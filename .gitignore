@@ -1,0 +1,13 @@
+# Coders in Flow
+.codersinflow
+.vscode
+node_modules
+.env
+.venv
+.codex
+out
+dist
+*.vsix
+.claude
+CLAUDE.md
+.DS_Store
