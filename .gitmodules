@@ -1,0 +1,3 @@
+[submodule "shadcn-landing/serpapps.github.io"]
+	path = shadcn-landing/serpapps.github.io
+	url = https://github.com/serpapps/serpapps.github.io.git
