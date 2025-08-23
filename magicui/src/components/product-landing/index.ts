@@ -1,0 +1,9 @@
+export { default as ProductLandingTemplate } from './template';
+export { default as ProductHero } from './hero';
+export { default as ProductFeatures } from './features';
+export { default as VideoShowcase } from './video-showcase';
+export { default as ProductInstallation } from './installation';
+export { default as ProductUsage } from './usage';
+export { default as ProductPricing } from './pricing';
+export { default as ProductFAQ } from './faq';
+export { default as ProductCTA } from './cta';
