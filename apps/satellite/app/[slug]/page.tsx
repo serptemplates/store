@@ -22,3 +22,5 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 export function generateStaticParams() {
   return getProductSlugs().map((slug) => ({ slug }));
 }
+
+export const dynamicParams = false;

@@ -26,7 +26,7 @@ fs.mkdirSync(distRoot, { recursive: true });
 fs.rmSync(exportDir, { recursive: true, force: true });
 
 console.log(`\n📦 Building static export for ${siteSlug}...`);
-const buildEnv = { ...process.env, STATIC_EXPORT: "1", PRODUCTS_ROOT: "../store/data" };
+const buildEnv = { ...process.env, STATIC_EXPORT: "1", PRODUCTS_ROOT: "../store/data", SITE_SLUG: siteSlug };
 if (fs.existsSync(siteManifest)) {
   buildEnv.SITE_CONFIG_PATH = siteManifest;
   console.log(`Using site config: ${siteManifest}`);

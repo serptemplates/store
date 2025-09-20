@@ -87,6 +87,9 @@ importers:
       '@vercel/postgres':
         specifier: ^0.10.0
         version: 0.10.0
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -96,6 +99,9 @@ importers:
       next:
         specifier: 15.1.0
         version: 15.1.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      next-mdx-remote:
+        specifier: ^5.0.0
+        version: 5.0.0(@types/react@19.1.12)(react@19.1.1)
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -112,6 +118,9 @@ importers:
         specifier: ^3.23.8
         version: 3.25.76
     devDependencies:
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       '@types/node':
         specifier: ^22
         version: 22.18.0

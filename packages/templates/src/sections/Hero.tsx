@@ -127,34 +127,31 @@ export function Hero({
       return resolveThumbnails(mediaItems);
     }
 
-    const fallback: HeroMediaItem[] = [];
-
     if (videoSrc) {
-      fallback.push({
-        type: "video",
-        src: videoSrc,
-        lightThumbnailSrc: lightThumbnailSrc,
-        darkThumbnailSrc: darkThumbnailSrc,
-        alt: videoTitle,
-        title: videoTitle,
-      });
-    } else if (lightThumbnailSrc) {
-      fallback.push({
-        type: "image",
-        src: lightThumbnailSrc,
-        alt: thumbnailAlt ?? videoTitle,
-        title: thumbnailAlt ?? videoTitle,
-      });
+      return resolveThumbnails([
+        {
+          type: "video",
+          src: videoSrc,
+          lightThumbnailSrc,
+          darkThumbnailSrc,
+          alt: videoTitle,
+          title: videoTitle,
+        },
+      ]);
     }
 
-    return resolveThumbnails(fallback);
-  }, [mediaItems, videoSrc, lightThumbnailSrc, darkThumbnailSrc, videoTitle, thumbnailAlt]);
+    return [];
+  }, [mediaItems, videoSrc, lightThumbnailSrc, darkThumbnailSrc, videoTitle]);
+
+  const hasMedia = carouselItems.length > 0;
 
   return (
     <section className="relative overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
       <div className="container relative py-16 md:py-24 lg:py-28">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+        <div
+          className={`mx-auto grid max-w-6xl items-center gap-10 ${hasMedia ? "lg:grid-cols-2" : "lg:grid-cols-1"}`}
+        >
           {/* Left: text content */}
           <div className="text-center lg:text-left">
             <h1 className="mb-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl leading-[0.95]">
@@ -183,14 +180,11 @@ export function Hero({
             {/* CTA button removed to keep single primary CTA in navbar */}
           </div>
 
-          {/* Right: media carousel */}
-          <div className="relative mx-auto w-full max-w-xl lg:max-w-[640px]">
-            {carouselItems.length > 0 ? (
+          {hasMedia && (
+            <div className="relative mx-auto w-full max-w-xl lg:max-w-[640px]">
               <HeroMediaCarousel items={carouselItems} />
-            ) : (
-              <div className="aspect-video w-full overflow-hidden rounded-2xl border bg-muted/40" />
-            )}
-          </div>
+            </div>
+          )}
         </div>
   
       </div>

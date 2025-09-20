@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import NextLink from "next/link";
 
 const navLinks = [
+  { label: "Blog", href: "/blog" as const },
   { label: "Docs", href: "https://github.com/serpapps" as const },
   { label: "Support", href: "https://github.com/serpapps/support" as const },
 ];
@@ -32,7 +33,7 @@ export default function Page() {
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container flex h-16 items-center justify-between">
           <NextLink href="/" className="text-lg font-semibold">
-            SERP Apps Store
+            SERP Apps
           </NextLink>
           <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
             <div className="relative group">
@@ -70,20 +71,29 @@ export default function Page() {
           </div>
         </nav>
         <details className="container border-t border-border/60 py-3 text-sm text-muted-foreground sm:hidden">
-          <summary className="cursor-pointer list-none font-medium text-foreground">Browse products</summary>
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {productLinks.map((item) => (
-              <NextLink key={item.slug} href={`/${item.slug}`} className="block">
-                {item.name}
-              </NextLink>
-            ))}
+          <summary className="cursor-pointer list-none font-medium text-foreground">Browse</summary>
+          <div className="mt-3 space-y-3">
+            <div className="grid gap-2">
+              {navLinks.map((link) => (
+                <NextLink key={link.label} href={link.href} className="block">
+                  {link.label}
+                </NextLink>
+              ))}
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {productLinks.map((item) => (
+                <NextLink key={item.slug} href={`/${item.slug}`} className="block">
+                  {item.name}
+                </NextLink>
+              ))}
+            </div>
           </div>
         </details>
       </header>
 
       <main className="container flex flex-col gap-16 py-16">
         <section className="text-center space-y-6">
-          <Badge className="px-3 py-1 text-sm">SERP Apps Store</Badge>
+          <Badge className="px-3 py-1 text-sm">SERP Apps</Badge>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Apps</h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{heroDescription}</p>
         </section>

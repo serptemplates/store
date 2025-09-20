@@ -54,6 +54,7 @@ export type HomeTemplateProps = {
     ctaDisabled?: PricingCtaProps["ctaDisabled"];
     terms?: PricingCtaProps["terms"];
   };
+  breadcrumbs?: Array<{ label: string; href?: string }>;
 };
 
 export function HomeTemplate({
@@ -79,6 +80,7 @@ export function HomeTemplate({
   posts,
   postsTitle,
   pricing,
+  breadcrumbs,
 }: HomeTemplateProps) {
   const { Navbar, Footer, Button, Badge, Input, Card, CardHeader, CardTitle, CardContent, CardDescription } = ui as any;
 
@@ -150,6 +152,30 @@ export function HomeTemplate({
     <>
       <Navbar />
       <main className="min-h-screen bg-background">
+        {Array.isArray(breadcrumbs) && breadcrumbs.length > 0 && (
+          <nav className="container pt-8 text-sm text-muted-foreground" aria-label="Breadcrumb">
+            <ol className="flex flex-wrap items-center gap-2">
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <li key={`${crumb.label}-${index}`} className="flex items-center gap-2">
+                    {crumb.href && !isLast ? (
+                      <a
+                        href={crumb.href}
+                        className="transition-colors hover:text-primary"
+                      >
+                        {crumb.label}
+                      </a>
+                    ) : (
+                      <span className={isLast ? "text-foreground" : undefined}>{crumb.label}</span>
+                    )}
+                    {!isLast && <span className="text-muted-foreground">/</span>}
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        )}
         {/* Hero (input removed, CTA changed) */}
         <Hero
           badgeText={badgeText}

@@ -21,6 +21,8 @@ export type NavbarProps = {
   ctaText?: string; // defaults to "Get It Now"
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
+  showLinks?: boolean; // whether to render blog/categories links
+  showCta?: boolean; // whether to render the CTA button
 };
 
 export function Navbar({
@@ -32,6 +34,8 @@ export function Navbar({
   ctaText = "Get It Now",
   onCtaClick,
   ctaDisabled = false,
+  showLinks = true,
+  showCta = true,
 }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -50,32 +54,36 @@ export function Navbar({
           </LinkComp>
 
           <div className="hidden md:flex md:items-center md:gap-4">
-            {/* <div className="flex items-center gap-6">
-              <LinkComp
-                href={blogHref}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Blog
-              </LinkComp>
-              {categories.map((category) => (
+            {showLinks && (
+              <div className="flex items-center gap-6">
                 <LinkComp
-                  key={category}
-                  href={`#${category.toLowerCase().replace(" ", "-")}`}
+                  href={blogHref}
                   className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                 >
-                  {category}
+                  Blog
                 </LinkComp>
-              ))}
-            </div> */}
-            {onCtaClick ? (
-              <InteractiveHoverButton onClick={onCtaClick} disabled={ctaDisabled}>
-                {ctaText}
-              </InteractiveHoverButton>
-            ) : (
-              resolvedCta && (
-                <LinkComp href={resolvedCta} target="_blank" rel="noopener noreferrer" className="inline-block">
-                  <InteractiveHoverButton disabled={ctaDisabled}>{ctaText}</InteractiveHoverButton>
-                </LinkComp>
+                {categories.map((category) => (
+                  <LinkComp
+                    key={category}
+                    href={`#${category.toLowerCase().replace(" ", "-")}`}
+                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {category}
+                  </LinkComp>
+                ))}
+              </div>
+            )}
+            {showCta && (
+              onCtaClick ? (
+                <InteractiveHoverButton onClick={onCtaClick} disabled={ctaDisabled}>
+                  {ctaText}
+                </InteractiveHoverButton>
+              ) : (
+                resolvedCta && (
+                  <LinkComp href={resolvedCta} target="_blank" rel="noopener noreferrer" className="inline-block">
+                    <InteractiveHoverButton disabled={ctaDisabled}>{ctaText}</InteractiveHoverButton>
+                  </LinkComp>
+                )
               )
             )}
           </div>
@@ -83,53 +91,59 @@ export function Navbar({
           {/* Nav actions end */}
         </div>
 
-        {isMenuOpen && (
+        {(showLinks || showCta) && isMenuOpen && (
           <div className="border-t py-4 md:hidden">
             <div className="space-y-1">
-              <LinkComp
-                href={blogHref}
-                className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
-              </LinkComp>
-              {categories.map((category) => (
-                <LinkComp
-                  key={category}
-                  href={`#${category.toLowerCase().replace(" ", "-")}`}
-                  className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {category}
-                </LinkComp>
-              ))}
-              {onCtaClick ? (
-                <div className="px-4 pt-2">
-                  <InteractiveHoverButton
-                    className="w-full"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      onCtaClick();
-                    }}
-                    disabled={ctaDisabled}
+              {showLinks && (
+                <>
+                  <LinkComp
+                    href={blogHref}
+                    className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
                   >
-                    {ctaText}
-                  </InteractiveHoverButton>
-                </div>
-              ) : (
-                resolvedCta && (
-                  <div className="px-4 pt-2">
+                    Blog
+                  </LinkComp>
+                  {categories.map((category) => (
                     <LinkComp
-                      href={resolvedCta}
+                      key={category}
+                      href={`#${category.toLowerCase().replace(" ", "-")}`}
+                      className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
                       onClick={() => setIsMenuOpen(false)}
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
-                      <InteractiveHoverButton className="w-full" disabled={ctaDisabled}>
-                        {ctaText}
-                      </InteractiveHoverButton>
+                      {category}
                     </LinkComp>
+                  ))}
+                </>
+              )}
+              {showCta && (
+                onCtaClick ? (
+                  <div className="px-4 pt-2">
+                    <InteractiveHoverButton
+                      className="w-full"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        onCtaClick();
+                      }}
+                      disabled={ctaDisabled}
+                    >
+                      {ctaText}
+                    </InteractiveHoverButton>
                   </div>
+                ) : (
+                  resolvedCta && (
+                    <div className="px-4 pt-2">
+                      <LinkComp
+                        href={resolvedCta}
+                        onClick={() => setIsMenuOpen(false)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <InteractiveHoverButton className="w-full" disabled={ctaDisabled}>
+                          {ctaText}
+                        </InteractiveHoverButton>
+                      </LinkComp>
+                    </div>
+                  )
                 )
               )}
             </div>

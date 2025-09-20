@@ -21,6 +21,16 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   const homeProps = productToHomeTemplate(product, posts);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
+  const breadcrumbs = [
+    {
+      label: siteConfig.site?.name ?? "SERP Apps",
+      href: "/",
+    },
+    {
+      label: product.name,
+    },
+  ];
+
   const handleCheckout = useCallback(async () => {
     if (isCheckoutLoading) {
       return;
@@ -81,6 +91,9 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
       ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
       onCtaClick={handleCheckout}
       ctaDisabled={isCheckoutLoading}
+      blogHref="/blog"
+      showLinks={false}
+      showCta
     />
   );
 
@@ -93,6 +106,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   return (
     <HomeTemplate
       ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
+      breadcrumbs={breadcrumbs}
       {...homeProps}
       ctaText={siteConfig.cta?.text ?? homeProps.ctaText}
       ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref}

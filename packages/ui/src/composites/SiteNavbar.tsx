@@ -11,6 +11,9 @@ export type SiteNavbarProps = {
   ctaHref?: string;
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
+  blogHref?: string;
+  showLinks?: boolean;
+  showCta?: boolean;
 };
 
 export function SiteNavbar({
@@ -21,6 +24,9 @@ export function SiteNavbar({
   ctaHref,
   onCtaClick,
   ctaDisabled,
+  blogHref,
+  showLinks,
+  showCta,
 }: SiteNavbarProps) {
   return (
     <BaseNavbar
@@ -30,6 +36,9 @@ export function SiteNavbar({
       ctaHref={ctaHref}
       onCtaClick={onCtaClick}
       ctaDisabled={ctaDisabled}
+      blogHref={blogHref}
+      showLinks={showLinks}
+      showCta={showCta}
       brand={<img src={brandSrc} width={64} height={64} alt={site.name} className="h-8 w-8 object-contain" />}
     />
   );

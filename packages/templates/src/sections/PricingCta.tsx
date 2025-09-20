@@ -64,7 +64,7 @@ export function PricingCta({
       id={id}
       className={cn("py-28 px-4 sm:px-8 lg:px-12 bg-muted/60", className)}
     >
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-5xl">
         <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
           <div>
             <h2 className="text-4xl font-extrabold tracking-tight text-foreground">

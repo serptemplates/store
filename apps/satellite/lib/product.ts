@@ -9,7 +9,22 @@ function resolveDataRoot() {
   if (override) {
     return path.isAbsolute(override) ? override : path.join(process.cwd(), override);
   }
-  return path.join(process.cwd(), "data");
+
+  const candidates = [
+    path.join(process.cwd(), "data"),
+    path.join(process.cwd(), "../store/data"),
+    path.join(process.cwd(), "apps/store/data"),
+    path.join(process.cwd(), "../../store/data"),
+    path.join(process.cwd(), "../../apps/store/data"),
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  return candidates[0];
 }
 
 const dataRoot = resolveDataRoot();
