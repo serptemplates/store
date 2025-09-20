@@ -6,7 +6,7 @@ author: "SERP Apps Team"
 tags:
   - product-update
   - templates
-image: "https://images.serpapps.dev/lander-template-launch.jpg"
+image: "https://images.serp.app/lander-template-launch.jpg"
 ---
 
 It has never been easier to launch a product landing page. The SERP Apps lander template bundles the hero, pricing, testimonials, and FAQ sections you need into a single, reusable layout.

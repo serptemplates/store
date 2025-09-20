@@ -1,42 +1,54 @@
 export type FooterSite = {
-  name: string;
+  name?: string;
 };
 
 export type FooterProps = {
-  site: FooterSite;
-  year?: number;
+  legalLinks?: Array<{ label: string; href: string; external?: boolean }>;
+  site?: FooterSite;
 };
 
-export function Footer({ site, year = new Date().getFullYear() }: FooterProps) {
+const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "DMCA", href: "/dmca" },
+  { label: "Contact", href: "/contact" },
+];
+
+export function Footer({
+  legalLinks = DEFAULT_LEGAL_LINKS,
+  site,
+}: FooterProps) {
+  const brandName = site?.name ?? "SERP";
+
   return (
     <footer className="border-t bg-muted/30">
       <div className="container py-8">
         <div className="flex flex-col items-center gap-4 text-center text-sm text-muted-foreground md:flex-row md:justify-between">
-          <p>© {year} {site.name}. All rights reserved.</p>
-          <nav aria-label="Legal">
-            <ul className="flex flex-wrap justify-center gap-4">
-              <li>
-                <a className="hover:text-primary" href="/privacy">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-primary" href="/terms">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-primary" href="/dmca">
-                  DMCA
-                </a>
-              </li>
-              <li>
-                <a className="hover:text-primary" href="/contact">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <p>
+            ©
+            <a href="https://serp.co" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
+              {brandName}
+            </a>
+            . 
+          </p>
+          {legalLinks?.length ? (
+            <nav aria-label="Legal">
+              <ul className="flex flex-wrap justify-center gap-4">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      className="hover:text-primary"
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ) : null}
         </div>
       </div>
     </footer>

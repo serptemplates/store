@@ -55,6 +55,7 @@ export type HomeTemplateProps = {
     terms?: PricingCtaProps["terms"];
   };
   breadcrumbs?: Array<{ label: string; href?: string }>;
+  showPosts?: boolean;
 };
 
 export function HomeTemplate({
@@ -81,6 +82,7 @@ export function HomeTemplate({
   postsTitle,
   pricing,
   breadcrumbs,
+  showPosts = true,
 }: HomeTemplateProps) {
   const { Navbar, Footer, Button, Badge, Input, Card, CardHeader, CardTitle, CardContent, CardDescription } = ui as any;
 
@@ -220,17 +222,18 @@ export function HomeTemplate({
           />
         )}
 
-        {/* Posts */}
-        <PostsSection
-          posts={posts ?? []}
-          heading={postsTitle ?? "Posts"}
-          Badge={Badge}
-          Card={Card}
-          CardHeader={CardHeader}
-          CardTitle={CardTitle}
-          CardContent={CardContent}
-          CardDescription={CardDescription}
-        />
+        {showPosts && Array.isArray(posts) && posts.length > 0 && (
+          <PostsSection
+            posts={posts}
+            heading={postsTitle ?? "Posts"}
+            Badge={Badge}
+            Card={Card}
+            CardHeader={CardHeader}
+            CardTitle={CardTitle}
+            CardContent={CardContent}
+            CardDescription={CardDescription}
+          />
+        )}
 
         <Footer />
       </main>

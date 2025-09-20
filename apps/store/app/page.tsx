@@ -1,10 +1,136 @@
-import Link from "next/link";
-
 import { getAllProducts } from "@/lib/product";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import NextLink from "next/link";
+import { ProductsFilter } from "../components/ProductsFilter";
+
+const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
+  {
+    label: "Adult Sites",
+    keywords: [
+      "adult",
+      "porn",
+      "xxx",
+      "xvideos",
+      "xhamster",
+      "xnxx",
+      "stripchat",
+      "cam",
+      "bonga",
+      "beeg",
+      "spank",
+      "erome",
+      "erothots",
+      "tnaflix",
+      "orangeporn",
+      "chaturbate",
+    ],
+  },
+  {
+    label: "Course Platforms",
+    keywords: [
+      "course",
+      "udemy",
+      "skillshare",
+      "teachable",
+      "academy",
+      "learn",
+      "learning",
+      "education",
+      "university",
+      "khan",
+      "thinkific",
+      "kajabi",
+      "learndash",
+      "moodle",
+      "whop",
+      "skool",
+      "communities",
+    ],
+  },
+  {
+    label: "Social & Community",
+    keywords: [
+      "tiktok",
+      "instagram",
+      "facebook",
+      "twitter",
+      "youtube",
+      "snapchat",
+      "vk",
+      "reddit",
+      "giphy",
+      "onlyfans",
+    ],
+  },
+  {
+    label: "Stock Media",
+    keywords: [
+      "stock",
+      "vector",
+      "shutter",
+      "istock",
+      "depositphotos",
+      "adobe",
+      "alamy",
+      "stocksy",
+      "stockvault",
+      "storyblocks",
+      "dreamstime",
+      "123rf",
+      "vectorstock",
+      "unsplash",
+    ],
+  },
+  {
+    label: "Video Platforms",
+    keywords: [
+      "vimeo",
+      "wistia",
+      "loom",
+      "stream",
+      "dailymotion",
+      "terabox",
+      "vimeo",
+      "vk video",
+    ],
+  },
+  {
+    label: "File Utilities",
+    keywords: [
+      "pdf",
+      "csv",
+      "file",
+      "tool",
+      "transcript",
+      "combiner",
+      "converter",
+    ],
+  },
+];
+
+function deriveCategories(product: any): string[] {
+  const haystack = [
+    product.slug,
+    product.platform,
+    ...(product.categories ?? []),
+    ...(product.keywords ?? []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  const categories = new Set<string>();
+  categories.add("Downloaders");
+
+  CATEGORY_RULES.forEach((rule) => {
+    if (rule.keywords.some((keyword) => haystack.includes(keyword))) {
+      categories.add(rule.label);
+    }
+  });
+
+  return Array.from(categories);
+}
 
 const navLinks = [
   { label: "Docs", href: "https://github.com/serpapps" as const },
@@ -24,20 +150,40 @@ export default function Page() {
   const columnCount = 4;
   const itemsPerColumn = Math.ceil(productLinks.length / columnCount);
   const productColumns = Array.from({ length: columnCount }, (_, index) =>
-    productLinks.slice(index * itemsPerColumn, (index + 1) * itemsPerColumn),
+    productLinks.slice(index * itemsPerColumn, (index + 1) * itemsPerColumn)
   ).filter((column) => column.length > 0);
+
+  const filterItems = products.map((product) => {
+    const broadCategories = deriveCategories(product);
+    const keywords = Array.from(
+      new Set([
+        product.name,
+        product.platform ?? "",
+        ...(product.keywords ?? []),
+        ...broadCategories,
+      ].filter(Boolean))
+    );
+
+    return {
+      slug: product.slug,
+      name: product.name,
+      categories: broadCategories,
+      keywords,
+      platform: product.platform,
+    };
+  });
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="relative z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container flex h-16 items-center justify-between">
           <NextLink href="/" className="text-lg font-semibold">
-            SERP Apps Store
+            SERP
           </NextLink>
           <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
             <div className="relative group">
               <button className="font-medium transition-colors hover:text-foreground">Products</button>
-              <div className="absolute right-0 top-full z-20 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-popover p-6 shadow-lg group-hover:block group-focus-within:block">
+              <div className="absolute right-0 top-full z-50 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl group-hover:block group-focus-within:block">
                 <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {productColumns.map((column, columnIndex) => (
                     <div key={columnIndex} className="space-y-2">
@@ -82,51 +228,18 @@ export default function Page() {
       </header>
 
       <main className="container flex flex-col gap-16 py-16">
-        <section className="text-center space-y-6">
-          <Badge className="px-3 py-1 text-sm">SERP Apps Store</Badge>
+        <section className="relative z-0 text-center space-y-6">
+          <Badge className="px-3 py-1 text-sm">SERP Apps</Badge>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Apps</h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{heroDescription}</p>
         </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {products.map((product) => {
-          const categories = Array.isArray(product.categories) ? product.categories : [];
-
-          const preferredCategory =
-            categories.find((category) => category.toLowerCase() === "downloader") ||
-            categories.find((category) => /[A-Z]/.test(category)) ||
-            categories[0];
-
-          const categoryLabel = preferredCategory
-            ? /[A-Z]/.test(preferredCategory)
-              ? preferredCategory
-              : preferredCategory.replace(/\b\w/g, (char) => char.toUpperCase())
-            : product.platform;
-
-          return (
-            <Link
-              key={product.slug}
-              href={`/${product.slug}`}
-              className="group flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border"
-            >
-              {categoryLabel && (
-                <span className="w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground transition group-hover:bg-primary/10 group-hover:text-foreground">
-                  {categoryLabel}
-                </span>
-              )}
-              <h3 className="text-sm font-semibold text-foreground">{product.name}</h3>
-              <span className="mt-auto text-sm font-medium text-primary transition group-hover:underline">
-                View →
-              </span>
-            </Link>
-          );
-        })}
-      </section>
+        <ProductsFilter products={filterItems} />
       </main>
 
       <footer className="border-t bg-muted/40">
         <div className="container flex flex-col gap-2 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} SERP Apps. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} SERP Apps </p>
           <div className="flex gap-4">
             <NextLink href="https://github.com/serpapps/legal/blob/main/terms-conditions.md" target="_blank" rel="noopener noreferrer" className="underline">
               Terms & Conditions

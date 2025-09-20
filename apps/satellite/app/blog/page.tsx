@@ -118,7 +118,7 @@ export default function BlogIndexPage() {
         </section>
       </main>
 
-      <FooterComposite site={{ name: siteName }} />
+      <FooterComposite />
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function Page() {
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container flex h-16 items-center justify-between">
           <NextLink href="/" className="text-lg font-semibold">
-            SERP Apps
+            SERP
           </NextLink>
           <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
             <div className="relative group">
@@ -136,7 +136,7 @@ export default function Page() {
 
       <footer className="border-t bg-muted/40">
         <div className="container flex flex-col gap-2 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} SERP Apps. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} SERP Apps. </p>
           <div className="flex gap-4">
             <NextLink href="https://github.com/serpapps/legal/blob/main/terms-conditions.md" target="_blank" rel="noopener noreferrer" className="underline">
               Terms & Conditions

@@ -21,6 +21,8 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   const homeProps = productToHomeTemplate(product, posts);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
+  const showPosts = siteConfig.blog?.enabled !== false;
+
   const handleCheckout = useCallback(async () => {
     if (isCheckoutLoading) {
       return;
@@ -72,8 +74,8 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   const Navbar = () => (
     <SiteNavbar
       site={{
-        name: siteConfig.site?.name ?? product.name,
-        categories: product.categories,
+        name: siteConfig.site?.name ?? "SERP Apps",
+        categories: [],
         buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
       }}
       Link={NextLink}
@@ -81,31 +83,31 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
       ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
       onCtaClick={handleCheckout}
       ctaDisabled={isCheckoutLoading}
+      showLinks={false}
     />
   );
 
-  const Footer = () => (
-    <FooterComposite
-      site={{ name: product.name }}
-    />
-  );
+  const Footer = () => <FooterComposite />;
 
   return (
-    <HomeTemplate
-      ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
-      {...homeProps}
-      ctaText={siteConfig.cta?.text ?? homeProps.ctaText}
-      ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref}
-      pricing={homeProps.pricing
-        ? {
-            ...homeProps.pricing,
-            onCtaClick: handleCheckout,
-            ctaLoading: isCheckoutLoading,
-            ctaDisabled: isCheckoutLoading,
-            ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
-            ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText,
-          }
-        : undefined}
-    />
+      <HomeTemplate
+        ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
+        {...homeProps}
+        showPosts={showPosts}
+        posts={showPosts ? homeProps.posts : []}
+        postsTitle={showPosts ? homeProps.postsTitle : undefined}
+        ctaText={siteConfig.cta?.text ?? homeProps.ctaText}
+        ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref}
+        pricing={homeProps.pricing
+          ? {
+              ...homeProps.pricing,
+              onCtaClick: handleCheckout,
+              ctaLoading: isCheckoutLoading,
+              ctaDisabled: isCheckoutLoading,
+              ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
+              ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText,
+            }
+          : undefined}
+      />
   );
 }

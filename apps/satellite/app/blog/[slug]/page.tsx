@@ -137,7 +137,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </article>
       </main>
 
-      <FooterComposite site={{ name: siteName }} />
+      <FooterComposite />
     </div>
   );
 }

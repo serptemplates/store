@@ -97,11 +97,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     />
   );
 
-  const Footer = () => (
-    <FooterComposite
-      site={{ name: product.name }}
-    />
-  );
+  const Footer = () => <FooterComposite />;
 
   return (
     <HomeTemplate

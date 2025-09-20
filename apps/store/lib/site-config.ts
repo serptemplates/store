@@ -14,6 +14,9 @@ export type SiteConfig = {
     text?: string;
     href?: string;
   };
+  blog?: {
+    enabled?: boolean;
+  };
   excludeSlugs?: string[];
 };
 

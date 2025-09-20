@@ -1,4 +1,7 @@
 {
+  "blog": {
+    "enabled": false
+  },
   "excludeSlugs": [
     "serp-affiliates",
     "serp-affiliates-course",

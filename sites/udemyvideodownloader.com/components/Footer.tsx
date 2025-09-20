@@ -68,7 +68,7 @@ export function Footer() {
               </a>
             </div>
           )}
-          <p className="mt-2">© 2024 {siteConfig.name}. All rights reserved.</p>
+          <p className="mt-2">© {siteConfig.name}</p>
         </div>
       </div>
     </footer>

@@ -1,16 +1,21 @@
 {
   "site": {
-    "name": "SERP Apps Store",
-    "domain": "https://store.serp.co"
+    "name": "SERP Apps",
+    "domain": "https://apps.serp.co",
+    "logo": "/logo.png"
   },
   "navigation": {
     "links": [
+      { "label": "Catalog", "href": "/" },
       { "label": "Docs", "href": "https://github.com/serpapps" },
       { "label": "Support", "href": "https://github.com/serpapps/support" }
     ]
   },
   "cta": {
-    "text": "Checkout",
+    "text": "Get It Now",
     "href": "#pricing"
+  },
+  "blog": {
+    "enabled": false
   }
 }
