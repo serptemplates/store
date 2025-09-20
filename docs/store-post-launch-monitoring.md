@@ -3,11 +3,11 @@
 Detailed checklist for locking down observability and automated smoke-tests before and after cutting over from GHL.
 
 ## 1. prerequisites
-<!-- 
+
 1. Stripe test + live keys and webhook secrets already configured in Vercel (see `docs/vercel-envs.md`).
 2. Slack webhook (or another ops channel URL) saved as `SLACK_ALERT_WEBHOOK_URL` or `OPS_ALERT_WEBHOOK_URL`.
 3. Access to the Vercel project (`apps.serp.co`) with permission to edit Environment Variables, Cron Jobs, and Log Drains.
-4. Local Stripe CLI installed (`npm install -g stripe`) for optional checks. -->
+4. Local Stripe CLI installed (`npm install -g stripe`) for optional checks.
 
 ## 2. configure monitoring env vars (vercel dashboard)
 
@@ -38,16 +38,23 @@ Detailed checklist for locking down observability and automated smoke-tests befo
    - Headers: add `Authorization: Bearer <MONITORING_TOKEN>`.
 5. Optional: plug the same URL into an external uptime service (UptimeRobot, BetterStack, etc.) with the bearer header so you get dashboards and history.
 
-## 4. pipe logs to your observability stack
+## 4. pipe logs to your observability stack (optional)
 
-1. Visit Vercel → **Project → Settings → Observability → Log Drains**.
-2. Click **Add Log Drain** and choose your provider (Datadog, Logtail, BetterStack, etc.).
-3. Supply the destination URL/token from your provider. Vercel immediately starts forwarding JSON logs.
-4. Confirm you see structured events such as `{"event":"checkout.session.completed","level":"info"...}` inside your logging tool.
+> ℹ️ Log Drains require a Vercel Pro (or higher) plan. If you are on the Hobby tier, skip to the alternatives below.
+
+1. **If you have Log Drains:**
+   - Visit Vercel → **Project → Settings → Observability → Log Drains**.
+   - Click **Add Log Drain** and choose your provider (Datadog, Logtail, BetterStack, etc.).
+   - Supply the destination URL/token from your provider. Vercel immediately starts forwarding JSON logs.
+   - Confirm you see structured events such as `{"event":"checkout.session.completed","level":"info", ...}` inside your logging tool.
+2. **Hobby-plan alternatives:**
+   - Use `vercel logs apps.serp.co --since 1h --output json` (or `vercel tail`) to stream logs into your terminal or forward them to a local file/processor.
+   - Schedule the monitoring cron job (Section 3) to alert you on anomalies; combine it with Stripe dashboard email alerts for payment failures.
+   - Consider wiring key failures (e.g., webhook errors) straight to Slack via `sendOpsAlert`—those already trigger without Log Drains if `SLACK_ALERT_WEBHOOK_URL` is set.
 
 ## 5. run automated checkout smoke-tests (test mode)
 
-1. Ensure `.env` (local) contains `STRIPE_SECRET_KEY_TEST` and `STRIPE_CHECKOUT_PAYMENT_METHODS` so the script can authenticate.
+1. Ensure `.env` (local) contains both `STRIPE_SECRET_KEY_TEST` **and** `STRIPE_SECRET_KEY`. The script uses the live key to clone prices into test mode when needed, and the test key to create sessions. Also set `STRIPE_CHECKOUT_PAYMENT_METHODS`.
 2. From the repo root, run:
    ```sh
    pnpm test:checkout

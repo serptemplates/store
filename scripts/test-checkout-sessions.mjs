@@ -20,6 +20,10 @@ if (!secret) {
 }
 
 const stripe = new Stripe(secret, { apiVersion });
+const liveSecret = process.env.STRIPE_SECRET_KEY;
+const liveClient = liveSecret ? new Stripe(liveSecret, { apiVersion }) : null;
+const usingTestKey = secret.startsWith("sk_test");
+
 const paymentMethodTypes = (process.env.STRIPE_CHECKOUT_PAYMENT_METHODS || "card")
   .split(",")
   .map((value) => value.trim())
@@ -52,6 +56,111 @@ const files = fs
 let tested = 0;
 let failures = 0;
 
+async function ensureTestPriceId(slug, priceId) {
+  if (!usingTestKey) {
+    return priceId;
+  }
+
+  try {
+    await stripe.prices.retrieve(priceId);
+    return priceId;
+  } catch (error) {
+    const stripeError = error;
+    if (!liveClient) {
+      throw new Error(
+        `Test price ${priceId} missing for ${slug}, and STRIPE_SECRET_KEY (live) is not configured to clone it.`,
+      );
+    }
+
+    if (stripeError?.code && stripeError.code !== "resource_missing") {
+      throw error;
+    }
+  }
+
+  const livePrice = await liveClient.prices.retrieve(priceId, { expand: ["product"] });
+  const lookupKey = livePrice.lookup_key ?? `slug:${slug}`;
+
+  if (lookupKey) {
+    const existing = await stripe.prices.list({ lookup_keys: [lookupKey], limit: 1, active: true });
+    if (existing.data[0]) {
+      return existing.data[0].id;
+    }
+  }
+
+  const amount = (typeof livePrice.unit_amount === "number")
+    ? livePrice.unit_amount
+    : Number.parseInt(livePrice.unit_amount_decimal ?? "", 10);
+
+  if (!Number.isFinite(amount)) {
+    throw new Error(`Unable to determine amount for price ${priceId}`);
+  }
+
+  const currency = livePrice.currency ?? "usd";
+  const liveProduct = typeof livePrice.product === "string"
+    ? await liveClient.products.retrieve(livePrice.product)
+    : livePrice.product;
+
+  const createProductPayload = {
+    name: liveProduct?.name ?? slug,
+    metadata: {
+      slug,
+      cloned_from_product: liveProduct?.id ?? null,
+    },
+  };
+
+  const description = liveProduct?.description ?? undefined;
+  if (description) {
+    createProductPayload.description = description;
+  }
+
+  const images = Array.from(
+    new Set((liveProduct?.images ?? []).filter((value) => typeof value === "string" && value.length > 0)),
+  );
+  if (images.length > 0) {
+    createProductPayload.images = images.slice(0, 8);
+  }
+
+  const testProduct = await stripe.products.create(createProductPayload);
+
+  const priceParams = {
+    product: testProduct.id,
+    currency,
+    unit_amount: amount,
+    nickname: livePrice.nickname ?? slug,
+    metadata: {
+      slug,
+      cloned_from_price: livePrice.id,
+    },
+  };
+
+  if (lookupKey) {
+    priceParams.lookup_key = lookupKey;
+    priceParams.transfer_lookup_key = true;
+  }
+
+  if (livePrice.recurring) {
+    priceParams.recurring = {
+      interval: livePrice.recurring.interval,
+      interval_count: livePrice.recurring.interval_count ?? undefined,
+      usage_type: livePrice.recurring.usage_type ?? undefined,
+      aggregate_usage: livePrice.recurring.aggregate_usage ?? undefined,
+      trial_period_days: livePrice.recurring.trial_period_days ?? undefined,
+    };
+  }
+
+  if (livePrice.tax_behavior) {
+    priceParams.tax_behavior = livePrice.tax_behavior;
+  }
+
+  if (livePrice.billing_scheme) {
+    priceParams.billing_scheme = livePrice.billing_scheme;
+  }
+
+  const createdPrice = await stripe.prices.create(priceParams);
+  console.log(`🆕  Created test price ${createdPrice.id} for ${slug}`);
+  return createdPrice.id;
+}
+
 async function testProduct(file) {
   const absolutePath = path.join(productsDir, file);
   const raw = fs.readFileSync(absolutePath, "utf8");
@@ -80,13 +189,15 @@ async function testProduct(file) {
   };
 
   try {
+    const priceId = await ensureTestPriceId(slug, stripeConfig.price_id);
+
     const session = await stripe.checkout.sessions.create({
       mode: stripeConfig.mode ?? "payment",
       success_url: stripeConfig.success_url,
       cancel_url: stripeConfig.cancel_url,
       line_items: [
         {
-          price: stripeConfig.price_id,
+          price: priceId,
           quantity: 1,
         },
       ],

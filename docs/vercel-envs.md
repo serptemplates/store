@@ -48,4 +48,5 @@ CHECKOUT_MONITOR_MIN_ORDERS=1
 - Keep live and test webhook endpoints separate in Stripe so signing secrets stay isolated.
 - After updating variables in Vercel, redeploy so both server and client bundles pick up the changes.
 - Set `STRIPE_CHECKOUT_PAYMENT_METHODS` to `card` unless your Stripe account has PayPal enabled; add `paypal` only after Stripe confirms access.
+- When running preview/test deployments, also supplying `STRIPE_SECRET_KEY` allows the app to auto-clone live prices into test mode when needed; otherwise configure test prices manually.
 - Ensure every `stripe.price_id` in `apps/store/data/products/*.yaml` points at the correct mode (live vs test) before enabling real payments.

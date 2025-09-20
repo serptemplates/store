@@ -4,7 +4,7 @@ import { z } from "zod";
 import type Stripe from "stripe";
 
 import { getOfferConfig } from "@/lib/offer-config";
-import { getStripeClient, isUsingTestKeys } from "@/lib/stripe";
+import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/stripe";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
 
 const requestSchema = z.object({
@@ -68,8 +68,12 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const price = await stripe.prices.retrieve(offer.stripePriceId, {
-      expand: ["product"],
+    const price = await resolvePriceForEnvironment({
+      id: offer.id,
+      priceId: offer.stripePriceId,
+      productName: offer.productName,
+      productDescription: offer.productDescription,
+      productImage: offer.productImage,
     });
 
     const stripeProduct = price.product;
@@ -124,7 +128,7 @@ export async function POST(request: NextRequest) {
       cancel_url: offer.cancelUrl,
       line_items: [
         {
-          price: offer.stripePriceId,
+          price: price.id,
           quantity: parsedBody.quantity,
         },
       ],
