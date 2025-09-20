@@ -108,9 +108,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const paymentMethodTypesRaw =
+      process.env.STRIPE_CHECKOUT_PAYMENT_METHODS?.split(",")
+        .map((method) => method.trim())
+        .filter(Boolean) ?? [];
+    const paymentMethodTypes = (paymentMethodTypesRaw.length > 0
+      ? paymentMethodTypesRaw
+      : ["card"]) as Stripe.Checkout.SessionCreateParams.PaymentMethodType[];
+
     const session = await stripe.checkout.sessions.create({
       mode,
-      payment_method_types: ["card", "paypal"],
+      payment_method_types: paymentMethodTypes,
       client_reference_id: parsedBody.clientReferenceId,
       success_url: offer.successUrl,
       cancel_url: offer.cancelUrl,
