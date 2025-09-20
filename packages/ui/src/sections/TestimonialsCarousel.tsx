@@ -264,7 +264,7 @@ export default function Testimonials() {
   return (
     <section className="py-14">
       <div className="container max-w-6xl">
-        <h2 className="mb-2 text-center text-4xl font-bold tracking-tight md:text-5xl">Reviews</h2>
+        <h2 className="mb-2 text-center text-4xl font-bold tracking-tight md:text-4xl">Reviews</h2>
         <div className="relative mt-2 overflow-hidden">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {getColumns(testimonials, 3).map((colItems, i) => (

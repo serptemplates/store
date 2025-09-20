@@ -86,6 +86,10 @@ export function productToHomeTemplate(
       enabled: true,
       heading: product.name,
       subheading: product.tagline,
+      priceLabel: product.pricing?.label,
+      price: product.pricing?.price,
+      originalPrice: product.pricing?.original_price,
+      priceNote: product.pricing?.note,
       benefits:
         product.pricing?.benefits && product.pricing.benefits.length > 0
           ? product.pricing.benefits
