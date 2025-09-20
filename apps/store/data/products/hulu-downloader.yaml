@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from hulu with our reliabl
 product_page_url: https://store.serp.co/products/hulu-downloader
 purchase_url: https://serp.ly/hulu-downloader
 stripe:
-  price_id: price_1S99S206JrOmKRCmnelQqCxC
+  price_id: price_1S99wv06JrOmKRCmOtYb8mCE
   success_url: https://store.serp.co/products/hulu-downloader?checkout=success
   cancel_url: https://store.serp.co/products/hulu-downloader
   metadata:

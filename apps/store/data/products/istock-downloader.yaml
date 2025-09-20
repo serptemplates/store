@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from istock with our relia
 product_page_url: https://store.serp.co/products/istock-downloader
 purchase_url: https://serp.ly/istock-downloader
 stripe:
-  price_id: price_1S99S306JrOmKRCmK6NjK5Va
+  price_id: price_1S99ww06JrOmKRCmNqJ9zTSr
   success_url: https://store.serp.co/products/istock-downloader?checkout=success
   cancel_url: https://store.serp.co/products/istock-downloader
   metadata:

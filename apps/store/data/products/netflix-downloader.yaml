@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from netflix with our reli
 product_page_url: https://store.serp.co/products/netflix-downloader
 purchase_url: https://serp.ly/netflix-downloader
 stripe:
-  price_id: price_1S99S906JrOmKRCm8PWSzqUn
+  price_id: price_1S99fy06JrOmKRCmPkVYWIwk
   success_url: https://store.serp.co/products/netflix-downloader?checkout=success
   cancel_url: https://store.serp.co/products/netflix-downloader
   metadata:

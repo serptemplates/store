@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from stocksy with our reli
 product_page_url: https://store.serp.co/products/stocksy-downloader
 purchase_url: https://serp.ly/stocksy-downloader
 stripe:
-  price_id: price_1S99SK06JrOmKRCmaMgoSRnk
+  price_id: price_1S99g906JrOmKRCmaZzHAMEw
   success_url: https://store.serp.co/products/stocksy-downloader?checkout=success
   cancel_url: https://store.serp.co/products/stocksy-downloader
   metadata:

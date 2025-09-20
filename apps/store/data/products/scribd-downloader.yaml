@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from scribd with our relia
 product_page_url: https://store.serp.co/products/scribd-downloader
 purchase_url: https://serp.ly/scribd-downloader
 stripe:
-  price_id: price_1S99SG06JrOmKRCmUW3O85Xp
+  price_id: price_1S99g406JrOmKRCm3s3fJ3xy
   success_url: https://store.serp.co/products/scribd-downloader?checkout=success
   cancel_url: https://store.serp.co/products/scribd-downloader
   metadata:

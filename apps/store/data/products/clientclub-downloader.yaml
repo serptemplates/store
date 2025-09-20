@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from clientclub with our r
 product_page_url: https://store.serp.co/products/clientclub-downloader
 purchase_url: https://serp.ly/clientclub-downloader
 stripe:
-  price_id: price_1S99Rr06JrOmKRCmE9MJGOiW
+  price_id: price_1S99wm06JrOmKRCmaau6Xiqv
   success_url: https://store.serp.co/products/clientclub-downloader?checkout=success
   cancel_url: https://store.serp.co/products/clientclub-downloader
   metadata:

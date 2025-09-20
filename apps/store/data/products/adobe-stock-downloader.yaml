@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from adobe stock with our 
 product_page_url: https://store.serp.co/products/adobe-stock-downloader
 purchase_url: https://serp.ly/adobe-stock-downloader
 stripe:
-  price_id: price_1S99Rn06JrOmKRCmwLV8bR5q
+  price_id: price_1S99wh06JrOmKRCm9efFxcwZ
   success_url: https://store.serp.co/products/adobe-stock-downloader?checkout=success
   cancel_url: https://store.serp.co/products/adobe-stock-downloader
   metadata:

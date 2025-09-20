@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from kick clip with our re
 product_page_url: https://store.serp.co/products/kick-clip-downloader
 purchase_url: https://serp.ly/kick-clip-downloader
 stripe:
-  price_id: price_1S99S506JrOmKRCmbABw5hlJ
+  price_id: price_1S99wx06JrOmKRCmTvX5yYRV
   success_url: https://store.serp.co/products/kick-clip-downloader?checkout=success
   cancel_url: https://store.serp.co/products/kick-clip-downloader
   metadata:

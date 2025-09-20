@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from pixabay with our reli
 product_page_url: https://store.serp.co/products/pixabay-downloader
 purchase_url: https://serp.ly/pixabay-downloader
 stripe:
-  price_id: price_1S99SC06JrOmKRCmuwVIkkCh
+  price_id: price_1S99g106JrOmKRCmhuWBP77A
   success_url: https://store.serp.co/products/pixabay-downloader?checkout=success
   cancel_url: https://store.serp.co/products/pixabay-downloader
   metadata:

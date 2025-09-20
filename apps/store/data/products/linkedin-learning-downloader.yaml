@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from linkedin learning wit
 product_page_url: https://store.serp.co/products/linkedin-learning-downloader
 purchase_url: https://serp.ly/linkedin-learning-downloader
 stripe:
-  price_id: price_1S99S706JrOmKRCmMvTirhXR
+  price_id: price_1S99fw06JrOmKRCm59JPeRdR
   success_url: https://store.serp.co/products/linkedin-learning-downloader?checkout=success
   cancel_url: https://store.serp.co/products/linkedin-learning-downloader
   metadata:

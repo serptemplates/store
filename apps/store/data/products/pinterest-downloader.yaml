@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from pinterest with our re
 product_page_url: https://store.serp.co/products/pinterest-downloader
 purchase_url: https://serp.ly/pinterest-downloader
 stripe:
-  price_id: price_1S99SC06JrOmKRCmQOnJevLS
+  price_id: price_1S99g106JrOmKRCmu5wfxl1Y
   success_url: https://store.serp.co/products/pinterest-downloader?checkout=success
   cancel_url: https://store.serp.co/products/pinterest-downloader
   metadata:

@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from telegram video with o
 product_page_url: https://store.serp.co/products/telegram-video-downloader
 purchase_url: https://serp.ly/telegram-video-downloader
 stripe:
-  price_id: price_1S99SN06JrOmKRCmMYhlpaSE
+  price_id: price_1S99gC06JrOmKRCm9XooPQNU
   success_url: https://store.serp.co/products/telegram-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/telegram-video-downloader
   metadata:

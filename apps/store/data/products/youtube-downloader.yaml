@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from youtube with our reli
 product_page_url: https://store.serp.co/products/youtube-downloader
 purchase_url: https://serp.ly/youtube-downloader
 stripe:
-  price_id: price_1S99SX06JrOmKRCmoEj9f3qM
+  price_id: price_1S99xB06JrOmKRCmCyZM0ENF
   success_url: https://store.serp.co/products/youtube-downloader?checkout=success
   cancel_url: https://store.serp.co/products/youtube-downloader
   metadata:

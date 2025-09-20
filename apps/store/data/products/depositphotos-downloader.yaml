@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from depositphotos with ou
 product_page_url: https://store.serp.co/products/depositphotos-downloader
 purchase_url: https://serp.ly/depositphotos-downloader
 stripe:
-  price_id: price_1S99Rv06JrOmKRCmlizf0KIe
+  price_id: price_1S99wo06JrOmKRCmO7Fe7LYG
   success_url: https://store.serp.co/products/depositphotos-downloader?checkout=success
   cancel_url: https://store.serp.co/products/depositphotos-downloader
   metadata:

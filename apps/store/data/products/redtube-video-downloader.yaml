@@ -6,7 +6,7 @@ seo_description: Download Redtube Video Downloader content for offline use with 
 product_page_url: https://store.serp.co/products/redtube-video-downloader
 purchase_url: https://serp.ly/redtube-video-downloader
 stripe:
-  price_id: price_1S99SF06JrOmKRCm4mVQ477g
+  price_id: price_1S99g406JrOmKRCmqPgLx00x
   success_url: https://store.serp.co/products/redtube-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/redtube-video-downloader
   metadata:

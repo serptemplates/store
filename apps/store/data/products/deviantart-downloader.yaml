@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from deviantart with our r
 product_page_url: https://store.serp.co/products/deviantart-downloader
 purchase_url: https://serp.ly/deviantart-downloader
 stripe:
-  price_id: price_1S99Rw06JrOmKRCmTNUksRAe
+  price_id: price_1S99wp06JrOmKRCmxPZvi7YP
   success_url: https://store.serp.co/products/deviantart-downloader?checkout=success
   cancel_url: https://store.serp.co/products/deviantart-downloader
   metadata:

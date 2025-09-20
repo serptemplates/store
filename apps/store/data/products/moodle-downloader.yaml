@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from moodle with our relia
 product_page_url: https://store.serp.co/products/moodle-downloader
 purchase_url: https://serp.ly/moodle-downloader
 stripe:
-  price_id: price_1S99S806JrOmKRCmpUG2feB9
+  price_id: price_1S99fx06JrOmKRCmleYZfn4W
   success_url: https://store.serp.co/products/moodle-downloader?checkout=success
   cancel_url: https://store.serp.co/products/moodle-downloader
   metadata:

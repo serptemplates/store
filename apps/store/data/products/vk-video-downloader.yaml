@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from vk video with our rel
 product_page_url: https://store.serp.co/products/vk-video-downloader
 purchase_url: https://serp.ly/vk-video-downloader
 stripe:
-  price_id: price_1S99SU06JrOmKRCmT8smQGjt
+  price_id: price_1S99gJ06JrOmKRCmzNGM97WE
   success_url: https://store.serp.co/products/vk-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/vk-video-downloader
   metadata:

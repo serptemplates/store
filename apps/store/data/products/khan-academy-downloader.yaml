@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from khan academy with our
 product_page_url: https://store.serp.co/products/khan-academy-downloader
 purchase_url: https://serp.ly/khan-academy-downloader
 stripe:
-  price_id: price_1S99S406JrOmKRCmMYMBdJnH
+  price_id: price_1S99wx06JrOmKRCmqkFPnN9s
   success_url: https://store.serp.co/products/khan-academy-downloader?checkout=success
   cancel_url: https://store.serp.co/products/khan-academy-downloader
   metadata:

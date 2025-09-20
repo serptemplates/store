@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from m3u8 with our reliabl
 product_page_url: https://store.serp.co/products/m3u8-downloader
 purchase_url: https://serp.ly/m3u8-downloader
 stripe:
-  price_id: price_1S99S806JrOmKRCmHCCmhT1r
+  price_id: price_1S99fx06JrOmKRCm2ECdO0oK
   success_url: https://store.serp.co/products/m3u8-downloader?checkout=success
   cancel_url: https://store.serp.co/products/m3u8-downloader
   metadata:

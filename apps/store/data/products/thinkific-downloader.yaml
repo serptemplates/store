@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from thinkific with our re
 product_page_url: https://store.serp.co/products/thinkific-downloader
 purchase_url: https://serp.ly/thinkific-downloader
 stripe:
-  price_id: price_1S99SP06JrOmKRCmha01JJev
+  price_id: price_1S99gE06JrOmKRCmEfjsFume
   success_url: https://store.serp.co/products/thinkific-downloader?checkout=success
   cancel_url: https://store.serp.co/products/thinkific-downloader
   metadata:

@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from whop video with our r
 product_page_url: https://store.serp.co/products/whop-video-downloader
 purchase_url: https://serp.ly/whop-video-downloader
 stripe:
-  price_id: price_1S99SU06JrOmKRCmGNIw8jXn
+  price_id: price_1S99gJ06JrOmKRCmkAYY713T
   success_url: https://store.serp.co/products/whop-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/whop-video-downloader
   metadata:

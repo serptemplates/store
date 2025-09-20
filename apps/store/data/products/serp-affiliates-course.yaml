@@ -5,7 +5,7 @@ seo_description: Download SERP Affiliates Course content for offline use with ea
 product_page_url: https://store.serp.co/products/serp-affiliates-course
 purchase_url: https://serp.ly/serp-affiliates-course
 stripe:
-  price_id: PLACEHOLDER
+  price_id: price_1S9PBR06JrOmKRCmfPIguUcu
   success_url: https://store.serp.co/products/serp-affiliates-course?checkout=success
   cancel_url: https://store.serp.co/products/serp-affiliates-course
   metadata:
@@ -33,7 +33,7 @@ keywords:
 - serp affiliates course
 pricing:
   label: One-time payment
-  price: TODO
+  price: $17.00
   original_price: ''
   note: ''
   cta_text: Get it Now

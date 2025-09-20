@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from bilibili with our rel
 product_page_url: https://store.serp.co/products/bilibili-downloader
 purchase_url: https://serp.ly/bilibili-downloader
 stripe:
-  price_id: price_1S99Rp06JrOmKRCmqpg3uKKt
+  price_id: price_1S99wj06JrOmKRCmXQNer2ho
   success_url: https://store.serp.co/products/bilibili-downloader?checkout=success
   cancel_url: https://store.serp.co/products/bilibili-downloader
   metadata:

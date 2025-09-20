@@ -6,7 +6,7 @@ seo_description: Download Sprout Video Downloader content for offline use with e
 product_page_url: https://store.serp.co/products/sprout-video-downloader
 purchase_url: https://serp.ly/sprout-video-downloader
 stripe:
-  price_id: price_1S99SK06JrOmKRCmBNooistw
+  price_id: price_1S99g906JrOmKRCmqpFh4LYc
   success_url: https://store.serp.co/products/sprout-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/sprout-video-downloader
   metadata:

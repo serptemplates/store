@@ -31,7 +31,7 @@ seo_description: 'Downloads videos from YouPorn with advanced features including
 product_page_url: https://store.serp.co/products/youporn-video-downloader
 purchase_url: https://serp.ly/youporn-video-downloader
 stripe:
-  price_id: price_1S99SX06JrOmKRCm6mwsFtlk
+  price_id: price_1RvXMm06JrOmKRCmEXZ7GsiQ
   success_url: https://store.serp.co/products/youporn-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/youporn-video-downloader
   metadata:

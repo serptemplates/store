@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from pdf with our reliable
 product_page_url: https://store.serp.co/products/pdf-downloader
 purchase_url: https://serp.ly/pdf-downloader
 stripe:
-  price_id: price_1S99SB06JrOmKRCmT9X7isbT
+  price_id: price_1S99g006JrOmKRCmVzelEW6H
   success_url: https://store.serp.co/products/pdf-downloader?checkout=success
   cancel_url: https://store.serp.co/products/pdf-downloader
   metadata:

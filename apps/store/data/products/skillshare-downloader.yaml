@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from skillshare with our r
 product_page_url: https://store.serp.co/products/skillshare-downloader
 purchase_url: https://serp.ly/skillshare-downloader
 stripe:
-  price_id: price_1S99SI06JrOmKRCmwXlbYPBq
+  price_id: price_1S99g706JrOmKRCmWGVr96N6
   success_url: https://store.serp.co/products/skillshare-downloader?checkout=success
   cancel_url: https://store.serp.co/products/skillshare-downloader
   metadata:

@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from amazon video with our
 product_page_url: https://store.serp.co/products/amazon-video-downloader
 purchase_url: https://serp.ly/amazon-video-downloader
 stripe:
-  price_id: price_1S99Ro06JrOmKRCmIymNj577
+  price_id: price_1S99wi06JrOmKRCmRppaSLjK
   success_url: https://store.serp.co/products/amazon-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/amazon-video-downloader
   metadata:

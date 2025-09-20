@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from 123movies with our re
 product_page_url: https://store.serp.co/products/123movies-downloader
 purchase_url: https://serp.ly/123movies-downloader
 stripe:
-  price_id: price_1S99Rm06JrOmKRCmy06p5kao
+  price_id: price_1S99wh06JrOmKRCmkF8J8XUh
   success_url: https://store.serp.co/products/123movies-downloader?checkout=success
   cancel_url: https://store.serp.co/products/123movies-downloader
   metadata:

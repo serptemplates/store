@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from stockvault with our r
 product_page_url: https://store.serp.co/products/stockvault-downloader
 purchase_url: https://serp.ly/stockvault-downloader
 stripe:
-  price_id: price_1S99SL06JrOmKRCm4veYsbIN
+  price_id: price_1S99g906JrOmKRCmGb7sOQ2q
   success_url: https://store.serp.co/products/stockvault-downloader?checkout=success
   cancel_url: https://store.serp.co/products/stockvault-downloader
   metadata:

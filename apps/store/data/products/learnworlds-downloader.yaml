@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from learnworlds with our 
 product_page_url: https://store.serp.co/products/learnworlds-downloader
 purchase_url: https://serp.ly/learnworlds-downloader
 stripe:
-  price_id: price_1S99S606JrOmKRCm3FCmGNwl
+  price_id: price_1S99wz06JrOmKRCmFCzqKyrO
   success_url: https://store.serp.co/products/learnworlds-downloader?checkout=success
   cancel_url: https://store.serp.co/products/learnworlds-downloader
   metadata:
