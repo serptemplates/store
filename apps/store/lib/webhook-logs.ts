@@ -94,3 +94,43 @@ export async function recordWebhookLog(input: WebhookLogRecordInput): Promise<We
 
   return result?.rows?.[0] ?? null;
 }
+
+export async function countErroredWebhookLogsSince(hours: number): Promise<number> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return 0;
+  }
+
+  const interval = Math.max(Math.floor(hours), 1);
+
+  const result = await query<{ error_count: string }>`
+    SELECT COUNT(*)::int AS error_count
+      FROM webhook_logs
+     WHERE status = 'error'
+       AND updated_at >= NOW() - (${interval}::int * INTERVAL '1 hour');
+  `;
+
+  const value = result?.rows?.[0]?.error_count;
+  return typeof value === "number" ? value : Number.parseInt(String(value ?? 0), 10) || 0;
+}
+
+export async function countPendingWebhookLogsOlderThan(minutes: number): Promise<number> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return 0;
+  }
+
+  const interval = Math.max(Math.floor(minutes), 1);
+
+  const result = await query<{ pending_count: string }>`
+    SELECT COUNT(*)::int AS pending_count
+      FROM webhook_logs
+     WHERE status = 'pending'
+       AND created_at < NOW() - (${interval}::int * INTERVAL '1 minute');
+  `;
+
+  const value = result?.rows?.[0]?.pending_count;
+  return typeof value === "number" ? value : Number.parseInt(String(value ?? 0), 10) || 0;
+}

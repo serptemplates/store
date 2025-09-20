@@ -32,6 +32,12 @@ GHL_API_BASE_URL=https://services.leadconnectorhq.com
 GHL_PAT_LOCATION=pit_xxx_replace_me
 GHL_LOCATION_ID=XM0gbS5U3qNXtUksyJ6o
 SLACK_ALERT_WEBHOOK_URL=https://hooks.slack.com/services/xxx/yyy/zzz
+MONITORING_TOKEN=choose_a_random_secret
+CHECKOUT_MONITOR_STALE_SESSION_MINUTES=15
+CHECKOUT_MONITOR_STALE_WEBHOOK_MINUTES=10
+CHECKOUT_MONITOR_WEBHOOK_LOOKBACK_HOURS=6
+CHECKOUT_MONITOR_MIN_ORDERS_LOOKBACK_HOURS=24
+CHECKOUT_MONITOR_MIN_ORDERS=1
 # Optional restricted Stripe key for read-only scripts
 # STRIPE_SECRET_KEY_RESTRICTED=rk_test_or_live_xxx_replace_me
 ```

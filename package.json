@@ -23,7 +23,8 @@
     "generate:products": "node scripts/generate-product-yamls.mjs",
     "fetch:ghl-products": "node scripts/fetch-ghl-products.mjs",
     "cleanup:stripe-products": "node scripts/cleanup-stripe-products.mjs",
-    "stripe:create-prices": "node scripts/create-stripe-prices.mjs"
+    "stripe:create-prices": "node scripts/create-stripe-prices.mjs",
+    "test:checkout": "node scripts/test-checkout-sessions.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
