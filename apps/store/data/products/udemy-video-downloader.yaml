@@ -1,0 +1,41 @@
+slug: udemy-video-downloader
+platform: Udemy
+seo_title: Udemy Video Downloader | Download Udemy Video Downloader for Offline Access
+seo_description: Download Udemy Video Downloader content for offline use with ease.
+product_page_url: https://store.serp.co/products/udemy-video-downloader
+purchase_url: https://serp.ly/udemy-video-downloader
+stripe:
+  price_id: price_1S99gH06JrOmKRCmSnepXJPa
+  success_url: https://store.serp.co/products/udemy-video-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/udemy-video-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6pwoyYNJYNSU
+name: Udemy Video Downloader
+tagline: Download Udemy Video Downloader instantly to your device.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Get quick access to Udemy Video Downloader content for offline use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- udemy video downloader
+- Downloader
+keywords:
+- udemy video downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

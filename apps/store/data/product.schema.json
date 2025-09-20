@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://serpapps.dev/schemas/lander-template-product.json",
+  "title": "Lander Template Product",
+  "description": "Content contract for SERP Apps downloader landing pages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "seo_title",
+    "seo_description",
+    "product_page_url",
+    "purchase_url",
+    "name",
+    "tagline",
+    "description"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seo_title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seo_description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_page_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "purchase_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tagline": {
+      "type": "string",
+      "minLength": 1
+    },
+    "featured_image": {
+      "type": "string",
+      "minLength": 1
+    },
+    "featured_image_gif": {
+      "type": "string",
+      "minLength": 1
+    },
+    "github_repo_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "github_repo_tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_videos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "default": []
+    },
+    "related_videos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "default": []
+    },
+    "screenshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "alt": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "review"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "default": []
+    },
+    "faqs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "question",
+          "answer"
+        ],
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1
+          },
+          "answer": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "default": []
+    },
+    "supported_operating_systems": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
+        "original_price": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "cta_text": {
+          "type": "string"
+        },
+        "cta_href": {
+          "type": "string",
+          "format": "uri"
+        },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        }
+      }
+    },
+    "stripe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "price_id",
+        "success_url",
+        "cancel_url"
+      ],
+      "properties": {
+        "price_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "success_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "cancel_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "payment",
+            "subscription"
+          ]
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        }
+      }
+    },
+    "ghl": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pipeline_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "tag_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "workflow_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "opportunity_name_template": {
+          "type": "string"
+        },
+        "contact_custom_field_ids": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "opportunity_custom_field_ids": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "pipeline_id",
+        "stage_id"
+      ]
+    }
+  }
+}

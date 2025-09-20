@@ -1,0 +1,32 @@
+name: Deploy getlooma.com
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sites/getlooma.com/**'
+      - 'packages/**'
+      - '.github/actions/deploy-site/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/deploy-getlooma.yml'
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        uses: ./.github/actions/deploy-site
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        with:
+          pkg: "@apps/getlooma.com"
+          dir: "sites/getlooma.com"
+          repo: "serpcompany/getlooma.com"
+          branch: "gh-pages"
+          cname: "getlooma.com"

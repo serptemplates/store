@@ -1,0 +1,28 @@
+{
+  "site": {
+    "name": "SERP Downloaders",
+    "domain": "https://serpdownloaders.com"
+  },
+  "navigation": {
+    "links": [
+      { "label": "Store", "href": "https://store.serp.co" },
+      { "label": "Docs", "href": "https://github.com/serpapps" }
+    ]
+  },
+  "cta": {
+    "text": "Checkout on Store",
+    "href": "https://store.serp.co"
+  },
+  "excludeSlugs": [
+    "serp-affiliates",
+    "serp-affiliates-course",
+    "seo-content-writing-mastery-course",
+    "seo-roi-calculator",
+    "learn-command-line-course",
+    "serp-blocks",
+    "serp-university-pro",
+    "learning-serp-affiliates",
+    "communities-serp-university",
+    "dream-customers-course"
+  ]
+}

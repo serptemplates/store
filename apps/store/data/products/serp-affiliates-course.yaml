@@ -1,0 +1,40 @@
+slug: serp-affiliates-course
+platform: SERP
+seo_title: SERP Affiliates Course | Download SERP Affiliates Course for Offline Access
+seo_description: Download SERP Affiliates Course content for offline use with ease.
+product_page_url: https://store.serp.co/products/serp-affiliates-course
+purchase_url: https://serp.ly/serp-affiliates-course
+stripe:
+  price_id: PLACEHOLDER
+  success_url: https://store.serp.co/products/serp-affiliates-course?checkout=success
+  cancel_url: https://store.serp.co/products/serp-affiliates-course
+  metadata:
+    source: generated
+    stripe_product_id: prod_T1QOQvjFUiX4V2
+name: SERP Affiliates Course
+tagline: Download SERP Affiliates Course instantly to your device.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Get quick access to SERP Affiliates Course content for offline use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- serp affiliates course
+keywords:
+- serp affiliates course
+pricing:
+  label: One-time payment
+  price: TODO
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

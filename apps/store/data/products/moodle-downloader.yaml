@@ -1,0 +1,44 @@
+slug: moodle-downloader
+platform: Moodle
+seo_title: Moodle Downloader | Download Moodle Downloader for Offline Access
+seo_description: Download videos, images, and content from moodle with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_page_url: https://store.serp.co/products/moodle-downloader
+purchase_url: https://serp.ly/moodle-downloader
+stripe:
+  price_id: price_1S99fx06JrOmKRCmleYZfn4W
+  success_url: https://store.serp.co/products/moodle-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/moodle-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6HjTufnmO8Ix
+name: Moodle Downloader
+tagline: Download videos, images, and content from moodle with our reliable downloader
+  tool. Fast, secure, and easy to use.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Download videos, images, and content from moodle with our reliable downloader
+  tool. Fast, secure, and easy to use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- moodle downloader
+- Downloader
+keywords:
+- moodle downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

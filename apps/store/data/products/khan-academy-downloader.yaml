@@ -1,0 +1,45 @@
+slug: khan-academy-downloader
+platform: Khan
+seo_title: Khan Academy Downloader | Download Khan Academy Downloader for Offline
+  Access
+seo_description: Download videos, images, and content from khan academy with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_page_url: https://store.serp.co/products/khan-academy-downloader
+purchase_url: https://serp.ly/khan-academy-downloader
+stripe:
+  price_id: price_1S99wx06JrOmKRCmqkFPnN9s
+  success_url: https://store.serp.co/products/khan-academy-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/khan-academy-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6HO7CKmlA65g
+name: Khan Academy Downloader
+tagline: Download videos, images, and content from khan academy with our reliable
+  downloader tool. Fast, secure, and easy to use.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Download videos, images, and content from khan academy with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- khan academy downloader
+- Downloader
+keywords:
+- khan academy downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

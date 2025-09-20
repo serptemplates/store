@@ -1,0 +1,42 @@
+slug: sprout-video-downloader
+platform: Sprout
+seo_title: Sprout Video Downloader | Download Sprout Video Downloader for Offline
+  Access
+seo_description: Download Sprout Video Downloader content for offline use with ease.
+product_page_url: https://store.serp.co/products/sprout-video-downloader
+purchase_url: https://serp.ly/sprout-video-downloader
+stripe:
+  price_id: price_1S99g906JrOmKRCmqpFh4LYc
+  success_url: https://store.serp.co/products/sprout-video-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/sprout-video-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_SqnfWNeyP5TUdt
+name: Sprout Video Downloader
+tagline: Download Sprout Video Downloader instantly to your device.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/689a90238192735459d0108c.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Get quick access to Sprout Video Downloader content for offline use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- sprout video downloader
+- Downloader
+keywords:
+- sprout video downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

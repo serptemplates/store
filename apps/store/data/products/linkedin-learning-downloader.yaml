@@ -1,0 +1,45 @@
+slug: linkedin-learning-downloader
+platform: Linkedin
+seo_title: Linkedin Learning Downloader | Download Linkedin Learning Downloader for
+  Offline Access
+seo_description: Download videos, images, and content from linkedin learning with
+  our reliable downloader tool. Fast, secure, and easy to use.
+product_page_url: https://store.serp.co/products/linkedin-learning-downloader
+purchase_url: https://serp.ly/linkedin-learning-downloader
+stripe:
+  price_id: price_1S99fw06JrOmKRCm59JPeRdR
+  success_url: https://store.serp.co/products/linkedin-learning-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/linkedin-learning-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6HSdCX0irIOM
+name: Linkedin Learning Downloader
+tagline: Download videos, images, and content from linkedin learning with our reliable
+  downloader tool. Fast, secure, and easy to use.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Download videos, images, and content from linkedin learning with our
+  reliable downloader tool. Fast, secure, and easy to use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- linkedin learning downloader
+- Downloader
+keywords:
+- linkedin learning downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

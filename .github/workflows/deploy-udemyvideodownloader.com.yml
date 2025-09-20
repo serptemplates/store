@@ -1,0 +1,32 @@
+name: Deploy udemyvideodownloader.com
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'sites/udemyvideodownloader.com/**'
+      - 'packages/**'
+      - '.github/actions/deploy-site/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/deploy-udemyvideodownloader.com.yml'
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        uses: ./.github/actions/deploy-site
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        with:
+          pkg: "@apps/udemyvideodownloader.com"
+          dir: "sites/udemyvideodownloader.com"
+          repo: "serpcompany/udemyvideodownloader.com"
+          branch: "gh-pages"
+          cname: "udemyvideodownloader.com"

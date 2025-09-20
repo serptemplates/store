@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# Pre-commit: lint and typecheck across the workspace
+# Runs even if some packages don’t define typecheck (uses --if-present)
+
+set -e
+
+echo "→ Linting..."
+pnpm -w -r lint
+
+echo "→ Typechecking..."
+pnpm -w -r --if-present typecheck
+
+echo "→ Validating lander template content..."
+pnpm --filter @apps/lander-template validate:content
+
+echo "✓ Pre-commit checks passed"

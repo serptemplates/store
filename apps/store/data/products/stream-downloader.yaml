@@ -1,0 +1,41 @@
+slug: stream-downloader
+platform: Stream
+seo_title: Stream Downloader | Download Stream Downloader for Offline Access
+seo_description: Download Stream Downloader content for offline use with ease.
+product_page_url: https://store.serp.co/products/stream-downloader
+purchase_url: https://serp.ly/stream-downloader
+stripe:
+  price_id: price_1S99gA06JrOmKRCmwsTNavsX
+  success_url: https://store.serp.co/products/stream-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/stream-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6HYumVhrKaBc
+name: Stream Downloader
+tagline: Download Stream Downloader instantly to your device.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Get quick access to Stream Downloader content for offline use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- stream downloader
+- Downloader
+keywords:
+- stream downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

@@ -1,0 +1,42 @@
+slug: wistia-video-downloader
+platform: Wistia
+seo_title: Wistia Video Downloader | Download Wistia Video Downloader for Offline
+  Access
+seo_description: Download Wistia Video Downloader content for offline use with ease.
+product_page_url: https://store.serp.co/products/wistia-video-downloader
+purchase_url: https://serp.ly/wistia-video-downloader
+stripe:
+  price_id: price_1S99gJ06JrOmKRCmN3MovrlF
+  success_url: https://store.serp.co/products/wistia-video-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/wistia-video-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_SqneqGTUexmjwU
+name: Wistia Video Downloader
+tagline: Download Wistia Video Downloader instantly to your device.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/689a90ec5cdebf4b18144b66.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Get quick access to Wistia Video Downloader content for offline use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- wistia video downloader
+- Downloader
+keywords:
+- wistia video downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

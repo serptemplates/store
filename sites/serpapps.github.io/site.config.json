@@ -1,0 +1,16 @@
+{
+  "site": {
+    "name": "SERP Apps",
+    "domain": "https://serpapps.github.io"
+  },
+  "navigation": {
+    "links": [
+      { "label": "Store", "href": "https://store.serp.co" },
+      { "label": "Downloaders", "href": "https://serpdownloaders.com" }
+    ]
+  },
+  "cta": {
+    "text": "Visit Store",
+    "href": "https://store.serp.co"
+  }
+}

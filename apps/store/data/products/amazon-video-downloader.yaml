@@ -1,0 +1,45 @@
+slug: amazon-video-downloader
+platform: Amazon
+seo_title: Amazon Video Downloader | Download Amazon Video Downloader for Offline
+  Access
+seo_description: Download videos, images, and content from amazon video with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_page_url: https://store.serp.co/products/amazon-video-downloader
+purchase_url: https://serp.ly/amazon-video-downloader
+stripe:
+  price_id: price_1S99wi06JrOmKRCmRppaSLjK
+  success_url: https://store.serp.co/products/amazon-video-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/amazon-video-downloader
+  metadata:
+    source: generated
+    stripe_product_id: prod_Sv6GpeME33OEqF
+name: Amazon Video Downloader
+tagline: Download videos, images, and content from amazon video with our reliable
+  downloader tool. Fast, secure, and easy to use.
+featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
+featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+github_repo_url: https://github.com/serpapps
+github_repo_tags: []
+features: []
+description: Download videos, images, and content from amazon video with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_videos: []
+related_videos: []
+screenshots: []
+faqs: []
+supported_operating_systems:
+- windows
+- macos
+status: draft
+categories:
+- amazon video downloader
+- Downloader
+keywords:
+- amazon video downloader
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Get it Now
+  benefits: []

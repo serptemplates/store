@@ -1,0 +1,54 @@
+{
+  "name": "emd-monorepo",
+  "private": true,
+  "workspaces": [
+    "sites/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter @apps/store dev",
+    "dev:vimeo": "pnpm --filter @apps/downloadvimeo.com dev",
+    "dev:loom": "pnpm --filter @apps/getlooma.com dev",
+    "dev:skool": "pnpm --filter @apps/skooldownloader.com dev",
+    "dev:tiktok": "pnpm --filter @apps/tiktokdownloaderapp.com dev",
+    "dev:wistia": "pnpm --filter @apps/wistiadownloader.com dev",
+    "dev:udemy": "pnpm --filter @apps/udemyvideodownloader.com dev",
+    "dev:orange": "pnpm --filter @apps/orangepornvideos.net dev",
+    "build": "pnpm -r --parallel build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "prepare": "husky",
+    "dev:stripe-webhook": "node scripts/stripe-webhook-test-server.js",
+    "sync:stripe-prices": "node scripts/sync-stripe-prices.mjs",
+    "generate:products": "node scripts/generate-product-yamls.mjs",
+    "fetch:ghl-products": "node scripts/fetch-ghl-products.mjs",
+    "cleanup:stripe-products": "node scripts/cleanup-stripe-products.mjs",
+    "stripe:create-prices": "node scripts/create-stripe-prices.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-switch": "^1.2.6",
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.5",
+    "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^11.18.2",
+    "jsdom": "^24.1.3",
+    "next-themes": "^0.3.0",
+    "react-icons": "^5.5.0",
+    "recharts": "^2.15.4",
+    "rehype-pretty-code": "^0.13.2",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "stripe": "^15.12.0",
+    "unified": "^11.0.5",
+    "vaul": "^0.9.9",
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "husky": "^9.0.0"
+  }
+}
