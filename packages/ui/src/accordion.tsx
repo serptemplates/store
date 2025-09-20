@@ -106,8 +106,8 @@ const AccordionContent = ({ className, children, ...props }: ContentProps) => {
   if (!item) return null;
   const open = item.open;
   return (
-    <div className={cn("overflow-hidden text-muted-foreground", className)} data-state={open ? "open" : "closed"} {...props}>
-      {open && <div className="px-4 pb-4 pt-0">{children}</div>}
+    <div className={cn("overflow-hidden", className)} data-state={open ? "open" : "closed"} {...props}>
+      {open && <div>{children}</div>}
     </div>
   );
 };

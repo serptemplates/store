@@ -17,14 +17,14 @@ export function FaqSection({ faqs }: FaqSectionProps) {
     <section className="border-t bg-muted/30">
       <div className="container py-20">
         <div className="mx-auto max-w-2xl">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight">FAQ</h2>
+          <h2 className="mb-12 text-center text-4xl font-bold tracking-tight">FAQ</h2>
           <Accordion type="single" collapsible className="w-full divide-y divide-border/50">
             {faqs.map((faq, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`} className="border-0 rounded-none px-0">
                 <AccordionTrigger className="px-0 font-medium hover:no-underline">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="px-0 pb-6 text-muted-foreground">
+                <AccordionContent className="px-6 text-sm">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

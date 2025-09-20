@@ -42,7 +42,7 @@ export function PostsSection({
   return (
     <section className="container py-12 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <h2 className="mb-8 text-center text-3xl font-bold tracking-tight">{heading}</h2>
+        <h2 className="mb-8 text-center text-4xl font-bold tracking-tight">{heading}</h2>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
           {posts.slice(0, 3).map((post) => (
             <a key={post.slug} href={`/blog/${post.slug}`} className="block">

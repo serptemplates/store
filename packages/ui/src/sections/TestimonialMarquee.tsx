@@ -35,7 +35,7 @@ export function TestimonialMarquee({ items = defaultItems, heading = "Testimonia
   return (
     <section className={cn("py-28", className)}>
       <div className="px-4 sm:px-6 lg:px-8">
-        <h2 className="mb-10 text-center text-4xl font-semibold tracking-tight md:text-5xl">{heading}</h2>
+        <h2 className="mb-10 text-center text-4xl font-bold tracking-tight">{heading}</h2>
       </div>
       <div className="space-y-4">
         <Marquee className="[--duration:36s]">
