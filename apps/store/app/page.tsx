@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 const heroDescription =
-  "Browse the full SERP Apps catalog of downloaders, automations, and growth tools. Each product includes instant Stripe checkout and GoHighLevel sync out of the box.";
+  "Browse the full SERP Apps catalog of downloaders, automations, and growth tools.";
 
 export default function Page() {
   const products = getAllProducts();
@@ -84,7 +84,7 @@ export default function Page() {
       <main className="container flex flex-col gap-16 py-16">
         <section className="text-center space-y-6">
           <Badge className="px-3 py-1 text-sm">SERP Apps Store</Badge>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Downloaders & Growth Tools</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Apps</h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{heroDescription}</p>
         </section>
 
