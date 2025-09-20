@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/GoogleTagManager";
 import { getSiteConfig } from "@/lib/site-config";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -33,11 +33,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <html lang="en">
-      <head>
-        <GoogleTagManager gtmId={gtmId ?? ""} />
-      </head>
       <body className={`${inter.className} antialiased`}>
-        <GoogleTagManagerNoscript gtmId={gtmId ?? ""} />
+        {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
         {children}
         <SpeedInsights />
       </body>
