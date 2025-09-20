@@ -19,7 +19,27 @@ featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/medi
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
-features: []
+features:
+- Download documents and books from Scribd
+- Support for PDFs, audiobooks, and text documents
+- Batch download user libraries and collections
+- Automatic document conversion and formatting
+- Custom organization by author and category
+- Resume interrupted downloads with recovery
+- Cross-platform application for researchers and students
+- Built-in document reader with annotation support
+- Command-line tools for academic workflow automation
+- Integration with reference management systems
+- Export document metadata and citations
+- Search functionality across document libraries
+- Privacy protection designed for academic use
+- Regular updates to maintain Scribd compatibility
+- Support for various document formats
+- Bandwidth management for large document collections
+- Backup and restore for research libraries
+- Smart categorization by subject and publication date
+- Academic workflow integration features
+- Citation generation and bibliography tools
 description: Download videos, images, and content from scribd with our reliable downloader
   tool. Fast, secure, and easy to use.
 product_videos: []

@@ -20,7 +20,27 @@ featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/medi
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
-features: []
+features:
+- Download complete Kajabi courses and coaching content
+- Extract video lessons, PDFs, and course materials
+- Maintain program structure and module organization
+- Support for community posts and member interactions
+- Automatic subtitle extraction in multiple languages
+- Batch download entire coaching programs
+- Resume interrupted downloads seamlessly
+- Command-line interface for bulk processing
+- Cross-platform application support
+- Built-in video player with coaching tools
+- Integration with business coaching platforms
+- Export student progress and engagement data
+- Search functionality across program content
+- Privacy protection with secure local storage
+- Regular updates to maintain Kajabi compatibility
+- Custom folder organization by program type
+- Backup and restore capabilities
+- Offline coaching with synchronized progress
+- Support for live session recordings
+- Smart content delivery and organization
 description: Download videos, images, and content from kajabi video with our reliable
   downloader tool. Fast, secure, and easy to use.
 product_videos: []

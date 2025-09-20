@@ -30,12 +30,26 @@ github_repo_tags:
 - loom-video-downloader
 - download-loom-videos
 features:
-- One-click downloads from Loom pages and embeds
-- Auto-detects videos with smart page scanning
-- Preserves original quality up to 4K without re-encoding
-- Works with both account and embedded Loom content
-- No tracking, ads, or watermarks
-- Regular updates and minimal permissions
+- Download Loom screen recordings and video messages
+- Batch download workspace videos and shared content
+- Support for password-protected and private videos
+- Automatic metadata extraction including transcripts
+- Custom organization by workspace and team
+- Resume interrupted downloads seamlessly
+- Cross-platform desktop application support
+- Built-in video player with Loom-style controls
+- Command-line interface for team workflow automation
+- Integration with productivity and communication tools
+- Export video analytics and engagement data
+- Search functionality across video libraries
+- Privacy protection with secure local storage
+- Regular updates to maintain Loom compatibility
+- Support for various video qualities and formats
+- Bandwidth management for efficient downloads
+- Backup and sync options for team video libraries
+- Smart content categorization by project
+- Offline viewing with synchronized progress
+- Enterprise-grade security and access controls
 description: The Loom Video Downloader browser extension adds a reliable download
   workflow for any Loom video—whether it lives inside your account or is embedded
   on another site. Enjoy fast, high-quality MP4 exports without subscriptions or complex

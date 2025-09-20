@@ -19,7 +19,27 @@ featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/medi
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
-features: []
+features:
+- Download HLS streams from M3U8 playlists efficiently
+- Support for encrypted and DRM-protected streams
+- Batch processing for multiple streams simultaneously
+- Automatic quality selection and adaptive streaming
+- Resume interrupted downloads with segment recovery
+- Cross-platform command-line and GUI applications
+- Built-in stream analysis and diagnostic tools
+- Custom output formats and container options
+- Concurrent segment downloading for faster speeds
+- Progress tracking with bandwidth monitoring
+- Integration with streaming software and tools
+- Support for live stream recording and archiving
+- Regular updates to handle protocol changes
+- Privacy protection with secure local storage
+- Advanced proxy configuration and routing
+- Metadata extraction from stream headers
+- Automatic retry mechanisms for failed segments
+- User-friendly interface with stream preview
+- Export capabilities for media servers
+- Comprehensive logging and error reporting
 description: Download videos, images, and content from m3u8 with our reliable downloader
   tool. Fast, secure, and easy to use.
 product_videos: []

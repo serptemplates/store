@@ -19,7 +19,27 @@ featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/medi
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
-features: []
+features:
+- Download premium stock photos from Stocksy
+- Support for authentic and diverse photography
+- Batch download photographer collections and searches
+- Automatic rights management and license tracking
+- Custom organization by photographer and theme
+- Resume interrupted downloads with recovery
+- Cross-platform application for creative professionals
+- Built-in photo viewer with metadata display
+- Command-line tools for creative workflow automation
+- Integration with professional design applications
+- Export photo data and licensing information
+- Advanced search across photo libraries
+- Privacy protection with secure local storage
+- Regular updates to maintain Stocksy compatibility
+- Support for high-resolution photography
+- Bandwidth management for large photo files
+- Backup and restore for photo archives
+- Smart categorization by authenticity and diversity
+- Creative project workflow integration
+- Photographer discovery and curation features
 description: Download videos, images, and content from stocksy with our reliable downloader
   tool. Fast, secure, and easy to use.
 product_videos: []
