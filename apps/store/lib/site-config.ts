@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export type SiteConfig = {
+  gtmId?: string;
   site?: {
     name?: string;
     domain?: string;

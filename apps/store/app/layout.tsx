@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/GoogleTagManager";
+import { getSiteConfig } from "@/lib/site-config";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -27,9 +29,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const { gtmId } = getSiteConfig();
+
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <head>
+        <GoogleTagManager gtmId={gtmId ?? ""} />
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <GoogleTagManagerNoscript gtmId={gtmId ?? ""} />
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
