@@ -15,8 +15,8 @@ stripe:
 name: Clientclub Downloader
 tagline: Download videos, images, and content from clientclub with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:

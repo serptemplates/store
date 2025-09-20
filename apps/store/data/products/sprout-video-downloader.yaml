@@ -14,8 +14,8 @@ stripe:
     stripe_product_id: prod_SqnfWNeyP5TUdt
 name: Sprout Video Downloader
 tagline: Download Sprout Video Downloader instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/689a90238192735459d0108c.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
@@ -42,7 +42,9 @@ features:
 description: Get quick access to Sprout Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
+- https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
 faqs:
 - question: How do I download Sprout videos?
   answer: To download Sprout videos, you can use specialized software or browser extensions

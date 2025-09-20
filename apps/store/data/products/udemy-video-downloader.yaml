@@ -13,8 +13,8 @@ stripe:
     stripe_product_id: prod_Sv6pwoyYNJYNSU
 name: Udemy Video Downloader
 tagline: Download Udemy Video Downloader instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-video-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
@@ -41,7 +41,8 @@ features:
 description: Get quick access to Udemy Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-downloader.gif
 faqs:
 - question: How can I download Udemy courses for offline viewing?
   answer: 'To download Udemy courses, you typically need: 1) An active subscription

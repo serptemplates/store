@@ -13,8 +13,8 @@ stripe:
     stripe_product_id: prod_SrFXkM8CAB2Ds8
 name: Beeg Video Downloader
 tagline: Download Beeg Video Downloader instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:

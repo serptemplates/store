@@ -24,7 +24,7 @@ name: Vimeo Video Downloader
 tagline: Download Vimeo videos conveniently and quickly to easily backup your collection
   or view and organize for offline viewing.
 featured_image: /images/vimeo-video-downloader.png
-featured_image_gif: /images/vimeo-video-downloader.gif
+featured_image_gif: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.gif
 github_repo_url: https://github.com/serpapps/vimeo-video-downloader
 github_repo_tags:
 - vimeo-downloader
@@ -78,21 +78,11 @@ related_videos:
 - https://www.youtube.com/watch?v=ZnoC6IZg4s4
 - https://www.youtube.com/watch?v=MeLNJSwCnwk
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/refs/heads/main/screenshots/vimeo-video-downloader-screenshot-1.jpg
-  alt: Vimeo Video Downloader interface showing URL input and download options
-  caption: Clean and intuitive main interface for easy video downloading
-- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/refs/heads/main/screenshots/vimeo-video-downloader-screenshot2.jpg
-  alt: Bulk download feature processing multiple Vimeo URLs
-  caption: Bulk download functionality for downloading multiple videos at once
-- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/refs/heads/main/screenshots/vimeo-video-downloader-screenshot3.jpg
-  alt: Quality selection dropdown showing 4K, 1080p, 720p options
-  caption: Choose from multiple quality options including 4K resolution
-- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/refs/heads/main/screenshots/vimeo-video-downloader-screenshot4.jpg
-  alt: Download progress bar showing real-time download status
-  caption: Real-time progress tracking with download speed and ETA
-- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/refs/heads/main/screenshots/vimeo-video-downloader-screenshot5.jpg
-  alt: Download progress bar showing real-time download status
-  caption: Real-time progress tracking with download speed and ETA
+- https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot.jpg
+- https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.png
+- https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot4.jpg
+- https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot5.jpg
+- https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot2.jpg
 reviews:
 - name: Sarah Johnson
   review: This downloader is a game-changer! I needed to backup my educational content

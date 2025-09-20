@@ -14,8 +14,8 @@ stripe:
     stripe_product_id: prod_SrFXX6huXVaXb9
 name: Xhamster Video Downloader
 tagline: Download Xhamster Video Downloader instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/68768fd8c595e174d5b7f470.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/xhamster-video-downloader/main/images/xhamster-video-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/xhamster-video-downloader/main/images/xhamster-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:

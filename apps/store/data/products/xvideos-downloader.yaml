@@ -13,8 +13,8 @@ stripe:
     stripe_product_id: prod_SrGW6pAdy73l9t
 name: XVideos Downloader
 tagline: Download XVideos Downloader instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/68768fd8c595e174d5b7f470.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:

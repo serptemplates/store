@@ -15,8 +15,8 @@ stripe:
 name: Pdf Downloader
 tagline: Download videos, images, and content from pdf with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/pdf-downloader/main/images/pdf-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/pdf-downloader/main/images/pdf-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:

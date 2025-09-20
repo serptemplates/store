@@ -15,8 +15,8 @@ stripe:
 name: Youtube Downloader
 tagline: Download videos, images, and content from youtube with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
@@ -44,7 +44,9 @@ description: Download videos, images, and content from youtube with our reliable
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.jpg
+- https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.gif
 faqs:
 - question: How do I download Youtube videos?
   answer: To download Youtube videos, you can use specialized software or browser
