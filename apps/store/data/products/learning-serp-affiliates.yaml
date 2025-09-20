@@ -7,7 +7,7 @@ seo_description: Download Learning - SERP Affiliates content for offline use wit
 product_page_url: https://store.serp.co/products/learning-serp-affiliates
 purchase_url: https://serp.ly/learning-serp-affiliates
 stripe:
-  price_id: price_1S99fv06JrOmKRCmZ5Yw78TK
+  price_id: price_1S99S606JrOmKRCmDPKTYR3F
   success_url: https://store.serp.co/products/learning-serp-affiliates?checkout=success
   cancel_url: https://store.serp.co/products/learning-serp-affiliates
   metadata:

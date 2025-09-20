@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from instagram with our re
 product_page_url: https://store.serp.co/products/instagram-downloader
 purchase_url: https://serp.ly/instagram-downloader
 stripe:
-  price_id: price_1S99wv06JrOmKRCm5BKNZ3Kj
+  price_id: price_1S99S306JrOmKRCmICWh6VJw
   success_url: https://store.serp.co/products/instagram-downloader?checkout=success
   cancel_url: https://store.serp.co/products/instagram-downloader
   metadata:

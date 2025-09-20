@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from soundgasm with our re
 product_page_url: https://store.serp.co/products/soundgasm-downloader
 purchase_url: https://serp.ly/soundgasm-downloader
 stripe:
-  price_id: price_1S99g806JrOmKRCmB103AZJL
+  price_id: price_1S99SJ06JrOmKRCmaIudUSDK
   success_url: https://store.serp.co/products/soundgasm-downloader?checkout=success
   cancel_url: https://store.serp.co/products/soundgasm-downloader
   metadata:

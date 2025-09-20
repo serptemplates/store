@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from thumbnail with our re
 product_page_url: https://store.serp.co/products/thumbnail-downloader
 purchase_url: https://serp.ly/thumbnail-downloader
 stripe:
-  price_id: price_1S99gE06JrOmKRCmHWXd57yx
+  price_id: price_1S99SQ06JrOmKRCmQbaiv16c
   success_url: https://store.serp.co/products/thumbnail-downloader?checkout=success
   cancel_url: https://store.serp.co/products/thumbnail-downloader
   metadata:

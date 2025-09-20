@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from learndash with our re
 product_page_url: https://store.serp.co/products/learndash-downloader
 purchase_url: https://serp.ly/learndash-downloader
 stripe:
-  price_id: price_1S99wy06JrOmKRCmGHe9PqqC
+  price_id: price_1S99S506JrOmKRCm1CKYaTQD
   success_url: https://store.serp.co/products/learndash-downloader?checkout=success
   cancel_url: https://store.serp.co/products/learndash-downloader
   metadata:

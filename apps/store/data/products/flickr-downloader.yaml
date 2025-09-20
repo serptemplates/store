@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from flickr with our relia
 product_page_url: https://store.serp.co/products/flickr-downloader
 purchase_url: https://serp.ly/flickr-downloader
 stripe:
-  price_id: price_1S99ws06JrOmKRCmFvK8ceNO
+  price_id: price_1S99S006JrOmKRCmCeEYBlV8
   success_url: https://store.serp.co/products/flickr-downloader?checkout=success
   cancel_url: https://store.serp.co/products/flickr-downloader
   metadata:

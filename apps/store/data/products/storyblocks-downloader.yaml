@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from storyblocks with our 
 product_page_url: https://store.serp.co/products/storyblocks-downloader
 purchase_url: https://serp.ly/storyblocks-downloader
 stripe:
-  price_id: price_1S99gA06JrOmKRCmt3y1AyVP
+  price_id: price_1S99SL06JrOmKRCme837PkGP
   success_url: https://store.serp.co/products/storyblocks-downloader?checkout=success
   cancel_url: https://store.serp.co/products/storyblocks-downloader
   metadata:

@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from rawpixel with our rel
 product_page_url: https://store.serp.co/products/rawpixel-downloader
 purchase_url: https://serp.ly/rawpixel-downloader
 stripe:
-  price_id: price_1S99g206JrOmKRCm0DpSeCzS
+  price_id: price_1S99SE06JrOmKRCmPE1cGA7N
   success_url: https://store.serp.co/products/rawpixel-downloader?checkout=success
   cancel_url: https://store.serp.co/products/rawpixel-downloader
   metadata:

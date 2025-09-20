@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from facebook video with o
 product_page_url: https://store.serp.co/products/facebook-video-downloader
 purchase_url: https://serp.ly/facebook-video-downloader
 stripe:
-  price_id: price_1S99wr06JrOmKRCmnHmBidFY
+  price_id: price_1S99Rz06JrOmKRCmXoOxhUA8
   success_url: https://store.serp.co/products/facebook-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/facebook-video-downloader
   metadata:

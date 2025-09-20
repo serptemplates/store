@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from soundcloud with our r
 product_page_url: https://store.serp.co/products/soundcloud-downloader
 purchase_url: https://serp.ly/soundcloud-downloader
 stripe:
-  price_id: price_1S99g806JrOmKRCmTl8grSWH
+  price_id: price_1S99SJ06JrOmKRCm7pghFFNc
   success_url: https://store.serp.co/products/soundcloud-downloader?checkout=success
   cancel_url: https://store.serp.co/products/soundcloud-downloader
   metadata:

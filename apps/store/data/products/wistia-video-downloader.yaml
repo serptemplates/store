@@ -6,7 +6,7 @@ seo_description: Download Wistia Video Downloader content for offline use with e
 product_page_url: https://store.serp.co/products/wistia-video-downloader
 purchase_url: https://serp.ly/wistia-video-downloader
 stripe:
-  price_id: price_1S99gJ06JrOmKRCmN3MovrlF
+  price_id: price_1S99SV06JrOmKRCmZWdnfGIT
   success_url: https://store.serp.co/products/wistia-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/wistia-video-downloader
   metadata:

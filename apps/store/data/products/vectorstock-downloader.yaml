@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from vectorstock with our 
 product_page_url: https://store.serp.co/products/vectorstock-downloader
 purchase_url: https://serp.ly/vectorstock-downloader
 stripe:
-  price_id: price_1S99gI06JrOmKRCmTvjSmEWB
+  price_id: price_1S99SU06JrOmKRCmnBqqpVHl
   success_url: https://store.serp.co/products/vectorstock-downloader?checkout=success
   cancel_url: https://store.serp.co/products/vectorstock-downloader
   metadata:

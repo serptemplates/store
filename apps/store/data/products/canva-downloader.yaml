@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from canva with our reliab
 product_page_url: https://store.serp.co/products/canva-downloader
 purchase_url: https://serp.ly/canva-downloader
 stripe:
-  price_id: price_1S99wk06JrOmKRCmiqfoFkqm
+  price_id: price_1S99Rq06JrOmKRCmQaZDJ3hS
   success_url: https://store.serp.co/products/canva-downloader?checkout=success
   cancel_url: https://store.serp.co/products/canva-downloader
   metadata:

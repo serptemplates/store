@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from creative market with 
 product_page_url: https://store.serp.co/products/creative-market-downloader
 purchase_url: https://serp.ly/creative-market-downloader
 stripe:
-  price_id: price_1S99wo06JrOmKRCm6kWvA9RF
+  price_id: price_1S99Ru06JrOmKRCmlRl5yaNp
   success_url: https://store.serp.co/products/creative-market-downloader?checkout=success
   cancel_url: https://store.serp.co/products/creative-market-downloader
   metadata:

@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from twitter video with ou
 product_page_url: https://store.serp.co/products/twitter-video-downloader
 purchase_url: https://serp.ly/twitter-video-downloader
 stripe:
-  price_id: price_1S99gH06JrOmKRCme009G5ob
+  price_id: price_1S99SS06JrOmKRCmGveoOGaD
   success_url: https://store.serp.co/products/twitter-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/twitter-video-downloader
   metadata:

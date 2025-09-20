@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from tubi with our reliabl
 product_page_url: https://store.serp.co/products/tubi-downloader
 purchase_url: https://serp.ly/tubi-downloader
 stripe:
-  price_id: price_1S99gG06JrOmKRCmmZOSX7ah
+  price_id: price_1S99SR06JrOmKRCmlzjfG7Xd
   success_url: https://store.serp.co/products/tubi-downloader?checkout=success
   cancel_url: https://store.serp.co/products/tubi-downloader
   metadata:

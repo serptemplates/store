@@ -5,7 +5,7 @@ seo_description: Download SERP University Pro content for offline use with ease.
 product_page_url: https://store.serp.co/products/serp-university-pro
 purchase_url: https://serp.ly/serp-university-pro
 stripe:
-  price_id: price_1S99g606JrOmKRCm7VXhs3e3
+  price_id: price_1S99SH06JrOmKRCmsagl09TC
   success_url: https://store.serp.co/products/serp-university-pro?checkout=success
   cancel_url: https://store.serp.co/products/serp-university-pro
   metadata:

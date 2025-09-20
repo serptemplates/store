@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from gokollab with our rel
 product_page_url: https://store.serp.co/products/gokollab-downloader
 purchase_url: https://serp.ly/gokollab-downloader
 stripe:
-  price_id: price_1S99wv06JrOmKRCmyCPZfee1
+  price_id: price_1S99S206JrOmKRCmqYGE8YzF
   success_url: https://store.serp.co/products/gokollab-downloader?checkout=success
   cancel_url: https://store.serp.co/products/gokollab-downloader
   metadata:

@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from coursera with our rel
 product_page_url: https://store.serp.co/products/coursera-downloader
 purchase_url: https://serp.ly/coursera-downloader
 stripe:
-  price_id: price_1S99wn06JrOmKRCmwkYTxZBx
+  price_id: price_1S99Ru06JrOmKRCmJZIQRt90
   success_url: https://store.serp.co/products/coursera-downloader?checkout=success
   cancel_url: https://store.serp.co/products/coursera-downloader
   metadata:

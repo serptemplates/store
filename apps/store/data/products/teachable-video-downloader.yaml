@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from teachable video with 
 product_page_url: https://store.serp.co/products/teachable-video-downloader
 purchase_url: https://serp.ly/teachable-video-downloader
 stripe:
-  price_id: price_1S99gB06JrOmKRCmO2gulXc5
+  price_id: price_1S99SM06JrOmKRCmcMQnt6f7
   success_url: https://store.serp.co/products/teachable-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/teachable-video-downloader
   metadata:

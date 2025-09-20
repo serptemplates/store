@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from redgifs with our reli
 product_page_url: https://store.serp.co/products/redgifs-downloader
 purchase_url: https://serp.ly/redgifs-downloader
 stripe:
-  price_id: price_1S99g306JrOmKRCmP9M8EStc
+  price_id: price_1S99SE06JrOmKRCmfyMlVdkc
   success_url: https://store.serp.co/products/redgifs-downloader?checkout=success
   cancel_url: https://store.serp.co/products/redgifs-downloader
   metadata:

@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from twitch video with our
 product_page_url: https://store.serp.co/products/twitch-video-downloader
 purchase_url: https://serp.ly/twitch-video-downloader
 stripe:
-  price_id: price_1S99gH06JrOmKRCm3wdakg7Q
+  price_id: price_1S99SS06JrOmKRCmEJr2M9sQ
   success_url: https://store.serp.co/products/twitch-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/twitch-video-downloader
   metadata:

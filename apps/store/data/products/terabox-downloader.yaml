@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from terabox with our reli
 product_page_url: https://store.serp.co/products/terabox-downloader
 purchase_url: https://serp.ly/terabox-downloader
 stripe:
-  price_id: price_1S99gC06JrOmKRCmY3kTiBht
+  price_id: price_1S99SO06JrOmKRCmg9vfvSod
   success_url: https://store.serp.co/products/terabox-downloader?checkout=success
   cancel_url: https://store.serp.co/products/terabox-downloader
   metadata:

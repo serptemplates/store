@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from kajabi video with our
 product_page_url: https://store.serp.co/products/kajabi-video-downloader
 purchase_url: https://serp.ly/kajabi-video-downloader
 stripe:
-  price_id: price_1S99wx06JrOmKRCmFaiTWpCK
+  price_id: price_1S99S406JrOmKRCmBcdzXB0h
   success_url: https://store.serp.co/products/kajabi-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/kajabi-video-downloader
   metadata:

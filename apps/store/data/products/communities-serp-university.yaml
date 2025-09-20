@@ -7,7 +7,7 @@ seo_description: Download Communities - SERP University content for offline use 
 product_page_url: https://store.serp.co/products/communities-serp-university
 purchase_url: https://serp.ly/communities-serp-university
 stripe:
-  price_id: price_1S99wm06JrOmKRCmOIttGU5E
+  price_id: price_1S99Rs06JrOmKRCmP7ITXxPG
   success_url: https://store.serp.co/products/communities-serp-university?checkout=success
   cancel_url: https://store.serp.co/products/communities-serp-university
   metadata:

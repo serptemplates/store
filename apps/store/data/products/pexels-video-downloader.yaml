@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from pexels video with our
 product_page_url: https://store.serp.co/products/pexels-video-downloader
 purchase_url: https://serp.ly/pexels-video-downloader
 stripe:
-  price_id: price_1S99g106JrOmKRCmnvLb6LoL
+  price_id: price_1S99SB06JrOmKRCmOrGrLXUp
   success_url: https://store.serp.co/products/pexels-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/pexels-video-downloader
   metadata:

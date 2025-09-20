@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from podia with our reliab
 product_page_url: https://store.serp.co/products/podia-downloader
 purchase_url: https://serp.ly/podia-downloader
 stripe:
-  price_id: price_1S99g206JrOmKRCmS5hDrXoG
+  price_id: price_1S99SD06JrOmKRCmk252RNFe
   success_url: https://store.serp.co/products/podia-downloader?checkout=success
   cancel_url: https://store.serp.co/products/podia-downloader
   metadata:

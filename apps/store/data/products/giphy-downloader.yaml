@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from giphy with our reliab
 product_page_url: https://store.serp.co/products/giphy-downloader
 purchase_url: https://serp.ly/giphy-downloader
 stripe:
-  price_id: price_1S99wu06JrOmKRCmq1ANhFue
+  price_id: price_1S99S106JrOmKRCmdXfb9jS6
   success_url: https://store.serp.co/products/giphy-downloader?checkout=success
   cancel_url: https://store.serp.co/products/giphy-downloader
   metadata:

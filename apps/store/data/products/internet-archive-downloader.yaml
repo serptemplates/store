@@ -7,7 +7,7 @@ seo_description: Download videos, images, and content from internet archive with
 product_page_url: https://store.serp.co/products/internet-archive-downloader
 purchase_url: https://serp.ly/internet-archive-downloader
 stripe:
-  price_id: price_1S99ww06JrOmKRCmOPtNc4AC
+  price_id: price_1S99S306JrOmKRCmt9e2zpy1
   success_url: https://store.serp.co/products/internet-archive-downloader?checkout=success
   cancel_url: https://store.serp.co/products/internet-archive-downloader
   metadata:

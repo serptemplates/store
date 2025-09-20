@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from 123rf with our reliab
 product_page_url: https://store.serp.co/products/123rf-downloader
 purchase_url: https://serp.ly/123rf-downloader
 stripe:
-  price_id: price_1S99wh06JrOmKRCmViWhNpBg
+  price_id: price_1S99Rm06JrOmKRCmtW0poTQ6
   success_url: https://store.serp.co/products/123rf-downloader?checkout=success
   cancel_url: https://store.serp.co/products/123rf-downloader
   metadata:

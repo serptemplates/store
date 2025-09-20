@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from dailymotion with our 
 product_page_url: https://store.serp.co/products/dailymotion-downloader
 purchase_url: https://serp.ly/dailymotion-downloader
 stripe:
-  price_id: price_1S99wo06JrOmKRCmtEGHbI2T
+  price_id: price_1S99Rv06JrOmKRCmWEKyv5Pn
   success_url: https://store.serp.co/products/dailymotion-downloader?checkout=success
   cancel_url: https://store.serp.co/products/dailymotion-downloader
   metadata:

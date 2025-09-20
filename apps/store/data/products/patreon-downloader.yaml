@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from patreon with our reli
 product_page_url: https://store.serp.co/products/patreon-downloader
 purchase_url: https://serp.ly/patreon-downloader
 stripe:
-  price_id: price_1S99g006JrOmKRCmQ5WBiQuN
+  price_id: price_1S99SB06JrOmKRCmqci3083A
   success_url: https://store.serp.co/products/patreon-downloader?checkout=success
   cancel_url: https://store.serp.co/products/patreon-downloader
   metadata:

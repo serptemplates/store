@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from nicovideo with our re
 product_page_url: https://store.serp.co/products/nicovideo-downloader
 purchase_url: https://serp.ly/nicovideo-downloader
 stripe:
-  price_id: price_1S99fz06JrOmKRCmxFh2vLWI
+  price_id: price_1S99SA06JrOmKRCmA0l7bmzs
   success_url: https://store.serp.co/products/nicovideo-downloader?checkout=success
   cancel_url: https://store.serp.co/products/nicovideo-downloader
   metadata:

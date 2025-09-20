@@ -6,7 +6,7 @@ seo_description: Download Learn Command Line Course content for offline use with
 product_page_url: https://store.serp.co/products/learn-command-line-course
 purchase_url: https://serp.ly/learn-command-line-course
 stripe:
-  price_id: price_1S99fu06JrOmKRCml2exhDiV
+  price_id: price_1S99S506JrOmKRCmB4Lwtrnx
   success_url: https://store.serp.co/products/learn-command-line-course?checkout=success
   cancel_url: https://store.serp.co/products/learn-command-line-course
   metadata:

@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from alamy with our reliab
 product_page_url: https://store.serp.co/products/alamy-downloader
 purchase_url: https://serp.ly/alamy-downloader
 stripe:
-  price_id: price_1S99wi06JrOmKRCmJJfdiHTB
+  price_id: price_1S99Ro06JrOmKRCmNdzX5iy7
   success_url: https://store.serp.co/products/alamy-downloader?checkout=success
   cancel_url: https://store.serp.co/products/alamy-downloader
   metadata:

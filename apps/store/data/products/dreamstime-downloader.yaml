@@ -6,7 +6,7 @@ seo_description: Download videos, images, and content from dreamstime with our r
 product_page_url: https://store.serp.co/products/dreamstime-downloader
 purchase_url: https://serp.ly/dreamstime-downloader
 stripe:
-  price_id: price_1S99wq06JrOmKRCmT1rrKjcd
+  price_id: price_1S99Rx06JrOmKRCmWKeqJdXx
   success_url: https://store.serp.co/products/dreamstime-downloader?checkout=success
   cancel_url: https://store.serp.co/products/dreamstime-downloader
   metadata:

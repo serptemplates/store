@@ -6,7 +6,7 @@ seo_description: Download TNAFlix Video Downloader content for offline use with 
 product_page_url: https://store.serp.co/products/tnaflix-video-downloader
 purchase_url: https://serp.ly/tnaflix-video-downloader
 stripe:
-  price_id: price_1S99gF06JrOmKRCmxPX1Ip5o
+  price_id: price_1S99SR06JrOmKRCmFntpBWsU
   success_url: https://store.serp.co/products/tnaflix-video-downloader?checkout=success
   cancel_url: https://store.serp.co/products/tnaflix-video-downloader
   metadata:
