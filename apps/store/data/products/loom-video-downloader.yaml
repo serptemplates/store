@@ -60,7 +60,8 @@ product_videos:
 related_videos:
 - https://www.youtube.com/watch?v=4MnyU0kPxlE
 screenshots:
-- https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.png
+- url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.png
+  alt: Loom Video Downloader screenshot
 faqs:
 - question: How do I download Loom videos?
   answer: To download Loom videos, you can use specialized software or browser extensions

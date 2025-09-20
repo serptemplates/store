@@ -46,8 +46,10 @@ description: Download videos, images, and content from snapchat video with our r
 product_videos: []
 related_videos: []
 screenshots:
-- https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.gif
-- https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.jpg
+- url: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.gif
+  alt: Snapchat Video Downloader animation
+- url: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.jpg
+  alt: Snapchat Video Downloader screenshot
 faqs:
 - question: How do I download content from Snapchat?
   answer: To download Snapchat content, you can use browser extensions, online downloaders,

@@ -25,12 +25,31 @@ function derivePlatform(product: ProductData): string {
   return titleCase(first ?? "Product");
 }
 
-function toScreenshots(screenshots: ProductData["screenshots"]): Screenshot[] | undefined {
-  if (!screenshots?.length) return undefined;
-  return screenshots.map((shot) => ({
-    src: shot.url,
-    alt: shot.alt,
-  }));
+function toScreenshots(screenshots: ProductData["screenshots"], product: ProductData): Screenshot[] | undefined {
+  // If we have actual screenshots, use them
+  if (screenshots?.length) {
+    return screenshots.map((shot) => ({
+      src: shot.url,
+      alt: shot.alt,
+    }));
+  }
+
+  // Otherwise, fall back to featured images if available
+  const fallbackImages = [];
+  if (product.featured_image) {
+    fallbackImages.push({
+      src: product.featured_image,
+      alt: `${product.name} screenshot`,
+    });
+  }
+  if (product.featured_image_gif && product.featured_image_gif !== product.featured_image) {
+    fallbackImages.push({
+      src: product.featured_image_gif,
+      alt: `${product.name} animation`,
+    });
+  }
+
+  return fallbackImages.length > 0 ? fallbackImages : undefined;
 }
 
 function toTestimonials(reviews: ProductData["reviews"]): Testimonial[] | undefined {
@@ -58,7 +77,7 @@ export function productToHomeTemplate(
   const ctaHref = product.pricing?.cta_href ?? "#pricing";
   const ctaText = product.pricing?.cta_text ?? "Checkout";
   const videoUrl = product.product_videos?.[0];
-  const screenshots = toScreenshots(product.screenshots);
+  const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
 

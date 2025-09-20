@@ -45,8 +45,10 @@ description: Download videos, images, and content from youtube with our reliable
 product_videos: []
 related_videos: []
 screenshots:
-- https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.jpg
-- https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.gif
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.jpg
+  alt: YouTube Downloader screenshot
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.gif
+  alt: YouTube Downloader animation
 faqs:
 - question: How do I download Youtube videos?
   answer: To download Youtube videos, you can use specialized software or browser
