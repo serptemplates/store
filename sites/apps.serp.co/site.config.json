@@ -17,6 +17,6 @@
     "href": "#pricing"
   },
   "blog": {
-    "enabled": false
+    "enabled": true
   }
 }
