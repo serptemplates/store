@@ -28,8 +28,8 @@ const ghlCustomFieldSchema = z.record(z.string());
 
 const ghlSchema = z
   .object({
-    pipeline_id: z.string(),
-    stage_id: z.string(),
+    pipeline_id: z.string().optional(),
+    stage_id: z.string().optional(),
     status: z.string().optional(),
     source: z.string().optional(),
     tag_ids: z.array(z.string()).optional().default([]),

@@ -3,6 +3,7 @@
   "packageManager": "pnpm@9.11.0",
   "private": true,
   "workspaces": [
+    "apps/*",
     "sites/*",
     "packages/*"
   ],

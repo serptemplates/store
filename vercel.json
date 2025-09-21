@@ -1,8 +1,11 @@
 {
+  "installCommand": "cd .. && pnpm install --frozen-lockfile",
+  "buildCommand": "cd .. && pnpm --filter @apps/store build",
+  "outputDirectory": "apps/store/.next",
   "crons": [
     {
       "path": "/api/monitoring/health?alert=1",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }

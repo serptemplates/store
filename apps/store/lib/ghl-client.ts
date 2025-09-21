@@ -199,8 +199,8 @@ export type GhlSyncConfig = {
   source?: string;
   contactCustomFieldIds?: Record<string, string>;
   opportunityCustomFieldIds?: Record<string, string>;
-  pipelineId: string;
-  stageId: string;
+  pipelineId?: string;
+  stageId?: string;
 };
 
 export type GhlSyncContext = {
@@ -264,11 +264,6 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     return null;
   }
 
-  if (!config.pipelineId || !config.stageId) {
-    logger.warn("ghl.skip_missing_pipeline", { offerId: context.offerId });
-    return null;
-  }
-
   if (!context.customerEmail) {
     logger.warn("ghl.skip_missing_email", { offerId: context.offerId });
     return null;
@@ -305,35 +300,58 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     return null;
   }
 
-  const opportunityName = renderTemplate(
-    config.opportunityNameTemplate,
-    {
+  logger.info("ghl.contact_upserted", {
+    offerId: context.offerId,
+    stripePaymentIntentId: context.stripePaymentIntentId ?? null,
+    email: context.customerEmail,
+    contactId,
+  });
+
+  const shouldCreateOpportunity = Boolean(config.pipelineId && config.stageId);
+
+  if (shouldCreateOpportunity) {
+    const opportunityName = renderTemplate(
+      config.opportunityNameTemplate,
+      {
+        ...baseContext,
+        contactFirstName: firstName,
+        contactLastName: lastName,
+      },
+      `${context.offerName} Purchase`
+    );
+
+    const opportunityCustomFields = buildCustomFieldPayload(config.opportunityCustomFieldIds, {
       ...baseContext,
-      contactFirstName: firstName,
-      contactLastName: lastName,
-    },
-    `${context.offerName} Purchase`
-  );
+      contactId,
+    });
 
-  const opportunityCustomFields = buildCustomFieldPayload(config.opportunityCustomFieldIds, {
-    ...baseContext,
-    contactId,
-  });
+    const monetaryValue = typeof context.amountTotal === "number" ? Math.max(context.amountTotal / 100, 0) : undefined;
 
-  const monetaryValue = typeof context.amountTotal === "number" ? Math.max(context.amountTotal / 100, 0) : undefined;
+    await createOpportunity({
+      contactId,
+      pipelineId: config.pipelineId!,
+      stageId: config.stageId!,
+      name: opportunityName,
+      monetaryValue,
+      currency: context.currency ?? "USD",
+      status: config.status ?? "open",
+      source: config.source ?? "Stripe Checkout",
+      tags: config.tagIds,
+      customFields: opportunityCustomFields,
+    });
 
-  await createOpportunity({
-    contactId,
-    pipelineId: config.pipelineId,
-    stageId: config.stageId,
-    name: opportunityName,
-    monetaryValue,
-    currency: context.currency ?? "USD",
-    status: config.status ?? "open",
-    source: config.source ?? "Stripe Checkout",
-    tags: config.tagIds,
-    customFields: opportunityCustomFields,
-  });
+    logger.info("ghl.opportunity_created", {
+      offerId: context.offerId,
+      contactId,
+      pipelineId: config.pipelineId,
+      stageId: config.stageId,
+    });
+  } else {
+    logger.debug("ghl.skip_opportunity_creation", {
+      offerId: context.offerId,
+      reason: "missing_pipeline_or_stage",
+    });
+  }
 
   if (config.workflowIds && config.workflowIds.length > 0) {
     for (const workflowId of config.workflowIds) {
@@ -350,5 +368,5 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     }
   }
 
-  return { contactId, opportunityCreated: true };
+  return { contactId, opportunityCreated: shouldCreateOpportunity };
 }

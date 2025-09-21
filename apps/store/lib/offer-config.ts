@@ -4,8 +4,8 @@ import { getProductData } from "@/lib/product";
 
 const ghlConfigSchema = z
   .object({
-    pipelineId: z.string(),
-    stageId: z.string(),
+    pipelineId: z.string().optional(),
+    stageId: z.string().optional(),
     status: z.string().optional(),
     source: z.string().optional(),
     tagIds: z.array(z.string()).optional(),
@@ -63,8 +63,8 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
           : undefined,
       ghl: product.ghl
         ? {
-            pipelineId: product.ghl.pipeline_id,
-            stageId: product.ghl.stage_id,
+            pipelineId: product.ghl.pipeline_id ?? undefined,
+            stageId: product.ghl.stage_id ?? undefined,
             status: product.ghl.status,
             source: product.ghl.source,
             tagIds: product.ghl.tag_ids && product.ghl.tag_ids.length > 0 ? product.ghl.tag_ids : undefined,
