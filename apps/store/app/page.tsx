@@ -134,7 +134,7 @@ function deriveCategories(product: any): string[] {
 
 const navLinks = [
   { label: "Docs", href: "https://github.com/serpapps" as const },
-  { label: "Support", href: "https://github.com/serpapps/support" as const },
+  { label: "Support", href: "https://github.com/serpapps/support" as const }
 ];
 
 const heroDescription =
@@ -241,6 +241,9 @@ export default function Page() {
         <div className="container flex flex-col gap-2 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} SERP Apps </p>
           <div className="flex gap-4">
+            <NextLink href="/blog" target="_blank" rel="noopener noreferrer" className="underline">
+              Blog
+            </NextLink>
             <NextLink href="https://github.com/serpapps/legal/blob/main/terms-conditions.md" target="_blank" rel="noopener noreferrer" className="underline">
               Terms & Conditions
             </NextLink>

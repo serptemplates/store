@@ -5,6 +5,7 @@ import type { MetadataRoute } from "next";
 
 import { getProductSlugs } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
+import { getAllPosts } from "@/lib/blog";
 
 export const runtime = "nodejs";
 
@@ -48,8 +49,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Add product pages
   const productSlugs = getProductSlugs();
-
   productSlugs.forEach((slug) => {
     const productFilePath = path.join(productsDir, `${slug}.yaml`);
     const lastModified = readLastModified(productFilePath) ?? now;
@@ -59,6 +60,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "weekly",
       priority: 0.7,
+    });
+  });
+
+  // Add blog index page
+  entries.push({
+    url: `${baseUrl}/blog`,
+    lastModified: now,
+    changeFrequency: "daily",
+    priority: 0.8,
+  });
+
+  // Add individual blog posts
+  const blogPosts = getAllPosts();
+  blogPosts.forEach((post) => {
+    entries.push({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.date),
+      changeFrequency: "monthly",
+      priority: 0.6,
     });
   });
 

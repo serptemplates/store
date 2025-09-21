@@ -51,3 +51,16 @@ next-env.d.ts
 
 .next
 **/out/
+.venv
+.codex
+out
+dist
+*.vsix
+CLAUDE.md
+.git
+*.log
+*.tmp
+__pycache__
+*.pyc
+.env.local
+.github
