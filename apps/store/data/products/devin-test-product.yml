@@ -1,0 +1,11 @@
+slug: devin-test-product            # this is the slug the API expects
+seo_title: Devin Test Product
+seo_description: Short description
+product_page_url: https://apps.serp.co/products/devin-test-product
+purchase_url: https://apps.serp.co/products/devin-test-product
+name: Devin Test Product
+tagline: One-dollar live test
+stripe:
+  price_id: price_1S9dCY06JrOmKRCmhpwhj8le
+  success_url: https://apps.serp.co/products/devin-test-product?checkout=success
+  cancel_url: https://apps.serp.co/products/devin-test-product
