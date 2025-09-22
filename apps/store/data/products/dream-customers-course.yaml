@@ -1,8 +1,8 @@
 slug: dream-customers-course
 platform: Dream
 seo_title: Dream Customers Course | Download Dream Customers Course for Offline Access
-seo_description: How to Craft the Perfect Buyer Persona & Sell More Products At Higher
-  Prices With Ease
+seo_description: How to Craft the Perfect Buyer Persona & Sell More Products At
+  Higher Prices With Ease
 product_page_url: https://store.serp.co/products/dream-customers-course
 purchase_url: https://serp.ly/dream-customers-course
 stripe:
@@ -13,31 +13,34 @@ stripe:
     source: generated
     stripe_product_id: prod_Sj0wicy3xxPYCH
 name: Dream Customers Course
-tagline: How to Craft the Perfect Buyer Persona & Sell More Products At Higher Prices
-  With Ease
+tagline: How to Craft the Perfect Buyer Persona & Sell More Products At Higher
+  Prices With Ease
 featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/687f4846bf6969d3fd138546.jpeg
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features: []
-description: How to Craft the Perfect Buyer Persona & Sell More Products At Higher
-  Prices With Ease
+description: How to Craft the Perfect Buyer Persona & Sell More Products At
+  Higher Prices With Ease
 product_videos: []
 related_videos: []
 screenshots: []
 faqs: []
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - macos
 status: draft
 categories:
-- dream customers course
+  - dream customers course
 keywords:
-- dream customers course
+  - dream customers course
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: ''
+  original_price: ""
+  note: ""
   cta_text: Get it Now
   benefits: []
+ghl:
+  pipeline_id: GYbj73q9z3SGihxNlOne
+  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb

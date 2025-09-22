@@ -24,17 +24,20 @@ related_videos: []
 screenshots: []
 faqs: []
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - macos
 status: draft
 categories:
-- serp affiliates course
+  - serp affiliates course
 keywords:
-- serp affiliates course
+  - serp affiliates course
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: ''
+  original_price: ""
+  note: ""
   cta_text: Get it Now
   benefits: []
+ghl:
+  pipeline_id: GYbj73q9z3SGihxNlOne
+  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb

@@ -1,7 +1,7 @@
 slug: learn-command-line-course
 platform: Learn
-seo_title: Learn Command Line Course | Download Learn Command Line Course for Offline
-  Access
+seo_title: Learn Command Line Course | Download Learn Command Line Course for
+  Offline Access
 seo_description: Download Learn Command Line Course content for offline use with ease.
 product_page_url: https://store.serp.co/products/learn-command-line-course
 purchase_url: https://serp.ly/learn-command-line-course
@@ -25,17 +25,20 @@ related_videos: []
 screenshots: []
 faqs: []
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - macos
 status: draft
 categories:
-- learn command line course
+  - learn command line course
 keywords:
-- learn command line course
+  - learn command line course
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: ''
+  original_price: ""
+  note: ""
   cta_text: Get it Now
   benefits: []
+ghl:
+  pipeline_id: GYbj73q9z3SGihxNlOne
+  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb

@@ -1,9 +1,8 @@
 slug: seo-content-writing-mastery-course
 platform: SEO
-seo_title: SEO Content Writing Mastery Course | Download SEO Content Writing Mastery
-  Course for Offline Access
-seo_description: Download SEO Content Writing Mastery Course content for offline use
-  with ease.
+seo_title: SEO Content Writing Mastery Course | Download SEO Content Writing
+  Mastery Course for Offline Access
+seo_description: Download SEO Content Writing Mastery Course content for offline use with ease.
 product_page_url: https://store.serp.co/products/seo-content-writing-mastery-course
 purchase_url: https://serp.ly/seo-content-writing-mastery-course
 stripe:
@@ -20,24 +19,26 @@ featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features: []
-description: Get quick access to SEO Content Writing Mastery Course content for offline
-  use.
+description: Get quick access to SEO Content Writing Mastery Course content for offline use.
 product_videos: []
 related_videos: []
 screenshots: []
 faqs: []
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - macos
 status: draft
 categories:
-- seo content writing mastery course
+  - seo content writing mastery course
 keywords:
-- seo content writing mastery course
+  - seo content writing mastery course
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: ''
+  original_price: ""
+  note: ""
   cta_text: Get it Now
   benefits: []
+ghl:
+  pipeline_id: GYbj73q9z3SGihxNlOne
+  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
