@@ -1,24 +1,26 @@
 slug: serp-blocks
 platform: SERP
 seo_title: SERP Blocks | Download SERP Blocks for Offline Access
-seo_description: "SERP UI (originally SERP Blocks) is a component & template library\
-  \ for building great looking high-performing websites & apps quickly and easily.It's\
-  \ built on ShadcnUI & TailwindCSS, with over 1500+ pre-made components, patterns,\
-  \ blocks, sections & full themes that work with a variety of JavaScript libraries\
-  \ and frameworks with more on the way, including: NextJS, React, Vue, Nuxt, Astro,\
-  \ Vanilla JS & Svelte.Get it free here: https://serp.ly/serp-blocksA powerful component\
-  \ library of 1000+ meticulously crafted, theme-ready UI components, blocks & templates\
-  \ built on Shadcn UI.Designed to help you build stunning interfaces faster than\
-  \ ever. Whether you're a developer, designer, or product builder, this is for you!\U0001F381\
-  \ WHAT\u2019S INSIDE?- 1000+ Blocks: A massive collection of UI components, with\
-  \ 86 FREE blocks to get you started.- Built for Shadcn UI & Tailwind: Optimized\
-  \ for seamless integration with Next.js.- Dark & Light Mode: Every block is designed\
-  \ to work flawlessly in both modes.- Theme Switcher: Customize colors and styles\
-  \ effortlessly.Coming Soon: Support for React, Vue, and vanilla HTML/CSS/JS.\U0001F64B\
-  \ WHO\u2019S IT FOR?- Developers looking to speed up their workflow with pre-built,\
-  \ customizable components.- Designers who want to prototype or build production-ready\
-  \ interfaces.- Teams working on Next.js projects and want a consistent, themeable\
-  \ design system.Get it free here: https://serp.ly/serp-blocks"
+seo_description: "SERP UI (originally SERP Blocks) is a component & template
+  library for building great looking high-performing websites & apps quickly and
+  easily.It's built on ShadcnUI & TailwindCSS, with over 1500+ pre-made
+  components, patterns, blocks, sections & full themes that work with a variety
+  of JavaScript libraries and frameworks with more on the way, including:
+  NextJS, React, Vue, Nuxt, Astro, Vanilla JS & Svelte.Get it free here:
+  https://serp.ly/serp-blocksA powerful component library of 1000+ meticulously
+  crafted, theme-ready UI components, blocks & templates built on Shadcn
+  UI.Designed to help you build stunning interfaces faster than ever. Whether
+  you're a developer, designer, or product builder, this is for you!🎁 WHAT’S
+  INSIDE?- 1000+ Blocks: A massive collection of UI components, with 86 FREE
+  blocks to get you started.- Built for Shadcn UI & Tailwind: Optimized for
+  seamless integration with Next.js.- Dark & Light Mode: Every block is designed
+  to work flawlessly in both modes.- Theme Switcher: Customize colors and styles
+  effortlessly.Coming Soon: Support for React, Vue, and vanilla HTML/CSS/JS.🙋
+  WHO’S IT FOR?- Developers looking to speed up their workflow with pre-built,
+  customizable components.- Designers who want to prototype or build
+  production-ready interfaces.- Teams working on Next.js projects and want a
+  consistent, themeable design system.Get it free here:
+  https://serp.ly/serp-blocks"
 product_page_url: https://store.serp.co/products/serp-blocks
 purchase_url: https://serp.ly/serp-blocks
 stripe:
@@ -29,47 +31,52 @@ stripe:
     source: generated
     stripe_product_id: prod_SjPCSUurdaNWCy
 name: SERP Blocks
-tagline: SERP UI (originally SERP Blocks) is a component & template library for building
-  great looking high-performing websites & apps quickly and ea
+tagline: SERP UI (originally SERP Blocks) is a component & template library for
+  building great looking high-performing websites & apps quickly and ea
 featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/6880843d9a702e19460e899b.png
 featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features: []
-description: "SERP UI (originally SERP Blocks) is a component & template library for\
-  \ building great looking high-performing websites & apps quickly and easily.It's\
-  \ built on ShadcnUI & TailwindCSS, with over 1500+ pre-made components, patterns,\
-  \ blocks, sections & full themes that work with a variety of JavaScript libraries\
-  \ and frameworks with more on the way, including: NextJS, React, Vue, Nuxt, Astro,\
-  \ Vanilla JS & Svelte.Get it free here: https://serp.ly/serp-blocksA powerful component\
-  \ library of 1000+ meticulously crafted, theme-ready UI components, blocks & templates\
-  \ built on Shadcn UI.Designed to help you build stunning interfaces faster than\
-  \ ever. Whether you're a developer, designer, or product builder, this is for you!\U0001F381\
-  \ WHAT\u2019S INSIDE?- 1000+ Blocks: A massive collection of UI components, with\
-  \ 86 FREE blocks to get you started.- Built for Shadcn UI & Tailwind: Optimized\
-  \ for seamless integration with Next.js.- Dark & Light Mode: Every block is designed\
-  \ to work flawlessly in both modes.- Theme Switcher: Customize colors and styles\
-  \ effortlessly.Coming Soon: Support for React, Vue, and vanilla HTML/CSS/JS.\U0001F64B\
-  \ WHO\u2019S IT FOR?- Developers looking to speed up their workflow with pre-built,\
-  \ customizable components.- Designers who want to prototype or build production-ready\
-  \ interfaces.- Teams working on Next.js projects and want a consistent, themeable\
-  \ design system.Get it free here: https://serp.ly/serp-blocks"
+description: "SERP UI (originally SERP Blocks) is a component & template library
+  for building great looking high-performing websites & apps quickly and
+  easily.It's built on ShadcnUI & TailwindCSS, with over 1500+ pre-made
+  components, patterns, blocks, sections & full themes that work with a variety
+  of JavaScript libraries and frameworks with more on the way, including:
+  NextJS, React, Vue, Nuxt, Astro, Vanilla JS & Svelte.Get it free here:
+  https://serp.ly/serp-blocksA powerful component library of 1000+ meticulously
+  crafted, theme-ready UI components, blocks & templates built on Shadcn
+  UI.Designed to help you build stunning interfaces faster than ever. Whether
+  you're a developer, designer, or product builder, this is for you!🎁 WHAT’S
+  INSIDE?- 1000+ Blocks: A massive collection of UI components, with 86 FREE
+  blocks to get you started.- Built for Shadcn UI & Tailwind: Optimized for
+  seamless integration with Next.js.- Dark & Light Mode: Every block is designed
+  to work flawlessly in both modes.- Theme Switcher: Customize colors and styles
+  effortlessly.Coming Soon: Support for React, Vue, and vanilla HTML/CSS/JS.🙋
+  WHO’S IT FOR?- Developers looking to speed up their workflow with pre-built,
+  customizable components.- Designers who want to prototype or build
+  production-ready interfaces.- Teams working on Next.js projects and want a
+  consistent, themeable design system.Get it free here:
+  https://serp.ly/serp-blocks"
 product_videos: []
 related_videos: []
 screenshots: []
 faqs: []
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - macos
 status: draft
 categories:
-- serp blocks
+  - serp blocks
 keywords:
-- serp blocks
+  - serp blocks
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: ''
+  original_price: ""
+  note: ""
   cta_text: Get it Now
   benefits: []
+ghl:
+  pipeline_id: GYbj73q9z3SGihxNlOne
+  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
