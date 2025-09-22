@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import NextLink from "next/link";
 import { HomeTemplate } from "@repo/templates";
 import type { ProductData } from "@/lib/product-schema";
@@ -20,6 +20,14 @@ export type ClientHomeProps = {
 export default function ClientHome({ product, posts, siteConfig }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+
+  const affiliateId = useMemo(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+    const params = new URLSearchParams(window.location.search);
+    return params.get("aff") ?? params.get("affiliate") ?? undefined;
+  }, []);
 
   const showPosts = siteConfig.blog?.enabled !== false;
 
@@ -45,6 +53,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
         },
         body: JSON.stringify({
           offerId: product.slug,
+          affiliateId,
           metadata: {
             landerId: product.slug,
           },
@@ -69,7 +78,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     } finally {
       setIsCheckoutLoading(false);
     }
-  }, [isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
+  }, [affiliateId, isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
   const Navbar = () => (
     <SiteNavbar

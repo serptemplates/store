@@ -12,6 +12,7 @@ const requestSchema = z.object({
   quantity: z.number().int().min(1).max(10).optional().default(1),
   mode: z.enum(["payment", "subscription"]).optional(),
   clientReferenceId: z.string().optional(),
+  affiliateId: z.string().min(1).optional(),
   metadata: z.record(z.string()).optional(),
   customer: z
     .object({
@@ -65,6 +66,10 @@ export async function POST(request: NextRequest) {
 
   if (parsedBody.clientReferenceId) {
     sessionMetadata.clientReferenceId = parsedBody.clientReferenceId;
+  }
+
+  if (parsedBody.affiliateId) {
+    sessionMetadata.affiliateId = parsedBody.affiliateId;
   }
 
   try {

@@ -31,6 +31,7 @@ SITE_CONFIG_PATH=../sites/apps.serp.co/site.config.json
 GHL_API_BASE_URL=https://services.leadconnectorhq.com
 GHL_PAT_LOCATION=pit_xxx_replace_me
 GHL_LOCATION_ID=XM0gbS5U3qNXtUksyJ6o
+GHL_AFFILIATE_FIELD_ID=contact_field_id_for_affiliate_tracking
 SLACK_ALERT_WEBHOOK_URL=https://hooks.slack.com/services/xxx/yyy/zzz
 MONITORING_TOKEN=choose_a_random_secret
 CHECKOUT_MONITOR_STALE_SESSION_MINUTES=15

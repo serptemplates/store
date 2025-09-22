@@ -269,17 +269,24 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     return null;
   }
 
+  const affiliateIdValue = context.metadata?.affiliateId ?? undefined;
   const { firstName, lastName } = splitName(context.customerName);
   const baseContext: Record<string, unknown> = {
     ...context,
     firstName,
     lastName,
+    affiliateId: affiliateIdValue,
     amountDecimal: context.amountTotal != null ? context.amountTotal / 100 : undefined,
   };
 
   const contactCustomFields = buildCustomFieldPayload(config.contactCustomFieldIds, {
     ...baseContext,
   });
+
+  const affiliateFieldId = process.env.GHL_AFFILIATE_FIELD_ID;
+  if (affiliateFieldId && affiliateIdValue) {
+    contactCustomFields.push({ id: affiliateFieldId, value: affiliateIdValue });
+  }
 
   const contactResult = await upsertContact({
     email: context.customerEmail,
