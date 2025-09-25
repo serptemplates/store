@@ -21,7 +21,7 @@ ghl:
   opportunity_name_template: "{{offerName}} • {{customerEmail}}"
 name: Vimeo Video Downloader
 tagline: Download Vimeo videos conveniently and quickly to easily backup your collection or view and organize for offline viewing.
-featured_image: /images/vimeo-video-downloader.png
+featured_image: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.png
 featured_image_gif: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.gif
 github_repo_url: https://github.com/serpapps/vimeo-video-downloader
 github_repo_tags:
@@ -71,16 +71,27 @@ related_videos:
   - https://www.youtube.com/watch?v=ZnoC6IZg4s4
   - https://www.youtube.com/watch?v=MeLNJSwCnwk
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot.jpg
-    alt: Vimeo Video Downloader screenshot
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot-1.jpg
+    alt: Vimeo Video Downloader main interface
+    caption: Main download interface with quality options
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot2.jpg
+    alt: Vimeo Video Downloader batch mode
+    caption: Batch download multiple videos at once
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot3.jpg
+    alt: Vimeo Video Downloader settings
+    caption: Customizable download settings and preferences
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot4.jpg
+    alt: Vimeo Video Downloader progress tracking
+    caption: Real-time download progress monitoring
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot5.jpg
+    alt: Vimeo Video Downloader library view
+    caption: Organized library of downloaded videos
   - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.png
-    alt: Vimeo Video Downloader screenshot
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot4.jpg
-    alt: Vimeo Video Downloader screenshot
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot5.jpg
-    alt: Vimeo Video Downloader screenshot
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot2.jpg
-    alt: Vimeo Video Downloader screenshot
+    alt: Vimeo Video Downloader logo
+    caption: Professional Vimeo downloading solution
+  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot.jpg
+    alt: Vimeo Video Downloader in action
+    caption: Downloading high-quality Vimeo content
 reviews:
   - name: Sarah Johnson
     review: This downloader is a game-changer! I needed to backup my educational content from Vimeo and this tool made it incredibly easy. The bulk download feature saved me hours of work.

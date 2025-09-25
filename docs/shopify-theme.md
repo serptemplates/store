@@ -20,11 +20,15 @@ This provisions the following definitions under **Settings → Custom data → P
 | `serp` | `ghl_config` | `json` | Admin only | Go High Level pipeline / workflow config. |
 | `serp` | `stripe_config` | `json` | Admin only | Historical Stripe metadata for reference. |
 | `serp` | `feature_list` | `list.single_line_text_field` | Storefront | Feature bullets rendered on the page. |
+| `serp` | `features_richtext` | `rich_text_field` | Storefront | Preformatted HTML list of features. |
 | `serp` | `testimonials` | `json` | Storefront | Testimonials array for the reviews section. |
+| `serp` | `testimonials_richtext` | `rich_text_field` | Storefront | Testimonials formatted for a Rich text block. |
 | `serp` | `faqs` | `json` | Storefront | FAQ entries for accordion blocks. |
+| `serp` | `faq_richtext` | `rich_text_field` | Storefront | FAQ markup using `<details>` and `<summary>`. |
 | `serp` | `pricing_label` | `single_line_text_field` | Storefront | Heading above the pricing card (e.g. “One-time payment”). |
 | `serp` | `pricing_note` | `single_line_text_field` | Storefront | Subtext beneath the pricing card. |
 | `serp` | `pricing_benefits` | `list.single_line_text_field` | Storefront | Pricing plan bullet points. |
+| `serp` | `pricing_benefits_richtext` | `rich_text_field` | Storefront | HTML list of pricing benefits. |
 
 The product sync script automatically populates these fields from the YAML catalog. You can confirm values on any product detail page inside Shopify Admin.
 
@@ -79,6 +83,33 @@ Create a new section (e.g. `sections/serp-product-details.liquid`) with the foll
       </div>
 
       <div>
+        {% if product.media.size > 0 %}
+          <media-gallery
+            class="serp-gallery"
+            role="region"
+            aria-label="Product media gallery"
+            data-desktop-layout="stacked"
+          >
+            <div class="media-gallery__viewer"
+              data-media-id="{{ product.selected_or_first_available_variant.featured_media.id }}"
+            >
+              {% render 'product-media', media: product.selected_or_first_available_variant.featured_media, loop: true %}
+            </div>
+
+            <div class="media-gallery__thumbnails">
+              {% for media in product.media %}
+                <button
+                  class="media-gallery__thumbnail"
+                  data-target="{{ media.id }}"
+                  type="button"
+                >
+                  {% render 'product-thumbnail', media: media %}
+                </button>
+              {% endfor %}
+            </div>
+          </media-gallery>
+        {% endif %}
+
         {% if testimonials.size > 0 %}
           <h3>Customer reviews</h3>
           <div class="serp-testimonials">
@@ -126,7 +157,16 @@ Add CSS in your theme (e.g. `assets/base.css`) to style `.serp-*` classes or reu
 - When you design the navigation, mirror the collections created by the sync script (`Course Platforms`, `Video Platforms`, etc.) to drive discovery.
 - Keep Shopify Payments in **test mode** on the dev store; switch to live credentials when you migrate to `store-serp.myshopify.com`.
 
-With metafields and sections in place, you can proceed to hook up Shopify webhooks → Go High Level (Task 4) and prepare the rollout plan (Task 5).
+With metafields ready, you can wire Dawn’s default blocks without editing code:
+
+1. **Add feature and benefit lists** – in the product template, add a **Rich text** block and choose the dynamic source `serp.features_richtext`. Add another Rich text block bound to `serp.pricing_benefits_richtext`.
+2. **Testimonials** – add a Rich text block and bind it to `serp.testimonials_richtext`.
+3. **FAQs** – add a Rich text block (or Custom liquid block) and bind it to `serp.faq_richtext`. The HTML uses native `<details>` tags so each question behaves like a drop-down without any custom CSS.
+4. **Pricing label / note** – use Dawn’s existing “Text” or “Collapsible tab” blocks and bind to `serp.pricing_label` / `serp.pricing_note` as needed.
+
+No CSS tweaks are required—everything can be managed through the theme editor using dynamic sources.
+
+With metafields and theme blocks in place, you can proceed to hook up Shopify webhooks → Go High Level (Task 4) and prepare the rollout plan (Task 5).
 
 ## Shopify collections
 

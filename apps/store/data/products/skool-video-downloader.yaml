@@ -21,8 +21,8 @@ ghl:
   opportunity_name_template: "{{offerName}} • {{customerEmail}}"
 name: Skool Video Downloader
 tagline: Add a download button to Skool classrooms and archive every lesson for offline access.
-featured_image: https://raw.githubusercontent.com/user-attachments/assets/0b750532-0dd0-4768-a8c4-489b4e92c1c6
-featured_image_gif: https://raw.githubusercontent.com/user-attachments/assets/0b750532-0dd0-4768-a8c4-489b4e92c1c6
+featured_image: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.png
+featured_image_gif: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.gif
 github_repo_url: https://github.com/serpapps/skool-downloader
 github_repo_tags:
   - skool-downloader
@@ -56,9 +56,15 @@ product_videos:
 related_videos:
   - https://www.youtube.com/watch?v=J9eetd89HZk
 screenshots:
-  - url: https://raw.githubusercontent.com/user-attachments/assets/0b750532-0dd0-4768-a8c4-489b4e92c1c6
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
     alt: Skool Video Downloader extension interface
     caption: Floating download controls injected on Skool lesson pages
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%202.png
+    alt: Skool Video Downloader screenshot
+    caption: Downloading Skool videos with ease
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%203.png
+    alt: Skool Video Downloader interface
+    caption: Simple and intuitive download interface
 faqs:
   - question: How do I download Skool videos?
     answer: To download Skool videos, you can use specialized software or browser extensions designed for Skool. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.

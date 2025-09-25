@@ -16,6 +16,7 @@ const {
   updateProductRest,
   updateVariantRest,
   setProductMetafields,
+  replaceProductImages,
   getProductByHandle,
   ensureCollection,
   getStoreDomain,
@@ -83,6 +84,48 @@ function dedupe(values) {
   return result;
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function listToRichText(items) {
+  if (!items || items.length === 0) return null;
+  const listItems = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  return `<ul>${listItems}</ul>`;
+}
+
+function pricingNoteRichText(note) {
+  if (!note) return null;
+  return `<p>${escapeHtml(note)}</p>`;
+}
+
+function testimonialsToRichText(testimonials) {
+  if (!testimonials || testimonials.length === 0) return null;
+  return testimonials
+    .map((testimonial) => {
+      const quote = escapeHtml(testimonial.review ?? "");
+      const name = escapeHtml(testimonial.name ?? "Customer");
+      return `<blockquote><p>${quote}</p><cite>— ${name}</cite></blockquote>`;
+    })
+    .join("");
+}
+
+function faqsToRichText(faqs) {
+  if (!faqs || faqs.length === 0) return null;
+  return faqs
+    .map((faq) => {
+      const question = escapeHtml(faq.question ?? "Question");
+      const answer = escapeHtml(faq.answer ?? "");
+      return `<details><summary>${question}</summary><p>${answer}</p></details>`;
+    })
+    .join("");
+}
+
 function pruneUndefined(object) {
   return Object.fromEntries(Object.entries(object).filter(([, value]) => value !== undefined && value !== null && value !== ""));
 }
@@ -109,12 +152,22 @@ function mapProductToShopifyPayload(product) {
     : product?.shopify_collections
       ? [product.shopify_collections]
       : [];
+  const images = Array.isArray(product?.screenshots)
+    ? product.screenshots
+    : product?.screenshots
+      ? [product.screenshots]
+      : [];
   const tags = dedupe([
     product.platform,
     ...(product.categories ?? []),
     ...(product.keywords ?? []),
     ...shopifyCollections,
   ]);
+
+  const featuresRich = listToRichText(featureItems);
+  const testimonialsRich = testimonialsToRichText(testimonialItems);
+  const faqsRich = faqsToRichText(faqItems);
+  const pricingBenefitsRich = listToRichText(pricingBenefitsList);
 
   const metafields = [
     {
@@ -155,6 +208,54 @@ function mapProductToShopifyPayload(product) {
           value: JSON.stringify(product.stripe),
         }
       : null,
+    featureItems.length > 0
+      ? {
+          namespace: "serp",
+          key: "feature_list",
+          type: "list.single_line_text_field",
+          value: JSON.stringify(featureItems),
+        }
+      : null,
+    featuresRich
+      ? {
+          namespace: "serp",
+          key: "features_richtext",
+          type: "rich_text_field",
+          value: featuresRich,
+        }
+      : null,
+    testimonialItems.length > 0
+      ? {
+          namespace: "serp",
+          key: "testimonials",
+          type: "json",
+          value: JSON.stringify(testimonialItems),
+        }
+      : null,
+    testimonialsRich
+      ? {
+          namespace: "serp",
+          key: "testimonials_richtext",
+          type: "rich_text_field",
+          value: testimonialsRich,
+        }
+      : null,
+    faqItems.length > 0
+      ? {
+          namespace: "serp",
+          key: "faqs",
+          type: "json",
+          value: JSON.stringify(faqItems),
+        }
+      : null,
+    faqsRich
+      ? {
+          namespace: "serp",
+          key: "faq_richtext",
+          type: "rich_text_field",
+          value: faqsRich,
+        }
+      : null,
     product.pricing?.label && String(product.pricing.label).trim().length > 0
       ? {
           namespace: "serp",
@@ -171,36 +272,20 @@ function mapProductToShopifyPayload(product) {
           value: String(product.pricing.note).trim(),
         }
       : null,
-    product.pricing?.benefits && product.pricing.benefits.length > 0
+    pricingBenefitsList.length > 0
       ? {
           namespace: "serp",
           key: "pricing_benefits",
           type: "list.single_line_text_field",
-          value: JSON.stringify(product.pricing.benefits),
+          value: JSON.stringify(pricingBenefitsList),
         }
       : null,
-    product.features && product.features.length > 0
+    pricingBenefitsRich
       ? {
           namespace: "serp",
-          key: "feature_list",
-          type: "list.single_line_text_field",
-          value: JSON.stringify(product.features),
-        }
-      : null,
-    product.reviews && product.reviews.length > 0
-      ? {
-          namespace: "serp",
-          key: "testimonials",
-          type: "json",
-          value: JSON.stringify(product.reviews),
-        }
-      : null,
-    product.faqs && product.faqs.length > 0
-      ? {
-          namespace: "serp",
-          key: "faqs",
-          type: "json",
-          value: JSON.stringify(product.faqs),
+          key: "pricing_benefits_richtext",
+          type: "rich_text_field",
+          value: pricingBenefitsRich,
         }
       : null,
   ].filter(Boolean);
@@ -245,11 +330,12 @@ function mapProductToShopifyPayload(product) {
     updatePayload: baseProduct,
     variantPayload,
     metafields,
+    images,
   };
 }
 
 async function syncProduct(product) {
-  const { createPayload, updatePayload, variantPayload, metafields } = mapProductToShopifyPayload(product);
+  const { createPayload, updatePayload, variantPayload, metafields, images } = mapProductToShopifyPayload(product);
   const existing = await getProductByHandle(product.slug);
 
   if (!existing) {
@@ -263,6 +349,10 @@ async function syncProduct(product) {
 
     if (metafields.length > 0) {
       await setProductMetafields(created.admin_graphql_api_id, metafields);
+    }
+
+    if (images.length > 0) {
+      await replaceProductImages(created.id, images.map((image) => ({ src: image.src ?? image.url ?? image, alt: image.alt })));
     }
 
     return { slug: product.slug, action: "created" };
@@ -289,6 +379,10 @@ async function syncProduct(product) {
 
   if (metafields.length > 0) {
     await setProductMetafields(existing.id, metafields);
+  }
+
+  if (images.length > 0) {
+    await replaceProductImages(productId, images.map((image) => ({ src: image.src ?? image.url ?? image, alt: image.alt })));
   }
 
   return { slug: product.slug, action: "updated" };

@@ -85,6 +85,18 @@ const definitions = [
     },
   },
   {
+    name: "Features (Rich Text)",
+    namespace: "serp",
+    key: "features_richtext",
+    type: "rich_text_field",
+    description: "HTML list of features for use with Rich text blocks.",
+    ownerType: "PRODUCT",
+    access: {
+      admin: true,
+      storefront: true,
+    },
+  },
+  {
     name: "Testimonials JSON",
     namespace: "serp",
     key: "testimonials",
@@ -97,11 +109,35 @@ const definitions = [
     },
   },
   {
+    name: "Testimonials (Rich Text)",
+    namespace: "serp",
+    key: "testimonials_richtext",
+    type: "rich_text_field",
+    description: "HTML formatted testimonials for Rich text blocks.",
+    ownerType: "PRODUCT",
+    access: {
+      admin: true,
+      storefront: true,
+    },
+  },
+  {
     name: "FAQs JSON",
     namespace: "serp",
     key: "faqs",
     type: "json",
     description: "Serialized FAQ entries for the accordion component.",
+    ownerType: "PRODUCT",
+    access: {
+      admin: true,
+      storefront: true,
+    },
+  },
+  {
+    name: "FAQs (Rich Text)",
+    namespace: "serp",
+    key: "faq_richtext",
+    type: "rich_text_field",
+    description: "HTML FAQ markup (details/summary) for product pages.",
     ownerType: "PRODUCT",
     access: {
       admin: true,
@@ -126,6 +162,18 @@ const definitions = [
     key: "pricing_note",
     type: "single_line_text_field",
     description: "Supplemental note displayed beneath the pricing card.",
+    ownerType: "PRODUCT",
+    access: {
+      admin: true,
+      storefront: true,
+    },
+  },
+  {
+    name: "Pricing Benefits (Rich Text)",
+    namespace: "serp",
+    key: "pricing_benefits_richtext",
+    type: "rich_text_field",
+    description: "HTML list of pricing benefits for Rich text blocks.",
     ownerType: "PRODUCT",
     access: {
       admin: true,

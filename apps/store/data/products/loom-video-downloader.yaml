@@ -21,7 +21,7 @@ ghl:
   opportunity_name_template: "{{offerName}} • {{customerEmail}}"
 name: Loom Video Downloader
 tagline: Download Loom-hosted videos anywhere with one click and save them forever.
-featured_image: https://raw.githubusercontent.com/serpapps/loom-video-downloader/refs/heads/assets/images/loom-video-downloader.gif
+featured_image: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.png
 featured_image_gif: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.gif
 github_repo_url: https://github.com/serpapps/loom-video-downloader
 github_repo_tags:
@@ -56,8 +56,18 @@ product_videos:
 related_videos:
   - https://www.youtube.com/watch?v=4MnyU0kPxlE
 screenshots:
+  - url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/screenshots/loom-downloader-screenshot-1.jpg
+    alt: Loom Video Downloader main interface
+    caption: Simple one-click download interface for Loom videos
+  - url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/screenshots/loom-downloader-screenshot-2.jpg
+    alt: Loom Video Downloader batch download
+    caption: Batch download workspace videos efficiently
+  - url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/screenshots/loom-downloader-screenshot-3.jpg
+    alt: Loom Video Downloader settings
+    caption: Configure download settings and preferences
   - url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.png
-    alt: Loom Video Downloader screenshot
+    alt: Loom Video Downloader logo
+    caption: Professional Loom video downloading solution
 faqs:
   - question: How do I download Loom videos?
     answer: To download Loom videos, you can use specialized software or browser extensions designed for Loom. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.
