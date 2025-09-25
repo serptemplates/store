@@ -104,10 +104,16 @@ function mapProductToShopifyPayload(product) {
   const compareAtPrice = parsePrice(product?.pricing?.original_price);
 
   const productType = product.platform ?? "Software";
+  const shopifyCollections = Array.isArray(product?.shopify_collections)
+    ? product.shopify_collections
+    : product?.shopify_collections
+      ? [product.shopify_collections]
+      : [];
   const tags = dedupe([
     product.platform,
     ...(product.categories ?? []),
     ...(product.keywords ?? []),
+    ...shopifyCollections,
   ]);
 
   const metafields = [
@@ -147,6 +153,30 @@ function mapProductToShopifyPayload(product) {
           key: "stripe_config",
           type: "json",
           value: JSON.stringify(product.stripe),
+        }
+      : null,
+    product.pricing?.label && String(product.pricing.label).trim().length > 0
+      ? {
+          namespace: "serp",
+          key: "pricing_label",
+          type: "single_line_text_field",
+          value: String(product.pricing.label).trim(),
+        }
+      : null,
+    product.pricing?.note && String(product.pricing.note).trim().length > 0
+      ? {
+          namespace: "serp",
+          key: "pricing_note",
+          type: "single_line_text_field",
+          value: String(product.pricing.note).trim(),
+        }
+      : null,
+    product.pricing?.benefits && product.pricing.benefits.length > 0
+      ? {
+          namespace: "serp",
+          key: "pricing_benefits",
+          type: "list.single_line_text_field",
+          value: JSON.stringify(product.pricing.benefits),
         }
       : null,
     product.features && product.features.length > 0
@@ -268,7 +298,11 @@ async function syncCollections(products) {
   const categoryMap = new Map();
 
   for (const product of products) {
-    const categories = product.categories ?? [];
+    const categories = Array.isArray(product?.shopify_collections)
+      ? product.shopify_collections
+      : product?.shopify_collections
+        ? [product.shopify_collections]
+        : product.categories ?? [];
     for (const category of categories) {
       if (!category) continue;
       if (!categoryMap.has(category)) {

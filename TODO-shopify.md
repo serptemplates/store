@@ -7,19 +7,19 @@
 - [ ] Share credential placeholders securely (domain + tokens) for local development only—do not commit secrets.
 
 ## Task 2 – Product sync tooling (Repo work)
-- [ ] Add Shopify Admin API client helpers (`lib/shopify-admin.ts`) with typed wrappers for products, metafields, and collections.
-- [ ] Implement `scripts/sync-shopify-products.mjs` to:
-  - [ ] Read `apps/store/data/products/*.yaml` and convert to Shopify product payloads.
-  - [ ] Create/update corresponding Shopify products, variants/pricing, and media assets.
-  - [ ] Maintain Shopify collections based on our category mappings.
-  - [ ] Upsert metafields/metaobjects for SERP-specific data (slug, testimonials, FAQs, pricing blocks, affiliate settings).
-- [ ] Document required environment variables (`SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_API_TOKEN`, etc.) in `docs/vercel-envs.md`.
+- [x] Add Shopify Admin API helpers (`lib/shopify-admin.mjs`) with REST + GraphQL wrappers for products, metafields, and collections.
+- [x] Implement `scripts/sync-shopify-products.mjs` to:
+  - [x] Read `apps/store/data/products/*.yaml` and convert to Shopify payloads (products + variants).
+  - [x] Create/update products via Admin REST, keeping variant pricing in sync.
+  - [x] Ensure collections exist for category groupings.
+  - [x] Sync SERP-specific metafields (slug, testimonials, FAQs, pricing label/note/benefits, GHL config, etc.).
+- [x] Document Shopify environment variables and scripts (`docs/vercel-envs.md`, `docs/shopify-theme.md`).
 
 ## Task 3 – Metafield & theme wiring (Hybrid)
-- [ ] Define metafield definitions (namespace/key/type) for testimonials, FAQs, pricing details, affiliate tracking, and CTA URLs.
-- [ ] Provide theme section/snippet code (Liquid/JSON) to render the SERP product layout (hero, pricing card, cross-sells) using those metafields.
-- [ ] Import definitions into Shopify (via Admin API or UI) and attach metafield values via the sync script.
-- [ ] Apply theme customizations in Shopify’s editor: enable featured collections, search/filter settings, and mobile navigation improvements.
+- [x] Define metafield definitions and provisioning script (`pnpm setup:shopify:metafields`).
+- [x] Supply theme section example (`docs/shopify-theme.md`) using the SERP metafields.
+- [ ] Import definitions into Shopify (run setup script) and confirm product metafields populated after sync.
+- [ ] Apply theme customizations in Shopify editor (add SERP section, configure navigation, featured collections, search/filter behaviour).
 
 ## Task 4 – GHL automation layer (Repo work)
 - [ ] Extend checkout persistence to accept `source: "shopify"` and keep order logging unified.
