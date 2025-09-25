@@ -50,7 +50,7 @@ export function getSiteConfig(): SiteConfig {
     const parsed = JSON.parse(raw) as SiteConfig;
     cachedConfig = { path: configPath, value: parsed ?? {} };
     return cachedConfig.value;
-  } catch (error) {
+  } catch {
     if (configPath !== defaultConfigPath) {
       console.warn(`[site-config] Failed to load ${configPath}. Falling back to default config.`);
       try {
@@ -58,8 +58,8 @@ export function getSiteConfig(): SiteConfig {
         const parsed = JSON.parse(raw) as SiteConfig;
         cachedConfig = { path: defaultConfigPath, value: parsed ?? {} };
         return cachedConfig.value;
-      } catch (fallbackError) {
-        console.warn(`[site-config] Failed to load default config:`, fallbackError);
+      } catch {
+        console.warn(`[site-config] Failed to load default config.`);
       }
     }
 

@@ -30,7 +30,7 @@ export function GoogleTagManagerNoscript({ gtmId }: GoogleTagManagerProps) {
       <iframe
         src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
         height="0"
-        width="0"
+        title="Google Tag Manager"        width="0"
         style={{ display: 'none', visibility: 'hidden' }}
       />
     </noscript>

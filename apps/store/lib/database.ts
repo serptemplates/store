@@ -1,11 +1,14 @@
 import { createClient, type QueryResult, type QueryResultRow } from "@vercel/postgres";
 
+// Try to use non-pooled connection first, fall back to pooled
 const connectionString =
+  process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
+  process.env.DATABASE_URL_UNPOOLED ??
+  process.env.POSTGRES_URL_NON_POOLING ??
   process.env.CHECKOUT_DATABASE_URL ??
   process.env.POSTGRES_URL ??
   process.env.DATABASE_URL ??
   process.env.POSTGRES_PRISMA_URL ??
-  process.env.POSTGRES_URL_NON_POOLING ??
   process.env.SUPABASE_DB_URL ??
   "";
 
@@ -17,7 +20,6 @@ let missingLogged = false;
 
 function log(message: string, extra?: Record<string, unknown>) {
   const payload = extra ? ` ${JSON.stringify(extra)}` : "";
-  // eslint-disable-next-line no-console -- Operational logging for database availability.
   console.info(`[checkout-db] ${message}${payload}`);
 }
 

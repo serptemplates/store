@@ -23,7 +23,6 @@ function toJsonbLiteral(payload?: Record<string, unknown> | null): string {
   try {
     return JSON.stringify(payload);
   } catch (error) {
-    // eslint-disable-next-line no-console -- defensive logging for serialization issues
     console.warn("[webhook-log] Failed to serialize metadata", { error });
     return "{}";
   }

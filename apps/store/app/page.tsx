@@ -1,8 +1,8 @@
 import { getAllProducts } from "@/lib/product";
 import { Badge } from "@repo/ui/badge";
-import { Button } from "@repo/ui/button";
 import NextLink from "next/link";
 import { ProductsFilter } from "../components/ProductsFilter";
+import type { ProductData } from "@/lib/product-schema";
 
 const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
   {
@@ -109,7 +109,7 @@ const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
   },
 ];
 
-function deriveCategories(product: any): string[] {
+function deriveCategories(product: ProductData): string[] {
   const haystack = [
     product.slug,
     product.platform,

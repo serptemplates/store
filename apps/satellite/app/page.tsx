@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import { getAllProducts } from "@/lib/product";
 import { Badge } from "@repo/ui/badge";
-import { Button } from "@repo/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import NextLink from "next/link";
 
 const navLinks = [

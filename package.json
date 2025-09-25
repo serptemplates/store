@@ -52,6 +52,7 @@
     "yaml": "^2.6.1"
   },
   "devDependencies": {
+    "globals": "^16.4.0",
     "husky": "^9.0.0"
   }
 }
