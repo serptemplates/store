@@ -78,7 +78,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
           }
         : undefined,
     });
-  } catch (error) {
+  } catch {
     return null;
   }
 }

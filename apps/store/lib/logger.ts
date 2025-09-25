@@ -1,6 +1,4 @@
-const LOG_LEVELS = ["debug", "info", "warn", "error"] as const;
-
-export type LogLevel = (typeof LOG_LEVELS)[number];
+export type LogLevel = "debug" | "info" | "warn" | "error";
 
 function emit(level: LogLevel, event: string, context?: Record<string, unknown>) {
   const payload: Record<string, unknown> = {

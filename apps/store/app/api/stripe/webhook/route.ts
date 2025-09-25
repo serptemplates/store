@@ -242,10 +242,18 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   } catch (error) {
     const message =
       error && typeof error === "object" && "message" in error ? String(error.message) : String(error);
+
+    // Log the full error details including GHL response body
+    const errorDetails = error instanceof GhlRequestError
+      ? { message: error.message, name: error.name, status: error.status, body: error.body }
+      : error instanceof Error
+      ? { message: error.message, name: error.name }
+      : error;
+
     logger.error("ghl.sync_failed", {
       offerId,
       paymentIntentId,
-      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+      error: errorDetails,
     });
 
     let logResult: Awaited<ReturnType<typeof recordWebhookLog>> = null;

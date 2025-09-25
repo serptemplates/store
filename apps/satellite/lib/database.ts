@@ -17,7 +17,6 @@ let missingLogged = false;
 
 function log(message: string, extra?: Record<string, unknown>) {
   const payload = extra ? ` ${JSON.stringify(extra)}` : "";
-  // eslint-disable-next-line no-console -- Operational logging for database availability.
   console.info(`[checkout-db] ${message}${payload}`);
 }
 

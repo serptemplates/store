@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Type, FileText, Hash, AlignLeft, Space, Copy, Trash2, Download, BarChart3, Sparkles, Clock, Book } from "lucide-react";
+import { Type, FileText, Hash, AlignLeft, Space, Copy, Trash2, Sparkles, Clock, Book } from "lucide-react";
+import { siteConfig } from "@/site.config";
 
 interface TextStats {
   characters: number;

@@ -11,7 +11,6 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx_replace_me
 STRIPE_SECRET_KEY=sk_live_xxx_replace_me
 STRIPE_WEBHOOK_SECRET=whsec_live_xxx_replace_me
 STRIPE_CHECKOUT_PAYMENT_METHODS=card
-NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
 
 ########################################
 # Preview / Branch Deploys (test mode)

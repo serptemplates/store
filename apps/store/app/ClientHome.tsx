@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import NextLink from "next/link";
 import { HomeTemplate } from "@repo/templates";
 import type { ProductData } from "@/lib/product-schema";
@@ -21,13 +21,28 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   const homeProps = productToHomeTemplate(product, posts);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
-  const affiliateId = useMemo(() => {
+  const { affiliateId, checkoutStatus } = useMemo(() => {
     if (typeof window === "undefined") {
-      return undefined;
+      return { affiliateId: undefined, checkoutStatus: undefined };
     }
     const params = new URLSearchParams(window.location.search);
-    return params.get("aff") ?? params.get("affiliate") ?? undefined;
+    return {
+      affiliateId: params.get("aff") ?? params.get("affiliate") ?? undefined,
+      checkoutStatus: params.get("checkout") ?? undefined,
+    };
   }, []);
+
+  const isCheckoutSuccess = checkoutStatus === "success";
+
+  useEffect(() => {
+    if (!isCheckoutSuccess || typeof window === "undefined") {
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("checkout");
+    window.history.replaceState(null, "", url.toString());
+  }, [isCheckoutSuccess]);
 
   const showPosts = siteConfig.blog?.enabled !== false;
 
@@ -99,6 +114,18 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
   const Footer = () => <FooterComposite />;
 
   return (
+    <>
+      {isCheckoutSuccess && (
+        <div className="mx-auto mb-6 mt-4 w-full max-w-4xl px-4">
+          <div className="rounded-xl border border-green-200 bg-green-50 p-6 text-green-900 shadow-sm">
+            <h2 className="text-lg font-semibold">Thank you! 🎉</h2>
+            <p className="mt-2 text-sm text-green-800">
+              Your checkout was successful. We just sent a receipt and next steps to your inbox.
+              You can close this tab or keep browsing for more tools any time.
+            </p>
+          </div>
+        </div>
+      )}
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
@@ -118,5 +145,6 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
             }
           : undefined}
       />
+    </>
   );
 }

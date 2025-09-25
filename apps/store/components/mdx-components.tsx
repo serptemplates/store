@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import Image from "next/image";
@@ -42,7 +43,7 @@ export const mdxComponents: MDXComponents = {
   },
   pre: ({ children, ...props }: any) => {
     // Extract language from code block if available
-    let language = "";
+    let languageValue = "";
     let codeString = "";
 
     if (children && isValidElement(children)) {
@@ -50,14 +51,14 @@ export const mdxComponents: MDXComponents = {
       if (childProps?.className) {
         const match = childProps.className.match(/language-(\w+)/);
         if (match) {
-          language = match[1];
+          languageValue = match[1];
         }
       }
       codeString = childProps?.children || "";
     }
 
     return (
-      <CodeBlock language={language} codeString={codeString} {...props}>
+      <CodeBlock language={languageValue} codeString={codeString} {...props}>
         {children}
       </CodeBlock>
     );
@@ -75,8 +76,6 @@ export const mdxComponents: MDXComponents = {
     }
 
     // For code blocks, apply syntax highlighting colors
-    const language = className?.match(/language-(\w+)/)?.[1] || "";
-
     return (
       <code className={`block font-mono text-sm leading-relaxed text-gray-100 ${className || ""}`} {...props}>
         {children}
@@ -123,9 +122,9 @@ export const mdxComponents: MDXComponents = {
       {children}
     </p>
   ),
-  iframe: ({ ...props }: any) => (
+  iframe: ({ title, ...props }: any) => (
     <div className="my-8 aspect-video w-full overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-      <iframe className="h-full w-full" {...props} />
+      <iframe className="h-full w-full" title={title ?? "embedded-content"} {...props} />
     </div>
   ),
   table: ({ children, ...props }: any) => (

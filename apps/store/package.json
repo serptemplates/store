@@ -13,7 +13,9 @@
     "report:coverage": "node scripts/product-coverage-report.mjs",
     "export:offers": "node scripts/export-offer-catalog.mjs",
     "export:domains": "node scripts/export-domain-inventory.mjs",
-    "export:static": "next export"
+    "export:static": "next export",
+    "test:purchase": "npx tsx test-purchase-flow.ts",
+    "db:check": "npx tsx db-check.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

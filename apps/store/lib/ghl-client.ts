@@ -64,7 +64,13 @@ async function ghlRequest<T>(path: string, init: RequestInit & { retryDescriptio
   }
 
   const body = await response.text();
-  throw new GhlRequestError(`GHL request failed with status ${response.status}`, response.status, body);
+  logger.error("ghl.request_failed", {
+    status: response.status,
+    path,
+    responseBody: body,
+    request: init.body
+  });
+  throw new GhlRequestError(`GHL request failed with status ${response.status}: ${body}`, response.status, body);
 }
 
 type CustomFieldInput = { id: string; value: string | number | boolean };
@@ -97,13 +103,22 @@ export async function upsertContact(params: UpsertContactParams): Promise<Upsert
   if (params.source) body.source = params.source;
   if (params.tags && params.tags.length > 0) body.tags = params.tags;
   if (params.customFields && params.customFields.length > 0) {
-    body.customField = params.customFields.map((field) => ({ id: field.id, value: field.value }));
+    body.customFields = params.customFields.map((field) => ({ id: field.id, value: field.value }));
   }
+
+  // Log the full request body for debugging
+  const requestBody = JSON.stringify(body);
+  logger.info("ghl.upsert_contact_request", {
+    email: params.email,
+    bodyKeys: Object.keys(body),
+    customFieldsCount: params.customFields?.length ?? 0,
+    fullBody: requestBody,
+  });
 
   try {
     const result = await ghlRequest<{ contact?: { id?: string } }>("/contacts/upsert", {
       method: "POST",
-      body: JSON.stringify(body),
+      body: requestBody,
     });
 
     const contactId = result?.contact?.id;
@@ -140,19 +155,19 @@ export async function createOpportunity(params: OpportunityParams): Promise<void
     locationId: GHL_LOCATION_ID,
     contactId: params.contactId,
     pipelineId: params.pipelineId,
-    stageId: params.stageId,
+    pipelineStageId: params.stageId,  // Changed from stageId to pipelineStageId
     name: params.name,
   };
 
   if (typeof params.monetaryValue === "number") {
     payload.monetaryValue = params.monetaryValue;
   }
-  if (params.currency) payload.currency = params.currency.toUpperCase();
+  // Removed currency field - seems GHL doesn't accept it
   if (params.status) payload.status = params.status;
   if (params.source) payload.source = params.source;
   if (params.tags && params.tags.length > 0) payload.tags = params.tags;
   if (params.customFields && params.customFields.length > 0) {
-    payload.customField = params.customFields.map((field) => ({ id: field.id, value: field.value }));
+    payload.customFields = params.customFields.map((field) => ({ id: field.id, value: field.value }));
   }
 
   try {
@@ -247,7 +262,7 @@ function buildCustomFieldPayload(map: Record<string, string> | undefined, contex
 
 function renderTemplate(template: string | undefined, context: Record<string, unknown>, fallback: string): string {
   if (!template) return fallback;
-  return template.replace(/\{\{\s*([\w.]+)\s*\}\}/g, (match, key) => {
+  return template.replace(/\{\{\s*([\w.]+)\s*\}\}/g, (_match, key) => {
     const value = context[key as keyof typeof context];
     return value === undefined || value === null ? "" : String(value);
   }) || fallback;
