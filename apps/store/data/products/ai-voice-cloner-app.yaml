@@ -13,8 +13,8 @@ stripe:
     stripe_product_id: prod_SqhYIO8EBULvaD
 name: AI Voice Cloner App
 tagline: Download AI Voice Cloner App instantly to your device.
-featured_image: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.png
-featured_image_gif: https://storage.googleapis.com/msgsndr/XM0gbS5U3qNXtUksyJ6o/media/default-product.gif
+featured_image: null
+featured_image_gif: null
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features: []
@@ -28,7 +28,6 @@ supported_operating_systems:
   - macos
 status: draft
 categories:
-  - ai voice cloner app
   - Artificial Intelligence
 keywords:
   - ai voice cloner app
@@ -42,3 +41,5 @@ pricing:
 ghl:
   pipeline_id: GYbj73q9z3SGihxNlOne
   stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
+shopify_collections:
+  - Artificial Intelligence
