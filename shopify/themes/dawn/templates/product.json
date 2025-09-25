@@ -52,25 +52,25 @@
         "serp-features": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.metafields.serp.features_richtext %}<div class=\"serp-block serp-features\">{{ product.metafields.serp.features_richtext }}</div>{% endif %}"
+            "custom_liquid": "{% if product.metafields.serp.features_richtext %}<div class=\"serp-block serp-features\">{{ product.metafields.serp.features_richtext | metafield_tag }}</div>{% endif %}"
           }
         },
         "serp-benefits": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.metafields.serp.pricing_benefits_richtext %}<div class=\"serp-block serp-benefits\">{{ product.metafields.serp.pricing_benefits_richtext }}{% if product.metafields.serp.pricing_note.value %}<p class=\"serp-note\">{{ product.metafields.serp.pricing_note.value }}</p>{% endif %}</div>{% endif %}"
+            "custom_liquid": "{% if product.metafields.serp.pricing_benefits_richtext %}<div class=\"serp-block serp-benefits\">{{ product.metafields.serp.pricing_benefits_richtext | metafield_tag }}{% if product.metafields.serp.pricing_note.value %}<p class=\"serp-note\">{{ product.metafields.serp.pricing_note.value }}</p>{% endif %}</div>{% endif %}"
           }
         },
         "serp-testimonials": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.metafields.serp.testimonials_richtext %}<div class=\"serp-block serp-testimonials\">{{ product.metafields.serp.testimonials_richtext }}</div>{% endif %}"
+            "custom_liquid": "{% if product.metafields.serp.testimonials_richtext %}<div class=\"serp-block serp-testimonials\">{{ product.metafields.serp.testimonials_richtext | metafield_tag }}</div>{% endif %}"
           }
         },
         "serp-faq": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% if product.metafields.serp.faq_richtext %}<div class=\"serp-block serp-faq\">{{ product.metafields.serp.faq_richtext }}</div>{% endif %}"
+            "custom_liquid": "{% if product.metafields.serp.faq_richtext %}<div class=\"serp-block serp-faq\">{{ product.metafields.serp.faq_richtext | metafield_tag }}</div>{% endif %}"
           }
         },
         "share": {

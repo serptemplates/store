@@ -95,8 +95,106 @@ function escapeHtml(value) {
 
 function listToRichText(items) {
   if (!items || items.length === 0) return null;
-  const listItems = items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-  return `<ul>${listItems}</ul>`;
+
+  const children = items.map((item) => ({
+    type: "paragraph",
+    children: [
+      {
+        type: "text",
+        value: item,
+      },
+    ],
+  }));
+
+  return JSON.stringify({
+    type: "root",
+    children,
+  });
+}
+
+function ensureArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function coerceStringArray(value) {
+  return ensureArray(value)
+    .map((item) => {
+      if (typeof item === "string") {
+        const trimmed = item.trim();
+        return trimmed.length > 0 ? trimmed : null;
+      }
+
+      if (item && typeof item === "object") {
+        const text = item.text ?? item.title ?? item.label ?? item.value;
+        if (typeof text === "string" && text.trim().length > 0) {
+          return text.trim();
+        }
+        return null;
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+}
+
+function normalizeTestimonials(value) {
+  return ensureArray(value)
+    .map((item) => {
+      if (!item) return null;
+
+      if (typeof item === "string") {
+        const review = item.trim();
+        return review.length > 0 ? { name: "Customer", review } : null;
+      }
+
+      if (typeof item === "object") {
+        const review = item.review ?? item.quote ?? item.testimonial ?? item.body ?? item.text;
+        const name = item.name ?? item.author ?? item.title ?? "Customer";
+        const normalizedReview = typeof review === "string" ? review.trim() : "";
+        if (!normalizedReview) {
+          return null;
+        }
+
+        const normalizedName = typeof name === "string" && name.trim().length > 0 ? name.trim() : "Customer";
+        return { name: normalizedName, review: normalizedReview };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+}
+
+function normalizeFaqs(value) {
+  return ensureArray(value)
+    .map((item) => {
+      if (!item) return null;
+
+      if (typeof item === "string") {
+        const question = item.trim();
+        if (!question) return null;
+        return { question, answer: "" };
+      }
+
+      if (typeof item === "object") {
+        const question = item.question ?? item.q ?? item.title;
+        const answer = item.answer ?? item.a ?? item.body ?? item.text;
+        const normalizedQuestion = typeof question === "string" ? question.trim() : "";
+        const normalizedAnswer = typeof answer === "string" ? answer.trim() : "";
+
+        if (!normalizedQuestion && !normalizedAnswer) {
+          return null;
+        }
+
+        return {
+          question: normalizedQuestion || "Question",
+          answer: normalizedAnswer,
+        };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
 }
 
 function pricingNoteRichText(note) {
@@ -106,24 +204,101 @@ function pricingNoteRichText(note) {
 
 function testimonialsToRichText(testimonials) {
   if (!testimonials || testimonials.length === 0) return null;
-  return testimonials
-    .map((testimonial) => {
-      const quote = escapeHtml(testimonial.review ?? "");
-      const name = escapeHtml(testimonial.name ?? "Customer");
-      return `<blockquote><p>${quote}</p><cite>— ${name}</cite></blockquote>`;
-    })
-    .join("");
+
+  const children = testimonials.flatMap((testimonial) => {
+    const result = [];
+
+    if (testimonial.review) {
+      result.push({
+        type: "paragraph",
+        children: [
+          {
+            type: "text",
+            value: testimonial.review,
+          },
+        ],
+      });
+    }
+
+    if (testimonial.name) {
+      result.push({
+        type: "paragraph",
+        children: [
+          {
+            type: "text",
+            value: `— ${testimonial.name}`,
+            italic: true,
+          },
+        ],
+      });
+    }
+
+    return result;
+  });
+
+  if (children.length === 0) {
+    return null;
+  }
+
+  return JSON.stringify({
+    type: "root",
+    children,
+  });
 }
 
 function faqsToRichText(faqs) {
   if (!faqs || faqs.length === 0) return null;
-  return faqs
-    .map((faq) => {
-      const question = escapeHtml(faq.question ?? "Question");
-      const answer = escapeHtml(faq.answer ?? "");
-      return `<details><summary>${question}</summary><p>${answer}</p></details>`;
-    })
-    .join("");
+
+  const children = faqs.flatMap((faq) => {
+    const result = [];
+
+    if (faq.question) {
+      result.push({
+        type: "paragraph",
+        children: [
+          {
+            type: "text",
+            value: faq.question,
+            bold: true,
+          },
+        ],
+      });
+    }
+
+    if (faq.answer) {
+      const answerSegments = String(faq.answer)
+        .split(/\n\s*\n/)
+        .map((segment) => segment.trim())
+        .filter(Boolean);
+
+      if (answerSegments.length === 0) {
+        return result;
+      }
+
+      for (const segment of answerSegments) {
+        result.push({
+          type: "paragraph",
+          children: [
+            {
+              type: "text",
+              value: segment,
+            },
+          ],
+        });
+      }
+    }
+
+    return result;
+  });
+
+  if (children.length === 0) {
+    return null;
+  }
+
+  return JSON.stringify({
+    type: "root",
+    children,
+  });
 }
 
 function pruneUndefined(object) {
@@ -163,6 +338,16 @@ function mapProductToShopifyPayload(product) {
     ...(product.keywords ?? []),
     ...shopifyCollections,
   ]);
+
+  const featureItems = coerceStringArray(product.features ?? product.feature_list ?? product.featureList);
+  const testimonialItems = normalizeTestimonials(product.testimonials ?? product.reviews ?? product.testimonial_list);
+  const faqItems = normalizeFaqs(product.faqs ?? product.faq_list ?? product.faq);
+  const pricingBenefitsList = coerceStringArray(
+    product.pricing?.benefits ??
+      product.pricing_benefits ??
+      product.pricingBenefits ??
+      product.benefits,
+  );
 
   const featuresRich = listToRichText(featureItems);
   const testimonialsRich = testimonialsToRichText(testimonialItems);
