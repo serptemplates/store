@@ -41,6 +41,18 @@ CHECKOUT_MONITOR_MIN_ORDERS_LOOKBACK_HOURS=24
 CHECKOUT_MONITOR_MIN_ORDERS=1
 # Optional restricted Stripe key for read-only scripts
 # STRIPE_SECRET_KEY_RESTRICTED=rk_test_or_live_xxx_replace_me
+
+########################################
+# Shopify (classic theme storefront)
+########################################
+SHOPIFY_STORE_DOMAIN=serp-store-2.myshopify.com
+SHOPIFY_API_TOKEN=shpat_xxx_replace_me
+# Optional: surface API key/secret for CLI tooling or OAuth flows
+SHOPIFY_API_KEY=shpua_xxx_replace_me
+SHOPIFY_API_KEY_SECRET=shpss_xxx_replace_me
+SHOPIFY_STOREFRONT_TOKEN=shpat_storefront_xxx_replace_me
+# Override to match the Admin API version your store supports
+SHOPIFY_ADMIN_API_VERSION=2024-04
 ```
 
 ## Notes
