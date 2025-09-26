@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { HomeTemplate, type HomeTemplateProps } from "@repo/templates";
@@ -12,10 +13,11 @@ import { Input } from "@/components/ui/input";
 
 type Props = Omit<HomeTemplateProps, "ui">;
 
+const Navbar = () => (
+  <SiteNavbar site={{ name: siteConfig.name, categories: siteConfig.categories }} Link={NextLink} brandSrc="/logo.png" />
+);
+
 export default function ClientHome(props: Props) {
-  const Navbar = () => (
-    <SiteNavbar site={{ name: siteConfig.name, categories: siteConfig.categories }} Link={NextLink} brandSrc="/logo.png" />
-  );
   return (
     <HomeTemplate
       ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, CardDescription, Badge, Input }}

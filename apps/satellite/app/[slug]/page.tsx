@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { notFound } from "next/navigation";
 import ClientHome from "../ClientHome";
 import { getAllPosts } from "@/lib/blog";

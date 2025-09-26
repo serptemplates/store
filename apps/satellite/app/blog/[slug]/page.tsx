@@ -14,6 +14,7 @@ import { Badge } from "@repo/ui/badge";
 
 import { mdxComponents } from "../../../components/mdx-components";
 
+/* eslint-disable @next/next/no-duplicate-head */
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,7 +26,7 @@ export const mdxComponents: MDXComponents = {
       </a>
     );
   },
-  Image: (props: any) => <Image {...props} />,
+  Image: (props: any) => <Image alt="" {...props} />,
   img: ({ src, alt, ...props }: any) => {
     if (!src) return null;
     return (
