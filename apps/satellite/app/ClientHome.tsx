@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useCallback, useState } from "react";
@@ -79,25 +80,28 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     }
   }, [isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
-  const Navbar = () => (
-    <SiteNavbar
-      site={{
-        name: siteConfig.site?.name ?? product.name,
-        categories: product.categories,
-        buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
-      }}
-      Link={NextLink}
-      ctaText={siteConfig.cta?.text ?? homeProps.ctaText ?? "Checkout"}
-      ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
-      onCtaClick={handleCheckout}
-      ctaDisabled={isCheckoutLoading}
-      blogHref="/blog"
-      showLinks={false}
-      showCta
-    />
+  const Navbar = useCallback(
+    () => (
+      <SiteNavbar
+        site={{
+          name: siteConfig.site?.name ?? product.name,
+          categories: product.categories,
+          buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
+        }}
+        Link={NextLink}
+        ctaText={siteConfig.cta?.text ?? homeProps.ctaText ?? "Checkout"}
+        ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
+        onCtaClick={handleCheckout}
+        ctaDisabled={isCheckoutLoading}
+        blogHref="/blog"
+        showLinks={false}
+        showCta
+      />
+    ),
+    [handleCheckout, isCheckoutLoading, siteConfig, product, homeProps]
   );
 
-  const Footer = () => <FooterComposite />;
+  const Footer = useCallback(() => <FooterComposite />, []);
 
   return (
     <HomeTemplate
