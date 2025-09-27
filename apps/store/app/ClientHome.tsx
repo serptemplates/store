@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import NextLink from "next/link";
+import Script from "next/script";
 import { HomeTemplate } from "@repo/templates";
 import type { ProductData } from "@/lib/product-schema";
 import { productToHomeTemplate } from "@/lib/product-adapter";
@@ -53,15 +54,11 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
       return;
     }
 
-    const checkoutEndpoint = process.env.NEXT_PUBLIC_CHECKOUT_URL;
+    // Use the local API endpoint for checkout
+    const checkoutEndpoint = "/api/checkout/session";
 
     try {
       setIsCheckoutLoading(true);
-
-      if (!checkoutEndpoint) {
-        window.open(siteConfig.cta?.href ?? product.purchase_url, "_blank", "noopener,noreferrer");
-        return;
-      }
 
       const response = await fetch(checkoutEndpoint, {
         method: "POST",
@@ -97,30 +94,96 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     }
   }, [affiliateId, isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
+  // Create a custom component for breadcrumbs that will be injected after the navbar
+  const BreadcrumbsSection = useCallback(() => (
+    <nav aria-label="Breadcrumb" className="w-full bg-gray-50 dark:bg-gray-900 border-b">
+      <div className="container mx-auto px-4">
+        <ol className="flex items-center space-x-2 py-3 text-sm">
+          <li>
+            <NextLink
+              href="/"
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+            >
+              Home
+            </NextLink>
+          </li>
+          <li className="text-gray-400 dark:text-gray-600">/</li>
+          <li>
+            <NextLink
+              href="/#products"
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+            >
+              Products
+            </NextLink>
+          </li>
+          <li className="text-gray-400 dark:text-gray-600">/</li>
+          <li className="text-gray-900 dark:text-gray-100 font-medium">
+            {product.name}
+          </li>
+        </ol>
+      </div>
+    </nav>
+  ), [product.name]);
+
   const Navbar = useCallback(
     () => (
-      <SiteNavbar
-        site={{
-          name: siteConfig.site?.name ?? "SERP Apps",
-          categories: [],
-          buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
-        }}
-        Link={NextLink}
-        ctaText={siteConfig.cta?.text ?? homeProps.ctaText ?? "Checkout"}
-        ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
-        onCtaClick={handleCheckout}
-        ctaDisabled={isCheckoutLoading}
-        blogHref="/blog"
-        showLinks={true}
-      />
+      <>
+        <SiteNavbar
+          site={{
+            name: siteConfig.site?.name ?? "SERP Apps",
+            categories: [],
+            buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
+          }}
+          Link={NextLink}
+          showLinks={false}
+          showCta={false}
+        />
+        <BreadcrumbsSection />
+      </>
     ),
-    [handleCheckout, isCheckoutLoading, siteConfig, product, homeProps]
+    [BreadcrumbsSection, siteConfig, homeProps, product]
   );
 
   const Footer = useCallback(() => <FooterComposite />, []);
 
+  // Breadcrumb structured data for SEO
+  const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : 'https://store.serp.co';
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": `${siteUrl}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": `${siteUrl}/#products`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": product.name,
+        "item": `${siteUrl}/${product.slug}`
+      }
+    ]
+  };
+
   return (
     <>
+      {/* Breadcrumb Schema */}
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
       {isCheckoutSuccess && (
         <div className="mx-auto mb-6 mt-4 w-full max-w-4xl px-4">
           <div className="rounded-xl border border-green-200 bg-green-50 p-6 text-green-900 shadow-sm">
@@ -132,6 +195,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
           </div>
         </div>
       )}
+
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
@@ -147,7 +211,20 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
               ctaLoading: isCheckoutLoading,
               ctaDisabled: isCheckoutLoading,
               ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
-              ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText ?? "Get Instant Access",
+              ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText ?? "Pay with Stripe",
+              // Add custom content after the CTA button
+              ctaExtra: (
+                <PayPalCheckoutButton
+                  offerId={product.slug}
+                  price={homeProps.pricing?.price || product.pricing?.price || "$99"}
+                  affiliateId={affiliateId}
+                  metadata={{
+                    landerId: product.slug,
+                  }}
+                  buttonText="Pay with PayPal"
+                  className="w-full"
+                />
+              ),
             }
           : undefined}
       />

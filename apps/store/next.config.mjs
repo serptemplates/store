@@ -93,7 +93,8 @@ const nextConfig = {
 
       // Minimize main thread work
       config.optimization.minimize = true;
-      config.optimization.usedExports = true;
+      // Remove usedExports as it conflicts with Next.js caching
+      // config.optimization.usedExports = true;
       config.optimization.sideEffects = false;
     }
     return config;

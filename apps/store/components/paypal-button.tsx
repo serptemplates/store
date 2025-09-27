@@ -242,19 +242,19 @@ export function PayPalCheckoutButton({
     <button
       onClick={handlePayPalCheckout}
       disabled={loading}
-      className={`${className} bg-[#FFC439] hover:bg-[#F5B800] text-black font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`${className} group inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#FFC439] hover:bg-[#F5B800] px-8 text-base font-semibold text-black shadow-lg transition-all hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed`}
     >
       {loading ? (
-        <span className="flex items-center justify-center">
-          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <span className="flex items-center justify-center gap-2">
+          <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
           Processing...
         </span>
       ) : (
-        <span className="flex items-center justify-center">
-          <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <span className="flex items-center justify-center gap-2">
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72c.07-.37.392-.634.77-.634h7.494c2.959 0 4.736 1.547 4.736 3.957 0 3.39-2.857 5.16-5.574 5.16H9.144l-.846 8.473a.666.666 0 0 1-.658.56h-.001l-3.563.1zm1.877-11.566h2.68c1.448 0 2.605-.626 2.605-2.157 0-.964-.641-1.56-1.764-1.56H9.724l-.771 3.717z" fill="#253B80"/>
             <path d="M18.99 7.842h-3.658a.641.641 0 0 0-.633.555l-1.328 7.042-.045.235h3.41c.325 0 .61-.237.658-.553l.348-2.23c.047-.316.333-.553.658-.553h.525c2.146 0 3.39-1.041 3.718-3.104.144-.9-.006-1.607-.416-2.057-.45-.49-1.25-.836-2.237-.836v.501zm.387 3.053c-.144.957-.867 1.598-1.777 1.598h-.452l.316-2.004a.395.395 0 0 1 .39-.335h.207c.54 0 1.05 0 1.312.308.157.184.205.459.004.433z" fill="#179BD7"/>
           </svg>

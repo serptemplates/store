@@ -117,10 +117,23 @@ const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
 ];
 
 function deriveCategories(product: ProductData): string[] {
+  // First, use the categories directly from the product if they exist and are not empty
+  if (product.categories && product.categories.length > 0) {
+    // Filter out any categories that are just the product name or platform
+    const validCategories = product.categories.filter(cat =>
+      cat.toLowerCase() !== product.name?.toLowerCase() &&
+      cat.toLowerCase() !== product.platform?.toLowerCase()
+    );
+
+    if (validCategories.length > 0) {
+      return validCategories;
+    }
+  }
+
+  // Otherwise, derive categories based on keywords in slug and platform
   const haystack = [
     product.slug,
     product.platform,
-    ...(product.categories ?? []),
     ...(product.keywords ?? []),
   ]
     .filter(Boolean)
@@ -128,13 +141,36 @@ function deriveCategories(product: ProductData): string[] {
     .toLowerCase();
 
   const categories = new Set<string>();
-  categories.add("Downloaders");
 
+  // Check against category rules
   CATEGORY_RULES.forEach((rule) => {
     if (rule.keywords.some((keyword) => haystack.includes(keyword))) {
       categories.add(rule.label);
     }
   });
+
+  // If no specific category was found, determine based on common patterns
+  if (categories.size === 0) {
+    const slug = product.slug?.toLowerCase() || '';
+    const name = product.name?.toLowerCase() || '';
+
+    // Check if it's a downloader tool
+    if (slug.includes('downloader') || name.includes('downloader')) {
+      // Further categorize the type of downloader
+      if (slug.includes('video') || slug.includes('youtube') || slug.includes('vimeo')) {
+        categories.add("Video Downloaders");
+      } else if (slug.includes('stock') || slug.includes('photo') || slug.includes('image')) {
+        categories.add("Stock Media");
+      } else {
+        categories.add("Downloaders");
+      }
+    } else if (slug.includes('ai-') || name.includes('ai ')) {
+      categories.add("Artificial Intelligence");
+    } else {
+      // Default fallback
+      categories.add("Tools");
+    }
+  }
 
   return Array.from(categories);
 }
@@ -236,6 +272,8 @@ export default function Page() {
       categories: broadCategories,
       keywords,
       platform: product.platform,
+      coming_soon: product.coming_soon ?? false,
+      new_release: product.new_release ?? false,
     };
   });
 
@@ -319,8 +357,7 @@ export default function Page() {
 
       <main className="container flex flex-col gap-16 py-16">
         <section className="relative z-0 text-center space-y-6">
-          <Badge className="px-3 py-1 text-sm">Store</Badge>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Store</h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{heroDescription}</p>
         </section>
 

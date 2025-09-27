@@ -83,6 +83,8 @@ export const productSchema = z.object({
   // Coming soon / Waitlist fields
   coming_soon: z.boolean().optional().default(false),
   waitlist_url: z.string().url().optional(),
+  // New release field
+  new_release: z.boolean().optional().default(false),
   // Google Merchant fields
   brand: z.string().optional().default('SERP Apps'),
   sku: z.string().optional(),

@@ -17,6 +17,7 @@ export type PricingCtaProps = {
   onCtaClick?: () => void;
   ctaLoading?: boolean;
   ctaDisabled?: boolean;
+  ctaExtra?: ReactNode; // Additional content to show after the CTA button
   terms?: ReactNode;
   benefits?: string[];
   /** @deprecated kept for backwards compatibility */
@@ -49,6 +50,7 @@ export function PricingCta({
   onCtaClick,
   ctaLoading = false,
   ctaDisabled = false,
+  ctaExtra,
   terms,
   benefits,
   features,
@@ -71,36 +73,47 @@ export function PricingCta({
               {heading}
             </h2>
             <p className="mt-6 max-w-xl text-sm">{subheading}</p>
-            <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-              {onCtaClick ? (
-                <Button
-                  type="button"
-                  size="lg"
-                  onClick={onCtaClick}
-                  disabled={ctaDisabled || ctaLoading}
-                  className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-primary/80 px-7 py-6 text-base font-semibold text-primary-foreground shadow-lg transition-all hover:from-primary/90 hover:to-primary/70 hover:shadow-xl disabled:opacity-70"
-                >
-                  {ctaLoading ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <Zap className="h-5 w-5" />
-                  )}
-                  {ctaLoading ? "Processing..." : ctaText}
-                  <ArrowRight className="ml-1 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              ) : (
-                <Button
-                  asChild
-                  size="lg"
-                  className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-primary/80 px-7 py-6 text-base font-semibold text-primary-foreground shadow-lg transition-all hover:from-primary/90 hover:to-primary/70 hover:shadow-xl"
-                >
-                  <a href={ctaHref} target="_blank" rel="noopener noreferrer">
-                    <Zap className="h-5 w-5" />
-                    {ctaText}
+            <div className="mt-10">
+              <div className="flex flex-col gap-4">
+                {onCtaClick ? (
+                  <Button
+                    type="button"
+                    size="lg"
+                    onClick={onCtaClick}
+                    disabled={ctaDisabled || ctaLoading}
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#635BFF] hover:bg-[#5046E5] text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-70"
+                  >
+                    {ctaLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M5.5 5.5C5.5 4.11929 6.61929 3 8 3H16C17.3807 3 18.5 4.11929 18.5 5.5V18.5C18.5 19.8807 17.3807 21 16 21H8C6.61929 21 5.5 19.8807 5.5 18.5V5.5ZM8 5C7.72386 5 7.5 5.22386 7.5 5.5V18.5C7.5 18.7761 7.72386 19 8 19H16C16.2761 19 16.5 18.7761 16.5 18.5V5.5C16.5 5.22386 16.2761 5 16 5H8Z" fill="currentColor"/>
+                        <path d="M11 9.5C11 9.22386 11.2239 9 11.5 9H15.5C15.7761 9 16 9.22386 16 9.5C16 9.77614 15.7761 10 15.5 10H11.5C11.2239 10 11 9.77614 11 9.5Z" fill="currentColor"/>
+                        <path d="M11 12C11 11.7239 11.2239 11.5 11.5 11.5H15.5C15.7761 11.5 16 11.7239 16 12C16 12.2761 15.7761 12.5 15.5 12.5H11.5C11.2239 12.5 11 12.2761 11 12Z" fill="currentColor"/>
+                      </svg>
+                    )}
+                    {ctaLoading ? "Processing..." : ctaText}
                     <ArrowRight className="ml-1 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Button>
-              )}
+                  </Button>
+                ) : (
+                  <Button
+                    asChild
+                    size="lg"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#635BFF] hover:bg-[#5046E5] text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl"
+                  >
+                    <a href={ctaHref} target="_blank" rel="noopener noreferrer">
+                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M5.5 5.5C5.5 4.11929 6.61929 3 8 3H16C17.3807 3 18.5 4.11929 18.5 5.5V18.5C18.5 19.8807 17.3807 21 16 21H8C6.61929 21 5.5 19.8807 5.5 18.5V5.5ZM8 5C7.72386 5 7.5 5.22386 7.5 5.5V18.5C7.5 18.7761 7.72386 19 8 19H16C16.2761 19 16.5 18.7761 16.5 18.5V5.5C16.5 5.22386 16.2761 5 16 5H8Z" fill="currentColor"/>
+                        <path d="M11 9.5C11 9.22386 11.2239 9 11.5 9H15.5C15.7761 9 16 9.22386 16 9.5C16 9.77614 15.7761 10 15.5 10H11.5C11.2239 10 11 9.77614 11 9.5Z" fill="currentColor"/>
+                        <path d="M11 12C11 11.7239 11.2239 11.5 11.5 11.5H15.5C15.7761 11.5 16 11.7239 16 12C16 12.2761 15.7761 12.5 15.5 12.5H11.5C11.2239 12.5 11 12.2761 11 12Z" fill="currentColor"/>
+                      </svg>
+                      {ctaText}
+                      <ArrowRight className="ml-1 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </Button>
+                )}
+                {ctaExtra}
+              </div>
             </div>
             {terms && <div className="mt-6 text-sm text-muted-foreground">{terms}</div>}
           </div>
