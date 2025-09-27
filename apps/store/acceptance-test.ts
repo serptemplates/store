@@ -20,7 +20,14 @@ import { resolve } from 'path';
 // Load environment variables from .env.local
 config({ path: resolve(__dirname, '.env.local') });
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_51Rba2Z06JrOmKRCmYiQCi0Wm5bGMgq5GPlMUH3GlAHuz8AmYbXA0KPwCZPRXy5mnEW6W8lLrld62uDN3k853lWuo00G6qi77WC', {
+// Ensure STRIPE_SECRET_KEY is set in environment variables
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error('❌ STRIPE_SECRET_KEY environment variable is not set');
+  console.log('Please set it in .env.local file');
+  process.exit(1);
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-04-10' as any,
 });
 
