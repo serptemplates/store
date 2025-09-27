@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Test checkout failed:', error);
     return NextResponse.json(
-      { error: `Checkout failed: ${error.message}` },
+      { error: `Checkout failed: ${(error as Error).message}` },
       { status: 502 }
     );
   }

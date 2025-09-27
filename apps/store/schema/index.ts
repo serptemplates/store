@@ -35,10 +35,6 @@ export {
 
 export {
   ProductStructuredData,
-  WebSiteSchema,
-  ImageSchema,
-  HowToSchema,
-  LocalBusinessSchema,
 } from './structured-data-components';
 
 // Re-export schema types

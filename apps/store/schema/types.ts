@@ -40,7 +40,7 @@ export interface OfferSchema {
   shippingDetails?: OfferShippingDetailsSchema;
 }
 
-export interface AggregateOfferSchema extends OfferSchema {
+export interface AggregateOfferSchema extends Omit<OfferSchema, '@type'> {
   '@type': 'AggregateOffer';
   lowPrice: string | number;
   highPrice: string | number;
@@ -339,7 +339,7 @@ export interface HowToStepSchema {
 }
 
 // LocalBusiness Schema Types
-export interface LocalBusinessSchema extends OrganizationSchema {
+export interface LocalBusinessSchema extends Omit<OrganizationSchema, '@type'> {
   '@type': 'LocalBusiness';
   telephone?: string;
   priceRange?: string;

@@ -15,7 +15,7 @@ async function testStripe() {
   try {
     console.log('1️⃣ Initializing Stripe client...');
     const stripe = new Stripe(STRIPE_KEY, {
-      apiVersion: '2024-11-20.acacia',
+      apiVersion: '2024-04-10' as any,
     });
 
     console.log('✅ Stripe client initialized\n');

@@ -134,10 +134,10 @@ export function PayPalButton({
     <div className={className}>
       <PayPalScriptProvider
         options={{
-          "client-id": clientId,
+          clientId: clientId,
           currency: "USD",
           intent: "capture",
-        }}
+        } as any}
       >
         <div className="relative">
           {loading && (

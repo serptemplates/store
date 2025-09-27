@@ -72,14 +72,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     description: post.meta.description,
     image: post.meta.image || 'https://serp.app/og-image.png',
     datePublished: post.meta.date,
-    dateModified: post.meta.dateModified || post.meta.date,
+    dateModified: (post.meta as any).dateModified || post.meta.date,
     author: {
       name: post.meta.author,
     },
     url: `https://serp.app/blog/${slug}`,
     wordCount: post.content.split(' ').length,
     keywords: post.meta.tags,
-    articleSection: post.meta.category,
+    articleSection: (post.meta as any).category,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema({

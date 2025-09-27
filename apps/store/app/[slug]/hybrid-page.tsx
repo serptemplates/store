@@ -54,19 +54,17 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
   // Generate schema.org structured data for Google Shopping
   const productSchema = generateProductSchemaLD({
     product: {
-      slug: handle,
-      name: product.name,
-      description: product.description,
+      ...product,
       price: price?.price ? price.price.replace(/[^0-9.]/g, '') : '0',
       images: allImages as string[],
-      tagline: product.tagline,
       isDigital: true,
-      platform: product.platform,
-      categories: product.categories,
-      keywords: product.keywords,
-      features: product.features,
-      reviews: product.reviews,
-    },
+      reviews: product.reviews?.map(r => ({
+        ...r,
+        rating: (r as any).rating,
+        date: (r as any).date,
+        text: r.review
+      }))
+    } as any,
     url: `https://serp.app/${handle}`,
     storeUrl: 'https://serp.app',
     currency: 'USD',

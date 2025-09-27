@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       });
     } catch (error) {
       console.error('Simple checkout failed:', error);
-      return buildErrorResponse(`Checkout failed: ${error.message}`, 502);
+      return buildErrorResponse(`Checkout failed: ${(error as Error).message}`, 502);
     }
   }
 

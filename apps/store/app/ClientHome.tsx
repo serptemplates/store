@@ -147,16 +147,6 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
               ctaDisabled: isCheckoutLoading,
               ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
               ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText ?? "Get Instant Access",
-              additionalAction: (
-                <PayPalCheckoutButton
-                  offerId={product.slug}
-                  price={product.pricing?.price || "$0"}
-                  quantity={1}
-                  affiliateId={affiliateId}
-                  className="w-full mt-4"
-                  buttonText="Or Pay with PayPal"
-                />
-              ),
             }
           : undefined}
       />

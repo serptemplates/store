@@ -19,7 +19,7 @@ export async function createSimpleCheckout(params: {
   const stripeKey = process.env.STRIPE_SECRET_KEY || 'sk_test_51Rba2Z06JrOmKRCmYiQCi0Wm5bGMgq5GPlMUH3GlAHuz8AmYbXA0KPwCZPRXy5mnEW6W8lLrld62uDN3k853lWuo00G6qi77WC';
 
   const stripe = new Stripe(stripeKey, {
-    apiVersion: '2024-11-20.acacia',
+    apiVersion: '2024-04-10' as any,
   });
 
   // Get product data
@@ -115,7 +115,7 @@ export async function createSimpleCheckout(params: {
 
     console.log('[SimpleCheckout] Session params:', JSON.stringify(sessionParams, null, 2));
 
-    const session = await stripe.checkout.sessions.create(sessionParams);
+    const session = await stripe.checkout.sessions.create(sessionParams as any);
 
     console.log('[SimpleCheckout] Session created successfully:', session.id);
     console.log('[SimpleCheckout] Session URL:', session.url);

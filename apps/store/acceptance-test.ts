@@ -170,20 +170,16 @@ async function testPaymentProcessor() {
 
             const offerConfig = getOfferConfig(checkoutSession.offer_id);
             if (offerConfig?.ghl) {
-              const syncResult = await syncOrderWithGhl({
+              const syncResult = await syncOrderWithGhl(offerConfig.ghl, {
                 amountTotal: session.amount_total,
+                amountFormatted: `$${(session.amount_total! / 100).toFixed(2)}`,
                 currency: session.currency || 'usd',
                 customerEmail: TEST_CONFIG.testEmail,
                 customerName: TEST_CONFIG.testName,
-                affiliateId: TEST_CONFIG.affiliateId,
                 offerId: checkoutSession.offer_id,
-                paymentIntentId,
-                sessionId,
-                ghl: offerConfig.ghl,
-              }, {
-                offerId: checkoutSession.offer_id,
-                amountFormatted: `$${(session.amount_total! / 100).toFixed(2)}`,
-                currency: session.currency || 'usd',
+                offerName: offerConfig.productName || checkoutSession.offer_id,
+                stripePaymentIntentId: paymentIntentId,
+                stripeSessionId: sessionId,
                 landerId: checkoutSession.lander_id || checkoutSession.offer_id,
                 metadata: session.metadata || {},
               });

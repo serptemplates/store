@@ -55,7 +55,7 @@ try {
     console.log('  ⚠️  Database configured but no connection');
   }
 } catch (error) {
-  console.log('  ❌ Database connection failed:', error.message);
+  console.log('  ❌ Database connection failed:', (error as Error).message);
 }
 
 // Test 3: Check Recent Orders
@@ -84,7 +84,7 @@ try {
     console.log('  ℹ️  No orders found yet (this is normal if you haven\'t made test purchases)');
   }
 } catch (error) {
-  console.log('  ⚠️  Could not fetch orders:', error.message);
+  console.log('  ⚠️  Could not fetch orders:', (error as Error).message);
 }
 
 // Test 4: Check Webhook Logs
@@ -115,7 +115,7 @@ try {
     console.log('  ℹ️  No webhook events yet');
   }
 } catch (error) {
-  console.log('  ⚠️  Could not fetch webhook logs:', error.message);
+  console.log('  ⚠️  Could not fetch webhook logs:', (error as Error).message);
 }
 
 // Test 5: GHL Sync Status
@@ -136,7 +136,7 @@ try {
     console.log('  ℹ️  No recent checkout sessions to sync');
   }
 } catch (error) {
-  console.log('  ⚠️  Could not check GHL sync:', error.message);
+  console.log('  ⚠️  Could not check GHL sync:', (error as Error).message);
 }
 
 // Test 6: Create Test Checkout Session
@@ -165,7 +165,7 @@ try {
     console.log(`     Error: ${error}`);
   }
 } catch (error) {
-  console.log('  ❌ Could not reach checkout API:', error.message);
+  console.log('  ❌ Could not reach checkout API:', (error as Error).message);
 }
 
 // Test 7: Test PayPal Order Creation
@@ -184,7 +184,7 @@ try {
     const data = await response.json();
     console.log('  ✅ PayPal order created successfully');
     console.log(`  🆔 Order ID: ${data.orderId}`);
-    const approveLink = data.links?.find(l => l.rel === 'approve');
+    const approveLink = data.links?.find((l: any) => l.rel === 'approve');
     if (approveLink) {
       console.log(`  🔗 Approval URL: ${approveLink.href.substring(0, 50)}...`);
     }
@@ -198,7 +198,7 @@ try {
     }
   }
 } catch (error) {
-  console.log('  ❌ Could not reach PayPal API:', error.message);
+  console.log('  ❌ Could not reach PayPal API:', (error as Error).message);
 }
 
 // Summary
