@@ -4,4 +4,5 @@ export * from "./sections/FeaturesSection";
 export * from "./sections/TestimonialsSection";
 export * from "./sections/PostsSection";
 export * from "./sections/FaqSection";
+export * from "./sections/PricingCta";
 export * from "./MagicUiSaasTemplate";

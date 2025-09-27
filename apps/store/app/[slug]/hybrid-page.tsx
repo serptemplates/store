@@ -3,13 +3,19 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HomeTemplate } from "@repo/templates";
+import {
+  TestimonialsSection,
+  FaqSection,
+  PricingCta,
+  PostsSection,
+  FeaturesSection
+} from "@repo/templates";
 import type { ProductData } from "@/lib/product-schema";
 import { productToHomeTemplate } from "@/lib/product-adapter";
 import type { BlogPostMeta } from "@/lib/blog";
 import type { SiteConfig } from "@/lib/site-config";
 import { getBrandLogoPath } from "@/lib/brand-logos";
-import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui";
+import { Button, Card, CardContent, CardHeader, CardTitle, Badge } from "@repo/ui";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 export type HybridPageProps = {
@@ -89,11 +95,26 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
     }
   }, [isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
-  const Navbar = useCallback(() => null, []); // Don't render navbar in HomeTemplate
   const Footer = useCallback(() => <FooterComposite />, []);
 
   return (
     <>
+      {/* Site Header/Navbar */}
+      <header className="bg-white border-b">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="text-xl font-bold">
+              {siteConfig.site?.name || "Store"}
+            </Link>
+            <nav className="hidden md:flex items-center gap-8">
+              <Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link>
+              <Link href="/shop" className="text-gray-600 hover:text-gray-900">Shop</Link>
+              <Link href="/blog" className="text-gray-600 hover:text-gray-900">Blog</Link>
+            </nav>
+          </div>
+        </div>
+      </header>
+
       {/* Sticky Buy Bar */}
       <div className={`fixed top-0 left-0 right-0 bg-white border-b shadow-lg z-50 transition-transform duration-300 ${
         showStickyBar ? 'translate-y-0' : '-translate-y-full'
@@ -328,28 +349,57 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
         </div>
       )}
 
-      {/* Landing Page Components - Using HomeTemplate (without hero and features) */}
+      {/* Landing Page Components - Modular Sections */}
       <div className="mt-20">
-        <HomeTemplate
-          ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
-          {...homeProps}
-          videoUrl={undefined}
-          heroTitle=""
-          heroDescription=""
-          badgeText=""
-          ctaTitle=""
-          ctaDescription=""
-          featureHighlights={undefined}
-          showPosts={true}
-          pricing={homeProps.pricing
-            ? {
-                ...homeProps.pricing,
-                onCtaClick: handleCheckout,
-                ctaLoading: isCheckoutLoading,
-                ctaDisabled: isCheckoutLoading,
-              }
-            : undefined}
-        />
+        {/* Features Section - if we have feature data */}
+        {product.features && product.features.length > 0 && (
+          <FeaturesSection
+            features={product.features.map((feature) => ({
+              title: feature,
+              description: "",
+              icon: null
+            }))}
+          />
+        )}
+
+        {/* Testimonials Section */}
+        {homeProps.testimonials && homeProps.testimonials.length > 0 && (
+          <TestimonialsSection
+            testimonials={homeProps.testimonials}
+          />
+        )}
+
+        {/* FAQ Section */}
+        {homeProps.faqs && homeProps.faqs.length > 0 && (
+          <FaqSection
+            faqs={homeProps.faqs}
+          />
+        )}
+
+        {/* Blog Posts Section */}
+        {posts && posts.length > 0 && (
+          <PostsSection
+            posts={posts}
+            Badge={Badge}
+            Card={Card}
+            CardHeader={CardHeader}
+            CardTitle={CardTitle}
+            CardContent={CardContent}
+          />
+        )}
+
+        {/* Pricing Section */}
+        {homeProps.pricing && (
+          <PricingCta
+            {...homeProps.pricing}
+            onCtaClick={handleCheckout}
+            ctaLoading={isCheckoutLoading}
+            ctaDisabled={isCheckoutLoading}
+          />
+        )}
+
+        {/* Footer */}
+        <Footer />
       </div>
     </>
   );
