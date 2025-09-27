@@ -14,6 +14,10 @@ const testProduct = {
   slug: 'test-product',
   name: 'Test Product',
   description: 'This is a test product for schema validation',
+  seo_title: 'Test Product - Schema Testing',
+  seo_description: 'Test Product for schema.org validation',
+  product_page_url: 'https://serp.app/test-product',
+  purchase_url: 'https://serp.app/buy/test-product',
   price: '99.99',
   images: ['/image1.jpg', '/image2.jpg'],
   tagline: 'Best test product ever',
@@ -21,25 +25,25 @@ const testProduct = {
   platform: 'Web',
   categories: ['Software', 'Tools'],
   keywords: ['test', 'product', 'schema'],
-  features: [
-    { text: 'Feature 1' },
-    { text: 'Feature 2' },
-  ],
+  features: ['Feature 1', 'Feature 2'],
   reviews: [
     {
       name: 'John Doe',
-      rating: 5,
-      text: 'Great product!',
-      date: '2024-01-15',
+      review: 'Great product!',
     },
     {
       name: 'Jane Smith',
-      rating: 4,
-      text: 'Good value for money',
-      date: '2024-01-20',
+      review: 'Good value for money',
     },
   ],
-};
+  brand: 'SERP Apps',
+  sku: 'TEST-001',
+  pricing: {
+    price: '99.99',
+  },
+  layout_type: 'ecommerce' as const,
+  coming_soon: false,
+} as any;
 
 const productSchema = generateProductSchemaLD({
   product: testProduct,

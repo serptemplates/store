@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
               offerId: orderData.offer_id,
               landerId: orderData.lander_id,
               status: "error",
-              last_error: ghlError instanceof Error ? ghlError.message : "Unknown error",
+              lastError: ghlError instanceof Error ? ghlError.message : "Unknown error",
               metadata: {
                 source: "paypal",
                 orderId,
@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
         offerId: "",
         landerId: "",
         status: "error",
-        last_error: error instanceof Error ? error.message : "Unknown error",
+        lastError: error instanceof Error ? error.message : "Unknown error",
         metadata: {
           source: "paypal",
           eventId: event.id,

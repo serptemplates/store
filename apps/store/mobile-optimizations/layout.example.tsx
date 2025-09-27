@@ -17,7 +17,7 @@ const Analytics = dynamic(() => import('./components/Analytics'), {
   loading: () => null,
 });
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>

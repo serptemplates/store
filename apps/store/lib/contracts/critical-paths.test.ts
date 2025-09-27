@@ -201,16 +201,22 @@ describe('Critical Path: GHL Sync', () => {
 
     // Step 2: Build sync request
     const syncRequest = {
-      contactId: 'contact_123',
-      opportunityId: 'opp_123',
-      pipelineId: 'pipeline_123',
-      stageId: 'stage_new',
-      status: 'open',
-      monetaryValue: 7900,
+      amountTotal: 7900,
+      currency: 'USD',
+      customerEmail: 'test@example.com',
+      customerName: 'Test User',
+      offerId: 'test-offer',
+      paymentIntentId: 'pi_123',
+      sessionId: 'cs_123',
+      ghl: {
+        pipelineId: 'pipeline_123',
+        stageId: 'stage_new',
+        status: 'open',
+      },
     };
 
     const validatedSync = validateGHLSyncRequest(syncRequest);
-    expect(validatedSync.status).toBe('open');
+    expect(validatedSync.ghl.status).toBe('open');
 
     // Step 3: Check sync metadata
     const metadata = {

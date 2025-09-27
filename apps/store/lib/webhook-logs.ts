@@ -12,6 +12,7 @@ export type WebhookLogRecordInput = {
   landerId?: string | null;
   status: WebhookLogStatus;
   message?: string | null;
+  lastError?: string | null;
   metadata?: Record<string, unknown> | null;
 };
 

@@ -182,7 +182,7 @@ export function generateProductSchemaLD({
       ...(product.features?.map(feature => ({
         '@type': 'PropertyValue' as const,
         name: 'Feature',
-        value: typeof feature === 'string' ? feature : feature.text,
+        value: typeof feature === 'string' ? feature : (feature as any).text,
       })) || []),
     ],
     // Software-specific properties if applicable

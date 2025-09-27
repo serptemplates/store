@@ -23,23 +23,34 @@ const productSchema = generateProductSchemaLD({
     slug: 'test-downloader',
     name: 'Video Downloader Pro',
     description: 'Professional video downloading tool with advanced features',
+    seo_title: 'Video Downloader Pro - Best Video Download Tool',
+    seo_description: 'Download videos from anywhere with advanced features',
+    product_page_url: 'https://serp.app/video-downloader-pro',
+    purchase_url: 'https://serp.app/buy/video-downloader-pro',
     price: '49.99',
     images: ['/img1.jpg', '/img2.jpg', '/img3.jpg'],
+    tagline: 'Download videos like a pro',
     isDigital: true,
     platform: 'Web',
     categories: ['Software', 'Productivity'],
     keywords: ['download', 'video', 'tool'],
     features: [
-      { text: 'Batch downloading' },
-      { text: '4K video support' },
-      { text: 'Multiple format conversion' },
+      'Batch downloading',
+      '4K video support',
+      'Multiple format conversion',
     ],
     reviews: [
-      { name: 'John Doe', rating: 5, text: 'Excellent tool!', date: '2024-01-10' },
-      { name: 'Jane Smith', rating: 4, text: 'Very useful', date: '2024-01-15' },
-      { name: 'Bob Wilson', rating: 5, text: 'Worth every penny', date: '2024-01-20' },
+      { name: 'John Doe', review: 'Excellent tool!' },
+      { name: 'Jane Smith', review: 'Very useful' },
+      { name: 'Bob Wilson', review: 'Worth every penny' },
     ],
-  },
+    brand: 'SERP Apps',
+    pricing: {
+      price: '49.99',
+    },
+    layout_type: 'ecommerce' as const,
+    coming_soon: false,
+  } as any,
   url: 'https://serp.app/video-downloader-pro',
   storeUrl: 'https://serp.app',
   currency: 'USD',
@@ -58,9 +69,9 @@ console.log('  ✓ Shipping Details:', !!productSchema.offers.shippingDetails);
 // 2. REVIEW SNIPPETS (part of Product)
 console.log('\n2️⃣  Review Snippets');
 console.log('-'.repeat(40));
-console.log('  ✓ Aggregate Rating:', productSchema.aggregateRating.ratingValue);
-console.log('  ✓ Review Count:', productSchema.aggregateRating.reviewCount);
-console.log('  ✓ Individual Reviews:', productSchema.review.length, 'reviews');
+console.log('  ✓ Aggregate Rating:', productSchema.aggregateRating?.ratingValue);
+console.log('  ✓ Review Count:', productSchema.aggregateRating?.reviewCount);
+console.log('  ✓ Individual Reviews:', productSchema.review?.length, 'reviews');
 
 // 3. VIDEOS
 console.log('\n3️⃣  Videos');
