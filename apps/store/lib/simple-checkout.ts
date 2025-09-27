@@ -15,8 +15,11 @@ export async function createSimpleCheckout(params: {
   };
   affiliateId?: string;
 }) {
-  // Explicitly use the test key if env is not loaded
-  const stripeKey = process.env.STRIPE_SECRET_KEY || 'sk_test_51Rba2Z06JrOmKRCmYiQCi0Wm5bGMgq5GPlMUH3GlAHuz8AmYbXA0KPwCZPRXy5mnEW6W8lLrld62uDN3k853lWuo00G6qi77WC';
+  // Require STRIPE_SECRET_KEY to be set
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+  if (!stripeKey) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is not set');
+  }
 
   const stripe = new Stripe(stripeKey, {
     apiVersion: '2024-04-10' as any,

@@ -51,6 +51,7 @@
     "ajv-formats": "^3.0.1",
     "autoprefixer": "^10.4.20",
     "chrome-launcher": "^1.2.1",
+    "critters": "^0.0.25",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.33",
     "lighthouse": "^12.8.2",

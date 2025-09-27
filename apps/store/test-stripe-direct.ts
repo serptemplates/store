@@ -8,13 +8,18 @@ import Stripe from 'stripe';
 
 console.log('🧪 Testing Stripe Connection Directly\n');
 
-// Use the test key directly
-const STRIPE_KEY = 'sk_test_51Rba2Z06JrOmKRCmYiQCi0Wm5bGMgq5GPlMUH3GlAHuz8AmYbXA0KPwCZPRXy5mnEW6W8lLrld62uDN3k853lWuo00G6qi77WC';
+// Load environment variable
+const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_KEY) {
+  console.error('❌ STRIPE_SECRET_KEY environment variable is not set');
+  console.log('Please set it in .env.local file');
+  process.exit(1);
+}
 
 async function testStripe() {
   try {
     console.log('1️⃣ Initializing Stripe client...');
-    const stripe = new Stripe(STRIPE_KEY, {
+    const stripe = new Stripe(STRIPE_KEY!, {
       apiVersion: '2024-04-10' as any,
     });
 
