@@ -94,6 +94,37 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     }
   }, [affiliateId, isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
+  // Create a custom component for breadcrumbs that will be injected after the navbar
+  const BreadcrumbsSection = useCallback(() => (
+    <nav aria-label="Breadcrumb" className="w-full bg-gray-50 dark:bg-gray-900 border-b">
+      <div className="container mx-auto px-4">
+        <ol className="flex items-center space-x-2 py-3 text-sm">
+          <li>
+            <NextLink
+              href="/"
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+            >
+              Home
+            </NextLink>
+          </li>
+          <li className="text-gray-400 dark:text-gray-600">/</li>
+          <li>
+            <NextLink
+              href="/#products"
+              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+            >
+              Products
+            </NextLink>
+          </li>
+          <li className="text-gray-400 dark:text-gray-600">/</li>
+          <li className="text-gray-900 dark:text-gray-100 font-medium">
+            {product.name}
+          </li>
+        </ol>
+      </div>
+    </nav>
+  ), [product.name]);
+
   const Navbar = useCallback(
     () => (
       <>
@@ -110,7 +141,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
         <BreadcrumbsSection />
       </>
     ),
-    [handleCheckout, isCheckoutLoading, siteConfig, product, homeProps]
+    [BreadcrumbsSection, siteConfig, homeProps, product]
   );
 
   const Footer = useCallback(() => <FooterComposite />, []);
@@ -141,37 +172,6 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
       }
     ]
   };
-
-  // Create a custom component for breadcrumbs that will be injected after the navbar
-  const BreadcrumbsSection = () => (
-    <nav aria-label="Breadcrumb" className="w-full bg-gray-50 dark:bg-gray-900 border-b">
-      <div className="container mx-auto px-4">
-        <ol className="flex items-center space-x-2 py-3 text-sm">
-          <li>
-            <NextLink
-              href="/"
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-            >
-              Home
-            </NextLink>
-          </li>
-          <li className="text-gray-400 dark:text-gray-600">/</li>
-          <li>
-            <NextLink
-              href="/#products"
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-            >
-              Products
-            </NextLink>
-          </li>
-          <li className="text-gray-400 dark:text-gray-600">/</li>
-          <li className="text-gray-900 dark:text-gray-100 font-medium">
-            {product.name}
-          </li>
-        </ol>
-      </div>
-    </nav>
-  );
 
   return (
     <>
