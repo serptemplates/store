@@ -99,14 +99,19 @@ export function HomeTemplate({
   }
 
   if (Array.isArray(screenshots) && screenshots.length > 0) {
-    heroMediaItems.push(
-      ...screenshots.slice(0, 6).map((shot) => ({
+    const validScreenshots = screenshots
+      .filter(shot => shot.src && shot.src.trim() !== '')
+      .slice(0, 6)
+      .map((shot) => ({
         type: "image" as const,
         src: shot.src,
         alt: shot.alt,
         title: shot.alt,
-      }))
-    );
+      }));
+
+    if (validScreenshots.length > 0) {
+      heroMediaItems.push(...validScreenshots);
+    }
   }
 
   const defaultFeatures = [

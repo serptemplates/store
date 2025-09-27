@@ -34,6 +34,9 @@ export function ScreenshotsCarousel({
   autoSpeed = 200,
   pauseOnHover = true,
 }: ScreenshotsCarouselProps) {
+  // Filter out invalid images
+  const validImages = images.filter(img => img.src && img.src.trim() !== '');
+
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -108,16 +111,16 @@ export function ScreenshotsCarousel({
   const showPrev = useCallback(() => {
     setSelectedIndex((prev) => {
       if (prev === null) return prev;
-      return (prev - 1 + images.length) % images.length;
+      return (prev - 1 + validImages.length) % validImages.length;
     });
-  }, [images.length]);
+  }, [validImages.length]);
 
   const showNext = useCallback(() => {
     setSelectedIndex((prev) => {
       if (prev === null) return prev;
-      return (prev + 1) % images.length;
+      return (prev + 1) % validImages.length;
     });
-  }, [images.length]);
+  }, [validImages.length]);
 
   useEffect(() => {
     if (selectedIndex === null) {
@@ -143,6 +146,11 @@ export function ScreenshotsCarousel({
     return () => window.removeEventListener("keydown", handleKey);
   }, [selectedIndex, closeLightbox, showPrev, showNext]);
 
+  // Don't render anything if no valid images
+  if (validImages.length === 0) {
+    return null;
+  }
+
   return (
     <section className={cn("w-full", className)}>
       {title && (
@@ -166,7 +174,7 @@ export function ScreenshotsCarousel({
           onMouseLeave={pauseOnHover ? () => setIsHovered(false) : undefined}
         >
           <div className="flex items-stretch px-4" style={gapStyle}>
-            {images.map((img, i) => (
+            {validImages.map((img, i) => (
               <div
                 key={i}
                 className="image flex shrink-0 items-center justify-center"
@@ -193,7 +201,7 @@ export function ScreenshotsCarousel({
         </div>
       </div>
 
-      {selectedIndex !== null && images[selectedIndex] && (
+      {selectedIndex !== null && validImages[selectedIndex] && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 sm:p-10"
           role="dialog"
@@ -214,7 +222,7 @@ export function ScreenshotsCarousel({
               ×
             </button>
 
-            {images.length > 1 && (
+            {validImages.length > 1 && (
               <>
                 <button
                   type="button"
@@ -236,9 +244,9 @@ export function ScreenshotsCarousel({
             )}
 
             <img
-              src={images[selectedIndex].src}
-              srcSet={images[selectedIndex].srcSet}
-              alt={images[selectedIndex].alt ?? `Screenshot ${selectedIndex + 1}`}
+              src={validImages[selectedIndex].src}
+              srcSet={validImages[selectedIndex].srcSet}
+              alt={validImages[selectedIndex].alt ?? `Screenshot ${selectedIndex + 1}`}
               className="max-h-[90vh] w-full object-contain"
             />
           </div>
