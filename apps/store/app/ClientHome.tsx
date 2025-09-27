@@ -110,7 +110,8 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
         ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
         onCtaClick={handleCheckout}
         ctaDisabled={isCheckoutLoading}
-        showLinks={false}
+        blogHref="/blog"
+        showLinks={true}
       />
     ),
     [handleCheckout, isCheckoutLoading, siteConfig, product, homeProps]
