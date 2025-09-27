@@ -84,8 +84,8 @@ export function productToHomeTemplate(
   return {
     platform,
     videoUrl,
-    heroLightThumbnailSrc: product.featured_image,
-    heroDarkThumbnailSrc: product.featured_image_gif ?? product.featured_image,
+    heroLightThumbnailSrc: product.featured_image || undefined,
+    heroDarkThumbnailSrc: (product.featured_image_gif ?? product.featured_image) || undefined,
     heroVideoTitle: `${product.name} demo video`,
     heroTitle,
     heroDescription,

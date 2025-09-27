@@ -21,7 +21,7 @@ const stripeSchema = z.object({
   success_url: z.string().url(),
   cancel_url: z.string().url(),
   mode: z.enum(["payment", "subscription"]).optional(),
-  metadata: z.record(z.string()).optional().default({}),
+  metadata: z.record(z.any()).optional().default({}),
 });
 
 const ghlCustomFieldSchema = z.record(z.string());
@@ -61,9 +61,9 @@ export const productSchema = z.object({
   purchase_url: z.string().url(),
   name: z.string(),
   tagline: z.string(),
-  featured_image: z.string().optional(),
-  featured_image_gif: z.string().optional(),
-  github_repo_url: z.string().url().optional(),
+  featured_image: z.string().nullable().optional(),
+  featured_image_gif: z.string().nullable().optional(),
+  github_repo_url: z.string().url().nullable().optional(),
   github_repo_tags: z.array(z.string()).optional().default([]),
   features: z.array(z.string()).optional().default([]),
   description: z.string(),
@@ -79,6 +79,7 @@ export const productSchema = z.object({
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
+  layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),
 });
 
 export type ProductData = z.infer<typeof productSchema>;

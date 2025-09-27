@@ -1,43 +1,16 @@
 import Image from "next/image"
 import Link from "next/link"
-import type { Metadata, Route } from "next"
-import { notFound } from "next/navigation"
-
-import { formatPrice, getProductByHandle } from "@/lib/products-data"
+import type { Route } from "next"
+import { formatPrice } from "@/lib/products-data"
 import { getBrandLogoPath } from "@/lib/brand-logos"
-
-type ProductPageParams = {
-  handle: string
-}
-
-interface ProductPageProps {
-  params: Promise<ProductPageParams>
-}
 
 const SHOP_ROUTE = "/shop" satisfies Route
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { handle } = await params
-  const product = await getProductByHandle(handle)
-  if (!product) return {}
-
-  return {
-    title: product.metadata?.seo_title || `${product.title} - SERP Store`,
-    description: product.metadata?.seo_description || product.description,
-  }
-}
-
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { handle } = await params
-  const product = await getProductByHandle(handle)
-
-  if (!product) {
-    notFound()
-  }
-
-  const price = product.variants[0]?.prices[0]
+export default function EcommerceLayout({ product }: { product: any }) {
+  const price = product.variants?.[0]?.prices?.[0] || product.pricing
+  const handle = product.handle || product.slug
   const brandLogoPath = getBrandLogoPath(handle)
-  const mainImageSource = brandLogoPath || product.thumbnail
+  const mainImageSource = brandLogoPath || product.thumbnail || product.featured_image
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -48,7 +21,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <li>/</li>
           <li className="hover:text-gray-700">Products</li>
           <li>/</li>
-          <li className="text-gray-900 font-medium">{product.title}</li>
+          <li className="text-gray-900 font-medium">{product.title || product.name}</li>
         </ol>
       </nav>
 
@@ -59,7 +32,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {mainImageSource ? (
               <Image
                 src={mainImageSource}
-                alt={product.title}
+                alt={product.title || product.name}
                 fill
                 className={`${brandLogoPath ? 'object-contain p-12' : 'object-cover'}`}
                 unoptimized
@@ -76,11 +49,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Additional Images */}
           {product.images && product.images.length > 1 && (
             <div className="grid grid-cols-4 gap-2 mt-4">
-              {product.images.slice(0, 4).map((image, index) => (
+              {product.images.slice(0, 4).map((image: any, index: number) => (
                 <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
                   <Image
                     src={image.url}
-                    alt={`${product.title} ${index + 1}`}
+                    alt={`${product.title || product.name} ${index + 1}`}
                     fill
                     className="object-cover cursor-pointer hover:opacity-80 transition"
                     unoptimized
@@ -93,16 +66,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         {/* Product Info */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.title}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.title || product.name}</h1>
 
           {price && (
             <div className="mb-6">
               <p className="text-3xl font-semibold text-gray-900">
-                {formatPrice(price.amount, price.currency_code)}
+                {price.amount ? formatPrice(price.amount, price.currency_code) : price.price}
               </p>
-              {product.metadata?.original_price && (
+              {(product.metadata?.original_price || price.original_price) && (
                 <p className="text-lg text-gray-500 line-through">
-                  {product.metadata.original_price}
+                  {product.metadata?.original_price || price.original_price}
                 </p>
               )}
             </div>
@@ -115,12 +88,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Add to Cart */}
           <div className="flex gap-4 mb-8">
             <a
-              href={product.metadata?.stripe_price_id
+              href={product.stripe?.price_id
+                ? `/api/checkout?price_id=${product.stripe.price_id}`
+                : product.metadata?.stripe_price_id
                 ? `https://buy.stripe.com/test/${product.metadata.stripe_price_id}`
-                : "#"}
+                : product.purchase_url || "#"}
               className="flex-1 bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
-              Buy Now
+              {product.pricing?.cta_text || "Buy Now"}
             </a>
             <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,11 +105,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* Features */}
-          {product.metadata?.features && (
+          {(product.features || product.metadata?.features) && (
             <div className="border-t pt-6">
               <h3 className="font-semibold text-lg mb-4">Features</h3>
               <ul className="space-y-2">
-                {product.metadata.features.map((feature: string, index: number) => (
+                {(product.features || product.metadata.features).map((feature: string, index: number) => (
                   <li key={index} className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -147,11 +122,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
 
           {/* Benefits */}
-          {product.metadata?.benefits && (
+          {(product.pricing?.benefits || product.metadata?.benefits) && (
             <div className="border-t pt-6 mt-6">
               <h3 className="font-semibold text-lg mb-4">What You Get</h3>
               <ul className="space-y-2">
-                {product.metadata.benefits.map((benefit: string, index: number) => (
+                {(product.pricing?.benefits || product.metadata.benefits).map((benefit: string, index: number) => (
                   <li key={index} className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -188,10 +163,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* GitHub Link */}
-          {product.metadata?.github_repo_url && (
+          {(product.github_repo_url || product.metadata?.github_repo_url) && (
             <div className="mt-6">
               <a
-                href={product.metadata.github_repo_url}
+                href={product.github_repo_url || product.metadata.github_repo_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900"
@@ -205,6 +180,30 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
         </div>
       </div>
+
+      {/* Product Schema Markup */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: product.title || product.name,
+            description: product.description,
+            image: mainImageSource,
+            offers: {
+              "@type": "Offer",
+              price: price?.amount || price?.price || "0",
+              priceCurrency: price?.currency_code || "USD",
+              availability: "https://schema.org/InStock",
+              seller: {
+                "@type": "Organization",
+                name: "SERP Apps"
+              }
+            }
+          })
+        }}
+      />
     </div>
   )
 }

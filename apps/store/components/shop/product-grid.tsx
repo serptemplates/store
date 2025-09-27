@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Product, formatPrice } from "@/lib/products-data"
+import { getBrandLogoPath } from "@/lib/brand-logos"
 
 interface ProductGridProps {
   products: Product[]
@@ -20,6 +21,9 @@ export function ProductGrid({ products }: ProductGridProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {products.map((product) => {
         const price = product.variants[0]?.prices[0]
+        const brandLogoPath = getBrandLogoPath(product.handle)
+        const imageSource = brandLogoPath || product.thumbnail
+
         return (
           <Link
             key={product.id}
@@ -27,12 +31,12 @@ export function ProductGrid({ products }: ProductGridProps) {
             className="group"
           >
             <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
-              {product.thumbnail ? (
+              {imageSource ? (
                 <Image
-                  src={product.thumbnail}
+                  src={imageSource}
                   alt={product.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className={`${brandLogoPath ? 'object-contain p-8' : 'object-cover'} group-hover:scale-105 transition-transform duration-300`}
                   unoptimized // For external images
                 />
               ) : (

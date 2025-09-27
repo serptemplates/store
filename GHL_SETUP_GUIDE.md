@@ -1,6 +1,10 @@
 # GoHighLevel Integration Setup Guide
 
-This guide explains how to configure products to sync purchases with GoHighLevel CRM.
+- [ ] everything on our site is performant (98+) lighthouse
+- [ ] mobile responsive
+- [ ] other performance checks
+- [ ] seo meta stuff optimized
+- [ ] xml sitemap
 
 ## 1. Environment Variables
 
@@ -145,3 +149,4 @@ The system includes:
 ### Affiliate ID not tracked
 - Ensure `GHL_AFFILIATE_FIELD_ID` is set in environment
 - URL must include `?aff=xxx` or `?affiliate=xxx` parameter
+- add one of those "social proof soandso just bought" things

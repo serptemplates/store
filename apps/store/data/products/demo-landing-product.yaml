@@ -1,0 +1,164 @@
+slug: demo-landing-product
+platform: gumroad
+seo_title: AI Content Generator Pro - Create Viral Content in Seconds | SERP Apps
+seo_description: Revolutionary AI-powered content creation tool that generates blog posts, social media content, and marketing copy in seconds. Trained on millions of viral posts.
+product_page_url: https://serp.app/demo-landing-product
+purchase_url: https://serp.app/checkout/demo-landing-product
+name: AI Content Generator Pro
+tagline: Create Viral Content That Converts - Powered by Advanced AI
+featured_image: /images/ai-content-hero.jpg
+featured_image_gif: /images/ai-content-demo.gif
+github_repo_url: null
+github_repo_tags: []
+features:
+  - Generate blog posts up to 10,000 words in under 60 seconds
+  - 150+ content templates for every use case
+  - AI trained on 10M+ viral posts and high-converting copy
+  - Built-in SEO optimizer with keyword research
+  - Multi-language support (50+ languages)
+  - Tone and style customization for brand consistency
+  - Plagiarism checker and fact verification
+  - Direct publishing to WordPress, Medium, LinkedIn
+  - Team collaboration with unlimited seats
+  - API access for automation workflows
+  - Image generation with DALL-E 3 integration
+  - Content calendar and scheduling tools
+description: |
+  Stop struggling with writer's block and expensive content creators. AI Content Generator Pro
+  uses cutting-edge artificial intelligence to create engaging, original content that ranks
+  and converts.
+
+  Our proprietary AI model has been trained on millions of high-performing posts, ads, and
+  articles to understand what makes content successful. Whether you need blog posts, social
+  media content, email campaigns, or sales copy, our tool delivers professional results in seconds.
+
+  Perfect for:
+  - Digital marketers scaling content production
+  - Bloggers maintaining consistent posting schedules
+  - E-commerce stores needing product descriptions
+  - Agencies managing multiple client accounts
+  - Startups bootstrapping their content marketing
+product_videos:
+  - https://www.youtube.com/watch?v=ai-demo-2024
+  - https://vimeo.com/ai-content-case-study
+related_videos:
+  - https://www.youtube.com/watch?v=content-marketing-2024
+  - https://www.youtube.com/watch?v=ai-tools-comparison
+screenshots:
+  - url: /images/ai-dashboard.jpg
+    alt: AI Content Generator Dashboard
+    caption: Clean, intuitive dashboard for all your content needs
+  - url: /images/ai-templates.jpg
+    alt: 150+ Professional Templates
+    caption: Templates for every content type and industry
+  - url: /images/ai-seo-optimizer.jpg
+    alt: Built-in SEO Optimization
+    caption: Rank higher with AI-powered SEO suggestions
+  - url: /images/ai-results.jpg
+    alt: Generated Content Examples
+    caption: Professional content ready to publish
+reviews:
+  - name: David Martinez (Digital Marketing Agency)
+    review: "We've 10x'd our content output without hiring more writers. The AI understands our clients' voices perfectly. ROI is insane!"
+  - name: Rachel Kim (E-commerce Entrepreneur)
+    review: "Generated 500+ product descriptions in one afternoon. Sales increased 40% with the SEO-optimized copy. Game changer!"
+  - name: Tom Bradley (Tech Blogger)
+    review: "I publish daily now instead of weekly. The AI handles research, writing, and SEO. I just review and publish. My traffic tripled!"
+  - name: Sofia Chen (Startup Founder)
+    review: "Replaced our $5000/month content agency. The AI writes better copy and it's available 24/7. Best investment we've made."
+  - name: Marcus Johnson (YouTube Creator)
+    review: "Scripts, titles, descriptions, even tweet threads - this AI does it all. My channel grew from 10K to 100K subs in 3 months."
+faqs:
+  - question: Is the content truly original and plagiarism-free?
+    answer: Yes! Every piece is generated fresh using AI, not copied. We include a plagiarism checker to verify originality. Google loves our content!
+  - question: Can it write in my brand's specific tone and style?
+    answer: Absolutely! Train the AI on your existing content or manually set tone, style, and voice parameters. It learns and improves over time.
+  - question: How is this different from ChatGPT or other AI tools?
+    answer: We're specifically trained on high-converting marketing content with built-in SEO, templates, publishing tools, and workflow automation ChatGPT doesn't offer.
+  - question: What if I need help or the AI doesn't understand my niche?
+    answer: Our support team provides custom training for unique niches. Plus, you get access to our community of 50,000+ users sharing tips and templates.
+  - question: Can multiple team members use one account?
+    answer: Yes! Unlimited team seats included. Set permissions, share templates, and collaborate on content with built-in workflow tools.
+  - question: Is there an API for integration with my existing tools?
+    answer: Yes, full REST API included with webhook support. Integrate with Zapier, Make, or build custom automations. Documentation and support included.
+supported_operating_systems:
+  - Web-based (Chrome, Firefox, Safari, Edge)
+  - iOS App
+  - Android App
+  - WordPress Plugin
+  - Chrome Extension
+status: bestseller
+categories:
+  - AI Tools
+  - Content Creation
+  - Marketing Automation
+  - SEO Tools
+keywords:
+  - ai content generator
+  - ai writing tool
+  - content creation software
+  - automated blog writer
+  - seo content generator
+  - marketing copywriter ai
+  - content automation
+  - ai copywriting tool
+pricing:
+  label: Lifetime Access - BLACK FRIDAY DEAL
+  price: "$297"
+  original_price: "$997"
+  note: "⚡ ENDING SOON: Save $700 + Lock in lifetime updates (normally $97/mo)"
+  cta_text: Claim Your Lifetime License Now
+  cta_href: /checkout/ai-content-lifetime
+  benefits:
+    - Lifetime access - never pay again (worth $1,164/year)
+    - Generate unlimited content forever
+    - All current and future features included
+    - 150+ templates (new ones added monthly)
+    - Unlimited team members ($297 value)
+    - Priority GPT-4 processing
+    - API access for automation
+    - White-label rights for agencies
+    - 60-day money-back guarantee
+    - Join 50,000+ successful users
+stripe:
+  price_id: price_AI_LIFETIME_2024
+  success_url: https://serp.app/welcome/ai-content-generator
+  cancel_url: https://serp.app/ai-content-generator
+  mode: payment
+  metadata:
+    product_type: saas_lifetime
+    onboarding_required: "true"
+    community_access: "true"
+ghl:
+  pipeline_id: pipeline_high_ticket
+  stage_id: stage_onboarding
+  status: vip_customer
+  source: black_friday_sale
+  tag_ids:
+    - tag_ai_tools
+    - tag_lifetime_deal
+    - tag_high_value
+    - tag_black_friday_2024
+  workflow_ids:
+    - workflow_ai_onboarding
+    - workflow_community_invite
+    - workflow_training_sequence
+  opportunity_name_template: "AI Content Pro LIFETIME - {{contact.name}}"
+  contact_custom_field_ids:
+    product_purchased: ai_content_lifetime
+    license_type: lifetime_unlimited
+    purchase_value: "297.00"
+    potential_ltv: "5000.00"
+  opportunity_custom_field_ids:
+    deal_type: black_friday_lifetime
+    saved_amount: "700.00"
+    recurring_value_lost: "97.00"
+
+# Product Layout Configuration
+layout_type: landing  # Use high-converting landing page style
+show_countdown_timer: true
+show_social_proof: true
+show_money_back_guarantee: true
+show_testimonial_videos: true
+enable_exit_intent_popup: true
+enable_scarcity_messaging: true
