@@ -10,12 +10,6 @@ const isStaticExport = process.env.STATIC_EXPORT === "1";
 const nextConfig = {
   transpilePackages: ["@repo/ui", "@repo/templates"],
 
-  // Enable SWC minification for better performance
-  swcMinify: true,
-
-  // Optimize fonts
-  optimizeFonts: true,
-
   // Enable compression
   compress: true,
 
@@ -76,8 +70,11 @@ const nextConfig = {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name(module) {
-              // Get package name
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              // Get package name safely
+              if (!module.context) return 'vendor-common';
+              const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+              if (!match) return 'vendor-common';
+              const packageName = match[1];
               // Group small packages together, split large ones
               if (packageName.includes('next')) return 'next-vendor';
               if (packageName.includes('@')) return 'vendor-scoped';
