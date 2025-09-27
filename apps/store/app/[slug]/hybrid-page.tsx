@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import {
   TestimonialsSection,
   FaqSection,
@@ -17,6 +18,10 @@ import type { SiteConfig } from "@/lib/site-config";
 import { getBrandLogoPath } from "@/lib/brand-logos";
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge } from "@repo/ui";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
+import { ProductStructuredData } from "@/schema/structured-data-components";
+import { PayPalCheckoutButton } from "@/components/paypal-button";
+import { generateProductSchemaLD, generateBreadcrumbSchema } from "@/schema/product-schema-ld";
+import { generateWebApplicationSchema } from "@/schema/software-app-schema";
 
 export type HybridPageProps = {
   product: ProductData;
@@ -39,8 +44,72 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
 
   const allImages = [
     mainImageSource,
-    ...(product.screenshots || []).map((s) => s.url)
+    ...(product.screenshots || []).map((s) => typeof s === 'string' ? s : s.url)
   ].filter(Boolean);
+
+  const affiliateId = typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('ref') || ''
+    : '';
+
+  // Generate schema.org structured data for Google Shopping
+  const productSchema = generateProductSchemaLD({
+    product: {
+      slug: handle,
+      name: product.name,
+      description: product.description,
+      price: price?.price ? price.price.replace(/[^0-9.]/g, '') : '0',
+      images: allImages as string[],
+      tagline: product.tagline,
+      isDigital: true,
+      platform: product.platform,
+      categories: product.categories,
+      keywords: product.keywords,
+      features: product.features,
+      reviews: product.reviews,
+    },
+    url: `https://serp.app/${handle}`,
+    storeUrl: 'https://serp.app',
+    currency: 'USD',
+    comingSoon: product.coming_soon || false,
+    expectedLaunchDate: undefined,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: product.name },
+    ],
+    storeUrl: 'https://serp.app',
+  });
+
+  // Generate SoftwareApplication schema for app products
+  const softwareAppSchema = generateWebApplicationSchema({
+    name: product.name,
+    description: product.description || product.tagline || '',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      price: product.pricing?.price?.replace(/[^0-9.]/g, '') || '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: product.reviews && product.reviews.length > 0 ? {
+      ratingValue: product.reviews.reduce((sum, r) => sum + ((r as any).rating || 5), 0) / product.reviews.length,
+      ratingCount: product.reviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    } : undefined,
+    screenshot: product.screenshots?.map(s => typeof s === 'string' ? s : s.url) || [mainImageSource],
+    softwareVersion: '1.0',
+    url: `https://serp.app/${handle}`,
+    downloadUrl: product.purchase_url,
+    author: {
+      name: 'SERP Apps',
+      url: 'https://serp.app',
+    },
+    datePublished: new Date().toISOString(),
+    featureList: product.features?.map(f => typeof f === 'string' ? f : (f as any).text || (f as any).title),
+    browserRequirements: 'Requires a modern web browser with JavaScript enabled',
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,8 +166,81 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
 
   const Footer = useCallback(() => <FooterComposite />, []);
 
+  const productUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/${product.slug}`
+    : `https://store.com/${product.slug}`;
+
   return (
     <>
+      {/* Structured Data for SEO - Product, Breadcrumb, FAQ, Video, etc. */}
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema),
+        }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      {/* SoftwareApplication schema for app products */}
+      <Script
+        id="software-app-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(softwareAppSchema),
+        }}
+      />
+      {/* FAQ Schema */}
+      {homeProps.faqs && homeProps.faqs.length > 0 && (
+        <Script
+          id="faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: homeProps.faqs.map(faq => ({
+                '@type': 'Question',
+                name: faq.question,
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: faq.answer,
+                },
+              })),
+            }),
+          }}
+        />
+      )}
+      {/* Video Schema */}
+      {product.product_videos && product.product_videos.length > 0 && product.product_videos.map((video, idx) => {
+        const videoId = video.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+        return (
+          <Script
+            key={`video-schema-${idx}`}
+            id={`video-schema-${idx}`}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'VideoObject',
+                name: `${product.name} Demo Video ${idx + 1}`,
+                description: `Product demonstration for ${product.name}`,
+                thumbnailUrl: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : mainImageSource,
+                uploadDate: new Date().toISOString(),
+                contentUrl: video,
+                embedUrl: video.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/'),
+              }),
+            }}
+          />
+        );
+      })}
+      <ProductStructuredData product={product} url={productUrl} />
+
       {/* Site Header/Navbar */}
       <header className="bg-white border-b">
         <div className="container mx-auto px-4">
@@ -166,8 +308,16 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                {isCheckoutLoading ? "Processing..." : "Buy Now"}
+                {isCheckoutLoading ? "Processing..." : "Buy Now with Card"}
               </button>
+              <PayPalCheckoutButton
+                offerId={product.slug}
+                price={product.pricing?.price || "$0"}
+                quantity={1}
+                affiliateId={affiliateId}
+                className="px-6 py-2 rounded-lg font-semibold"
+                buttonText="PayPal"
+              />
             </div>
           </div>
         </div>
@@ -246,23 +396,36 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
             {/* Price */}
             {price && (
               <div className="mb-6">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-4xl font-bold text-gray-900">
-                    {price.price}
-                  </span>
-                  {price.original_price && (
-                    <>
-                      <span className="text-2xl text-gray-400 line-through">
-                        {price.original_price}
+                {product.coming_soon ? (
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                      Coming Soon
+                    </span>
+                    {price.price && (
+                      <span className="text-2xl text-gray-500">
+                        Expected: {price.price}
                       </span>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                        {Math.round(((parseFloat(price.original_price.replace('$', '')) -
-                          parseFloat((price.price || '$0').replace('$', ''))) /
-                          parseFloat(price.original_price.replace('$', ''))) * 100)}% OFF
-                      </span>
-                    </>
-                  )}
-                </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-4xl font-bold text-gray-900">
+                      {price.price}
+                    </span>
+                    {price.original_price && (
+                      <>
+                        <span className="text-2xl text-gray-400 line-through">
+                          {price.original_price}
+                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                          {Math.round(((parseFloat(price.original_price.replace('$', '')) -
+                            parseFloat((price.price || '$0').replace('$', ''))) /
+                            parseFloat(price.original_price.replace('$', ''))) * 100)}% OFF
+                        </span>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 
@@ -292,15 +455,40 @@ export default function HybridPage({ product, posts, siteConfig }: HybridPagePro
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex gap-4 mb-8">
-              <button
-                onClick={handleCheckout}
-                disabled={isCheckoutLoading}
-                className="flex-1 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-              >
-                {isCheckoutLoading ? "Processing..." : (price?.cta_text || "Get Instant Access")}
-              </button>
-              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+            <div className="flex flex-col gap-4 mb-8">
+              {product.coming_soon ? (
+                // Coming Soon / Waitlist Mode
+                <button
+                  onClick={() => {
+                    if (product.waitlist_url) {
+                      window.open(product.waitlist_url, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                  className="w-full bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+                >
+                  Join Waitlist
+                </button>
+              ) : (
+                // Regular Purchase Mode
+                <>
+                  <button
+                    onClick={handleCheckout}
+                    disabled={isCheckoutLoading}
+                    className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                  >
+                    {isCheckoutLoading ? "Processing..." : (price?.cta_text || "Get Instant Access with Card")}
+                  </button>
+                  <PayPalCheckoutButton
+                    offerId={product.slug}
+                    price={product.pricing?.price || "$0"}
+                    quantity={1}
+                    affiliateId={affiliateId}
+                    className="w-full"
+                    buttonText="Pay with PayPal"
+                  />
+                </>
+              )}
+              <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition w-full">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />

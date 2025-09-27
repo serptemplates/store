@@ -1,7 +1,14 @@
 import { getAllProducts } from "@/lib/product";
 import { Badge } from "@repo/ui/badge";
 import NextLink from "next/link";
-import { ProductsFilter } from "../components/ProductsFilter";
+import Script from "next/script";
+import dynamic from "next/dynamic";
+
+// Lazy load the ProductsFilter component to reduce initial bundle
+const ProductsFilter = dynamic(() => import("../components/ProductsFilter").then(mod => ({ default: mod.ProductsFilter })), {
+  ssr: true,
+  loading: () => <div className="min-h-[400px] animate-pulse bg-muted/20 rounded-lg" />
+});
 import type { ProductData } from "@/lib/product-schema";
 
 const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
@@ -143,6 +150,65 @@ const heroDescription =
 export default function Page() {
   const products = getAllProducts();
 
+  // Organization schema for homepage
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'SERP Apps',
+    url: 'https://serp.app',
+    logo: 'https://serp.app/logo.png',
+    description: 'Browse the full SERP Apps catalog of downloaders, automations, and growth tools.',
+    sameAs: [
+      'https://github.com/serpapps',
+      'https://twitter.com/serpapps',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: 'support@serp.app',
+      url: 'https://serp.app/support',
+    },
+  };
+
+  // WebSite schema with search action
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'SERP Apps',
+    url: 'https://serp.app',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://serp.app/search?q={search_term_string}'
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
+  // CollectionPage schema for the product listing
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'SERP Apps Product Catalog',
+    description: 'Browse all available download automation tools and growth apps',
+    url: 'https://serp.app',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: products.length,
+      itemListElement: products.slice(0, 10).map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          name: product.name,
+          url: `https://serp.app/${product.slug}`,
+          description: product.description || product.tagline,
+        }
+      }))
+    }
+  };
+
   const productLinks = products
     .map((product) => ({ slug: product.slug, name: product.name }))
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -174,6 +240,30 @@ export default function Page() {
   });
 
   return (
+    <>
+      {/* Schema.org structured data */}
+      <Script
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema),
+        }}
+      />
+      <Script
+        id="collection-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionSchema),
+        }}
+      />
+
     <div className="flex min-h-screen flex-col bg-background">
       <header className="relative z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <nav className="container flex h-16 items-center justify-between">
@@ -254,5 +344,6 @@ export default function Page() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

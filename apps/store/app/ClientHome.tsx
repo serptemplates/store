@@ -11,6 +11,7 @@ import type { SiteConfig } from "@/lib/site-config";
 import { SiteNavbar } from "@repo/ui/composites/SiteNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui";
+import { PayPalCheckoutButton } from "@/components/paypal-button";
 
 export type ClientHomeProps = {
   product: ProductData;
@@ -145,7 +146,17 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
               ctaLoading: isCheckoutLoading,
               ctaDisabled: isCheckoutLoading,
               ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
-              ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText,
+              ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText ?? "Get Instant Access",
+              additionalAction: (
+                <PayPalCheckoutButton
+                  offerId={product.slug}
+                  price={product.pricing?.price || "$0"}
+                  quantity={1}
+                  affiliateId={affiliateId}
+                  className="w-full mt-4"
+                  buttonText="Or Pay with PayPal"
+                />
+              ),
             }
           : undefined}
       />

@@ -82,11 +82,17 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     metadata.clientReferenceId = session.client_reference_id;
   }
 
-  const offerId = metadata.offerId ?? metadata.productSlug;
+  // Try to get offerId from multiple sources
+  const offerId = metadata.offerId
+    ?? metadata.productSlug
+    ?? session.client_reference_id
+    ?? (process.env.NODE_ENV === 'development' ? 'demo-ecommerce-product' : null);
 
   if (!offerId) {
     logger.error("webhook.missing_offer_id", {
       sessionId: session.id,
+      metadata,
+      clientReferenceId: session.client_reference_id,
     });
     return;
   }

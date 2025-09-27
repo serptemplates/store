@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 
 import { format } from "date-fns";
@@ -15,6 +16,7 @@ import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 
 import { mdxComponents } from "@/components/mdx-components";
+import { generateArticleSchema, generateBreadcrumbSchema } from "@/schema";
 
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -64,7 +66,49 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const ctaHref = siteConfig.cta?.href;
   const ctaText = siteConfig.cta?.text ?? "Checkout";
 
+  // Generate Article schema for SEO
+  const articleSchema = generateArticleSchema({
+    headline: post.meta.title,
+    description: post.meta.description,
+    image: post.meta.image || 'https://serp.app/og-image.png',
+    datePublished: post.meta.date,
+    dateModified: post.meta.dateModified || post.meta.date,
+    author: {
+      name: post.meta.author,
+    },
+    url: `https://serp.app/blog/${slug}`,
+    wordCount: post.content.split(' ').length,
+    keywords: post.meta.tags,
+    articleSection: post.meta.category,
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog' },
+      { name: post.meta.title },
+    ],
+    storeUrl: 'https://serp.app',
+  });
+
   return (
+    <>
+      {/* Article schema for SEO */}
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
     <div className="flex min-h-screen flex-col bg-background">
       <SiteNavbar
         site={{ name: siteName, categories: [], buyUrl: ctaHref }}
@@ -152,5 +196,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <FooterComposite />
     </div>
+    </>
   );
 }

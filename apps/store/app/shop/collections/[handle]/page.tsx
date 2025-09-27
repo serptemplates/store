@@ -2,9 +2,9 @@ import { ProductGrid } from "@/components/shop/product-grid"
 import { getProductsByCollection } from "@/lib/products-data"
 
 interface CollectionPageProps {
-  params: {
+  params: Promise<{
     handle: string
-  }
+  }>
 }
 
 export function generateStaticParams() {
@@ -17,6 +17,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CollectionPageProps) {
+  const { handle } = await params;
   const titles: Record<string, string> = {
     "video-downloaders": "Video Downloaders",
     "learning-tools": "Learning Tools",
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: CollectionPageProps) {
     "all": "All Products"
   }
 
-  const title = titles[params.handle] || "Collection"
+  const title = titles[handle] || "Collection"
 
   return {
     title: `${title} - SERP Store`,
@@ -33,7 +34,8 @@ export async function generateMetadata({ params }: CollectionPageProps) {
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
-  const products = await getProductsByCollection(params.handle)
+  const { handle } = await params;
+  const products = await getProductsByCollection(handle)
   const collections: Record<string, { title: string; description: string }> = {
     "video-downloaders": {
       title: "Video Downloaders",
@@ -53,7 +55,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     }
   }
 
-  const collection = collections[params.handle] || collections.all
+  const collection = collections[handle] || collections.all
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -98,12 +100,12 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       <ProductGrid products={products} />
 
       {/* Related Collections */}
-      {params.handle !== "all" && (
+      {handle !== "all" && (
         <div className="mt-16">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Other Collections</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {Object.entries(collections)
-              .filter(([key]) => key !== params.handle && key !== "all")
+              .filter(([key]) => key !== handle && key !== "all")
               .map(([key, value]) => (
                 <a
                   key={key}

@@ -1,10 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
+import Script from "next/script"
 import type { Metadata, Route } from "next"
 import { notFound } from "next/navigation"
 
 import { formatPrice, getProductByHandle } from "@/lib/products-data"
 import { getBrandLogoPath } from "@/lib/brand-logos"
+import { generateProductSchemaLD, generateBreadcrumbSchema } from "@/schema/product-schema-ld"
 
 type ProductPageParams = {
   handle: string
@@ -39,7 +41,55 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const brandLogoPath = getBrandLogoPath(handle)
   const mainImageSource = brandLogoPath || product.thumbnail
 
+  // Generate schema.org structured data for Google Shopping
+  const productSchema = generateProductSchemaLD({
+    product: {
+      slug: handle,
+      name: product.title,
+      description: product.description || '',
+      price: price?.amount ? (price.amount / 100).toString() : '0',
+      images: product.images?.map(img => img.url) || [mainImageSource || '/api/og'],
+      tagline: (product as any).subtitle,
+      isDigital: true,
+      platform: product.metadata?.platform,
+      categories: (product as any).categories?.map((c: any) => c.name),
+      keywords: product.tags?.map(t => t.value),
+      features: product.metadata?.features,
+      reviews: product.metadata?.reviews,
+    },
+    url: `https://serp.app/shop/products/${handle}`,
+    storeUrl: 'https://serp.app',
+    currency: price?.currency_code?.toUpperCase() || 'USD',
+  })
+
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Home', url: '/' },
+      { name: 'Shop', url: '/shop' },
+      { name: 'Products', url: '/shop/products' },
+      { name: product.title },
+    ],
+    storeUrl: 'https://serp.app',
+  })
+
   return (
+    <>
+      {/* Schema.org JSON-LD for Google Shopping */}
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema),
+        }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <nav className="text-sm mb-6">
@@ -206,5 +256,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </div>
     </div>
+    </>
   )
 }

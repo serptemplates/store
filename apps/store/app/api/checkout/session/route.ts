@@ -43,8 +43,42 @@ export async function POST(request: NextRequest) {
 
   const offer = getOfferConfig(parsedBody.offerId);
 
+  // If no Stripe configuration, use simple checkout
   if (!offer) {
-    return buildErrorResponse(`Offer ${parsedBody.offerId} is not configured`, 404);
+    try {
+      const { createSimpleCheckout } = await import('@/lib/simple-checkout');
+      const session = await createSimpleCheckout({
+        offerId: parsedBody.offerId,
+        quantity: parsedBody.quantity,
+        metadata: parsedBody.metadata,
+        customer: parsedBody.customer,
+        affiliateId: parsedBody.affiliateId,
+      });
+
+      // Save to database
+      await markStaleCheckoutSessions();
+      await upsertCheckoutSession({
+        stripeSessionId: session.id,
+        paymentIntentId: session.payment_intent as string | null,
+        offerId: parsedBody.offerId,
+        landerId: parsedBody.offerId,
+        customerEmail: parsedBody.customer?.email || null,
+        metadata: {
+          ...parsedBody.metadata,
+          affiliateId: parsedBody.affiliateId,
+        },
+        status: 'pending',
+        source: 'stripe',
+      });
+
+      return NextResponse.json({
+        id: session.id,
+        url: session.url,
+      });
+    } catch (error) {
+      console.error('Simple checkout failed:', error);
+      return buildErrorResponse(`Checkout failed: ${error.message}`, 502);
+    }
   }
 
   const stripe = getStripeClient();

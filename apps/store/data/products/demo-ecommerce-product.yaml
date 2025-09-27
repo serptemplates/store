@@ -129,9 +129,9 @@ stripe:
 ghl:
   pipeline_id: pipeline_abc123
   stage_id: stage_new_customer
-  status: active_customer
+  status: open  # Must be: open, won, lost, or abandoned
   source: website_purchase
-  tag_ids:
+  tag_ids:  # Tags are applied to contact, not opportunity
     - tag_video_tools
     - tag_premium_customer
     - tag_lifetime_license

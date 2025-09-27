@@ -80,6 +80,12 @@ export const productSchema = z.object({
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
   layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),
+  // Coming soon / Waitlist fields
+  coming_soon: z.boolean().optional().default(false),
+  waitlist_url: z.string().url().optional(),
+  // Google Merchant fields
+  brand: z.string().optional().default('SERP Apps'),
+  sku: z.string().optional(),
 });
 
 export type ProductData = z.infer<typeof productSchema>;

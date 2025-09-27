@@ -1,0 +1,137 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+// Define redirect mappings from old GHL store URLs to new URLs
+const REDIRECT_MAPPINGS: Record<string, string> = {
+  // Old GHL store URLs -> New store URLs
+  "/store/product-1": "/demo-ecommerce-product",
+  "/store/product-2": "/demo-landing-product",
+  "/ghl/checkout": "/checkout",
+  "/ghl/success": "/checkout/success",
+
+  // Add more mappings as needed
+  "/old-product-url": "/new-product-slug",
+  "/legacy/store": "/shop",
+
+  // Category redirects
+  "/category/downloaders": "/shop?category=downloaders",
+  "/category/tools": "/shop?category=tools",
+
+  // Common GHL paths
+  "/funnel/*": "/", // Redirect all funnel pages to home for now
+  "/v2/*": "/", // Old version paths
+};
+
+// Regex patterns for dynamic redirects
+const DYNAMIC_REDIRECTS = [
+  {
+    // Redirect GHL funnel URLs with IDs
+    pattern: /^\/funnels\/([a-zA-Z0-9]+)\/pages\/([a-zA-Z0-9]+)$/,
+    redirect: (match: RegExpMatchArray) => `/product/${match[1]}`,
+  },
+  {
+    // Redirect old product URLs with query params
+    pattern: /^\/products\?id=([a-zA-Z0-9-]+)$/,
+    redirect: (match: RegExpMatchArray) => `/${match[1]}`,
+  },
+];
+
+export function middleware(request: NextRequest) {
+  const { pathname, search } = request.nextUrl;
+  const fullPath = `${pathname}${search}`;
+
+  // Check static redirects first
+  if (REDIRECT_MAPPINGS[pathname]) {
+    return NextResponse.redirect(
+      new URL(REDIRECT_MAPPINGS[pathname], request.url),
+      301 // Permanent redirect
+    );
+  }
+
+  // Check wildcard redirects
+  for (const [pattern, target] of Object.entries(REDIRECT_MAPPINGS)) {
+    if (pattern.endsWith("/*")) {
+      const basePath = pattern.slice(0, -2);
+      if (pathname.startsWith(basePath)) {
+        return NextResponse.redirect(
+          new URL(target, request.url),
+          301
+        );
+      }
+    }
+  }
+
+  // Check dynamic redirects
+  for (const { pattern, redirect } of DYNAMIC_REDIRECTS) {
+    const match = fullPath.match(pattern);
+    if (match) {
+      const targetPath = redirect(match);
+      return NextResponse.redirect(
+        new URL(targetPath, request.url),
+        301
+      );
+    }
+  }
+
+  // UTM parameter preservation for marketing campaigns
+  if (search.includes("utm_") || search.includes("ref=") || search.includes("affiliateId=")) {
+    // Preserve UTM parameters when redirecting
+    const url = request.nextUrl.clone();
+
+    // Store UTM parameters in cookies for attribution tracking
+    const response = NextResponse.next();
+    const searchParams = new URLSearchParams(search);
+
+    // Set cookies for tracking (30 day expiry)
+    const cookieOptions = {
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      httpOnly: false,
+      sameSite: 'lax' as const,
+      secure: process.env.NODE_ENV === 'production',
+    };
+
+    if (searchParams.get('utm_source')) {
+      response.cookies.set('utm_source', searchParams.get('utm_source')!, cookieOptions);
+    }
+    if (searchParams.get('utm_medium')) {
+      response.cookies.set('utm_medium', searchParams.get('utm_medium')!, cookieOptions);
+    }
+    if (searchParams.get('utm_campaign')) {
+      response.cookies.set('utm_campaign', searchParams.get('utm_campaign')!, cookieOptions);
+    }
+    if (searchParams.get('utm_term')) {
+      response.cookies.set('utm_term', searchParams.get('utm_term')!, cookieOptions);
+    }
+    if (searchParams.get('utm_content')) {
+      response.cookies.set('utm_content', searchParams.get('utm_content')!, cookieOptions);
+    }
+    if (searchParams.get('ref') || searchParams.get('affiliateId')) {
+      const affiliateId = searchParams.get('ref') || searchParams.get('affiliateId');
+      response.cookies.set('affiliateId', affiliateId!, cookieOptions);
+    }
+
+    return response;
+  }
+
+  // Log 404s from old URLs for monitoring
+  if (pathname.includes('/ghl/') || pathname.includes('/funnel/') || pathname.includes('/store/')) {
+    console.warn(`[301-redirect] Old URL accessed but no redirect configured: ${fullPath}`);
+  }
+
+  return NextResponse.next();
+}
+
+// Configure which routes the middleware should run on
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public files
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|_next).*)',
+  ],
+};
