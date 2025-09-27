@@ -15,6 +15,10 @@ export type ProductSearchBarProps = {
   categories: ProductCategory[];
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
+  showComingSoon?: boolean;
+  setShowComingSoon?: (value: boolean) => void;
+  showNewReleases?: boolean;
+  setShowNewReleases?: (value: boolean) => void;
 };
 
 export function ProductSearchBar({
@@ -23,6 +27,10 @@ export function ProductSearchBar({
   categories,
   selectedCategory,
   setSelectedCategory,
+  showComingSoon,
+  setShowComingSoon,
+  showNewReleases,
+  setShowNewReleases,
 }: ProductSearchBarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -91,6 +99,56 @@ export function ProductSearchBar({
             </div>
           )}
         </div>
+
+        {setShowNewReleases && (
+          <button
+            type="button"
+            onClick={() => setShowNewReleases(!showNewReleases)}
+            className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition ${
+              showNewReleases
+                ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 hover:bg-emerald-500/20 dark:text-emerald-400"
+                : "border-border bg-card/60 text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <div className={`h-4 w-4 rounded-full border-2 ${
+              showNewReleases
+                ? "border-emerald-500 bg-emerald-500"
+                : "border-muted-foreground"
+            }`}>
+              {showNewReleases && (
+                <svg className="h-full w-full text-white" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M13.485 3.515a.5.5 0 0 1 0 .707l-7 7a.5.5 0 0 1-.707 0l-3-3a.5.5 0 1 1 .707-.707L6 10.03l6.778-6.778a.5.5 0 0 1 .707 0z"/>
+                </svg>
+              )}
+            </div>
+            New Releases
+          </button>
+        )}
+
+        {setShowComingSoon && (
+          <button
+            type="button"
+            onClick={() => setShowComingSoon(!showComingSoon)}
+            className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition ${
+              showComingSoon
+                ? "border-purple-500/30 bg-purple-500/10 text-purple-700 hover:bg-purple-500/20 dark:text-purple-400"
+                : "border-border bg-card/60 text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <div className={`h-4 w-4 rounded-full border-2 ${
+              showComingSoon
+                ? "border-purple-500 bg-purple-500"
+                : "border-muted-foreground"
+            }`}>
+              {showComingSoon && (
+                <svg className="h-full w-full text-white" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M13.485 3.515a.5.5 0 0 1 0 .707l-7 7a.5.5 0 0 1-.707 0l-3-3a.5.5 0 1 1 .707-.707L6 10.03l6.778-6.778a.5.5 0 0 1 .707 0z"/>
+                </svg>
+              )}
+            </div>
+            Coming Soon
+          </button>
+        )}
 
         {(searchQuery.trim() || selectedCategory !== "all") && (
           <button

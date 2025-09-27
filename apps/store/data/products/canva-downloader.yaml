@@ -1,7 +1,8 @@
 slug: canva-downloader
 platform: Canva
 seo_title: Canva Downloader | Download Canva Downloader for Offline Access
-seo_description: Download videos, images, and content from canva with our reliable downloader tool. Fast, secure, and easy to use.
+seo_description: Download videos, images, and content from canva with our reliable
+  downloader tool. Fast, secure, and easy to use.
 product_page_url: https://store.serp.co/products/canva-downloader
 purchase_url: https://serp.ly/canva-downloader
 stripe:
@@ -12,65 +13,78 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6GiFXmH9cXgG
 name: Canva Downloader
-tagline: Download videos, images, and content from canva with our reliable downloader tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from canva with our reliable downloader
+  tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/canva-downloader/main/images/featured.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/canva-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
-  - Download Canva designs and creative projects
-  - Support for templates and custom designs
-  - Batch download design collections and folders
-  - Automatic export in various formats (PNG, PDF, etc.)
-  - Custom organization by project and design type
-  - Resume interrupted downloads with recovery
-  - Cross-platform application for designers
-  - Built-in design viewer with Canva-style interface
-  - Command-line tools for design workflow automation
-  - Integration with design and marketing platforms
-  - Export design data and usage analytics
-  - Search functionality across design libraries
-  - Privacy protection with local design storage
-  - Regular updates to maintain Canva compatibility
-  - Support for various design formats and resolutions
-  - Bandwidth management for large design files
-  - Backup and sync options for design projects
-  - Smart categorization by brand and campaign
-  - Team collaboration and sharing features
-  - Design version control and history tracking
-description: Download videos, images, and content from canva with our reliable downloader tool. Fast, secure, and easy to use.
+- Download Canva designs and creative projects
+- Support for templates and custom designs
+- Batch download design collections and folders
+- Automatic export in various formats (PNG, PDF, etc.)
+- Custom organization by project and design type
+- Resume interrupted downloads with recovery
+- Cross-platform application for designers
+- Built-in design viewer with Canva-style interface
+- Command-line tools for design workflow automation
+- Integration with design and marketing platforms
+- Export design data and usage analytics
+- Search functionality across design libraries
+- Privacy protection with local design storage
+- Regular updates to maintain Canva compatibility
+- Support for various design formats and resolutions
+- Bandwidth management for large design files
+- Backup and sync options for design projects
+- Smart categorization by brand and campaign
+- Team collaboration and sharing features
+- Design version control and history tracking
+description: Download videos, images, and content from canva with our reliable downloader
+  tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots: []
 faqs:
-  - question: How do I download images from Canva?
-    answer: "To download from Canva: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms."
-  - question: Are there free alternatives to downloading from Canva?
-    answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, Canva may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
-  - question: What image formats does Canva provide?
-    answer: Canva typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
-  - question: Can I use Canva images for commercial purposes?
-    answer: Commercial use of Canva images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
-  - question: What are the licensing requirements for Canva images?
-    answer: "Canva images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues."
+- question: How do I download images from Canva?
+  answer: 'To download from Canva: 1) Create an account and choose a subscription
+    plan, 2) Search for desired images, 3) Select image size and license type, 4)
+    Download through the official platform. Always use legitimate methods and respect
+    licensing terms.'
+- question: Are there free alternatives to downloading from Canva?
+  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay
+    that offer high-quality images. However, Canva may offer unique content and commercial
+    licenses. Always check licensing requirements for your intended use.
+- question: What image formats does Canva provide?
+  answer: Canva typically provides images in JPEG and PNG formats, with some platforms
+    offering additional formats like SVG, EPS, or TIFF. Resolution options usually
+    range from web-optimized sizes to high-resolution print quality.
+- question: Can I use Canva images for commercial purposes?
+  answer: Commercial use of Canva images depends on the specific license you purchase.
+    Standard licenses typically allow commercial use with some restrictions, while
+    extended licenses offer broader usage rights. Always read the license agreement
+    carefully.
+- question: What are the licensing requirements for Canva images?
+  answer: 'Canva images come with specific licensing terms that may require: 1) Attribution
+    to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4)
+    Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-  - windows
-  - macos
+- windows
+- macos
 status: draft
 categories:
-  - canva downloader
-  - Downloader
+- canva downloader
+- Downloader
 keywords:
-  - canva downloader
+- canva downloader
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
   benefits: []
 ghl:
   pipeline_id: GYbj73q9z3SGihxNlOne
   stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
-shopify_collections:
-  - Downloaders
+coming_soon: true

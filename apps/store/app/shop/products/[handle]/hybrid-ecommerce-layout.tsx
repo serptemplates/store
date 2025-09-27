@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Route } from "next"
 import { getBrandLogoPath } from "@/lib/brand-logos"
+import { PayPalCheckoutButton } from "@/components/paypal-button"
 
 // Format price helper (client-safe)
 function formatPrice(amount: number | string, currency: string = 'USD'): string {
@@ -205,20 +206,33 @@ export default function HybridEcommerceLayout({ product }: { product: any }) {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex gap-4 mb-8">
+            <div className="space-y-3 mb-8">
               <a
                 href={product.stripe?.price_id
                   ? `/api/checkout?price_id=${product.stripe.price_id}`
                   : product.purchase_url || "#"}
-                className="flex-1 bg-blue-600 text-white text-center py-4 px-8 rounded-xl font-semibold hover:bg-blue-700 transition transform hover:scale-[1.02] shadow-lg"
+                className="block w-full bg-blue-600 text-white text-center py-4 px-8 rounded-xl font-semibold hover:bg-blue-700 transition transform hover:scale-[1.02] shadow-lg"
               >
-                {product.pricing?.cta_text || "Get Instant Access"}
+                {product.pricing?.cta_text || "Get Instant Access with Card"}
               </a>
-              <button className="p-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition">
+
+              {/* PayPal Button */}
+              {process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && (
+                <PayPalCheckoutButton
+                  offerId={product.handle || product.slug}
+                  price={price?.amount ? formatPrice(price.amount, price.currency_code || 'USD') : (price?.price || "$0")}
+                  quantity={1}
+                  buttonText="Pay with PayPal"
+                  className="w-full"
+                />
+              )}
+
+              <button className="w-full p-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition flex items-center justify-center">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
+                <span className="ml-2">Save to Wishlist</span>
               </button>
               <button className="p-4 border-2 border-gray-200 rounded-xl hover:bg-gray-50 transition">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

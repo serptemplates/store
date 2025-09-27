@@ -217,6 +217,7 @@ export function HomeTemplate({
             onCtaClick={pricing?.onCtaClick}
             ctaLoading={pricing?.ctaLoading}
             ctaDisabled={pricing?.ctaDisabled}
+            ctaExtra={pricing?.ctaExtra}
             terms={pricing?.terms}
             id={pricing?.id ?? "pricing"}
           />

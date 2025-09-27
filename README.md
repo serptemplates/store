@@ -43,3 +43,11 @@ pnpm sync:stripe-prices
 ```
 
 This updates each product YAML with formatted pricing pulled from Stripe.
+
+## Stripe Checkout
+
+For the checkout to work properly, you need to have these
+   environment variables set in your .env.local file:
+  - STRIPE_SECRET_KEY - Your Stripe secret key
+  - STRIPE_WEBHOOK_SECRET - For handling Stripe webhooks
+  - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY - Your Stripe publishable key

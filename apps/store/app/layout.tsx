@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: STORE_TITLE,
   description: STORE_DESCRIPTION,
   metadataBase: new URL("https://serp.app"),
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     title: STORE_TITLE,

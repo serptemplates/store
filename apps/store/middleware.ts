@@ -118,6 +118,24 @@ export function middleware(request: NextRequest) {
     console.warn(`[301-redirect] Old URL accessed but no redirect configured: ${fullPath}`);
   }
 
+  // For all other unmatched paths that look like they should be 404s,
+  // redirect to homepage with a 301 status
+  // This will catch any path that doesn't match existing routes
+  // Note: In production, Next.js will handle actual 404 detection,
+  // but we can add a catch-all for common 404 patterns
+  const is404Pattern =
+    pathname.length > 1 && // Not the homepage
+    !pathname.startsWith('/shop') && // Not shop pages
+    !pathname.startsWith('/blog') && // Not blog pages
+    !pathname.startsWith('/checkout') && // Not checkout pages
+    !pathname.match(/^\/[a-z0-9-]+$/) && // Not product pages (single segment slugs)
+    !pathname.includes('.'); // Not static files
+
+  if (is404Pattern) {
+    console.log(`[404-redirect] Redirecting unknown path to homepage: ${pathname}`);
+    return NextResponse.redirect(new URL('/', request.url), 301);
+  }
+
   return NextResponse.next();
 }
 
