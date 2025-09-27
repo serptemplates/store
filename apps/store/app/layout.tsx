@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import { getSiteConfig } from "@/lib/site-config";
-
-// Lazy load GTM to improve initial page load
-const DelayedGTM = dynamic(() => import("@/components/DelayedGTM").then(mod => ({ default: mod.DelayedGTM })), {
-  ssr: false
-});
+import { DelayedGTM } from "@/components/DelayedGTM";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
