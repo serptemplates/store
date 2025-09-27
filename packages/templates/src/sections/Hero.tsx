@@ -193,7 +193,10 @@ export function Hero({
 }
 
 function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: items.length > 1, containScroll: "trimSnaps" });
+  // Filter out invalid items
+  const validItems = items.filter(item => item.src && item.src.trim() !== '');
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: validItems.length > 1, containScroll: "trimSnaps" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -219,9 +222,9 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
   const onPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const onNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  const progress = items.length > 0 ? ((selectedIndex + 1) / items.length) * 100 : 0;
+  const progress = validItems.length > 0 ? ((selectedIndex + 1) / validItems.length) * 100 : 0;
 
-  const imageIndices = useMemo(() => items.flatMap((item, index) => (item.type === "image" ? [index] : [])), [items]);
+  const imageIndices = useMemo(() => validItems.flatMap((item, index) => (item.type === "image" ? [index] : [])), [validItems]);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
@@ -269,11 +272,16 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
     return () => window.removeEventListener("keydown", handleKey);
   }, [lightboxIndex, closeLightbox, showPrevImage, showNextImage]);
 
+  // Don't render anything if no valid items
+  if (validItems.length === 0) {
+    return null;
+  }
+
   return (
     <div className="group relative">
       <div ref={emblaRef} className="overflow-hidden rounded-2xl">
         <div className="flex">
-          {items.map((item, index) => (
+          {validItems.map((item, index) => (
             <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
               {item.type === "video" ? (
                 <div className="relative">
@@ -311,7 +319,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
         </div>
       </div>
 
-      {items.length > 1 && (
+      {validItems.length > 1 && (
         <>
           <button
             type="button"
@@ -332,7 +340,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
         </>
       )}
 
-      {items.length > 1 && (
+      {validItems.length > 1 && (
         <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
           <span className="font-medium">
             {String(selectedIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
@@ -341,7 +349,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
         </div>
       )}
 
-      {lightboxIndex !== null && items[lightboxIndex]?.type === "image" && (
+      {lightboxIndex !== null && validItems[lightboxIndex]?.type === "image" && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4"
           role="dialog"
@@ -390,8 +398,8 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
             )}
 
             <img
-              src={items[lightboxIndex].src}
-              alt={items[lightboxIndex].alt ?? items[lightboxIndex].title ?? "Product screenshot"}
+              src={validItems[lightboxIndex].src}
+              alt={validItems[lightboxIndex].alt ?? validItems[lightboxIndex].title ?? "Product screenshot"}
               className="max-h-[90vh] w-full object-contain"
             />
           </div>
