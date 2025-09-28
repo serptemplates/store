@@ -49,11 +49,17 @@
       "minLength": 1
     },
     "featured_image": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "minLength": 1
     },
     "featured_image_gif": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "minLength": 1
     },
     "github_repo_url": {
@@ -190,6 +196,33 @@
         "minLength": 1
       },
       "default": []
+    },
+    "layout_type": {
+      "type": "string",
+      "enum": [
+        "landing",
+        "ecommerce"
+      ],
+      "default": "landing"
+    },
+    "coming_soon": {
+      "type": "boolean",
+      "default": false
+    },
+    "waitlist_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "new_release": {
+      "type": "boolean",
+      "default": false
+    },
+    "brand": {
+      "type": "string",
+      "default": "SERP Apps"
+    },
+    "sku": {
+      "type": "string"
     },
     "pricing": {
       "type": "object",

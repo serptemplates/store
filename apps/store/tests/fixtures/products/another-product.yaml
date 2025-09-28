@@ -1,0 +1,11 @@
+slug: another-product
+seo_title: Another Product
+seo_description: Another product description.
+product_page_url: https://example.com/another-product
+purchase_url: https://example.com/another-product/buy
+name: Another Product
+tagline: Another great product.
+description: |
+  Description for another product.
+pricing:
+  price: "$59"

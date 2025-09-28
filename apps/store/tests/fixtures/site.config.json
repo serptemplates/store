@@ -1,0 +1,6 @@
+{
+  "excludeSlugs": ["excluded-product"],
+  "site": {
+    "name": "Fixture Site"
+  }
+}

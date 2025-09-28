@@ -9,6 +9,11 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:smoke": "playwright test --project=\"Desktop Chrome\"",
+    "test:stripe-live": "vitest --run tests/integration/stripe-live.test.ts",
+    "test:safe": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:smoke",
     "validate:content": "node scripts/validate-product.mjs",
     "report:coverage": "node scripts/product-coverage-report.mjs",
     "export:offers": "node scripts/export-offer-catalog.mjs",
@@ -40,9 +45,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@jest/globals": "^30.1.2",
     "@playwright/test": "^1.55.1",
-    "@types/jest": "^30.0.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -60,6 +63,8 @@
     "resend": "^6.1.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.1"
   }
 }
