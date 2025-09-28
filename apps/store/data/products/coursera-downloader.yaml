@@ -78,7 +78,6 @@ supported_operating_systems:
 - macos
 status: draft
 categories:
-- coursera downloader
 - Downloader
 keywords:
 - coursera downloader

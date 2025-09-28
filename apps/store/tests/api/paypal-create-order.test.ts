@@ -77,6 +77,7 @@ describe("POST /api/paypal/create-order", () => {
     layout_type: "landing",
     coming_soon: false,
     new_release: false,
+    popular: false,
     brand: "SERP Apps",
   };
 

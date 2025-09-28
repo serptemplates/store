@@ -9,6 +9,9 @@ export interface Product {
   description?: string
   thumbnail?: string
   images?: Array<{ url: string }>
+  coming_soon?: boolean
+  new_release?: boolean
+  popular?: boolean
   variants: Array<{
     id: string
     title: string
@@ -58,6 +61,9 @@ export async function getProducts(): Promise<Product[]> {
         { url: data.featured_image }
       ] : [],
       collection,
+      coming_soon: Boolean(data.coming_soon),
+      new_release: Boolean(data.new_release),
+      popular: Boolean(data.popular),
       variants: [{
         id: `${data.slug}-default`,
         title: 'Default',
@@ -77,6 +83,18 @@ export async function getProducts(): Promise<Product[]> {
         benefits: data.pricing?.benefits,
         features: data.features
       }
+    }
+
+    const activeBadges = [
+      product.coming_soon && 'coming_soon',
+      product.new_release && 'new_release',
+      product.popular && 'popular'
+    ].filter(Boolean) as string[]
+
+    if (activeBadges.length > 1) {
+      console.warn(
+        `[products-data] Product "${product.handle}" has multiple badge flags enabled: ${activeBadges.join(', ')}`
+      )
     }
 
     products.push(product)

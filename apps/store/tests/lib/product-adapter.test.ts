@@ -44,6 +44,7 @@ const baseProduct: ProductData = {
   layout_type: "landing",
   coming_soon: false,
   new_release: false,
+  popular: false,
   brand: "SERP Apps",
 };
 

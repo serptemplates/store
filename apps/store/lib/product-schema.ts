@@ -85,6 +85,8 @@ export const productSchema = z.object({
   waitlist_url: z.string().url().optional(),
   // New release field
   new_release: z.boolean().optional().default(false),
+  // Popular badge field
+  popular: z.boolean().optional().default(false),
   // Google Merchant fields
   brand: z.string().optional().default('SERP Apps'),
   sku: z.string().optional(),

@@ -24,12 +24,45 @@ export function ProductGrid({ products }: ProductGridProps) {
         const brandLogoPath = getBrandLogoPath(product.handle)
         const imageSource = brandLogoPath || product.thumbnail
 
+        const bannerType = product.coming_soon
+          ? "comingSoon"
+          : product.new_release
+            ? "newRelease"
+            : product.popular
+              ? "popular"
+              : null
+
+        const bannerText =
+          bannerType === "comingSoon"
+            ? "Coming Soon"
+            : bannerType === "newRelease"
+              ? "New Release"
+              : bannerType === "popular"
+                ? "Most Popular"
+                : ""
+
+        const bannerClass =
+          bannerType === "comingSoon"
+            ? "from-purple-500 to-purple-600"
+            : bannerType === "newRelease"
+              ? "from-emerald-500 to-teal-600"
+              : bannerType === "popular"
+                ? "from-amber-400 via-amber-500 to-yellow-500"
+                : ""
+
         return (
           <Link
             key={product.id}
             href={`/shop/products/${product.handle}`}
-            className="group"
+            className="group relative block"
           >
+            {bannerType && (
+              <div
+                className={`absolute -right-12 top-6 z-10 rotate-45 bg-gradient-to-r ${bannerClass} px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md`}
+              >
+                {bannerText}
+              </div>
+            )}
             <div className="relative overflow-hidden rounded-lg bg-gray-100 aspect-square mb-4">
               {imageSource ? (
                 <Image
