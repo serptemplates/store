@@ -8,6 +8,7 @@ import {
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/offer-config";
 import { recordWebhookLog } from "@/lib/webhook-logs";
+import logger from "@/lib/logger";
 
 const PAYPAL_WEBHOOK_ID = process.env.PAYPAL_WEBHOOK_ID || "";
 
@@ -30,14 +31,16 @@ export async function POST(request: NextRequest) {
       });
 
       if (!isValid) {
-        console.error("PayPal webhook signature verification failed");
+        logger.error("paypal.webhook_signature_invalid");
         return NextResponse.json(
           { error: "Invalid webhook signature" },
           { status: 401 }
         );
       }
     } catch (error) {
-      console.error("PayPal webhook verification error:", error);
+      logger.error("paypal.webhook_verification_error", {
+        error: error instanceof Error ? error.message : String(error)
+      });
       // Continue processing even if verification fails in development
       if (process.env.NODE_ENV === "production") {
         return NextResponse.json(
@@ -50,7 +53,7 @@ export async function POST(request: NextRequest) {
 
   const event = JSON.parse(body);
 
-  console.log(`[PayPal Webhook] Event type: ${event.event_type}`);
+  logger.info("paypal.webhook_received", { eventType: event.event_type });
 
   try {
     switch (event.event_type) {
@@ -60,7 +63,7 @@ export async function POST(request: NextRequest) {
                        event.resource?.id;
 
         if (!orderId) {
-          console.error("No order ID found in PayPal webhook event");
+          logger.error("paypal.missing_order_id");
           return NextResponse.json({ received: true });
         }
 
@@ -72,7 +75,7 @@ export async function POST(request: NextRequest) {
         const checkoutSession = await findCheckoutSessionByStripeSessionId(sessionId);
 
         if (!checkoutSession) {
-          console.error("Checkout session not found for PayPal order:", orderId);
+          logger.warn("paypal.session_not_found", { orderId });
         }
 
         // Extract payment details
@@ -188,12 +191,15 @@ export async function POST(request: NextRequest) {
       }
 
       default:
-        console.log(`[PayPal Webhook] Unhandled event type: ${event.event_type}`);
+        logger.debug("paypal.webhook_unhandled", { eventType: event.event_type });
     }
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error("PayPal webhook processing error:", error);
+    logger.error("paypal.webhook_processing_error", {
+      error: error instanceof Error ? error.message : String(error),
+      eventType: event.event_type
+    });
 
     // Record webhook error
     if (event.resource?.id) {

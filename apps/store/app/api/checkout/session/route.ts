@@ -7,6 +7,7 @@ import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
 import { checkoutSessionSchema, sanitizeInput } from "@/lib/validation/checkout";
 import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
+import logger from "@/lib/logger";
 
 function buildErrorResponse(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
@@ -172,7 +173,7 @@ export async function POST(request: NextRequest) {
     // Add payment method configuration
     if (paymentConfigId) {
       // Use payment configuration from Stripe Dashboard
-      console.log(`Using payment configuration: ${paymentConfigId}`);
+      logger.debug("checkout.payment_config_used", { paymentConfigId });
       sessionParams.payment_method_configuration = paymentConfigId;
     } else {
       // Use explicit payment method types
@@ -180,7 +181,7 @@ export async function POST(request: NextRequest) {
         ? process.env.STRIPE_CHECKOUT_PAYMENT_METHODS.split(",").map(m => m.trim()) as Stripe.Checkout.SessionCreateParams.PaymentMethodType[]
         : ["card"];  // Default: card includes all cards, Apple Pay, Google Pay, and Link
 
-      console.log(`Using payment method types: ${paymentMethodTypes.join(", ")}`);
+      logger.debug("checkout.payment_methods", { paymentMethodTypes: paymentMethodTypes.join(", ") });
       sessionParams.payment_method_types = paymentMethodTypes;
     }
 
