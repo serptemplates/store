@@ -69,3 +69,4 @@ __pycache__
 .shopify
 screenshots
 test-results
+.playwright-mcp

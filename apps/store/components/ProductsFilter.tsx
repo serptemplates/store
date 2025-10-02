@@ -116,7 +116,7 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
           >
             {product.coming_soon && (
               <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-purple-500 to-purple-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
-                Coming Soon
+                Pre Release
               </div>
             )}
             {product.new_release && !product.coming_soon && (

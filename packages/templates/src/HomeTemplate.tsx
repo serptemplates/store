@@ -9,6 +9,8 @@ import { FeaturesSection } from "./sections/FeaturesSection";
 import { SocialProofScreenshots } from "./sections/SocialProofScreenshots";
 import { PostsSection } from "./sections/PostsSection";
 import { FaqSection, type FAQ } from "./sections/FaqSection";
+import { AboutSection } from "./sections/AboutSection";
+import { teamMembers } from "./data/team";
 
 type UI = {
   Navbar: ComponentType<any>;
@@ -207,6 +209,9 @@ export function HomeTemplate({
 
         {/* FAQ */}
         <FaqSection faqs={faqList} />
+
+        {/* About Section */}
+        <AboutSection team={teamMembers} />
 
         {/* Pricing CTA (configurable per site) */}
         {(pricing?.enabled ?? true) && (

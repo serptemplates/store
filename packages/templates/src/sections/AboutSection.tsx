@@ -1,0 +1,70 @@
+import { type FC } from "react"
+
+export interface TeamMember {
+  name: string
+  title?: string
+  description: string
+  image?: string
+}
+
+export interface AboutSectionProps {
+  title?: string
+  subtitle?: string
+  team: TeamMember[]
+}
+
+export const AboutSection: FC<AboutSectionProps> = ({
+  title = "The faces behind SERP Apps",
+  subtitle = "Two outstanding individuals who also happen to be best friends.",
+  team
+}) => {
+  return (
+    <div className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        {/* Title Section */}
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            {title}
+          </h2>
+        </div>
+
+        {/* Team Members */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          {team.map((member, index) => (
+            <div key={index} className="rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+              {/* Image with max constraints */}
+              {member.image ? (
+                <div className="flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full object-cover"
+                    style={{ maxWidth: '700px', maxHeight: '800px' }}
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-80 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-32 h-32 bg-white/50 backdrop-blur rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-600 font-medium text-lg">{member.name}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Content fills remaining space */}
+              <div className="flex-1 p-4 bg-gradient-to-br from-gray-50 to-blue-50">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  <span className="font-semibold text-gray-900">{member.name.split(' ')[0]}</span> is {member.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -146,7 +146,7 @@ export function ProductSearchBar({
                 </svg>
               )}
             </div>
-            Coming Soon
+            Pre Release
           </button>
         )}
 

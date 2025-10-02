@@ -154,7 +154,7 @@ export function Hero({
         >
           {/* Left: text content */}
           <div className="text-center lg:text-left">
-            <h1 className="mb-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl leading-[0.95]">
+            <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
               {before}
               <span className="bg-gradient-to-r from-primary via-fuchsia-500 to-emerald-500 bg-clip-text text-transparent">
                 {` ${hi} `}
@@ -162,7 +162,7 @@ export function Hero({
               {after}
             </h1>
 
-            <p className="mb-6 text-lg text-muted-foreground lg:max-w-xl lg:pr-4">
+            <p className="mb-6 text-base text-gray-600 lg:max-w-xl lg:pr-4">
               {heroDescription}
             </p>
 
@@ -171,7 +171,7 @@ export function Hero({
                 {checklist.slice(0, 6).map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-emerald-500" />
-                    <span className="text-xs">{item}</span>
+                    <span className="text-sm text-gray-600">{item}</span>
                   </div>
                 ))}
               </div>
@@ -341,7 +341,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
       )}
 
       {validItems.length > 1 && (
-        <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+        <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
           <span className="font-medium">
             {String(selectedIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
           </span>
