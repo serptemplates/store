@@ -173,7 +173,7 @@ export function EmbeddedCheckoutView() {
                 metadata={{
                   landerId: productSlug || '',
                 }}
-                buttonText={`Pay $${finalPrice.toFixed(2)} with PayPal`}
+                buttonText="Pay with PayPal"
                 className="w-full"
               />
 
