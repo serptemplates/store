@@ -192,6 +192,52 @@ export function createWebhookValidator(
 
 /**
  * Sanitizes user input to prevent injection attacks
+ * 
+ * IMPORTANT: This is server-side security sanitization, not client-side validation.
+ * Client-side form libraries (React Hook Form, Formik, etc.) improve UX but can be 
+ * bypassed by attackers making direct API calls. ALWAYS sanitize on the server.
+ * 
+ * What this function protects against:
+ * - XSS (Cross-Site Scripting) attacks via HTML/script injection
+ * - Buffer overflow via extremely large inputs
+ * - Mass assignment vulnerabilities via unexpected fields
+ * - Stored malicious content in databases
+ * 
+ * What this function does NOT protect against:
+ * - SQL injection (use parameterized queries/ORMs for that)
+ * - NoSQL injection (use proper query builders)
+ * - CSRF attacks (use CSRF tokens)
+ * - Authentication/authorization issues (handle separately)
+ * 
+ * See docs/SECURITY-VALIDATION.md for detailed security best practices.
+ * 
+ * @example
+ * ```typescript
+ * // In an API route
+ * export async function POST(request: NextRequest) {
+ *   const rawData = await request.json();
+ *   
+ *   // Step 1: Sanitize (remove malicious content)
+ *   const sanitized = sanitizeInput(rawData, {
+ *     stripHtml: true,
+ *     maxLength: 1000,
+ *     allowedFields: ['name', 'email', 'message']
+ *   });
+ *   
+ *   // Step 2: Validate with Zod (type checking)
+ *   const validated = schema.parse(sanitized);
+ *   
+ *   // Step 3: Safe to use
+ *   await saveToDatabase(validated);
+ * }
+ * ```
+ * 
+ * @param data - The data object to sanitize (usually from request.json())
+ * @param options - Sanitization options
+ * @param options.stripHtml - Remove HTML tags to prevent XSS (default: true)
+ * @param options.maxLength - Maximum string length to prevent DoS (default: 1000)
+ * @param options.allowedFields - Whitelist of allowed fields (undefined = allow all)
+ * @returns Sanitized data with same structure as input
  */
 export function sanitizeInput<T extends Record<string, any>>(
   data: T,
