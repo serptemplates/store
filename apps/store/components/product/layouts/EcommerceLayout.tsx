@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { formatPrice } from "@/lib/products-data"
 import { getBrandLogoPath } from "@/lib/brand-logos"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import { HybridProductOverview } from "@/components/product/hybrid/HybridProductOverview"
 import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSection"
@@ -34,20 +33,6 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
   }, [mainImageSource, product.images])
 
   const { affiliateId } = useAffiliateTracking()
-
-  const fallbackUrl: string =
-    product.purchase_url ||
-    product.metadata?.purchase_url ||
-    product.stripe?.checkoutUrl ||
-    "#"
-
-  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
-    offerId: handle,
-    affiliateId,
-    metadata: { landerId: handle },
-    endpoint: "/api/checkout/session",
-    fallbackUrl,
-  })
 
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
@@ -115,17 +100,10 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     displayPrice,
     originalPrice,
     priceLabel,
-    onCheckout: beginCheckout,
-    checkoutCtaLabel: product.pricing?.cta_text || "Buy with Card",
-    isCheckoutLoading,
+    productSlug: handle,
+    affiliateId,
     showWaitlist: Boolean(product.coming_soon),
     onWaitlistClick: handleWaitlistClick,
-    payPalProps: !product.coming_soon ? {
-      offerId: handle,
-      price: displayPrice || "0",
-      affiliateId,
-      metadata: { landerId: handle },
-    } : null,
     benefits,
     features: featureList,
     githubUrl,
@@ -133,13 +111,10 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     product.title,
     product.name,
     product.description,
-    product.pricing?.cta_text,
     product.coming_soon,
     displayPrice,
     originalPrice,
     priceLabel,
-    beginCheckout,
-    isCheckoutLoading,
     handleWaitlistClick,
     handle,
     affiliateId,
@@ -155,8 +130,6 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
         priceLabel={priceLabel}
         price={displayPrice}
         originalPrice={originalPrice}
-        onCheckout={beginCheckout}
-        isLoading={isCheckoutLoading}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}

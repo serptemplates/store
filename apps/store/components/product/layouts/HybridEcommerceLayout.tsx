@@ -191,8 +191,6 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
         priceLabel={priceLabel}
         price={displayPrice}
         originalPrice={originalPrice}
-        onCheckout={beginCheckout}
-        isLoading={isCheckoutLoading}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}

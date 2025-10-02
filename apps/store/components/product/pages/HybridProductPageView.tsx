@@ -2,18 +2,19 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import { FeaturesSection, PostsSection, PricingCta, TestimonialsSection } from "@repo/templates"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
-import { PayPalCheckoutButton } from "@/components/paypal-button"
+// Removed: PayPalCheckoutButton - now using unified checkout page
 import { ProductMediaGallery } from "@/components/product/ProductMediaGallery"
 import { FaqSection } from "@repo/templates"
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
+// Removed: useCheckoutRedirect - now using direct link to unified checkout page
 import { getBrandLogoPath } from "@/lib/brand-logos"
 import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/product-adapter"
@@ -31,6 +32,7 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const router = useRouter()
 
   const homeProps = productToHomeTemplate(product, posts)
 
@@ -52,15 +54,10 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
 
   const { affiliateId } = useAffiliateTracking()
 
-  const checkoutEndpoint = process.env.NEXT_PUBLIC_CHECKOUT_URL
-  const fallbackUrl = siteConfig.cta?.href ?? product.purchase_url
-  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
-    offerId: product.slug,
-    affiliateId,
-    metadata: { landerId: product.slug },
-    endpoint: checkoutEndpoint,
-    fallbackUrl,
-  })
+  const handleCheckout = useCallback(() => {
+    const checkoutUrl = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`
+    router.push(checkoutUrl as any)
+  }, [product.slug, affiliateId, router])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,8 +103,6 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         priceLabel={price?.label ?? null}
         price={price?.price ?? null}
         originalPrice={price?.original_price ?? null}
-        onCheckout={beginCheckout}
-        isLoading={isCheckoutLoading}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}
@@ -221,23 +216,12 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
                   Join Waitlist
                 </button>
               ) : (
-                <>
-                  <button
-                    onClick={beginCheckout}
-                    disabled={isCheckoutLoading}
-                    className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
-                  >
-                    {isCheckoutLoading ? "Processing..." : price?.cta_text || "Get Instant Access with Card"}
-                  </button>
-                  <PayPalCheckoutButton
-                    offerId={product.slug}
-                    price={product.pricing?.price || "$0"}
-                    quantity={1}
-                    affiliateId={affiliateId}
-                    className="w-full"
-                    buttonText="Pay with PayPal"
-                  />
-                </>
+                <Link
+                  href={`/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`}
+                  className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition inline-block text-center"
+                >
+                  {price?.cta_text || "Proceed to Checkout"}
+                </Link>
               )}
               <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition w-full">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,9 +303,9 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         {homeProps.pricing && (
           <PricingCta
             {...homeProps.pricing}
-            onCtaClick={beginCheckout}
-            ctaLoading={isCheckoutLoading}
-            ctaDisabled={isCheckoutLoading}
+            onCtaClick={handleCheckout}
+            ctaLoading={false}
+            ctaDisabled={false}
           />
         )}
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { PayPalCheckoutButton } from "@/components/paypal-button";
+import { useRouter } from "next/navigation";
 import type { ProductData } from "@/lib/product-schema";
 
 export interface StickyPurchaseBarProps {
@@ -9,8 +9,6 @@ export interface StickyPurchaseBarProps {
   priceLabel?: string | null;
   price?: string | null;
   originalPrice?: string | null;
-  onCheckout: () => void;
-  isLoading: boolean;
   show: boolean;
   brandLogoPath?: string | null;
   mainImageSource?: string | null | undefined;
@@ -22,16 +20,25 @@ export function StickyPurchaseBar({
   priceLabel,
   price,
   originalPrice,
-  onCheckout,
-  isLoading,
   show,
   brandLogoPath,
   mainImageSource,
   affiliateId,
 }: StickyPurchaseBarProps) {
+  const router = useRouter();
+
   if (!show) {
     return null;
   }
+
+  const handleCheckout = () => {
+    const params = new URLSearchParams();
+    params.set("product", product.slug || "");
+    if (affiliateId) {
+      params.set("aff", affiliateId);
+    }
+    router.push(`/checkout?${params.toString()}`);
+  };
 
   return (
     <div className="fixed inset-x-0 top-0 z-40 bg-white/95 shadow-lg backdrop-blur dark:bg-gray-900/95 transition-transform">
@@ -67,20 +74,15 @@ export function StickyPurchaseBar({
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={onCheckout}
-            disabled={isLoading}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2 disabled:opacity-50"
+            onClick={handleCheckout}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2"
           >
-            {isLoading ? "Processing…" : "Buy Now with Card"}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span>Checkout</span>
           </button>
-          <PayPalCheckoutButton
-            offerId={product.slug}
-            price={price ?? product.pricing?.price ?? "$0"}
-            affiliateId={affiliateId}
-            metadata={{ landerId: product.slug }}
-            className="px-6 py-2 rounded-lg font-semibold"
-            buttonText="PayPal"
-          />
+          <span className="text-xs text-gray-500">Cards • PayPal</span>
         </div>
       </div>
     </div>

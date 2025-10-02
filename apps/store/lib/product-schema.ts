@@ -18,6 +18,7 @@ const faqSchema = z.object({
 
 const stripeSchema = z.object({
   price_id: z.string(),
+  test_price_id: z.string().optional(), // Optional test mode price ID
   success_url: z.string().url(),
   cancel_url: z.string().url(),
   mode: z.enum(["payment", "subscription"]).optional(),
