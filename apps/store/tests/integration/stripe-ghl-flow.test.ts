@@ -1,33 +1,9 @@
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
 import Stripe from "stripe";
 import { beforeAll, afterAll, describe, expect, it } from "vitest";
 import { NextRequest } from "next/server";
-import { config as loadEnv } from "dotenv";
+import { loadIntegrationEnv } from "./utils/env";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const candidateEnvFiles = Array.from(
-  new Set([
-    path.resolve(process.cwd(), ".env.local"),
-    path.resolve(process.cwd(), ".env"),
-    path.resolve(__dirname, "../../../../.env.local"),
-    path.resolve(__dirname, "../../../../.env"),
-    path.resolve(__dirname, "../../../.env.local"),
-    path.resolve(__dirname, "../../../.env"),
-    path.resolve(__dirname, "../../.env.local"),
-    path.resolve(__dirname, "../../.env"),
-  ]),
-);
-
-for (const envPath of candidateEnvFiles) {
-  if (fs.existsSync(envPath)) {
-    loadEnv({ path: envPath, override: false });
-  }
-}
+loadIntegrationEnv(import.meta.url);
 
 const { POST: createCheckoutSession } = await import("@/app/api/checkout/session/route");
 const { POST: handleStripeWebhook } = await import("@/app/api/stripe/webhook/route");

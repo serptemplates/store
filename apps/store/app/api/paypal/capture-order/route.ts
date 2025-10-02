@@ -58,49 +58,54 @@ export async function POST(request: NextRequest) {
       : 0;
 
     // Update checkout session status
-    if (checkoutSession) {
-      await updateCheckoutSessionStatus(checkoutSession.id, "completed");
-    }
-
     // Create order record
     const orderData = {
-      checkout_session_id: checkoutSession?.id || null,
-      stripe_session_id: sessionId,
-      stripe_payment_intent_id: `paypal_${capture?.id || parsedBody.orderId}`,
-      stripe_charge_id: capture?.id || null,
-      amount_total: amountTotal,
+      checkoutSessionId: checkoutSession?.id || null,
+      stripeSessionId: sessionId,
+      stripePaymentIntentId: `paypal_${capture?.id || parsedBody.orderId}`,
+      stripeChargeId: capture?.id || null,
+      amountTotal: amountTotal,
       currency: capture?.amount?.currency_code || "USD",
-      offer_id: checkoutSession?.offerId || "",
-      lander_id: checkoutSession?.landerId || checkoutSession?.offerId || "",
-      customer_email: payer?.email_address || checkoutSession?.customerEmail || "",
-      customer_name: payer?.name
-        ? `${payer.name.given_name || ""} ${payer.name.surname || ""}`.trim()
-        : "",
+      offerId: checkoutSession?.offerId || "",
+      landerId: checkoutSession?.landerId || checkoutSession?.offerId || "",
+      customerEmail: payer?.email_address || checkoutSession?.customerEmail || "",
+      customerName:
+        payer?.name && (payer.name.given_name || payer.name.surname)
+          ? `${payer.name.given_name || ""} ${payer.name.surname || ""}`.trim()
+          : checkoutSession?.metadata?.customerName?.toString() ?? "",
       metadata: {
         ...checkoutSession?.metadata,
         paypalOrderId: parsedBody.orderId,
         paypalCaptureId: capture?.id,
         source: "paypal",
       },
-      payment_status: captureResult.status,
-      payment_method: "paypal",
+      paymentStatus: captureResult.status,
+      paymentMethod: "paypal",
       source: "paypal" as const,
     };
 
     await upsertOrder(orderData);
 
+    // Update checkout session with payment metadata
+    await updateCheckoutSessionStatus(sessionId, "completed", {
+      metadata: orderData.metadata,
+    });
+
     // Sync with GHL if configured
+    let syncResult: Awaited<ReturnType<typeof syncOrderWithGhl>> | null = null;
+    let syncError: unknown = null;
+
     if (checkoutSession?.offerId && payer?.email_address) {
       const offer = getOfferConfig(checkoutSession.offerId);
 
       try {
-        await syncOrderWithGhl(offer?.ghl, {
+        syncResult = await syncOrderWithGhl(offer?.ghl, {
           offerId: checkoutSession.offerId,
           offerName: offer?.productName || checkoutSession.offerId,
           customerEmail: payer.email_address,
-          customerName: orderData.customer_name,
+          customerName: orderData.customerName,
           stripeSessionId: sessionId,
-          stripePaymentIntentId: orderData.stripe_payment_intent_id,
+          stripePaymentIntentId: orderData.stripePaymentIntentId,
           amountTotal: amountTotal,
           currency: orderData.currency,
           landerId: checkoutSession.landerId,
@@ -108,8 +113,31 @@ export async function POST(request: NextRequest) {
         });
       } catch (ghlError) {
         console.error("Failed to sync with GHL:", ghlError);
+        syncError = ghlError;
         // Don't fail the payment capture due to GHL sync error
       }
+    }
+
+    if (syncResult) {
+      const metadataUpdate: Record<string, string> = {
+        ghlSyncedAt: new Date().toISOString(),
+        ghlSyncError: "",
+      };
+
+      if (syncResult.contactId) {
+        metadataUpdate.ghlContactId = syncResult.contactId;
+      }
+
+      await updateCheckoutSessionStatus(sessionId, "completed", {
+        metadata: metadataUpdate,
+      });
+    } else if (syncError) {
+      await updateCheckoutSessionStatus(sessionId, "completed", {
+        metadata: {
+          ghlSyncError:
+            syncError instanceof Error ? syncError.message : String(syncError),
+        },
+      });
     }
 
     return NextResponse.json({

@@ -160,6 +160,22 @@ pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test
 
 The spec provisions a checkout session via the public API, replays a signed `checkout.session.completed` webhook, and asserts that `checkout_sessions.metadata` picks up `ghlSyncedAt`/`ghlContactId` while the matching order persists in `orders`.
 
+### 7. Run Automated PayPal -> GHL Integration Test
+
+```bash
+pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
+```
+
+**Prerequisites**
+- `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` configured for a sandbox app
+- `DATABASE_URL` pointing at a writable Postgres instance
+- `GHL_LOCATION_ID` and `GHL_PAT_LOCATION` with API access
+- Optional: `STRIPE_INTEGRATION_OFFER_ID` to target a non-default offer slug
+
+> Like the Stripe spec, the PayPal test auto-loads `.env.local` / `.env` from the repo root and `apps/store` so you can keep secrets in those files.
+
+The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api/paypal/capture-order`, and verifies that both the order record and `checkout_sessions` row mirror our Stripe flow (including `ghlSyncedAt`, `ghlContactId`, and PayPal metadata).
+
 ## Testing Checklist
 
 ### Payment Processing
@@ -191,6 +207,7 @@ The spec provisions a checkout session via the public API, replays a signed `che
 
 ### Automated Checks
 - [ ] `tests/integration/stripe-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts`)
+- [ ] `tests/integration/paypal-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts`)
 
 ## Monitoring & Alerts
 
