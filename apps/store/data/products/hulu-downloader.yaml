@@ -93,7 +93,6 @@ supported_operating_systems:
 - macos
 status: draft
 categories:
-- hulu downloader
 - Downloader
 keywords:
 - hulu downloader

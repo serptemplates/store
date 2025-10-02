@@ -48,9 +48,14 @@ DATABASE_URL=postgresql://user:pass@localhost:5432/store
 
 # Stripe
 STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_SECRET_KEY_TEST=sk_test_xxx           # optional: explicit test key override
 STRIPE_WEBHOOK_SECRET=whsec_xxx
+STRIPE_WEBHOOK_SECRET_TEST=whsec_xxx         # optional: explicit test webhook secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
+STRIPE_INTEGRATION_OFFER_ID=loom-video-downloader  # optional: product slug for integration spec
 ```
+
+> The automated Stripe->GHL integration spec reads the `_TEST` variables when present and falls back to the base keys. Set the optional entries above if you keep separate live/test credentials in the same environment file.
 
 ## Verification Steps
 
@@ -139,6 +144,22 @@ WHERE status = 'completed'
 ORDER BY created_at DESC;
 ```
 
+### 6. Run Automated Stripe -> GHL Integration Test
+
+```bash
+pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+```
+
+**Prerequisites**
+- `STRIPE_SECRET_KEY_TEST` (or `STRIPE_SECRET_KEY`) and matching `STRIPE_WEBHOOK_SECRET_TEST`
+- `DATABASE_URL` pointing at a writable Postgres instance
+- `GHL_LOCATION_ID` and `GHL_PAT_LOCATION` with API access
+- Optional: `STRIPE_INTEGRATION_OFFER_ID` to target a non-default offer slug
+
+> The test automatically loads `.env.local` / `.env` from both the repo root and `apps/store`, so you can keep your secrets in those files rather than exporting them manually before each run.
+
+The spec provisions a checkout session via the public API, replays a signed `checkout.session.completed` webhook, and asserts that `checkout_sessions.metadata` picks up `ghlSyncedAt`/`ghlContactId` while the matching order persists in `orders`.
+
 ## Testing Checklist
 
 ### Payment Processing
@@ -167,6 +188,9 @@ ORDER BY created_at DESC;
 - [ ] No duplicate contacts created
 - [ ] Existing contacts updated (not recreated)
 - [ ] Email validation working
+
+### Automated Checks
+- [ ] `tests/integration/stripe-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts`)
 
 ## Monitoring & Alerts
 
