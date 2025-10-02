@@ -100,9 +100,6 @@ export function getRuntimeEnvironment(): RuntimeEnvironment {
 
   const nodeEnv = normalizeRuntimeEnv(process.env.NODE_ENV);
   if (nodeEnv) {
-    if (nodeEnv === "live") {
-      return "production";
-    }
     return nodeEnv;
   }
 
