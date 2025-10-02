@@ -155,13 +155,12 @@ export function PricingCta({
 
           {/* Right side - pricing card */}
           <div className="relative order-1 lg:order-2">
-            <div className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0"
+            <div className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
                  style={{
                    padding: '30px 25px 25px',
                    boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
                    border: '1px solid #e5e5e5'
-                 }}
-                 className="sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]">
+                 }}>
 
               {/* Product Title - Mobile Only */}
               <div className="text-center mb-4 lg:hidden">
