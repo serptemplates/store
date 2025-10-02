@@ -9,6 +9,12 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:smoke": "playwright test --project=\"Desktop Chrome\"",
+    "test:stripe-live": "vitest --run tests/integration/stripe-live.test.ts",
+    "test:safe": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:smoke",
+    "validate:products": "tsx scripts/validate-products.ts",
     "validate:content": "node scripts/validate-product.mjs",
     "report:coverage": "node scripts/product-coverage-report.mjs",
     "export:offers": "node scripts/export-offer-catalog.mjs",
@@ -18,12 +24,15 @@
     "db:check": "npx tsx db-check.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.1",
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@paypal/paypal-js": "^8.4.2",
     "@paypal/react-paypal-js": "^8.9.1",
     "@repo/templates": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@stripe/react-stripe-js": "^5.0.0",
+    "@stripe/stripe-js": "^8.0.0",
     "@vercel/postgres": "^0.10.0",
     "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^4.1.0",
@@ -33,16 +42,15 @@
     "next-mdx-remote": "^5.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.63.0",
     "reading-time": "^1.5.0",
     "rehype-code-titles": "^1.2.0",
     "rehype-highlight": "^7.0.2",
     "yaml": "^2.6.1",
-    "zod": "^3.23.8"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@jest/globals": "^30.1.2",
     "@playwright/test": "^1.55.1",
-    "@types/jest": "^30.0.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -60,6 +68,8 @@
     "resend": "^6.1.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.1"
   }
 }

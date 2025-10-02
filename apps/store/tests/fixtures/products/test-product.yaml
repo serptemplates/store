@@ -1,0 +1,16 @@
+slug: test-product
+seo_title: Test Product
+seo_description: Test product description.
+product_page_url: https://example.com/test-product
+purchase_url: https://example.com/test-product/buy
+name: Test Product
+platform: Test Platform
+tagline: The best test product.
+description: |
+  Detailed description of the test product.
+pricing:
+  label: Lifetime access
+  price: "$99"
+screenshots: []
+reviews: []
+faqs: []

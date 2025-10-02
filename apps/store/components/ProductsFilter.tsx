@@ -13,6 +13,7 @@ export type ProductListItem = {
   platform?: string;
   coming_soon?: boolean;
   new_release?: boolean;
+  popular?: boolean;
 };
 
 export function ProductsFilter({ products }: { products: ProductListItem[] }) {
@@ -74,15 +75,19 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
 
     // Sort: new releases first, then available products, then coming soon products
     return filteredProducts.sort((a, b) => {
-      // First priority: new releases
-      if (a.new_release && !b.new_release) return -1;
-      if (!a.new_release && b.new_release) return 1;
-
-      // Second priority: coming soon at the bottom
-      if (a.coming_soon === b.coming_soon) {
-        return a.name.localeCompare(b.name);
+      if (a.new_release !== b.new_release) {
+        return a.new_release ? -1 : 1;
       }
-      return a.coming_soon ? 1 : -1;
+
+      if (a.popular !== b.popular) {
+        return a.popular ? -1 : 1;
+      }
+
+      if (a.coming_soon !== b.coming_soon) {
+        return a.coming_soon ? 1 : -1;
+      }
+
+      return a.name.localeCompare(b.name);
     });
   }, [products, searchQuery, selectedCategory, showComingSoon, showNewReleases]);
 
@@ -105,8 +110,8 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
           <Link
             key={product.slug}
             href={`/${product.slug}`}
-            className={`group flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border ${
-              (product.coming_soon || product.new_release) ? "relative overflow-hidden" : ""
+            className={`group relative flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border ${
+              product.coming_soon || product.new_release || product.popular ? "overflow-hidden" : ""
             }`}
           >
             {product.coming_soon && (
@@ -117,6 +122,11 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
             {product.new_release && !product.coming_soon && (
               <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-emerald-500 to-teal-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
                 New Release
+              </div>
+            )}
+            {product.popular && !product.coming_soon && !product.new_release && (
+              <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
+                Most Popular
               </div>
             )}
             <span className="w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground transition group-hover:bg-primary/10 group-hover:text-foreground">

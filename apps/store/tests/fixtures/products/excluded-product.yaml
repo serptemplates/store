@@ -1,0 +1,9 @@
+slug: excluded-product
+seo_title: Excluded Product
+seo_description: Should be excluded.
+product_page_url: https://example.com/excluded-product
+purchase_url: https://example.com/excluded-product/buy
+name: Excluded Product
+tagline: Not for listing.
+description: |
+  This product should not appear in listings.

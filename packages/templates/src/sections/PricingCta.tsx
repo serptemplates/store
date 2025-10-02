@@ -27,15 +27,11 @@ export type PricingCtaProps = {
 };
 
 const defaultBenefits = [
-  "Automated backups",
-  "24/7 support",
-  "Unlimited projects",
-  "Unlimited users",
-  "Custom domain",
-  "Custom branding",
-  "Advanced analytics",
-  "Custom permissions",
-  "Advanced reports",
+  "Instant access after checkout",
+  "Lifetime license and updates",
+  "Supports private videos",
+  "Unlimited downloads included",
+  "Works on macOS, Windows, and Linux",
 ];
 
 export function PricingCta({
@@ -45,7 +41,7 @@ export function PricingCta({
   price,
   originalPrice,
   priceNote,
-  ctaText = "Get it Now",
+  ctaText = "GET IT NOW",
   ctaHref = "#download",
   onCtaClick,
   ctaLoading = false,
@@ -57,96 +53,332 @@ export function PricingCta({
   className,
   id,
 }: PricingCtaProps) {
-  const listItems = (benefits?.length ? benefits : features?.length ? features : defaultBenefits).slice(0, 6);
+  const listItems = (benefits?.length ? benefits : features?.length ? features : defaultBenefits).slice(0, 8);
 
   const showPriceDetails = Boolean(price || priceLabel || originalPrice || priceNote);
+
+  // Calculate discount percentage if original price exists
+  let discountPercentage = 0;
+  if (originalPrice && price) {
+    const originalNum = parseFloat(originalPrice.replace(/[^0-9.]/g, ''));
+    const currentNum = parseFloat(price.replace(/[^0-9.]/g, ''));
+    if (originalNum && currentNum) {
+      discountPercentage = Math.round((1 - currentNum / originalNum) * 100);
+    }
+  }
 
   return (
     <section
       id={id}
-      className={cn("py-28 px-4 sm:px-8 lg:px-12 bg-muted/60", className)}
+      className={cn("py-10 sm:py-16 lg:py-20 px-4", className)}
+      style={{ backgroundColor: '#f8f8f8' }}
     >
-      <div className="relative mx-auto max-w-5xl">
-        <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h2 className="text-4xl font-extrabold tracking-tight text-foreground">
-              {heading}
+      <div className="relative mx-auto" style={{ maxWidth: '1200px' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+          {/* Left side content - Hidden on mobile */}
+          <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
+            {/* Product Title & Description */}
+            <h2 className="font-bold mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-[42px]"
+                style={{
+                  lineHeight: '1.2',
+                  color: '#111827',
+                  fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
+                }}>
+              {heading || "Get Instant Access"}
             </h2>
-            <p className="mt-6 max-w-xl text-sm">{subheading}</p>
-            <div className="mt-10">
-              <div className="flex flex-col gap-4">
-                {onCtaClick ? (
-                  <Button
-                    type="button"
-                    size="lg"
-                    onClick={onCtaClick}
-                    disabled={ctaDisabled || ctaLoading}
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#635BFF] hover:bg-[#5046E5] text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl disabled:opacity-70"
-                  >
-                    {ctaLoading ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M5.5 5.5C5.5 4.11929 6.61929 3 8 3H16C17.3807 3 18.5 4.11929 18.5 5.5V18.5C18.5 19.8807 17.3807 21 16 21H8C6.61929 21 5.5 19.8807 5.5 18.5V5.5ZM8 5C7.72386 5 7.5 5.22386 7.5 5.5V18.5C7.5 18.7761 7.72386 19 8 19H16C16.2761 19 16.5 18.7761 16.5 18.5V5.5C16.5 5.22386 16.2761 5 16 5H8Z" fill="currentColor"/>
-                        <path d="M11 9.5C11 9.22386 11.2239 9 11.5 9H15.5C15.7761 9 16 9.22386 16 9.5C16 9.77614 15.7761 10 15.5 10H11.5C11.2239 10 11 9.77614 11 9.5Z" fill="currentColor"/>
-                        <path d="M11 12C11 11.7239 11.2239 11.5 11.5 11.5H15.5C15.7761 11.5 16 11.7239 16 12C16 12.2761 15.7761 12.5 15.5 12.5H11.5C11.2239 12.5 11 12.2761 11 12Z" fill="currentColor"/>
-                      </svg>
-                    )}
-                    {ctaLoading ? "Processing..." : ctaText}
-                    <ArrowRight className="ml-1 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                ) : (
-                  <Button
-                    asChild
-                    size="lg"
-                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#635BFF] hover:bg-[#5046E5] text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl"
-                  >
-                    <a href={ctaHref} target="_blank" rel="noopener noreferrer">
-                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M5.5 5.5C5.5 4.11929 6.61929 3 8 3H16C17.3807 3 18.5 4.11929 18.5 5.5V18.5C18.5 19.8807 17.3807 21 16 21H8C6.61929 21 5.5 19.8807 5.5 18.5V5.5ZM8 5C7.72386 5 7.5 5.22386 7.5 5.5V18.5C7.5 18.7761 7.72386 19 8 19H16C16.2761 19 16.5 18.7761 16.5 18.5V5.5C16.5 5.22386 16.2761 5 16 5H8Z" fill="currentColor"/>
-                        <path d="M11 9.5C11 9.22386 11.2239 9 11.5 9H15.5C15.7761 9 16 9.22386 16 9.5C16 9.77614 15.7761 10 15.5 10H11.5C11.2239 10 11 9.77614 11 9.5Z" fill="currentColor"/>
-                        <path d="M11 12C11 11.7239 11.2239 11.5 11.5 11.5H15.5C15.7761 11.5 16 11.7239 16 12C16 12.2761 15.7761 12.5 15.5 12.5H11.5C11.2239 12.5 11 12.2761 11 12Z" fill="currentColor"/>
-                      </svg>
-                      {ctaText}
-                      <ArrowRight className="ml-1 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </a>
-                  </Button>
-                )}
-                {ctaExtra}
+            <p className="text-base sm:text-lg mb-6 lg:mb-8" style={{ color: '#4b5563', lineHeight: '1.6' }}>
+              {subheading || "Start using our product immediately after checkout. No waiting, no delays."}
+            </p>
+
+            {/* Key Value Props - Hidden on mobile, shown on lg+ */}
+            <div className="hidden lg:block space-y-4 mb-8">
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#fbbf24' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Instant Download</h3>
+                  <p className="text-sm text-gray-600">Get access immediately after payment</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#4ade80' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Lifetime Updates</h3>
+                  <p className="text-sm text-gray-600">All future updates included at no extra cost</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#60a5fa' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Premium Support</h3>
+                  <p className="text-sm text-gray-600">Get help when you need it</p>
+                </div>
               </div>
             </div>
-            {terms && <div className="mt-6 text-sm text-muted-foreground">{terms}</div>}
+
+            {/* Trust indicators - Hidden on mobile */}
+            <div className="hidden lg:flex flex-wrap items-center gap-6 mb-6">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                ))}
+                <span className="ml-2 text-sm text-gray-600">Trusted by 14,745+ customers</span>
+              </div>
+            </div>
+
+            {/* Security badges - Hidden on mobile */}
+            <div className="hidden lg:flex items-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <span>Secure Checkout</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                <span>SSL Encrypted</span>
+              </div>
+            </div>
           </div>
 
-          <div className="relative">
-            <div className="relative flex flex-col gap-6 rounded-2xl border border-border/70 bg-card/80 p-8 shadow-xl">
-              {showPriceDetails ? (
-                <div className="text-center">
-                  <div className="flex flex-col items-center justify-center gap-1">
-                    {originalPrice && (
-                      <div className="text-2xl font-medium text-muted-foreground/80 line-through">
-                        {originalPrice}
-                      </div>
-                    )}
-                    {price && <div className="text-5xl font-bold text-foreground">{price}</div>}
-                  </div>
-                  {priceLabel && (
-                    <div className="mt-1 text-sm uppercase tracking-wide text-muted-foreground">{priceLabel}</div>
-                  )}
-                  {priceNote && <div className="mt-2 text-sm text-muted-foreground">{priceNote}</div>}
-                </div>
-              ) : null}
+          {/* Right side - pricing card */}
+          <div className="relative order-1 lg:order-2">
+            <div className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
+                 style={{
+                   padding: '30px 25px 25px',
+                   boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
+                   border: '1px solid #e5e5e5'
+                 }}>
 
-              <div className="space-y-4">
-                {listItems.map((feat, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm text-foreground">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                      <Check className="h-3.5 w-3.5" />
-                    </span>
-                    <span>{feat}</span>
-                  </div>
-                ))}
+              {/* Product Title - Mobile Only */}
+              <div className="text-center mb-4 lg:hidden">
+                <h2 className="font-bold text-xl sm:text-2xl"
+                    style={{
+                      color: '#111827',
+                      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
+                    }}>
+                  {heading || "Get Instant Access"}
+                </h2>
+                {subheading && (
+                  <p className="text-sm sm:text-base mt-2" style={{ color: '#6b7280' }}>
+                    {subheading}
+                  </p>
+                )}
               </div>
+
+              {/* Pricing */}
+              {showPriceDetails && (
+                <div className="text-center mb-4">
+                  {originalPrice && (
+                    <div className="line-through mb-1 text-2xl sm:text-3xl"
+                         style={{
+                           color: '#9ca3af',
+                           fontWeight: '400',
+                           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
+                         }}>
+                      {originalPrice}
+                    </div>
+                  )}
+                  {price && (
+                    <div className="font-bold text-5xl sm:text-6xl"
+                         style={{
+                           lineHeight: '0.9',
+                           color: '#000000',
+                           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                           letterSpacing: '-0.02em'
+                         }}>
+                      {price}
+                    </div>
+                  )}
+                  {priceLabel && (
+                    <div className="mt-2" style={{
+                      color: '#6b7280',
+                      fontSize: '14px',
+                      fontStyle: 'italic'
+                    }}>
+                      {priceLabel}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Discount Badge */}
+              {discountPercentage > 0 && (
+                <div className="mb-5 mx-auto w-full">
+                  <div className="py-2.5 px-4 rounded-md text-center font-bold"
+                       style={{
+                         backgroundColor: '#ef4444',
+                         color: 'white',
+                         fontSize: '13px',
+                         letterSpacing: '0.01em'
+                       }}>
+                    {discountPercentage}% OFF - but only TODAY, on THURSDAY
+                  </div>
+                </div>
+              )}
+
+              <div style={{ borderTop: '1px solid #e5e7eb', marginBottom: '20px', marginTop: '15px' }}></div>
+
+              {/* Benefits List */}
+              <div className="mb-6">
+                <div className="space-y-2.5">
+                  {listItems.map((feat, index) => (
+                    <div key={index} className="flex items-center gap-2.5">
+                      <span className="flex items-center justify-center rounded-full flex-shrink-0"
+                            style={{
+                              backgroundColor: '#dcfce7',
+                              width: '20px',
+                              height: '20px'
+                            }}>
+                        <Check style={{
+                          color: '#16a34a',
+                          width: '12px',
+                          height: '12px',
+                          strokeWidth: '3'
+                        }} />
+                      </span>
+                      <span style={{
+                        color: '#374151',
+                        fontSize: '15px',
+                        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                        lineHeight: '1.4'
+                      }}>
+                        {feat}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ borderTop: '1px solid #e5e7eb', marginBottom: '20px' }}></div>
+
+              {/* Additional info if provided */}
+              {(benefits?.length || features?.length) && benefits?.length !== listItems.length && (
+                <div className="mb-4">
+              <p className="text-left mb-3" style={{
+                color: '#374151',
+                fontSize: '14px',
+                lineHeight: '1.5'
+              }}>
+                Included: <strong>300 critical conversion checkpoints</strong>
+              </p>
+              <p className="text-left mb-4" style={{
+                color: '#374151',
+                fontSize: '14px',
+                lineHeight: '1.5'
+              }}>
+                Checklist last updated: <strong>October 2nd 2025</strong>
+              </p>
+            </div>
+          )}
+
+          {/* CTA Button */}
+          <div className="mb-5">
+            {onCtaClick ? (
+              <button
+                type="button"
+                onClick={onCtaClick}
+                disabled={ctaDisabled || ctaLoading}
+                className="w-full font-bold transition-all text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
+                style={{
+                  backgroundImage: 'linear-gradient(#ffe252, #fed300)',
+                  color: '#000000',
+                  fontWeight: '700',
+                  borderRadius: '101px',
+                  borderTop: 'none',
+                  borderLeft: 'none',
+                  borderRight: 'none',
+                  borderBottom: '5px solid #d0ad00',
+                  boxShadow: '0 3px 0 1px #000000',
+                  fontFamily: '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                  letterSpacing: '0px',
+                  lineHeight: '1.3em',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  zIndex: 2
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 5px 0 1px #000000';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 3px 0 1px #000000';
+                }}
+              >
+                {ctaLoading ? (
+                  <>
+                    <Loader2 className="inline h-5 w-5 animate-spin mr-2" />
+                    Processing...
+                  </>
+                ) : (
+                  ctaText
+                )}
+              </button>
+            ) : (
+              <a
+                href={ctaHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
+                style={{
+                  backgroundImage: 'linear-gradient(#ffe252, #fed300)',
+                  color: '#000000',
+                  fontWeight: '700',
+                  borderRadius: '101px',
+                  borderTop: 'none',
+                  borderLeft: 'none',
+                  borderRight: 'none',
+                  borderBottom: '5px solid #d0ad00',
+                  boxShadow: '0 3px 0 1px #000000',
+                  fontFamily: '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                  letterSpacing: '0px',
+                  lineHeight: '1.3em',
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  zIndex: 2,
+                  display: 'inline-block'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 5px 0 1px #000000';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 3px 0 1px #000000';
+                }}
+              >
+                {ctaText}
+              </a>
+            )}
+            {ctaExtra}
+          </div>
+
+              {/* Terms/Disclaimer - only show if custom terms provided */}
+              {terms && (
+                <div className="text-center leading-relaxed"
+                     style={{
+                       color: '#6b7280',
+                       fontSize: '13px',
+                       lineHeight: '1.5',
+                       fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
+                     }}>
+                  {terms}
+                </div>
+              )}
             </div>
           </div>
         </div>

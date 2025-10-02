@@ -5,7 +5,7 @@
  * These tests prevent regression and ensure data integrity
  */
 
-import { describe, it, expect, beforeAll } from '@jest/globals';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { z } from 'zod';
 
 // Import all contracts
@@ -25,6 +25,7 @@ import {
   validateStripeWebhookEvent,
   isStripeWebhookEvent,
 } from './webhook.contract';
+import type { StripeCheckoutSessionCompleted } from './webhook.contract';
 
 import {
   validateGHLConfig,
@@ -64,6 +65,12 @@ import {
   validateRefundRequest,
   validateDiscountCode,
 } from './business-rules.contract';
+import {
+  buildOrderFixture,
+  buildStripeCheckoutSessionFixture,
+  buildStripePaymentIntentFixture,
+  buildStripeWebhookEventFixture,
+} from './test-fixtures';
 
 describe('Critical Path: Checkout to Payment', () => {
   it('should validate complete checkout flow', () => {
@@ -86,26 +93,27 @@ describe('Critical Path: Checkout to Payment', () => {
     expect(validatedRequest.customer?.email).toBe('test@example.com');
 
     // Step 2: Create Stripe session
-    const stripeSession = {
-      id: 'cs_test_123',
-      object: 'checkout.session',
-      amount_total: 7900,
-      currency: 'usd',
-      customer_email: 'test@example.com',
+    const stripeSession = buildStripeCheckoutSessionFixture({
+      id: 'cs_test_flow',
       metadata: {
         offerId: 'test-product',
         affiliateId: 'AFF123',
       },
-      mode: 'payment',
-      payment_intent: 'pi_test_123',
-      payment_status: 'paid',
-      status: 'complete',
-    };
+      payment_intent: 'pi_test_flow',
+    });
 
     const validatedSession = validateStripeCheckoutSession(stripeSession);
-    expect(validatedSession.id).toBe('cs_test_123');
+    expect(validatedSession.id).toBe('cs_test_flow');
 
-    // Step 3: Database insert
+    // Step 3: Validate payment intent
+    const paymentIntent = buildStripePaymentIntentFixture({
+      id: 'pi_test_flow',
+      customer: 'cus_test_flow',
+    });
+    const validatedIntent = validateStripePaymentIntent(paymentIntent);
+    expect(validatedIntent.id).toBe('pi_test_flow');
+
+    // Step 4: Database insert
     const dbInsert = {
       stripe_session_id: stripeSession.id,
       offer_id: checkoutRequest.offerId,
@@ -115,9 +123,9 @@ describe('Critical Path: Checkout to Payment', () => {
     };
 
     const validatedInsert = validateDBInsertCheckoutSession(dbInsert);
-    expect(validatedInsert.stripe_session_id).toBe('cs_test_123');
+    expect(validatedInsert.stripe_session_id).toBe('cs_test_flow');
 
-    // Step 4: Payment transition
+    // Step 5: Payment transition
     const isValidTransition = validatePaymentTransition('pending', 'processing');
     expect(isValidTransition).toBe(true);
 
@@ -127,46 +135,34 @@ describe('Critical Path: Checkout to Payment', () => {
 
   it('should validate webhook to order creation flow', () => {
     // Step 1: Webhook event
-    const webhookEvent = {
-      id: 'evt_test_123',
-      object: 'event',
-      type: 'checkout.session.completed',
-      data: {
-        object: {
-          id: 'cs_test_123',
-          amount_total: 7900,
-          customer_email: 'test@example.com',
-          metadata: {
-            offerId: 'test-product',
-          },
-        },
+    const webhookEvent = buildStripeWebhookEventFixture({}, {
+      id: 'cs_test_flow',
+      payment_intent: 'pi_test_flow',
+      metadata: {
+        offerId: 'test-product',
       },
-      livemode: false,
-      pending_webhooks: 0,
-    };
+    });
 
     expect(isStripeWebhookEvent(webhookEvent)).toBe(true);
     const validatedEvent = validateStripeWebhookEvent(webhookEvent);
     expect(validatedEvent.type).toBe('checkout.session.completed');
+    const session = validatedEvent.data.object as StripeCheckoutSessionCompleted;
 
     // Step 2: Create order
-    const order = {
-      checkoutSessionId: 'session-123',
-      stripeSessionId: 'cs_test_123',
-      stripePaymentIntentId: 'pi_test_123',
-      offerId: 'test-product',
-      customerEmail: 'test@example.com',
-      amountTotal: 7900,
-      currency: 'usd',
-      paymentStatus: 'succeeded',
-      status: 'completed',
+    const order = buildOrderFixture({
+      stripeSessionId: session.id,
+      stripePaymentIntentId:
+        typeof session.payment_intent === 'string'
+          ? session.payment_intent
+          : session.payment_intent?.id ?? 'pi_test_flow',
+      offerId: session.metadata.offerId,
+      amountTotal: session.amount_total ?? 7900,
+      currency: session.currency ?? 'usd',
       metadata: {},
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    });
 
     const validatedOrder = validateOrder(order);
-    expect(validatedOrder.stripeSessionId).toBe('cs_test_123');
+    expect(validatedOrder.stripeSessionId).toBe('cs_test_flow');
 
     // Step 3: Database insert
     const dbOrder = camelToSnakeCase({
@@ -180,20 +176,35 @@ describe('Critical Path: Checkout to Payment', () => {
     });
 
     const validatedDbOrder = validateDBInsertOrder(dbOrder);
-    expect(validatedDbOrder.stripe_session_id).toBe('cs_test_123');
+    expect(validatedDbOrder.stripe_session_id).toBe(order.stripeSessionId);
   });
 });
 
 describe('Critical Path: GHL Sync', () => {
   it('should validate GHL sync flow', () => {
     // Step 1: Build GHL contact
+    const nowIso = new Date().toISOString();
     const contact = {
+      id: 'contact_123',
+      locationId: 'location_123',
       email: 'test@example.com',
+      phone: '+1234567890',
       firstName: 'Test',
       lastName: 'User',
-      phone: '+1234567890',
+      name: 'Test User',
+      dateOfBirth: null,
+      address1: null,
+      city: null,
+      state: null,
+      country: null,
+      postalCode: null,
+      companyName: null,
+      website: null,
       tags: ['customer', 'premium'],
       source: 'website',
+      customFields: {},
+      dateAdded: nowIso,
+      dateUpdated: nowIso,
     };
 
     const validatedContact = validateGHLContact(contact);
@@ -599,16 +610,7 @@ describe('Regression Tests', () => {
   });
 
   it('should validate Stripe ID formats', () => {
-    const invalidSessionId = {
-      id: 'invalid_id', // Should start with cs_
-      object: 'checkout.session',
-      amount_total: 7900,
-      currency: 'usd',
-      metadata: {},
-      mode: 'payment',
-      payment_status: 'paid',
-      status: 'complete',
-    };
+    const invalidSessionId = buildStripeCheckoutSessionFixture({ id: 'invalid_id' });
 
     expect(() => validateStripeCheckoutSession(invalidSessionId)).toThrow();
   });

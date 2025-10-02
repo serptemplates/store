@@ -18,6 +18,7 @@ const faqSchema = z.object({
 
 const stripeSchema = z.object({
   price_id: z.string(),
+  test_price_id: z.string().optional(), // Optional test mode price ID
   success_url: z.string().url(),
   cancel_url: z.string().url(),
   mode: z.enum(["payment", "subscription"]).optional(),
@@ -85,6 +86,8 @@ export const productSchema = z.object({
   waitlist_url: z.string().url().optional(),
   // New release field
   new_release: z.boolean().optional().default(false),
+  // Popular badge field
+  popular: z.boolean().optional().default(false),
   // Google Merchant fields
   brand: z.string().optional().default('SERP Apps'),
   sku: z.string().optional(),

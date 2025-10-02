@@ -57,6 +57,12 @@ export async function createPayPalOrder(params: {
   const client = getPayPalClient();
 
   const request = new paypal.orders.OrdersCreateRequest();
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+    "http://localhost:3000";
+
   request.requestBody({
     intent: "CAPTURE",
     purchase_units: [{
@@ -72,8 +78,8 @@ export async function createPayPalOrder(params: {
       brand_name: "SERP Apps Store",
       landing_page: "BILLING",
       user_action: "PAY_NOW",
-      return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?source=paypal`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/cancel`,
+      return_url: `${siteUrl}/checkout/success?source=paypal`,
+      cancel_url: `${siteUrl}/checkout/cancel`,
     },
   });
 

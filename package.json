@@ -27,8 +27,10 @@
     "cleanup:stripe-products": "node scripts/cleanup-stripe-products.mjs",
     "stripe:create-prices": "node scripts/create-stripe-prices.mjs",
     "test:checkout": "node scripts/test-checkout-sessions.mjs",
+    "test:perf": "node scripts/lighthouse-budget.mjs",
     "sync:shopify:products": "node scripts/sync-shopify-products.mjs",
-    "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs"
+    "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
+    "validate:products": "pnpm --filter @apps/store validate:products"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

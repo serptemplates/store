@@ -5,7 +5,7 @@
  * Run with: npm test contracts.test.ts
  */
 
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import {
   validateCheckoutSession,
   validateCheckoutRequest,
@@ -35,6 +35,12 @@ import {
   dbToCamelCase,
   camelToSnakeCase,
 } from '../lib/contracts/database.contract';
+import {
+  buildOrderFixture,
+  buildStripeCheckoutSessionFixture,
+  buildStripePaymentIntentFixture,
+  buildStripeWebhookEventFixture,
+} from '@/lib/contracts/test-fixtures';
 
 describe('Checkout Contracts', () => {
   describe('validateCheckoutRequest', () => {
@@ -102,7 +108,6 @@ describe('Checkout Contracts', () => {
       const metadata = {
         ghlSyncedAt: '2025-09-27T10:00:00Z',
         ghlContactId: 'contact_123',
-        ghlError: null,
         otherField: 'ignored',
       };
 
@@ -112,44 +117,54 @@ describe('Checkout Contracts', () => {
       expect(result.ghlError).toBeUndefined();
     });
   });
+
+  describe('Checkout session persistence', () => {
+    it('should validate a persisted checkout session record', () => {
+      const record = {
+        id: '00000000-0000-0000-0000-000000000000',
+        stripeSessionId: 'cs_test_record',
+        stripePaymentIntentId: 'pi_test_record',
+        offerId: 'demo-product',
+        landerId: null,
+        customerEmail: 'test@example.com',
+        metadata: {},
+        status: 'pending' as const,
+        source: 'stripe' as const,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const parsed = validateCheckoutSession(record);
+      expect(parsed.stripeSessionId).toBe('cs_test_record');
+      expect(parsed.status).toBe('pending');
+    });
+  });
+
+  describe('Order records', () => {
+    it('should validate a stored order record', () => {
+      const order = buildOrderFixture();
+      const parsed = validateOrder(order);
+      expect(parsed.stripePaymentIntentId).toBe('pi_test_fixture');
+      expect(parsed.source).toBe('stripe');
+    });
+  });
 });
 
 describe('Webhook Contracts', () => {
   describe('Stripe Checkout Session', () => {
     it('should validate a valid Stripe checkout session', () => {
-      const validSession = {
-        id: 'cs_test_123',
-        object: 'checkout.session',
-        amount_total: 7900,
-        currency: 'usd',
-        customer_email: 'test@example.com',
-        metadata: {
-          offerId: 'demo-product',
-          affiliateId: 'AFF123',
-        },
-        mode: 'payment',
-        payment_intent: 'pi_test_123',
-        payment_status: 'paid',
-        status: 'complete',
-      };
+      const validSession = buildStripeCheckoutSessionFixture();
 
       const result = validateStripeCheckoutSession(validSession);
-      expect(result.id).toBe('cs_test_123');
+      expect(result.id).toBe(validSession.id);
       expect(result.amount_total).toBe(7900);
       expect(result.metadata.offerId).toBe('demo-product');
     });
 
     it('should reject session with invalid ID format', () => {
-      const invalidSession = {
-        id: 'invalid_id', // Should start with cs_
-        object: 'checkout.session',
-        amount_total: 7900,
-        currency: 'usd',
-        metadata: {},
-        mode: 'payment',
-        payment_status: 'paid',
-        status: 'complete',
-      };
+      const invalidSession = buildStripeCheckoutSessionFixture({
+        id: 'invalid_id',
+      });
 
       expect(() => validateStripeCheckoutSession(invalidSession)).toThrow();
     });
@@ -157,39 +172,17 @@ describe('Webhook Contracts', () => {
 
   describe('Stripe Payment Intent', () => {
     it('should validate a valid payment intent', () => {
-      const validIntent = {
-        id: 'pi_test_123',
-        object: 'payment_intent',
-        amount: 7900,
-        amount_capturable: 0,
-        amount_received: 7900,
-        currency: 'usd',
-        metadata: {
-          offerId: 'demo-product',
-        },
-        status: 'succeeded',
-      };
+      const validIntent = buildStripePaymentIntentFixture();
 
       const result = validateStripePaymentIntent(validIntent);
-      expect(result.id).toBe('pi_test_123');
+      expect(result.id).toBe(validIntent.id);
       expect(result.amount).toBe(7900);
     });
   });
 
   describe('Webhook Event Type Guards', () => {
     it('should identify Stripe webhook events', () => {
-      const stripeEvent = {
-        id: 'evt_test_123',
-        object: 'event',
-        type: 'checkout.session.completed',
-        data: {
-          object: {
-            id: 'cs_test_123',
-          },
-        },
-        livemode: false,
-        pending_webhooks: 0,
-      };
+      const stripeEvent = buildStripeWebhookEventFixture();
 
       expect(isStripeWebhookEvent(stripeEvent)).toBe(true);
     });

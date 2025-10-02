@@ -16,6 +16,7 @@ const requestSchema = z.object({
       name: z.string().max(120).optional(),
     })
     .optional(),
+  couponCode: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -55,7 +56,17 @@ export async function POST(request: NextRequest) {
   const product = getProductData(parsedBody.offerId);
   const priceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
   const price = parseFloat(priceString);
-  const totalAmount = (price * parsedBody.quantity).toFixed(2);
+
+  // Apply coupon discount if provided (placeholder logic - integrate with your coupon system)
+  let discountAmount = 0;
+  if (parsedBody.couponCode) {
+    // TODO: Validate coupon and calculate discount
+    // For now, we'll just pass the coupon code to metadata
+    // In production, you would validate the coupon against a database
+    // and apply the appropriate discount
+  }
+
+  const totalAmount = ((price * parsedBody.quantity) - discountAmount).toFixed(2);
 
   try {
     // Mark stale checkout sessions
@@ -72,6 +83,7 @@ export async function POST(request: NextRequest) {
         affiliateId: parsedBody.affiliateId || "",
         customerEmail: parsedBody.customer?.email || "",
         customerName: parsedBody.customer?.name || "",
+        couponCode: parsedBody.couponCode || "",
       },
     });
 

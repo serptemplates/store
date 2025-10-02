@@ -1,44 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
 import type Stripe from "stripe";
 
 import { getOfferConfig } from "@/lib/offer-config";
 import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/stripe";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
-
-const requestSchema = z.object({
-  offerId: z.string().min(1, "offerId is required"),
-  quantity: z.number().int().min(1).max(10).optional().default(1),
-  mode: z.enum(["payment", "subscription"]).optional(),
-  clientReferenceId: z.string().optional(),
-  affiliateId: z.string().min(1).optional(),
-  metadata: z.record(z.string()).optional(),
-  customer: z
-    .object({
-      email: z.string().email("Invalid email"),
-      name: z.string().max(120).optional(),
-      phone: z.string().max(32).optional(),
-    })
-    .optional(),
-});
+import { checkoutSessionSchema, sanitizeInput } from "@/lib/validation/checkout";
+import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
 
 function buildErrorResponse(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
 }
 
 export async function POST(request: NextRequest) {
-  let parsedBody: z.infer<typeof requestSchema>;
+  // Apply rate limiting
+  return withRateLimit(request, checkoutRateLimit, async () => {
+    const parseResult = checkoutSessionSchema.safeParse(await request.json());
 
-  try {
-    const json = await request.json();
-    parsedBody = requestSchema.parse(json);
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return buildErrorResponse(error.issues.map((issue) => issue.message).join(", "));
-    }
+  if (!parseResult.success) {
+    return buildErrorResponse(
+      parseResult.error.issues.map((issue) => issue.message).join(", ")
+    );
+  }
 
-    return buildErrorResponse("Invalid request payload");
+  const parsedBody = parseResult.data;
+
+  // Sanitize string inputs
+  if (parsedBody.offerId) {
+    parsedBody.offerId = sanitizeInput(parsedBody.offerId);
+  }
+  if (parsedBody.affiliateId) {
+    parsedBody.affiliateId = sanitizeInput(parsedBody.affiliateId);
   }
 
   const offer = getOfferConfig(parsedBody.offerId);
@@ -151,20 +143,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const paymentMethodTypesRaw =
-      process.env.STRIPE_CHECKOUT_PAYMENT_METHODS?.split(",")
-        .map((method) => method.trim())
-        .filter(Boolean) ?? [];
-    const paymentMethodTypes = (paymentMethodTypesRaw.length > 0
-      ? paymentMethodTypesRaw
-      : ["card"]) as Stripe.Checkout.SessionCreateParams.PaymentMethodType[];
+    // Configure payment methods - two options:
+    // Option 1: Use a payment configuration ID (manages all payment methods in Stripe Dashboard)
+    // Option 2: Specify payment_method_types directly (manual control)
 
-    const session = await stripe.checkout.sessions.create({
+    const paymentConfigId = process.env.STRIPE_PAYMENT_CONFIG_ID;
+
+    let sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode,
-      payment_method_types: paymentMethodTypes,
       client_reference_id: parsedBody.clientReferenceId,
-      success_url: offer.successUrl,
-      cancel_url: offer.cancelUrl,
       line_items: [
         {
           price: price.id,
@@ -173,12 +160,40 @@ export async function POST(request: NextRequest) {
       ],
       customer_email: parsedBody.customer?.email,
       metadata: sessionMetadata,
+      allow_promotion_codes: true,  // Enable coupon codes
+      billing_address_collection: 'auto',  // Collect billing address which includes name
       custom_text: {
         submit: {
           message: `Secure checkout for ${offer.productName ?? offer.id}`,
         },
       },
-    });
+    };
+
+    // Add payment method configuration
+    if (paymentConfigId) {
+      // Use payment configuration from Stripe Dashboard
+      console.log(`Using payment configuration: ${paymentConfigId}`);
+      sessionParams.payment_method_configuration = paymentConfigId;
+    } else {
+      // Use explicit payment method types
+      const paymentMethodTypes: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = process.env.STRIPE_CHECKOUT_PAYMENT_METHODS
+        ? process.env.STRIPE_CHECKOUT_PAYMENT_METHODS.split(",").map(m => m.trim()) as Stripe.Checkout.SessionCreateParams.PaymentMethodType[]
+        : ["card"];  // Default: card includes all cards, Apple Pay, Google Pay, and Link
+
+      console.log(`Using payment method types: ${paymentMethodTypes.join(", ")}`);
+      sessionParams.payment_method_types = paymentMethodTypes;
+    }
+
+    // Configure for embedded or hosted mode
+    if (parsedBody.uiMode === "embedded") {
+      sessionParams.ui_mode = "embedded";
+      sessionParams.return_url = offer.successUrl;
+    } else {
+      sessionParams.success_url = offer.successUrl;
+      sessionParams.cancel_url = offer.cancelUrl;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     const paymentIntentId =
       typeof session.payment_intent === "string"
@@ -205,12 +220,22 @@ export async function POST(request: NextRequest) {
       console.error("[checkout] Failed to mark stale checkout sessions", { error });
     });
 
-    return NextResponse.json({
-      id: session.id,
-      url: session.url,
-      status: session.payment_status,
-      mode: session.mode,
-    });
+    // Return appropriate response based on UI mode
+    if (parsedBody.uiMode === "embedded") {
+      return NextResponse.json({
+        id: session.id,
+        client_secret: session.client_secret,
+        status: session.payment_status,
+        mode: session.mode,
+      });
+    } else {
+      return NextResponse.json({
+        id: session.id,
+        url: session.url,
+        status: session.payment_status,
+        mode: session.mode,
+      });
+    }
   } catch (error) {
     if (error && typeof error === "object" && "message" in error) {
       return buildErrorResponse(`Stripe error: ${String(error.message)}`, 502);
@@ -218,4 +243,5 @@ export async function POST(request: NextRequest) {
 
     return buildErrorResponse("Unexpected error while creating checkout session", 500);
   }
+  });
 }
