@@ -6,4 +6,7 @@ export * from "./sections/SocialProofScreenshots";
 export * from "./sections/PostsSection";
 export * from "./sections/FaqSection";
 export * from "./sections/PricingCta";
+export { AboutSection } from "./sections/AboutSection";
+export type { AboutSectionProps } from "./sections/AboutSection";
+export * from "./data/team";
 export * from "./MagicUiSaasTemplate";

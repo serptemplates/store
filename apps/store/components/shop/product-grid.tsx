@@ -34,7 +34,7 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         const bannerText =
           bannerType === "comingSoon"
-            ? "Coming Soon"
+            ? "Pre Release"
             : bannerType === "newRelease"
               ? "New Release"
               : bannerType === "popular"

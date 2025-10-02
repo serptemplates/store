@@ -79,15 +79,10 @@ export function PricingCta({
           {/* Left side content - Hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
             {/* Product Title & Description */}
-            <h2 className="font-bold mb-3 sm:mb-4 text-2xl sm:text-3xl lg:text-[42px]"
-                style={{
-                  lineHeight: '1.2',
-                  color: '#111827',
-                  fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
-                }}>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               {heading || "Get Instant Access"}
             </h2>
-            <p className="text-base sm:text-lg mb-6 lg:mb-8" style={{ color: '#4b5563', lineHeight: '1.6' }}>
+            <p className="text-lg md:text-xl text-gray-600 mb-6 lg:mb-8">
               {subheading || "Start using our product immediately after checkout. No waiting, no delays."}
             </p>
 
@@ -164,15 +159,11 @@ export function PricingCta({
 
               {/* Product Title - Mobile Only */}
               <div className="text-center mb-4 lg:hidden">
-                <h2 className="font-bold text-xl sm:text-2xl"
-                    style={{
-                      color: '#111827',
-                      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
-                    }}>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                   {heading || "Get Instant Access"}
                 </h2>
                 {subheading && (
-                  <p className="text-sm sm:text-base mt-2" style={{ color: '#6b7280' }}>
+                  <p className="text-base md:text-lg text-gray-600 mt-2">
                     {subheading}
                   </p>
                 )}

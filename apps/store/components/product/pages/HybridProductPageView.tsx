@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-import { FeaturesSection, PostsSection, PricingCta, SocialProofScreenshots } from "@repo/templates"
+import { FeaturesSection, PostsSection, PricingCta, SocialProofScreenshots, AboutSection } from "@repo/templates"
+import { teamMembers } from "@repo/templates/data/team"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
@@ -147,7 +148,7 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
                 {product.coming_soon ? (
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                      Coming Soon
+                      Pre Release
                     </span>
                     {price.price && <span className="text-2xl text-gray-500">Expected: {price.price}</span>}
                   </div>
@@ -287,6 +288,9 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         <SocialProofScreenshots />
 
         {homeProps.faqs && homeProps.faqs.length > 0 && <FaqSection faqs={homeProps.faqs} />}
+
+        {/* About Section */}
+        <AboutSection team={teamMembers} />
 
         {posts && posts.length > 0 && (
           <PostsSection

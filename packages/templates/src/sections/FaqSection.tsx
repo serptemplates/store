@@ -22,8 +22,8 @@ export function FaqSection({ faqs }: FaqSectionProps) {
   return (
     <section className="w-full bg-blue-50/30 py-24">
       <div className="container mx-auto max-w-3xl px-4">
-        <h2 className="mb-16 text-center text-5xl font-black text-gray-900 sm:text-4xl">
-          Frequently asked questions:
+        <h2 className="mb-16 text-center text-2xl md:text-3xl font-bold text-gray-900">
+          Frequently asked questions
         </h2>
         <div className="space-y-4">
           {faqs.map((item, index) => (
@@ -36,7 +36,7 @@ export function FaqSection({ faqs }: FaqSectionProps) {
                 className="flex w-full items-center justify-between p-8 text-left transition-all"
                 aria-expanded={openIndex === index}
               >
-                <h3 className="pr-4 text-lg font-bold text-gray-900 sm:text-xl">
+                <h3 className="pr-4 text-lg font-semibold text-gray-900">
                   {index + 1}. {item.question}
                 </h3>
                 <svg
