@@ -1,8 +1,6 @@
 import { CheckoutCancelContent } from "./render"
 
-type PageSearchParams = {
-  product?: string | string[]
-}
+type PageSearchParams = Record<string, string | string[] | undefined>
 
 function getProductParam(searchParams: PageSearchParams) {
   const value = searchParams?.product
@@ -10,8 +8,13 @@ function getProductParam(searchParams: PageSearchParams) {
   return Array.isArray(value) ? value[0] : value
 }
 
-export default function CheckoutCancelPage({ searchParams }: { searchParams: PageSearchParams }) {
-  const product = getProductParam(searchParams)
+export default async function CheckoutCancelPage({
+  searchParams,
+}: {
+  searchParams: Promise<PageSearchParams>
+}) {
+  const params = await searchParams
+  const product = getProductParam(params)
 
   return <CheckoutCancelContent product={product} />
 }
