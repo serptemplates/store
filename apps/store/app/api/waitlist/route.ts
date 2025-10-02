@@ -1,13 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sanitizeInput } from '@/lib/contracts/validation.middleware';
 
 /**
  * Waitlist API endpoint for coming soon products
  * Stores waitlist entries and optionally integrates with GHL or email service
+ * 
+ * Security: Uses server-side sanitization to prevent XSS and injection attacks.
+ * Client-side validation alone is insufficient as attackers can bypass it.
  */
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    
+    // Sanitize input to prevent XSS and other injection attacks
+    // This is critical even if using client-side form validation
+    const body = sanitizeInput(rawBody, {
+      stripHtml: true,
+      maxLength: 500,
+      allowedFields: ['email', 'product', 'name', 'source']
+    });
+    
     const { email, product, name, source } = body;
 
     // Validate required fields
