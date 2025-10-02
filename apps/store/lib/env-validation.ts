@@ -6,6 +6,13 @@
  */
 
 import logger from "./logger";
+import {
+  getOptionalStripePublishableKey,
+  getOptionalStripeSecretKey,
+  getOptionalStripeWebhookSecret,
+  getRuntimeEnvironment,
+  getStripeMode,
+} from "@/lib/stripe-environment";
 
 interface EnvConfig {
   name: string;
@@ -21,27 +28,6 @@ const ENV_CONFIGS: EnvConfig[] = [
     required: false, // Optional as app can work without DB
     description: "PostgreSQL connection string for order persistence",
   },
-  
-  // Stripe (required for payments)
-  {
-    name: "STRIPE_SECRET_KEY",
-    required: true,
-    description: "Stripe secret key (sk_live_* or sk_test_*)",
-    validate: (value) => value.startsWith("sk_"),
-  },
-  {
-    name: "STRIPE_WEBHOOK_SECRET",
-    required: true,
-    description: "Stripe webhook signing secret (whsec_*)",
-    validate: (value) => value.startsWith("whsec_"),
-  },
-  {
-    name: "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
-    required: true,
-    description: "Stripe publishable key (pk_live_* or pk_test_*)",
-    validate: (value) => value.startsWith("pk_"),
-  },
-  
   // GHL (optional but recommended)
   {
     name: "GHL_PAT_LOCATION",
@@ -117,23 +103,44 @@ export function validateEnvironment(): ValidationResult {
     }
   }
 
-  // Additional validation checks
-  if (process.env.NODE_ENV === "production") {
-    // In production, ensure we're using live Stripe keys
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    if (stripeKey && stripeKey.startsWith("sk_test_")) {
-      warnings.push(
-        "WARNING: Using Stripe test keys in production environment!"
-      );
+  const runtimeEnv = getRuntimeEnvironment();
+  const stripeMode = getStripeMode();
+
+  if (!getOptionalStripeSecretKey(stripeMode)) {
+    errors.push(
+      stripeMode === "live"
+        ? "Missing Stripe live secret key. Set STRIPE_SECRET_KEY_LIVE or provide an sk_live_* value in STRIPE_SECRET_KEY."
+        : "Missing Stripe test secret key. Set STRIPE_SECRET_KEY_TEST with an sk_test_* value.",
+    );
+  }
+
+  if (!getOptionalStripePublishableKey(stripeMode)) {
+    errors.push(
+      stripeMode === "live"
+        ? "Missing Stripe live publishable key. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE or provide a pk_live_* value in NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY."
+        : "Missing Stripe test publishable key. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST with a pk_test_* value.",
+    );
+  }
+
+  if (!getOptionalStripeWebhookSecret(stripeMode)) {
+    errors.push(
+      stripeMode === "live"
+        ? "Missing Stripe live webhook secret. Set STRIPE_WEBHOOK_SECRET_LIVE or provide a live secret in STRIPE_WEBHOOK_SECRET."
+        : "Missing Stripe test webhook secret. Set STRIPE_WEBHOOK_SECRET_TEST or ensure STRIPE_WEBHOOK_SECRET points to your test endpoint.",
+    );
+  }
+
+  if (runtimeEnv === "production") {
+    if (stripeMode !== "live") {
+      warnings.push("WARNING: Using Stripe test mode in production environment!");
     }
 
-    // Ensure HTTPS is used in production
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     if (siteUrl && !siteUrl.startsWith("https://")) {
-      errors.push(
-        "NEXT_PUBLIC_SITE_URL must use HTTPS in production"
-      );
+      errors.push("NEXT_PUBLIC_SITE_URL must use HTTPS in production");
     }
+  } else if (stripeMode === "live") {
+    warnings.push("Using live Stripe keys outside the production environment.");
   }
 
   return {
@@ -180,9 +187,8 @@ export function validateEnvironmentOrThrow(): void {
 export function getEnvironmentInfo(): Record<string, string | boolean> {
   return {
     nodeEnv: process.env.NODE_ENV || "unknown",
-    stripeMode: process.env.STRIPE_SECRET_KEY?.startsWith("sk_test_")
-      ? "test"
-      : "live",
+    runtimeEnv: getRuntimeEnvironment(),
+    stripeMode: getStripeMode(),
     databaseConfigured: !!process.env.DATABASE_URL,
     ghlConfigured: !!(
       process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID

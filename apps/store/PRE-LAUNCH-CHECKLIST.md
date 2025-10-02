@@ -24,8 +24,9 @@
 
 ### Environment Variables
 - [ ] All required variables configured in Vercel
-- [ ] `STRIPE_SECRET_KEY` starts with `sk_live_` (not test key)
-- [ ] `STRIPE_WEBHOOK_SECRET` configured and valid
+- [ ] `STRIPE_SECRET_KEY_LIVE` starts with `sk_live_`
+- [ ] `STRIPE_WEBHOOK_SECRET_LIVE` configured and valid
+- [ ] `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE` uses a `pk_live_` key
 - [ ] `NEXT_PUBLIC_SITE_URL` uses HTTPS
 - [ ] `GHL_PAT_LOCATION` and `GHL_LOCATION_ID` configured
 - [ ] `SLACK_ALERT_WEBHOOK_URL` configured for ops alerts

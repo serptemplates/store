@@ -6,9 +6,9 @@
 ```bash
 # Required Environment Variables Checklist
 □ DATABASE_URL - PostgreSQL connection string configured
-□ STRIPE_SECRET_KEY - Production Stripe secret key (sk_live_...)
-□ STRIPE_WEBHOOK_SECRET - Webhook endpoint secret from Stripe Dashboard
-□ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY - Production publishable key (pk_live_...)
+□ STRIPE_SECRET_KEY_LIVE - Production Stripe secret key (sk_live_...)
+□ STRIPE_WEBHOOK_SECRET_LIVE - Webhook endpoint secret from Stripe Dashboard
+□ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE - Production publishable key (pk_live_...)
 □ NEXT_PUBLIC_CHECKOUT_URL - Set to production domain /api/checkout/session
 □ GHL_API_BASE_URL - https://services.leadconnectorhq.com
 □ GHL_LOCATION_ID - Your GHL location ID

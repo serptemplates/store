@@ -8,10 +8,11 @@ import {
   EmbeddedCheckout
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
+import { requireStripePublishableKey } from "@/lib/stripe-environment"
 import "@/styles/checkout.css"
 
 // Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
+const stripePromise = loadStripe(requireStripePublishableKey())
 
 // Mock product data
 const mockProducts: Record<string, any> = {
@@ -35,7 +36,7 @@ export function EmbeddedCheckoutView() {
   const [isLoading, setIsLoading] = useState(true)
   const [clientSecret, setClientSecret] = useState("")
   const [showPayPal, setShowPayPal] = useState(false)
-  const [couponCode, setCouponCode] = useState("")
+  const [email, setEmail] = useState("")
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {

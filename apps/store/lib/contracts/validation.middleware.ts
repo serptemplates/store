@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z, ZodError, ZodSchema } from 'zod';
 import logger from '../logger';
+import { getOptionalStripeWebhookSecret } from '../stripe-environment';
 
 // ============= Validation Result Types =============
 
@@ -123,10 +124,15 @@ export function createWebhookValidator(
           const stripe = require('stripe');
           const stripeClient = new stripe(secretKey);
           try {
+            const webhookSecret = getOptionalStripeWebhookSecret();
+            if (!webhookSecret) {
+              throw new Error('Stripe webhook secret is not configured.');
+            }
+
             parsedBody = stripeClient.webhooks.constructEvent(
               body,
               signature,
-              process.env.STRIPE_WEBHOOK_SECRET!
+              webhookSecret
             );
             isValid = true;
           } catch {

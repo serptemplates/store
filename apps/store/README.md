@@ -82,6 +82,21 @@ pnpm dev  # Runs the store app specifically
 - **Local**: Create `.env.local` in `/apps/store/`
 - **Production**: Set in Vercel Dashboard → Settings → Environment Variables
 
+### Checkout E2E Verification
+Run the combined end-to-end suite. The script auto-starts the dev server and Stripe CLI listener if they aren’t already running:
+
+```bash
+pnpm --filter @apps/store test:e2e
+```
+
+This sequentially:
+1. Spins up `pnpm dev` and `stripe listen --forward-to http://localhost:3000/api/stripe/webhook` when needed
+2. Drives the lander → Stripe Checkout → thank-you path via Playwright
+3. Runs the automated payment flow (Stripe session, database persistence, GHL sync)
+4. Executes the acceptance suite to validate email, Postgres, Stripe, and GHL automation hooks
+
+Review Stripe (test mode), your inbox, Postgres, and GoHighLevel afterward to inspect the generated artifacts.
+
 ## Deployment
 
 ### Via CLI

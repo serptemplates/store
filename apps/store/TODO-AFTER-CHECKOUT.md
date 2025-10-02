@@ -18,8 +18,9 @@ Read these in order:
 
 **Required:**
 - [ ] Set `REDACT_LOGS=true` in production environment
-- [ ] Verify `STRIPE_SECRET_KEY` starts with `sk_live_` (not `sk_test_`)
-- [ ] Verify `STRIPE_WEBHOOK_SECRET` is configured
+- [ ] Verify `STRIPE_SECRET_KEY_LIVE` starts with `sk_live_`
+- [ ] Verify `STRIPE_WEBHOOK_SECRET_LIVE` is configured
+- [ ] Verify `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE` uses a `pk_live_` key
 - [ ] Verify `NEXT_PUBLIC_SITE_URL` uses HTTPS
 - [ ] Verify `GHL_PAT_LOCATION` is set
 - [ ] Verify `GHL_LOCATION_ID` is set

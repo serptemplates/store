@@ -199,6 +199,48 @@ ORDER BY created_at DESC;
 2. Verify webhook secret matches
 3. Check firewall/proxy settings
 
+## Regression Baseline – 2025-10-02 Manual Proof
+
+**Goal**: Verify a Stripe test checkout persists to Postgres and syncs to GoHighLevel without automation.
+
+### Environment
+- `.env.local` includes working `STRIPE_SECRET_KEY`, latest `STRIPE_WEBHOOK_SECRET_TEST`, `DATABASE_URL`, and required `GHL_*` keys.
+- Dev server started with `pnpm --filter @apps/store dev` (watch for `env.validation_success`).
+- Stripe CLI relay running:
+
+```bash
+stripe listen \
+  --events checkout.session.completed,payment_intent.succeeded \
+  --forward-to localhost:3000/api/stripe/webhook
+```
+
+### Manual Flow
+1. Visit `http://localhost:3000`, open the product page (`/loom-video-downloader`), click **Buy**, and complete Stripe checkout in test mode using card `4242 4242 4242 4242` and email `test@serp.co`.
+2. Observe dev-server logs confirming a successful sync:
+   - `POST /api/stripe/webhook 200`
+   - `ghl.contact_upserted` with `offerId: "loom-video-downloader"`, `email: "test@serp.co"`, and `contactId: "WDWSTD9nFxUNRYo8MryL"`
+   - Opportunity creation intentionally skipped (`missing_pipeline_or_stage`) and no workflow errors (workflow IDs removed).
+3. Confirm database write:
+
+```bash
+psql "$DATABASE_URL" -c "
+  SELECT offer_id,
+         amount_total,
+         metadata->>'ghlSyncedAt' AS ghl_synced_at
+    FROM orders
+   WHERE customer_email = 'test@serp.co'
+   ORDER BY created_at DESC
+   LIMIT 1;
+"
+```
+
+Expected result: row present with `offer_id = loom-video-downloader`, `amount_total = 1700` (in cents), and a non-null `ghl_synced_at` timestamp.
+
+### Snapshot Notes
+- Contact `test@serp.co` exists in GHL with tag `purchase-loom-video-downloader`.
+- Product YAML has pipeline/stage IDs removed; workflows omitted to prevent 404s.
+- Repeat the above steps after any change to Stripe config, database schema, or GHL credentials to preserve this baseline.
+
 ## Next Steps
 
 1. **Set up monitoring dashboard** for real-time metrics

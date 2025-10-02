@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { isDatabaseConfigured, query } from '@/lib/database';
+import { getOptionalStripeSecretKey, getStripeMode } from '@/lib/stripe-environment';
 
 export async function GET() {
   const checks = {
@@ -24,11 +25,8 @@ export async function GET() {
   }
 
   // Check Stripe
-  if (process.env.STRIPE_SECRET_KEY) {
-    checks.stripe = 'configured';
-  } else {
-    checks.stripe = 'not_configured';
-  }
+  const activeStripeMode = getStripeMode();
+  checks.stripe = getOptionalStripeSecretKey(activeStripeMode) ? 'configured' : 'not_configured';
 
   // Check PayPal
   if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {

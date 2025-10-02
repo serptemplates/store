@@ -1,15 +1,16 @@
 import { config } from "dotenv";
 import crypto from "crypto";
 import Stripe from "stripe";
+import { getOptionalStripeWebhookSecret } from "./lib/stripe-environment";
 
 // Load environment variables
 config({ path: "../../.env" });
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET_TEST;
+const WEBHOOK_SECRET = getOptionalStripeWebhookSecret("test") || getOptionalStripeWebhookSecret();
 const API_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL || "http://localhost:3000";
 
 if (!WEBHOOK_SECRET) {
-  console.error("❌ STRIPE_WEBHOOK_SECRET not configured");
+  console.error("❌ Stripe webhook secret for test mode is not configured (set STRIPE_WEBHOOK_SECRET_TEST)");
   process.exit(1);
 }
 

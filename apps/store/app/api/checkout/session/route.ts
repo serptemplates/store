@@ -4,6 +4,7 @@ import type Stripe from "stripe";
 
 import { getOfferConfig } from "@/lib/offer-config";
 import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/stripe";
+import { getOptionalStripePaymentConfigId } from "@/lib/stripe-environment";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
 import { checkoutSessionSchema, sanitizeInput } from "@/lib/validation/checkout";
 import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
@@ -148,7 +149,7 @@ export async function POST(request: NextRequest) {
     // Option 1: Use a payment configuration ID (manages all payment methods in Stripe Dashboard)
     // Option 2: Specify payment_method_types directly (manual control)
 
-    const paymentConfigId = process.env.STRIPE_PAYMENT_CONFIG_ID;
+    const paymentConfigId = getOptionalStripePaymentConfigId();
 
     let sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode,

@@ -16,18 +16,21 @@ import Stripe from 'stripe';
 import { query } from './lib/database';
 import { config } from 'dotenv';
 import { resolve } from 'path';
+import { requireStripeSecretKey } from './lib/stripe-environment';
 
 // Load environment variables from .env.local
 config({ path: resolve(__dirname, '.env.local') });
 
-// Ensure STRIPE_SECRET_KEY is set in environment variables
-if (!process.env.STRIPE_SECRET_KEY) {
-  console.error('❌ STRIPE_SECRET_KEY environment variable is not set');
-  console.log('Please set it in .env.local file');
+let stripeSecret: string;
+try {
+  stripeSecret = requireStripeSecretKey('test');
+} catch (error) {
+  console.error('❌', error instanceof Error ? error.message : String(error));
+  console.log('Please set STRIPE_SECRET_KEY_TEST in your .env.local file for acceptance tests.');
   process.exit(1);
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const stripe = new Stripe(stripeSecret, {
   apiVersion: '2024-04-10' as any,
 });
 

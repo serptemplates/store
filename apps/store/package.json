@@ -21,7 +21,8 @@
     "export:domains": "node scripts/export-domain-inventory.mjs",
     "export:static": "next export",
     "test:purchase": "npx tsx test-purchase-flow.ts",
-    "db:check": "npx tsx db-check.ts"
+    "db:check": "npx tsx db-check.ts",
+    "test:e2e": "tsx scripts/run-checkout-e2e.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -1,64 +1,47 @@
 import Stripe from "stripe";
 
 import logger from "@/lib/logger";
+import {
+  getOptionalStripeSecretKey,
+  getStripeMode,
+  isStripeTestMode,
+  requireStripeSecretKey,
+  type StripeMode,
+} from "@/lib/stripe-environment";
 
 const apiVersion: Stripe.StripeConfig["apiVersion"] = "2024-04-10";
 
-let stripeClientAuto: Stripe | undefined;
-let stripeClientLive: Stripe | null | undefined;
-let stripeClientTest: Stripe | null | undefined;
+const clientCache: Partial<Record<StripeMode, Stripe>> = {};
+let autoClientCache: { mode: StripeMode; client: Stripe } | null = null;
 
-function createStripeClient(secret: string | undefined | null): Stripe | null {
-  if (!secret) {
-    return null;
+function getOrCreateClient(mode: StripeMode): Stripe {
+  if (clientCache[mode]) {
+    return clientCache[mode]!;
   }
 
-  return new Stripe(secret, { apiVersion });
+  const client = new Stripe(requireStripeSecretKey(mode), { apiVersion });
+  clientCache[mode] = client;
+  return client;
 }
 
-function resolveStripeSecret(): string {
-  const secret = process.env.STRIPE_SECRET_KEY ?? process.env.STRIPE_SECRET_KEY_TEST;
-  if (!secret) {
-    throw new Error("Stripe secret key is not configured. Set STRIPE_SECRET_KEY or STRIPE_SECRET_KEY_TEST.");
-  }
+export function getStripeClient(mode: "auto" | StripeMode = "auto"): Stripe {
+  const resolvedMode = mode === "auto" ? getStripeMode() : mode;
 
-  return secret;
-}
-
-export function getStripeClient(mode: "auto" | "live" | "test" = "auto"): Stripe {
   if (mode === "auto") {
-    if (!stripeClientAuto) {
-      stripeClientAuto = new Stripe(resolveStripeSecret(), { apiVersion });
+    if (autoClientCache && autoClientCache.mode === resolvedMode) {
+      return autoClientCache.client;
     }
 
-    return stripeClientAuto;
+    const client = getOrCreateClient(resolvedMode);
+    autoClientCache = { mode: resolvedMode, client };
+    return client;
   }
 
-  if (mode === "live") {
-    if (stripeClientLive === undefined) {
-      stripeClientLive = createStripeClient(process.env.STRIPE_SECRET_KEY);
-    }
-
-    if (!stripeClientLive) {
-      throw new Error("Live Stripe key (STRIPE_SECRET_KEY) is not configured.");
-    }
-
-    return stripeClientLive;
-  }
-
-  if (stripeClientTest === undefined) {
-    stripeClientTest = createStripeClient(process.env.STRIPE_SECRET_KEY_TEST ?? process.env.STRIPE_SECRET_KEY);
-  }
-
-  if (!stripeClientTest) {
-    throw new Error("Test Stripe key is not configured. Set STRIPE_SECRET_KEY_TEST.");
-  }
-
-  return stripeClientTest;
+  return getOrCreateClient(resolvedMode);
 }
 
 export function isUsingTestKeys(): boolean {
-  return Boolean(process.env.STRIPE_SECRET_KEY_TEST && !process.env.STRIPE_SECRET_KEY);
+  return isStripeTestMode();
 }
 
 function parseUnitAmount(price: Stripe.Price): number {
@@ -96,10 +79,10 @@ async function ensureTestPriceExists(offer: {
     }
   }
 
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!getOptionalStripeSecretKey("live")) {
     throw new Error(
-      `Stripe test price ${offer.priceId} is missing and STRIPE_SECRET_KEY is not configured for cloning. ` +
-        `Add a test price or set STRIPE_SECRET_KEY alongside STRIPE_SECRET_KEY_TEST.`,
+      `Stripe test price ${offer.priceId} is missing and no live Stripe secret key is configured for cloning. ` +
+        `Add a test price or set STRIPE_SECRET_KEY_LIVE (or STRIPE_SECRET_KEY with an sk_live_* value) alongside STRIPE_SECRET_KEY_TEST.`,
     );
   }
 
@@ -126,15 +109,15 @@ async function ensureTestPriceExists(offer: {
   const amount = parseUnitAmount(livePrice);
   const currency = livePrice.currency ?? "usd";
 
-const rawProduct = typeof livePrice.product === "string"
+  const rawProduct = typeof livePrice.product === "string"
     ? await liveClient.products.retrieve(livePrice.product)
     : livePrice.product ?? null;
 
-const isActiveProduct = (candidate: Stripe.Product | Stripe.DeletedProduct | null): candidate is Stripe.Product => {
+  const isActiveProduct = (candidate: Stripe.Product | Stripe.DeletedProduct | null): candidate is Stripe.Product => {
     return Boolean(candidate && !candidate.deleted);
   };
 
-const product = isActiveProduct(rawProduct) ? rawProduct : null;
+  const product = isActiveProduct(rawProduct) ? rawProduct : null;
 
   let testProductId: string | undefined;
 

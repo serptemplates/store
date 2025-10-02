@@ -16,11 +16,12 @@ import {
 import { getOfferConfig } from "@/lib/offer-config";
 import { syncOrderWithGhl, GhlRequestError, RETRYABLE_STATUS_CODES } from "@/lib/ghl-client";
 import { getStripeClient } from "@/lib/stripe";
+import { getOptionalStripeWebhookSecret } from "@/lib/stripe-environment";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/ops-notify";
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET ?? process.env.STRIPE_WEBHOOK_SECRET_TEST;
+const webhookSecret = getOptionalStripeWebhookSecret();
 
 function jsonResponse(body: Record<string, unknown>, status = 200) {
   return NextResponse.json(body, { status });

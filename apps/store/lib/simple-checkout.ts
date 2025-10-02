@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { getProductData } from './product';
+import { getStripeMode, requireStripeSecretKey } from './stripe-environment';
 
 /**
  * Simple checkout that creates Stripe prices on the fly from product data
@@ -15,11 +16,8 @@ export async function createSimpleCheckout(params: {
   };
   affiliateId?: string;
 }) {
-  // Require STRIPE_SECRET_KEY to be set
-  const stripeKey = process.env.STRIPE_SECRET_KEY;
-  if (!stripeKey) {
-    throw new Error('STRIPE_SECRET_KEY environment variable is not set');
-  }
+  const stripeMode = getStripeMode();
+  const stripeKey = requireStripeSecretKey(stripeMode);
 
   const stripe = new Stripe(stripeKey, {
     apiVersion: '2024-04-10' as any,
@@ -111,7 +109,7 @@ export async function createSimpleCheckout(params: {
         landerId: product.slug,
         affiliateId: params.affiliateId || '',
         productName: product.name || '',
-        environment: process.env.STRIPE_SECRET_KEY?.startsWith('sk_test') ? 'test' : 'live',
+        environment: stripeMode,
       },
       client_reference_id: product.slug,
     };

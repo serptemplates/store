@@ -12,13 +12,9 @@ stripe:
   metadata:
     source: lander-template
 ghl:
-  pipeline_id: GYbj73q9z3SGihxNlOne
-  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
   source: Stripe Checkout
   tag_ids:
   - purchase-loom-video-downloader
-  workflow_ids:
-  - 9520b9b9-52c6-48d7-b4a4-b8cff53aeb7d
   opportunity_name_template: '{{offerName}} • {{customerEmail}}'
 name: Loom Video Downloader
 tagline: Download Loom-hosted videos anywhere with one click and save them forever.

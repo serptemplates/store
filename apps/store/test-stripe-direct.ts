@@ -5,16 +5,21 @@
  */
 
 import Stripe from 'stripe';
+import { getStripeMode, requireStripeSecretKey } from './lib/stripe-environment';
 
 console.log('🧪 Testing Stripe Connection Directly\n');
 
 // Load environment variable
-const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
-if (!STRIPE_KEY) {
-  console.error('❌ STRIPE_SECRET_KEY environment variable is not set');
-  console.log('Please set it in .env.local file');
+let STRIPE_KEY: string;
+try {
+  STRIPE_KEY = requireStripeSecretKey();
+} catch (error) {
+  console.error('❌', error instanceof Error ? error.message : String(error));
+  console.log('Please set STRIPE_SECRET_KEY_TEST (or STRIPE_SECRET_KEY_LIVE for production) in your .env file.');
   process.exit(1);
 }
+
+const ACTIVE_MODE = getStripeMode();
 
 async function testStripe() {
   try {
@@ -25,7 +30,7 @@ async function testStripe() {
 
     console.log('✅ Stripe client initialized\n');
 
-    console.log('2️⃣ Creating test product...');
+    console.log(`2️⃣ Creating test product using ${ACTIVE_MODE.toUpperCase()} credentials...`);
     const product = await stripe.products.create({
       name: 'Test Product ' + Date.now(),
       description: 'Automated test product',
@@ -75,7 +80,7 @@ async function testStripe() {
     if (error.type === 'StripeAuthenticationError') {
       console.error('\n🔑 Authentication Error:');
       console.error('The Stripe secret key is invalid or not working.');
-      console.error('Please check your STRIPE_SECRET_KEY in .env.local');
+      console.error('Please verify your configured Stripe secret key value.');
     } else if (error.type === 'StripeConnectionError') {
       console.error('\n🌐 Connection Error:');
       console.error('Cannot connect to Stripe API.');

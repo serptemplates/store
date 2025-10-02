@@ -11,11 +11,16 @@ console.log('🧪 Payment Flow Test Suite\n');
 
 // Test 1: Check Environment Variables
 console.log('1️⃣ Checking Environment Variables...');
-const requiredEnvVars = {
+type EnvCheck = string | string[];
+
+const requiredEnvVars: Record<string, EnvCheck[]> = {
   stripe: [
-    'STRIPE_SECRET_KEY',
-    'STRIPE_WEBHOOK_SECRET',
-    'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
+    ['STRIPE_SECRET_KEY_TEST', 'STRIPE_SECRET_KEY'],
+    ['STRIPE_SECRET_KEY_LIVE', 'STRIPE_SECRET_KEY'],
+    ['STRIPE_WEBHOOK_SECRET_TEST', 'STRIPE_WEBHOOK_SECRET'],
+    ['STRIPE_WEBHOOK_SECRET_LIVE', 'STRIPE_WEBHOOK_SECRET'],
+    ['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY'],
+    ['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY'],
     'NEXT_PUBLIC_CHECKOUT_URL'
   ],
   paypal: [
@@ -36,11 +41,15 @@ const requiredEnvVars = {
 let allConfigured = true;
 for (const [service, vars] of Object.entries(requiredEnvVars)) {
   console.log(`\n  ${service.toUpperCase()}:`);
-  for (const varName of vars) {
-    const isSet = !!process.env[varName];
-    const status = isSet ? '✅' : '❌';
-    console.log(`    ${status} ${varName}: ${isSet ? 'Configured' : 'MISSING'}`);
-    if (!isSet) allConfigured = false;
+  for (const entry of vars) {
+    const candidates = Array.isArray(entry) ? entry : [entry];
+    const configuredName = candidates.find((name) => !!process.env[name]);
+    const status = configuredName ? '✅' : '❌';
+    const label = Array.isArray(entry) ? candidates.join(' / ') : entry;
+    console.log(
+      `    ${status} ${label}: ${configuredName ? `Configured via ${configuredName}` : 'MISSING'}`,
+    );
+    if (!configuredName) allConfigured = false;
   }
 }
 
