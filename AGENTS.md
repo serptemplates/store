@@ -1,0 +1,1 @@
+- use playwright MCP server to see browser console and network logs, and correct your errors and fix items
