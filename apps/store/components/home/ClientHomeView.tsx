@@ -10,9 +10,7 @@ import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { SiteNavbar } from "@repo/ui/composites/SiteNavbar"
 
-import { PayPalCheckoutButton } from "@/components/paypal-button"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
@@ -27,16 +25,6 @@ export type ClientHomeProps = {
 export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
-
-  const fallbackUrl = siteConfig.cta?.href ?? product.purchase_url
-
-  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
-    offerId: product.slug,
-    affiliateId,
-    metadata: { landerId: product.slug },
-    endpoint: "/api/checkout/session",
-    fallbackUrl,
-  })
 
   const showPosts = siteConfig.blog?.enabled !== false
 
@@ -146,25 +134,21 @@ export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) 
           homeProps.pricing
             ? {
                 ...homeProps.pricing,
-                onCtaClick: beginCheckout,
-                ctaLoading: isCheckoutLoading,
-                ctaDisabled: isCheckoutLoading,
-                ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
-                ctaText:
-                  siteConfig.cta?.text ??
-                  homeProps.pricing.ctaText ??
-                  homeProps.ctaText ??
-                  "Pay with Stripe",
-                ctaExtra: (
-                  <PayPalCheckoutButton
-                    offerId={product.slug}
-                    price={homeProps.pricing?.price || product.pricing?.price || "$99"}
-                    affiliateId={affiliateId}
-                    metadata={{ landerId: product.slug }}
-                    buttonText="Pay with PayPal"
-                    className="w-full"
-                  />
-                ),
+                originalPrice: homeProps.pricing.originalPrice || "$27.99",
+                priceNote: "Use the product on a single project",
+                onCtaClick: () => {
+                  const params = new URLSearchParams();
+                  params.set("product", product.slug || "");
+                  if (affiliateId) {
+                    params.set("aff", affiliateId);
+                  }
+                  window.location.href = `/checkout?${params.toString()}`;
+                },
+                ctaLoading: false,
+                ctaDisabled: false,
+                ctaHref: `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`,
+                ctaText: "Get it Now!",
+                ctaExtra: null,
               }
             : undefined
         }

@@ -112,6 +112,8 @@ export function productToHomeTemplate(
       benefits:
         product.pricing?.benefits && product.pricing.benefits.length > 0
           ? product.pricing.benefits
+          : product.features && product.features.length > 0
+          ? product.features.slice(0, 8) // Take first 8 features for the pricing section
           : defaultPricingBenefits,
       ctaText,
       ctaHref,

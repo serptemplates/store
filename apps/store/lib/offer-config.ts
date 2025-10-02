@@ -34,6 +34,18 @@ export type OfferConfig = z.infer<typeof offerConfigSchema>;
 /**
  * Derives offer configuration directly from the product content definition.
  */
+// Helper to determine if we're in development/localhost
+function isLocalhost(): boolean {
+  if (typeof window !== 'undefined') {
+    return window.location.hostname === 'localhost' ||
+           window.location.hostname === '127.0.0.1' ||
+           window.location.hostname.startsWith('localhost:');
+  }
+  // For server-side, check environment variables
+  return process.env.NODE_ENV === 'development' ||
+         process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.startsWith('pk_test_') || false;
+}
+
 export function getOfferConfig(offerId: string): OfferConfig | null {
   try {
     const product = getProductData(offerId);
@@ -43,16 +55,38 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       return null;
     }
 
+    const isTest = isLocalhost();
+
+    // Use the appropriate price ID based on environment
+    // The resolvePriceForEnvironment function will handle auto-cloning from live to test
+    let priceId = stripeConfig.price_id;
+
+    if (isTest && stripeConfig.test_price_id) {
+      // Use explicitly configured test price if available
+      priceId = stripeConfig.test_price_id;
+    }
+    // Otherwise, use the live price ID and let resolvePriceForEnvironment handle it
+
+    // Adjust URLs for localhost
+    const baseUrl = isTest ? 'http://localhost:3000' : 'https://store.serp.co';
+    const successUrl = isTest
+      ? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
+      : stripeConfig.success_url;
+    const cancelUrl = isTest
+      ? `${baseUrl}/checkout?canceled=true`
+      : stripeConfig.cancel_url;
+
     return offerConfigSchema.parse({
       id: product.slug,
-      stripePriceId: stripeConfig.price_id,
-      successUrl: stripeConfig.success_url,
-      cancelUrl: stripeConfig.cancel_url,
+      stripePriceId: priceId,
+      successUrl,
+      cancelUrl,
       mode: stripeConfig.mode ?? "payment",
       metadata: {
         productSlug: product.slug,
         productName: product.name,
         productPageUrl: product.product_page_url,
+        environment: isTest ? 'test' : 'live',
         ...(stripeConfig.metadata ?? {}),
       },
       productName: product.name,

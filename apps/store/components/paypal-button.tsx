@@ -50,6 +50,9 @@ export function PayPalButton({
       setLoading(true);
       setError(null);
 
+      // Extract coupon code from metadata if present
+      const couponCode = metadata?.couponCode;
+
       const response = await fetch("/api/paypal/create-order", {
         method: "POST",
         headers: {
@@ -61,6 +64,7 @@ export function PayPalButton({
           affiliateId,
           metadata,
           customer,
+          couponCode,
         }),
       });
 
@@ -199,6 +203,9 @@ export function PayPalCheckoutButton({
     try {
       setLoading(true);
 
+      // Extract coupon code from metadata if present
+      const couponCode = metadata?.couponCode;
+
       const response = await fetch("/api/paypal/create-order", {
         method: "POST",
         headers: {
@@ -210,6 +217,7 @@ export function PayPalCheckoutButton({
           affiliateId,
           metadata,
           customer,
+          couponCode,
         }),
       });
 

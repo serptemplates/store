@@ -1,4 +1,6 @@
-import { PayPalCheckoutButton } from "@/components/paypal-button";
+"use client"
+
+import { useRouter } from "next/navigation";
 
 export interface ProductInfoSectionProps {
   title: string;
@@ -6,18 +8,10 @@ export interface ProductInfoSectionProps {
   displayPrice?: string | null;
   originalPrice?: string | null;
   priceLabel?: string | null;
-  onCheckout: () => void;
-  checkoutCtaLabel?: string;
-  isCheckoutLoading: boolean;
+  productSlug?: string;
+  affiliateId?: string;
   showWaitlist: boolean;
   onWaitlistClick?: () => void;
-  payPalProps?: {
-    offerId: string;
-    price: string;
-    affiliateId?: string;
-    metadata?: Record<string, string>;
-    buttonText?: string;
-  } | null;
   benefits?: string[];
   features?: string[];
   githubUrl?: string;
@@ -29,16 +23,24 @@ export function ProductInfoSection({
   displayPrice,
   originalPrice,
   priceLabel,
-  onCheckout,
-  checkoutCtaLabel = "Buy with Card",
-  isCheckoutLoading,
+  productSlug,
+  affiliateId,
   showWaitlist,
   onWaitlistClick,
-  payPalProps,
   benefits = [],
   features = [],
   githubUrl,
 }: ProductInfoSectionProps) {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    const params = new URLSearchParams();
+    params.set("product", productSlug || "");
+    if (affiliateId) {
+      params.set("aff", affiliateId);
+    }
+    router.push(`/checkout?${params.toString()}`);
+  };
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-4">{title}</h1>
@@ -67,23 +69,26 @@ export function ProductInfoSection({
           </button>
         ) : (
           <button
-            onClick={onCheckout}
-            disabled={isCheckoutLoading}
-            className="block w-full bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            onClick={handleCheckout}
+            className="block w-full bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
           >
-            {isCheckoutLoading ? "Processing…" : checkoutCtaLabel}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span>Proceed to Checkout</span>
           </button>
         )}
 
-        {payPalProps && !showWaitlist && process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && (
-          <PayPalCheckoutButton
-            offerId={payPalProps.offerId}
-            price={payPalProps.price}
-            affiliateId={payPalProps.affiliateId}
-            metadata={payPalProps.metadata}
-            buttonText={payPalProps.buttonText || "Pay with PayPal"}
-            className="w-full"
-          />
+        {/* Multiple payment options indicator */}
+        {!showWaitlist && (
+          <div className="flex items-center justify-center gap-4 py-2">
+            <span className="text-xs text-gray-500">Secure payment via</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-600 font-medium">Cards</span>
+              <span className="text-xs text-gray-400">•</span>
+              <span className="text-xs text-gray-600 font-medium">PayPal</span>
+            </div>
+          </div>
         )}
 
         <button className="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center">
