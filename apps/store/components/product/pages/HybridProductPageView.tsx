@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-import { FeaturesSection, PostsSection, PricingCta, TestimonialsSection } from "@repo/templates"
+import { FeaturesSection, PostsSection, PricingCta, SocialProofScreenshots } from "@repo/templates"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
@@ -283,9 +283,8 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
           />
         )}
 
-        {homeProps.testimonials && homeProps.testimonials.length > 0 && (
-          <TestimonialsSection testimonials={homeProps.testimonials} />
-        )}
+        {/* Social Proof Screenshots */}
+        <SocialProofScreenshots />
 
         {homeProps.faqs && homeProps.faqs.length > 0 && <FaqSection faqs={homeProps.faqs} />}
 

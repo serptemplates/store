@@ -5,7 +5,8 @@ import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import { Hero, type HeroMediaItem } from "./sections/Hero";
 import { PricingCta, type PricingCtaProps } from "./sections/PricingCta";
 import { FeaturesSection } from "./sections/FeaturesSection";
-import { TestimonialsSection } from "./sections/TestimonialsSection";
+// Removed TestimonialsSection - using SocialProofScreenshots instead
+import { SocialProofScreenshots } from "./sections/SocialProofScreenshots";
 import { PostsSection } from "./sections/PostsSection";
 import { FaqSection, type FAQ } from "./sections/FaqSection";
 
@@ -201,8 +202,8 @@ export function HomeTemplate({
         {/* Features */}
         <FeaturesSection features={normalizedFeatures} />
 
-        {/* Testimonials */}
-        <TestimonialsSection testimonials={testimonials as any} heading={testimonialsHeading ?? "Reviews"} />
+        {/* Social Proof Screenshots */}
+        <SocialProofScreenshots />
 
         {/* FAQ */}
         <FaqSection faqs={faqList} />

@@ -41,7 +41,7 @@ export function PricingCta({
   price,
   originalPrice,
   priceNote,
-  ctaText = "Get it Now!",
+  ctaText = "GET IT NOW",
   ctaHref = "#download",
   onCtaClick,
   ctaLoading = false,

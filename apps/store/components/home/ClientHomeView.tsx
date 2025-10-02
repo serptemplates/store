@@ -147,7 +147,7 @@ export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) 
                 ctaLoading: false,
                 ctaDisabled: false,
                 ctaHref: `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`,
-                ctaText: "Get it Now!",
+                ctaText: "GET IT NOW",
                 ctaExtra: null,
               }
             : undefined
