@@ -177,7 +177,7 @@ export function validateEnvironmentOrThrow(): void {
 /**
  * Get redacted environment info for debugging
  */
-export function getEnvironmentInfo(): Record<string, string> {
+export function getEnvironmentInfo(): Record<string, string | boolean> {
   return {
     nodeEnv: process.env.NODE_ENV || "unknown",
     stripeMode: process.env.STRIPE_SECRET_KEY?.startsWith("sk_test_")

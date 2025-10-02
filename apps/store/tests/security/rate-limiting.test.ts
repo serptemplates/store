@@ -52,18 +52,22 @@ describe("Rate Limiting Security", () => {
     });
 
     const request1 = new NextRequest("http://localhost:3000/api/test", {
-      headers: { "x-forwarded-for": "192.168.1.1" },
+      headers: { "x-forwarded-for": "10.0.0.1" },
     });
 
     const request2 = new NextRequest("http://localhost:3000/api/test", {
-      headers: { "x-forwarded-for": "192.168.1.2" },
+      headers: { "x-forwarded-for": "10.0.0.2" },
     });
 
-    // Make requests from both IPs
+    // Make requests from IP1
     for (let i = 0; i < 3; i++) {
       const result1 = await limiter(request1);
-      const result2 = await limiter(request2);
       expect(result1.success).toBe(true);
+    }
+    
+    // Make requests from IP2
+    for (let i = 0; i < 3; i++) {
+      const result2 = await limiter(request2);
       expect(result2.success).toBe(true);
     }
 

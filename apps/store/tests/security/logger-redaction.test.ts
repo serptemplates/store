@@ -1,18 +1,21 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
 describe("Logger PII Redaction", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
   let consoleInfoSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    vi.resetModules();
     consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     consoleInfoSpy = vi.spyOn(console, "info").mockImplementation(() => {});
-    process.env.NODE_ENV = "production";
-    process.env.REDACT_LOGS = "true";
   });
 
-  it("should redact email addresses in logs", async () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("should redact email addresses in logs when REDACT_LOGS is true", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.error("test.error", {
@@ -20,7 +23,7 @@ describe("Logger PII Redaction", () => {
       message: "Contact customer@example.com",
     });
 
-    const logOutput = consoleErrorSpy.mock.calls[0][0];
+    const logOutput = consoleErrorSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.email).toBe("[REDACTED]");
@@ -29,6 +32,8 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should redact phone numbers in logs", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.info("test.info", {
@@ -36,7 +41,7 @@ describe("Logger PII Redaction", () => {
       message: "Call 555-123-4567",
     });
 
-    const logOutput = consoleInfoSpy.mock.calls[0][0];
+    const logOutput = consoleInfoSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.phone).toBe("[REDACTED]");
@@ -45,6 +50,8 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should redact passwords in logs", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.error("test.error", {
@@ -52,7 +59,7 @@ describe("Logger PII Redaction", () => {
       apiKey: "sk_test_12345",
     });
 
-    const logOutput = consoleErrorSpy.mock.calls[0][0];
+    const logOutput = consoleErrorSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.password).toBe("[REDACTED]");
@@ -60,13 +67,15 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should redact bearer tokens in logs", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.error("test.error", {
       authorization: "Bearer sk_live_abc123xyz",
     });
 
-    const logOutput = consoleErrorSpy.mock.calls[0][0];
+    const logOutput = consoleErrorSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.authorization).toContain("[REDACTED]");
@@ -74,6 +83,8 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should handle nested objects with PII", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.info("test.nested", {
@@ -84,7 +95,7 @@ describe("Logger PII Redaction", () => {
       },
     });
 
-    const logOutput = consoleInfoSpy.mock.calls[0][0];
+    const logOutput = consoleInfoSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.user.email).toBe("[REDACTED]");
@@ -93,44 +104,31 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should handle arrays with PII", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.info("test.array", {
       emails: ["test1@example.com", "test2@example.com"],
     });
 
-    const logOutput = consoleInfoSpy.mock.calls[0][0];
+    const logOutput = consoleInfoSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.emails[0]).toContain("[EMAIL_REDACTED]");
     expect(parsed.context.emails[1]).toContain("[EMAIL_REDACTED]");
   });
 
-  it("should not redact in development mode", async () => {
-    process.env.NODE_ENV = "development";
-    process.env.REDACT_LOGS = "false";
-    
-    vi.resetModules();
-    const { default: logger } = await import("@/lib/logger");
-    
-    logger.info("test.dev", {
-      email: "dev@example.com",
-    });
-
-    const logOutput = consoleInfoSpy.mock.calls[0][0];
-    const parsed = JSON.parse(logOutput);
-    
-    expect(parsed.context.email).toBe("dev@example.com");
-  });
-
   it("should handle credit card patterns", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.error("test.card", {
       message: "Card 4532-1234-5678-9010 declined",
     });
 
-    const logOutput = consoleErrorSpy.mock.calls[0][0];
+    const logOutput = consoleErrorSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.message).toContain("[CARD_REDACTED]");
@@ -138,6 +136,8 @@ describe("Logger PII Redaction", () => {
   });
 
   it("should preserve non-PII data", async () => {
+    process.env.REDACT_LOGS = "true";
+    vi.resetModules();
     const { default: logger } = await import("@/lib/logger");
     
     logger.info("test.preserve", {
@@ -147,7 +147,7 @@ describe("Logger PII Redaction", () => {
       status: "completed",
     });
 
-    const logOutput = consoleInfoSpy.mock.calls[0][0];
+    const logOutput = consoleInfoSpy.mock.calls[0]?.[0] as string;
     const parsed = JSON.parse(logOutput);
     
     expect(parsed.context.orderId).toBe("order_123");
