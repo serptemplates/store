@@ -8,7 +8,7 @@ purchase_url: https://serp.ly/loom-video-downloader
 stripe:
   price_id: price_1S9BFJ06JrOmKRCmdpVOP8Em
   success_url: https://apps.serp.co/loom-video-downloader/checkout/success
-  cancel_url: 
+  cancel_url: https://apps.serp.co/checkout?product=loom-video-downloader
   metadata:
     source: lander-template
 ghl:
