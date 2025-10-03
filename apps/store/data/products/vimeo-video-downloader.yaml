@@ -131,6 +131,7 @@ reviews:
     rating: 5
     date: 2025-03-09
     title: Flawless 4K downloads
+faqs:
   - question: How does the Vimeo Video Downloader extension work?
     answer: Simply install our extension in your browser, navigate to any Vimeo video, and click the download button that appears. Our extension integrates seamlessly with your browser, allowing you to download videos in just one click without leaving the page.
   - question: What video quality options can I download?

@@ -68,3 +68,4 @@ __pycache__
 screenshots
 test-results
 .playwright-mcp
+playwright-report
