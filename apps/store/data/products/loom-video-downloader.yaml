@@ -3,12 +3,12 @@ platform: Loom
 seo_title: Loom Video Downloader | How to Download Loom Videos Even with a Free Account
 seo_description: Quickly download Loom videos from your account or embedded pages
   with a lightweight browser extension and keep 4K copies offline.
-product_page_url: https://store.serp.co/products/loom-video-downloader
+product_page_url: https://apps.serp.co/loom-video-downloader
 purchase_url: https://serp.ly/loom-video-downloader
 stripe:
   price_id: price_1S9BFJ06JrOmKRCmdpVOP8Em
-  success_url: https://store.serp.co/products/loom-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/loom-video-downloader
+  success_url: https://apps.serp.co/loom-video-downloader/checkout/success
+  cancel_url: 
   metadata:
     source: lander-template
 ghl:
@@ -114,6 +114,7 @@ faqs:
 supported_operating_systems:
 - windows
 - macos
+- linux
 status: live
 categories:
 - Downloader
