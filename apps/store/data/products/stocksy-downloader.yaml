@@ -15,7 +15,7 @@ name: Stocksy Downloader
 tagline: Download videos, images, and content from stocksy with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stocksy-downloader/main/images/stocksy-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/stocksy-downloader
 github_repo_tags: []
 features:
   - Download premium stock photos from Stocksy

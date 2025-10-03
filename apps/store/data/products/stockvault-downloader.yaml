@@ -15,7 +15,7 @@ name: Stockvault Downloader
 tagline: Download videos, images, and content from stockvault with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stockvault-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stockvault-downloader/main/images/stockvault-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/stockvault-downloader
 github_repo_tags: []
 features:
   - Download free stock graphics and design resources

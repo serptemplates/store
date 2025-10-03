@@ -15,7 +15,7 @@ name: Eporner Video Downloader
 tagline: Download Eporner Video Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/eporner-downloader/main/images/eporner-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/eporner-video-downloader
 github_repo_tags: []
 features:
   - Download videos in multiple quality settings

@@ -15,7 +15,7 @@ name: Internet Archive Downloader
 tagline: Download videos, images, and content from internet archive with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/internet-archive-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/internet-archive-downloader/main/images/internet-archive-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/internet-archive-downloader
 github_repo_tags: []
 features:
   - Download content from Internet Archive collections

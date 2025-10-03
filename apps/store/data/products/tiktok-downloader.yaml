@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_SqnavySFXhLMCk
 name: Tiktok Downloader
 tagline: Download Tiktok Downloader instantly to your device.
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/tiktok-video-downloader
 github_repo_tags: []
 features:
   - Download TikTok videos without watermarks in HD quality

@@ -15,7 +15,7 @@ name: Telegram Video Downloader
 tagline: Download videos, images, and content from telegram video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/telegram-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/telegram-video-downloader/main/images/telegram-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/telegram-video-downloader
 github_repo_tags: []
 features:
   - Download videos from Telegram channels and groups

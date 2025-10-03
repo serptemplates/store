@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_T5OJxcMDHKSqyk
 name: SpankBang Video Downloader
 tagline: Download SpankBang Video Downloader instantly to your device.
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/spankbang-video-downloader
 github_repo_tags: []
 features:
   - Download high-quality videos in multiple resolutions

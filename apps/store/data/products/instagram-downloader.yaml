@@ -15,7 +15,7 @@ name: Instagram Downloader
 tagline: Download videos, images, and content from instagram with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/instagram-downloader/main/images/instagram-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/instagram-downloader
 github_repo_tags: []
 features:
   - Download Instagram photos, videos, and stories in original quality

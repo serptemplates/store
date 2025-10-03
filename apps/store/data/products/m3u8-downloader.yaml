@@ -15,7 +15,7 @@ name: M3u8 Downloader
 tagline: Download videos, images, and content from m3u8 with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: null
 featured_image_gif: https://raw.githubusercontent.com/serpapps/m3u8-downloader/main/images/m3u8-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/m3u8-downloader
 github_repo_tags: []
 features:
   - Download HLS streams from M3U8 playlists efficiently

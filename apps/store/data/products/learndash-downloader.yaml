@@ -15,7 +15,7 @@ name: Learndash Downloader
 tagline: Download videos, images, and content from learndash with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learndash-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/learndash-downloader/main/images/learndash-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/learndash-downloader
 github_repo_tags: []
 features:
   - Download complete LearnDash courses and lessons

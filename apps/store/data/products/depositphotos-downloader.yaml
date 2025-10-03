@@ -15,7 +15,7 @@ name: Depositphotos Downloader
 tagline: Download videos, images, and content from depositphotos with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/depositphotos-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/depositphotos-downloader/main/images/depositphotos-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/depositphotos-downloader
 github_repo_tags: []
 features:
   - Download high-quality stock photos and vectors

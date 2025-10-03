@@ -15,7 +15,7 @@ name: Udemy Video Downloader
 tagline: Download Udemy Video Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/udemy-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/udemy-video-downloader
 github_repo_tags: []
 features:
   - Download complete Udemy courses with all video lectures

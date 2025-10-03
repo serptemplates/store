@@ -15,7 +15,7 @@ name: Soundgasm Downloader
 tagline: Download videos, images, and content from soundgasm with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundgasm-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/soundgasm-downloader/main/images/soundgasm-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/soundgasm-downloader
 github_repo_tags: []
 features:
   - Download audio content and voice recordings
