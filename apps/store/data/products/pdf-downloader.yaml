@@ -1,18 +1,20 @@
 slug: pdf-downloader
 platform: Pdf
 seo_title: Pdf Downloader | Download Pdf Downloader for Offline Access
-seo_description: Download videos, images, and content from pdf with our reliable downloader tool. Fast, secure, and easy to use.
-product_page_url: https://store.serp.co/products/pdf-downloader
+seo_description: Download videos, images, and content from pdf with our reliable downloader
+  tool. Fast, secure, and easy to use.
+product_page_url: https://apps.serp.co/pdf-downloader
 purchase_url: https://serp.ly/pdf-downloader
 stripe:
   price_id: price_1S99g006JrOmKRCmVzelEW6H
-  success_url: https://store.serp.co/products/pdf-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/pdf-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=pdf-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sv6HOiUUVHSA9S
 name: Pdf Downloader
-tagline: Download videos, images, and content from pdf with our reliable downloader tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from pdf with our reliable downloader
+  tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pdf-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pdf-downloader/main/images/pdf-downloader.gif
 github_repo_url: https://github.com/serpapps/pdf-downloader
@@ -38,7 +40,8 @@ features:
 - Backup & sync
 - Optical Character Recognition (OCR) integration
 - Smart organization
-description: Download videos, images, and content from pdf with our reliable downloader tool. Fast, secure, and easy to use.
+description: Download videos, images, and content from pdf with our reliable downloader
+  tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
@@ -46,28 +49,54 @@ screenshots:
   alt: Pdf Downloader website preview
 faqs:
 - question: How do I download Pdf videos?
-  answer: To download Pdf videos, you can use specialized software or browser extensions designed for Pdf. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.
+  answer: To download Pdf videos, you can use specialized software or browser extensions
+    designed for Pdf. Look for tools that support high-quality downloads and multiple
+    formats. Always ensure you have permission to download content and respect copyright
+    laws.
 - question: Is it legal to download from Pdf?
-  answer: 'The legality of downloading Pdf content depends on several factors: 1) Copyright ownership, 2) Terms of service, 3) Your intended use, and 4) Local laws. Generally, downloading copyrighted content without permission is not legal. Always check Pdf''s terms of service and only download content you own or have explicit permission to download.'
+  answer: 'The legality of downloading Pdf content depends on several factors: 1)
+    Copyright ownership, 2) Terms of service, 3) Your intended use, and 4) Local laws.
+    Generally, downloading copyrighted content without permission is not legal. Always
+    check Pdf''s terms of service and only download content you own or have explicit
+    permission to download.'
 - question: What video formats are supported for Pdf downloads?
-  answer: Most Pdf downloaders support common formats including MP4, WebM, and sometimes FLV. MP4 is typically the most compatible format for playback on various devices. Some tools also allow you to choose video quality (480p, 720p, 1080p, etc.) and extract audio-only files in MP3 format.
+  answer: Most Pdf downloaders support common formats including MP4, WebM, and sometimes
+    FLV. MP4 is typically the most compatible format for playback on various devices.
+    Some tools also allow you to choose video quality (480p, 720p, 1080p, etc.) and
+    extract audio-only files in MP3 format.
 - question: Can I download Pdf videos on mobile devices?
-  answer: Yes, there are mobile apps and mobile-friendly websites that allow Pdf video downloads on smartphones and tablets. However, mobile options may be more limited than desktop software. Always download apps from official app stores and be cautious of malicious software.
+  answer: Yes, there are mobile apps and mobile-friendly websites that allow Pdf video
+    downloads on smartphones and tablets. However, mobile options may be more limited
+    than desktop software. Always download apps from official app stores and be cautious
+    of malicious software.
 - question: How do I fix Pdf download errors?
-  answer: 'Common solutions for Pdf download errors include: 1) Check your internet connection, 2) Verify the video URL is correct and accessible, 3) Update your downloader software, 4) Clear browser cache/cookies, 5) Try a different download format or quality. If errors persist, the video may have download restrictions or be region-locked.'
+  answer: 'Common solutions for Pdf download errors include: 1) Check your internet
+    connection, 2) Verify the video URL is correct and accessible, 3) Update your
+    downloader software, 4) Clear browser cache/cookies, 5) Try a different download
+    format or quality. If errors persist, the video may have download restrictions
+    or be region-locked.'
 - question: What quality options are available for Pdf downloads?
-  answer: Pdf downloaders typically offer various quality options ranging from 144p to 4K, depending on the original video quality. Common options include 720p HD, 1080p Full HD, and sometimes higher resolutions. Choose quality based on your device's capabilities and storage space.
+  answer: Pdf downloaders typically offer various quality options ranging from 144p
+    to 4K, depending on the original video quality. Common options include 720p HD,
+    1080p Full HD, and sometimes higher resolutions. Choose quality based on your
+    device's capabilities and storage space.
 - question: Are there any risks in downloading from Pdf?
-  answer: 'Potential risks include: 1) Legal issues if downloading copyrighted content without permission, 2) Malware from untrusted downloader software, 3) Violating Pdf''s terms of service, 4) Poor quality or incomplete downloads. Always use reputable downloaders and respect content creators'' rights.'
+  answer: 'Potential risks include: 1) Legal issues if downloading copyrighted content
+    without permission, 2) Malware from untrusted downloader software, 3) Violating
+    Pdf''s terms of service, 4) Poor quality or incomplete downloads. Always use reputable
+    downloaders and respect content creators'' rights.'
 - question: Can I download private or restricted Pdf videos?
-  answer: Generally, you cannot and should not download private or restricted Pdf videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
+  answer: Generally, you cannot and should not download private or restricted Pdf
+    videos. These are protected by privacy settings and attempting to bypass these
+    restrictions may violate terms of service and privacy laws. Only download publicly
+    available content that you have permission to save.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
 - Downloader
@@ -93,17 +122,20 @@ reviews:
   title: Saves hours every week with Pdf Downloader
   rating: 5.0
   date: '2025-02-12'
-  review: I manage content libraries and Pdf Downloader lets me pull everything from Pdf in minutes. The speeds are great and files stay organized.
+  review: I manage content libraries and Pdf Downloader lets me pull everything from
+    Pdf in minutes. The speeds are great and files stay organized.
 - name: Jamie Nguyen
   title: Rock solid Pdf downloads
   rating: 4.9
   date: '2025-03-03'
-  review: Downloading from Pdf used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  review: Downloading from Pdf used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
 - name: Priya Patel
   title: Ideal for organizing Pdf content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Pdf assets for clients and the batch features in Pdf Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Pdf assets for clients and the batch features in Pdf Downloader
+    keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:
@@ -112,4 +144,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination:
+buy_button_destination: null
