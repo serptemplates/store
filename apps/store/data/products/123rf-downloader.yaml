@@ -26,7 +26,7 @@ features:
 - Resume downloads with recovery
 - Cross-platform application for graphic designers
 - Built-in image viewer with zoom and preview
-- Command-line tools for design workflow automation
+- Design workflow CLI
 - Integration with creative software applications
 - Export image data and license information
 - Search capabilities across stock image libraries

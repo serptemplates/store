@@ -21,7 +21,7 @@ features:
 - Download VK videos and social media content
 - Support for public and private group videos
 - Batch download user walls and community content
-- Automatic subtitle extraction in multiple languages
+- Multi-language subtitle extraction
 - Resume downloads
 - Cross-platform compatibility for international users
 - Built-in video player with VK-style controls

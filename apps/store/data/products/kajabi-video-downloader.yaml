@@ -22,7 +22,7 @@ features:
 - Extract video lessons, PDFs, and course materials
 - Maintain program structure and module organization
 - Support for community posts and member interactions
-- Automatic subtitle extraction in multiple languages
+- Multi-language subtitle extraction
 - Batch download entire coaching programs
 - Resume downloads
 - Command-line interface for bulk processing

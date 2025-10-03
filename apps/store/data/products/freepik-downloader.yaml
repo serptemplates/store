@@ -25,19 +25,19 @@ features:
 - Custom organization by design style and category
 - Resume downloads
 - Cross-platform support for designers and agencies
-- Built-in asset viewer with layer and vector support
-- Command-line tools for design workflow automation
-- Integration with professional design software
-- Advanced search and filtering by style and format
-- Duplicate detection across design asset libraries
-- Privacy-focused design with local-only storage
+- Asset viewer (layer/vector)
+- Design workflow CLI
+- Design software integration
+- Advanced search & filtering
+- Duplicate detection
+- Local-only storage for privacy
 - Regular compatibility updates
-- Export options for design management systems
-- Bandwidth optimization for complex vector files
-- Support for various file formats and resolutions
+- Design system export
+- Bandwidth optimization
+- Multiple formats/resolutions
 - Smart asset recommendation and discovery
-- Backup and restore capabilities for design archives
-- Premium subscription integration and tracking
+- Design archive backup
+- Premium subscription tracking
 description: Download videos, images, and content from freepik with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
