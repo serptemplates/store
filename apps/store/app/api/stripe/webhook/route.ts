@@ -12,6 +12,7 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   updateCheckoutSessionStatus,
+  updateOrderMetadata,
 } from "@/lib/checkout-store";
 import { getOfferConfig } from "@/lib/offer-config";
 import { syncOrderWithGhl, GhlRequestError, RETRYABLE_STATUS_CODES } from "@/lib/ghl-client";
@@ -235,19 +236,33 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
         },
       });
 
-      if (licenseResult && paymentIntentId) {
+      if (licenseResult?.licenseKey) {
         const now = new Date().toISOString();
-        await upsertOrder({
-          stripePaymentIntentId: paymentIntentId,
-          metadata: {
-            license: {
-              action: licenseResult.action ?? null,
-              licenseId: licenseResult.licenseId ?? null,
-              licenseKey: licenseResult.licenseKey ?? null,
-              updatedAt: now,
-            },
+        const licenseMetadataUpdate = {
+          license: {
+            action: licenseResult.action ?? null,
+            licenseId: licenseResult.licenseId ?? null,
+            licenseKey: licenseResult.licenseKey ?? null,
+            updatedAt: now,
           },
-        });
+        };
+
+        const updated = await updateOrderMetadata(
+          {
+            stripePaymentIntentId: paymentIntentId,
+            stripeSessionId: session.id,
+          },
+          licenseMetadataUpdate
+        );
+
+        if (!updated) {
+          logger.warn("license_service.metadata_update_failed", {
+            provider: "stripe",
+            id: eventId ?? session.id,
+            paymentIntentId,
+            sessionId: session.id,
+          });
+        }
       }
     } catch (error) {
       logger.error("license_service.create_throw", {
