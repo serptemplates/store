@@ -185,8 +185,12 @@ function deriveCategories(product: ProductData): string[] {
 }
 
 const navLinks = [
-  { label: "Docs", href: "https://github.com/serpapps" as const },
-  { label: "Support", href: "https://github.com/serpapps/support" as const },
+  { label: "Videos", href: "/videos" as const },
+  { label: "Articles", href: "/blog" as const },
+  { label: "Github", href: "https://github.com/serpapps" as const },
+  { label: "Help", href: "https://serp.ly/@serp/support" as const },
+  { label: "Account", href: "/account" as const },
+  
 ]
 
 const heroDescription =
@@ -315,7 +319,7 @@ export function HomePageView() {
             </NextLink>
             <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
               <div className="relative group">
-                <button className="font-medium transition-colors hover:text-foreground">Products</button>
+                <button className="font-medium transition-colors hover:text-foreground">Apps</button>
                 <div className="absolute right-0 top-full z-50 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl group-hover:block group-focus-within:block">
                   <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {productColumns.map((column, columnIndex) => (
