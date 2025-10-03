@@ -56,8 +56,12 @@ faqs:
   - question: What are the licensing requirements for 123rf images?
     answer: '123rf images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
+  - mac
   - windows
-  - macos
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
   - 123rf downloader

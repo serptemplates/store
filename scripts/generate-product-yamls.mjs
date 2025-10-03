@@ -135,7 +135,7 @@ for (const slug of allSlugs) {
     related_videos: [],
     screenshots: [],
     faqs: [],
-    supported_operating_systems: ['windows', 'macos'],
+    supported_operating_systems: ['mac', 'windows', 'linux', 'chrome', 'firefox', 'edge'],
     status: 'draft',
     categories: [slug.replace(/-/g, ' ')],
     keywords: [slug.replace(/-/g, ' ')],

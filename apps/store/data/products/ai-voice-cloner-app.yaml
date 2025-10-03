@@ -26,8 +26,12 @@ screenshots:
     alt: AI Voice Cloner App website preview
 faqs: []
 supported_operating_systems:
+  - mac
   - windows
-  - macos
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
   - Artificial Intelligence

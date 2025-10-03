@@ -62,8 +62,12 @@ faqs:
   - question: What formats do Instagram downloads support?
     answer: Instagram downloaders typically support common formats like MP4 for videos, JPG/PNG for images, and MP3 for audio. The available formats depend on the original content type and the downloader software used. Choose formats compatible with your intended use.
 supported_operating_systems:
+  - mac
   - windows
-  - macos
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
   - instagram downloader

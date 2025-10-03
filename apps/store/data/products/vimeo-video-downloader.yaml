@@ -149,8 +149,8 @@ faqs:
   - question: What if I encounter a download error?
     answer: Most issues are resolved by refreshing the page or restarting your browser. If problems persist, our support team is here to help. Check that you're using the latest version of the extension, as updates often fix compatibility issues.
 supported_operating_systems:
+  - mac
   - windows
-  - macos
   - linux
   - chrome
   - firefox

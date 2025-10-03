@@ -60,8 +60,12 @@ faqs:
   - question: Can I download private or restricted Spankbang videos?
     answer: Generally, you cannot and should not download private or restricted Spankbang videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
+  - mac
   - windows
-  - macos
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
   - spankbang video downloader
