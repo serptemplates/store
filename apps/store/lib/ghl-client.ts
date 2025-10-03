@@ -291,6 +291,7 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
   const { firstName, lastName } = splitName(context.customerName);
   const baseContext: Record<string, unknown> = {
     ...context,
+    ...(context.metadata ?? {}),
     firstName,
     lastName,
     affiliateId: affiliateIdValue,

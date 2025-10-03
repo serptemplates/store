@@ -4,6 +4,8 @@ import { createPayPalOrder, isPayPalConfigured } from "@/lib/paypal";
 import { getOfferConfig } from "@/lib/offer-config";
 import { getProductData } from "@/lib/product";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
+import { validateCoupon as validateCouponCode } from "@/lib/coupons";
+import { sanitizeInput } from "@/lib/validation/checkout";
 
 const requestSchema = z.object({
   offerId: z.string().min(1, "offerId is required"),
@@ -43,6 +45,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request payload" }, { status: 400 });
   }
 
+  parsedBody.offerId = sanitizeInput(parsedBody.offerId);
+
+  if (parsedBody.affiliateId) {
+    parsedBody.affiliateId = sanitizeInput(parsedBody.affiliateId);
+  }
+
+  if (parsedBody.customer?.name) {
+    parsedBody.customer.name = sanitizeInput(parsedBody.customer.name);
+  }
+
   const offer = getOfferConfig(parsedBody.offerId);
 
   if (!offer) {
@@ -52,25 +64,99 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const metadataFromRequest: Record<string, string> = {
+    ...(parsedBody.metadata ?? {}),
+  };
+
+  let couponValidation: Awaited<ReturnType<typeof validateCouponCode>> | null = null;
+  let normalizedCouponCode: string | undefined;
+
+  if (parsedBody.couponCode) {
+    const sanitizedCoupon = sanitizeInput(parsedBody.couponCode).trim();
+
+    if (!sanitizedCoupon) {
+      return NextResponse.json({ error: "Coupon code is required" }, { status: 400 });
+    }
+
+    couponValidation = await validateCouponCode(sanitizedCoupon);
+
+    if (!couponValidation.valid) {
+      return NextResponse.json(
+        { error: couponValidation.error ?? "Invalid coupon code" },
+        { status: 400 }
+      );
+    }
+
+    normalizedCouponCode = couponValidation.code ?? sanitizedCoupon;
+    metadataFromRequest.couponCode = normalizedCouponCode;
+
+    if (couponValidation.discount) {
+      metadataFromRequest.couponType = couponValidation.discount.type;
+      metadataFromRequest.couponValue = String(couponValidation.discount.amount);
+      if (couponValidation.discount.currency) {
+        metadataFromRequest.couponCurrency = couponValidation.discount.currency.toUpperCase();
+      }
+    }
+
+    if (couponValidation.stripePromotionCode) {
+      metadataFromRequest.couponStripePromotionCode = couponValidation.stripePromotionCode;
+    }
+  }
+
   // Get product data for price
   const product = getProductData(parsedBody.offerId);
   const priceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
   const price = parseFloat(priceString);
+  const quantity = parsedBody.quantity ?? 1;
 
-  // Apply coupon discount if provided (placeholder logic - integrate with your coupon system)
-  let discountAmount = 0;
-  if (parsedBody.couponCode) {
-    // TODO: Validate coupon and calculate discount
-    // For now, we'll just pass the coupon code to metadata
-    // In production, you would validate the coupon against a database
-    // and apply the appropriate discount
+  const subtotalCents = Math.round(price * 100) * quantity;
+
+  let discountCents = 0;
+  if (couponValidation?.discount) {
+    if (couponValidation.discount.type === "percentage") {
+      discountCents = Math.round(subtotalCents * (couponValidation.discount.amount / 100));
+    } else {
+      discountCents = couponValidation.discount.amount * quantity;
+    }
   }
 
-  const totalAmount = ((price * parsedBody.quantity) - discountAmount).toFixed(2);
+  if (discountCents > subtotalCents) {
+    discountCents = subtotalCents;
+  }
+
+  const totalAmountCents = Math.max(0, subtotalCents - discountCents);
+  const totalAmount = (totalAmountCents / 100).toFixed(2);
+
+  if (normalizedCouponCode) {
+    metadataFromRequest.couponSubtotalCents = String(subtotalCents);
+    metadataFromRequest.couponDiscountCents = String(discountCents);
+    metadataFromRequest.couponAdjustedTotalCents = String(totalAmountCents);
+  }
+
+  parsedBody.metadata = metadataFromRequest;
+  if (normalizedCouponCode) {
+    parsedBody.couponCode = normalizedCouponCode;
+  }
 
   try {
     // Mark stale checkout sessions
     await markStaleCheckoutSessions();
+
+    const orderMetadata: Record<string, string> = {
+      ...parsedBody.metadata,
+    };
+
+    if (parsedBody.affiliateId) {
+      orderMetadata.affiliateId = parsedBody.affiliateId;
+    }
+
+    if (parsedBody.customer?.email) {
+      orderMetadata.customerEmail = parsedBody.customer.email;
+    }
+
+    if (parsedBody.customer?.name) {
+      orderMetadata.customerName = parsedBody.customer.name;
+    }
 
     // Create PayPal order
     const paypalOrder = await createPayPalOrder({
@@ -78,13 +164,7 @@ export async function POST(request: NextRequest) {
       currency: "USD",
       description: product.name || `Purchase of ${parsedBody.offerId}`,
       offerId: parsedBody.offerId,
-      metadata: {
-        ...parsedBody.metadata,
-        affiliateId: parsedBody.affiliateId || "",
-        customerEmail: parsedBody.customer?.email || "",
-        customerName: parsedBody.customer?.name || "",
-        couponCode: parsedBody.couponCode || "",
-      },
+      metadata: orderMetadata,
     });
 
     // Store checkout session in database

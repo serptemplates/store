@@ -23,6 +23,7 @@ const TEST_COUPONS: Record<string, {
   'WELCOME10': { discount: { type: 'percentage', amount: 10 }, maxUses: 100, currentUses: 0 },
   'FIXED5': { discount: { type: 'fixed', amount: 500, currency: 'usd' } }, // $5 off
   'BLACKFRIDAY': { discount: { type: 'percentage', amount: 30 }, expiresAt: new Date('2025-12-01') },
+  'DEVIN': { discount: { type: 'percentage', amount: 42 } },
 };
 
 export async function validateCoupon(
@@ -33,13 +34,14 @@ export async function validateCoupon(
     return { valid: false, error: "Coupon code is required" };
   }
 
-  const normalizedCode = code.toUpperCase().trim();
+  const trimmedCode = code.trim();
+  const normalizedCode = trimmedCode.toUpperCase();
 
   // First check Stripe promotion codes
   try {
     const stripe = getStripeClient();
     const promotionCodes = await stripe.promotionCodes.list({
-      code: normalizedCode,
+      code: trimmedCode,
       active: true,
       limit: 1,
     });

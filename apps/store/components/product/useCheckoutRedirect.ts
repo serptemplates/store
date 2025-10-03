@@ -10,9 +10,20 @@ export interface UseCheckoutRedirectOptions {
   fallbackUrl: string;
 }
 
+export interface BeginCheckoutOverrides {
+  quantity?: number;
+  affiliateId?: string;
+  couponCode?: string;
+  customer?: {
+    email?: string;
+    name?: string;
+  };
+  metadata?: Record<string, string>;
+}
+
 export interface UseCheckoutRedirectResult {
   isLoading: boolean;
-  beginCheckout: () => Promise<void>;
+  beginCheckout: (overrides?: BeginCheckoutOverrides) => Promise<void>;
 }
 
 /**
@@ -23,7 +34,7 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
   const { offerId, endpoint = "/api/checkout/session", affiliateId, metadata, fallbackUrl } = options;
   const [isLoading, setIsLoading] = useState(false);
 
-  const beginCheckout = useCallback(async () => {
+  const beginCheckout = useCallback(async (overrides?: BeginCheckoutOverrides) => {
     if (isLoading) {
       return;
     }
@@ -36,29 +47,52 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
     try {
       setIsLoading(true);
 
+      const finalAffiliateId = overrides?.affiliateId ?? affiliateId;
+      const finalQuantity = overrides?.quantity ?? 1;
+      const mergedMetadata: Record<string, string> = {
+        ...(metadata ?? {}),
+        ...(overrides?.metadata ?? {}),
+      };
+
+      if (!mergedMetadata.landerId) {
+        mergedMetadata.landerId = offerId;
+      }
+
+      const requestPayload: Record<string, unknown> = {
+        offerId,
+        quantity: finalQuantity,
+        metadata: mergedMetadata,
+      };
+
+      if (finalAffiliateId) {
+        requestPayload.affiliateId = finalAffiliateId;
+      }
+
+      if (overrides?.couponCode) {
+        requestPayload.couponCode = overrides.couponCode;
+        mergedMetadata.couponCode = overrides.couponCode;
+      }
+
+      if (overrides?.customer) {
+        requestPayload.customer = overrides.customer;
+      }
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          offerId,
-          affiliateId,
-          metadata: {
-            ...(metadata ?? {}),
-            landerId: metadata?.landerId ?? offerId,
-          },
-        }),
+        body: JSON.stringify(requestPayload),
       });
 
       if (!response.ok) {
         throw new Error(`Failed to create checkout session (${response.status})`);
       }
 
-      const payload = (await response.json()) as { url?: string };
+      const responseBody = (await response.json()) as { url?: string };
 
-      if (payload?.url) {
-        window.open(payload.url, "_blank", "noopener,noreferrer");
+      if (responseBody?.url) {
+        window.open(responseBody.url, "_blank", "noopener,noreferrer");
         return;
       }
 

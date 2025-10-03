@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -41,6 +41,15 @@ export function CheckoutPageView() {
   const [showCoupon, setShowCoupon] = useState(false)
   const [product, setProduct] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false)
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string
+    discount?: { type: "percentage" | "fixed"; amount: number; currency?: string }
+  } | null>(null)
+  const [couponFeedback, setCouponFeedback] = useState<{
+    type: "success" | "error"
+    message: string
+  } | null>(null)
 
   const {
     register,
@@ -61,6 +70,86 @@ export function CheckoutPageView() {
   })
 
   const paymentMethod = watch("paymentMethod")
+  const couponCodeValue = watch("couponCode")
+
+  const applyCoupon = useCallback(async (inputCode: string): Promise<boolean> => {
+    const rawCode = inputCode.trim()
+
+    if (!rawCode) {
+      setCouponFeedback({ type: "error", message: "Enter a coupon code" })
+      setAppliedCoupon(null)
+      return false
+    }
+
+    setIsApplyingCoupon(true)
+    setCouponFeedback(null)
+
+    try {
+      const response = await fetch("/api/checkout/validate-coupon", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ couponCode: rawCode }),
+      })
+
+      const payload = await response.json()
+
+      if (!response.ok) {
+        throw new Error(payload?.error || "Failed to validate coupon")
+      }
+
+      if (!payload.valid) {
+        setAppliedCoupon(null)
+        setCouponFeedback({
+          type: "error",
+          message: payload.error || "Invalid coupon code",
+        })
+        return false
+      }
+
+      const normalizedCode: string = payload.code || rawCode.toUpperCase()
+      setValue("couponCode", normalizedCode)
+      setAppliedCoupon({
+        code: normalizedCode,
+        discount: payload.discount,
+      })
+      setCouponFeedback({
+        type: "success",
+        message: `Coupon ${normalizedCode} applied successfully`,
+      })
+      return true
+    } catch (error) {
+      console.error("Failed to validate coupon", error)
+      setAppliedCoupon(null)
+      setCouponFeedback({
+        type: "error",
+        message: "Unable to validate coupon. Try again.",
+      })
+      return false
+    } finally {
+      setIsApplyingCoupon(false)
+    }
+  }, [setValue])
+
+  useEffect(() => {
+    if (!appliedCoupon) {
+      return
+    }
+
+    const normalizedInput = couponCodeValue?.trim().toUpperCase() || ""
+
+    if (!normalizedInput) {
+      setAppliedCoupon(null)
+      setCouponFeedback(null)
+      return
+    }
+
+    if (normalizedInput !== appliedCoupon.code) {
+      setAppliedCoupon(null)
+      setCouponFeedback(null)
+    }
+  }, [appliedCoupon, couponCodeValue])
 
   useEffect(() => {
     if (productSlug) {
@@ -77,6 +166,13 @@ export function CheckoutPageView() {
     setIsLoading(false)
   }, [productSlug, router])
 
+  useEffect(() => {
+    setAppliedCoupon(null)
+    setCouponFeedback(null)
+    setValue("couponCode", "")
+    setShowCoupon(false)
+  }, [productSlug, setValue])
+
   const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
     offerId: productSlug || "",
     affiliateId,
@@ -88,9 +184,30 @@ export function CheckoutPageView() {
   })
 
   const onSubmit = async (data: CheckoutFormData) => {
+    const trimmedCouponInput = data.couponCode?.trim()
+    const normalizedInput = trimmedCouponInput ? trimmedCouponInput.toUpperCase() : undefined
+
+    if (normalizedInput && appliedCoupon?.code !== normalizedInput) {
+      const applied = await applyCoupon(normalizedInput)
+      if (!applied) {
+        return
+      }
+    }
+
+    const customerName = `${data.firstName} ${data.lastName}`.trim()
+    const normalizedCoupon = appliedCoupon?.code || data.couponCode?.toUpperCase().trim() || undefined
+
     if (data.paymentMethod === "card") {
-      // Pass form data to Stripe checkout
-      await beginCheckout()
+      await beginCheckout({
+        couponCode: normalizedCoupon,
+        customer: {
+          email: data.email,
+          name: customerName || undefined,
+        },
+        metadata: {
+          country: data.country,
+        },
+      })
     }
     // PayPal is handled by the PayPal button component
   }
@@ -103,7 +220,36 @@ export function CheckoutPageView() {
     )
   }
 
-  const finalPrice = product?.price || 67.00
+  const orderSummary = useMemo(() => {
+    const basePrice = product?.price ?? 67.0
+    const priceInCents = Math.round(basePrice * 100)
+
+    if (!appliedCoupon?.discount) {
+      return {
+        displayPrice: basePrice,
+        savings: 0,
+      }
+    }
+
+    const { discount } = appliedCoupon
+    let discountedCents = priceInCents
+
+    if (discount.type === "percentage") {
+      discountedCents = Math.max(
+        0,
+        Math.round(priceInCents - priceInCents * (discount.amount / 100)),
+      )
+    } else {
+      discountedCents = Math.max(0, priceInCents - discount.amount)
+    }
+
+    return {
+      displayPrice: discountedCents / 100,
+      savings: (priceInCents - discountedCents) / 100,
+    }
+  }, [appliedCoupon, product?.price])
+
+  const finalPrice = orderSummary.displayPrice
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -205,6 +351,28 @@ export function CheckoutPageView() {
                 <span className="text-xl sm:text-2xl font-bold">${finalPrice.toFixed(2)}</span>
               </div>
 
+              {appliedCoupon && (
+                <div className="flex items-center justify-between rounded-md bg-green-50 px-3 py-2 text-sm text-green-700">
+                  <span>
+                    Coupon <strong>{appliedCoupon.code}</strong> applied
+                    {orderSummary.savings > 0 && (
+                      <> — you save ${orderSummary.savings.toFixed(2)}</>
+                    )}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAppliedCoupon(null)
+                      setCouponFeedback(null)
+                      setValue("couponCode", "")
+                    }}
+                    className="text-xs font-medium text-green-800 hover:underline"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+
               {!showCoupon ? (
                 <button
                   type="button"
@@ -223,11 +391,25 @@ export function CheckoutPageView() {
                   />
                   <button
                     type="button"
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm hover:bg-gray-300"
+                    onClick={() => {
+                      void applyCoupon(couponCodeValue || "")
+                    }}
+                    disabled={isApplyingCoupon}
+                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Apply
+                    {isApplyingCoupon ? "Applying..." : "Apply"}
                   </button>
                 </div>
+              )}
+
+              {couponFeedback && (
+                <p
+                  className={`mt-2 text-xs ${
+                    couponFeedback.type === "success" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {couponFeedback.message}
+                </p>
               )}
             </div>
 
@@ -312,7 +494,7 @@ export function CheckoutPageView() {
             {paymentMethod === 'card' ? (
               <button
                 type="submit"
-                disabled={isSubmitting || isCheckoutLoading}
+                disabled={isSubmitting || isCheckoutLoading || isApplyingCoupon}
                 className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-md text-base sm:text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting || isCheckoutLoading ? 'Processing...' : `🔒 Place Your Order $${finalPrice.toFixed(2)}`}
@@ -324,6 +506,7 @@ export function CheckoutPageView() {
                 affiliateId={affiliateId}
                 metadata={{
                   landerId: productSlug || '',
+                  ...(appliedCoupon?.code ? { couponCode: appliedCoupon.code } : {}),
                 }}
                 buttonText={`Place Your Order $${finalPrice.toFixed(2)}`}
                 className="w-full"

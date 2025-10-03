@@ -9,6 +9,7 @@ import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout
 import { checkoutSessionSchema, sanitizeInput } from "@/lib/validation/checkout";
 import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
 import logger from "@/lib/logger";
+import { validateCoupon as validateCouponCode } from "@/lib/coupons";
 
 function buildErrorResponse(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
@@ -27,12 +28,53 @@ export async function POST(request: NextRequest) {
 
   const parsedBody = parseResult.data;
 
+  let couponValidation: Awaited<ReturnType<typeof validateCouponCode>> | null = null;
+  let normalizedCouponCode: string | undefined;
+
   // Sanitize string inputs
   if (parsedBody.offerId) {
     parsedBody.offerId = sanitizeInput(parsedBody.offerId);
   }
   if (parsedBody.affiliateId) {
     parsedBody.affiliateId = sanitizeInput(parsedBody.affiliateId);
+  }
+
+  const metadataFromRequest: Record<string, string> = {
+    ...(parsedBody.metadata ?? {}),
+  };
+
+  if (parsedBody.couponCode) {
+    const sanitizedCoupon = sanitizeInput(parsedBody.couponCode).trim();
+
+    if (!sanitizedCoupon) {
+      return buildErrorResponse("Coupon code is required");
+    }
+
+    couponValidation = await validateCouponCode(sanitizedCoupon);
+
+    if (!couponValidation.valid) {
+      return buildErrorResponse(couponValidation.error ?? "Invalid coupon code");
+    }
+
+    normalizedCouponCode = couponValidation.code ?? sanitizedCoupon;
+    metadataFromRequest.couponCode = normalizedCouponCode;
+
+    if (couponValidation.discount) {
+      metadataFromRequest.couponType = couponValidation.discount.type;
+      metadataFromRequest.couponValue = String(couponValidation.discount.amount);
+      if (couponValidation.discount.currency) {
+        metadataFromRequest.couponCurrency = couponValidation.discount.currency.toUpperCase();
+      }
+    }
+
+    if (couponValidation.stripePromotionCode) {
+      metadataFromRequest.couponStripePromotionCode = couponValidation.stripePromotionCode;
+    }
+  }
+
+  parsedBody.metadata = metadataFromRequest;
+  if (normalizedCouponCode) {
+    parsedBody.couponCode = normalizedCouponCode;
   }
 
   const offer = getOfferConfig(parsedBody.offerId);
@@ -109,6 +151,27 @@ export async function POST(request: NextRequest) {
       productImage: offer.productImage,
     });
 
+    if (couponValidation?.discount && typeof price.unit_amount === "number") {
+      const baseAmountCents = price.unit_amount * parsedBody.quantity;
+      let discountCents = 0;
+
+      if (couponValidation.discount.type === "percentage") {
+        discountCents = Math.round(baseAmountCents * (couponValidation.discount.amount / 100));
+      } else {
+        discountCents = couponValidation.discount.amount * parsedBody.quantity;
+      }
+
+      if (discountCents > baseAmountCents) {
+        discountCents = baseAmountCents;
+      }
+
+      const adjustedCents = Math.max(0, baseAmountCents - discountCents);
+
+      sessionMetadata.couponDiscountCents = String(discountCents);
+      sessionMetadata.couponSubtotalCents = String(baseAmountCents);
+      sessionMetadata.couponAdjustedTotalCents = String(adjustedCents);
+    }
+
     const stripeProduct = price.product;
 
     if (stripeProduct) {
@@ -170,6 +233,14 @@ export async function POST(request: NextRequest) {
         },
       },
     };
+
+    if (couponValidation?.stripePromotionCode) {
+      sessionParams.discounts = [
+        {
+          promotion_code: couponValidation.stripePromotionCode,
+        },
+      ];
+    }
 
     // Add payment method configuration
     if (paymentConfigId) {
