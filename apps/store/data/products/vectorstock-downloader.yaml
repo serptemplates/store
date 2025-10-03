@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download vector graphics and illustrations
 - Support for scalable vector formats (SVG, EPS, AI)
-- Batch download artist portfolios and collections
+- Batch artist portfolios/collections downloads
 - Automatic license management and tracking
-- Custom organization by style and category
+- Organize by style/category
 - Resume downloads with recovery
-- Cross-platform application for vector artists
-- Built-in vector viewer with scalable preview
-- Command-line tools for design automation
+- Cross-platform support
+- vector viewer
+- CLI tools
 - Integration with vector graphics software
-- Export vector data and licensing information
+- Export vector data/licensing information
 - Search capabilities across vector libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various vector formats and resolutions
-- Bandwidth optimization for vector collections
+- Bandwidth optimization
 - Backup and restore for design asset libraries
-- Smart categorization by illustration style
+- Smart categorization
 - Vector design workflow integration
 - Artist discovery and portfolio browsing
 description: Download videos, images, and content from vectorstock with our reliable downloader tool. Fast, secure, and easy to use.

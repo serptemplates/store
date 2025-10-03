@@ -20,23 +20,23 @@ github_repo_tags: []
 features:
 - Download free movies and TV shows from Tubi
 - Support for commercial-free offline viewing
-- Batch download movie collections and series
+- Batch movie collections/series downloads
 - Automatic commercial detection and removal
 - Multiple subtitle and audio track support
 - Resume downloads
-- Cross-platform compatibility for cord-cutters
+- Cross-platform support
 - Built-in media player with advanced controls
-- Custom organization by genre and release year
+- Organize by genre/release year
 - Duplicate detection
-- Command-line tools for automated recording
-- Integration with home theater and media systems
-- Export movie schedules and availability data
+- CLI tools
+- home theater integration
+- Export movie schedules/availability data
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various video formats and qualities
-- Bandwidth optimization for streaming quality
+- Bandwidth optimization
 - Library search
-- Backup and sync options for movie libraries
+- Backup & sync
 - Smart recommendations for free content discovery
 description: Download videos, images, and content from tubi with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

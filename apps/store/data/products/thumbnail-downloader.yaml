@@ -19,24 +19,24 @@ github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
 - Download video thumbnails from various platforms
-- Support for high-resolution thumbnail extraction
-- Batch download thumbnails from playlists and channels
-- Automatic metadata extraction and organization
+- High-res thumbnail extraction
+- Batch thumbnails from playlists/channels downloads
+- Auto metadata extraction and organization
 - Custom folder structures by platform and source
 - Resume downloads
-- Cross-platform application for content creators
-- Built-in thumbnail viewer with preview mode
-- Command-line tools for thumbnail automation
-- Integration with video editing and design software
-- Export thumbnail data and source information
+- Cross-platform support
+- thumbnail viewer
+- CLI tools
+- video editing integration
+- Export thumbnail data/source information
 - Search capabilities across thumbnail libraries
-- Privacy protection with local-only storage
+- Privacy protection
 - Regular compatibility updates
 - Support for various image formats and resolutions
-- Bandwidth optimization for thumbnail collections
-- Backup and sync options for design assets
-- Smart categorization by content type and quality
-- Creative workflow integration features
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
+- Workflow integration
 - Thumbnail analysis and recommendation tools
 description: Download videos, images, and content from thumbnail with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

@@ -19,23 +19,23 @@ github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
 - High-res Flickr downloads and albums
-- Batch download photographer portfolios and collections
+- Batch photographer portfolios/collections downloads
 - Support for Creative Commons and rights-managed content
 - Automatic Metadata extraction
-- Custom organization by photographer and album
+- Organize by photographer/album
 - Resume downloads
-- Cross-platform application for photography enthusiasts
-- Built-in photo viewer with metadata display
-- Command-line tools for photo collection automation
+- Cross-platform support
+- photo viewer
+- CLI tools
 - Integration with photo management applications
-- Export photo data and licensing information
+- Export photo data/licensing information
 - Search capabilities across photo libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various image formats and qualities
 - Bandwidth management for large photo collections
 - Backup and restore options for photo archives
-- Smart categorization by subject and style
+- Smart categorization
 - Creative Commons license tracking
 - Photography workflow integration features
 description: Download videos, images, and content from flickr with our reliable downloader tool. Fast, secure, and easy to use.

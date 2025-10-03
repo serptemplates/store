@@ -18,26 +18,26 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/udemy-video-downl
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
-- Download complete Udemy courses with all video lectures
-- Extract course materials including PDFs, quizzes, and assignments
-- Maintain original course structure and section organization
-- Support for encrypted and DRM-protected content
-- Automatic subtitle downloading in multiple languages
-- Batch processing for multiple course downloads
-- Resume downloads with progress recovery
-- Quality selection from 360p to 1080p and beyond
-- Command-line interface for automated course archiving
-- Integration with learning management systems
+- Complete Udemy course downloads
+- Course materials extraction
+- Structured course organization
+- DRM content support
+- Multi-language subtitles
+- Batch course downloads
+- Resume downloads
+- Multiple quality options
+- CLI for archiving
+- LMS integration
 - Export course transcripts and notes
-- Offline certificate generation and storage
-- Cross-platform compatibility across all devices
+- Offline certificates
+- Cross-platform support
 - Smart Bandwidth-efficient downloads
-- Course update detection and incremental downloads
-- Built-in video player with speed control and bookmarks
-- Search functionality across downloaded course content
-- Backup and restore capabilities for course libraries
-- Privacy protection with secure local storage
-- Regular updates to maintain Udemy platform compatibility
+- Auto update detection
+- Video player with controls
+- Course content search
+- Backup & restore
+- Secure local storage
+- Platform compatibility updates
 description: Get quick access to Udemy Video Downloader content for offline use.
 product_videos: []
 related_videos: []

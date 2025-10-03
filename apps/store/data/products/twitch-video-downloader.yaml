@@ -24,18 +24,18 @@ features:
 - Extract chat logs and viewer interactions
 - Support for subscriber-only and restricted content
 - Automatic thumbnail and preview generation
-- Resume downloads with progress tracking
+- Resume downloads
 - Command-line tools
-- Cross-platform compatibility across all devices
+- Cross-platform support
 - Custom folder organization
 - Built-in video player with timestamp navigation
-- Integration with streaming software and tools
+- streaming software integration
 - Duplicate detection to avoid redundant downloads
-- Export stream metadata and statistics
+- Export stream metadata/statistics
 - Privacy-focused design with secure storage
 - Regular compatibility updates
 - Bandwidth-efficient downloads
-- Search functionality across downloaded streams
+- Search downloaded streams
 - Backup and restore capabilities
 - Support for various video formats and qualities
 description: Download videos, images, and content from twitch video with our reliable downloader tool. Fast, secure, and easy to use.

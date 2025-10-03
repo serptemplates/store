@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download ClientClub client portal content and resources
 - Support for password-protected client areas
-- Batch download client materials and shared files
+- Batch client materials/shared files downloads
 - Automatic organization by client and project
 - Custom folder structures for client management
 - Resume downloads
-- Cross-platform application for service providers
-- Built-in document viewer with client portal features
-- Command-line tools for client workflow automation
+- Cross-platform support
+- document viewer
+- CLI tools
 - Integration with client relationship management systems
-- Export client data and project analytics
+- Export client data/project analytics
 - Search capabilities across client content
 - Enterprise-grade privacy and security features
 - Regular compatibility updates
 - Support for various document and media formats
 - Bandwidth management for client file transfers
 - Backup and restore options for client archives
-- Smart organization by service type and project
+- Smart organization
 - Secure client data handling and storage
 - Advanced access control and permissions
 description: Download videos, images, and content from clientclub with our reliable downloader tool. Fast, secure, and easy to use.

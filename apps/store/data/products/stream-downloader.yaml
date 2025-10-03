@@ -22,20 +22,20 @@ features:
 - Support for multiple streaming protocols and formats
 - Batch recording from multiple sources simultaneously
 - Automatic stream detection and quality selection
-- Custom organization by platform and streamer
+- Organize by platform/streamer
 - Resume interrupted recordings with recovery
-- Cross-platform application for stream archiving
+- Cross-platform support
 - Built-in stream player with recording controls
-- Command-line tools for streaming automation
-- Integration with streaming and media platforms
-- Export stream data and recording statistics
+- CLI tools
+- streaming integration
+- Export stream data/recording statistics
 - Search capabilities across recorded streams
-- Privacy protection with encrypted storage
+- Privacy protection
 - Regular compatibility updates
 - Support for various streaming formats and qualities
 - Bandwidth management for live recording
 - Backup and restore for stream archives
-- Smart categorization by content type
+- Smart categorization
 - Live stream monitoring and alerts
 - Advanced recording scheduling and automation
 description: Get quick access to Stream Downloader content for offline use.

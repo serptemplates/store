@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Creative Market fonts, graphics, and templates
 - Support for premium and free goods collections
-- Batch download designer portfolios and bundles
+- Batch designer portfolios/bundles downloads
 - Automatic license tracking and usage rights
-- Custom organization by product type and designer
+- Organize by product type/designer
 - Resume downloads
-- Cross-platform application for creative professionals
+- Cross-platform support
 - Built-in asset browser with preview capabilities
-- Command-line tools for creative asset automation
-- Integration with design software and workflows
-- Export product data and purchase history
+- CLI tools
+- design software integration
+- Export product data/purchase history
 - Search capabilities across creative asset libraries
 - Local-only storage for privacy
 - Regular updates to maintain Creative Market compatibility
 - Support for various creative file formats
-- Bandwidth optimization for large design bundles
+- Bandwidth optimization
 - Backup and restore for creative asset collections
-- Smart categorization by design style and use case
+- Smart categorization
 - License compliance and usage tracking
 - Designer discovery and recommendation features
 description: Download videos, images, and content from creative market with our reliable downloader tool. Fast, secure, and easy to use.

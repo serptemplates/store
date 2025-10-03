@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Whop marketplace videos and digital products
 - Support for premium and subscription-based content
-- Batch download product libraries and collections
-- Automatic metadata extraction and product organization
-- Custom organization by seller and product category
+- Batch product libraries/collections downloads
+- Auto metadata extraction and product organization
+- Organize by seller/product category
 - Resume downloads with recovery
-- Cross-platform application for digital entrepreneurs
+- Cross-platform support
 - Built-in media player with marketplace controls
 - Command-line interface for business automation
-- Integration with e-commerce and marketing tools
-- Export product data and sales analytics
-- Search functionality across product libraries
+- e-commerce integration
+- Export product data/sales analytics
+- Search product libraries
 - Privacy-focused design with secure storage
 - Regular compatibility updates
 - Support for various digital product formats
-- Bandwidth optimization for large product files
-- Backup and sync options for product archives
-- Smart categorization by market and niche
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
 - Offline access to purchased content
 - Advanced product management and tracking
 description: Download videos, images, and content from whop video with our reliable downloader tool. Fast, secure, and easy to use.

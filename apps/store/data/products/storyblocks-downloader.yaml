@@ -22,20 +22,20 @@ features:
 - Support for unlimited subscription content
 - Batch download creative project collections
 - Automatic license management and tracking
-- Custom organization by project and asset type
+- Organize by project/asset type
 - Resume downloads with recovery
-- Cross-platform application for video creators
+- Cross-platform support
 - Built-in media browser with preview capabilities
-- Command-line tools for video production automation
+- CLI tools
 - Integration with video editing software
-- Export asset data and usage analytics
-- Search functionality across media libraries
-- Privacy protection with local asset storage
+- Export asset data/usage analytics
+- Search media libraries
+- Privacy protection
 - Regular compatibility updates
 - Support for 4K video and high-quality audio
 - Bandwidth management for large media files
-- Backup and sync options for production assets
-- Smart categorization by mood and style
+- Backup & sync
+- Smart categorization
 - Video production workflow integration
 - Asset discovery and recommendation system
 description: Download videos, images, and content from storyblocks with our reliable downloader tool. Fast, secure, and easy to use.

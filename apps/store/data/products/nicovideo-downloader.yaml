@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download videos from NicoNico Douga platform
 - Support for comments overlay and subtitles
-- Batch download user uploads and playlists
+- Batch user uploads/playlists downloads
 - Automatic Metadata extraction
-- Custom organization by uploader and category
+- Organize by uploader/category
 - Resume downloads
-- Cross-platform application for Japanese content
+- Cross-platform support
 - Built-in video player with comment display
-- Command-line tools for content automation
-- Integration with anime and Japanese media tools
-- Export video data and engagement statistics
-- Search functionality across video libraries
+- CLI tools
+- anime integration
+- Export video data/engagement statistics
+- Search video libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Supports various containers/codecs
-- Bandwidth optimization for international access
+- Bandwidth optimization
 - Backup and restore for video collections
-- Smart categorization by genre and popularity
+- Smart categorization
 - Japanese content discovery features
 - Comment archiving and analysis tools
 description: Download videos, images, and content from nicovideo with our reliable downloader tool. Fast, secure, and easy to use.

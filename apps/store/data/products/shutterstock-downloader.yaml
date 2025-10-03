@@ -19,24 +19,24 @@ github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
 - High-res stock downloads without watermarks
-- Batch download search results and collections
+- Batch search results/collections downloads
 - Support for various image formats (JPEG, PNG, TIFF, EPS)
 - Metadata extraction
-- Integration with design software and workflows
+- design software integration
 - Organize by category or project
 - Automatic image resizing and format conversion
 - License information tracking and management
-- Search functionality across downloaded assets
+- Search downloaded assets
 - Duplicate detection to avoid redundant downloads
 - Resume downloads
-- Command-line tools for automated asset management
+- CLI tools
 - Cross-platform support
-- Built-in image viewer with zoom and preview
+- image viewer
 - Cloud storage integration for team collaboration
 - Progress tracking for large batch operations
 - Regular compatibility updates
-- Privacy protection with secure local storage
-- Export capabilities for asset catalogs and libraries
+- Secure local storage
+- Export capabilities for asset catalogs/libraries
 - Smart Bandwidth-efficient downloads
 description: Download videos, images, and content from shutterstock with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

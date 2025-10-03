@@ -24,16 +24,16 @@ features:
 - Support for drip-fed content and lesson prerequisites
 - Automatic certificate and completion tracking
 - Batch download multiple courses from LMS
-- Resume downloads with progress recovery
+- Resume downloads
 - Command-line interface for educational automation
-- Cross-platform compatibility for learners and instructors
+- Cross-platform support
 - Built-in course player with progress tracking
-- Integration with learning management systems
-- Export course completion data and certificates
-- Search functionality across course content
+- LMS integration
+- Export course completion data/certificates
+- Search course content
 - Privacy protection designed for educational use
 - Regular compatibility updates
-- Custom organization by course category and level
+- Organize by course category/level
 - Backup and restore capabilities for course data
 - Offline learning with synchronized progress
 - Support for multimedia lessons and interactive content

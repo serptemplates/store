@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download premium stock photos from Stocksy
 - Support for authentic and diverse photography
-- Batch download photographer collections and searches
+- Batch photographer collections/searches downloads
 - Automatic rights management and license tracking
-- Custom organization by photographer and theme
+- Organize by photographer/theme
 - Resume downloads with recovery
-- Cross-platform application for creative professionals
-- Built-in photo viewer with metadata display
-- Command-line tools for creative workflow automation
+- Cross-platform support
+- photo viewer
+- CLI tools
 - Integration with professional design applications
-- Export photo data and licensing information
+- Export photo data/licensing information
 - Advanced search across photo libraries
-- Privacy protection with secure local storage
+- Secure local storage
 - Regular compatibility updates
-- Support for high-resolution photography
+- High-res photography
 - Bandwidth management for large photo files
 - Backup and restore for photo archives
-- Smart categorization by authenticity and diversity
+- Smart categorization
 - Creative project workflow integration
 - Photographer discovery and curation features
 description: Download videos, images, and content from stocksy with our reliable downloader tool. Fast, secure, and easy to use.

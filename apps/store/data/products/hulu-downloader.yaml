@@ -20,23 +20,23 @@ github_repo_tags: []
 features:
 - High-quality Hulu shows and downloads
 - Support for live TV recordings and DVR content
-- Batch download series seasons and episodes
+- Batch series seasons/episodes downloads
 - Automatic commercial detection and removal
 - Multiple subtitle and audio track support
 - Resume downloads
-- Cross-platform compatibility for all devices
+- Cross-platform support
 - Built-in media player with advanced controls
-- Custom organization by network and genre
+- Organize by network/genre
 - Duplicate detection and content management
-- Command-line tools for automated recording
+- CLI tools
 - Integration with home theater systems
-- Export show schedules and episode guides
+- Export show schedules/episode guides
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various video formats and qualities
-- Bandwidth optimization for efficient downloads
+- Bandwidth optimization
 - Search capabilities across content libraries
-- Backup and sync options for media collections
+- Backup & sync
 - Offline viewing with progress synchronization
 description: Download videos, images, and content from hulu with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

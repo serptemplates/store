@@ -20,9 +20,9 @@ github_repo_tags: []
 features:
 - High-quality Facebook downloads quality
 - Support for public and private video content
-- Batch download from pages, groups, and profiles
+- Batch from pages, groups,/profiles downloads
 - Extract video metadata including descriptions and comments
-- Automatic thumbnail and preview image extraction
+- Auto thumbnail and preview image extraction
 - Resume downloads
 - Cross-platform support
 - Command-line tools
@@ -33,7 +33,7 @@ features:
 - Export video data and statistics
 - Privacy-focused design with secure local storage
 - Regular compatibility updates
-- Search functionality across downloaded videos
+- Search downloaded videos
 - Bandwidth-efficient downloads
 - Backup and restore capabilities
 - Support for Facebook Watch and IGTV content

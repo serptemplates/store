@@ -21,16 +21,16 @@ features:
 - High-quality Dailymotion downloads
 - Batch processing for channel and playlist content
 - Support for various video formats and resolutions
-- Automatic metadata extraction and organization
-- Resume downloads with progress recovery
+- Auto metadata extraction and organization
+- Resume downloads
 - Cross-platform support
 - Built-in video player with Dailymotion-style controls
 - Command-line tools
 - Organize by channel and category
 - Duplicate detection and content management
-- Integration with video management and editing tools
-- Export channel data and video analytics
-- Privacy protection with secure local storage
+- video management integration
+- Export channel data/video analytics
+- Secure local storage
 - Regular compatibility updates
 - Search capabilities across video libraries
 - Bandwidth-efficient downloads

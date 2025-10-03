@@ -18,19 +18,19 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/teachable-video-d
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
-- Download complete Teachable courses with all video content
+- Complete complete Teachable courses downloads
 - Extract course materials including worksheets and resources
 - Maintain original course structure and lesson organization
 - Support for drip-fed content and timed releases
-- Automatic subtitle and transcript extraction
+- Auto subtitle and transcript extraction
 - Batch download multiple courses from instructors
-- Resume downloads with progress tracking
+- Resume downloads
 - Command-line interface for automated course collection
-- Cross-platform compatibility for students and educators
+- Cross-platform support
 - Built-in video player with note-taking capabilities
-- Integration with learning management systems
-- Export completion certificates and progress reports
-- Search functionality across course content
+- LMS integration
+- Export completion certificates/progress reports
+- Search course content
 - Local-only storage for privacy
 - Regular compatibility updates
 - Organize by instructor or topic

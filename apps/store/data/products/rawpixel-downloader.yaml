@@ -22,21 +22,21 @@ features:
 - Support for free and premium design assets
 - Batch downloads for series/collections
 - Automatic license tracking and usage management
-- Custom organization by asset type and style
+- Organize by asset type/style
 - Resume downloads
-- Cross-platform application for designers
+- Cross-platform support
 - Built-in asset browser with design preview
-- Command-line tools for design automation
+- CLI tools
 - Integration with creative design workflows
-- Export asset data and design information
-- Search functionality across design libraries
+- Export asset data/design information
+- Search design libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various design formats and sizes
-- Bandwidth optimization for design collections
-- Backup and sync options for creative assets
-- Smart categorization by design trend
-- Creative workflow integration features
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
+- Workflow integration
 - Design inspiration and discovery tools
 description: Download videos, images, and content from rawpixel with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

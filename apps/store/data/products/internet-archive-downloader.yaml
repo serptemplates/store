@@ -24,18 +24,18 @@ features:
 - Automatic metadata preservation and organization
 - Custom folder structures by collection type
 - Resume downloads
-- Cross-platform application for archivists and researchers
-- Built-in content viewer with archive-style interface
-- Command-line tools for digital preservation workflows
+- Cross-platform support
+- content viewer
+- CLI tools
 - Integration with digital library systems
-- Export collection data and historical metadata
+- Export collection data/historical metadata
 - Search capabilities across archived content
-- Privacy protection with secure local storage
+- Secure local storage
 - Regular updates to maintain Archive.org compatibility
 - Support for historical and rare content formats
-- Bandwidth optimization for large archive collections
+- Bandwidth optimization
 - Backup and preservation verification tools
-- Smart categorization by era and content type
+- Smart categorization
 - Digital preservation workflow integration
 - Historical research and discovery features
 description: Download videos, images, and content from internet archive with our reliable downloader tool. Fast, secure, and easy to use.

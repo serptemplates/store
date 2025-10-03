@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download documents and books from Scribd
 - Support for PDFs, audiobooks, and text documents
-- Batch download user libraries and collections
+- Batch user libraries/collections downloads
 - Automatic document conversion and formatting
-- Custom organization by author and category
+- Organize by author/category
 - Resume downloads with recovery
-- Cross-platform application for researchers and students
+- Cross-platform support
 - Built-in document reader with annotation support
-- Command-line tools for academic workflow automation
+- CLI tools
 - Integration with reference management systems
-- Export document metadata and citations
-- Search functionality across document libraries
+- Export document metadata/citations
+- Search document libraries
 - Privacy protection designed for academic use
 - Regular compatibility updates
 - Support for various document formats
 - Bandwidth management for large document collections
 - Backup and restore for research libraries
-- Smart categorization by subject and publication date
+- Smart categorization
 - Academic workflow integration features
 - Citation generation and bibliography tools
 description: Download videos, images, and content from scribd with our reliable downloader tool. Fast, secure, and easy to use.

@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Circle community content and discussions
 - Support for private communities and member-only content
-- Batch download posts, comments, and shared media
+- Batch posts, comments,/shared media downloads
 - Automatic organization by community and topic
 - Custom folder structures for community management
-- Resume downloads with progress tracking
-- Cross-platform application for community managers
-- Built-in content viewer with community features
-- Command-line tools for community automation
+- Resume downloads
+- Cross-platform support
+- content viewer
+- CLI tools
 - Integration with community management platforms
-- Export community analytics and engagement data
+- Export community analytics/engagement data
 - Search capabilities across community content
 - Privacy protection designed for community use
 - Regular compatibility updates
 - Support for various content types and formats
 - Bandwidth management for large community downloads
 - Backup and restore options for community archives
-- Smart categorization by discussion topic
+- Smart categorization
 - Offline access to community resources
 - Member engagement tracking and analytics
 description: Download videos, images, and content from circle with our reliable downloader tool. Fast, secure, and easy to use.
