@@ -10,6 +10,8 @@ const ALLOWED_PREFIXES = [
 
 const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
+const FALLBACK_PAGE_BASE = "https://apps.serp.co/";
+const STORE_PAGE_BASE = "https://store.serp.co/products/";
 
 describe("buy button destinations", () => {
   it("ensures each product CTA points to an approved destination", () => {
@@ -71,5 +73,27 @@ describe("buy button destinations", () => {
       );
 
     expect(cancelViolations).toEqual([]);
+
+    const pageViolations: Array<{ slug: string; pageUrl: string; expected: string }> = [];
+
+    products.forEach((product) => {
+      const buy = product.buy_button_destination;
+      const pageUrl = product.product_page_url ?? "";
+
+      if (typeof buy === "string" && buy.startsWith("https://ghl.serp.co/")) {
+        const expected = `${STORE_PAGE_BASE}${product.slug}`;
+        if (pageUrl !== expected) {
+          pageViolations.push({ slug: product.slug, pageUrl, expected });
+        }
+        return;
+      }
+
+      const expected = `${FALLBACK_PAGE_BASE}${product.slug}`;
+      if (pageUrl !== expected) {
+        pageViolations.push({ slug: product.slug, pageUrl, expected });
+      }
+    });
+
+    expect(pageViolations).toEqual([]);
   });
 });

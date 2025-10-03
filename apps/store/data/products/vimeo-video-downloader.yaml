@@ -6,8 +6,8 @@ product_page_url: https://apps.serp.co/vimeo-video-downloader
 purchase_url: https://serp.ly/skool-video-downloader
 stripe:
   price_id: price_1S2fcZ06JrOmKRCmTwbmGNxm
-  success_url: https://apps.serp.co/checkout/success
-  cancel_url: https://apps.serp.co/checkout?cancel
+  success_url: https://store.serp.co/products/vimeo-video-downloader?checkout=success
+  cancel_url: https://store.serp.co/products/vimeo-video-downloader
   metadata:
     source: lander-template
 buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
