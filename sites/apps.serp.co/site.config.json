@@ -8,8 +8,10 @@
   "navigation": {
     "links": [
       { "label": "Catalog", "href": "/" },
-      { "label": "Docs", "href": "https://github.com/serpapps" },
-      { "label": "Support", "href": "https://github.com/serpapps/support" }
+      { "label": "Github", "href": "https://github.com/serpapps" },
+      { "label": "Support", "href": "https://serp.ly/@serp/support" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "Videos", "href": "/videos" }
     ]
   },
   "cta": {
