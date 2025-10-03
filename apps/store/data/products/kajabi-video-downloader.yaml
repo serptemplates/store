@@ -18,55 +18,55 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/kajabi-video-down
 github_repo_url: https://github.com/serpapps/kajabi-video-downloader
 github_repo_tags: []
 features:
-  - Download complete Kajabi courses and coaching content
-  - Extract video lessons, PDFs, and course materials
-  - Maintain program structure and module organization
-  - Support for community posts and member interactions
-  - Automatic subtitle extraction in multiple languages
-  - Batch download entire coaching programs
-  - Resume interrupted downloads seamlessly
-  - Command-line interface for bulk processing
-  - Cross-platform application support
-  - Built-in video player with coaching tools
-  - Integration with business coaching platforms
-  - Export student progress and engagement data
-  - Search functionality across program content
-  - Privacy protection with secure local storage
-  - Regular updates to maintain Kajabi compatibility
-  - Custom folder organization by program type
-  - Backup and restore capabilities
-  - Offline coaching with synchronized progress
-  - Support for live session recordings
-  - Smart content delivery and organization
+- Download complete Kajabi courses and coaching content
+- Extract video lessons, PDFs, and course materials
+- Maintain program structure and module organization
+- Support for community posts and member interactions
+- Multi-language subtitle extraction
+- Batch download entire coaching programs
+- Resume downloads
+- Command-line interface for bulk processing
+- Cross-platform support
+- Built-in video player with coaching tools
+- Integration with business coaching platforms
+- Export student progress/engagement data
+- Search program content
+- Secure local storage
+- Regular compatibility updates
+- Organize by program type
+- Backup and restore capabilities
+- Offline coaching with synchronized progress
+- Support for live session recordings
+- Smart content delivery and organization
 description: Download videos, images, and content from kajabi video with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
-    alt: Kajabi Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
+  alt: Kajabi Video Downloader website preview
 faqs:
-  - question: How can I download Kajabi courses for offline viewing?
-    answer: 'To download Kajabi courses, you typically need: 1) An active subscription or course purchase, 2) Official Kajabi mobile app (if available for offline viewing), 3) Third-party tools (use with caution). Always check Kajabi''s terms of service and only download content you''ve legitimately purchased or have access to.'
-  - question: Is it allowed to download Kajabi course content?
-    answer: Downloading Kajabi courses is subject to the platform's terms of service and copyright laws. Most educational platforms allow offline viewing through their official apps but prohibit redistribution or sharing. Always respect intellectual property rights and only download content you've purchased or have legitimate access to.
-  - question: What formats do Kajabi course downloads come in?
-    answer: Kajabi course downloads typically come in MP4 format for videos, and may include PDF files for course materials, subtitles in SRT format, and audio files in MP3 format. The exact formats depend on the original content and the downloader used.
-  - question: Can I download Kajabi courses to multiple devices?
-    answer: This depends on Kajabi's licensing terms. Many platforms allow downloads to a limited number of devices per account. Check your subscription details and the platform's device limits. Using third-party downloaders may violate terms of service.
-  - question: How do I organize downloaded Kajabi course materials?
-    answer: 'Best practices for organizing downloaded Kajabi courses: 1) Create folders by course name and instructor, 2) Maintain original file names when possible, 3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use media management software for better organization.'
+- question: How can I download Kajabi courses for offline viewing?
+  answer: 'To download Kajabi courses, you typically need: 1) An active subscription or course purchase, 2) Official Kajabi mobile app (if available for offline viewing), 3) Third-party tools (use with caution). Always check Kajabi''s terms of service and only download content you''ve legitimately purchased or have access to.'
+- question: Is it allowed to download Kajabi course content?
+  answer: Downloading Kajabi courses is subject to the platform's terms of service and copyright laws. Most educational platforms allow offline viewing through their official apps but prohibit redistribution or sharing. Always respect intellectual property rights and only download content you've purchased or have legitimate access to.
+- question: What formats do Kajabi course downloads come in?
+  answer: Kajabi course downloads typically come in MP4 format for videos, and may include PDF files for course materials, subtitles in SRT format, and audio files in MP3 format. The exact formats depend on the original content and the downloader used.
+- question: Can I download Kajabi courses to multiple devices?
+  answer: This depends on Kajabi's licensing terms. Many platforms allow downloads to a limited number of devices per account. Check your subscription details and the platform's device limits. Using third-party downloaders may violate terms of service.
+- question: How do I organize downloaded Kajabi course materials?
+  answer: 'Best practices for organizing downloaded Kajabi courses: 1) Create folders by course name and instructor, 2) Maintain original file names when possible, 3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use media management software for better organization.'
 supported_operating_systems:
-  - windows
-  - macos
+- windows
+- macos
 status: draft
 categories:
-  - kajabi video downloader
-  - Downloader
+- kajabi video downloader
+- Downloader
 keywords:
-  - kajabi video downloader
+- kajabi video downloader
 pricing:
   label: One-time payment
-  price: '$17.00'
+  price: $17.00
   original_price: ''
   note: ''
   cta_text: Get it Now
@@ -77,26 +77,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-kajabi-video-downloader
+  - purchase-kajabi-video-downloader
 coming_soon: false
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Kajabi Video Downloader
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and Kajabi Video Downloader lets me pull everything from Kajabi in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Kajabi downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from Kajabi used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Kajabi content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive Kajabi assets for clients and the batch features in Kajabi Video Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with Kajabi Video Downloader
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and Kajabi Video Downloader lets me pull everything from Kajabi in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Kajabi downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from Kajabi used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Kajabi content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive Kajabi assets for clients and the batch features in Kajabi Video Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

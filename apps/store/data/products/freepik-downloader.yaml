@@ -18,55 +18,55 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/freepik-downloade
 github_repo_url: https://github.com/serpapps/freepik-downloader
 github_repo_tags: []
 features:
-  - Download premium vectors, photos, and design assets
-  - Batch processing for design collections and searches
-  - Support for vector formats (SVG, EPS, AI) and raster images
-  - Automatic license tracking and usage rights management
-  - Custom organization by design style and category
-  - Resume interrupted downloads with smart recovery
-  - Cross-platform support for designers and agencies
-  - Built-in asset viewer with layer and vector support
-  - Command-line tools for design workflow automation
-  - Integration with professional design software
-  - Advanced search and filtering by style and format
-  - Duplicate detection across design asset libraries
-  - Privacy-focused design with local-only storage
-  - Regular updates to maintain Freepik compatibility
-  - Export options for design management systems
-  - Bandwidth optimization for complex vector files
-  - Support for various file formats and resolutions
-  - Smart asset recommendation and discovery
-  - Backup and restore capabilities for design archives
-  - Premium subscription integration and tracking
+- Download premium vectors, photos, and design assets
+- Batch processing for design collections and searches
+- Support for vector formats (SVG, EPS, AI) and raster images
+- Automatic license tracking and usage rights management
+- Organize by design style/category
+- Resume downloads
+- Cross-platform support
+- Asset viewer (layer/vector)
+- Design workflow CLI
+- Design software integration
+- Advanced search & filtering
+- Duplicate detection
+- Local-only storage for privacy
+- Regular compatibility updates
+- Design system export
+- Bandwidth optimization
+- Multiple formats/resolutions
+- Smart asset recommendation and discovery
+- Design archive backup
+- Premium subscription tracking
 description: Download videos, images, and content from freepik with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/freepik-downloader.jpg
-    alt: Freepik Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/freepik-downloader.jpg
+  alt: Freepik Downloader website preview
 faqs:
-  - question: How do I download images from Freepik?
-    answer: 'To download from Freepik: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms.'
-  - question: Are there free alternatives to downloading from Freepik?
-    answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, Freepik may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
-  - question: What image formats does Freepik provide?
-    answer: Freepik typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
-  - question: Can I use Freepik images for commercial purposes?
-    answer: Commercial use of Freepik images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
-  - question: What are the licensing requirements for Freepik images?
-    answer: 'Freepik images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
+- question: How do I download images from Freepik?
+  answer: 'To download from Freepik: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms.'
+- question: Are there free alternatives to downloading from Freepik?
+  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, Freepik may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
+- question: What image formats does Freepik provide?
+  answer: Freepik typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
+- question: Can I use Freepik images for commercial purposes?
+  answer: Commercial use of Freepik images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
+- question: What are the licensing requirements for Freepik images?
+  answer: 'Freepik images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-  - windows
-  - macos
+- windows
+- macos
 status: draft
 categories:
-  - freepik downloader
-  - Downloader
+- freepik downloader
+- Downloader
 keywords:
-  - freepik downloader
+- freepik downloader
 pricing:
   label: One-time payment
-  price: '$17.00'
+  price: $17.00
   original_price: ''
   note: ''
   cta_text: Get it Now
@@ -77,26 +77,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-freepik-downloader
+  - purchase-freepik-downloader
 coming_soon: false
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Freepik Downloader
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and Freepik Downloader lets me pull everything from Freepik in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Freepik downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from Freepik used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Freepik content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive Freepik assets for clients and the batch features in Freepik Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with Freepik Downloader
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and Freepik Downloader lets me pull everything from Freepik in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Freepik downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from Freepik used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Freepik content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive Freepik assets for clients and the batch features in Freepik Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
