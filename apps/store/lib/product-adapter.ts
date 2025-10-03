@@ -74,7 +74,18 @@ export function productToHomeTemplate(
   const badgeText = product.status?.toUpperCase() ?? "LIVE";
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = product.tagline || product.seo_description;
-  const ctaHref = product.buy_button_destination ?? product.pricing?.cta_href ?? "#pricing";
+  const allowedPrefixes = ["https://store.serp.co/", "https://ghl.serp.co/"];
+  const candidateLinks = [
+    product.buy_button_destination,
+    product.pricing?.cta_href,
+    product.purchase_url,
+    product.product_page_url,
+  ];
+
+  const ctaHref = candidateLinks.find(
+    (link): link is string =>
+      typeof link === "string" && allowedPrefixes.some((prefix) => link.startsWith(prefix)),
+  ) ?? `https://store.serp.co/products/${product.slug}`;
   const ctaText = product.pricing?.cta_text ?? "Checkout";
   const videoUrl = product.product_videos?.[0];
   const screenshots = toScreenshots(product.screenshots, product);
