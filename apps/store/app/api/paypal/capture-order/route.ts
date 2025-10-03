@@ -5,6 +5,7 @@ import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
+  type CheckoutOrderUpsert,
 } from "@/lib/checkout-store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/offer-config";
@@ -60,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     // Update checkout session status
     // Create order record
-    const orderData = {
+    const orderData: CheckoutOrderUpsert = {
       checkoutSessionId: checkoutSession?.id || null,
       stripeSessionId: sessionId,
       stripePaymentIntentId: `paypal_${capture?.id || parsedBody.orderId}`,

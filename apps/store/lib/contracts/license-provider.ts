@@ -22,9 +22,11 @@ const expiresAtSchema = z
       return direct;
     }
 
-    const parsedDate = Date.parse(value);
-    if (!Number.isNaN(parsedDate)) {
-      return Math.floor(parsedDate / 1000);
+    if (typeof value === "string") {
+      const parsedDate = Date.parse(value);
+      if (!Number.isNaN(parsedDate)) {
+        return Math.floor(parsedDate / 1000);
+      }
     }
 
     return null;

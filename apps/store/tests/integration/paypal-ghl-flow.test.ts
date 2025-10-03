@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi, type MockInstance } from "vitest";
 import { NextRequest } from "next/server";
 
 import { loadIntegrationEnv } from "./utils/env";
@@ -34,7 +34,9 @@ const maybeDescribe =
 maybeDescribe("PayPal checkout to GHL integration", () => {
   const integrationOfferId = process.env.STRIPE_INTEGRATION_OFFER_ID ?? "loom-video-downloader";
 
-  let captureSpy: ReturnType<typeof vi.spyOn> | null = null;
+type CaptureSpy = MockInstance<typeof paypalModule.capturePayPalOrder>;
+
+let captureSpy: CaptureSpy | null = null;
   let sessionId: string | null = null;
 
   beforeAll(async () => {

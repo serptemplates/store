@@ -43,6 +43,12 @@ export async function POST(request: NextRequest) {
     ...(parsedBody.metadata ?? {}),
   };
 
+  let couponDiscountCents: number | undefined;
+  let couponSubtotalCents: number | undefined;
+  let couponAdjustedTotalCents: number | undefined;
+  let couponOriginalUnitAmount: number | undefined;
+  let couponAdjustedUnitAmount: number | undefined;
+
   if (parsedBody.couponCode) {
     const sanitizedCoupon = sanitizeInput(parsedBody.couponCode).trim();
 
@@ -151,62 +157,191 @@ export async function POST(request: NextRequest) {
       productImage: offer.productImage,
     });
 
-    if (couponValidation?.discount && typeof price.unit_amount === "number") {
-      const baseAmountCents = price.unit_amount * parsedBody.quantity;
-      let discountCents = 0;
-
-      if (couponValidation.discount.type === "percentage") {
-        discountCents = Math.round(baseAmountCents * (couponValidation.discount.amount / 100));
-      } else {
-        discountCents = couponValidation.discount.amount * parsedBody.quantity;
-      }
-
-      if (discountCents > baseAmountCents) {
-        discountCents = baseAmountCents;
-      }
-
-      const adjustedCents = Math.max(0, baseAmountCents - discountCents);
-
-      sessionMetadata.couponDiscountCents = String(discountCents);
-      sessionMetadata.couponSubtotalCents = String(baseAmountCents);
-      sessionMetadata.couponAdjustedTotalCents = String(adjustedCents);
-    }
+    const quantity = parsedBody.quantity;
+    const unitAmount =
+      typeof price.unit_amount === "number"
+        ? price.unit_amount
+        : typeof price.unit_amount_decimal === "string"
+          ? Math.round(Number(price.unit_amount_decimal))
+          : null;
 
     const stripeProduct = price.product;
+    let productId: string | undefined;
+    let currentProduct: Stripe.Product | null = null;
 
     if (stripeProduct) {
-      const productId = typeof stripeProduct === "string" ? stripeProduct : stripeProduct.id;
-      const currentProduct =
+      productId = typeof stripeProduct === "string" ? stripeProduct : stripeProduct.id;
+      const resolvedProduct =
         typeof stripeProduct === "string"
           ? await stripe.products.retrieve(stripeProduct)
           : (stripeProduct as Stripe.Product);
 
-      const desiredName = offer.productName ?? currentProduct.name;
-      const desiredDescription = offer.productDescription ?? currentProduct.description ?? undefined;
-      const desiredImages = offer.productImage ? [offer.productImage] : undefined;
+      currentProduct = resolvedProduct ?? null;
 
-      const updates: Stripe.ProductUpdateParams = {};
+      if (currentProduct) {
+        const safeProduct = currentProduct;
+        const desiredName = offer.productName ?? safeProduct.name;
+        const desiredDescription = offer.productDescription ?? safeProduct.description ?? undefined;
+        const desiredImages = offer.productImage ? [offer.productImage] : undefined;
 
-      if (desiredName && currentProduct.name !== desiredName) {
-        updates.name = desiredName;
-      }
+        const updates: Stripe.ProductUpdateParams = {};
 
-      if (desiredDescription && currentProduct.description !== desiredDescription) {
-        updates.description = desiredDescription;
-      }
+        if (desiredName && safeProduct.name !== desiredName) {
+          updates.name = desiredName;
+        }
 
-      if (
-        desiredImages &&
-        desiredImages.length > 0 &&
-        (!currentProduct.images || desiredImages.some((image) => !currentProduct.images?.includes(image)))
-      ) {
-        updates.images = desiredImages;
-      }
+        if (desiredDescription && safeProduct.description !== desiredDescription) {
+          updates.description = desiredDescription;
+        }
 
-      if (Object.keys(updates).length > 0) {
-        await stripe.products.update(productId, updates);
+        if (
+          desiredImages &&
+          desiredImages.length > 0 &&
+          (!safeProduct.images || desiredImages.some((image) => !safeProduct.images?.includes(image)))
+        ) {
+          updates.images = desiredImages;
+        }
+
+        if (Object.keys(updates).length > 0 && productId) {
+          await stripe.products.update(productId, updates);
+        }
       }
     }
+
+    if (couponValidation?.discount && unitAmount === null) {
+      return buildErrorResponse("Unable to apply coupon to this price");
+    }
+
+    let customLineItems: Stripe.Checkout.SessionCreateParams.LineItem[] | null = null;
+
+    if (couponValidation?.discount && unitAmount !== null) {
+      const subtotalCents = unitAmount * quantity;
+      let discountCents = 0;
+
+      if (couponValidation.discount.type === "percentage") {
+        discountCents = Math.round(subtotalCents * (couponValidation.discount.amount / 100));
+      } else {
+        discountCents = couponValidation.discount.amount * quantity;
+      }
+
+      if (discountCents > subtotalCents) {
+        discountCents = subtotalCents;
+      }
+
+      const adjustedTotalCents = Math.max(0, subtotalCents - discountCents);
+
+      couponDiscountCents = discountCents;
+      couponSubtotalCents = subtotalCents;
+      couponAdjustedTotalCents = adjustedTotalCents;
+      couponOriginalUnitAmount = unitAmount;
+
+      const adjustedUnitAmount = Math.floor(adjustedTotalCents / quantity);
+      const remainder = adjustedTotalCents - adjustedUnitAmount * quantity;
+      couponAdjustedUnitAmount = adjustedUnitAmount;
+
+      if (!couponValidation.stripePromotionCode) {
+        const baseProductName = offer.productName ?? currentProduct?.name ?? offer.id;
+        const baseDescription = offer.productDescription ?? currentProduct?.description ?? undefined;
+        const imageCandidates = [
+          offer.productImage,
+          ...(currentProduct?.images ?? []),
+        ].filter((value): value is string => Boolean(value && value.length > 0));
+        const productImages = imageCandidates.length > 0 ? Array.from(new Set(imageCandidates)).slice(0, 8) : undefined;
+
+        const productDataBase: Stripe.Checkout.SessionCreateParams.LineItem.PriceData.ProductData = {
+          name: baseProductName,
+        };
+
+        if (baseDescription) {
+          productDataBase.description = baseDescription;
+        }
+
+        if (productImages && productImages.length > 0) {
+          productDataBase.images = productImages;
+        }
+
+        productDataBase.metadata = {
+          base_price_id: price.id,
+          coupon_code: normalizedCouponCode ?? "",
+        };
+
+        const buildPriceData = (unit: number): Stripe.Checkout.SessionCreateParams.LineItem.PriceData => ({
+          currency: price.currency ?? "usd",
+          unit_amount: unit,
+          product_data: {
+            ...productDataBase,
+            metadata: {
+              ...productDataBase.metadata,
+              unit_amount_cents: String(unit),
+            },
+          },
+          ...(price.tax_behavior ? { tax_behavior: price.tax_behavior } : {}),
+        });
+
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+        const baseQuantity = quantity - remainder;
+
+        if (baseQuantity > 0) {
+          lineItems.push({
+            price_data: buildPriceData(adjustedUnitAmount),
+            quantity: baseQuantity,
+          });
+        }
+
+        if (remainder > 0) {
+          lineItems.push({
+            price_data: buildPriceData(adjustedUnitAmount + 1),
+            quantity: remainder,
+          });
+        }
+
+        if (lineItems.length === 0) {
+          lineItems.push({
+            price_data: buildPriceData(adjustedTotalCents),
+            quantity: 1,
+          });
+        }
+
+        customLineItems = lineItems;
+      }
+    }
+
+    if (couponDiscountCents !== undefined) {
+      const discountStr = String(couponDiscountCents);
+      metadataFromRequest.couponDiscountCents = discountStr;
+      sessionMetadata.couponDiscountCents = discountStr;
+    }
+
+    if (couponSubtotalCents !== undefined) {
+      const subtotalStr = String(couponSubtotalCents);
+      metadataFromRequest.couponSubtotalCents = subtotalStr;
+      sessionMetadata.couponSubtotalCents = subtotalStr;
+    }
+
+    if (couponAdjustedTotalCents !== undefined) {
+      const adjustedTotalStr = String(couponAdjustedTotalCents);
+      metadataFromRequest.couponAdjustedTotalCents = adjustedTotalStr;
+      sessionMetadata.couponAdjustedTotalCents = adjustedTotalStr;
+    }
+
+    if (couponOriginalUnitAmount !== undefined) {
+      const originalUnitStr = String(couponOriginalUnitAmount);
+      metadataFromRequest.couponOriginalUnitCents = originalUnitStr;
+      sessionMetadata.couponOriginalUnitCents = originalUnitStr;
+    }
+
+    if (couponAdjustedUnitAmount !== undefined) {
+      const adjustedUnitStr = String(couponAdjustedUnitAmount);
+      metadataFromRequest.couponAdjustedUnitCents = adjustedUnitStr;
+      sessionMetadata.couponAdjustedUnitCents = adjustedUnitStr;
+    }
+
+    if (normalizedCouponCode) {
+      metadataFromRequest.couponSource = couponValidation?.stripePromotionCode ? "stripe" : "local";
+      sessionMetadata.couponSource = metadataFromRequest.couponSource;
+    }
+
+    parsedBody.metadata = metadataFromRequest;
 
     // Configure payment methods - two options:
     // Option 1: Use a payment configuration ID (manages all payment methods in Stripe Dashboard)
@@ -214,15 +349,17 @@ export async function POST(request: NextRequest) {
 
     const paymentConfigId = getOptionalStripePaymentConfigId();
 
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customLineItems ?? [
+      {
+        price: price.id,
+        quantity: parsedBody.quantity,
+      },
+    ];
+
     let sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode,
       client_reference_id: parsedBody.clientReferenceId,
-      line_items: [
-        {
-          price: price.id,
-          quantity: parsedBody.quantity,
-        },
-      ],
+      line_items: lineItems,
       customer_email: parsedBody.customer?.email,
       metadata: sessionMetadata,
       allow_promotion_codes: true,  // Enable coupon codes

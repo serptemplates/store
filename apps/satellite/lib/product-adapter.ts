@@ -61,12 +61,14 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
+  const featuredImage = product.featured_image ?? undefined;
+  const featuredImageGif = product.featured_image_gif ?? undefined;
 
   return {
     platform,
     videoUrl,
-    heroLightThumbnailSrc: product.featured_image,
-    heroDarkThumbnailSrc: product.featured_image_gif ?? product.featured_image,
+    heroLightThumbnailSrc: featuredImage,
+    heroDarkThumbnailSrc: featuredImageGif ?? featuredImage,
     heroVideoTitle: `${product.name} demo video`,
     heroTitle,
     heroDescription,

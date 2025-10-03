@@ -53,7 +53,7 @@ export interface LicenseCreationInput {
   eventType?: string;
   amount?: number | null;
   currency?: string | null;
-  expiresAt?: string | null;
+  expiresAt?: string | number | null;
   rawEvent?: unknown;
 }
 
@@ -71,6 +71,45 @@ function normaliseKey(data: Record<string, unknown>): string | null {
   if (typeof data.key === "string" && data.key.length > 0) {
     return data.key;
   }
+  return null;
+}
+
+type LicenseProviderStatus = LicenseProviderPurchase["status"];
+
+function normaliseStatus(value?: string | null): LicenseProviderStatus {
+  if (!value) {
+    return "completed";
+  }
+
+  const normalised = value.toLowerCase();
+  const allowed: LicenseProviderStatus[] = ["completed", "failed", "refunded", "cancelled"];
+
+  return allowed.includes(normalised as LicenseProviderStatus)
+    ? (normalised as LicenseProviderStatus)
+    : "completed";
+}
+
+function normaliseExpiresAt(value?: string | number | null): number | null {
+  if (value === undefined || value === null || value === "") {
+    return null;
+  }
+
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const direct = Number(value);
+    if (!Number.isNaN(direct)) {
+      return direct;
+    }
+
+    const parsed = Date.parse(value);
+    if (!Number.isNaN(parsed)) {
+      return Math.floor(parsed / 1000);
+    }
+  }
+
   return null;
 }
 
@@ -245,7 +284,7 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
 
   const normalizedId = input.id.startsWith("evt") ? input.id : `evt-${input.id}`;
   const eventType = ADMIN_EVENT_TYPE ?? input.eventType ?? "checkout.completed";
-  const status = input.status ?? "completed";
+  const status = normaliseStatus(input.status);
 
   const amountValue =
     input.amount !== undefined
@@ -257,6 +296,13 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
   const rawCurrency =
     input.currency ?? (typeof metadata.currency === "string" ? metadata.currency : null);
   const currencyValue = rawCurrency ? String(rawCurrency).toLowerCase() : null;
+
+  const expiresAt = normaliseExpiresAt(
+    input.expiresAt
+      ?? (typeof metadata.expiresAt === "number" || typeof metadata.expiresAt === "string"
+        ? metadata.expiresAt
+        : null)
+  );
 
   const payloadDraft: LicenseProviderPurchase = {
     id: normalizedId,
@@ -272,7 +318,7 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
     amount: amountValue,
     currency: currencyValue,
     rawEvent: Object.keys(rawEvent).length > 0 ? rawEvent : { source: ADMIN_RAW_EVENT_SOURCE },
-    expiresAt: input.expiresAt ?? null,
+    expiresAt,
   };
 
   const payload = normaliseLicenseProviderPayload(payloadDraft);
