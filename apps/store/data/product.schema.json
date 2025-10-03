@@ -40,6 +40,10 @@
       "type": "string",
       "format": "uri"
     },
+    "buy_button_destination": {
+      "type": "string",
+      "format": "uri"
+    },
     "name": {
       "type": "string",
       "minLength": 1
