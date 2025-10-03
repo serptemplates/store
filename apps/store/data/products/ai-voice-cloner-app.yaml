@@ -27,7 +27,11 @@ screenshots:
 faqs: []
 supported_operating_systems:
   - windows
-  - macos
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
   - Artificial Intelligence
@@ -72,4 +76,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/ai-voice-cloner-app
+buy_button_destination:

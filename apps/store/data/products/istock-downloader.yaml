@@ -56,12 +56,16 @@ faqs:
 - question: What are the licensing requirements for Istock images?
   answer: 'Istock images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- istock downloader
 - Downloader
+- Creative Assets
 keywords:
 - istock downloader
 pricing:
@@ -78,7 +82,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-istock-downloader
-coming_soon: false
+pre_release: false
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Istock Downloader
@@ -103,4 +107,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/istock-downloader
+buy_button_destination:

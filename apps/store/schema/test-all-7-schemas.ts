@@ -49,7 +49,7 @@ const productSchema = generateProductSchemaLD({
       price: '49.99',
     },
     layout_type: 'ecommerce' as const,
-    coming_soon: false,
+    pre_release: false,
   } as any,
   url: 'https://serp.app/video-downloader-pro',
   storeUrl: 'https://serp.app',

@@ -82,7 +82,7 @@ faqs:
     answer: Generally, you cannot and should not download private or restricted Skool videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
   - windows
-  - macos
+  - mac
   - linux
   - chrome
   - firefox
@@ -90,6 +90,7 @@ supported_operating_systems:
 status: live
 categories:
   - Downloader
+  - Course Platforms
 keywords:
   - skool video downloader
   - download skool videos

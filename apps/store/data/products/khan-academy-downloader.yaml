@@ -56,12 +56,16 @@ faqs:
 - question: How do I organize downloaded Khan Academy course materials?
   answer: 'Best practices for organizing downloaded Khan Academy courses: 1) Create folders by course name and instructor, 2) Maintain original file names when possible, 3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use media management software for better organization.'
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- khan academy downloader
 - Downloader
+- Course Platforms
 keywords:
 - khan academy downloader
 pricing:
@@ -78,7 +82,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-khan-academy-downloader
-coming_soon: false
+pre_release: false
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Khan Academy Downloader
@@ -103,4 +107,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/khan-academy-downloader
+buy_button_destination:

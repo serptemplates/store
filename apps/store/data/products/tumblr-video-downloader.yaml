@@ -62,13 +62,18 @@ faqs:
 - question: What formats do Tumblr downloads support?
   answer: Tumblr downloaders typically support common formats like MP4 for videos, JPG/PNG for images, and MP3 for audio. The available formats depend on the original content type and the downloader software used. Choose formats compatible with your intended use.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
-coming_soon: false
+pre_release: false
 categories:
-- tumblr video downloader
 - Downloader
+- Image Hosting
+- Social Media
 keywords:
 - tumblr video downloader
 pricing:
@@ -109,4 +114,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/tumblr-video-downloader
+buy_button_destination:

@@ -2,6 +2,7 @@ import dynamic from "next/dynamic"
 import NextLink from "next/link"
 import Script from "next/script"
 
+import { CATEGORY_RULES, PRIMARY_CATEGORIES } from "@/lib/category-constants"
 import { getAllProducts } from "@/lib/product"
 import type { ProductData } from "@/lib/product-schema"
 import { WhoIsBehind } from "./WhoIsBehind"
@@ -14,110 +15,13 @@ const ProductsFilter = dynamic(
   },
 )
 
-const CATEGORY_RULES: Array<{ label: string; keywords: string[] }> = [
-  {
-    label: "Adult Sites",
-    keywords: [
-      "adult",
-      "porn",
-      "xxx",
-      "xvideos",
-      "xhamster",
-      "xnxx",
-      "stripchat",
-      "cam",
-      "bonga",
-      "beeg",
-      "spank",
-      "erome",
-      "erothots",
-      "tnaflix",
-      "orangeporn",
-      "chaturbate",
-    ],
-  },
-  {
-    label: "Course Platforms",
-    keywords: [
-      "course",
-      "udemy",
-      "skillshare",
-      "teachable",
-      "academy",
-      "learn",
-      "learning",
-      "education",
-      "university",
-      "khan",
-      "thinkific",
-      "kajabi",
-      "learndash",
-      "moodle",
-      "whop",
-      "skool",
-      "communities",
-    ],
-  },
-  {
-    label: "Social & Community",
-    keywords: [
-      "tiktok",
-      "instagram",
-      "facebook",
-      "twitter",
-      "youtube",
-      "snapchat",
-      "vk",
-      "reddit",
-      "giphy",
-      "onlyfans",
-    ],
-  },
-  {
-    label: "Stock Media",
-    keywords: [
-      "stock",
-      "vector",
-      "shutter",
-      "istock",
-      "depositphotos",
-      "adobe",
-      "alamy",
-      "stocksy",
-      "stockvault",
-      "storyblocks",
-      "dreamstime",
-      "123rf",
-      "vectorstock",
-      "unsplash",
-    ],
-  },
-  {
-    label: "Video Platforms",
-    keywords: [
-      "vimeo",
-      "wistia",
-      "loom",
-      "stream",
-      "dailymotion",
-      "terabox",
-      "vimeo",
-      "vk video",
-    ],
-  },
-  {
-    label: "File Utilities",
-    keywords: [
-      "pdf",
-      "csv",
-      "file",
-      "tool",
-      "transcript",
-      "combiner",
-      "converter",
-    ],
-  },
-]
+const CATEGORY_ORDER = new Map(
+  PRIMARY_CATEGORIES.map((label, index) => [label.toLowerCase(), index] as const),
+)
+
+const CATEGORY_CANONICAL_LABELS = new Map(
+  PRIMARY_CATEGORIES.map((label) => [label.toLowerCase(), label] as const),
+)
 
 function deriveCategories(product: ProductData): string[] {
   if (product.categories && product.categories.length > 0) {
@@ -128,7 +32,30 @@ function deriveCategories(product: ProductData): string[] {
     )
 
     if (validCategories.length > 0) {
-      return validCategories
+      const seen = new Set<string>()
+      const recognized: string[] = []
+      const additional: string[] = []
+
+      validCategories.forEach((category) => {
+        const lower = category.toLowerCase()
+        if (seen.has(lower)) return
+        seen.add(lower)
+
+        const canonical = CATEGORY_CANONICAL_LABELS.get(lower) ?? category
+        if (CATEGORY_ORDER.has(lower)) {
+          recognized.push(canonical)
+        } else {
+          additional.push(canonical)
+        }
+      })
+
+      recognized.sort((a, b) => {
+        const aIndex = CATEGORY_ORDER.get(a.toLowerCase()) ?? Number.MAX_SAFE_INTEGER
+        const bIndex = CATEGORY_ORDER.get(b.toLowerCase()) ?? Number.MAX_SAFE_INTEGER
+        return aIndex - bIndex
+      })
+
+      return [...recognized, ...additional]
     }
   }
 
@@ -149,22 +76,112 @@ function deriveCategories(product: ProductData): string[] {
     const slug = product.slug?.toLowerCase() || ""
     const name = product.name?.toLowerCase() || ""
 
+    const addCategory = (label: string) => {
+      const canonical = CATEGORY_CANONICAL_LABELS.get(label.toLowerCase()) ?? label
+      categories.add(canonical)
+    }
+
+    if (slug.includes("ai-") || name.includes("ai ")) {
+      addCategory("Artificial Intelligence")
+    }
+
+    if (slug.includes("live") || slug.includes("stream") || name.includes("stream")) {
+      addCategory("Live Stream")
+    }
+
+    if (
+      slug.includes("movie") ||
+      slug.includes("tv") ||
+      slug.includes("film") ||
+      slug.includes("netflix") ||
+      slug.includes("hulu") ||
+      slug.includes("tubi") ||
+      slug.includes("prime") ||
+      name.includes("movie")
+    ) {
+      addCategory("Movies & TV")
+    }
+
+    if (
+      slug.includes("stock") ||
+      slug.includes("vector") ||
+      slug.includes("design") ||
+      slug.includes("creative") ||
+      slug.includes("asset")
+    ) {
+      addCategory("Creative Assets")
+    }
+
+    if (slug.includes("image") || slug.includes("photo") || slug.includes("thumbnail")) {
+      addCategory("Image Hosting")
+    }
+
+    if (
+      slug.includes("facebook") ||
+      slug.includes("instagram") ||
+      slug.includes("tiktok") ||
+      slug.includes("twitter") ||
+      slug.includes("youtube") ||
+      slug.includes("snapchat") ||
+      slug.includes("telegram") ||
+      slug.includes("patreon") ||
+      slug.includes("onlyfans") ||
+      slug.includes("social")
+    ) {
+      addCategory("Social Media")
+    }
+
+    if (
+      slug.includes("adult") ||
+      slug.includes("porn") ||
+      slug.includes("cam") ||
+      slug.includes("xxx") ||
+      slug.includes("nsfw")
+    ) {
+      addCategory("Adult")
+    }
+
+    if (
+      slug.includes("course") ||
+      slug.includes("learn") ||
+      slug.includes("academy") ||
+      slug.includes("class")
+    ) {
+      addCategory("Course Platforms")
+    }
+
     if (slug.includes("downloader") || name.includes("downloader")) {
-      if (slug.includes("video") || slug.includes("youtube") || slug.includes("vimeo")) {
-        categories.add("Video Downloaders")
-      } else if (slug.includes("stock") || slug.includes("photo") || slug.includes("image")) {
-        categories.add("Stock Media")
-      } else {
-        categories.add("Downloaders")
-      }
-    } else if (slug.includes("ai-") || name.includes("ai ")) {
-      categories.add("Artificial Intelligence")
-    } else {
-      categories.add("Tools")
+      addCategory("Downloader")
+    }
+
+    if (categories.size === 0) {
+      addCategory("Downloader")
     }
   }
 
-  return Array.from(categories)
+  const recognized: string[] = []
+  const additional: string[] = []
+  const seen = new Set<string>()
+
+  Array.from(categories).forEach((category) => {
+    const lower = category.toLowerCase()
+    if (seen.has(lower)) return
+    seen.add(lower)
+
+    if (CATEGORY_ORDER.has(lower)) {
+      recognized.push(CATEGORY_CANONICAL_LABELS.get(lower) ?? category)
+    } else {
+      additional.push(category)
+    }
+  })
+
+  recognized.sort((a, b) => {
+    const aIndex = CATEGORY_ORDER.get(a.toLowerCase()) ?? Number.MAX_SAFE_INTEGER
+    const bIndex = CATEGORY_ORDER.get(b.toLowerCase()) ?? Number.MAX_SAFE_INTEGER
+    return aIndex - bIndex
+  })
+
+  return [...recognized, ...additional]
 }
 
 const navLinks = [
@@ -260,7 +277,7 @@ export function HomePageView() {
       categories: broadCategories,
       keywords,
       platform: product.platform,
-      coming_soon: product.coming_soon ?? false,
+      pre_release: product.pre_release ?? false,
       new_release: product.new_release ?? false,
       popular: product.popular ?? false,
     }

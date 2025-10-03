@@ -254,7 +254,7 @@
       ],
       "default": "landing"
     },
-    "coming_soon": {
+    "pre_release": {
       "type": "boolean",
       "default": false
     },

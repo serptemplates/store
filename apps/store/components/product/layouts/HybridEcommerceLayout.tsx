@@ -151,9 +151,9 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     onCheckout: beginCheckout,
     checkoutCtaLabel: product.pricing?.cta_text || "Get Instant Access with Card",
     isCheckoutLoading,
-    showWaitlist: Boolean(product.coming_soon),
+    showWaitlist: Boolean(product.pre_release),
     onWaitlistClick: handleWaitlistClick,
-    payPalProps: !product.coming_soon ? {
+    payPalProps: !product.pre_release ? {
       offerId: handle,
       price: displayPrice || "0",
       affiliateId,
@@ -168,7 +168,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     product.name,
     product.description,
     product.pricing?.cta_text,
-    product.coming_soon,
+    product.pre_release,
     displayPrice,
     originalPrice,
     priceLabel,

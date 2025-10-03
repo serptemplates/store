@@ -15,8 +15,8 @@ export type ProductSearchBarProps = {
   categories: ProductCategory[];
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
-  showComingSoon?: boolean;
-  setShowComingSoon?: (value: boolean) => void;
+  showPreRelease?: boolean;
+  setShowPreRelease?: (value: boolean) => void;
   showNewReleases?: boolean;
   setShowNewReleases?: (value: boolean) => void;
 };
@@ -27,8 +27,8 @@ export function ProductSearchBar({
   categories,
   selectedCategory,
   setSelectedCategory,
-  showComingSoon,
-  setShowComingSoon,
+  showPreRelease,
+  setShowPreRelease,
   showNewReleases,
   setShowNewReleases,
 }: ProductSearchBarProps) {
@@ -125,22 +125,22 @@ export function ProductSearchBar({
           </button>
         )}
 
-        {setShowComingSoon && (
+        {setShowPreRelease && (
           <button
             type="button"
-            onClick={() => setShowComingSoon(!showComingSoon)}
+            onClick={() => setShowPreRelease(!showPreRelease)}
             className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition ${
-              showComingSoon
+              showPreRelease
                 ? "border-purple-500/30 bg-purple-500/10 text-purple-700 hover:bg-purple-500/20 dark:text-purple-400"
                 : "border-border bg-card/60 text-muted-foreground hover:text-foreground"
             }`}
           >
             <div className={`h-4 w-4 rounded-full border-2 ${
-              showComingSoon
+              showPreRelease
                 ? "border-purple-500 bg-purple-500"
                 : "border-muted-foreground"
             }`}>
-              {showComingSoon && (
+              {showPreRelease && (
                 <svg className="h-full w-full text-white" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M13.485 3.515a.5.5 0 0 1 0 .707l-7 7a.5.5 0 0 1-.707 0l-3-3a.5.5 0 1 1 .707-.707L6 10.03l6.778-6.778a.5.5 0 0 1 .707 0z"/>
                 </svg>
@@ -157,7 +157,7 @@ export function ProductSearchBar({
               setSearchQuery("");
               setSelectedCategory("all");
             }}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-card/60 px-4 text-sm font-medium text-muted-foreground transition hover:text-primary"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-red-500/50 bg-red-500/10 px-4 text-sm font-medium text-red-600 transition hover:bg-red-500/20 dark:text-red-400"
           >
             <X className="h-4 w-4" />
             Clear filters

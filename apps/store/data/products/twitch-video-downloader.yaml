@@ -62,13 +62,18 @@ faqs:
 - question: Can I download private or restricted Twitch videos?
   answer: Generally, you cannot and should not download private or restricted Twitch videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
-coming_soon: false
+pre_release: false
 categories:
-- twitch video downloader
 - Downloader
+- Live Stream
+- Social Media
 keywords:
 - twitch video downloader
 pricing:
@@ -109,4 +114,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/twitch-video-downloader
+buy_button_destination:

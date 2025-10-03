@@ -56,12 +56,16 @@ faqs:
 - question: How do I organize downloaded Teachable course materials?
   answer: 'Best practices for organizing downloaded Teachable courses: 1) Create folders by course name and instructor, 2) Maintain original file names when possible, 3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use media management software for better organization.'
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- teachable video downloader
 - Downloader
+- Course Platforms
 keywords:
 - teachable video downloader
 pricing:
@@ -102,4 +106,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/teachable-video-downloader
+buy_button_destination:

@@ -62,12 +62,16 @@ faqs:
 - question: Can I download private or restricted Netflix videos?
   answer: Generally, you cannot and should not download private or restricted Netflix videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- netflix downloader
 - Downloader
+- Movies & TV
 keywords:
 - netflix downloader
 pricing:
@@ -84,7 +88,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-netflix-downloader
-coming_soon: false
+pre_release: false
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Netflix Downloader
@@ -109,4 +113,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/netflix-downloader
+buy_button_destination:
