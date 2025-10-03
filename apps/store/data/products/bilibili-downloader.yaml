@@ -62,12 +62,16 @@ faqs:
 - question: Can I download private or restricted Bilibili videos?
   answer: Generally, you cannot and should not download private or restricted Bilibili videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- bilibili downloader
 - Downloader
+- Social Media
 keywords:
 - bilibili downloader
 pricing:

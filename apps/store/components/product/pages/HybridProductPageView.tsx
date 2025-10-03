@@ -145,7 +145,7 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
 
             {price && (
               <div className="mb-6">
-                {product.coming_soon ? (
+                {product.pre_release ? (
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                       Pre Release
@@ -205,7 +205,7 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
             </div>
 
             <div className="flex flex-col gap-4 mb-8">
-              {product.coming_soon ? (
+              {product.pre_release ? (
                 <button
                   onClick={() => {
                     if (product.waitlist_url) {

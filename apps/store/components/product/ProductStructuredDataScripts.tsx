@@ -34,7 +34,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://serp.app/${product.slug}`,
     storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://serp.app",
     currency: "USD",
-    comingSoon: product.coming_soon ?? false,
+    preRelease: product.pre_release ?? false,
     expectedLaunchDate: undefined,
   });
 

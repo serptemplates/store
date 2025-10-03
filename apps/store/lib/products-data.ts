@@ -9,7 +9,7 @@ export interface Product {
   description?: string
   thumbnail?: string
   images?: Array<{ url: string }>
-  coming_soon?: boolean
+  pre_release?: boolean
   new_release?: boolean
   popular?: boolean
   variants: Array<{
@@ -61,7 +61,7 @@ export async function getProducts(): Promise<Product[]> {
         { url: data.featured_image }
       ] : [],
       collection,
-      coming_soon: Boolean(data.coming_soon),
+      pre_release: Boolean(data.pre_release),
       new_release: Boolean(data.new_release),
       popular: Boolean(data.popular),
       variants: [{
@@ -86,7 +86,7 @@ export async function getProducts(): Promise<Product[]> {
     }
 
     const activeBadges = [
-      product.coming_soon && 'coming_soon',
+      product.pre_release && 'pre_release',
       product.new_release && 'new_release',
       product.popular && 'popular'
     ].filter(Boolean) as string[]

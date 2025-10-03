@@ -24,8 +24,8 @@ export function ProductGrid({ products }: ProductGridProps) {
         const brandLogoPath = getBrandLogoPath(product.handle)
         const imageSource = brandLogoPath || product.thumbnail
 
-        const bannerType = product.coming_soon
-          ? "comingSoon"
+        const bannerType = product.pre_release
+          ? "preRelease"
           : product.new_release
             ? "newRelease"
             : product.popular
@@ -33,7 +33,7 @@ export function ProductGrid({ products }: ProductGridProps) {
               : null
 
         const bannerText =
-          bannerType === "comingSoon"
+          bannerType === "preRelease"
             ? "Pre Release"
             : bannerType === "newRelease"
               ? "New Release"
@@ -42,7 +42,7 @@ export function ProductGrid({ products }: ProductGridProps) {
                 : ""
 
         const bannerClass =
-          bannerType === "comingSoon"
+          bannerType === "preRelease"
             ? "from-purple-500 to-purple-600"
             : bannerType === "newRelease"
               ? "from-emerald-500 to-teal-600"

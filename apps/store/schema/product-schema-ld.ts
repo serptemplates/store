@@ -32,7 +32,7 @@ export interface ProductSchemaLDOptions {
   storeName?: string;
   brandName?: string;
   currency?: string;
-  comingSoon?: boolean;
+  preRelease?: boolean;
   expectedLaunchDate?: string;
 }
 
@@ -43,7 +43,7 @@ export function generateProductSchemaLD({
   storeName = 'SERP Apps',
   brandName = 'SERP Apps',
   currency = 'USD',
-  comingSoon = false,
+  preRelease = false,
   expectedLaunchDate,
 }: ProductSchemaLDOptions) {
   // Get primary image or use placeholder
@@ -82,12 +82,12 @@ export function generateProductSchemaLD({
     priceCurrency: currency,
     price: product.price || '0.00',
     priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
-    // Set availability based on coming_soon flag
-    availability: comingSoon
+    // Set availability based on pre_release flag
+    availability: preRelease
       ? 'https://schema.org/PreOrder'
       : 'https://schema.org/InStock',
-    // Add availabilityStarts for coming soon products
-    ...(comingSoon && expectedLaunchDate && {
+    // Add availabilityStarts for pre-release products
+    ...(preRelease && expectedLaunchDate && {
       availabilityStarts: expectedLaunchDate,
     }),
     seller: {

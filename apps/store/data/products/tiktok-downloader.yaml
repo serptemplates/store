@@ -60,12 +60,16 @@ faqs:
 - question: What formats do Tiktok downloads support?
   answer: Tiktok downloaders typically support common formats like MP4 for videos, JPG/PNG for images, and MP3 for audio. The available formats depend on the original content type and the downloader software used. Choose formats compatible with your intended use.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- tiktok downloader
 - Downloader
+- Social Media
 keywords:
 - tiktok downloader
 pricing:
@@ -107,5 +111,5 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/tiktok-downloader
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
+buy_button_destination:

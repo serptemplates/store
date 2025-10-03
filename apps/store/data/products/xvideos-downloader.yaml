@@ -62,12 +62,16 @@ faqs:
 - question: Can I download private or restricted Xvideos videos?
   answer: Generally, you cannot and should not download private or restricted Xvideos videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- xvideos downloader
 - Downloader
+- Adult
 keywords:
 - xvideos downloader
 pricing:

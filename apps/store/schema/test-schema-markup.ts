@@ -42,7 +42,7 @@ const testProduct = {
     price: '99.99',
   },
   layout_type: 'ecommerce' as const,
-  coming_soon: false,
+  pre_release: false,
 } as any;
 
 const productSchema = generateProductSchemaLD({

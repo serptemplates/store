@@ -43,7 +43,7 @@ const baseProduct: ProductData = {
     metadata: {},
   },
   layout_type: "landing",
-  coming_soon: false,
+  pre_release: false,
   new_release: false,
   popular: false,
   brand: "SERP Apps",

@@ -3,8 +3,8 @@ import path from "path"
 import { parse } from "yaml"
 import { productSchema } from "../lib/product-schema"
 
-const BADGE_FLAGS: Array<"coming_soon" | "new_release" | "popular"> = [
-  "coming_soon",
+const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
+  "pre_release",
   "new_release",
   "popular",
 ]
@@ -41,13 +41,13 @@ async function main() {
 
     if (activeBadges.length > 1) {
       errors.push(
-        `❌ ${file}: Multiple badge flags set (${activeBadges.join(", ")}). Only one of coming_soon, new_release, popular is allowed.`,
+        `❌ ${file}: Multiple badge flags set (${activeBadges.join(", ")}). Only one of pre_release, new_release, popular is allowed.`,
       )
     }
 
-    if (product.status === "live" && product.coming_soon) {
+    if (product.status === "live" && product.pre_release) {
       warnings.push(
-        `⚠️  ${file}: Product marked as live and coming_soon simultaneously. Double-check intended state.`,
+        `⚠️  ${file}: Product marked as live and pre_release simultaneously. Double-check intended state.`,
       )
     }
   }

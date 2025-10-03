@@ -54,12 +54,16 @@ faqs:
 - question: What are the licensing requirements for Shutterstock images?
   answer: 'Shutterstock images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-- windows
-- macos
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- shutterstock downloader
 - Downloader
+- Creative Assets
 keywords:
 - shutterstock downloader
 pricing:
@@ -76,7 +80,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-shutterstock-downloader
-coming_soon: false
+pre_release: false
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Shutterstock Downloader
@@ -101,4 +105,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://serp.ly/shutterstock-downloader
+buy_button_destination:
