@@ -20,13 +20,13 @@ github_repo_tags: []
 features:
 - Download premium Adobe Stock photos, vectors, and videos
 - Batch processing for creative project collections
-- Support for high-resolution and vector formats
+- High-res and vector formats
 - Advanced license management and usage tracking
-- Custom organization by project and creative brief
-- Resume downloads with progress recovery
+- Organize by project/creative brief
+- Resume downloads
 - Cross-platform integration with Creative Cloud
 - Built-in asset browser with advanced preview
-- Command-line tools for enterprise creative workflows
+- CLI tools
 - Seamless integration with Adobe Creative Suite
 - Professional search and filtering capabilities
 - Duplicate detection across creative libraries

@@ -22,18 +22,18 @@ features:
 - Extract interactive videos and SCORM content
 - Maintain academy structure and course hierarchy
 - Support for social learning features and discussions
-- Automatic subtitle downloading in multiple languages
+- Multi-language subtitles
 - Batch download entire learning academies
 - Resume interrupted transfers with smart recovery
 - Command-line interface for educational automation
-- Cross-platform compatibility for learners and admins
+- Cross-platform support
 - Built-in video player with interactive elements
 - Integration with enterprise learning systems
-- Export certificates and learning analytics
-- Search functionality across academy content
-- Privacy protection with encrypted storage
+- Export certificates/learning analytics
+- Search academy content
+- Privacy protection
 - Regular compatibility updates
-- Custom organization by academy and subject
+- Organize by academy/subject
 - Backup and restore capabilities for learning data
 - Offline learning with progress synchronization
 - Support for virtual classroom recordings

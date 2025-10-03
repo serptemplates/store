@@ -22,18 +22,18 @@ features:
 - Extract course materials including assignments and quizzes
 - Maintain course structure and module organization
 - Support for forum discussions and submissions
-- Automatic grade book and progress extraction
+- Auto grade book and progress extraction
 - Batch download multiple courses from institutions
-- Resume downloads with progress tracking
-- Command-line tools for academic automation
-- Cross-platform support for students and educators
-- Built-in content viewer with academic tools
+- Resume downloads
+- CLI tools
+- Cross-platform support
+- content viewer
 - Integration with student information systems
-- Export transcripts and completion certificates
-- Search functionality across course content
+- Export transcripts/completion certificates
+- Search course content
 - Privacy protection designed for educational use
 - Regular compatibility updates
-- Custom organization by semester and subject
+- Organize by semester/subject
 - Backup and restore options for academic records
 - Offline study with synchronized progress
 - Support for multimedia assignments and projects

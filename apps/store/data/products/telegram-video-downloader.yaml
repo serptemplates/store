@@ -25,15 +25,15 @@ features:
 - Resume downloads
 - Cross-platform support
 - Built-in media player with telegram-style controls
-- Command-line tools for automated monitoring
+- CLI tools
 - Custom folder structures and naming schemes
 - Duplicate detection across multiple channels
-- Integration with messaging and communication tools
-- Export channel statistics and engagement data
+- messaging integration
+- Export channel statistics/engagement data
 - Privacy-focused design with encrypted storage
 - Regular compatibility updates
 - Library search
-- Bandwidth optimization for efficient downloads
+- Bandwidth optimization
 - Backup and restore capabilities for media archives
 - Support for voice messages and audio content
 - Real-time monitoring of new channel posts

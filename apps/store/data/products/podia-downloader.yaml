@@ -24,17 +24,17 @@ features:
 - Support for membership site content and updates
 - Automatic transcript and subtitle downloading
 - Batch process multiple products and courses
-- Resume downloads with progress recovery
-- Command-line tools for product collection automation
+- Resume downloads
+- CLI tools
 - Cross-platform support
 - Built-in media player with learning features
 - Integration with digital product management tools
-- Export sales data and customer analytics
+- Export sales data/customer analytics
 - Search capabilities across product libraries
 - Local-only storage for privacy
 - Regular compatibility updates
-- Custom organization by product type and category
-- Backup and sync options for digital libraries
+- Organize by product type/category
+- Backup & sync
 - Offline access with synchronized progress tracking
 - Support for community features and discussions
 - Smart content categorization and tagging

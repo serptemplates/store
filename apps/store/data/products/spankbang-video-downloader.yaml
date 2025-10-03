@@ -18,7 +18,7 @@ github_repo_tags: []
 features:
 - Download high-quality videos in multiple resolutions
 - Batch processing for efficient bulk downloads
-- Automatic thumbnail and preview image extraction
+- Auto thumbnail and preview image extraction
 - Resume downloads
 - Cross-platform support
 - Command-line tools

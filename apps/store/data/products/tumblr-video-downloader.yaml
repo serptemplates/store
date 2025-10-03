@@ -20,21 +20,21 @@ github_repo_tags: []
 features:
 - Download Tumblr videos and GIFs in original quality
 - Support for blog archives and tag-based content
-- Batch download entire user blogs and reblogs
+- Batch entire user blogs/reblogs downloads
 - Automatic Metadata extraction
-- Resume downloads with progress tracking
+- Resume downloads
 - Cross-platform support
-- Built-in media viewer with tumblr-style interface
+- media viewer
 - Command-line interface for blog archiving automation
 - Custom organization by blog, tag, or content type
 - Duplicate detection and reblog management
-- Integration with creative and artistic workflows
-- Export blog data and social engagement metrics
-- Privacy protection with local-only storage
+- creative integration
+- Export blog data/social engagement metrics
+- Privacy protection
 - Regular compatibility updates
 - Search capabilities across downloaded media
 - Bandwidth management for large media files
-- Backup and sync options for creative libraries
+- Backup & sync
 - Support for audio posts and multimedia content
 - Real-time monitoring of favorite blogs
 - Smart content curation and discovery features

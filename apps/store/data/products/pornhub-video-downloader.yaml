@@ -18,8 +18,8 @@ github_repo_tags: []
 features:
 - Download videos in multiple quality options up to 1080p HD
 - Batch download support for multiple videos simultaneously
-- Automatic thumbnail and preview image extraction
-- Resume downloads with progress recovery
+- Auto thumbnail and preview image extraction
+- Resume downloads
 - Cross-platform compatibility (Windows, Mac, Linux)
 - Command-line tools
 - Video format conversion and optimization tools

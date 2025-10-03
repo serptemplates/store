@@ -25,17 +25,17 @@ features:
 - Custom folder structures by user and upload date
 - Resume downloads
 - Cross-platform application with privacy focus
-- Built-in media viewer with gallery features
-- Command-line tools for automated content collection
+- media viewer
+- CLI tools
 - Integration with media organization tools
-- Export user data and content statistics
+- Export user data/content statistics
 - Search capabilities across media libraries
-- Privacy protection with secure local storage
+- Secure local storage
 - Regular compatibility updates
 - Support for various media formats and qualities
-- Bandwidth optimization for media collections
-- Backup and sync options for content archives
-- Smart categorization by content type
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
 - Advanced privacy controls and encryption
 - Secure content verification and integrity
 description: Download videos, images, and content from erome with our reliable downloader tool. Fast, secure, and easy to use.

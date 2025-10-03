@@ -22,16 +22,16 @@ features:
 - Support for encrypted and DRM-protected streams
 - Batch processing for multiple streams simultaneously
 - Automatic quality selection and adaptive streaming
-- Resume downloads with segment recovery
+- Resume downloads
 - Cross-platform command-line and GUI applications
 - Built-in stream analysis and diagnostic tools
 - Custom output formats and container options
 - Concurrent segment downloading for faster speeds
 - Progress tracking with bandwidth monitoring
-- Integration with streaming software and tools
+- streaming software integration
 - Support for live stream recording and archiving
 - Regular updates to handle protocol changes
-- Privacy protection with secure local storage
+- Secure local storage
 - Advanced proxy configuration and routing
 - Metadata extraction from stream headers
 - Automatic retry mechanisms for failed segments

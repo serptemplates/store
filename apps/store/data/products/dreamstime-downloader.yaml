@@ -21,22 +21,22 @@ features:
 - Download royalty-free photos, vectors, and illustrations
 - Batch processing for creative content collections
 - Support for exclusive Dreamstime contributor content
-- Automatic metadata and keyword extraction
-- Custom organization by theme and usage rights
+- Auto metadata and keyword extraction
+- Organize by theme/usage rights
 - Resume downloads with recovery
-- Cross-platform compatibility for creative professionals
+- Cross-platform support
 - Built-in asset browser with advanced preview
-- Command-line tools for automated asset collection
-- Integration with design and marketing workflows
+- CLI tools
+- design integration
 - Professional search and filtering by categories
 - Duplicate detection across media libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Export capabilities for asset management systems
-- Smart bandwidth optimization for large collections
+- Smart Bandwidth optimization
 - Support for various licensing models and formats
 - Intelligent content recommendation and discovery
-- Backup and sync options for creative teams
+- Backup & sync
 - Advanced license management and tracking
 description: Download videos, images, and content from dreamstime with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

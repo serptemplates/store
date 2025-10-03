@@ -24,7 +24,7 @@ features:
 - Peer-reviewed content support
 - Multi-language subtitle extraction
 - Batch course downloads
-- Resume downloads with progress tracking
+- Resume downloads
 - Academic calendar integration
 - Educational CLI tools
 - Certificate export

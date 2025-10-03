@@ -19,21 +19,21 @@ github_repo_url: https://github.com/serpapps/unsplash-downloader
 github_repo_tags: []
 features:
 - High-res professional downloadsgraphy
-- Batch download photographer portfolios and collections
+- Batch photographer portfolios/collections downloads
 - Support for RAW and edited photo formats
 - Automatic photographer attribution and credit tracking
 - Custom organization by photographer, style, or theme
 - Resume downloads
-- Cross-platform compatibility for designers and creators
-- Built-in photo viewer with EXIF data display
-- Command-line tools for automated photo collection
+- Cross-platform support
+- photo viewer
+- CLI tools
 - Integration with professional design applications
 - Advanced search and filtering capabilities
 - Duplicate detection across photo libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Export options for photo management systems
-- Smart bandwidth optimization for large files
+- Smart Bandwidth optimization
 - Support for various image qualities and formats
 - Intelligent content curation and recommendation
 - Backup and restore capabilities for photo archives

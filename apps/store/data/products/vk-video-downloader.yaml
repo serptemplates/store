@@ -20,20 +20,20 @@ github_repo_tags: []
 features:
 - Download VK videos and social media content
 - Support for public and private group videos
-- Batch download user walls and community content
+- Batch user walls/community content downloads
 - Multi-language subtitle extraction
 - Resume downloads
-- Cross-platform compatibility for international users
+- Cross-platform support
 - Built-in video player with VK-style controls
-- Command-line tools for social media archiving
+- CLI tools
 - Organize by user and community
 - Duplicate detection across multiple sources
 - Integration with social media management platforms
-- Export user data and social network analytics
+- Export user data/social network analytics
 - Privacy-focused design with secure local storage
 - Regular compatibility updates
-- Search functionality across social media content
-- Bandwidth optimization for international usage
+- Search social media content
+- Bandwidth optimization
 - Backup and restore capabilities for social archives
 - Support for live streams and video calls
 - Real-time monitoring of social media activity

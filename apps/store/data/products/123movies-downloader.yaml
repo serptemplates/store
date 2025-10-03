@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download movies and TV shows from streaming sites
 - Multiple quality/format options
-- Batch download movie collections and series
-- Automatic subtitle and audio track extraction
-- Custom organization by genre and release year
+- Batch movie collections/series downloads
+- Auto subtitle and audio track extraction
+- Organize by genre/release year
 - Resume downloads
 - Cross-platform support
 - Built-in media player with streaming controls
-- Command-line tools for automated movie collection
+- CLI tools
 - Media center integration
-- Export movie data and viewing statistics
-- Search functionality across movie libraries
-- Privacy protection with local-only storage
+- Export movie data/viewing statistics
+- Search movie libraries
+- Privacy protection
 - Regular compatibility updates
 - Support for various video containers and codecs
-- Bandwidth optimization for large movie files
+- Bandwidth optimization
 - Backup and restore options for movie collections
-- Smart categorization by IMDB ratings and genres
+- Smart categorization
 - Offline viewing with progress synchronization
 - Advanced filtering by actors and directors
 description: Download videos, images, and content from 123movies with our reliable downloader tool. Fast, secure, and easy to use.

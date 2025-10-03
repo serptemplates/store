@@ -20,19 +20,19 @@ github_repo_tags: []
 features:
 - Download subscriber content and media files
 - Support for photos, videos, and story content
-- Batch download creator profiles and posts
+- Batch creator profiles/posts downloads
 - Automatic content organization by creator and date
 - Resume downloads with recovery
 - Cross-platform support
-- Built-in media viewer with privacy controls
+- media viewer
 - Command-line interface for automated collection
 - Custom folder structures and naming schemes
 - Duplicate detection and content management
 - Integration with content management systems
-- Export creator data and engagement metrics
+- Export creator data/engagement metrics
 - Privacy-focused design with encrypted storage
 - Regular compatibility updates
-- Search functionality across content libraries
+- Search content libraries
 - Bandwidth management for large media files
 - Support for live stream recordings
 - Smart content categorization and filtering

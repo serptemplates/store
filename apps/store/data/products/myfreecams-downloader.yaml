@@ -23,13 +23,13 @@ features:
 - Batch recording from multiple cam models
 - Automatic stream detection and quality adjustment
 - Resume interrupted recordings seamlessly
-- Cross-platform compatibility for recording needs
+- Cross-platform support
 - Built-in privacy controls and secure file storage
 - Organize by model and date
 - Duplicate detection and recording management
-- Bandwidth optimization for smooth streaming
+- Bandwidth optimization
 - Progress tracking with real-time recording data
-- Integration with cam recording and management tools
+- cam recording integration
 - Regular compatibility updates
 - Local-only storage for privacy
 - Support for multiple recording formats and resolutions

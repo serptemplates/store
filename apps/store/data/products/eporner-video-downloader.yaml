@@ -20,8 +20,8 @@ github_repo_tags: []
 features:
 - Download videos in multiple quality settings
 - Batch processing for efficient bulk operations
-- Automatic content metadata and tag extraction
-- Resume downloads with progress recovery
+- Auto content metadata and tag extraction
+- Resume downloads
 - Cross-platform support
 - Command-line tools
 - Built-in privacy controls and secure downloading

@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download SoundCloud tracks and playlists
 - Support for high-quality audio downloads up to 320kbps
-- Batch download artist discographies and liked tracks
+- Batch artist discographies/liked tracks downloads
 - Automatic Metadata extraction
-- Custom organization by artist, genre, and playlist
+- Organize by artist, genre,/playlist
 - Resume downloads
-- Cross-platform application for music enthusiasts
+- Cross-platform support
 - Built-in audio player with SoundCloud-style controls
-- Command-line tools for music collection automation
+- CLI tools
 - Integration with music management applications
-- Export track data and listening analytics
-- Search functionality across music libraries
+- Export track data/listening analytics
+- Search music libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various audio formats (MP3, FLAC, WAV)
 - Bandwidth management for large music collections
 - Backup and restore options for music libraries
-- Smart categorization by genre and mood
+- Smart categorization
 - Music discovery and recommendation features
 - Artist following and new release tracking
 description: Download videos, images, and content from soundcloud with our reliable downloader tool. Fast, secure, and easy to use.

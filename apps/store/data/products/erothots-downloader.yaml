@@ -21,15 +21,15 @@ features:
 - Download content from Erothots platform
 - Support for various media types and formats
 - Batch downloads for series/collections
-- Automatic metadata extraction and organization
+- Auto metadata extraction and organization
 - Custom folder structures by creator and content type
 - Resume downloads with recovery
 - Cross-platform support
-- Built-in media viewer with privacy controls
+- media viewer
 - Command-line interface for automated collection
 - Integration with content management systems
-- Export creator data and content analytics
-- Search functionality across content libraries
+- Export creator data/content analytics
+- Search content libraries
 - Privacy-focused design with encrypted storage
 - Regular compatibility updates
 - Support for high-quality media downloads

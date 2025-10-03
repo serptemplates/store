@@ -20,24 +20,24 @@ github_repo_tags: []
 features:
 - Download free stock graphics and design resources
 - Support for vectors, photos, and design elements
-- Batch download category collections and searches
-- Automatic metadata extraction and tagging
-- Custom organization by design type and style
+- Batch category collections/searches downloads
+- Auto metadata extraction and tagging
+- Organize by design type/style
 - Resume downloads
-- Cross-platform application for graphic designers
-- Built-in asset viewer with design preview
-- Command-line tools for design resource automation
+- Cross-platform support
+- asset viewer
+- CLI tools
 - Integration with graphic design applications
-- Export resource data and usage information
+- Export resource data/usage information
 - Search capabilities across design libraries
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various design formats and resolutions
-- Bandwidth optimization for design collections
+- Bandwidth optimization
 - Backup and restore for creative asset libraries
-- Smart categorization by design category
+- Smart categorization
 - Free resource discovery and recommendation
-- Creative workflow integration features
+- Workflow integration
 description: Download videos, images, and content from stockvault with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []

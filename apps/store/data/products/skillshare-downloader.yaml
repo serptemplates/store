@@ -18,20 +18,20 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/skillshare-downlo
 github_repo_url: https://github.com/serpapps/skillshare-downloader
 github_repo_tags: []
 features:
-- Download complete Skillshare classes with all video lessons
+- Complete complete Skillshare classes downloads
 - Extract class projects and community feedback
 - Maintain class structure with organized lesson folders
 - Support for premium and exclusive content
-- Automatic transcript and subtitle extraction
+- Auto transcript and subtitle extraction
 - Batch download classes by category or instructor
 - Resume downloads
 - Command-line interface for automated learning workflows
-- Cross-platform compatibility for all devices
-- Built-in video player with speed control and bookmarks
-- Integration with creative software and design tools
-- Export class materials and project templates
-- Search functionality across downloaded classes
-- Privacy protection with secure local storage
+- Cross-platform support
+- Video player with controls
+- creative software integration
+- Export class materials/project templates
+- Search downloaded classes
+- Secure local storage
 - Regular compatibility updates
 - Organize by skill or category
 - Backup and restore capabilities for class libraries

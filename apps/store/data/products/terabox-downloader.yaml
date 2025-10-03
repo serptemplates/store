@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download files from TeraBox cloud storage
 - Support for large file transfers and folders
-- Batch download shared links and collections
+- Batch shared links/collections downloads
 - Automatic folder structure preservation
-- Custom organization by file type and date
+- Organize by file type/date
 - Resume downloads with recovery
 - Cross-platform support
 - Built-in file manager with preview capabilities
-- Command-line tools for cloud storage automation
-- Integration with backup and sync applications
-- Export file metadata and sharing information
-- Search functionality across downloaded files
+- CLI tools
+- backup integration
+- Export file metadata/sharing information
+- Search downloaded files
 - Local-only storage for privacy
 - Regular compatibility updates
 - Support for various file types and formats
-- Bandwidth optimization for large file transfers
+- Bandwidth optimization
 - Backup verification and integrity checking
-- Smart categorization by file type and size
+- Smart categorization
 - Cloud storage migration tools
 - Advanced file organization and management
 description: Download videos, images, and content from terabox with our reliable downloader tool. Fast, secure, and easy to use.

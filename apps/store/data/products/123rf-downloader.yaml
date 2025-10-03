@@ -21,21 +21,21 @@ features:
 - Download royalty-free stock images and vectors
 - Batch processing for creative project collections
 - Support for various image formats and resolutions
-- Automatic metadata extraction and keyword tagging
-- Custom organization by project and usage rights
+- Auto metadata extraction and keyword tagging
+- Organize by project/usage rights
 - Resume downloads with recovery
-- Cross-platform application for graphic designers
-- Built-in image viewer with zoom and preview
+- Cross-platform support
+- image viewer
 - Design workflow CLI
 - Integration with creative software applications
-- Export image data and license information
+- Export image data/license information
 - Search capabilities across stock image libraries
 - Local-only storage for privacy
 - Regular compatibility updates
-- Support for high-resolution downloads
+- High-res downloads
 - Bandwidth management for large image collections
-- Backup and sync options for creative assets
-- Smart categorization by style and theme
+- Backup & sync
+- Smart categorization
 - License compliance tracking and management
 - Professional workflow integration features
 description: Download videos, images, and content from 123rf with our reliable downloader tool. Fast, secure, and easy to use.

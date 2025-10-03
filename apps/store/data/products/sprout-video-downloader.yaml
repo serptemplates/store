@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Sprout Video content and business videos
 - Support for secure and private video hosting
-- Batch download video libraries and collections
-- Automatic metadata extraction and organization
+- Batch video libraries/collections downloads
+- Auto metadata extraction and organization
 - Custom folder structures by project and campaign
 - Resume downloads
-- Cross-platform desktop application for businesses
+- Cross-platform support
 - Built-in video player with business-grade controls
 - Command-line interface for enterprise workflows
 - Integration with business video management systems
-- Export video performance data and analytics
-- Search functionality across business video libraries
+- Export video performance data/analytics
+- Search business video libraries
 - Enterprise-grade privacy and security features
 - Regular updates to maintain Sprout Video compatibility
 - Support for various video formats and qualities
-- Bandwidth optimization for corporate environments
+- Bandwidth optimization
 - Backup & sync for team collaboration
-- Smart organization by department and project
+- Smart organization
 - Offline access with synchronized viewing progress
 - Advanced user management and access controls
 description: Get quick access to Sprout Video Downloader content for offline use.

@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download GoHighLevel CRM data and marketing assets
 - Support for client funnels and automation content
-- Batch download marketing campaigns and templates
+- Batch marketing campaigns/templates downloads
 - Automatic organization by client and campaign
 - Custom folder structures for agency workflows
 - Resume downloads
-- Cross-platform application for marketing agencies
-- Built-in content viewer with CRM integration
-- Command-line tools for agency automation
-- Integration with marketing and sales platforms
-- Export client data and campaign analytics
+- Cross-platform support
+- content viewer
+- CLI tools
+- marketing integration
+- Export client data/campaign analytics
 - Search capabilities across marketing content
 - Enterprise-grade privacy and compliance features
 - Regular compatibility updates
 - Support for various marketing asset formats
 - Bandwidth management for large campaign files
 - Backup and restore options for client data
-- Smart organization by service offering
+- Smart organization
 - Secure client information handling
 - Advanced reporting and performance tracking
 description: Download videos, images, and content from gohighlevel with our reliable downloader tool. Fast, secure, and easy to use.

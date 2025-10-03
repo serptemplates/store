@@ -23,20 +23,20 @@ features:
 - Support for various media formats (JPEG, PNG, MP4, etc.)
 - Automatic Metadata extraction
 - Organize by category and usage rights
-- Resume downloads with progress tracking
+- Resume downloads
 - Cross-platform support
-- Built-in media viewer with zoom and preview capabilities
+- media viewer
 - Command-line interface for automated asset collection
-- Integration with design software and creative workflows
-- Search functionality across downloaded media libraries
+- design software integration
+- Search downloaded media libraries
 - Duplicate detection to avoid redundant downloads
-- Privacy protection with local-only storage
+- Privacy protection
 - Regular compatibility updates
-- Export capabilities for asset catalogs and portfolios
+- Export capabilities for asset catalogs/portfolios
 - Bandwidth-efficient downloads
 - Support for different image sizes and resolutions
 - Smart content categorization and tagging system
-- Backup and sync options for creative libraries
+- Backup & sync
 - Free usage tracking and license compliance
 description: Download videos, images, and content from pixabay with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []

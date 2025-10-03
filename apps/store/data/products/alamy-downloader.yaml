@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download premium stock photography from Alamy
 - Support for editorial and commercial licenses
-- Batch download photographer collections and searches
+- Batch photographer collections/searches downloads
 - Automatic rights management and license tracking
-- Custom organization by photographer and subject
+- Organize by photographer/subject
 - Resume downloads
-- Cross-platform application for photo professionals
-- Built-in photo viewer with metadata display
-- Command-line tools for stock photo automation
+- Cross-platform support
+- photo viewer
+- CLI tools
 - Integration with professional photography workflows
-- Export photo data and licensing information
+- Export photo data/licensing information
 - Advanced search across photo libraries
-- Privacy protection with secure storage
+- Privacy protection
 - Regular compatibility updates
 - Support for various image formats and sizes
-- Bandwidth optimization for large photo files
+- Bandwidth optimization
 - Backup and restore for photo archives
-- Smart categorization by subject and location
+- Smart categorization
 - Professional license management features
 - Quality control and image verification tools
 description: Download videos, images, and content from alamy with our reliable downloader tool. Fast, secure, and easy to use.

@@ -20,9 +20,9 @@ github_repo_tags: []
 features:
 - Download videos in HD quality with multiple options
 - Batch download support for multiple videos
-- Automatic metadata extraction and organization
+- Auto metadata extraction and organization
 - Resume interrupted transfers with progress recovery
-- Cross-platform compatibility for all operating systems
+- Cross-platform support
 - Command-line tools
 - Built-in proxy support for enhanced privacy
 - Custom naming schemes and folder structures

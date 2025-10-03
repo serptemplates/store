@@ -19,15 +19,15 @@ github_repo_url: https://github.com/serpapps/pinterest-downloader
 github_repo_tags: []
 features:
 - Download Pinterest images and board collections
-- Support for high-resolution image downloads
-- Batch download entire boards and user profiles
+- High-res image downloads
+- Batch entire boards/user profiles downloads
 - Automatic Metadata extraction
-- Custom organization by board and category
+- Organize by board/category
 - Resume downloads
-- Cross-platform application for content curators
-- Built-in image viewer with Pinterest-style interface
-- Command-line tools for content curation automation
-- Integration with design and marketing workflows
+- Cross-platform support
+- image viewer
+- CLI tools
+- design integration
 - Export board data and pin analytics
 - Search capabilities across image collections
 - Local-only storage for privacy
@@ -35,7 +35,7 @@ features:
 - Support for various image formats and sizes
 - Bandwidth management for large image collections
 - Backup and restore options for inspiration boards
-- Smart categorization by theme and style
+- Smart categorization
 - Creative project integration features
 - Trending content discovery and recommendations
 description: Download videos, images, and content from pinterest with our reliable downloader tool. Fast, secure, and easy to use.

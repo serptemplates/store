@@ -28,16 +28,16 @@ features:
 - License tracking and compliance verification
 - Search and filter capabilities for large libraries
 - Duplicate detection and asset management
-- Resume downloads with progress recovery
+- Resume downloads
 - Command-line interface for enterprise workflows
 - Cross-platform professional application support
-- Built-in image viewer with color profile support
+- image viewer
 - Cloud storage integration for team collaboration
 - Progress monitoring for bulk operations
 - Regular updates to maintain Getty Images compatibility
 - Enterprise-grade privacy and security features
 - Export capabilities for digital asset management
-- Smart bandwidth optimization for large files
+- Smart Bandwidth optimization
 description: Download videos, images, and content from getty images with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []

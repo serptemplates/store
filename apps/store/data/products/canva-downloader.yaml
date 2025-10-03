@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Canva designs and creative projects
 - Support for templates and custom designs
-- Batch download design collections and folders
+- Batch design collections/folders downloads
 - Automatic export in various formats (PNG, PDF, etc.)
-- Custom organization by project and design type
+- Organize by project/design type
 - Resume downloads with recovery
-- Cross-platform application for designers
-- Built-in design viewer with Canva-style interface
+- Cross-platform support
+- design viewer
 - Design workflow CLI
-- Integration with design and marketing platforms
-- Export design data and usage analytics
-- Search functionality across design libraries
-- Privacy protection with local design storage
+- design integration
+- Export design data/usage analytics
+- Search design libraries
+- Privacy protection
 - Regular compatibility updates
 - Support for various design formats and resolutions
 - Bandwidth management for large design files
-- Backup and sync options for design projects
-- Smart categorization by brand and campaign
+- Backup & sync
+- Smart categorization
 - Team collaboration and sharing features
 - Design version control and history tracking
 description: Download videos, images, and content from canva with our reliable downloader tool. Fast, secure, and easy to use.

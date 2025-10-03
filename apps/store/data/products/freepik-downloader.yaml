@@ -22,9 +22,9 @@ features:
 - Batch processing for design collections and searches
 - Support for vector formats (SVG, EPS, AI) and raster images
 - Automatic license tracking and usage rights management
-- Custom organization by design style and category
+- Organize by design style/category
 - Resume downloads
-- Cross-platform support for designers and agencies
+- Cross-platform support
 - Asset viewer (layer/vector)
 - Design workflow CLI
 - Design software integration

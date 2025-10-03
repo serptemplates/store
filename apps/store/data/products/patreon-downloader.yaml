@@ -20,22 +20,22 @@ github_repo_tags: []
 features:
 - Download Patreon creator content and exclusive posts
 - Support for subscriber-only and tier-based content
-- Batch download creator libraries and post history
+- Batch creator libraries/post history downloads
 - Automatic organization by creator and content type
 - Custom folder structures for patron content
-- Resume downloads with progress tracking
-- Cross-platform application for content supporters
-- Built-in media viewer with Patreon-style interface
-- Command-line tools for content archiving
+- Resume downloads
+- Cross-platform support
+- media viewer
+- CLI tools
 - Integration with creator support workflows
-- Export creator data and support analytics
-- Search functionality across patron content
+- Export creator data/support analytics
+- Search patron content
 - Privacy protection designed for supporter content
 - Regular compatibility updates
 - Support for various content formats and media
-- Bandwidth optimization for creator content
-- Backup and sync options for supporter libraries
-- Smart organization by support tier and date
+- Bandwidth optimization
+- Backup & sync
+- Smart organization
 - Creator discovery and recommendation features
 - Support tracking and engagement analytics
 description: Download videos, images, and content from patreon with our reliable downloader tool. Fast, secure, and easy to use.
