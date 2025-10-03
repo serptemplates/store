@@ -2,6 +2,8 @@ import nodemailer from "nodemailer";
 
 import logger from "@/lib/logger";
 
+type MailTransporter = ReturnType<typeof nodemailer.createTransport>;
+
 interface VerificationEmailInput {
   email: string;
   code: string;
@@ -141,7 +143,7 @@ type SmtpConfig = {
   replyTo?: string;
 };
 
-let cachedTransporter: nodemailer.Transporter | null = null;
+let cachedTransporter: MailTransporter | null = null;
 let cachedConfigSignature: string | null = null;
 
 function getSmtpConfig(): SmtpConfig | null {
@@ -177,7 +179,7 @@ function getSmtpConfig(): SmtpConfig | null {
   };
 }
 
-async function getTransporter(config: SmtpConfig) {
+async function getTransporter(config: SmtpConfig): Promise<MailTransporter> {
   const signature = JSON.stringify({
     host: config.host,
     port: config.port,

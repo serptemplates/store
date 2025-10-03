@@ -20,6 +20,7 @@ import { getOptionalStripeWebhookSecret } from "@/lib/stripe-environment";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/ops-notify";
+import { createLicenseForOrder } from "@/lib/license-service";
 
 const webhookSecret = getOptionalStripeWebhookSecret();
 
@@ -76,7 +77,38 @@ async function syncOrderWithGhlWithRetry(
   return null;
 }
 
-async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
+function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {
+  const tierValue = typeof metadata?.licenseTier === "string" ? metadata?.licenseTier : offerId;
+  const entitlementsRaw = metadata?.licenseEntitlements;
+  const entitlementsSet = new Set<string>();
+
+  if (Array.isArray(entitlementsRaw)) {
+    for (const item of entitlementsRaw) {
+      if (item != null) {
+        entitlementsSet.add(String(item));
+      }
+    }
+  }
+
+  if (offerId) {
+    entitlementsSet.add(offerId);
+  }
+
+  const entitlements = Array.from(entitlementsSet);
+
+  const featuresRaw = metadata?.licenseFeatures;
+  const features = featuresRaw && typeof featuresRaw === "object" && !Array.isArray(featuresRaw)
+    ? (featuresRaw as Record<string, unknown>)
+    : {};
+
+  return {
+    tier: tierValue ?? null,
+    entitlements,
+    features,
+  };
+}
+
+async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, eventId?: string) {
   const metadata = normalizeMetadata(session.metadata);
 
   if (session.client_reference_id) {
@@ -156,6 +188,84 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     source: "stripe",
   });
 
+  let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
+
+  if (customerEmail) {
+    const { tier, entitlements, features } = extractLicenseConfig(offerConfig?.metadata, offerId);
+
+    const amountMajorUnits =
+      typeof session.amount_total === "number" ? Number((session.amount_total / 100).toFixed(2)) : null;
+    const currencyCode = typeof session.currency === "string" ? session.currency.toLowerCase() : null;
+
+    const licenseMetadata: Record<string, unknown> = {
+      orderId: session.id,
+      paymentIntentId,
+      stripeSessionId: session.id,
+      offerId,
+      amount: amountMajorUnits,
+      currency: currencyCode,
+    };
+
+    if (session.customer_details?.name) {
+      licenseMetadata.customerName = session.customer_details.name;
+    }
+
+    if (session.client_reference_id) {
+      licenseMetadata.clientReferenceId = session.client_reference_id;
+    }
+
+    try {
+      licenseResult = await createLicenseForOrder({
+        id: eventId ?? session.id,
+        provider: "stripe",
+        providerObjectId: paymentIntentId ?? session.id,
+        userEmail: customerEmail,
+        tier,
+        entitlements,
+        features,
+        metadata: licenseMetadata,
+        status: session.payment_status ?? "completed",
+        eventType: "checkout.completed",
+        amount: amountMajorUnits,
+        currency: currencyCode,
+        rawEvent: {
+          eventId: eventId ?? null,
+          checkoutSessionId: session.id,
+          paymentIntentId,
+        },
+      });
+
+      if (licenseResult && paymentIntentId) {
+        const now = new Date().toISOString();
+        await upsertOrder({
+          stripePaymentIntentId: paymentIntentId,
+          metadata: {
+            license: {
+              action: licenseResult.action ?? null,
+              licenseId: licenseResult.licenseId ?? null,
+              licenseKey: licenseResult.licenseKey ?? null,
+              updatedAt: now,
+            },
+          },
+        });
+      }
+    } catch (error) {
+      logger.error("license_service.create_throw", {
+        provider: "stripe",
+        id: eventId ?? session.id,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+
+  if (licenseResult?.licenseKey) {
+    metadata.licenseKey = licenseResult.licenseKey;
+  }
+
+  if (licenseResult?.licenseId) {
+    metadata.licenseId = licenseResult.licenseId;
+  }
+
   const existingSessionRecord = await findCheckoutSessionByStripeSessionId(session.id);
   const existingMetadata = (existingSessionRecord?.metadata ?? {}) as Record<string, unknown>;
   const ghlSyncedAtValue =
@@ -208,6 +318,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       currency: session.currency ?? null,
       landerId,
       metadata,
+      licenseKey: licenseResult?.licenseKey ?? undefined,
+      licenseId: licenseResult?.licenseId ?? undefined,
+      licenseAction: licenseResult?.action ?? undefined,
     });
 
     if (syncResult) {
@@ -389,7 +502,7 @@ async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentIntent) {
 async function handleStripeEvent(event: Stripe.Event) {
   switch (event.type) {
     case "checkout.session.completed":
-      await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+      await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session, event.id);
       break;
     case "payment_intent.succeeded":
       await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent);

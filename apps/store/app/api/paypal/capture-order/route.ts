@@ -8,6 +8,7 @@ import {
 } from "@/lib/checkout-store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/offer-config";
+import { createLicenseForOrder } from "@/lib/license-service";
 
 const requestSchema = z.object({
   orderId: z.string().min(1, "orderId is required"),
@@ -86,6 +87,108 @@ export async function POST(request: NextRequest) {
 
     await upsertOrder(orderData);
 
+    let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
+
+    if (payer?.email_address) {
+      const { tier, entitlements, features } = (() => {
+        const licenseTier = typeof checkoutSession?.metadata?.licenseTier === "string"
+          ? (checkoutSession?.metadata?.licenseTier as string)
+          : checkoutSession?.offerId ?? null;
+
+        const rawEntitlements = checkoutSession?.metadata?.licenseEntitlements;
+        const entitlementsSet = new Set<string>();
+
+        if (Array.isArray(rawEntitlements)) {
+          for (const item of rawEntitlements) {
+            if (item != null) {
+              entitlementsSet.add(String(item));
+            }
+          }
+        }
+
+        if (checkoutSession?.offerId) {
+          entitlementsSet.add(checkoutSession.offerId);
+        }
+
+        const entitlementsList = Array.from(entitlementsSet);
+
+        const rawFeatures = checkoutSession?.metadata?.licenseFeatures;
+        const featuresMap = rawFeatures && typeof rawFeatures === "object" && !Array.isArray(rawFeatures)
+          ? (rawFeatures as Record<string, unknown>)
+          : {};
+
+        return {
+          tier: licenseTier,
+          entitlements: entitlementsList,
+          features: featuresMap,
+        };
+      })();
+
+      const amountMajorUnits = typeof amountTotal === "number" ? Number((amountTotal / 100).toFixed(2)) : null;
+
+      const licenseMetadata: Record<string, unknown> = {
+        orderId: parsedBody.orderId,
+        paypalCaptureId: capture?.id ?? null,
+        checkoutSessionId: checkoutSession?.id ?? null,
+        offerId: checkoutSession?.offerId ?? null,
+        amount: amountMajorUnits,
+        currency: capture?.amount?.currency_code?.toLowerCase() ?? null,
+      };
+
+      try {
+        licenseResult = await createLicenseForOrder({
+          id: parsedBody.orderId,
+          provider: "paypal",
+          providerObjectId: capture?.id ?? parsedBody.orderId,
+          userEmail: payer.email_address,
+          tier,
+          entitlements,
+          features,
+          metadata: licenseMetadata,
+          status: captureResult.status ?? "completed",
+          eventType: "checkout.completed",
+          amount: amountMajorUnits,
+          currency: capture?.amount?.currency_code?.toLowerCase() ?? null,
+          rawEvent: {
+            orderId: parsedBody.orderId,
+            captureId: capture?.id ?? null,
+            checkoutSessionId: checkoutSession?.id ?? null,
+          },
+        });
+
+        if (licenseResult && orderData.stripePaymentIntentId) {
+          const now = new Date().toISOString();
+          await upsertOrder({
+            stripePaymentIntentId: orderData.stripePaymentIntentId,
+            metadata: {
+              license: {
+                action: licenseResult.action ?? null,
+                licenseId: licenseResult.licenseId ?? null,
+                licenseKey: licenseResult.licenseKey ?? null,
+                updatedAt: now,
+              },
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Failed to create license:", error instanceof Error ? error.message : error);
+      }
+    }
+
+    if (licenseResult?.licenseKey) {
+      orderData.metadata = {
+        ...(orderData.metadata ?? {}),
+        licenseKey: licenseResult.licenseKey,
+      };
+    }
+
+    if (licenseResult?.licenseId) {
+      orderData.metadata = {
+        ...(orderData.metadata ?? {}),
+        licenseId: licenseResult.licenseId,
+      };
+    }
+
     // Update checkout session with payment metadata
     await updateCheckoutSessionStatus(sessionId, "completed", {
       metadata: orderData.metadata,
@@ -110,6 +213,9 @@ export async function POST(request: NextRequest) {
           currency: orderData.currency,
           landerId: checkoutSession.landerId,
           metadata: orderData.metadata as Record<string, string>,
+          licenseKey: licenseResult?.licenseKey ?? undefined,
+          licenseId: licenseResult?.licenseId ?? undefined,
+          licenseAction: licenseResult?.action ?? undefined,
         });
       } catch (ghlError) {
         console.error("Failed to sync with GHL:", ghlError);

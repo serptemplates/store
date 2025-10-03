@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
@@ -10,10 +11,15 @@ export const dynamic = "force-dynamic";
 
 type DashboardAccount = Parameters<typeof AccountDashboard>[0]["account"];
 
+type ResolvableSearchParams =
+  | Record<string, string | string[]>
+  | Promise<Record<string, string | string[]>>
+  | undefined;
+
 export default async function AccountPage({
   searchParams,
 }: {
-  searchParams?: Promise<Record<string, string | string[]>>;
+  searchParams?: ResolvableSearchParams;
 }) {
   const cookieStore = await cookies();
   const params = (await Promise.resolve(searchParams)) ?? {};
@@ -51,22 +57,57 @@ export default async function AccountPage({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-16 px-4">
-      <div className="max-w-5xl mx-auto space-y-10">
-        {accountSummary ? (
-          <AccountDashboard
-            account={accountSummary}
-            purchases={purchases}
-            verifiedRecently={verifiedRecently}
-          />
-        ) : (
-          <AccountVerificationFlow
-            defaultEmail={prefilledEmail}
-            verificationError={verificationError}
-            recentlyVerified={verifiedRecently}
-          />
-        )}
-      </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
+          <Link href="/" className="flex items-center gap-2 text-slate-900">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-semibold text-white shadow-sm">
+              SA
+            </span>
+            <span className="text-lg font-semibold tracking-tight">SERP Apps</span>
+          </Link>
+          <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
+            <Link href="/shop" className="hover:text-slate-900">
+              Shop
+            </Link>
+            <a href="https://serp.ly/@serp/support" className="hover:text-slate-900" target="_blank" rel="noreferrer">
+              Support
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main className="flex-1 py-16 px-4">
+        <div className="max-w-2xl mx-auto space-y-10">
+          {accountSummary ? (
+            <AccountDashboard
+              account={accountSummary}
+              purchases={purchases}
+              verifiedRecently={verifiedRecently}
+            />
+          ) : (
+            <AccountVerificationFlow
+              defaultEmail={prefilledEmail}
+              verificationError={verificationError}
+              recentlyVerified={verifiedRecently}
+            />
+          )}
+        </div>
+      </main>
+
+      <footer className="border-t border-slate-200 bg-slate-900 text-slate-300">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold text-white">Need a hand?</p>
+            <p className="text-sm text-slate-400">
+              Visit <a href="https://serp.ly/@serp/support" className="text-slate-200 hover:text-white" target="_blank" rel="noreferrer">Support</a> for help.
+            </p>
+          </div>
+          <div className="text-xs text-slate-500">
+            © {new Date().getFullYear()} SERP Apps. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
@@ -159,15 +200,39 @@ async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]>
   return Promise.all(
     orders.map(async (order) => {
       const amountFormatted = formatAmount(order.amountTotal, order.currency);
+      const metadata = order.metadata ?? {};
 
-      const license = licenseEnabled
-        ? await fetchLicenseForOrder({
-            email,
-            offerId: order.offerId,
-            orderId: order.id,
-            source: order.source,
-          }).catch(() => null)
-        : null;
+      const storedLicenseRaw = metadata.license;
+      const storedLicense =
+        storedLicenseRaw && typeof storedLicenseRaw === "object" && !Array.isArray(storedLicenseRaw)
+          ? (storedLicenseRaw as Record<string, unknown>)
+          : null;
+
+      const storedLicenseKey =
+        typeof storedLicense?.licenseKey === "string" ? storedLicense.licenseKey : null;
+      const storedLicenseStatus =
+        typeof storedLicense?.status === "string"
+          ? storedLicense.status
+          : typeof storedLicense?.action === "string"
+            ? storedLicense.action
+            : null;
+      const storedLicenseUrl =
+        typeof storedLicense?.url === "string" ? storedLicense.url : null;
+
+      let fetchedLicense = null;
+
+      if (licenseEnabled && !storedLicenseKey) {
+        fetchedLicense = await fetchLicenseForOrder({
+          email,
+          offerId: order.offerId,
+          orderId: order.id,
+          source: order.source,
+        }).catch(() => null);
+      }
+
+      const licenseKey = storedLicenseKey ?? fetchedLicense?.licenseKey ?? null;
+      const licenseStatus = storedLicenseStatus ?? fetchedLicense?.status ?? null;
+      const licenseUrl = storedLicenseUrl ?? fetchedLicense?.url ?? null;
 
       return {
         orderId: order.id,
@@ -175,9 +240,9 @@ async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]>
         purchasedAt: order.createdAt.toISOString(),
         amountFormatted,
         source: order.source,
-        licenseKey: license?.licenseKey ?? null,
-        licenseStatus: license?.status ?? null,
-        licenseUrl: license?.url ?? null,
+        licenseKey,
+        licenseStatus,
+        licenseUrl,
       } satisfies PurchaseSummary;
     }),
   );
