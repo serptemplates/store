@@ -23,10 +23,16 @@ export function useAffiliateTracking(): AffiliateTrackingResult {
 
     const url = new URL(window.location.href);
     const params = url.searchParams;
-    const affiliate = params.get("aff") ?? params.get("affiliate") ?? undefined;
+    const affiliate =
+      params.get("aff") ??
+      params.get("affiliate") ??
+      params.get("affiliateId") ??
+      params.get("am_id") ??
+      undefined;
     const checkout = params.get("checkout");
 
-    setAffiliateId(affiliate ?? undefined);
+    const normalizedAffiliate = affiliate?.trim();
+    setAffiliateId(normalizedAffiliate || undefined);
     const isSuccess = checkout === "success";
     setCheckoutSuccess(isSuccess);
 

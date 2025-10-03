@@ -48,6 +48,17 @@ const licenseSchema = z
   })
   .optional();
 
+const optionalExternalUrl = z.preprocess(
+  (value) => {
+    if (typeof value !== "string") {
+      return value;
+    }
+    const trimmed = value.trim();
+    return trimmed.length === 0 ? undefined : trimmed;
+  },
+  z.string().url().optional(),
+);
+
 const pricingSchema = z
   .object({
     label: z.string().optional(),
@@ -67,6 +78,7 @@ export const productSchema = z.object({
   seo_description: z.string(),
   product_page_url: z.string().url(),
   purchase_url: z.string().url(),
+  buy_button_destination: optionalExternalUrl,
   name: z.string(),
   tagline: z.string(),
   featured_image: z.string().nullable().optional(),

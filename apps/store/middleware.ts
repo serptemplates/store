@@ -74,7 +74,13 @@ export function middleware(request: NextRequest) {
   }
 
   // UTM parameter preservation for marketing campaigns
-  if (search.includes("utm_") || search.includes("ref=") || search.includes("affiliateId=")) {
+  if (
+    search.includes("utm_") ||
+    search.includes("ref=") ||
+    search.includes("affiliateId=") ||
+    search.includes("aff=") ||
+    search.includes("am_id=")
+  ) {
     // Preserve UTM parameters when redirecting
     const url = request.nextUrl.clone();
 
@@ -105,9 +111,18 @@ export function middleware(request: NextRequest) {
     if (searchParams.get('utm_content')) {
       response.cookies.set('utm_content', searchParams.get('utm_content')!, cookieOptions);
     }
-    if (searchParams.get('ref') || searchParams.get('affiliateId')) {
-      const affiliateId = searchParams.get('ref') || searchParams.get('affiliateId');
-      response.cookies.set('affiliateId', affiliateId!, cookieOptions);
+    const affiliateParam =
+      searchParams.get('aff') ||
+      searchParams.get('affiliate') ||
+      searchParams.get('affiliateId') ||
+      searchParams.get('ref') ||
+      searchParams.get('am_id');
+
+    if (affiliateParam) {
+      const normalizedAffiliate = affiliateParam.trim();
+      if (normalizedAffiliate) {
+        response.cookies.set('affiliateId', normalizedAffiliate, cookieOptions);
+      }
     }
 
     return response;

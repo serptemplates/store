@@ -8,6 +8,7 @@ const baseProduct: ProductData = {
   seo_description: "Sample description",
   product_page_url: "https://example.com/sample",
   purchase_url: "https://example.com/sample/buy",
+  buy_button_destination: undefined,
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
@@ -50,7 +51,7 @@ const baseProduct: ProductData = {
 
 describe("productToHomeTemplate", () => {
   it("derives platform name and default benefits", () => {
-    const productWithoutPlatform: ProductData = { ...baseProduct };
+    const productWithoutPlatform: ProductData = { ...baseProduct, features: [] };
     const template = productToHomeTemplate(productWithoutPlatform, []);
 
     expect(template.platform).toBe("Sample Product");
@@ -102,5 +103,18 @@ describe("productToHomeTemplate", () => {
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
     expect(template.posts).toHaveLength(1);
     expect(template.postsTitle).toBe("Posts");
+  });
+
+  it("prefers buy_button_destination for CTA links when provided", () => {
+    const destination = "https://external.example.com/landing";
+    const product: ProductData = {
+      ...baseProduct,
+      buy_button_destination: destination,
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaHref).toBe(destination);
+    expect(template.pricing?.ctaHref).toBe(destination);
   });
 });

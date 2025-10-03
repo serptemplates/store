@@ -25,6 +25,10 @@ export type ClientHomeProps = {
 export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
+  const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
+  const buyButtonDestination = product.buy_button_destination ?? undefined
+  const useExternalBuyDestination = Boolean(buyButtonDestination)
+  const resolvedPricingHref = buyButtonDestination ?? checkoutHref
 
   const showPosts = siteConfig.blog?.enabled !== false
 
@@ -136,17 +140,14 @@ export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) 
                 ...homeProps.pricing,
                 originalPrice: homeProps.pricing.originalPrice || "$27.99",
                 priceNote: "Use the product on a single project",
-                onCtaClick: () => {
-                  const params = new URLSearchParams();
-                  params.set("product", product.slug || "");
-                  if (affiliateId) {
-                    params.set("aff", affiliateId);
-                  }
-                  window.location.href = `/checkout?${params.toString()}`;
-                },
+                onCtaClick: useExternalBuyDestination
+                  ? undefined
+                  : () => {
+                      window.location.href = checkoutHref
+                    },
                 ctaLoading: false,
                 ctaDisabled: false,
-                ctaHref: `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`,
+                ctaHref: resolvedPricingHref,
                 ctaText: "GET IT NOW",
                 ctaExtra: null,
               }

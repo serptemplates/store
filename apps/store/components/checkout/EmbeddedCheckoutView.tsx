@@ -30,7 +30,12 @@ export function EmbeddedCheckoutView() {
   const router = useRouter()
 
   const productSlug = searchParams.get("product")
-  const affiliateId = searchParams.get("aff") || undefined
+  const affiliateParam =
+    searchParams.get("aff") ??
+    searchParams.get("affiliate") ??
+    searchParams.get("affiliateId") ??
+    searchParams.get("am_id")
+  const affiliateId = affiliateParam?.trim() || undefined
 
   const [product, setProduct] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)

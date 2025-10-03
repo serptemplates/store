@@ -21,6 +21,8 @@ export type ClientHomeProps = {
 export default function ClientHome({ product, posts, siteConfig }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const buyButtonDestination = product.buy_button_destination ?? undefined;
+  const useExternalBuyDestination = Boolean(buyButtonDestination);
 
   const breadcrumbs = [
     {
@@ -34,6 +36,11 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
 
   const handleCheckout = useCallback(async () => {
     if (isCheckoutLoading) {
+      return;
+    }
+
+    if (buyButtonDestination) {
+      window.open(buyButtonDestination, "_blank", "noopener,noreferrer");
       return;
     }
 
@@ -78,7 +85,7 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
     } finally {
       setIsCheckoutLoading(false);
     }
-  }, [isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
+  }, [buyButtonDestination, isCheckoutLoading, product.purchase_url, product.slug, siteConfig.cta?.href]);
 
   const Navbar = useCallback(
     () => (
@@ -91,8 +98,8 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
         Link={NextLink}
         ctaText={siteConfig.cta?.text ?? homeProps.ctaText ?? "Checkout"}
         ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url}
-        onCtaClick={handleCheckout}
-        ctaDisabled={isCheckoutLoading}
+        onCtaClick={useExternalBuyDestination ? undefined : handleCheckout}
+        ctaDisabled={useExternalBuyDestination ? false : isCheckoutLoading}
         blogHref="/blog"
         showLinks={false}
         showCta
@@ -113,10 +120,14 @@ export default function ClientHome({ product, posts, siteConfig }: ClientHomePro
       pricing={homeProps.pricing
         ? {
             ...homeProps.pricing,
-            onCtaClick: handleCheckout,
-            ctaLoading: isCheckoutLoading,
-            ctaDisabled: isCheckoutLoading,
-            ctaHref: siteConfig.cta?.href ?? homeProps.pricing.ctaHref ?? homeProps.ctaHref,
+            onCtaClick: useExternalBuyDestination ? undefined : handleCheckout,
+            ctaLoading: useExternalBuyDestination ? false : isCheckoutLoading,
+            ctaDisabled: useExternalBuyDestination ? false : isCheckoutLoading,
+            ctaHref:
+              buyButtonDestination ??
+              siteConfig.cta?.href ??
+              homeProps.pricing.ctaHref ??
+              homeProps.ctaHref,
             ctaText: siteConfig.cta?.text ?? homeProps.pricing.ctaText ?? homeProps.ctaText,
           }
         : undefined}
