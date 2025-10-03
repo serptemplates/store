@@ -14,7 +14,7 @@ stripe:
     stripe_product_id: prod_SrFXvsPxRa2Ugv
 name: Eporner Video Downloader
 tagline: Download Eporner Video Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/eporner-downloader/main/images/eporner-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/eporner-downloader/main/images/eporner-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -42,7 +42,9 @@ features:
 description: Get quick access to Eporner Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
+  alt: Eporner Video Downloader website preview
 faqs:
 - question: How do I download Eporner videos?
   answer: To download Eporner videos, you can use specialized software or browser

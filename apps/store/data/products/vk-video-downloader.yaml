@@ -15,7 +15,7 @@ stripe:
 name: Vk Video Downloader
 tagline: Download videos, images, and content from vk video with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/vk-video-downloader/main/images/vk-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vk-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/vk-video-downloader/main/images/vk-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from vk video with our reliabl
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vk-video-downloader.jpg
+  alt: Vk Video Downloader website preview
 faqs:
 - question: How do I download content from Vk?
   answer: To download Vk content, you can use browser extensions, online downloaders,

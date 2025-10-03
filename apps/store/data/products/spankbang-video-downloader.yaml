@@ -41,7 +41,9 @@ features:
 description: Get quick access to SpankBang Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
+  alt: SpankBang Video Downloader website preview
 faqs:
 - question: How do I download Spankbang videos?
   answer: To download Spankbang videos, you can use specialized software or browser
@@ -136,3 +138,4 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 buy_button_destination: https://ghl.serp.co/payment-link/68df9a9567ee3be2e66997a7
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg

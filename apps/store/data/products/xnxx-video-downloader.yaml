@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_SrGYKrazcfgi5G
 name: XNXX Video Downloader
 tagline: Download XNXX Video Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xnxx-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -41,7 +41,9 @@ features:
 description: Get quick access to XNXX Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xnxx-video-downloader.jpg
+  alt: XNXX Video Downloader website preview
 faqs:
 - question: How do I download Xnxx videos?
   answer: To download Xnxx videos, you can use specialized software or browser extensions

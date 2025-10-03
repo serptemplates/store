@@ -15,7 +15,7 @@ stripe:
 name: Clientclub Downloader
 tagline: Download videos, images, and content from clientclub with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/clientclub-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from clientclub with our relia
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/clientclub-downloader.jpg
+  alt: Clientclub Downloader website preview
 faqs:
 - question: How do I download Clientclub videos?
   answer: To download Clientclub videos, you can use specialized software or browser

@@ -14,7 +14,7 @@ stripe:
     stripe_product_id: prod_SqnfWNeyP5TUdt
 name: Sprout Video Downloader
 tagline: Download Sprout Video Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -43,6 +43,8 @@ description: Get quick access to Sprout Video Downloader content for offline use
 product_videos: []
 related_videos: []
 screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
+  alt: Sprout Video Downloader website preview
 - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
   alt: Sprout Video Downloader screenshot
 - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif

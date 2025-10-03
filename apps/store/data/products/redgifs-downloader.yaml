@@ -15,7 +15,7 @@ stripe:
 name: Redgifs Downloader
 tagline: Download videos, images, and content from redgifs with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/redgifs-downloader/main/images/redgifs-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redgifs-downloader/main/images/redgifs-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from redgifs with our reliable
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg
+  alt: Redgifs Downloader website preview
 faqs:
 - question: How do I download Redgifs videos?
   answer: To download Redgifs videos, you can use specialized software or browser

@@ -16,7 +16,7 @@ stripe:
 name: Youporn Video Downloader
 tagline: Downloads videos from YouPorn with advanced features including license activation,
   download management, and high-quality video extraction.Au
-featured_image: https://raw.githubusercontent.com/serpapps/youporn-video-downloader/main/images/youporn-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/youporn-video-downloader/main/images/youporn-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -69,7 +69,9 @@ description: 'Downloads videos from YouPorn with advanced features including lic
   (recommended)Chromium-based browsersEdge (Chromium)'
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
+  alt: Youporn Video Downloader website preview
 faqs:
 - question: How do I download Youporn videos?
   answer: To download Youporn videos, you can use specialized software or browser

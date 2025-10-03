@@ -16,7 +16,7 @@ stripe:
 name: Snapchat Video Downloader
 tagline: Download videos, images, and content from snapchat video with our reliable
   downloader tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/snapchat-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -46,6 +46,8 @@ description: Download videos, images, and content from snapchat video with our r
 product_videos: []
 related_videos: []
 screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/snapchat-video-downloader.jpg
+  alt: Snapchat Video Downloader website preview
 - url: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.gif
   alt: Snapchat Video Downloader animation
 - url: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-downloader.jpg

@@ -15,7 +15,7 @@ stripe:
 name: Hulu Downloader
 tagline: Download videos, images, and content from hulu with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/hulu-downloader/main/images/hulu-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/hulu-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/hulu-downloader/main/images/hulu-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from hulu with our reliable do
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/hulu-downloader.jpg
+  alt: Hulu Downloader website preview
 faqs:
 - question: How do I download Hulu videos?
   answer: To download Hulu videos, you can use specialized software or browser extensions

@@ -17,7 +17,7 @@ ghl:
   - purchase-loom-video-downloader
 name: Loom Video Downloader
 tagline: Download Loom-hosted videos anywhere with one click and save them forever.
-featured_image: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.png
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.gif
 github_repo_url: https://github.com/serpapps/loom-video-downloader
 github_repo_tags:
@@ -50,6 +50,8 @@ product_videos:
 related_videos:
 - https://www.youtube.com/watch?v=4MnyU0kPxlE
 screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg
+  alt: Loom Video Downloader website preview
 - url: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/screenshots/loom-downloader-screenshot-1.jpg
   alt: Loom Video Downloader main interface
   caption: Simple one-click download interface for Loom videos

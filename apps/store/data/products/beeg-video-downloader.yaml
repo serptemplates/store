@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_SrFXkM8CAB2Ds8
 name: Beeg Video Downloader
 tagline: Download Beeg Video Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -41,7 +41,9 @@ features:
 description: Get quick access to Beeg Video Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
+  alt: Beeg Video Downloader website preview
 faqs:
 - question: How do I download Beeg videos?
   answer: To download Beeg videos, you can use specialized software or browser extensions

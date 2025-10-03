@@ -15,7 +15,7 @@ stripe:
 name: Skillshare Downloader
 tagline: Download videos, images, and content from skillshare with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/skillshare-downloader/main/images/skillshare-downloader.jpg
+featured_image: null
 featured_image_gif: https://raw.githubusercontent.com/serpapps/skillshare-downloader/main/images/skillshare-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []

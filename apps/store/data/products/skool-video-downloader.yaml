@@ -19,7 +19,7 @@ buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b3488
 name: Skool Video Downloader
 tagline: Add a download button to Skool classrooms and archive every lesson for offline
   access.
-featured_image: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.png
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.gif
 github_repo_url: https://github.com/serpapps/skool-downloader
 github_repo_tags:
@@ -57,6 +57,8 @@ product_videos:
 related_videos:
 - https://www.youtube.com/watch?v=J9eetd89HZk
 screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
+  alt: Skool Video Downloader website preview
 - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
   alt: Skool Video Downloader extension interface
   caption: Floating download controls injected on Skool lesson pages

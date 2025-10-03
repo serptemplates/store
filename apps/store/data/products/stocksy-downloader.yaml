@@ -15,7 +15,7 @@ stripe:
 name: Stocksy Downloader
 tagline: Download videos, images, and content from stocksy with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/stocksy-downloader/main/images/stocksy-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stocksy-downloader/main/images/stocksy-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from stocksy with our reliable
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
+  alt: Stocksy Downloader website preview
 faqs:
 - question: How do I download images from Stocksy?
   answer: 'To download from Stocksy: 1) Create an account and choose a subscription

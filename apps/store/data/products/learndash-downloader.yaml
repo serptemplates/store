@@ -15,7 +15,7 @@ stripe:
 name: Learndash Downloader
 tagline: Download videos, images, and content from learndash with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/learndash-downloader/main/images/learndash-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learndash-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/learndash-downloader/main/images/learndash-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from learndash with our reliab
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learndash-downloader.jpg
+  alt: Learndash Downloader website preview
 faqs:
 - question: How can I download Learndash courses for offline viewing?
   answer: 'To download Learndash courses, you typically need: 1) An active subscription
