@@ -15,7 +15,7 @@ name: Teachable Video Downloader
 tagline: Download videos, images, and content from teachable video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/teachable-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/teachable-video-downloader/main/images/teachable-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/teachable-video-downloader
 github_repo_tags: []
 features:
   - Download complete Teachable courses with all video content

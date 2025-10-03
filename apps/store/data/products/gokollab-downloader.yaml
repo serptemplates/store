@@ -15,7 +15,7 @@ name: Gokollab Downloader
 tagline: Download videos, images, and content from gokollab with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gokollab-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/gokollab-downloader/main/images/gokollab-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/gokollab-downloader
 github_repo_tags: []
 features:
   - Download GoKollab collaboration content and projects

@@ -15,7 +15,7 @@ name: Patreon Downloader
 tagline: Download videos, images, and content from patreon with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: null
 featured_image_gif: https://raw.githubusercontent.com/serpapps/patreon-downloader/main/images/patreon-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/patreon-downloader
 github_repo_tags: []
 features:
   - Download Patreon creator content and exclusive posts

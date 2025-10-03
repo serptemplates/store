@@ -15,7 +15,7 @@ name: Hulu Downloader
 tagline: Download videos, images, and content from hulu with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/hulu-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/hulu-downloader/main/images/hulu-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/hulu-downloader
 github_repo_tags: []
 features:
   - Download Hulu shows and movies in high quality

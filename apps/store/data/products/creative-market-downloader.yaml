@@ -15,7 +15,7 @@ name: Creative Market Downloader
 tagline: Download videos, images, and content from creative market with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/creative-market-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/creative-market-downloader/main/images/featured.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/creative-market-downloader
 github_repo_tags: []
 features:
   - Download Creative Market fonts, graphics, and templates

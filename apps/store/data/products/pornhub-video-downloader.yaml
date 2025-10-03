@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_Sqsjylj8Z89k1v
 name: Pornhub Video Downloader
 tagline: Pornhub video downloader
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/pornhub-video-downloader
 github_repo_tags: []
 features:
   - Download videos in multiple quality options up to 1080p HD

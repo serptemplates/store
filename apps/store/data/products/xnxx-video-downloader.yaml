@@ -15,7 +15,7 @@ name: XNXX Video Downloader
 tagline: Download XNXX Video Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xnxx-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/xnxx-video-downloader
 github_repo_tags: []
 features:
   - Download high-quality videos in multiple resolutions

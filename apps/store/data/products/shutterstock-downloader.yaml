@@ -15,7 +15,7 @@ name: Shutterstock Downloader
 tagline: Download videos, images, and content from shutterstock with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: null
 featured_image_gif: https://raw.githubusercontent.com/serpapps/shutterstock-downloader/main/images/shutterstock-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/shutterstock-downloader
 github_repo_tags: []
 features:
   - Download high-resolution stock images without watermarks

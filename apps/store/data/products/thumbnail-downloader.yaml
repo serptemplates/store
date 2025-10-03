@@ -15,7 +15,7 @@ name: Thumbnail Downloader
 tagline: Download videos, images, and content from thumbnail with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/thumbnail-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/thumbnail-downloader/main/images/thumbnail-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/thumbnail-downloader
 github_repo_tags: []
 features:
   - Download video thumbnails from various platforms

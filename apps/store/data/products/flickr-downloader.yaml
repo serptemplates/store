@@ -15,7 +15,7 @@ name: Flickr Downloader
 tagline: Download videos, images, and content from flickr with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/flickr-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/flickr-downloader/main/images/flickr-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/flickr-downloader
 github_repo_tags: []
 features:
   - Download high-resolution Flickr photos and albums

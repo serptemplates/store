@@ -15,7 +15,7 @@ name: Erothots Downloader
 tagline: Download videos, images, and content from erothots with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erothots-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/erothots-downloader/main/images/erothots-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/erothots-downloader
 github_repo_tags: []
 features:
   - Download content from Erothots platform

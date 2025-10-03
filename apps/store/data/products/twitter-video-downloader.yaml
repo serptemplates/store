@@ -15,7 +15,7 @@ name: Twitter Video Downloader
 tagline: Download videos, images, and content from twitter video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/twitter-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/twitter-video-downloader/main/images/twitter-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/twitter-video-downloader
 github_repo_tags: []
 features:
   - Download Twitter videos and GIFs in original quality
