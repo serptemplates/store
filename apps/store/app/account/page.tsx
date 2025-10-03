@@ -11,18 +11,16 @@ export const dynamic = "force-dynamic";
 
 type DashboardAccount = Parameters<typeof AccountDashboard>[0]["account"];
 
-type ResolvableSearchParams =
-  | Record<string, string | string[]>
-  | Promise<Record<string, string | string[]>>
-  | undefined;
+type SearchParamsPromise = Promise<Record<string, string | string[]>>;
 
 export default async function AccountPage({
   searchParams,
 }: {
-  searchParams?: ResolvableSearchParams;
+  searchParams?: SearchParamsPromise;
 }) {
   const cookieStore = await cookies();
-  const params = (await Promise.resolve(searchParams)) ?? {};
+  const params: Record<string, string | string[]> =
+    (searchParams ? await searchParams : undefined) ?? {};
   const sessionCookie = cookieStore.get("store_account_session")?.value ?? null;
   const account = await getAccountFromSessionCookie(sessionCookie);
 

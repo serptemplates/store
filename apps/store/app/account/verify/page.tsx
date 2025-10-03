@@ -2,17 +2,15 @@ import VerifyTokenClient from "@/components/account/VerifyTokenClient";
 
 export const dynamic = "force-dynamic";
 
-type ResolvableSearchParams =
-  | Record<string, string | string[]>
-  | Promise<Record<string, string | string[]>>
-  | undefined;
+type SearchParamsPromise = Promise<Record<string, string | string[]>>;
 
 export default async function AccountVerifyPage({
   searchParams,
 }: {
-  searchParams?: ResolvableSearchParams;
+  searchParams?: SearchParamsPromise;
 }) {
-  const params = (await Promise.resolve(searchParams)) ?? {};
+  const params: Record<string, string | string[]> =
+    (searchParams ? await searchParams : undefined) ?? {};
   const tokenParam = params?.token;
   const token = Array.isArray(tokenParam) ? tokenParam[0] ?? null : tokenParam ?? null;
 
