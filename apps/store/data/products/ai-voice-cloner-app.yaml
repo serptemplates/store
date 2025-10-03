@@ -22,24 +22,24 @@ description: Get quick access to AI Voice Cloner App content for offline use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
-    alt: AI Voice Cloner App website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
+  alt: AI Voice Cloner App website preview
 faqs: []
 supported_operating_systems:
-  - mac
-  - windows
-  - linux
-  - chrome
-  - firefox
-  - edge
+- mac
+- windows
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
-  - Artificial Intelligence
+- Artificial Intelligence
 keywords:
-  - ai voice cloner app
+- ai voice cloner app
 pricing:
   label: One-time payment
-  price: '$17.00'
+  price: '17.00'
   original_price: ''
   note: ''
   cta_text: Get it Now
@@ -50,26 +50,29 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-ai-voice-cloner-app
+  - purchase-ai-voice-cloner-app
 new_release: true
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with AI Voice Cloner App
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and AI Voice Cloner App lets me pull everything from AI in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid AI downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from AI used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing AI content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive AI assets for clients and the batch features in AI Voice Cloner App keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with AI Voice Cloner App
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and AI Voice Cloner App lets me pull everything
+    from AI in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid AI downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from AI used to be hit or miss. This downloader is stable, fast,
+    and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing AI content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive AI assets for clients and the batch features in AI Voice Cloner
+    App keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

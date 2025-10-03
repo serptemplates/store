@@ -1,7 +1,8 @@
 slug: alamy-downloader
 platform: Alamy
 seo_title: Alamy Downloader | Download Alamy Downloader for Offline Access
-seo_description: Download videos, images, and content from alamy with our reliable downloader tool. Fast, secure, and easy to use.
+seo_description: Download videos, images, and content from alamy with our reliable
+  downloader tool. Fast, secure, and easy to use.
 product_page_url: https://store.serp.co/products/alamy-downloader
 purchase_url: https://serp.ly/alamy-downloader
 stripe:
@@ -12,65 +13,79 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6GxfQm1ccyWC
 name: Alamy Downloader
-tagline: Download videos, images, and content from alamy with our reliable downloader tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from alamy with our reliable downloader
+  tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alamy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/alamy-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
 features:
-  - Download premium stock photography from Alamy
-  - Support for editorial and commercial licenses
-  - Batch download photographer collections and searches
-  - Automatic rights management and license tracking
-  - Custom organization by photographer and subject
-  - Resume interrupted downloads seamlessly
-  - Cross-platform application for photo professionals
-  - Built-in photo viewer with metadata display
-  - Command-line tools for stock photo automation
-  - Integration with professional photography workflows
-  - Export photo data and licensing information
-  - Advanced search across photo libraries
-  - Privacy protection with secure storage
-  - Regular updates to maintain Alamy compatibility
-  - Support for various image formats and sizes
-  - Bandwidth optimization for large photo files
-  - Backup and restore for photo archives
-  - Smart categorization by subject and location
-  - Professional license management features
-  - Quality control and image verification tools
-description: Download videos, images, and content from alamy with our reliable downloader tool. Fast, secure, and easy to use.
+- Download premium stock photography from Alamy
+- Support for editorial and commercial licenses
+- Batch download photographer collections and searches
+- Automatic rights management and license tracking
+- Custom organization by photographer and subject
+- Resume interrupted downloads seamlessly
+- Cross-platform application for photo professionals
+- Built-in photo viewer with metadata display
+- Command-line tools for stock photo automation
+- Integration with professional photography workflows
+- Export photo data and licensing information
+- Advanced search across photo libraries
+- Privacy protection with secure storage
+- Regular updates to maintain Alamy compatibility
+- Support for various image formats and sizes
+- Bandwidth optimization for large photo files
+- Backup and restore for photo archives
+- Smart categorization by subject and location
+- Professional license management features
+- Quality control and image verification tools
+description: Download videos, images, and content from alamy with our reliable downloader
+  tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alamy-downloader.jpg
-    alt: Alamy Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alamy-downloader.jpg
+  alt: Alamy Downloader website preview
 faqs:
-  - question: How do I download images from Alamy?
-    answer: 'To download from Alamy: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms.'
-  - question: Are there free alternatives to downloading from Alamy?
-    answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, Alamy may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
-  - question: What image formats does Alamy provide?
-    answer: Alamy typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
-  - question: Can I use Alamy images for commercial purposes?
-    answer: Commercial use of Alamy images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
-  - question: What are the licensing requirements for Alamy images?
-    answer: 'Alamy images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
+- question: How do I download images from Alamy?
+  answer: 'To download from Alamy: 1) Create an account and choose a subscription
+    plan, 2) Search for desired images, 3) Select image size and license type, 4)
+    Download through the official platform. Always use legitimate methods and respect
+    licensing terms.'
+- question: Are there free alternatives to downloading from Alamy?
+  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay
+    that offer high-quality images. However, Alamy may offer unique content and commercial
+    licenses. Always check licensing requirements for your intended use.
+- question: What image formats does Alamy provide?
+  answer: Alamy typically provides images in JPEG and PNG formats, with some platforms
+    offering additional formats like SVG, EPS, or TIFF. Resolution options usually
+    range from web-optimized sizes to high-resolution print quality.
+- question: Can I use Alamy images for commercial purposes?
+  answer: Commercial use of Alamy images depends on the specific license you purchase.
+    Standard licenses typically allow commercial use with some restrictions, while
+    extended licenses offer broader usage rights. Always read the license agreement
+    carefully.
+- question: What are the licensing requirements for Alamy images?
+  answer: 'Alamy images come with specific licensing terms that may require: 1) Attribution
+    to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4)
+    Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-  - mac
-  - windows
-  - linux
-  - chrome
-  - firefox
-  - edge
+- mac
+- windows
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
-  - alamy downloader
-  - Downloader
+- alamy downloader
+- Downloader
 keywords:
-  - alamy downloader
+- alamy downloader
 pricing:
   label: One-time payment
-  price: '$17.00'
+  price: '17.00'
   original_price: ''
   note: ''
   cta_text: Get it Now
@@ -81,30 +96,33 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-alamy-downloader
+  - purchase-alamy-downloader
 coming_soon: false
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Alamy Downloader
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and Alamy Downloader lets me pull everything from Alamy in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Alamy downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from Alamy used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Alamy content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive Alamy assets for clients and the batch features in Alamy Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with Alamy Downloader
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and Alamy Downloader lets me pull everything
+    from Alamy in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Alamy downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from Alamy used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Alamy content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive Alamy assets for clients and the batch features in Alamy Downloader
+    keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68dfb1032197097607e2638e
+buy_button_destination: https://serp.ly/alamy-downloader
