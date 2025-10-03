@@ -149,7 +149,8 @@
         "additionalProperties": false,
         "required": [
           "name",
-          "review"
+          "review",
+          "rating"
         ],
         "properties": {
           "name": {
@@ -159,6 +160,25 @@
           "review": {
             "type": "string",
             "minLength": 1
+          },
+          "rating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "string"
           }
         }
       },
@@ -187,6 +207,14 @@
       "default": []
     },
     "supported_operating_systems": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "supported_regions": {
       "type": "array",
       "items": {
         "type": "string",
@@ -226,6 +254,10 @@
       "type": "boolean",
       "default": false
     },
+    "expected_launch_date": {
+      "type": "string",
+      "format": "date"
+    },
     "waitlist_url": {
       "type": "string",
       "format": "uri"
@@ -254,6 +286,19 @@
         "original_price": {
           "type": "string"
         },
+        "currency": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        },
+        "availability": {
+          "type": "string",
+          "minLength": 1
+        },
+        "price_valid_until": {
+          "type": "string",
+          "format": "date"
+        },
         "note": {
           "type": "string"
         },
@@ -271,6 +316,29 @@
             "minLength": 1
           },
           "default": []
+        }
+      }
+    },
+    "return_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fees": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "policy_category": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
         }
       }
     },
@@ -357,16 +425,6 @@
             "type": "string",
             "minLength": 1
           }
-        },
-        "workflow_ids": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "opportunity_name_template": {
-          "type": "string"
         },
         "contact_custom_field_ids": {
           "type": "object",
