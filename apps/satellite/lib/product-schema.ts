@@ -28,8 +28,8 @@ const ghlCustomFieldSchema = z.record(z.string());
 
 const ghlSchema = z
   .object({
-    pipeline_id: z.string(),
-    stage_id: z.string(),
+    pipeline_id: z.string().optional(),
+    stage_id: z.string().optional(),
     status: z.string().optional(),
     source: z.string().optional(),
     tag_ids: z.array(z.string()).optional().default([]),
@@ -37,6 +37,14 @@ const ghlSchema = z
     opportunity_name_template: z.string().optional(),
     contact_custom_field_ids: ghlCustomFieldSchema.optional(),
     opportunity_custom_field_ids: ghlCustomFieldSchema.optional(),
+  })
+  .optional();
+
+const licenseSchema = z
+  .object({
+    entitlements: z
+      .union([z.string().min(1), z.array(z.string().min(1)).min(1)])
+      .optional(),
   })
   .optional();
 
@@ -61,9 +69,11 @@ export const productSchema = z.object({
   purchase_url: z.string().url(),
   name: z.string(),
   tagline: z.string(),
-  featured_image: z.string().optional(),
-  featured_image_gif: z.string().optional(),
-  github_repo_url: z.string().url().optional(),
+  featured_image: z.string().nullable().optional(),
+  featured_image_gif: z.string().nullable().optional(),
+  github_repo_url: z.string().url().nullable().optional(),
+  chrome_webstore_link: z.string().url().optional(),
+  firefox_addon_store_link: z.string().url().nullable().optional(),
   github_repo_tags: z.array(z.string()).optional().default([]),
   features: z.array(z.string()).optional().default([]),
   description: z.string(),
@@ -79,6 +89,7 @@ export const productSchema = z.object({
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
+  license: licenseSchema,
 });
 
 export type ProductData = z.infer<typeof productSchema>;

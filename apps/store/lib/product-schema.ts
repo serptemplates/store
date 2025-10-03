@@ -41,6 +41,14 @@ const ghlSchema = z
   })
   .optional();
 
+const licenseSchema = z
+  .object({
+    entitlements: z
+      .union([z.string().min(1), z.array(z.string().min(1)).min(1)])
+      .optional(),
+  })
+  .optional();
+
 const pricingSchema = z
   .object({
     label: z.string().optional(),
@@ -65,6 +73,8 @@ export const productSchema = z.object({
   featured_image: z.string().nullable().optional(),
   featured_image_gif: z.string().nullable().optional(),
   github_repo_url: z.string().url().nullable().optional(),
+  chrome_webstore_link: z.string().url().optional(),
+  firefox_addon_store_link: z.string().url().nullable().optional(),
   github_repo_tags: z.array(z.string()).optional().default([]),
   features: z.array(z.string()).optional().default([]),
   description: z.string(),
@@ -80,6 +90,7 @@ export const productSchema = z.object({
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
+  license: licenseSchema,
   layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),
   // Coming soon / Waitlist fields
   coming_soon: z.boolean().optional().default(false),

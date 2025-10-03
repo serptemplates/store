@@ -54,9 +54,9 @@ function SuccessContent() {
                   <Mail className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Check your email</p>
+                  <p className="font-medium text-gray-900">Check your inbox</p>
                   <p className="text-sm text-gray-600">
-                    We&apos;ve sent your receipt and access details to your email address
+                    We&apos;ve sent your receipt and a 6-digit verification code to the email you used at checkout.
                   </p>
                 </div>
               </div>
@@ -66,9 +66,9 @@ function SuccessContent() {
                   <Download className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Access your purchase</p>
+                  <p className="font-medium text-gray-900">Verify your email</p>
                   <p className="text-sm text-gray-600">
-                    Follow the instructions in your email to download or access your product
+                    Enter the code (or click the link) to unlock your account dashboard and license keys.
                   </p>
                 </div>
               </div>
@@ -78,9 +78,9 @@ function SuccessContent() {
                   <ArrowRight className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Get started</p>
+                  <p className="font-medium text-gray-900">Access your downloads</p>
                   <p className="text-sm text-gray-600">
-                    Begin using your new product right away with our quick start guide
+                    Once verified, head to your account to grab your purchase, license key, and onboarding guides.
                   </p>
                 </div>
               </div>

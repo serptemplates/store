@@ -231,6 +231,9 @@ export type GhlSyncContext = {
   currency?: string | null;
   landerId?: string | null;
   metadata?: Record<string, string>;
+  licenseKey?: string | null | undefined;
+  licenseId?: string | null | undefined;
+  licenseAction?: string | null | undefined;
 };
 
 export type SyncOutcome = {

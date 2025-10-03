@@ -208,6 +208,9 @@ importers:
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.1.13)(react@19.1.1)
+      nodemailer:
+        specifier: ^6.9.15
+        version: 6.10.1
       react:
         specifier: ^19.0.0
         version: 19.1.1
@@ -4552,6 +4555,10 @@ packages:
 
   node-releases@2.0.21:
     resolution: {integrity: sha512-5b0pgg78U3hwXkCM8Z9b2FJdPZlr9Psr9V2gQPESdGHqbntyFJKFW4r5TeWGFzafGY3hzs1JC62VEQMbl1JFkw==}
+
+  nodemailer@6.10.1:
+    resolution: {integrity: sha512-Z+iLaBGVaSjbIzQ4pX6XV41HrooLsQ10ZWPUehGmuantvzWoDVBnmsdUcOIDM1t+yPor5pDhVlDESgOMEGxhHA==}
+    engines: {node: '>=6.0.0'}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -9722,6 +9729,8 @@ snapshots:
   node-gyp-build@4.8.4: {}
 
   node-releases@2.0.21: {}
+
+  nodemailer@6.10.1: {}
 
   normalize-path@3.0.0: {}
 

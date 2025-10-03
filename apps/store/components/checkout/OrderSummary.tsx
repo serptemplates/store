@@ -120,7 +120,7 @@ export function OrderSummary({ product, displayPrice, originalPrice }: OrderSumm
       <div className="mt-6 p-3 bg-gray-50 rounded-lg">
         <p className="text-xs text-gray-600">
           Need help? Contact support at{" "}
-          <a href="mailto:support@serp.app" className="text-blue-600 hover:underline">
+          <a href="#" className="text-blue-600 hover:underline">
             support@serp.app
           </a>
         </p>

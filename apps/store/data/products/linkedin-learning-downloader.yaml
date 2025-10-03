@@ -91,6 +91,7 @@ pricing:
   cta_text: Get it Now
   benefits: []
 ghl:
-  pipeline_id: GYbj73q9z3SGihxNlOne
-  stage_id: 8b813665-bcdd-4636-bc65-d8f79d3743cb
+  source: Stripe Checkout
+  tag_ids:
+  - purchase-linkedin-learning-downloader
 coming_soon: true

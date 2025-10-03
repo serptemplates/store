@@ -128,6 +128,7 @@ export function middleware(request: NextRequest) {
     !pathname.startsWith('/shop') && // Not shop pages
     !pathname.startsWith('/blog') && // Not blog pages
     !pathname.startsWith('/checkout') && // Not checkout pages
+    !pathname.startsWith('/account') && // Allow account pages
     !pathname.match(/^\/[a-z0-9-]+$/) && // Not product pages (single segment slugs)
     !pathname.includes('.'); // Not static files
 

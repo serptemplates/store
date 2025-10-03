@@ -66,6 +66,23 @@
       "type": "string",
       "format": "uri"
     },
+    "chrome_webstore_link": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1
+    },
+    "firefox_addon_store_link": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "github_repo_tags": {
       "type": "array",
       "items": {
@@ -257,6 +274,28 @@
         }
       }
     },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "entitlements": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          ]
+        }
+      }
+    },
     "stripe": {
       "type": "object",
       "additionalProperties": false,
@@ -341,11 +380,7 @@
             "type": "string"
           }
         }
-      },
-      "required": [
-        "pipeline_id",
-        "stage_id"
-      ]
+      }
     }
   }
 }

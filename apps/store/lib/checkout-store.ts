@@ -49,6 +49,88 @@ export interface CheckoutOrderUpsert {
 
 const JSON_EMPTY_OBJECT = "{}";
 
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+interface OrderRow {
+  id: string;
+  checkout_session_id: string | null;
+  stripe_session_id: string | null;
+  stripe_payment_intent_id: string | null;
+  stripe_charge_id: string | null;
+  amount_total: number | null;
+  currency: string | null;
+  offer_id: string | null;
+  lander_id: string | null;
+  customer_email: string | null;
+  customer_name: string | null;
+  metadata: unknown;
+  payment_status: string | null;
+  payment_method: string | null;
+  source: CheckoutSource | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrderRecord {
+  id: string;
+  checkoutSessionId: string | null;
+  stripeSessionId: string | null;
+  stripePaymentIntentId: string | null;
+  stripeChargeId: string | null;
+  offerId: string | null;
+  landerId: string | null;
+  customerEmail: string | null;
+  customerName: string | null;
+  amountTotal: number | null;
+  currency: string | null;
+  metadata: Record<string, unknown>;
+  paymentStatus: string | null;
+  paymentMethod: string | null;
+  source: CheckoutSource;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
+  if (!row) {
+    return null;
+  }
+
+  let metadata: Record<string, unknown> = {};
+
+  if (typeof row.metadata === "string") {
+    try {
+      metadata = JSON.parse(row.metadata) as Record<string, unknown>;
+    } catch {
+      metadata = {};
+    }
+  } else if (row.metadata && typeof row.metadata === "object") {
+    metadata = row.metadata as Record<string, unknown>;
+  }
+
+  return {
+    id: row.id,
+    checkoutSessionId: row.checkout_session_id,
+    stripeSessionId: row.stripe_session_id,
+    stripePaymentIntentId: row.stripe_payment_intent_id,
+    stripeChargeId: row.stripe_charge_id,
+    offerId: row.offer_id,
+    landerId: row.lander_id,
+    customerEmail: row.customer_email,
+    customerName: row.customer_name,
+    amountTotal: row.amount_total,
+    currency: row.currency,
+    metadata,
+    paymentStatus: row.payment_status,
+    paymentMethod: row.payment_method,
+    source: (row.source ?? "stripe") as CheckoutSource,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
 interface CheckoutSessionRow {
   id: string;
   stripe_session_id: string;
@@ -357,4 +439,46 @@ export async function getRecentOrderStats(hours: number): Promise<{
   const lastOrderAt = row?.last_created_at ? new Date(row.last_created_at) : null;
 
   return { count, lastOrderAt };
+}
+
+export async function findRecentOrdersByEmail(email: string, limit = 20): Promise<OrderRecord[]> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return [];
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+  const safeLimit = Math.min(Math.max(Math.floor(limit), 1), 200);
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE customer_email IS NOT NULL
+      AND LOWER(customer_email) = ${normalizedEmail}
+    ORDER BY created_at DESC
+    LIMIT ${safeLimit};
+  `;
+
+  const rows = result?.rows ?? [];
+  const orders = rows.map((row) => mapOrderRow(row)).filter(Boolean) as OrderRecord[];
+
+  return orders;
 }
