@@ -35,18 +35,29 @@ function extractValue(source, key) {
 }
 
 for (const site of siteDirs) {
-  const siteConfigPath = path.join(sitesDir, site, "site.config.ts");
+  const siteConfigPathTs = path.join(sitesDir, site, "site.config.ts");
+  const siteConfigPathJson = path.join(sitesDir, site, "site.config.json");
   let url = "";
   let buyUrl = "";
   let gtmId = "";
   let hasConfig = false;
 
-  if (fs.existsSync(siteConfigPath)) {
+  if (fs.existsSync(siteConfigPathTs)) {
     hasConfig = true;
-    const content = fs.readFileSync(siteConfigPath, "utf8");
+    const content = fs.readFileSync(siteConfigPathTs, "utf8");
     url = extractValue(content, "url") || extractValue(content, "siteUrl");
     buyUrl = extractValue(content, "buyUrl");
     gtmId = extractValue(content, "gtmId");
+  } else if (fs.existsSync(siteConfigPathJson)) {
+    hasConfig = true;
+    try {
+      const json = JSON.parse(fs.readFileSync(siteConfigPathJson, "utf8"));
+      url = json?.site?.domain ?? "";
+      buyUrl = json?.cta?.href ?? "";
+      gtmId = json?.gtmId ?? "";
+    } catch (error) {
+      console.warn(`Failed to parse ${siteConfigPathJson}:`, error);
+    }
   }
 
   const row = [site, url, buyUrl, gtmId, hasConfig ? "yes" : "no"].map((value) => {

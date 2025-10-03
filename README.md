@@ -1,37 +1,28 @@
-# README
+# SERP Apps Store
 
-- https://getlooma.com
-- https://downloadvimeo.com
-- https://skooldownloader.com
-- https://wistiadownloader.com
-- https://udemyvideodownloader.com
-- https://tiktokdownloaderapp.com
-- https://orangepornvideos.net
+This repository now focuses exclusively on the `@apps/store` Next.js commerce application and its shared component libraries. Satellite marketing sites and their deployment tooling live in a separate repository.
 
+## Directory Overview
 
-## Adding a New Site
+- `apps/store` – production storefront deployed to `https://apps.serp.co`
+- `packages/ui` – shared UI primitives consumed by the store
+- `packages/templates` – marketing page sections used across store product and blog pages
+- `sites/apps.serp.co` – markdown blog content and store-level site metadata
 
-- Create `sites/<domain>/` with a Next.js app structure.
-- Set `package.json` name to `@apps/<domain>` and choose a dev port.
-- Update `next.config.mjs`:
-  - `output: 'export'`
-  - `transpilePackages: ['@repo/ui','@repo/templates']`
-- Update `tailwind.config.ts` content globs to include:
-  - `../../packages/ui/src/**/*.{ts,tsx}`
-- Implement `app/page.tsx` using `HomeTemplate`:
-  - `platform` and `exampleUrl` props
-  - Pass site UI: `Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge` (Input no longer used in Hero)
-- Add `site.config.ts` with site metadata (and GTM if used).
-- Create deploy workflow targeting the destination repo and GitHub Pages `gh-pages` branch with `CNAME`.
-- GitHub Pages: set source to `gh-pages`, configure custom domain, enable HTTPS.
-- DNS: point apex via A records or `www` via CNAME to GitHub Pages.
+## Local Development
 
-## Site-Specific Blog Content
+```bash
+pnpm install
+pnpm dev
+```
 
-- Shared posts live in `apps/satellite/content/blog`, but each site can override them by dropping Markdown/MDX into `sites/<slug>/content/blog`.
-- The loader prefers site folders first; slugs in the site directory win over shared posts with the same filename.
-- To limit a shared post to specific sites, add `sites: ["downloadvimeo.com", "getlooma.com"]` in its front matter.
-- When developing or exporting a site, set `SITE_SLUG=<slug>` (the deploy script does this automatically) so the build picks the correct content.
+The dev script runs `@apps/store` on port 3000. See `apps/store/README.md` for detailed product management and testing workflows.
+
+## Blog Content
+
+- Store blog posts live under `sites/apps.serp.co/content/blog`
+- Markdown/MDX files are loaded by `apps/store/lib/blog.ts`
+- Front matter supports `draft`, `tags`, `description`, and optional hero images
 
 ## Stripe Price Sync
 
@@ -46,8 +37,7 @@ This updates each product YAML with formatted pricing pulled from Stripe.
 
 ## Stripe Checkout
 
-For the checkout to work properly, you need to have these
-   environment variables set in your .env.local file:
-  - STRIPE_SECRET_KEY - Your Stripe secret key
-  - STRIPE_WEBHOOK_SECRET - For handling Stripe webhooks
-  - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY - Your Stripe publishable key
+For the checkout to work properly, set these environment variables in `.env.local`:
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`

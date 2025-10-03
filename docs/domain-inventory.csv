@@ -1,9 +1,2 @@
 site,url,buy_url,gtm_id,has_site_config
-downloadvimeo.com,https://downloadvimeo.com,https://serp.ly/vimeo-video-downloader,GTM-PLDR624X,yes
-getlooma.com,https://getlooma.com,https://serp.ly/loom-video-downloader,GTM-57L458CF,yes
-lander-template,,,,no
-orangepornvideos.net,https://orangepornvideos.net,#download,GTM-P7VVBM8G,yes
-skooldownloader.com,https://skooldownloader.com,#download,GTM-W7GFBQ7G,yes
-tiktokdownloaderapp.com,https://tiktokdownloaderapp.com,#download,GTM-TQWJMC82,yes
-udemyvideodownloader.com,https://udemyvideodownloader.com,#download,GTM-KK3QGQTG,yes
-wistiadownloader.com,https://wistiadownloader.com,#download,GTM-MM67CMD4,yes
+apps.serp.co,https://apps.serp.co,#pricing,GTM-WS97TH45,yes

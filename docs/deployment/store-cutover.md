@@ -51,18 +51,7 @@ This documents how to launch the new Stripe-powered store alongside the existing
 
 ## Supporting scripts
 
-- **Static satellites** – use `scripts/deploy-static-site.mjs` with the relevant site slug and repo:
-
-  ```bash
-  # Example: deploy serpdownloaders marketing site to GitHub Pages
-  NEXT_PUBLIC_CHECKOUT_URL=https://store.serp.co/api/checkout/session \
-  node scripts/deploy-static-site.mjs serpdownloaders.com \
-    git@github.com:serpdownloaders/serpdownloaders.github.io.git
-  ```
-
-  This reads `sites/<slug>/site.config.json` to set CTA labels, exclude lists, etc., builds the static output, and pushes to the target repository.
-
-- **Main store** – deploy `@apps/store` (without `STATIC_EXPORT`) to the staging/promotion host. The HERO CTA now scrolls to `#pricing` and the pricing CTA hits the hosted checkout API. If `NEXT_PUBLIC_CHECKOUT_URL` is omitted, the CTA will fall back to the configured product purchase URL (useful for satellites).
+- **Main store** – deploy `@apps/store` (without `STATIC_EXPORT`) to the staging/promotion host. The HERO CTA now scrolls to `#pricing` and the pricing CTA hits the hosted checkout API.
 
 ## Rollback plan
 
