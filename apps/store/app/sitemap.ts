@@ -3,9 +3,10 @@ import path from "node:path";
 
 import type { MetadataRoute } from "next";
 
-import { getProductSlugs } from "@/lib/product";
+import { getProductData, getProductSlugs } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { getAllPosts } from "@/lib/blog";
+import { getProductVideoEntries } from "@/lib/video";
 
 export const runtime = "nodejs";
 
@@ -47,6 +48,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "daily",
       priority: 1,
     },
+    {
+      url: `${baseUrl}/videos`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.85,
+    },
   ];
 
   // Add product pages
@@ -61,6 +68,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.7,
     });
+
+    try {
+      const product = getProductData(slug);
+      const videos = getProductVideoEntries(product);
+      videos.forEach((video) => {
+        entries.push({
+          url: `${baseUrl}${video.watchPath}`,
+          lastModified,
+          changeFrequency: "weekly",
+          priority: 0.5,
+        });
+      });
+    } catch (error) {
+      console.warn(`[sitemap] Failed to add video watch pages for ${slug}:`, error);
+    }
   });
 
   // Add blog index page

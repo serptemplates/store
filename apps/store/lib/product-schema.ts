@@ -9,6 +9,9 @@ const screenshotSchema = z.object({
 const reviewSchema = z.object({
   name: z.string(),
   review: z.string(),
+  title: z.string().optional(),
+  rating: z.number().optional(),
+  date: z.string().optional(),
 });
 
 const faqSchema = z.object({

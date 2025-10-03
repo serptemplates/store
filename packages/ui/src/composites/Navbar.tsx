@@ -62,6 +62,12 @@ export function Navbar({
                 >
                   Blog
                 </LinkComp>
+                <LinkComp
+                  href="/videos"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                >
+                  Videos
+                </LinkComp>
                 {categories.map((category) => (
                   <LinkComp
                     key={category}
@@ -102,6 +108,13 @@ export function Navbar({
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Blog
+                  </LinkComp>
+                  <LinkComp
+                    href="/videos"
+                    className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Videos
                   </LinkComp>
                   {categories.map((category) => (
                     <LinkComp

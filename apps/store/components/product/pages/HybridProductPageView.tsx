@@ -22,6 +22,7 @@ import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
+import { getProductVideoEntries } from "@/lib/video"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -36,6 +37,9 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
   const router = useRouter()
 
   const homeProps = productToHomeTemplate(product, posts)
+
+  const videoEntries = useMemo(() => getProductVideoEntries(product), [product])
+  const selectedVideoEntry = videoEntries[selectedVideoIndex]
 
   const price = product.pricing
   const handle = product.slug
@@ -69,6 +73,12 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (selectedVideoIndex >= videoEntries.length) {
+      setSelectedVideoIndex(0)
+    }
+  }, [selectedVideoIndex, videoEntries.length])
 
   const Footer = useCallback(() => <FooterComposite />, [])
   const productUrl = typeof window !== "undefined" ? `${window.location.origin}/${product.slug}` : `https://store.com/${product.slug}`
@@ -239,27 +249,32 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         </div>
       </div>
 
-      {product.product_videos && product.product_videos.length > 0 && (
+      {videoEntries.length > 0 && (
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
-              <iframe
-                key={selectedVideoIndex}
-                src={product.product_videos[selectedVideoIndex]
-                  .replace("watch?v=", "embed/")
-                  .replace("vimeo.com/", "player.vimeo.com/video/")
-                  .replace("youtu.be/", "youtube.com/embed/")}
-                className="absolute inset-0 w-full h-full"
-                allowFullScreen
-                title={`Product Demo Video ${selectedVideoIndex + 1}`}
-              />
+              {selectedVideoEntry && (
+                <iframe
+                  key={selectedVideoEntry.slug}
+                  src={selectedVideoEntry.embedUrl}
+                  className="absolute inset-0 h-full w-full"
+                  allowFullScreen
+                  title={selectedVideoEntry.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                />
+              )}
+              {selectedVideoEntry && (
+                <div className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow">
+                  <Link href={selectedVideoEntry.watchPath}>View watch page</Link>
+                </div>
+              )}
             </div>
 
-            {product.product_videos.length > 1 && (
+            {videoEntries.length > 1 && (
               <div className="flex items-center gap-2 mt-4 justify-center">
-                {product.product_videos.map((_, index) => (
+                {videoEntries.map((video, index) => (
                   <button
-                    key={index}
+                    key={video.slug}
                     onClick={() => setSelectedVideoIndex(index)}
                     className={`h-1 rounded-full transition-all duration-300 ${
                       selectedVideoIndex === index ? "w-8 bg-blue-600" : "w-2 bg-gray-300 hover:bg-gray-400"
