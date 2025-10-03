@@ -6,8 +6,9 @@ import NextLink from "next/link";
 
 const navLinks = [
   { label: "Blog", href: "/blog" as const },
-  { label: "Docs", href: "https://github.com/serpapps" as const },
+  { label: "Github", href: "https://github.com/serpapps" as const },
   { label: "Support", href: "https://github.com/serpapps/support" as const },
+  { label: "Community", href: "https://serp.ly/@serp/community" as const },
 ];
 
 const heroDescription =
