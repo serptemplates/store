@@ -25,7 +25,7 @@ features:
 - Automatic transcription and subtitle downloading
 - Batch processing for multiple course collections
 - Resume interrupted transfers with smart recovery
-- Command-line tools for educational automation
+- Educational CLI tools
 - Cross-platform support
 - Built-in media player with bookmarking features
 - Integration with student information systems
