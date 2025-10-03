@@ -1,18 +1,21 @@
 slug: pexels-video-downloader
 platform: Pexels
-seo_title: Pexels Video Downloader | Download Pexels Video Downloader for Offline Access
-seo_description: Download videos, images, and content from pexels video with our reliable downloader tool. Fast, secure, and easy to use.
-product_page_url: https://store.serp.co/products/pexels-video-downloader
+seo_title: Pexels Video Downloader | Download Pexels Video Downloader for Offline
+  Access
+seo_description: Download videos, images, and content from pexels video with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_page_url: https://apps.serp.co/pexels-video-downloader
 purchase_url: https://serp.ly/pexels-video-downloader
 stripe:
   price_id: price_1S99g106JrOmKRCmnvLb6LoL
-  success_url: https://store.serp.co/products/pexels-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/pexels-video-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=pexels-video-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sv6HyGUyULY4PF
 name: Pexels Video Downloader
-tagline: Download videos, images, and content from pexels video with our reliable downloader tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from pexels video with our reliable
+  downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pexels-video-downloader/main/images/pexels-video-downloader.gif
 github_repo_url: https://github.com/serpapps/pexels-video-downloader
@@ -38,7 +41,8 @@ features:
 - Smart content categorization and tagging
 - Backup & sync
 - Free usage compliance and attribution tracking
-description: Download videos, images, and content from pexels video with our reliable downloader tool. Fast, secure, and easy to use.
+description: Download videos, images, and content from pexels video with our reliable
+  downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
@@ -46,22 +50,34 @@ screenshots:
   alt: Pexels Video Downloader website preview
 faqs:
 - question: How do I download images from Pexels?
-  answer: 'To download from Pexels: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms.'
+  answer: 'To download from Pexels: 1) Create an account and choose a subscription
+    plan, 2) Search for desired images, 3) Select image size and license type, 4)
+    Download through the official platform. Always use legitimate methods and respect
+    licensing terms.'
 - question: Are there free alternatives to downloading from Pexels?
-  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, Pexels may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
+  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay
+    that offer high-quality images. However, Pexels may offer unique content and commercial
+    licenses. Always check licensing requirements for your intended use.
 - question: What image formats does Pexels provide?
-  answer: Pexels typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
+  answer: Pexels typically provides images in JPEG and PNG formats, with some platforms
+    offering additional formats like SVG, EPS, or TIFF. Resolution options usually
+    range from web-optimized sizes to high-resolution print quality.
 - question: Can I use Pexels images for commercial purposes?
-  answer: Commercial use of Pexels images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
+  answer: Commercial use of Pexels images depends on the specific license you purchase.
+    Standard licenses typically allow commercial use with some restrictions, while
+    extended licenses offer broader usage rights. Always read the license agreement
+    carefully.
 - question: What are the licensing requirements for Pexels images?
-  answer: 'Pexels images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
+  answer: 'Pexels images come with specific licensing terms that may require: 1) Attribution
+    to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4)
+    Prohibition of resale. Always comply with the license terms to avoid legal issues.'
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
 - Downloader
@@ -89,17 +105,20 @@ reviews:
   title: Saves hours every week with Pexels Video Downloader
   rating: 5.0
   date: '2025-02-12'
-  review: I manage content libraries and Pexels Video Downloader lets me pull everything from Pexels in minutes. The speeds are great and files stay organized.
+  review: I manage content libraries and Pexels Video Downloader lets me pull everything
+    from Pexels in minutes. The speeds are great and files stay organized.
 - name: Jamie Nguyen
   title: Rock solid Pexels downloads
   rating: 4.9
   date: '2025-03-03'
-  review: Downloading from Pexels used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  review: Downloading from Pexels used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
 - name: Priya Patel
   title: Ideal for organizing Pexels content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Pexels assets for clients and the batch features in Pexels Video Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Pexels assets for clients and the batch features in Pexels Video
+    Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:
@@ -108,4 +127,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination:
+buy_button_destination: null

@@ -2,12 +2,12 @@ slug: ai-voice-cloner-app
 platform: AI
 seo_title: AI Voice Cloner App | Download AI Voice Cloner App for Offline Access
 seo_description: Download AI Voice Cloner App content for offline use with ease.
-product_page_url: https://store.serp.co/products/ai-voice-cloner-app
+product_page_url: https://apps.serp.co/ai-voice-cloner-app
 purchase_url: https://serp.ly/ai-voice-cloner-app
 stripe:
   price_id: price_1S99fd06JrOmKRCmxtuDhI3T
-  success_url: https://store.serp.co/products/ai-voice-cloner-app?checkout=success
-  cancel_url: https://store.serp.co/products/ai-voice-cloner-app
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
   metadata:
     source: generated
     stripe_product_id: prod_SqhYIO8EBULvaD
@@ -22,24 +22,24 @@ description: Get quick access to AI Voice Cloner App content for offline use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
-    alt: AI Voice Cloner App website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
+  alt: AI Voice Cloner App website preview
 faqs: []
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
-  - Artificial Intelligence
+- Artificial Intelligence
 keywords:
-  - ai voice cloner app
+- ai voice cloner app
 pricing:
   label: One-time payment
-  price: '$17.00'
+  price: $17.00
   original_price: ''
   note: ''
   cta_text: Get it Now
@@ -50,30 +50,33 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-ai-voice-cloner-app
+  - purchase-ai-voice-cloner-app
 new_release: true
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with AI Voice Cloner App
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and AI Voice Cloner App lets me pull everything from AI in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid AI downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from AI used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing AI content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive AI assets for clients and the batch features in AI Voice Cloner App keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with AI Voice Cloner App
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and AI Voice Cloner App lets me pull everything
+    from AI in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid AI downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from AI used to be hit or miss. This downloader is stable, fast,
+    and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing AI content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive AI assets for clients and the batch features in AI Voice Cloner
+    App keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination:
+buy_button_destination: null

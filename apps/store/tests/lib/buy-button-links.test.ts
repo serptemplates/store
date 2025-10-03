@@ -8,11 +8,14 @@ const ALLOWED_PREFIXES = [
   "https://ghl.serp.co/",
 ];
 
+const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success";
+const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
+
 describe("buy button destinations", () => {
   it("ensures each product CTA points to an approved destination", () => {
     const products = getAllProducts();
 
-    const violations = products
+    const ctaViolations = products
       .map((product) => {
         const template = productToHomeTemplate(product);
         const href = template.ctaHref;
@@ -27,6 +30,46 @@ describe("buy button destinations", () => {
       })
       .filter((entry): entry is { slug: string; href: string } => entry !== null);
 
-    expect(violations).toEqual([]);
+    expect(ctaViolations).toEqual([]);
+
+    const successViolations = products
+      .map((product) => {
+        const buy = product.buy_button_destination;
+        const needsFallback =
+          typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
+
+        if (!needsFallback) {
+          return null;
+        }
+
+        const successUrl = product.stripe?.success_url;
+        return successUrl === FALLBACK_SUCCESS_URL
+          ? null
+          : { slug: product.slug, successUrl };
+      })
+      .filter((entry): entry is { slug: string; successUrl: string | undefined } => entry !== null);
+
+    expect(successViolations).toEqual([]);
+
+    const cancelViolations = products
+      .map((product) => {
+        const buy = product.buy_button_destination;
+        const needsFallback =
+          typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
+
+        if (!needsFallback) {
+          return null;
+        }
+
+        const cancelUrl = product.stripe?.cancel_url;
+        const expected = `${FALLBACK_CANCEL_BASE}${product.slug}`;
+        return cancelUrl === expected ? null : { slug: product.slug, cancelUrl, expected };
+      })
+      .filter(
+        (entry): entry is { slug: string; cancelUrl: string | undefined; expected: string } =>
+          entry !== null,
+      );
+
+    expect(cancelViolations).toEqual([]);
   });
 });

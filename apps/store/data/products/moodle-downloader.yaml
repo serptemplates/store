@@ -1,18 +1,20 @@
 slug: moodle-downloader
 platform: Moodle
 seo_title: Moodle Downloader | Download Moodle Downloader for Offline Access
-seo_description: Download videos, images, and content from moodle with our reliable downloader tool. Fast, secure, and easy to use.
-product_page_url: https://store.serp.co/products/moodle-downloader
+seo_description: Download videos, images, and content from moodle with our reliable
+  downloader tool. Fast, secure, and easy to use.
+product_page_url: https://apps.serp.co/moodle-downloader
 purchase_url: https://serp.ly/moodle-downloader
 stripe:
   price_id: price_1S99fx06JrOmKRCmleYZfn4W
-  success_url: https://store.serp.co/products/moodle-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/moodle-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=moodle-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sv6HjTufnmO8Ix
 name: Moodle Downloader
-tagline: Download videos, images, and content from moodle with our reliable downloader tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from moodle with our reliable downloader
+  tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/moodle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/moodle-downloader/main/images/moodle-downloader.gif
 github_repo_url: https://github.com/serpapps/moodle-downloader
@@ -38,7 +40,8 @@ features:
 - Offline study with synchronized progress
 - Support for multimedia assignments and projects
 - Smart academic calendar integration
-description: Download videos, images, and content from moodle with our reliable downloader tool. Fast, secure, and easy to use.
+description: Download videos, images, and content from moodle with our reliable downloader
+  tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
@@ -46,22 +49,38 @@ screenshots:
   alt: Moodle Downloader website preview
 faqs:
 - question: How can I download Moodle courses for offline viewing?
-  answer: 'To download Moodle courses, you typically need: 1) An active subscription or course purchase, 2) Official Moodle mobile app (if available for offline viewing), 3) Third-party tools (use with caution). Always check Moodle''s terms of service and only download content you''ve legitimately purchased or have access to.'
+  answer: 'To download Moodle courses, you typically need: 1) An active subscription
+    or course purchase, 2) Official Moodle mobile app (if available for offline viewing),
+    3) Third-party tools (use with caution). Always check Moodle''s terms of service
+    and only download content you''ve legitimately purchased or have access to.'
 - question: Is it allowed to download Moodle course content?
-  answer: Downloading Moodle courses is subject to the platform's terms of service and copyright laws. Most educational platforms allow offline viewing through their official apps but prohibit redistribution or sharing. Always respect intellectual property rights and only download content you've purchased or have legitimate access to.
+  answer: Downloading Moodle courses is subject to the platform's terms of service
+    and copyright laws. Most educational platforms allow offline viewing through their
+    official apps but prohibit redistribution or sharing. Always respect intellectual
+    property rights and only download content you've purchased or have legitimate
+    access to.
 - question: What formats do Moodle course downloads come in?
-  answer: Moodle course downloads typically come in MP4 format for videos, and may include PDF files for course materials, subtitles in SRT format, and audio files in MP3 format. The exact formats depend on the original content and the downloader used.
+  answer: Moodle course downloads typically come in MP4 format for videos, and may
+    include PDF files for course materials, subtitles in SRT format, and audio files
+    in MP3 format. The exact formats depend on the original content and the downloader
+    used.
 - question: Can I download Moodle courses to multiple devices?
-  answer: This depends on Moodle's licensing terms. Many platforms allow downloads to a limited number of devices per account. Check your subscription details and the platform's device limits. Using third-party downloaders may violate terms of service.
+  answer: This depends on Moodle's licensing terms. Many platforms allow downloads
+    to a limited number of devices per account. Check your subscription details and
+    the platform's device limits. Using third-party downloaders may violate terms
+    of service.
 - question: How do I organize downloaded Moodle course materials?
-  answer: 'Best practices for organizing downloaded Moodle courses: 1) Create folders by course name and instructor, 2) Maintain original file names when possible, 3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use media management software for better organization.'
+  answer: 'Best practices for organizing downloaded Moodle courses: 1) Create folders
+    by course name and instructor, 2) Maintain original file names when possible,
+    3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use
+    media management software for better organization.'
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
 - Downloader
@@ -88,17 +107,20 @@ reviews:
   title: Saves hours every week with Moodle Downloader
   rating: 5.0
   date: '2025-02-12'
-  review: I manage content libraries and Moodle Downloader lets me pull everything from Moodle in minutes. The speeds are great and files stay organized.
+  review: I manage content libraries and Moodle Downloader lets me pull everything
+    from Moodle in minutes. The speeds are great and files stay organized.
 - name: Jamie Nguyen
   title: Rock solid Moodle downloads
   rating: 4.9
   date: '2025-03-03'
-  review: Downloading from Moodle used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  review: Downloading from Moodle used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
 - name: Priya Patel
   title: Ideal for organizing Moodle content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Moodle assets for clients and the batch features in Moodle Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Moodle assets for clients and the batch features in Moodle Downloader
+    keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:
@@ -107,4 +129,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination:
+buy_button_destination: null
