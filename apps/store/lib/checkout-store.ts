@@ -441,6 +441,49 @@ export async function getRecentOrderStats(hours: number): Promise<{
   return { count, lastOrderAt };
 }
 
+export async function updateOrderMetadata(
+  lookupKey: { stripePaymentIntentId?: string | null; stripeSessionId?: string | null },
+  metadata: Record<string, unknown>
+): Promise<boolean> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return false;
+  }
+
+  const metadataJson = toJsonbLiteral(metadata);
+
+  // Try payment intent ID first (more specific)
+  if (lookupKey.stripePaymentIntentId) {
+    const result = await query`
+      UPDATE orders
+      SET metadata = COALESCE(orders.metadata, '{}'::jsonb) || ${metadataJson}::jsonb,
+          updated_at = NOW()
+      WHERE stripe_payment_intent_id = ${lookupKey.stripePaymentIntentId}
+      RETURNING id;
+    `;
+
+    if (result?.rows?.length) {
+      return true;
+    }
+  }
+
+  // Fall back to session ID
+  if (lookupKey.stripeSessionId) {
+    const result = await query`
+      UPDATE orders
+      SET metadata = COALESCE(orders.metadata, '{}'::jsonb) || ${metadataJson}::jsonb,
+          updated_at = NOW()
+      WHERE stripe_session_id = ${lookupKey.stripeSessionId}
+      RETURNING id;
+    `;
+
+    return Boolean(result?.rows?.length);
+  }
+
+  return false;
+}
+
 export async function findRecentOrdersByEmail(email: string, limit = 20): Promise<OrderRecord[]> {
   const schemaReady = await ensureDatabase();
 

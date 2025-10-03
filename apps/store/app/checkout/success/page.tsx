@@ -1,15 +1,41 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { CheckCircle, Download, Mail, ArrowRight, Home } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@repo/ui";
 import { ConversionTracking } from "./tracking";
 import { useSearchParams } from "next/navigation";
+import { processCheckoutSession } from "./actions";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
+  const [processing, setProcessing] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!sessionId) {
+      setProcessing(false);
+      return;
+    }
+
+    // Process the checkout session to ensure order and license are created
+    // This is especially important in development where webhooks may not be configured
+    processCheckoutSession(sessionId)
+      .then((result) => {
+        if (!result.success) {
+          console.warn("Failed to process checkout:", result.message);
+        }
+      })
+      .catch((err) => {
+        console.error("Error processing checkout:", err);
+        setError("There was an issue processing your order. Please contact support if you don't receive your license key.");
+      })
+      .finally(() => {
+        setProcessing(false);
+      });
+  }, [sessionId]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
@@ -17,6 +43,23 @@ function SuccessContent() {
       <div className="max-w-2xl w-full">
         {/* Success Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+          {/* Processing indicator */}
+          {processing && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                <p className="text-sm text-blue-800">Processing your order and generating license key...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Error message */}
+          {error && (
+            <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <p className="text-sm text-amber-800">{error}</p>
+            </div>
+          )}
+
           {/* Success Icon */}
           <div className="flex justify-center mb-6">
             <div className="relative">
