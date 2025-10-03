@@ -16,6 +16,36 @@ const faqSchema = z.object({
   answer: z.string(),
 });
 
+const videoLinkSchema = z.union([
+  z.string().url(),
+  z
+    .object({
+      url: z.string().url(),
+      id: z.string().optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      channel: z.string().optional(),
+      channel_url: z.string().url().optional(),
+      channel_id: z.string().optional(),
+      uploader: z.string().optional(),
+      uploader_url: z.string().url().optional(),
+      uploader_id: z.string().optional(),
+      upload_date: z
+        .string()
+        .regex(/^[0-9]{8}$/)
+        .optional(),
+      duration: z.number().int().nonnegative().optional(),
+      duration_string: z.string().optional(),
+      view_count: z.number().int().nonnegative().optional(),
+      like_count: z.number().int().nonnegative().optional(),
+      comment_count: z.number().int().nonnegative().optional(),
+      thumbnail_url: z.string().url().optional(),
+      categories: z.array(z.string()).optional(),
+      tags: z.array(z.string()).optional(),
+    })
+    .strict(),
+]);
+
 const stripeSchema = z.object({
   price_id: z.string(),
   test_price_id: z.string().optional(), // Optional test mode price ID
@@ -93,8 +123,8 @@ export const productSchema = z.object({
   github_repo_tags: z.array(z.string()).optional().default([]),
   features: z.array(z.string()).optional().default([]),
   description: z.string(),
-  product_videos: z.array(z.string()).optional().default([]),
-  related_videos: z.array(z.string()).optional().default([]),
+  product_videos: z.array(videoLinkSchema).optional().default([]),
+  related_videos: z.array(videoLinkSchema).optional().default([]),
   screenshots: z.array(screenshotSchema).optional().default([]),
   reviews: z.array(reviewSchema).optional().default([]),
   faqs: z.array(faqSchema).optional().default([]),

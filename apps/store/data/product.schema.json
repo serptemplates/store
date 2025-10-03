@@ -117,16 +117,186 @@
     "product_videos": {
       "type": "array",
       "items": {
-        "type": "string",
-        "format": "uri"
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "uri"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              },
+              "channel_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "channel_id": {
+                "type": "string"
+              },
+              "uploader": {
+                "type": "string"
+              },
+              "uploader_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "uploader_id": {
+                "type": "string"
+              },
+              "upload_date": {
+                "type": "string",
+                "pattern": "^[0-9]{8}$"
+              },
+              "duration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "duration_string": {
+                "type": "string"
+              },
+              "view_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "like_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "comment_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "thumbnail_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
       },
       "default": []
     },
     "related_videos": {
       "type": "array",
       "items": {
-        "type": "string",
-        "format": "uri"
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "uri"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "channel": {
+                "type": "string"
+              },
+              "channel_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "channel_id": {
+                "type": "string"
+              },
+              "uploader": {
+                "type": "string"
+              },
+              "uploader_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "uploader_id": {
+                "type": "string"
+              },
+              "upload_date": {
+                "type": "string",
+                "pattern": "^[0-9]{8}$"
+              },
+              "duration": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "duration_string": {
+                "type": "string"
+              },
+              "view_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "like_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "comment_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "thumbnail_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
       },
       "default": []
     },

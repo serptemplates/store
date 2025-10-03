@@ -7,7 +7,7 @@ import { z } from "zod";
  */
 const expiresAtSchema = z
   .union([z.number(), z.string()])
-  .optional()
+  .nullish()
   .transform((value) => {
     if (value === undefined || value === null || value === "") {
       return null as number | null;

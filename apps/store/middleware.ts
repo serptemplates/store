@@ -144,6 +144,7 @@ export function middleware(request: NextRequest) {
     !pathname.startsWith('/blog') && // Not blog pages
     !pathname.startsWith('/checkout') && // Not checkout pages
     !pathname.startsWith('/account') && // Allow account pages
+    !pathname.startsWith('/watch') && // Allow video watch routes
     !pathname.match(/^\/[a-z0-9-]+$/) && // Not product pages (single segment slugs)
     !pathname.includes('.'); // Not static files
 

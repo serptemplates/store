@@ -90,6 +90,21 @@ const nextConfig = {
             hostname: 'ui-avatars.com',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'raw.githubusercontent.com',
+            pathname: '/**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'img.youtube.com',
+            pathname: '/**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'images.unsplash.com',
+            pathname: '/**',
+          },
         ],
       },
 
@@ -108,7 +123,7 @@ const nextConfig = {
   },
 
   // Optimize webpack bundle splitting for mobile
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     if (!isServer) {
       // More aggressive code splitting
       config.optimization.runtimeChunk = 'single';
@@ -159,11 +174,13 @@ const nextConfig = {
         },
       };
 
-      // Minimize main thread work
-      config.optimization.minimize = true;
-      // Remove usedExports as it conflicts with Next.js caching
-      // config.optimization.usedExports = true;
-      config.optimization.sideEffects = false;
+      if (!dev) {
+        // Minimize bundles only in production to avoid corrupting dev cache artifacts
+        config.optimization.minimize = true;
+        // Remove usedExports as it conflicts with Next.js caching
+        // config.optimization.usedExports = true;
+        config.optimization.sideEffects = false;
+      }
     }
     return config;
   },

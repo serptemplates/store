@@ -482,3 +482,39 @@ export async function findRecentOrdersByEmail(email: string, limit = 20): Promis
 
   return orders;
 }
+
+export async function findRecentCheckoutSessionsByEmail(email: string, limit = 20): Promise<CheckoutSessionRecord[]> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return [];
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+  const safeLimit = Math.min(Math.max(Math.floor(limit), 1), 200);
+
+  const result = await query<CheckoutSessionRow>`
+    SELECT
+      id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      offer_id,
+      lander_id,
+      customer_email,
+      metadata,
+      status,
+      source,
+      created_at,
+      updated_at
+    FROM checkout_sessions
+    WHERE customer_email IS NOT NULL
+      AND LOWER(customer_email) = ${normalizedEmail}
+    ORDER BY created_at DESC
+    LIMIT ${safeLimit};
+  `;
+
+  const rows = result?.rows ?? [];
+  const sessions = rows.map((row) => mapCheckoutSessionRow(row)).filter(Boolean) as CheckoutSessionRecord[];
+
+  return sessions;
+}

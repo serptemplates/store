@@ -297,11 +297,11 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
     input.currency ?? (typeof metadata.currency === "string" ? metadata.currency : null);
   const currencyValue = rawCurrency ? String(rawCurrency).toLowerCase() : null;
 
-  const expiresAt = normaliseExpiresAt(
+  const expiresAtRaw = normaliseExpiresAt(
     input.expiresAt
-      ?? (typeof metadata.expiresAt === "number" || typeof metadata.expiresAt === "string"
-        ? metadata.expiresAt
-        : null)
+    ?? (typeof metadata.expiresAt === "number" || typeof metadata.expiresAt === "string"
+      ? metadata.expiresAt
+      : undefined)
   );
 
   const payloadDraft: LicenseProviderPurchase = {
@@ -318,7 +318,7 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
     amount: amountValue,
     currency: currencyValue,
     rawEvent: Object.keys(rawEvent).length > 0 ? rawEvent : { source: ADMIN_RAW_EVENT_SOURCE },
-    expiresAt,
+    expiresAt: expiresAtRaw,
   };
 
   const payload = normaliseLicenseProviderPayload(payloadDraft);

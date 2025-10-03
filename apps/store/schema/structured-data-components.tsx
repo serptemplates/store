@@ -81,30 +81,42 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   };
 
   // VideoObject Schema for product videos
-  const videoSchemas = product.product_videos?.map((videoUrl, index) => {
-    // Extract video ID from YouTube URL
-    const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+  const videoSchemas = product.product_videos
+    ?.map((entry, index) => {
+      const data = typeof entry === "string" ? { url: entry } : entry;
+      if (!data?.url) return undefined;
 
-    return {
-      "@context": "https://schema.org",
-      "@type": "VideoObject",
-      name: `${product.name} - Demo Video ${index + 1}`,
-      description: `Product demonstration video for ${product.name}`,
-      thumbnailUrl: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : product.featured_image,
-      uploadDate: new Date().toISOString(),
-      contentUrl: videoUrl,
-      embedUrl: videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/'),
-      duration: "PT5M", // Default 5 minutes, adjust as needed
-      publisher: {
-        "@type": "Organization",
-        name: "Store",
-        logo: {
-          "@type": "ImageObject",
-          url: typeof window !== 'undefined' ? `${window.location.origin}/logo.png` : "https://store.com/logo.png"
+      const videoUrl = data.url;
+      const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+      const embedUrl = videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/');
+      const uploadDate = data.upload_date && data.upload_date.length === 8
+        ? `${data.upload_date.slice(0, 4)}-${data.upload_date.slice(4, 6)}-${data.upload_date.slice(6, 8)}`
+        : new Date().toISOString();
+      const duration = data.duration ? `PT${Math.max(1, Math.floor(data.duration / 60))}M` : undefined;
+
+      return {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: data.title ?? `${product.name} - Demo Video ${index + 1}`,
+        description: data.description ?? `Product demonstration video for ${product.name}`,
+        thumbnailUrl: data.thumbnail_url ?? (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : product.featured_image),
+        uploadDate,
+        contentUrl: videoUrl,
+        embedUrl,
+        duration: duration ?? (data.duration_string ? `PT${data.duration_string.replace(':', 'M')}S` : "PT5M"),
+        publisher: {
+          "@type": "Organization",
+          name: "Store",
+          logo: {
+            "@type": "ImageObject",
+            url: typeof window !== 'undefined' ? `${window.location.origin}/logo.png` : "https://store.com/logo.png"
+          }
         }
-      }
-    };
-  });
+      };
+    })
+    .filter(Boolean);
 
   // SoftwareApplication Schema (if applicable)
   const softwareSchema = product.github_repo_url ? {

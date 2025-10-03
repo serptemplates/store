@@ -208,6 +208,21 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    if (unitAmount !== null) {
+      const estimatedSubtotal = unitAmount * quantity;
+      const currencyCode = (price.currency ?? "usd").toLowerCase();
+
+      metadataFromRequest.unitAmountCents = String(unitAmount);
+      metadataFromRequest.quantity = String(quantity);
+      metadataFromRequest.currency = currencyCode;
+      metadataFromRequest.estimatedTotalCents = String(estimatedSubtotal);
+
+      sessionMetadata.unitAmountCents = String(unitAmount);
+      sessionMetadata.quantity = String(quantity);
+      sessionMetadata.currency = currencyCode;
+      sessionMetadata.estimatedTotalCents = String(estimatedSubtotal);
+    }
+
     if (couponValidation?.discount && unitAmount === null) {
       return buildErrorResponse("Unable to apply coupon to this price");
     }
@@ -322,6 +337,8 @@ export async function POST(request: NextRequest) {
       const adjustedTotalStr = String(couponAdjustedTotalCents);
       metadataFromRequest.couponAdjustedTotalCents = adjustedTotalStr;
       sessionMetadata.couponAdjustedTotalCents = adjustedTotalStr;
+      sessionMetadata.estimatedTotalCents = adjustedTotalStr;
+      metadataFromRequest.estimatedTotalCents = adjustedTotalStr;
     }
 
     if (couponOriginalUnitAmount !== undefined) {

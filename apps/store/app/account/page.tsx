@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
 import AccountVerificationFlow from "@/components/account/AccountVerificationFlow";
 import { getAccountFromSessionCookie } from "@/lib/account-service";
-import { findRecentOrdersByEmail } from "@/lib/checkout-store";
+import { findRecentCheckoutSessionsByEmail, findRecentOrdersByEmail } from "@/lib/checkout-store";
 import { fetchLicenseForOrder } from "@/lib/license-service";
 
 export const dynamic = "force-dynamic";
@@ -188,14 +188,9 @@ function getDevPreviewData(
 
 async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]> {
   const orders = await findRecentOrdersByEmail(email, 20);
-
-  if (!orders.length) {
-    return [];
-  }
-
   const licenseEnabled = Boolean(process.env.LICENSE_SERVICE_URL);
 
-  return Promise.all(
+  const orderSummaries = await Promise.all(
     orders.map(async (order) => {
       const amountFormatted = formatAmount(order.amountTotal, order.currency);
       const metadata = order.metadata ?? {};
@@ -244,6 +239,51 @@ async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]>
       } satisfies PurchaseSummary;
     }),
   );
+
+  const seenSessionIds = new Set(
+    orders
+      .map((order) => order.stripeSessionId)
+      .filter((sessionId): sessionId is string => Boolean(sessionId)),
+  );
+
+  const checkoutSessions = await findRecentCheckoutSessionsByEmail(email, 20);
+
+  const sessionSummaries = checkoutSessions
+    .filter((session) => session.status === "pending" || session.status === "completed")
+    .filter((session) => {
+      if (!session.stripeSessionId) {
+        return true;
+      }
+
+      return !seenSessionIds.has(session.stripeSessionId);
+    })
+    .map((session) => {
+      const estimatedAmount = extractEstimatedAmount(session.metadata);
+      const currencyCode = extractCurrency(session.metadata);
+      const amountFormatted = formatAmount(estimatedAmount, currencyCode);
+      const statusLabel = session.status === "completed" ? "processing" : "awaiting payment confirmation";
+
+      return {
+        orderId: session.stripeSessionId ?? session.id,
+        offerId: session.offerId,
+        purchasedAt: session.createdAt.toISOString(),
+        amountFormatted,
+        source: session.source,
+        licenseKey: null,
+        licenseStatus: statusLabel,
+        licenseUrl: null,
+      } satisfies PurchaseSummary;
+    });
+
+  const combined = [...orderSummaries, ...sessionSummaries];
+
+  combined.sort((a, b) => {
+    const aTime = a.purchasedAt ? new Date(a.purchasedAt).getTime() : 0;
+    const bTime = b.purchasedAt ? new Date(b.purchasedAt).getTime() : 0;
+    return bTime - aTime;
+  });
+
+  return combined;
 }
 
 function formatAmount(amount: number | null, currency: string | null): string | null {
@@ -261,4 +301,58 @@ function formatAmount(amount: number | null, currency: string | null): string | 
   } catch {
     return `${(amount / 100).toFixed(2)} ${currencyCode}`;
   }
+}
+
+function extractEstimatedAmount(metadata: Record<string, unknown> | null | undefined): number | null {
+  if (!metadata || typeof metadata !== "object") {
+    return null;
+  }
+
+  const amountKeys = [
+    "estimatedTotalCents",
+    "couponAdjustedTotalCents",
+    "couponSubtotalCents",
+    "estimatedSubtotalCents",
+  ];
+
+  for (const key of amountKeys) {
+    const value = metadata[key];
+
+    if (typeof value === "string") {
+      const parsed = Number.parseInt(value, 10);
+      if (Number.isFinite(parsed)) {
+        return parsed;
+      }
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return value;
+    }
+  }
+
+  const unitAmount = metadata.unitAmountCents;
+  const quantity = metadata.quantity;
+
+  const unit = typeof unitAmount === "string" ? Number.parseInt(unitAmount, 10) : unitAmount;
+  const qty = typeof quantity === "string" ? Number.parseInt(quantity, 10) : quantity;
+
+  if (Number.isFinite(unit) && Number.isFinite(qty)) {
+    return (unit as number) * (qty as number);
+  }
+
+  return null;
+}
+
+function extractCurrency(metadata: Record<string, unknown> | null | undefined): string | null {
+  if (!metadata || typeof metadata !== "object") {
+    return null;
+  }
+
+  const value = metadata.currency;
+
+  if (typeof value === "string" && value.length > 0) {
+    return value;
+  }
+
+  return null;
 }

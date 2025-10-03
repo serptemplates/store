@@ -99,20 +99,32 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         }
       : null;
 
-  const videoScripts = (product.product_videos ?? []).map((video, index) => {
-    const videoId = video.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+  const videoScripts = (product.product_videos ?? [])
+    .map((entry, index) => {
+      const data = typeof entry === 'string' ? { url: entry } : entry;
+      if (!data?.url) return undefined;
 
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'VideoObject',
-      name: `${product.name} Demo Video ${index + 1}`,
-      description: `Product demonstration for ${product.name}`,
-      thumbnailUrl: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : images[0],
-      uploadDate: new Date().toISOString(),
-      contentUrl: video,
-      embedUrl: video.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/'),
-    };
-  });
+      const videoUrl = data.url;
+      const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+      const embedUrl = videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/');
+      const uploadDate = data.upload_date && data.upload_date.length === 8
+        ? `${data.upload_date.slice(0, 4)}-${data.upload_date.slice(4, 6)}-${data.upload_date.slice(6, 8)}`
+        : new Date().toISOString();
+
+      return {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: data.title ?? `${product.name} Demo Video ${index + 1}`,
+        description: data.description ?? `Product demonstration for ${product.name}`,
+        thumbnailUrl: data.thumbnail_url ?? (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : images[0]),
+        uploadDate,
+        contentUrl: videoUrl,
+        embedUrl,
+      };
+    })
+    .filter(Boolean);
 
   return (
     <>

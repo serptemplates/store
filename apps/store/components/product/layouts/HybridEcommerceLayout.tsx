@@ -98,7 +98,13 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     return [] as string[]
   }, [product.features, product.metadata?.features])
 
-  const videoEmbeds: string[] = useMemo(() => product.product_videos ?? [], [product.product_videos])
+  const videoEmbeds: string[] = useMemo(
+    () =>
+      (product.product_videos ?? [])
+        .map((entry) => (typeof entry === "string" ? entry : entry?.url))
+        .filter((url): url is string => typeof url === "string" && url.length > 0),
+    [product.product_videos],
+  )
   const githubUrl: string | undefined = product.github_repo_url || product.metadata?.github_repo_url
 
   const includedItems = useMemo(() => (

@@ -37,6 +37,14 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
 
   const homeProps = productToHomeTemplate(product, posts)
 
+  const videoEmbeds = useMemo(
+    () =>
+      (product.product_videos ?? [])
+        .map((entry) => (typeof entry === "string" ? entry : entry?.url))
+        .filter((url): url is string => typeof url === "string" && url.length > 0),
+    [product.product_videos],
+  )
+
   const price = product.pricing
   const handle = product.slug
   const brandLogoPath = getBrandLogoPath(handle)
@@ -239,13 +247,13 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         </div>
       </div>
 
-      {product.product_videos && product.product_videos.length > 0 && (
+      {videoEmbeds.length > 0 && (
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
               <iframe
                 key={selectedVideoIndex}
-                src={product.product_videos[selectedVideoIndex]
+                src={videoEmbeds[selectedVideoIndex]
                   .replace("watch?v=", "embed/")
                   .replace("vimeo.com/", "player.vimeo.com/video/")
                   .replace("youtu.be/", "youtube.com/embed/")}
@@ -255,9 +263,9 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
               />
             </div>
 
-            {product.product_videos.length > 1 && (
+            {videoEmbeds.length > 1 && (
               <div className="flex items-center gap-2 mt-4 justify-center">
-                {product.product_videos.map((_, index) => (
+                {videoEmbeds.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedVideoIndex(index)}
