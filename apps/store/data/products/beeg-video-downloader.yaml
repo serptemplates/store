@@ -15,7 +15,7 @@ name: Beeg Video Downloader
 tagline: Download Beeg Video Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/beeg-video-downloader
 github_repo_tags: []
 features:
   - Download high-resolution videos with quality selection

@@ -15,7 +15,7 @@ name: Snapchat Video Downloader
 tagline: Download videos, images, and content from snapchat video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/snapchat-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/snapchat-video-downloader/main/images/snapchat-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/snapchat-video-downloader
 github_repo_tags: []
 features:
   - Download Snapchat stories and spotlight videos

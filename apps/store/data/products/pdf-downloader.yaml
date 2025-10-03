@@ -15,7 +15,7 @@ name: Pdf Downloader
 tagline: Download videos, images, and content from pdf with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pdf-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pdf-downloader/main/images/pdf-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/pdf-downloader
 github_repo_tags: []
 features:
   - Download PDF documents from various sources

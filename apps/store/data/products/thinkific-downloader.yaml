@@ -15,7 +15,7 @@ name: Thinkific Downloader
 tagline: Download videos, images, and content from thinkific with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/thinkific-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/thinkific-downloader/main/images/thinkific-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/thinkific-downloader
 github_repo_tags: []
 features:
   - Download complete Thinkific courses and learning paths

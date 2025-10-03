@@ -15,7 +15,7 @@ name: Vk Video Downloader
 tagline: Download videos, images, and content from vk video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vk-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/vk-video-downloader/main/images/vk-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/vk-video-downloader
 github_repo_tags: []
 features:
   - Download VK videos and social media content

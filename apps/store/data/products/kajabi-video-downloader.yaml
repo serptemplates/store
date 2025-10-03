@@ -15,7 +15,7 @@ name: Kajabi Video Downloader
 tagline: Download videos, images, and content from kajabi video with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/kajabi-video-downloader/main/images/kajabi-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/kajabi-video-downloader
 github_repo_tags: []
 features:
   - Download complete Kajabi courses and coaching content

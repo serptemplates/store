@@ -15,7 +15,7 @@ name: XVideos Downloader
 tagline: Download XVideos Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/xvideos-video-downloader
 github_repo_tags: []
 features:
   - Download videos in HD quality with multiple resolution options

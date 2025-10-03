@@ -15,7 +15,7 @@ name: Nicovideo Downloader
 tagline: Download videos, images, and content from nicovideo with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/nicovideo-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/nicovideo-downloader/main/images/nicovideo-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/nicovideo-downloader
 github_repo_tags: []
 features:
   - Download videos from NicoNico Douga platform

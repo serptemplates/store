@@ -15,7 +15,7 @@ name: Erome Downloader
 tagline: Download videos, images, and content from erome with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/erome-downloader
 github_repo_tags: []
 features:
   - Download multimedia content from Erome platform

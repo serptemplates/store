@@ -15,7 +15,7 @@ name: Terabox Downloader
 tagline: Download videos, images, and content from terabox with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/terabox-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/terabox-downloader/main/images/terabox-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/terabox-downloader
 github_repo_tags: []
 features:
   - Download files from TeraBox cloud storage

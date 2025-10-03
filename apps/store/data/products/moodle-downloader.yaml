@@ -15,7 +15,7 @@ name: Moodle Downloader
 tagline: Download videos, images, and content from moodle with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/moodle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/moodle-downloader/main/images/moodle-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/moodle-downloader
 github_repo_tags: []
 features:
   - Download complete Moodle courses and resources

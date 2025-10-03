@@ -15,7 +15,7 @@ name: Gohighlevel Downloader
 tagline: Download videos, images, and content from gohighlevel with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/gohighlevel-downloader/main/images/gohighlevel-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/gohighlevel-downloader
 github_repo_tags: []
 features:
   - Download GoHighLevel CRM data and marketing assets

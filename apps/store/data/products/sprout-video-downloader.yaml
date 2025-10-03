@@ -15,7 +15,7 @@ name: Sprout Video Downloader
 tagline: Download Sprout Video Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/sprout-video-downloader
 github_repo_tags: []
 features:
   - Download Sprout Video content and business videos

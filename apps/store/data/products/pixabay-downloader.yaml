@@ -15,7 +15,7 @@ name: Pixabay Downloader
 tagline: Download videos, images, and content from pixabay with our reliable downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pixabay-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pixabay-downloader/main/images/pixabay-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/pixabay-downloader
 github_repo_tags: []
 features:
   - Download high-quality royalty-free images and videos

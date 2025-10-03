@@ -15,7 +15,7 @@ name: Stream Downloader
 tagline: Download Stream Downloader instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stream-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stream-downloader/main/images/stream-downloader.gif
-github_repo_url: https://github.com/serpapps
+github_repo_url: https://github.com/serpapps/stream-downloader
 github_repo_tags: []
 features:
   - Download live streams from various platforms
