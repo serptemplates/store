@@ -6,7 +6,7 @@ import { z } from "zod";
  * `serp-license-key-management` backend expects (`backend/src/types/database.ts`).
  */
 const expiresAtSchema = z
-  .union([z.number(), z.string()])
+  .union([z.number(), z.string(), z.null()])
   .optional()
   .transform((value) => {
     if (value === undefined || value === null || value === "") {
