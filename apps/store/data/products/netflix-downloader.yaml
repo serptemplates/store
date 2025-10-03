@@ -15,7 +15,7 @@ stripe:
 name: Netflix Downloader
 tagline: Download videos, images, and content from netflix with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/netflix-downloader/main/images/netflix-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/netflix-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/netflix-downloader/main/images/netflix-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from netflix with our reliable
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/netflix-downloader.jpg
+  alt: Netflix Downloader website preview
 faqs:
 - question: How do I download Netflix videos?
   answer: To download Netflix videos, you can use specialized software or browser

@@ -15,7 +15,7 @@ stripe:
 name: Coursera Downloader
 tagline: Download videos, images, and content from coursera with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/coursera-downloader/main/images/featured.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/coursera-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from coursera with our reliabl
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
+  alt: Coursera Downloader website preview
 faqs:
 - question: How can I download Coursera courses for offline viewing?
   answer: 'To download Coursera courses, you typically need: 1) An active subscription

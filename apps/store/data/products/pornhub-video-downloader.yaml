@@ -40,7 +40,9 @@ features:
 description: Pornhub video downloader
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg
+  alt: Pornhub Video Downloader website preview
 faqs:
 - question: How do I download Pornhub videos?
   answer: To download Pornhub videos, you can use specialized software or browser
@@ -136,3 +138,4 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 buy_button_destination: https://ghl.serp.co/payment-link/68df984e2197096081e262eb
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg

@@ -15,7 +15,7 @@ stripe:
 name: Whop Video Downloader
 tagline: Download videos, images, and content from whop video with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from whop video with our relia
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
+  alt: Whop Video Downloader website preview
 faqs:
 - question: How do I download Whop videos?
   answer: To download Whop videos, you can use specialized software or browser extensions

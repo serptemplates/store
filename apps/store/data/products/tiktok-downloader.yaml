@@ -39,7 +39,9 @@ features:
 description: Get quick access to Tiktok Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
+  alt: Tiktok Downloader website preview
 faqs:
 - question: How do I download content from Tiktok?
   answer: To download Tiktok content, you can use browser extensions, online downloaders,
@@ -130,3 +132,4 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 buy_button_destination: https://serp.ly/tiktok-downloader
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg

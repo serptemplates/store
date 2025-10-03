@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_SrGW6pAdy73l9t
 name: XVideos Downloader
 tagline: Download XVideos Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -41,7 +41,9 @@ features:
 description: Get quick access to XVideos Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
+  alt: XVideos Downloader website preview
 faqs:
 - question: How do I download Xvideos videos?
   answer: To download Xvideos videos, you can use specialized software or browser

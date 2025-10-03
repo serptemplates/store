@@ -15,7 +15,7 @@ stripe:
 name: Moodle Downloader
 tagline: Download videos, images, and content from moodle with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/moodle-downloader/main/images/moodle-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/moodle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/moodle-downloader/main/images/moodle-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from moodle with our reliable 
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/moodle-downloader.jpg
+  alt: Moodle Downloader website preview
 faqs:
 - question: How can I download Moodle courses for offline viewing?
   answer: 'To download Moodle courses, you typically need: 1) An active subscription

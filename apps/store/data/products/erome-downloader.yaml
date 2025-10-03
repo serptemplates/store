@@ -15,7 +15,7 @@ stripe:
 name: Erome Downloader
 tagline: Download videos, images, and content from erome with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from erome with our reliable d
   tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg
+  alt: Erome Downloader website preview
 faqs:
 - question: How do I download Erome videos?
   answer: To download Erome videos, you can use specialized software or browser extensions

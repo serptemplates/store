@@ -16,7 +16,7 @@ stripe:
 name: Stripchat Video Downloader
 tagline: Download videos, images, and content from stripchat video with our reliable
   downloader tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/stripchat-video-downloader/main/images/stripchat-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stripchat-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stripchat-video-downloader/main/images/stripchat-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -45,7 +45,9 @@ description: Download videos, images, and content from stripchat video with our 
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stripchat-video-downloader.jpg
+  alt: Stripchat Video Downloader website preview
 faqs:
 - question: How do I download Stripchat videos?
   answer: To download Stripchat videos, you can use specialized software or browser

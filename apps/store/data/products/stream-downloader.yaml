@@ -13,7 +13,7 @@ stripe:
     stripe_product_id: prod_Sv6HYumVhrKaBc
 name: Stream Downloader
 tagline: Download Stream Downloader instantly to your device.
-featured_image: https://raw.githubusercontent.com/serpapps/stream-downloader/main/images/stream-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stream-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stream-downloader/main/images/stream-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -41,7 +41,9 @@ features:
 description: Get quick access to Stream Downloader content for offline use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stream-downloader.jpg
+  alt: Stream Downloader website preview
 faqs:
 - question: How do I download Stream videos?
   answer: To download Stream videos, you can use specialized software or browser extensions

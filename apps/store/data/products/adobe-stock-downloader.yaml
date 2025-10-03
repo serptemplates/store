@@ -15,7 +15,7 @@ stripe:
 name: Adobe Stock Downloader
 tagline: Download videos, images, and content from adobe stock with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/adobe-stock-downloader/main/images/featured.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/adobe-stock-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/adobe-stock-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from adobe stock with our reli
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/adobe-stock-downloader.jpg
+  alt: Adobe Stock Downloader website preview
 faqs:
 - question: How do I download images from Adobe Stock?
   answer: 'To download from Adobe Stock: 1) Create an account and choose a subscription

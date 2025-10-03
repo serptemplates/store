@@ -16,7 +16,7 @@ stripe:
 name: Pexels Video Downloader
 tagline: Download videos, images, and content from pexels video with our reliable
   downloader tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/pexels-video-downloader/main/images/pexels-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pexels-video-downloader/main/images/pexels-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -45,7 +45,9 @@ description: Download videos, images, and content from pexels video with our rel
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
+  alt: Pexels Video Downloader website preview
 faqs:
 - question: How do I download images from Pexels?
   answer: 'To download from Pexels: 1) Create an account and choose a subscription

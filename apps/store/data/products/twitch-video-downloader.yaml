@@ -16,7 +16,7 @@ stripe:
 name: Twitch Video Downloader
 tagline: Download videos, images, and content from twitch video with our reliable
   downloader tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/twitch-video-downloader/main/images/twitch-video-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/twitch-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/twitch-video-downloader/main/images/twitch-video-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -45,7 +45,9 @@ description: Download videos, images, and content from twitch video with our rel
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/twitch-video-downloader.jpg
+  alt: Twitch Video Downloader website preview
 faqs:
 - question: How do I download Twitch videos?
   answer: To download Twitch videos, you can use specialized software or browser extensions

@@ -15,7 +15,7 @@ stripe:
 name: Soundcloud Downloader
 tagline: Download videos, images, and content from soundcloud with our reliable downloader
   tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/soundcloud-downloader/main/images/soundcloud-downloader.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundcloud-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/soundcloud-downloader/main/images/soundcloud-downloader.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -44,7 +44,9 @@ description: Download videos, images, and content from soundcloud with our relia
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundcloud-downloader.jpg
+  alt: Soundcloud Downloader website preview
 faqs:
 - question: How do I download Soundcloud videos?
   answer: To download Soundcloud videos, you can use specialized software or browser

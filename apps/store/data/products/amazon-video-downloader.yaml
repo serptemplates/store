@@ -16,7 +16,7 @@ stripe:
 name: Amazon Video Downloader
 tagline: Download videos, images, and content from amazon video with our reliable
   downloader tool. Fast, secure, and easy to use.
-featured_image: https://raw.githubusercontent.com/serpapps/amazon-video-downloader/main/images/featured.jpg
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/amazon-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/amazon-video-downloader/main/images/featured.gif
 github_repo_url: https://github.com/serpapps
 github_repo_tags: []
@@ -45,7 +45,9 @@ description: Download videos, images, and content from amazon video with our rel
   downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
-screenshots: []
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/amazon-video-downloader.jpg
+  alt: Amazon Video Downloader website preview
 faqs:
 - question: How do I download Amazon videos?
   answer: To download Amazon videos, you can use specialized software or browser extensions
