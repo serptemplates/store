@@ -80,7 +80,7 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       pricing: {
         price: "$49",
-        cta_href: "https://checkout.example.com",
+        cta_href: "https://store.serp.co/checkout/example",
         cta_text: "Get Started",
         benefits: ["One", "Two"],
       },
@@ -97,7 +97,7 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, posts as any);
 
-    expect(template.ctaHref).toBe("https://checkout.example.com");
+    expect(template.ctaHref).toBe("https://store.serp.co/checkout/example");
     expect(template.ctaText).toBe("Get Started");
     const pricing = template.pricing!;
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
@@ -106,7 +106,7 @@ describe("productToHomeTemplate", () => {
   });
 
   it("prefers buy_button_destination for CTA links when provided", () => {
-    const destination = "https://external.example.com/landing";
+    const destination = "https://store.serp.co/external/landing";
     const product: ProductData = {
       ...baseProduct,
       buy_button_destination: destination,
@@ -116,5 +116,23 @@ describe("productToHomeTemplate", () => {
 
     expect(template.ctaHref).toBe(destination);
     expect(template.pricing?.ctaHref).toBe(destination);
+  });
+
+  it("falls back to store product page when links are missing or unsupported", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      buy_button_destination: undefined,
+      pricing: {
+        price: baseProduct.pricing?.price,
+        benefits: baseProduct.pricing?.benefits ?? [],
+        cta_href: "https://example.com/not-allowed",
+      },
+      purchase_url: "https://serp.ly/something",
+      product_page_url: "https://store.serp.co/products/sample-product",
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaHref).toBe("https://store.serp.co/products/sample-product");
   });
 });

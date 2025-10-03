@@ -41,8 +41,15 @@
       "format": "uri"
     },
     "buy_button_destination": {
-      "type": "string",
-      "format": "uri"
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "name": {
       "type": "string",
