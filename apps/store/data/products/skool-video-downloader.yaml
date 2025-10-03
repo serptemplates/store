@@ -15,9 +15,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-skool-video-downloader
-  workflow_ids:
-  - 96d28efa-3f67-4fa3-b39a-48585c3e35da
-  opportunity_name_template: '{{offerName}} • {{customerEmail}}'
+buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
 name: Skool Video Downloader
 tagline: Add a download button to Skool classrooms and archive every lesson for offline
   access.
@@ -29,26 +27,26 @@ github_repo_tags:
 - skool-video-downloader
 - download-skool-videos
 features:
-- Download complete Skool courses and classroom content offline
-- Extract video lessons, documents, and course materials
-- Maintain course structure with organized folder hierarchy
-- Automatic login and session management for enrolled courses
-- Batch download multiple courses simultaneously
-- Download community posts, discussions, and comments
-- Extract course attachments and supplementary files
-- Support for live stream recording and playback
-- Progress tracking for large course downloads
-- Automatic quality selection for optimal file sizes
-- Resume interrupted downloads seamlessly
-- Export course data in multiple formats (PDF, EPUB, etc.)
-- Built-in search and filtering for specific content
-- Backup and sync capabilities for course libraries
-- Command-line tools for advanced automation
-- Integration with popular note-taking applications
-- Offline viewing with built-in media player
-- Cross-platform desktop application support
-- Regular updates to maintain Skool compatibility
-- Privacy-focused with local storage only
+- Download full courses offline
+- Save videos, docs, and materials
+- Preserve course structure
+- Auto-login for enrolled courses
+- Batch download multiple courses
+- Export posts and discussions
+- Download all attachments
+- Record live streams
+- Track download progress
+- Optimize file sizes
+- Resume interrupted downloads
+- Export to PDF and EPUB
+- Search and filter content
+- Backup course libraries
+- CLI for automation
+- Sync with note-taking apps
+- Offline media player
+- Works on all platforms
+- Always Skool-compatible
+- Local storage only
 description: Skool Video Downloader is a browser extension that injects a download
   button on skool.com so you can back up every classroom video before access expires.
   Preserve lessons from community posts, about pages, and private course areas, all
@@ -114,6 +112,10 @@ faqs:
 supported_operating_systems:
 - windows
 - macos
+- linux
+- chrome
+- firefox
+- edge
 status: live
 categories:
 - Downloader

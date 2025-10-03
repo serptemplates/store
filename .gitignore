@@ -46,9 +46,7 @@ next-env.d.ts
 
 # Override any global '*.com' ignore rules for site folders
 !sites/*.com/
-!sites/getlooma.com/
-!sites/downloadvimeo.com/
-!sites/skooldownloader.com/
+!sites/apps.serp.co/
 
 .next
 **/out/

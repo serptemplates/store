@@ -11,6 +11,7 @@ stripe:
   cancel_url: https://store.serp.co/products/vimeo-video-downloader
   metadata:
     source: lander-template
+buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
 ghl:
   source: Stripe Checkout
   tag_ids:
@@ -43,26 +44,26 @@ pricing:
   - Unlimited downloads with no throttling
   - SERP Apps support when you need help
 features:
-- Download high-definition Vimeo videos in multiple quality options
-- Batch download entire playlists and channels with one click
-- Extract video metadata including title, description, and tags
-- Support for password-protected and private Vimeo content
-- Automatic subtitle and closed caption extraction
-- Resume interrupted downloads with smart recovery
-- Convert videos to popular formats (MP4, AVI, MOV, etc.)
-- Download video thumbnails and preview images
-- Command-line interface for automated workflows
-- Cross-platform compatibility (Windows, Mac, Linux)
-- Bypass geo-restrictions and regional blocks
-- Extract audio-only tracks in high quality
-- Organize downloads with custom folder structures
-- Built-in video player for preview before download
-- Scheduler for downloading videos at specific times
-- Progress tracking with detailed download statistics
-- Proxy support for enhanced privacy and access
-- Duplicate detection to avoid redundant downloads
-- Integration with cloud storage services
-- Regular updates to maintain compatibility with Vimeo changes
+- Download in HD and 4K quality
+- Batch download playlists and channels
+- Extract titles, descriptions, and tags
+- Access password-protected videos
+- Download subtitles and captions
+- Resume interrupted downloads
+- Convert to MP4, AVI, MOV formats
+- Save thumbnails and previews
+- CLI for automation
+- Works on Windows, Mac, Linux
+- Bypass geo-restrictions
+- Extract audio-only tracks
+- Custom folder organization
+- Preview before downloading
+- Schedule downloads
+- Track download progress
+- Proxy support for privacy
+- Detect and skip duplicates
+- Sync to cloud storage
+- Always Vimeo-compatible
 description: Vimeo Video Downloader is a powerful desktop application that allows
   you to download any Vimeo video with just one click, including private videos, live
   stream replays, and restricted content that normally can't be downloaded. Built
