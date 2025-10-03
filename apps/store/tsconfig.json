@@ -52,13 +52,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-  "node_modules",
-  "../../sites/downloadvimeo.com/**/*",
-  "../../sites/getlooma.com/**/*",
-  "../../sites/skooldownloader.com/**/*",
-  "../../sites/tiktokdownloaderapp.com/**/*",
-  "../../sites/udemyvideodownloader.com/**/*",
-  "../../sites/wistiadownloader.com/**/*"
-]
+    "node_modules"
+  ]
 
 }

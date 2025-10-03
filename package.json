@@ -9,13 +9,6 @@
   ],
   "scripts": {
     "dev": "pnpm --filter @apps/store dev",
-    "dev:vimeo": "pnpm --filter @apps/downloadvimeo.com dev",
-    "dev:loom": "pnpm --filter @apps/getlooma.com dev",
-    "dev:skool": "pnpm --filter @apps/skooldownloader.com dev",
-    "dev:tiktok": "pnpm --filter @apps/tiktokdownloaderapp.com dev",
-    "dev:wistia": "pnpm --filter @apps/wistiadownloader.com dev",
-    "dev:udemy": "pnpm --filter @apps/udemyvideodownloader.com dev",
-    "dev:orange": "pnpm --filter @apps/orangepornvideos.net dev",
     "build": "pnpm -r --parallel build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r --if-present typecheck",
