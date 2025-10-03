@@ -47,10 +47,13 @@ features:
   - Local storage only
 description: Skool Video Downloader is a browser extension that injects a download button on skool.com so you can back up every classroom video before access expires. Preserve lessons from community posts, about pages, and private course areas, all while keeping original quality.
 product_videos:
-  - https://www.youtube.com/watch?v=YBBSkdb1YAw
+  - https://www.youtube.com/watch?v=J9eetd89HZk
   - https://www.youtube.com/watch?v=WRSzeFI_Q7g
 related_videos:
-  - https://www.youtube.com/watch?v=J9eetd89HZk
+  - https://www.youtube.com/watch?v=Ez7vpisxEdY
+  - https://www.youtube.com/watch?v=YBBSkdb1YAw
+  - https://www.youtube.com/watch?v=tgDmBdReTqA
+  - https://www.youtube.com/watch?v=YH-oF2cWoDI
 screenshots:
   - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
     alt: Skool Video Downloader website preview

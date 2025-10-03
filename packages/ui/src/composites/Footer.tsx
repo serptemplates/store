@@ -8,6 +8,7 @@ export type FooterProps = {
 };
 
 const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
+  { label: "Videos", href: "/videos" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "DMCA", href: "/dmca" },
