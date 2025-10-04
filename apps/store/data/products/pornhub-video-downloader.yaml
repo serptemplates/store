@@ -111,5 +111,5 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68df984e2197096081e262eb
+buy_button_destination: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg

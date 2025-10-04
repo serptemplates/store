@@ -117,6 +117,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-soundgasm-downloader
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Soundgasm Downloader

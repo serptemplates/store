@@ -136,4 +136,4 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
-buy_button_destination: null
+buy_button_destination: https://ghl.serp.co/payment-link/68e022c6613b1b4c4ace7f2b

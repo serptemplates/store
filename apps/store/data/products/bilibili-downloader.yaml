@@ -88,6 +88,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-bilibili-downloader
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Bilibili Downloader
