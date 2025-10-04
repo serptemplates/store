@@ -118,7 +118,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-internet-archive-downloader
-pre_release: false
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Internet Archive Downloader

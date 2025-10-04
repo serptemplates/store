@@ -83,7 +83,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-123rf-downloader
-pre_release: false
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with 123rf Downloader
