@@ -29,11 +29,7 @@ export type ClientHomeProps = {
 
 export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
-<<<<<<< HEAD
-  const resolvedVideos = (productVideos ?? []).filter((video): video is ProductVideoEntry => Boolean(video))
-=======
   const resolvedVideos = videoEntries
->>>>>>> aeaceb6 (add video support (#51))
   const primaryWatchVideo = resolvedVideos.find((video) => video.source === 'primary') ?? resolvedVideos[0]
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
   const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
