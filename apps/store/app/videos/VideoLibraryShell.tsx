@@ -41,20 +41,16 @@ export default function VideoLibraryShell({
     });
   }, [videos, activeFilter, normalizedQuery]);
 
-  const [featuredVideo, ...remainingVideos] = filteredVideos;
+  const visibleVideos = filteredVideos;
   return (
     <div className="bg-muted/20 py-12">
       <div className="container space-y-10">
         <header className="mx-auto max-w-3xl space-y-4 text-center">
-          <span className="inline-flex items-center justify-center rounded-full bg-primary/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
-            Video Library
-          </span>
+ 
           <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-            Explore every {siteName} walkthrough in one place
+            Videos
           </h1>
-          <p className="text-base text-muted-foreground">
-            Browse demos and related tutorials, filter by product, and jump straight into the optimized watch experience.
-          </p>
+
         </header>
 
         <div className="mx-auto flex w-full flex-col gap-4">
@@ -107,53 +103,8 @@ export default function VideoLibraryShell({
           </div>
         </div>
 
-        {featuredVideo && (
-          <article className="mx-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-sm">
-            <Link href={featuredVideo.watchPath} className="block">
-              {featuredVideo.thumbnailUrl ? (
-                <div className="relative aspect-video w-full bg-muted">
-                  <Image
-                    src={featuredVideo.thumbnailUrl}
-                    alt={featuredVideo.title}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 1024px, 100vw"
-                    priority
-                    unoptimized
-                  />
-                  <span className="absolute bottom-3 right-3 rounded bg-black/70 px-2 py-1 text-xs font-semibold text-white">
-                    Watch now
-                  </span>
-                </div>
-              ) : (
-                <div className="flex aspect-video w-full items-center justify-center bg-muted text-xs text-muted-foreground">
-                  Preview coming soon
-                </div>
-              )}
-            </Link>
-            <div className="flex gap-3 px-6 pb-6 pt-5">
-              <div className="mt-1 h-12 w-12 flex-shrink-0 rounded-full bg-primary/10 text-primary">
-                <span className="flex h-full w-full items-center justify-center text-sm font-semibold">
-                  {featuredVideo.productName.slice(0, 2).toUpperCase()}
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col gap-1">
-                <h2 className="text-xl font-semibold leading-tight text-foreground">
-                  <Link href={featuredVideo.watchPath} className="hover:text-primary">
-                    {featuredVideo.title}
-                  </Link>
-                </h2>
-                <p className="text-sm text-muted-foreground">{featuredVideo.productName}</p>
-                <p className="text-xs uppercase tracking-wide text-muted-foreground/80">
-                  {siteName} • {featuredVideo.source === 'primary' ? 'Demo premiere' : 'Related walkthrough'}
-                </p>
-              </div>
-            </div>
-          </article>
-        )}
-
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {(featuredVideo ? remainingVideos : filteredVideos).map((item) => (
+          {visibleVideos.map((item) => (
             <article key={item.watchPath} className="flex flex-col gap-3">
               <Link href={item.watchPath} className="group relative block overflow-hidden rounded-2xl border border-border bg-muted">
                 {item.thumbnailUrl ? (
@@ -179,21 +130,13 @@ export default function VideoLibraryShell({
                   </div>
                 )}
               </Link>
-              <div className="flex gap-3">
-                <div className="mt-1 h-9 w-9 flex-shrink-0 rounded-full bg-primary/10 text-primary">
-                  <span className="flex h-full w-full items-center justify-center text-xs font-semibold">
-                    {item.productName.slice(0, 2).toUpperCase()}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col gap-1">
-                  <h3 className="text-sm font-semibold leading-snug text-foreground">
-                    <Link href={item.watchPath} className="hover:text-primary">
-                      {item.title}
-                    </Link>
-                  </h3>
-                  <p className="text-xs text-muted-foreground">{item.productName}</p>
-                  <p className="text-xs text-muted-foreground/80">{siteName} • {item.source === 'primary' ? 'Demo' : 'Related'}</p>
-                </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="text-sm font-semibold leading-snug text-foreground">
+                  <Link href={item.watchPath} className="hover:text-primary">
+                    {item.title}
+                  </Link>
+                </h3>
+                <p className="text-xs text-muted-foreground">{item.productName}</p>
               </div>
             </article>
           ))}

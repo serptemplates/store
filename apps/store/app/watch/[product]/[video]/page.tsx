@@ -4,12 +4,13 @@ import Link from "next/link";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 
-import { getProductData, getProductSlugs } from "@/lib/product";
+import { getAllProducts, getProductData, getProductSlugs } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { getProductVideoEntries } from "@/lib/video";
 import { getSiteBaseUrl, toAbsoluteUrl } from "@/lib/urls";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
-import { SiteNavbar } from "@repo/ui/composites/SiteNavbar";
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
+import { buildPrimaryNavProps } from "@/lib/navigation";
 
 type WatchPageParams = { product: string; video: string };
 
@@ -107,14 +108,11 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   }
 
   const { product, entry, siteName, watchUrl, productUrl } = context;
-  const relatedVideos = (product.related_videos ?? []).filter((videoUrl) => typeof videoUrl === "string" && videoUrl.trim().length > 0);
   const baseUrl = getSiteBaseUrl();
   const siteConfig = getSiteConfig();
   const navSiteName = siteConfig.site?.name ?? siteName;
-  const navCategories = (siteConfig.navigation?.links ?? [])
-    .map((link) => link.label)
-    .filter((label): label is string => Boolean(label));
-  const logoSrc = siteConfig.site?.logo ?? "/logo.png";
+  const allProducts = getAllProducts();
+  const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
   const siteRegions = Array.isArray((product as any).supported_regions)
     ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
     : [];
@@ -216,13 +214,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
 
   return (
     <>
-      <SiteNavbar
-        site={{ name: navSiteName, categories: navCategories, buyUrl: product.purchase_url }}
-        Link={Link}
-        brandSrc={logoSrc}
-        showLinks={Boolean(navCategories.length)}
-        showCta={false}
-      />
+      <PrimaryNavbar {...navProps} />
       <main className="min-h-screen bg-white text-gray-900">
       <Script id="video-object-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoObjectSchema) }} />
       <Script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
@@ -241,9 +233,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 lg:flex-row lg:items-start lg:gap-12">
         <article className="flex-1">
           <header className="mb-6">
-            <p className="text-xs uppercase tracking-wide text-blue-600">Product demo</p>
-            <h1 className="mt-2 text-3xl font-semibold text-gray-900">{entry.title}</h1>
-            <p className="mt-3 text-base text-gray-600">{entry.description}</p>
+            <h1 className="text-3xl font-semibold text-gray-900">{entry.title}</h1>
           </header>
 
           <div className="relative mb-6 overflow-hidden rounded-xl bg-black shadow-lg">
@@ -304,41 +294,11 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">{video.title}</span>
-                        <span className="text-xs text-gray-500">Watch now</span>
                       </div>
                     </Link>
                   </li>
                 ))}
-              {relatedVideos.map((videoUrl) => (
-                <li key={videoUrl}>
-                  <a
-                    href={videoUrl}
-                    className="group flex gap-3 rounded-lg border border-dashed border-gray-200 p-2 transition hover:border-blue-200 hover:bg-white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <div className="h-16 w-24 flex-shrink-0 overflow-hidden rounded-md bg-gray-200" />
-                    <div>
-                      <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">External video</span>
-                      <span className="block text-xs text-gray-500">Opens in new tab</span>
-                    </div>
-                  </a>
-                </li>
-              ))}
             </ul>
-          </section>
-
-          <section className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-            <h2 className="text-base font-semibold text-gray-900">Need help?</h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Our support team can help you install the extension, troubleshoot downloads, and ensure your archives stay up to date.
-            </p>
-            <a
-              href="mailto:support@serp.app"
-              className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-blue-300 hover:text-blue-700"
-            >
-              Contact support
-            </a>
           </section>
         </aside>
       </div>

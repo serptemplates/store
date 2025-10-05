@@ -5,8 +5,10 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar, Clock, FileText, User } from "lucide-react";
 
 import { getAllPosts } from "@/lib/blog";
+import { getAllProducts } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
-import { SiteNavbar } from "@repo/ui/composites/SiteNavbar";
+import { buildPrimaryNavProps } from "@/lib/navigation";
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
@@ -15,20 +17,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo
 export default function BlogIndexPage() {
   const posts = getAllPosts();
   const siteConfig = getSiteConfig();
+  const products = getAllProducts();
 
   const siteName = siteConfig.site?.name ?? "SERP Downloaders";
-  const ctaHref = siteConfig.cta?.href;
-  const ctaText = siteConfig.cta?.text ?? "Checkout";
+  const navProps = buildPrimaryNavProps({ products, siteConfig });
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <SiteNavbar
-        site={{ name: siteName, categories: [], buyUrl: ctaHref }}
-        Link={Link}
-        ctaHref={ctaHref}
-        ctaText={ctaText}
-        showCta={false}
-      />
+      <PrimaryNavbar {...navProps} />
 
       <main className="flex-1 bg-background">
         <section className="border-b bg-gradient-to-b from-primary/5 to-background">

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Script from "next/script";
 
 import { getAllProducts } from "@/lib/product";
 import { getProductVideoEntries } from "@/lib/video";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
+import { buildPrimaryNavProps } from "@/lib/navigation";
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
-import { SiteNavbar } from "@repo/ui/composites/SiteNavbar";
+
+import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
 
 import VideoLibraryShell from "./VideoLibraryShell";
 import type { VideoListingItem } from "./types";
@@ -66,12 +68,7 @@ export default function VideosPage() {
   });
 
   const siteName = siteConfig.site?.name ?? "SERP Apps";
-  const navbarCategories = (siteConfig.navigation?.links ?? [])
-    .map((link) => link.label)
-    .filter((label): label is string => Boolean(label));
-  const logoSrc = siteConfig.site?.logo ?? "/logo.png";
-  const ctaHref = siteConfig.cta?.href;
-  const ctaText = siteConfig.cta?.text ?? "Shop Tools";
+  const navProps = buildPrimaryNavProps({ products, siteConfig });
 
   const listSchema = {
     '@context': 'https://schema.org',
@@ -105,16 +102,17 @@ export default function VideosPage() {
 
   return (
     <>
-      <SiteNavbar
-        site={{ name: siteName, categories: navbarCategories, buyUrl: ctaHref }}
-        Link={Link}
-        brandSrc={logoSrc}
-        showLinks={Boolean(navbarCategories.length)}
-        showCta={Boolean(ctaHref)}
-        ctaText={ctaText}
-        ctaHref={ctaHref}
-      />
+      <PrimaryNavbar {...navProps} />
       <main className="min-h-screen bg-[#f9f9f9] text-[#0f0f0f]">
+        <div className="mx-auto w-full max-w-6xl px-4 pt-6">
+          <ProductBreadcrumb
+            className="text-xs text-muted-foreground"
+            items={[
+              { label: "Home", href: "/" },
+              { label: `Videos` },
+            ]}
+          />
+        </div>
         <Script id="videos-itemlist" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
         <VideoLibraryShell siteName={siteName} filters={filters} videos={sortedItems} />
       </main>
