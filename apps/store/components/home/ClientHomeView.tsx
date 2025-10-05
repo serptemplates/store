@@ -15,7 +15,7 @@ import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
-import type { ProductVideoEntry } from "@/lib/video"
+import { getProductVideoEntries } from "@/lib/video"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
 
@@ -24,10 +24,9 @@ export type ClientHomeProps = {
   posts: BlogPostMeta[]
   siteConfig: SiteConfig
   navProps: PrimaryNavProps
-  productVideos?: ProductVideoEntry[]
 }
 
-export function ClientHomeView({ product, posts, siteConfig, navProps, productVideos }: ClientHomeProps) {
+export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
   const resolvedVideos = (productVideos ?? []).filter((video): video is ProductVideoEntry => Boolean(video))
   const primaryWatchVideo = resolvedVideos.find((video) => video.source === 'primary') ?? resolvedVideos[0]

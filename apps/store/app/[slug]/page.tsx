@@ -6,7 +6,6 @@ import { getAllPosts } from "@/lib/blog";
 import { getAllProducts, getProductData, getProductSlugs } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
-import { getProductVideoEntries } from "@/lib/video";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -21,7 +20,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const siteConfig = getSiteConfig();
   const allProducts = getAllProducts();
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
-  const videoEntries = getProductVideoEntries(product);
 
   // Check for layout_type in product
   const layoutType = product.layout_type || 'landing';
@@ -30,7 +28,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     return (
       <>
         <PrimaryNavbar {...navProps} />
-        <HybridPage product={product} posts={posts} siteConfig={siteConfig} videoEntries={videoEntries} />
+        <HybridPage product={product} posts={posts} siteConfig={siteConfig} />
       </>
     );
   }
@@ -39,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <>
       <PrimaryNavbar {...navProps} />
-      <ClientHome product={product} posts={posts} siteConfig={siteConfig} navProps={navProps} productVideos={videoEntries} />
+      <ClientHome product={product} posts={posts} siteConfig={siteConfig} navProps={navProps} />
     </>
   );
 }
