@@ -9,7 +9,6 @@ import Image from "next/image"
 import { HomeTemplate } from "@repo/templates"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
-import { SiteNavbar } from "@repo/ui/composites/SiteNavbar"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
 import type { BlogPostMeta } from "@/lib/blog"
@@ -17,14 +16,17 @@ import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { getProductVideoEntries } from "@/lib/video"
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
+import type { PrimaryNavProps } from "@/lib/navigation"
 
 export type ClientHomeProps = {
   product: ProductData
   posts: BlogPostMeta[]
   siteConfig: SiteConfig
+  navProps: PrimaryNavProps
 }
 
-export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) {
+export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
   const productVideos = getProductVideoEntries(product)
   const primaryWatchVideo = productVideos.find((video) => video.source === 'primary') ?? productVideos[0]
@@ -36,49 +38,7 @@ export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) 
 
   const showPosts = siteConfig.blog?.enabled !== false
 
-  const BreadcrumbsSection = useCallback(() => (
-    <nav aria-label="Breadcrumb" className="w-full bg-gray-50 dark:bg-gray-900 border-b">
-      <div className="container mx-auto px-4">
-        <ol className="flex items-center space-x-2 py-3 text-sm">
-          <li>
-            <NextLink
-              href="/"
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-            >
-              Home
-            </NextLink>
-          </li>
-          <li className="text-gray-400 dark:text-gray-600">/</li>
-          <li>
-            <NextLink
-              href="/#products"
-              className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-            >
-              Products
-            </NextLink>
-          </li>
-          <li className="text-gray-400 dark:text-gray-600">/</li>
-          <li className="text-gray-900 dark:text-gray-100 font-medium">{product.name}</li>
-        </ol>
-      </div>
-    </nav>
-  ), [product.name])
-
-  const Navbar = useCallback(() => (
-    <>
-      <SiteNavbar
-        site={{
-          name: siteConfig.site?.name ?? "SERP Apps",
-          categories: [],
-          buyUrl: siteConfig.cta?.href ?? homeProps.ctaHref ?? product.purchase_url,
-        }}
-        Link={NextLink}
-        showLinks={false}
-        showCta={false}
-      />
-      <BreadcrumbsSection />
-    </>
-  ), [BreadcrumbsSection, siteConfig, homeProps, product])
+  const Navbar = useCallback(() => <PrimaryNavbar {...navProps} />, [navProps])
 
   const Footer = useCallback(() => <FooterComposite />, [])
 
@@ -138,6 +98,11 @@ export function ClientHomeView({ product, posts, siteConfig }: ClientHomeProps) 
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
         ctaText={siteConfig.cta?.text ?? homeProps.ctaText}
         ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Products", href: "/#products" },
+          { label: product.name },
+        ]}
         pricing={
           homeProps.pricing
             ? {

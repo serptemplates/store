@@ -88,27 +88,6 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
       <ProductStructuredDataScripts product={product} posts={posts} siteConfig={siteConfig} images={allImages} />
       <ProductStructuredData product={product} url={productUrl} />
 
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-xl font-bold">
-              {siteConfig.site?.name || "Store"}
-            </Link>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-600 hover:text-gray-900">
-                Home
-              </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-gray-900">
-                Shop
-              </Link>
-              <Link href="/blog" className="text-gray-600 hover:text-gray-900">
-                Blog
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <StickyPurchaseBar
         product={product}
         priceLabel={price?.label ?? null}

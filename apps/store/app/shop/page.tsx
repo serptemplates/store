@@ -1,5 +1,9 @@
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { ProductGrid } from "@/components/shop/product-grid"
 import { getProducts } from "@/lib/products-data"
+import { getAllProducts } from "@/lib/product"
+import { getSiteConfig } from "@/lib/site-config"
+import { buildPrimaryNavProps } from "@/lib/navigation"
 
 export const metadata = {
   title: "Shop - SERP Store",
@@ -8,8 +12,13 @@ export const metadata = {
 
 export default async function ShopPage() {
   const products = await getProducts()
+  const siteConfig = getSiteConfig()
+  const navProducts = getAllProducts()
+  const navProps = buildPrimaryNavProps({ products: navProducts, siteConfig })
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
+      <PrimaryNavbar {...navProps} />
+      <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -91,6 +100,7 @@ export default async function ShopPage() {
           <p className="text-gray-600">Get help when you need it</p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

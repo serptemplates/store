@@ -1,12 +1,20 @@
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { Hero } from "@/components/Hero"
 import { SocialProof } from "@/components/SocialProof"
 import { WhoIsBehind } from "@/components/home/WhoIsBehind"
 import { ConversionAudit } from "@/components/ConversionAudit"
 import { FAQ } from "@/components/FAQ"
+import { getAllProducts } from "@/lib/product"
+import { getSiteConfig } from "@/lib/site-config"
+import { buildPrimaryNavProps } from "@/lib/navigation"
 
 export default function DemoPage() {
+  const siteConfig = getSiteConfig()
+  const products = getAllProducts()
+  const navProps = buildPrimaryNavProps({ products, siteConfig })
   return (
     <div className="min-h-screen bg-white">
+      <PrimaryNavbar {...navProps} />
       {/* Hero Section */}
       <Hero />
 

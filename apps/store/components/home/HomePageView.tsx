@@ -4,6 +4,9 @@ import Script from "next/script"
 
 import { CATEGORY_RULES, PRIMARY_CATEGORIES } from "@/lib/category-constants"
 import { getAllProducts } from "@/lib/product"
+import { getSiteConfig } from "@/lib/site-config"
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
+import { buildPrimaryNavProps } from "@/lib/navigation"
 import type { ProductData } from "@/lib/product-schema"
 import { WhoIsBehind } from "./WhoIsBehind"
 
@@ -184,20 +187,13 @@ function deriveCategories(product: ProductData): string[] {
   return [...recognized, ...additional]
 }
 
-const navLinks = [
-  { label: "Videos", href: "/videos" as const },
-  { label: "Articles", href: "/blog" as const },
-  { label: "Github", href: "https://github.com/serpapps" as const },
-  { label: "Help", href: "https://serp.ly/@serp/support" as const },
-  { label: "Account", href: "/account" as const },
-  
-]
-
 const heroDescription =
   "Browse the full SERP Apps catalog of downloaders, automations, and growth tools."
 
 export function HomePageView() {
   const products = getAllProducts()
+  const siteConfig = getSiteConfig()
+  const navProps = buildPrimaryNavProps({ products, siteConfig, showCta: false })
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -252,16 +248,6 @@ export function HomePageView() {
     },
   }
 
-  const productLinks = products
-    .map((product) => ({ slug: product.slug, name: product.name }))
-    .sort((a, b) => a.name.localeCompare(b.name))
-
-  const columnCount = 4
-  const itemsPerColumn = Math.ceil(productLinks.length / columnCount)
-  const productColumns = Array.from({ length: columnCount }, (_, index) =>
-    productLinks.slice(index * itemsPerColumn, (index + 1) * itemsPerColumn),
-  ).filter((column) => column.length > 0)
-
   const filterItems = products.map((product) => {
     const broadCategories = deriveCategories(product)
     const keywords = Array.from(
@@ -312,57 +298,7 @@ export function HomePageView() {
       />
 
       <div className="flex min-h-screen flex-col bg-background">
-        <header className="relative z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <nav className="container flex h-16 items-center justify-between">
-            <NextLink href="/" className="text-lg font-semibold">
-              SERP
-            </NextLink>
-            <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
-              <div className="relative group">
-                <button className="font-medium transition-colors hover:text-foreground">Apps</button>
-                <div className="absolute right-0 top-full z-50 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl group-hover:block group-focus-within:block">
-                  <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {productColumns.map((column, columnIndex) => (
-                      <div key={columnIndex} className="space-y-2">
-                        {column.map((item) => (
-                          <NextLink
-                            key={item.slug}
-                            href={`/${item.slug}`}
-                            className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                          >
-                            {item.name}
-                          </NextLink>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {navLinks.map((link) => (
-                <NextLink
-                  key={link.label}
-                  href={link.href}
-                  className="transition-colors hover:text-foreground"
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  {link.label}
-                </NextLink>
-              ))}
-            </div>
-          </nav>
-          <details className="container border-t border-border/60 py-3 text-sm text-muted-foreground sm:hidden">
-            <summary className="cursor-pointer list-none font-medium text-foreground">Browse products</summary>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {productLinks.map((item) => (
-                <NextLink key={item.slug} href={`/${item.slug}`} className="block">
-                  {item.name}
-                </NextLink>
-              ))}
-            </div>
-          </details>
-        </header>
+        <PrimaryNavbar {...navProps} />
 
         <main className="container flex flex-col gap-16 py-16">
           <section className="relative z-0 text-center space-y-6">
