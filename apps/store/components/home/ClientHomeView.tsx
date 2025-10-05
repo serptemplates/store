@@ -15,7 +15,7 @@ import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
-import { getProductVideoEntries } from "@/lib/video"
+import type { ProductVideoEntry } from "@/lib/video"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
 
@@ -24,11 +24,16 @@ export type ClientHomeProps = {
   posts: BlogPostMeta[]
   siteConfig: SiteConfig
   navProps: PrimaryNavProps
+  videoEntries: ProductVideoEntry[]
 }
 
-export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientHomeProps) {
+export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
+<<<<<<< HEAD
   const resolvedVideos = (productVideos ?? []).filter((video): video is ProductVideoEntry => Boolean(video))
+=======
+  const resolvedVideos = videoEntries
+>>>>>>> aeaceb6 (add video support (#51))
   const primaryWatchVideo = resolvedVideos.find((video) => video.source === 'primary') ?? resolvedVideos[0]
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
   const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
