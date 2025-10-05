@@ -37,7 +37,7 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Good Vibes
+            Praise from our community
           </h2>
         </div>
 
