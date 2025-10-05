@@ -72,13 +72,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const articleSchema = generateArticleSchema({
     headline: post.meta.title,
     description: post.meta.description,
-    image: post.meta.image || 'https://serp.app/og-image.png',
+    image: post.meta.image || 'https://apps.serp.co/og-image.png',
     datePublished: post.meta.date,
     dateModified: (post.meta as any).dateModified || post.meta.date,
     author: {
       name: post.meta.author,
     },
-    url: `https://serp.app/blog/${slug}`,
+    url: `https://apps.serp.co/blog/${slug}`,
     wordCount: post.content.split(' ').length,
     keywords: post.meta.tags,
     articleSection: (post.meta as any).category,
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       { name: 'Blog', url: '/blog' },
       { name: post.meta.title },
     ],
-    storeUrl: 'https://serp.app',
+    storeUrl: 'https://apps.serp.co',
   });
 
   return (

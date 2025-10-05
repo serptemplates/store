@@ -25,8 +25,8 @@ const productSchema = generateProductSchemaLD({
     description: 'Professional video downloading tool with advanced features',
     seo_title: 'Video Downloader Pro - Best Video Download Tool',
     seo_description: 'Download videos from anywhere with advanced features',
-    product_page_url: 'https://serp.app/video-downloader-pro',
-    purchase_url: 'https://serp.app/buy/video-downloader-pro',
+    product_page_url: 'https://apps.serp.co/video-downloader-pro',
+    purchase_url: 'https://apps.serp.co/buy/video-downloader-pro',
     price: '49.99',
     images: ['/img1.jpg', '/img2.jpg', '/img3.jpg'],
     tagline: 'Download videos like a pro',
@@ -51,8 +51,8 @@ const productSchema = generateProductSchemaLD({
     layout_type: 'ecommerce' as const,
     pre_release: false,
   } as any,
-  url: 'https://serp.app/video-downloader-pro',
-  storeUrl: 'https://serp.app',
+  url: 'https://apps.serp.co/video-downloader-pro',
+  storeUrl: 'https://apps.serp.co',
   currency: 'USD',
 });
 
@@ -151,7 +151,7 @@ const educationQA = generateEducationQASchema({
       upvoteCount: 8,
     },
   ],
-  url: 'https://serp.app/support/optimize-slow-downloads',
+  url: 'https://apps.serp.co/support/optimize-slow-downloads',
   keywords: ['optimization', 'slow connection', 'download speed'],
 });
 console.log('  ✓ Question:', educationQA.mainEntity.name.substring(0, 50) + '...');
@@ -170,7 +170,7 @@ const breadcrumbSchema = generateBreadcrumbSchema({
     { name: 'Software', url: '/products/software' },
     { name: 'Video Downloader Pro' },
   ],
-  storeUrl: 'https://serp.app',
+  storeUrl: 'https://apps.serp.co',
 });
 console.log('  ✓ Breadcrumb Path:', breadcrumbSchema.itemListElement.map(i => i.name).join(' > '));
 console.log('  ✓ Items:', breadcrumbSchema.itemListElement.length);

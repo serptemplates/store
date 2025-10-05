@@ -22,20 +22,20 @@ console.log('-'.repeat(40));
 const articleSchema = generateBlogPostingSchema({
   headline: 'How to Optimize Your Downloads for Speed',
   description: 'Learn the best practices for optimizing download speeds and improving user experience',
-  image: 'https://serp.app/blog/images/optimize-downloads.jpg',
+  image: 'https://apps.serp.co/blog/images/optimize-downloads.jpg',
   datePublished: '2024-01-15T10:00:00Z',
   dateModified: '2024-01-20T15:30:00Z',
   author: {
     name: 'John Developer',
-    url: 'https://serp.app/author/john',
+    url: 'https://apps.serp.co/author/john',
   },
-  url: 'https://serp.app/blog/optimize-downloads',
+  url: 'https://apps.serp.co/blog/optimize-downloads',
   wordCount: 1500,
   keywords: ['downloads', 'optimization', 'performance', 'speed'],
   articleSection: 'Technical Tutorials',
   publisher: {
     name: 'SERP Apps',
-    logo: 'https://serp.app/logo.png',
+    logo: 'https://apps.serp.co/logo.png',
   },
 });
 
@@ -73,18 +73,18 @@ const softwareAppSchema = generateWebApplicationSchema({
     worstRating: 1,
   },
   screenshot: [
-    'https://serp.app/screenshots/app1.jpg',
-    'https://serp.app/screenshots/app2.jpg',
-    'https://serp.app/screenshots/app3.jpg',
+    'https://apps.serp.co/screenshots/app1.jpg',
+    'https://apps.serp.co/screenshots/app2.jpg',
+    'https://apps.serp.co/screenshots/app3.jpg',
   ],
   softwareVersion: '2.5.0',
   fileSize: '15MB',
   softwareRequirements: 'Requires modern web browser with JavaScript enabled',
-  url: 'https://serp.app/video-downloader-pro',
-  downloadUrl: 'https://serp.app/download/video-downloader-pro',
+  url: 'https://apps.serp.co/video-downloader-pro',
+  downloadUrl: 'https://apps.serp.co/download/video-downloader-pro',
   author: {
     name: 'SERP Apps',
-    url: 'https://serp.app',
+    url: 'https://apps.serp.co',
   },
   datePublished: '2023-06-15',
   dateModified: '2024-01-20',
@@ -126,8 +126,8 @@ console.log('  • SoftwareApplication Schema: Added to /app/[slug]/hybrid-page.
 console.log('  • Both schemas are now live on respective pages');
 
 console.log('\n🔗 Test URLs:');
-console.log('  • Blog Post: https://serp.app/blog/[any-post-slug]');
-console.log('  • Software App: https://serp.app/[any-product-slug]');
+console.log('  • Blog Post: https://apps.serp.co/blog/[any-post-slug]');
+console.log('  • Software App: https://apps.serp.co/[any-product-slug]');
 
 console.log('\n📊 Google Search Console Benefits:');
 console.log('  • Article: Enhanced visibility in Google News, Discover');

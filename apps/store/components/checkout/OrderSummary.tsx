@@ -121,7 +121,7 @@ export function OrderSummary({ product, displayPrice, originalPrice }: OrderSumm
         <p className="text-xs text-gray-600">
           Need help? Contact support at{" "}
           <a href="#" className="text-blue-600 hover:underline">
-            support@serp.app
+            support@apps.serp.co
           </a>
         </p>
       </div>

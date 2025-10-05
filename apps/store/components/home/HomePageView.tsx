@@ -208,15 +208,15 @@ export function HomePageView() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "SERP Apps",
-    url: "https://serp.app",
-    logo: "https://serp.app/logo.png",
+    url: "https://apps.serp.co",
+    logo: "https://apps.serp.co/logo.png",
     description: "Browse the full SERP Apps catalog of downloaders, automations, and growth tools.",
     sameAs: ["https://github.com/serpapps", "https://twitter.com/serpapps"],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      email: "support@serp.app",
-      url: "https://serp.app/support",
+      email: "support@apps.serp.co",
+      url: "https://apps.serp.co/support",
     },
   }
 
@@ -224,12 +224,12 @@ export function HomePageView() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "SERP Apps",
-    url: "https://serp.app",
+    url: "https://apps.serp.co",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://serp.app/search?q={search_term_string}",
+        urlTemplate: "https://apps.serp.co/search?q={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -240,7 +240,7 @@ export function HomePageView() {
     "@type": "CollectionPage",
     name: "SERP Apps Product Catalog",
     description: "Browse all available download automation tools and growth apps",
-    url: "https://serp.app",
+    url: "https://apps.serp.co",
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: products.length,
@@ -250,7 +250,7 @@ export function HomePageView() {
         item: {
           "@type": "Product",
           name: product.name,
-          url: `https://serp.app/${product.slug}`,
+          url: `https://apps.serp.co/${product.slug}`,
           description: product.description || product.tagline,
         },
       })),
@@ -307,57 +307,7 @@ export function HomePageView() {
       />
 
       <div className="flex min-h-screen flex-col bg-background">
-        <header className="relative z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <nav className="container flex h-16 items-center justify-between">
-            <NextLink href="/" className="text-lg font-semibold">
-              SERP
-            </NextLink>
-            <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
-              <div className="relative group">
-                <button className="font-medium transition-colors hover:text-foreground">Apps</button>
-                <div className="absolute right-0 top-full z-50 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl group-hover:block group-focus-within:block">
-                  <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {productColumns.map((column, columnIndex) => (
-                      <div key={columnIndex} className="space-y-2">
-                        {column.map((item) => (
-                          <NextLink
-                            key={item.slug}
-                            href={`/${item.slug}`}
-                            className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                          >
-                            {item.name}
-                          </NextLink>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {navLinks.map((link) => (
-                <NextLink
-                  key={link.label}
-                  href={link.href}
-                  className="transition-colors hover:text-foreground"
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  {link.label}
-                </NextLink>
-              ))}
-            </div>
-          </nav>
-          <details className="container border-t border-border/60 py-3 text-sm text-muted-foreground sm:hidden">
-            <summary className="cursor-pointer list-none font-medium text-foreground">Browse products</summary>
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {productLinks.map((item) => (
-                <NextLink key={item.slug} href={`/${item.slug}`} className="block">
-                  {item.name}
-                </NextLink>
-              ))}
-            </div>
-          </details>
-        </header>
+        <PrimaryNavbar {...navProps} />
 
         <main className="container flex flex-col gap-16 py-16">
           <section className="relative z-0 text-center space-y-6">

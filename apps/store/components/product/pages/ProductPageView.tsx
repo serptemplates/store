@@ -34,8 +34,8 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
       features: product.metadata?.features,
       reviews: product.metadata?.reviews,
     } as any,
-    url: `https://serp.app/shop/products/${handle}`,
-    storeUrl: "https://serp.app",
+    url: `https://apps.serp.co/shop/products/${handle}`,
+    storeUrl: "https://apps.serp.co",
     currency: price?.currency_code?.toUpperCase() || "USD",
   })
 
@@ -46,7 +46,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
       { name: "Products", url: "/shop/products" },
       { name: product.title },
     ],
-    storeUrl: "https://serp.app",
+    storeUrl: "https://apps.serp.co",
   })
 
   return (

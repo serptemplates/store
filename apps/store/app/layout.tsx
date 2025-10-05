@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { getSiteConfig } from "@/lib/site-config";
 import { DelayedGTM } from "@/components/DelayedGTM";
-
-const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 const STORE_TITLE = "SERP Apps";
 const STORE_DESCRIPTION =
@@ -13,7 +10,7 @@ const STORE_DESCRIPTION =
 export const metadata: Metadata = {
   title: STORE_TITLE,
   description: STORE_DESCRIPTION,
-  metadataBase: new URL("https://serp.app"),
+  metadataBase: new URL("https://apps.serp.co"),
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -26,7 +23,7 @@ export const metadata: Metadata = {
     type: "website",
     title: STORE_TITLE,
     description: STORE_DESCRIPTION,
-    url: "https://serp.app",
+    url: "https://apps.serp.co",
   },
   twitter: {
     card: "summary_large_image",
@@ -47,11 +44,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
-        {/* Preconnect to critical domains for faster loading */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* Preconnect to GTM for faster loading */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className="font-sans antialiased">
         {gtmId && (
           <noscript>
             <iframe
