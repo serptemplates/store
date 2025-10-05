@@ -1,13 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
-import type { Route } from "next"
 
 import { formatPrice } from "@/lib/products-data"
 import { getBrandLogoPath } from "@/lib/brand-logos"
 import { generateBreadcrumbSchema, generateProductSchemaLD } from "@/schema/product-schema-ld"
-
-const SHOP_ROUTE = "/shop" satisfies Route
 
 interface ProductPageViewProps {
   handle: string
@@ -34,7 +31,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
       features: product.metadata?.features,
       reviews: product.metadata?.reviews,
     } as any,
-    url: `https://apps.serp.co/shop/products/${handle}`,
+    url: `https://apps.serp.co/${handle}`,
     storeUrl: "https://apps.serp.co",
     currency: price?.currency_code?.toUpperCase() || "USD",
   })
@@ -42,8 +39,6 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
       { name: "Home", url: "/" },
-      { name: "Shop", url: "/shop" },
-      { name: "Products", url: "/shop/products" },
       { name: product.title },
     ],
     storeUrl: "https://apps.serp.co",
@@ -69,9 +64,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
       <div className="container mx-auto px-4 py-8">
         <nav className="text-sm mb-6">
           <ol className="flex items-center space-x-2 text-gray-500">
-            <li><Link href={SHOP_ROUTE} className="hover:text-gray-700">Shop</Link></li>
-            <li>/</li>
-            <li className="hover:text-gray-700">Products</li>
+            <li><Link href="/" className="hover:text-gray-700">Home</Link></li>
             <li>/</li>
             <li className="text-gray-900 font-medium">{product.title}</li>
           </ol>

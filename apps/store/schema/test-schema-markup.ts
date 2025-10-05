@@ -79,8 +79,6 @@ console.log('');
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
     { name: 'Home', url: '/' },
-    { name: 'Shop', url: '/shop' },
-    { name: 'Products', url: '/shop/products' },
     { name: 'Test Product' },
   ],
   storeUrl: 'https://apps.serp.co',

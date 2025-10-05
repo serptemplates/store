@@ -23,12 +23,10 @@ const DEVICES_TO_TEST = [
 // Pages to test
 const PAGES_TO_TEST = [
   { path: '/', name: 'Homepage' },
-  { path: '/shop', name: 'Shop Page' },
-  { path: '/shop/products/demo-ecommerce-product', name: 'Product Page' },
-  { path: '/shop/collections/featured', name: 'Collection Page' },
+  { path: '/demo-ecommerce-product', name: 'Demo Ecommerce Product' },
+  { path: '/demo-landing-product', name: 'Demo Landing Product' },
   { path: '/blog', name: 'Blog Page' },
   { path: '/checkout/success', name: 'Checkout Success' },
-  { path: '/demo-ecommerce-product', name: 'Hybrid Product Page' },
 ];
 
 // Viewport breakpoints to test

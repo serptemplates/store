@@ -3,10 +3,9 @@ import { test, expect } from '@playwright/test';
 // Pages to test for mobile responsiveness
 const PAGES_TO_TEST = [
   { path: '/', name: 'Homepage' },
-  { path: '/shop', name: 'Shop Page' },
-  { path: '/shop/products/demo-ecommerce-product', name: 'Product Page' },
+  { path: '/demo-ecommerce-product', name: 'Demo Ecommerce Product' },
+  { path: '/demo-landing-product', name: 'Demo Landing Product' },
   { path: '/blog', name: 'Blog Page' },
-  { path: '/demo-ecommerce-product', name: 'Hybrid Product Page' },
 ];
 
 // Helper function to test mobile responsiveness
@@ -144,7 +143,7 @@ test.describe('Viewport Breakpoints', () => {
 
     test(`Product page adapts to ${viewport.name}`, async ({ page }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
-      await page.goto('http://localhost:3000/shop/products/demo-ecommerce-product');
+      await page.goto('http://localhost:3000/demo-ecommerce-product');
 
       // Check product images don't exceed viewport
       const imageWidths = await page.evaluate(() => {

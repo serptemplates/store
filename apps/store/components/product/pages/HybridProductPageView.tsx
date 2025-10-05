@@ -127,10 +127,6 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
                 Home
               </Link>
               <span className="mx-2 text-gray-400">/</span>
-              <Link href="/shop" className="text-gray-500 hover:text-gray-700">
-                Shop
-              </Link>
-              <span className="mx-2 text-gray-400">/</span>
               <span className="text-gray-900">{product.name}</span>
             </nav>
 

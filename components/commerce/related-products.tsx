@@ -145,7 +145,7 @@ export function RelatedProducts({ products, title = 'You May Also Like' }: Relat
             {displayProducts.map((product) => (
               <a
                 key={product.id}
-                href={`/shop/products/${product.handle}`}
+                href={`/${product.handle}`}
                 className="flex-shrink-0 w-72 bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition group"
               >
                 <div className="aspect-square bg-gray-100 relative overflow-hidden">
@@ -190,7 +190,7 @@ export function RelatedProducts({ products, title = 'You May Also Like' }: Relat
 
         <div className="mt-8 text-center">
           <a
-            href="/shop"
+            href="/"
             className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
           >
             View All Products

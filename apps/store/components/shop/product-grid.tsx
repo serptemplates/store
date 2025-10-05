@@ -53,7 +53,7 @@ export function ProductGrid({ products }: ProductGridProps) {
         return (
           <Link
             key={product.id}
-            href={`/shop/products/${product.handle}`}
+            href={`/${product.handle}`}
             className="group relative block"
           >
             {bannerType && (
