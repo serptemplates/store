@@ -37,16 +37,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   // Default to landing page layout
   return (
-    <>
-      <PrimaryNavbar {...navProps} />
-      <ClientHome
-        product={product}
-        posts={posts}
-        siteConfig={siteConfig}
-        navProps={navProps}
-        videoEntries={videoEntries}
-      />
-    </>
+    <ClientHome
+      product={product}
+      posts={posts}
+      siteConfig={siteConfig}
+      navProps={navProps}
+      videoEntries={videoEntries}
+    />
   );
 }
 
