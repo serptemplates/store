@@ -201,7 +201,7 @@ export function generateCourseSchema({
     provider: {
       '@type': 'Organization',
       name: provider || 'SERP Apps',
-      sameAs: 'https://serp.app',
+      sameAs: 'https://apps.serp.co',
     },
     ...(hasCourseInstance && {
       hasCourseInstance: {
@@ -248,6 +248,6 @@ export const exampleEducationQA = {
       upvoteCount: 15,
     },
   ],
-  url: 'https://serp.app/support/how-to-automate-downloads',
+  url: 'https://apps.serp.co/support/how-to-automate-downloads',
   keywords: ['automation', 'downloads', 'tutorial', 'setup'],
 };

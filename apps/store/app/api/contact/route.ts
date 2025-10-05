@@ -53,8 +53,8 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
 
         await resend.emails.send({
-          from: 'Contact Form <noreply@serp.app>',
-          to: process.env.CONTACT_EMAIL || 'support@serp.app',
+          from: 'Contact Form <noreply@apps.serp.co>',
+          to: process.env.CONTACT_EMAIL || 'support@apps.serp.co',
           replyTo: validatedData.email,
           subject: `Contact Form: ${validatedData.subject}`,
           text: `

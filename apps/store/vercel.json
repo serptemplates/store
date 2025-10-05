@@ -4,10 +4,6 @@
   "outputDirectory": ".next",
   "crons": [
     {
-      "path": "/api/cron/hourly-check",
-      "schedule": "0 * * * *"
-    },
-    {
       "path": "/api/monitoring/health?alert=1",
       "schedule": "*/15 * * * *"
     }

@@ -5,18 +5,13 @@
     "error": "lighthouse is not a function"
   },
   {
-    "name": "Shop",
-    "url": "http://localhost:3000/shop",
-    "error": "lighthouse is not a function"
-  },
-  {
-    "name": "Product Page",
-    "url": "http://localhost:3000/shop/products/demo-ecommerce-product",
-    "error": "lighthouse is not a function"
-  },
-  {
-    "name": "Hybrid Product",
+    "name": "Demo Ecommerce Product",
     "url": "http://localhost:3000/demo-ecommerce-product",
+    "error": "lighthouse is not a function"
+  },
+  {
+    "name": "Demo Landing Product",
+    "url": "http://localhost:3000/demo-landing-product",
     "error": "lighthouse is not a function"
   },
   {

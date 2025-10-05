@@ -1,6 +1,7 @@
 import type { Route } from "next";
 
 import type { ProductData } from "./product-schema";
+import { getVideoMetadataByKeys } from "./video-metadata";
 
 const YOUTUBE_ID_PATTERN = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i;
 const VIMEO_ID_PATTERN = /vimeo\.com\/(?:video\/)?([0-9]+)/i;
@@ -35,12 +36,12 @@ type ProductVideoSource = Pick<
   | "reviews"
 >;
 
-function extractYouTubeId(url: string): string | undefined {
+export function extractYouTubeId(url: string): string | undefined {
   const match = url.match(YOUTUBE_ID_PATTERN);
   return match?.[1];
 }
 
-function extractVimeoId(url: string): string | undefined {
+export function extractVimeoId(url: string): string | undefined {
   const match = url.match(VIMEO_ID_PATTERN);
   return match?.[1];
 }
@@ -73,7 +74,7 @@ function buildThumbnailUrl(
   return product.featured_image || product.featured_image_gif || undefined;
 }
 
-function resolveUploadDate(product: ProductVideoSource): string | undefined {
+export function resolveUploadDate(product: ProductVideoSource): string | undefined {
   const candidate = product.reviews?.find((review) => Boolean(review.date));
   if (candidate?.date) {
     const parsed = new Date(candidate.date);
@@ -142,15 +143,24 @@ export function getProductVideoEntries(product: ProductVideoSource): ProductVide
     }
     usedSlugs.add(slug);
 
+    const metadataEntry = getVideoMetadataByKeys([
+      youTubeId,
+      vimeoId,
+      uniquenessKey,
+      url,
+    ]);
+
     const embedUrl = buildEmbedUrl(platform, url, youTubeId ?? vimeoId);
     const thumbnailUrl =
+      metadataEntry?.thumbnailUrl ||
       buildThumbnailUrl(platform, youTubeId ?? vimeoId, product) ||
       product.featured_image ||
       product.featured_image_gif ||
       undefined;
 
-    const title = `${product.name} Demo Video ${entries.length + 1}`;
+    const title = metadataEntry?.title?.trim() || `${product.name} Demo Video ${entries.length + 1}`;
     const description =
+      metadataEntry?.description?.trim() ||
       product.tagline ||
       product.seo_description ||
       product.description ||
@@ -165,8 +175,8 @@ export function getProductVideoEntries(product: ProductVideoSource): ProductVide
       description,
       thumbnailUrl,
       platform,
-      uploadDate,
-      duration: "PT2M",
+      uploadDate: metadataEntry?.uploadDate || uploadDate,
+      duration: metadataEntry?.duration || "PT2M",
       source,
     });
   });

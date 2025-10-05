@@ -68,12 +68,6 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Shop",
-        item: typeof window !== 'undefined' ? `${window.location.origin}/shop` : "https://store.com/shop"
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
         name: product.name,
         item: url
       }

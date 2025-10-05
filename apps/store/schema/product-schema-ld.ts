@@ -281,7 +281,7 @@ export function generateOrganizationSchema({
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'support@serp.app',
+      email: 'support@apps.serp.co',
       url: `${storeUrl}/support`,
     },
   };

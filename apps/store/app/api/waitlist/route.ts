@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
 
         await resend.emails.send({
-          from: 'SERP Apps <noreply@serp.app>',
+          from: 'SERP Apps <noreply@apps.serp.co>',
           to: email,
           subject: `You're on the waitlist for ${product}!`,
           html: `

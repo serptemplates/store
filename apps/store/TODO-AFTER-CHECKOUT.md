@@ -27,7 +27,6 @@ Read these in order:
 
 **For Monitoring (Recommended):**
 - [ ] Generate and set `MONITORING_TOKEN` (32 random characters)
-- [ ] Generate and set `CRON_SECRET` (32 random characters)
 - [ ] Set `SLACK_ALERT_WEBHOOK_URL` (for error alerts)
 - [ ] Set `SLACK_SALES_WEBHOOK_URL` (for sales notifications)
 
@@ -132,7 +131,6 @@ curl -H "Authorization: Bearer $MONITORING_TOKEN" \
 - [ ] Watch for error alerts
 - [ ] Check `/api/monitoring/sales` endpoint hourly
 - [ ] Review Vercel logs for any issues
-- [ ] Verify hourly summaries arrive in Slack
 
 ### Week 1 After Launch:
 
@@ -192,7 +190,6 @@ REDACT_LOGS=true
 
 # Monitoring (Recommended)
 MONITORING_TOKEN=<generate-random-32-chars>
-CRON_SECRET=<generate-random-32-chars>
 SLACK_SALES_WEBHOOK_URL=https://hooks.slack.com/services/...
 SLACK_ALERT_WEBHOOK_URL=https://hooks.slack.com/services/...
 ```
