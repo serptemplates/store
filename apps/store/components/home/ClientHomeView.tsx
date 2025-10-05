@@ -28,8 +28,8 @@ export type ClientHomeProps = {
 
 export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientHomeProps) {
   const homeProps = productToHomeTemplate(product, posts)
-  const productVideos = getProductVideoEntries(product)
-  const primaryWatchVideo = productVideos.find((video) => video.source === 'primary') ?? productVideos[0]
+  const resolvedVideos = (productVideos ?? []).filter((video): video is ProductVideoEntry => Boolean(video))
+  const primaryWatchVideo = resolvedVideos.find((video) => video.source === 'primary') ?? resolvedVideos[0]
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
   const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
   const buyButtonDestination = product.buy_button_destination ?? undefined
@@ -124,7 +124,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientH
         }
       />
 
-      {productVideos.length > 0 && (
+      {resolvedVideos.length > 0 && (
         <section className="bg-gray-50 py-12">
           <div className="container mx-auto px-4">
             <div className="mb-8 flex flex-col gap-3 text-center">
@@ -138,7 +138,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps }: ClientH
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {productVideos.map((video) => (
+              {resolvedVideos.map((video) => (
                 <article
                   key={video.watchPath}
                   className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"

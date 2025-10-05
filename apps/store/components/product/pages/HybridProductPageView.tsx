@@ -22,15 +22,16 @@ import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
-import { getProductVideoEntries } from "@/lib/video"
+import type { ProductVideoEntry } from "@/lib/video"
 
 export interface HybridProductPageViewProps {
   product: ProductData
   posts: BlogPostMeta[]
   siteConfig: SiteConfig
+  videoEntries?: ProductVideoEntry[]
 }
 
-export function HybridProductPageView({ product, posts, siteConfig }: HybridProductPageViewProps) {
+export function HybridProductPageView({ product, posts, siteConfig, videoEntries }: HybridProductPageViewProps) {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
@@ -38,8 +39,11 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
 
   const homeProps = productToHomeTemplate(product, posts)
 
-  const videoEntries = useMemo(() => getProductVideoEntries(product), [product])
-  const selectedVideoEntry = videoEntries[selectedVideoIndex]
+  const resolvedVideos = useMemo(
+    () => (videoEntries ?? []).filter((entry): entry is ProductVideoEntry => Boolean(entry)),
+    [videoEntries],
+  )
+  const selectedVideoEntry = resolvedVideos[selectedVideoIndex]
 
   const price = product.pricing
   const handle = product.slug
@@ -75,17 +79,23 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
   }, [])
 
   useEffect(() => {
-    if (selectedVideoIndex >= videoEntries.length) {
+    if (selectedVideoIndex >= resolvedVideos.length) {
       setSelectedVideoIndex(0)
     }
-  }, [selectedVideoIndex, videoEntries.length])
+  }, [selectedVideoIndex, resolvedVideos.length])
 
   const Footer = useCallback(() => <FooterComposite />, [])
   const productUrl = typeof window !== "undefined" ? `${window.location.origin}/${product.slug}` : `https://store.com/${product.slug}`
 
   return (
     <>
-      <ProductStructuredDataScripts product={product} posts={posts} siteConfig={siteConfig} images={allImages} />
+      <ProductStructuredDataScripts
+        product={product}
+        posts={posts}
+        siteConfig={siteConfig}
+        images={allImages}
+        videoEntries={resolvedVideos}
+      />
       <ProductStructuredData product={product} url={productUrl} />
 
       <StickyPurchaseBar
@@ -228,7 +238,7 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         </div>
       </div>
 
-      {videoEntries.length > 0 && (
+      {resolvedVideos.length > 0 && (
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
@@ -249,9 +259,9 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
               )}
             </div>
 
-            {videoEntries.length > 1 && (
+            {resolvedVideos.length > 1 && (
               <div className="flex items-center gap-2 mt-4 justify-center">
-                {videoEntries.map((video, index) => (
+                {resolvedVideos.map((video, index) => (
                   <button
                     key={video.slug}
                     onClick={() => setSelectedVideoIndex(index)}

@@ -8,16 +8,17 @@ import type { ProductData } from "@/lib/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/product-adapter";
 import type { BlogPostMeta } from "@/lib/blog";
-import { getProductVideoEntries } from "@/lib/video";
+import type { ProductVideoEntry } from "@/lib/video";
 
 export interface ProductStructuredDataScriptsProps {
   product: ProductData;
   posts?: BlogPostMeta[];
   siteConfig?: SiteConfig;
   images: string[];
+  videoEntries?: ProductVideoEntry[];
 }
 
-export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images }: ProductStructuredDataScriptsProps) {
+export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
   const homeProps = productToHomeTemplate(product, posts);
   const productSchema = generateProductSchemaLD({
     product: {
@@ -108,13 +109,13 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       ? window.location.origin
       : 'https://apps.serp.co';
 
-  const videoEntries = getProductVideoEntries(product as ProductData);
+  const videoObjects = videoEntries ?? [];
   const supportedRegions = Array.isArray((product as any).supported_regions)
     ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
     : [];
   const primaryRegion = supportedRegions[0] ?? 'Worldwide';
 
-  const videoScripts = videoEntries.map((entry) => {
+  const videoScripts = videoObjects.map((entry) => {
     const thumbnailUrl = entry.thumbnailUrl
       ? [entry.thumbnailUrl]
       : images && images.length > 0
