@@ -7,9 +7,8 @@ const fs = require('fs');
 // Pages to test
 const PAGES_TO_TEST = [
   { path: '/', name: 'Homepage' },
-  { path: '/shop', name: 'Shop' },
-  { path: '/shop/products/demo-ecommerce-product', name: 'Product Page' },
-  { path: '/demo-ecommerce-product', name: 'Hybrid Product' },
+  { path: '/demo-ecommerce-product', name: 'Demo Ecommerce Product' },
+  { path: '/demo-landing-product', name: 'Demo Landing Product' },
   { path: '/blog', name: 'Blog' }
 ];
 
