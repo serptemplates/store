@@ -53,8 +53,27 @@
   * {
     @apply border-border;
   }
-  body {
+body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Stripe embedded checkout overrides */
+#checkout,
+#checkout iframe,
+#checkout > div,
+#checkout > div > div,
+#checkout [class*="App"],
+.App-Container,
+.js-global-layout-multi-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  #checkout {
+    width: 100%;
   }
 }
 
