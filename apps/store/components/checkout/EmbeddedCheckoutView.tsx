@@ -9,7 +9,6 @@ import {
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
 import { requireStripePublishableKey } from "@/lib/stripe-environment"
-import "@/styles/checkout.css"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())
