@@ -43,6 +43,51 @@ export async function POST(request: NextRequest) {
     ...(parsedBody.metadata ?? {}),
   };
 
+  const forwardedForHeader = request.headers.get("x-forwarded-for");
+  const forwardedIp = forwardedForHeader?.split(",")[0]?.trim();
+  const realIpHeader = request.headers.get("x-real-ip");
+  const realIp = realIpHeader?.split(",")[0]?.trim();
+  const vercelForwardedFor = request.headers.get("x-vercel-forwarded-for");
+  const vercelIp = vercelForwardedFor?.split(",")[0]?.trim();
+  const clientIp = forwardedIp ?? realIp ?? vercelIp ?? undefined;
+
+  const userAgentRaw = request.headers.get("user-agent") ?? undefined;
+  const userAgent = userAgentRaw ? userAgentRaw.slice(0, 250) : undefined;
+
+  const normalizedCheckoutSource = metadataFromRequest.checkoutSource?.trim();
+  if (!normalizedCheckoutSource) {
+    metadataFromRequest.checkoutSource = parsedBody.uiMode === "embedded"
+      ? "custom_checkout_stripe"
+      : "stripe_checkout";
+  } else {
+    metadataFromRequest.checkoutSource = normalizedCheckoutSource;
+  }
+
+  if (metadataFromRequest.termsAccepted !== undefined) {
+    metadataFromRequest.termsAccepted = String(
+      metadataFromRequest.termsAccepted === "true" || metadataFromRequest.termsAccepted === "1"
+    );
+  }
+
+  if (metadataFromRequest.termsAccepted !== "true") {
+    // The embedded checkout is only available after the checkbox is accepted,
+    // but we still normalize the value we persist for downstream systems.
+    metadataFromRequest.termsAccepted = "true";
+  }
+
+  if (metadataFromRequest.termsAcceptedAt && !metadataFromRequest.termsAcceptedAtClient) {
+    metadataFromRequest.termsAcceptedAtClient = metadataFromRequest.termsAcceptedAt;
+  }
+  metadataFromRequest.termsAcceptedAt = new Date().toISOString();
+
+  if (clientIp) {
+    metadataFromRequest.termsAcceptedIp = clientIp;
+  }
+
+  if (userAgent) {
+    metadataFromRequest.termsAcceptedUserAgent = userAgent;
+  }
+
   let couponDiscountCents: number | undefined;
   let couponSubtotalCents: number | undefined;
   let couponAdjustedTotalCents: number | undefined;
@@ -139,6 +184,10 @@ export async function POST(request: NextRequest) {
     landerId,
     environment: isUsingTestKeys() ? "test" : "live",
   };
+
+  sessionMetadata.checkoutSource = metadataFromRequest.checkoutSource;
+  sessionMetadata.termsAccepted = metadataFromRequest.termsAccepted;
+  sessionMetadata.termsAcceptedAt = metadataFromRequest.termsAcceptedAt;
 
   if (parsedBody.clientReferenceId) {
     sessionMetadata.clientReferenceId = parsedBody.clientReferenceId;

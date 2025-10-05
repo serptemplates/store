@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, ChangeEvent } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import {
@@ -40,8 +40,11 @@ export function EmbeddedCheckoutView() {
   const [isLoading, setIsLoading] = useState(true)
   const [clientSecret, setClientSecret] = useState("")
   const [showPayPal, setShowPayPal] = useState(false)
-  const [email, setEmail] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [termsAccepted, setTermsAccepted] = useState(true)
+  const [termsAcceptedAt, setTermsAcceptedAt] = useState(
+    () => new Date().toISOString()
+  )
 
   useEffect(() => {
     if (productSlug) {
@@ -60,7 +63,7 @@ export function EmbeddedCheckoutView() {
 
   // Create Stripe checkout session
   const fetchClientSecret = useCallback(async () => {
-    if (!product) return null
+    if (!product || !termsAccepted) return null
 
     try {
       const response = await fetch("/api/checkout/session", {
@@ -72,6 +75,9 @@ export function EmbeddedCheckoutView() {
           affiliateId,
           metadata: {
             landerId: productSlug,
+            checkoutSource: "custom_checkout_stripe",
+            termsAccepted: "true",
+            termsAcceptedAt,
           },
         }),
       })
@@ -89,10 +95,15 @@ export function EmbeddedCheckoutView() {
       setError("Failed to initialize checkout. Please try again.")
       return null
     }
-  }, [product, productSlug, affiliateId])
+  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
+    if (!termsAccepted) {
+      setClientSecret("")
+      return
+    }
+
     if (product && !showPayPal) {
       fetchClientSecret().then(secret => {
         if (secret) {
@@ -100,7 +111,15 @@ export function EmbeddedCheckoutView() {
         }
       })
     }
-  }, [product, showPayPal, fetchClientSecret])
+  }, [product, showPayPal, fetchClientSecret, termsAccepted])
+
+  const handleTermsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const accepted = event.target.checked
+    setTermsAccepted(accepted)
+    if (accepted) {
+      setTermsAcceptedAt(new Date().toISOString())
+    }
+  }
 
   if (isLoading || !product) {
     return (
@@ -111,6 +130,16 @@ export function EmbeddedCheckoutView() {
   }
 
   const finalPrice = product?.price || 67.00
+
+  const paypalMetadata: Record<string, string> = {
+    landerId: productSlug || '',
+    checkoutSource: "custom_checkout_paypal",
+  }
+
+  if (termsAccepted) {
+    paypalMetadata.termsAccepted = "true"
+    paypalMetadata.termsAcceptedAt = termsAcceptedAt
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -151,8 +180,8 @@ export function EmbeddedCheckoutView() {
 
           {!showPayPal ? (
             // Stripe Embedded Checkout
-            clientSecret ? (
-              <div id="checkout">
+            clientSecret && termsAccepted ? (
+              <div id="checkout" className="relative">
                 <EmbeddedCheckoutProvider
                   stripe={stripePromise}
                   options={{ clientSecret }}
@@ -164,7 +193,9 @@ export function EmbeddedCheckoutView() {
               <div className="flex items-center justify-center py-12">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading payment form...</p>
+                  <p className="text-gray-600">
+                    {termsAccepted ? "Loading payment form..." : "Please agree to the Terms to continue"}
+                  </p>
                 </div>
               </div>
             )
@@ -175,11 +206,10 @@ export function EmbeddedCheckoutView() {
                 offerId={productSlug || ''}
                 price={`$${finalPrice.toFixed(2)}`}
                 affiliateId={affiliateId}
-                metadata={{
-                  landerId: productSlug || '',
-                }}
+                metadata={paypalMetadata}
                 buttonText="Pay with PayPal"
                 className="w-full"
+                disabled={!termsAccepted}
               />
 
               <p className="text-xs text-gray-500 text-center">
@@ -187,6 +217,44 @@ export function EmbeddedCheckoutView() {
               </p>
             </div>
           )}
+
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                checked={termsAccepted}
+                onChange={handleTermsChange}
+              />
+              <span className="text-sm text-gray-700">
+                By placing your order, you agree to our
+                {" "}
+                <a
+                  href="https://github.com/serpapps/legal/blob/main/terms-conditions.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Terms and Conditions
+                </a>
+                {" "}and{" "}
+                <a
+                  href="https://github.com/serpapps/legal/blob/main/refund-policy.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Refund Policy
+                </a>
+                .
+              </span>
+            </label>
+            {!termsAccepted && (
+              <p className="mt-2 text-xs text-red-600">
+                You must accept the Terms and Refund Policy before completing your purchase.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Trust Badges */}
