@@ -10,15 +10,15 @@ import {
   recordAccountLogin,
   upsertAccount,
   type AccountRecord,
-} from "@/lib/account-store";
+} from "@/lib/account/store";
 import {
   createAccountSession,
   getAccountSessionCookieName,
   getAccountSessionCookieOptions,
   parseAccountSession,
   clearAccountSessionCookieOptions,
-} from "@/lib/account-auth";
-import { sendVerificationEmail } from "@/lib/account-email";
+} from "@/lib/account/auth";
+import { sendVerificationEmail } from "@/lib/account/email";
 
 export interface PurchaseAccountContext {
   email: string | null | undefined;

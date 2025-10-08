@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { validateCoupon, calculateDiscountedPrice, CouponValidation } from '@/lib/coupons';
+import { validateCoupon, calculateDiscountedPrice, CouponValidation } from '@/lib/payments/coupons';
 
 // Mock the Stripe client
-vi.mock('@/lib/stripe', () => ({
+vi.mock('@/lib/payments/stripe', () => ({
   getStripeClient: () => ({
     promotionCodes: {
       list: vi.fn().mockResolvedValue({ data: [] }),
@@ -47,7 +47,7 @@ describe('Coupon Validation', () => {
     });
 
     it('should handle Stripe API errors gracefully', async () => {
-      const stripe = require('@/lib/stripe').getStripeClient();
+      const stripe = require('@/lib/payments/stripe').getStripeClient();
       stripe.promotionCodes.list = vi.fn().mockRejectedValue(new Error('API Error'));
 
       const result = await validateCoupon('TESTCODE');

@@ -1,11 +1,11 @@
 "use server";
 
-import { getStripeClient } from "@/lib/stripe";
-import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder } from "@/lib/checkout-store";
+import { getStripeClient } from "@/lib/payments/stripe";
+import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder } from "@/lib/checkout/store";
 import { createLicenseForOrder } from "@/lib/license-service";
-import { updateOrderMetadata } from "@/lib/checkout-store";
-import { getOfferConfig } from "@/lib/offer-config";
-import { ensureAccountForPurchase } from "@/lib/account-service";
+import { updateOrderMetadata } from "@/lib/checkout/store";
+import { getOfferConfig } from "@/lib/products/offer-config";
+import { ensureAccountForPurchase } from "@/lib/account/service";
 import logger from "@/lib/logger";
 
 function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {

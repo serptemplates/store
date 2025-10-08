@@ -1,7 +1,7 @@
 import { promises as fs } from "fs"
 import path from "path"
 import { parse } from "yaml"
-import { productSchema } from "../lib/product-schema"
+import { productSchema } from "../lib/products/product-schema"
 
 const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
   "pre_release",

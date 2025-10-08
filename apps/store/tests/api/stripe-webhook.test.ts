@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type Stripe from "stripe";
-import type { OfferConfig } from "@/lib/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout-store";
+import type { OfferConfig } from "@/lib/products/offer-config";
+import type { CheckoutSessionRecord } from "@/lib/checkout/store";
 
 vi.hoisted(() => {
   process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
@@ -12,15 +12,15 @@ vi.mock("node:timers/promises", () => ({
   setTimeout: vi.fn().mockResolvedValue(undefined),
 }));
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
 }));
 
-vi.mock("@/lib/stripe", () => ({
+vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   findCheckoutSessionByPaymentIntentId: vi.fn(),
   findCheckoutSessionByStripeSessionId: vi.fn(),
   markStaleCheckoutSessions: vi.fn(),
@@ -61,13 +61,13 @@ vi.mock("@/lib/logger", () => ({
   },
 }));
 
-vi.mock("@/lib/ops-notify", () => ({
+vi.mock("@/lib/notifications/ops", () => ({
   sendOpsAlert: vi.fn(),
 }));
 
 import { POST } from "@/app/api/stripe/webhook/route";
-import { getStripeClient } from "@/lib/stripe";
-import { getOfferConfig } from "@/lib/offer-config";
+import { getStripeClient } from "@/lib/payments/stripe";
+import { getOfferConfig } from "@/lib/products/offer-config";
 import {
   findCheckoutSessionByPaymentIntentId,
   findCheckoutSessionByStripeSessionId,
@@ -75,10 +75,10 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   updateCheckoutSessionStatus,
-} from "@/lib/checkout-store";
+} from "@/lib/checkout/store";
 import { syncOrderWithGhl, GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
-import { sendOpsAlert } from "@/lib/ops-notify";
+import { sendOpsAlert } from "@/lib/notifications/ops";
 
 const getStripeClientMock = vi.mocked(getStripeClient);
 const getOfferConfigMock = vi.mocked(getOfferConfig);

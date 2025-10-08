@@ -4,7 +4,7 @@ import path from "node:path";
 const fixturesRoot = path.resolve(__dirname, "..", "fixtures");
 
 async function loadProductModule() {
-  return import("@/lib/product");
+  return import("@/lib/products/product");
 }
 
 beforeEach(() => {

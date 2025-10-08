@@ -48,7 +48,7 @@ if (licenseResult && paymentIntentId) {  // Requires paymentIntentId to be non-n
 
 ### 1. New `updateOrderMetadata` Function
 
-Created a dedicated function in `lib/checkout-store.ts` that intelligently handles the lookup:
+Created a dedicated function in `lib/checkout/store.ts` that intelligently handles the lookup:
 
 ```typescript
 export async function updateOrderMetadata(
@@ -97,7 +97,7 @@ if (licenseResult?.licenseKey) {  // Verify key exists
 
 | File | Lines Added | Lines Removed | Purpose |
 |------|-------------|---------------|---------|
-| `lib/checkout-store.ts` | +43 | 0 | New `updateOrderMetadata` function |
+| `lib/checkout/store.ts` | +43 | 0 | New `updateOrderMetadata` function |
 | `app/api/stripe/webhook/route.ts` | +26 | -11 | Use new function with proper fallback |
 | `__tests__/checkout-store-metadata-update.test.ts` | +153 | 0 | Comprehensive unit tests |
 | `ACCOUNT-CHECKOUT-FIX.md` | +180 | 0 | Technical documentation |
@@ -164,7 +164,7 @@ NEW CODE:
 
 ### Rollback Plan
 If issues occur, the old behavior can be restored by reverting the two main files:
-- `lib/checkout-store.ts`
+- `lib/checkout/store.ts`
 - `app/api/stripe/webhook/route.ts`
 
 ## 🎓 Lessons Learned

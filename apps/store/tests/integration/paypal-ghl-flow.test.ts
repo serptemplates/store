@@ -5,14 +5,14 @@ import { loadIntegrationEnv } from "./utils/env";
 
 loadIntegrationEnv(import.meta.url);
 
-const paypalModule = await import("@/lib/paypal");
+const paypalModule = await import("@/lib/payments/paypal");
 const { POST: captureOrderRoute } = await import("@/app/api/paypal/capture-order/route");
 const { ensureDatabase, isDatabaseConfigured, query } = await import("@/lib/database");
 const {
   upsertCheckoutSession,
   findCheckoutSessionByStripeSessionId,
-} = await import("@/lib/checkout-store");
-const { getOfferConfig } = await import("@/lib/offer-config");
+} = await import("@/lib/checkout/store");
+const { getOfferConfig } = await import("@/lib/products/offer-config");
 
 const paypalConfigured = Boolean(
   process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET,

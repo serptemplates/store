@@ -1,4 +1,4 @@
-import type { ProductData } from '@/lib/product-schema';
+import type { ProductData } from '@/lib/products/product-schema';
 
 /**
  * Generate Product schema.org JSON-LD for Google Shopping eligibility

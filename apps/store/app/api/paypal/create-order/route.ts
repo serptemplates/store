@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { createPayPalOrder, isPayPalConfigured } from "@/lib/paypal";
-import { getOfferConfig } from "@/lib/offer-config";
-import { getProductData } from "@/lib/product";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
-import { validateCoupon as validateCouponCode } from "@/lib/coupons";
+import { createPayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
+import { getOfferConfig } from "@/lib/products/offer-config";
+import { getProductData } from "@/lib/products/product";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
 
 const requestSchema = z.object({

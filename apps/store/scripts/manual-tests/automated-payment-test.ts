@@ -8,7 +8,7 @@
 
 import Stripe from 'stripe';
 import { query } from '../../lib/database';
-import { requireStripeSecretKey } from '../../lib/stripe-environment';
+import { requireStripeSecretKey } from '../../lib/payments/stripe-environment';
 
 const stripe = new Stripe(requireStripeSecretKey('test'), {
   apiVersion: '2024-04-10' as any,

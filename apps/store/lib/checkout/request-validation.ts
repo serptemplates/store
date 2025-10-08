@@ -6,7 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import logger from "./logger";
+import logger from "@/lib/logger";
 
 // Default limits (can be overridden per endpoint)
 const DEFAULT_JSON_SIZE_LIMIT = 1024 * 100; // 100KB

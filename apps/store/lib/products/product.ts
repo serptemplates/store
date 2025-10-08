@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parse } from "yaml";
 import { productSchema, type ProductData } from "./product-schema";
-import { isExcludedSlug } from "./site-config";
+import { isExcludedSlug } from "@/lib/site-config";
 
 function resolveDataRoot() {
   const override = process.env.PRODUCTS_ROOT;

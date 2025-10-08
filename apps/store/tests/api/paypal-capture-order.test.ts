@@ -1,14 +1,14 @@
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OfferConfig } from "@/lib/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout-store";
+import type { OfferConfig } from "@/lib/products/offer-config";
+import type { CheckoutSessionRecord } from "@/lib/checkout/store";
 
-vi.mock("@/lib/paypal", () => ({
+vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: vi.fn(),
   capturePayPalOrder: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   findCheckoutSessionByStripeSessionId: vi.fn(),
   updateCheckoutSessionStatus: vi.fn(),
   upsertOrder: vi.fn(),
@@ -18,19 +18,19 @@ vi.mock("@/lib/ghl-client", () => ({
   syncOrderWithGhl: vi.fn(),
 }));
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
 }));
 
 import { POST } from "@/app/api/paypal/capture-order/route";
-import { isPayPalConfigured, capturePayPalOrder } from "@/lib/paypal";
+import { isPayPalConfigured, capturePayPalOrder } from "@/lib/payments/paypal";
 import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout-store";
+} from "@/lib/checkout/store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
-import { getOfferConfig } from "@/lib/offer-config";
+import { getOfferConfig } from "@/lib/products/offer-config";
 
 const isPayPalConfiguredMock = vi.mocked(isPayPalConfigured);
 const capturePayPalOrderMock = vi.mocked(capturePayPalOrder);

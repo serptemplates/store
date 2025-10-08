@@ -1,4 +1,4 @@
-import logger from './logger';
+import logger from "@/lib/logger";
 
 const SLACK_WEBHOOK_URL = process.env.SLACK_ALERT_WEBHOOK_URL;
 const SALES_CHANNEL_URL = process.env.SLACK_SALES_WEBHOOK_URL || SLACK_WEBHOOK_URL;

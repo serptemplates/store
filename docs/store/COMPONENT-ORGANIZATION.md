@@ -12,6 +12,7 @@ This document captures the current component layers in the store monorepo and th
 - Removed the unused `components/commerce/*` directory that duplicated template sections but was never imported.
 - Deleted the checked-in `apps/store/mobile-optimizations` examples; the sample generator now lives at `scripts/store/optimize-mobile-performance.js` and writes fresh snippets when needed.
 - Updated helper scripts so they run from the repository root and live alongside the other operational tooling in `scripts/store`.
+- Reorganized `apps/store/lib` into domain folders (`account/`, `checkout/`, `payments/`, `notifications/`, `products/`) so application code can locate dependencies quickly without sifting through a flat directory.
 
 ## Guidelines going forward
 - Put design-system style building blocks in `packages/ui`, and export them through `packages/ui/src/index.ts`.

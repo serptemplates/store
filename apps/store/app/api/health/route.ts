@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { isDatabaseConfigured, query } from '@/lib/database';
-import { getOptionalStripeSecretKey, getStripeMode } from '@/lib/stripe-environment';
+import { getOptionalStripeSecretKey, getStripeMode } from '@/lib/payments/stripe-environment';
 
 export async function GET() {
   const checks = {

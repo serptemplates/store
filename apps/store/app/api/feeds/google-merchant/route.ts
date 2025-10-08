@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 
 function escapeXml(text: string): string {
   return text

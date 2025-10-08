@@ -1,9 +1,9 @@
 import type { HomeTemplateProps, FAQ, PostItem } from "@repo/templates";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
-import { titleCase } from "./string-utils";
+import { titleCase } from "@/lib/string-utils";
 import type { ProductData } from "./product-schema";
-import type { BlogPostMeta } from "./blog";
+import type { BlogPostMeta } from "@/lib/blog";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",

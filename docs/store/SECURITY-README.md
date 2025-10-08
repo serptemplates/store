@@ -45,7 +45,7 @@ A comprehensive security audit identified and fixed 7 critical/important securit
 
 ### Created (9 files)
 - `lib/env-validation.ts` - Environment validation (195 lines)
-- `lib/request-validation.ts` - Request middleware (246 lines)
+- `lib/checkout/request-validation.ts` - Request middleware (246 lines)
 - `instrumentation.ts` - Startup hooks (40 lines)
 - `tests/security/input-sanitization.test.ts` - XSS tests (91 lines)
 - `tests/security/logger-redaction.test.ts` - PII tests (158 lines)

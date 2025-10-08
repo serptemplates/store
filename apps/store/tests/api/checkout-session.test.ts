@@ -6,30 +6,30 @@ type StripeSessionWithResponse = Stripe.Checkout.Session & {
   lastResponse: Stripe.Response<Stripe.Checkout.Session>["lastResponse"];
 };
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
 }));
 
-vi.mock("@/lib/stripe", () => ({
+vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: vi.fn(),
   isUsingTestKeys: vi.fn(() => false),
   resolvePriceForEnvironment: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
 }));
 
-vi.mock("@/lib/simple-checkout", () => ({
+vi.mock("@/lib/checkout/simple-checkout", () => ({
   createSimpleCheckout: vi.fn(),
 }));
 
 import { POST } from "@/app/api/checkout/session/route";
-import { getOfferConfig } from "@/lib/offer-config";
-import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/stripe";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
-import { createSimpleCheckout } from "@/lib/simple-checkout";
+import { getOfferConfig } from "@/lib/products/offer-config";
+import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/payments/stripe";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { createSimpleCheckout } from "@/lib/checkout/simple-checkout";
 
 const getOfferConfigMock = vi.mocked(getOfferConfig);
 const getStripeClientMock = vi.mocked(getStripeClient);

@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 
-import { createAccountSession, parseAccountSession } from "@/lib/account-auth";
+import { createAccountSession, parseAccountSession } from "@/lib/account/auth";
 
 const ORIGINAL_SECRET = process.env.ACCOUNT_SESSION_SECRET;
 

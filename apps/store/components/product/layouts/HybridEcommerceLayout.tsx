@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 
-import { formatPrice } from "@/lib/products-data"
-import { getBrandLogoPath } from "@/lib/brand-logos"
+import { formatPrice } from "@/lib/products/products-data"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
 import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"

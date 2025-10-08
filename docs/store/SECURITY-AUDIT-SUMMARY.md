@@ -109,7 +109,7 @@ curl -I https://your-domain.com/api/health
 - Error message sanitization
 
 **Files Created:**
-- `apps/store/lib/request-validation.ts` (218 lines)
+- `apps/store/lib/checkout/request-validation.ts` (218 lines)
 
 ### 7. Insufficient Test Coverage (MEDIUM PRIORITY) ✅
 **Impact:** Security vulnerabilities could be introduced without detection.

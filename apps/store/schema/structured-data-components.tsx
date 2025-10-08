@@ -1,5 +1,5 @@
 import Script from "next/script";
-import type { ProductData } from "@/lib/product-schema";
+import type { ProductData } from "@/lib/products/product-schema";
 
 interface StructuredDataProps {
   product: ProductData;

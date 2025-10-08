@@ -13,14 +13,14 @@ import {
   upsertOrder,
   updateCheckoutSessionStatus,
   updateOrderMetadata,
-} from "@/lib/checkout-store";
-import { getOfferConfig } from "@/lib/offer-config";
+} from "@/lib/checkout/store";
+import { getOfferConfig } from "@/lib/products/offer-config";
 import { syncOrderWithGhl, GhlRequestError, RETRYABLE_STATUS_CODES } from "@/lib/ghl-client";
-import { getStripeClient } from "@/lib/stripe";
-import { getOptionalStripeWebhookSecret } from "@/lib/stripe-environment";
+import { getStripeClient } from "@/lib/payments/stripe";
+import { getOptionalStripeWebhookSecret } from "@/lib/payments/stripe-environment";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
-import { sendOpsAlert } from "@/lib/ops-notify";
+import { sendOpsAlert } from "@/lib/notifications/ops";
 import { createLicenseForOrder } from "@/lib/license-service";
 
 const webhookSecret = getOptionalStripeWebhookSecret();

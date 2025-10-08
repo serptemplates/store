@@ -7,7 +7,7 @@ import {
   isStripeTestMode,
   requireStripeSecretKey,
   type StripeMode,
-} from "@/lib/stripe-environment";
+} from "@/lib/payments/stripe-environment";
 
 const apiVersion: Stripe.StripeConfig["apiVersion"] = "2024-04-10";
 

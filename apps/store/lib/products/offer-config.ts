@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { getProductData } from "@/lib/product";
-import { isStripeTestMode } from "@/lib/stripe-environment";
+import { getProductData } from "@/lib/products/product";
+import { isStripeTestMode } from "@/lib/payments/stripe-environment";
 
 const ghlConfigSchema = z
   .object({

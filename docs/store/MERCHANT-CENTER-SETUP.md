@@ -109,7 +109,7 @@ Create an API endpoint to generate the feed dynamically:
 ```typescript
 // apps/store/app/api/feeds/google-merchant/route.ts
 import { NextResponse } from "next/server";
-import { getAllProducts } from "@/lib/products";
+import { getAllProducts } from "@/lib/products/product";
 
 export async function GET() {
   const products = getAllProducts();

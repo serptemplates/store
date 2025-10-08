@@ -113,4 +113,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68dfb1032197097607e2638e
+buy_button_destination: https://ghl.serp.co/payment-link/68df98e767ee3b7d3f69979d

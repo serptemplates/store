@@ -10,7 +10,7 @@ stripe:
   cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
   metadata:
     source: lander-template
-buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
+buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
 ghl:
   source: Stripe Checkout
   tag_ids:
