@@ -1,10 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import Avatar from "./avatar";
 import { cn } from "./lib/utils";
 import { FaStar } from "react-icons/fa6";
-import { isExternalLink } from "./utils";
-import { SmartLink } from "./components/smart-link";
+import SmartLink from "./components/smart-link";
 
 export type SocialProofBannerProps = {
   userCount: number;

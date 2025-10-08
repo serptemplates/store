@@ -8,13 +8,13 @@ type SmartLinkProps = PropsWithChildren<
   }
 >;
 
-export function SmartLink({
+const SmartLink = ({
   href,
   children,
   nextLinkProps,
   className,
   ...rest
-}: SmartLinkProps) {
+}: SmartLinkProps) => {
   const isInternal = href.startsWith("/") || href.startsWith("#");
 
   if (isInternal) {
@@ -36,4 +36,6 @@ export function SmartLink({
       {children}
     </a>
   );
-}
+};
+
+export default SmartLink;
