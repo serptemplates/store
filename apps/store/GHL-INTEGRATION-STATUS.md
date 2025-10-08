@@ -38,6 +38,10 @@ GHL_CUSTOM_FIELD_PRODUCT_NAME=custom_field_id_for_product_name
 GHL_CUSTOM_FIELD_AFFILIATE_ID=custom_field_id_for_affiliate
 GHL_CUSTOM_FIELD_ORDER_ID=custom_field_id_for_order_id
 
+# Optional overrides (auto-detected when unset)
+GHL_CUSTOM_FIELD_PURCHASE_METADATA=custom_field_id_for_purchase_metadata
+GHL_CUSTOM_FIELD_LICENSE_KEYS_V2=custom_field_id_for_license_payload
+
 # GHL Tags Configuration
 GHL_TAG_CUSTOMER=customer
 GHL_TAG_PURCHASER=purchaser
@@ -192,6 +196,19 @@ The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api
   - [ ] Product name
   - [ ] Affiliate ID
   - [ ] Order ID
+  - [ ] Purchase metadata JSON (`contact.purchase_metadata`)
+  - [ ] License keys payload (`contact.license_keys_v2`)
+
+**Purchase Metadata JSON**
+- Generated automatically for both Stripe and PayPal providers.
+- Includes provider, offer, product page URL, checkout URL (if applicable), customer info, payment totals, affiliate ID, and license snapshot.
+- Stored as pretty-printed JSON in `contact.purchase_metadata`.
+
+**License Keys Payload**
+- Contains the active license key, license ID, action (created/updated), entitlements array, and tier.
+- Stored as JSON in `contact.license_keys_v2`.
+
+> ℹ️ Field IDs are discovered from GoHighLevel at runtime. As long as your location has custom fields with the exact keys `contact.purchase_metadata` and `contact.license_keys_v2`, no additional configuration is required. The `GHL_CUSTOM_FIELD_*` environment variables remain available if you prefer to override the detected IDs or point to alternate fields per environment.
 - [ ] Automation triggered (if configured)
 
 ### Affiliate Tracking

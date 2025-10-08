@@ -97,6 +97,26 @@ This sequentially:
 
 Review Stripe (test mode), your inbox, Postgres, and GoHighLevel afterward to inspect the generated artifacts.
 
+### GHL Integration Checks
+
+Use the focused integration specs to validate that GHL receives the new metadata payloads for each provider:
+
+```bash
+# Stripe → GHL
+pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+
+# PayPal → GHL
+pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
+```
+
+Both tests create synthetic orders, replay the provider-specific webhook, and assert that:
+
+- Orders persist with the correct `source` (`stripe` or `paypal`).
+- Checkout sessions gain `ghlSyncedAt`/`ghlContactId` metadata.
+- The GoHighLevel contact contains the JSON blobs in `contact.purchase_metadata` and `contact.license_keys_v2`.
+
+> The runtime auto-discovers those custom fields by key. If your GoHighLevel location exposes `contact.purchase_metadata` and `contact.license_keys_v2`, no extra configuration is required. Optional overrides remain available via `GHL_CUSTOM_FIELD_PURCHASE_METADATA` and `GHL_CUSTOM_FIELD_LICENSE_KEYS_V2`.
+
 ## Deployment
 
 ### Via CLI

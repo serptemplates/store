@@ -92,7 +92,10 @@ describe("POST /api/paypal/webhook", () => {
     offerId: "demo-offer",
     landerId: "demo-offer",
     customerEmail: "buyer@example.com",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     status: "pending",
     source: "paypal",
     createdAt: new Date(),
@@ -105,7 +108,10 @@ describe("POST /api/paypal/webhook", () => {
     successUrl: "https://example.com/success",
     cancelUrl: "https://example.com/cancel",
     mode: "payment",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     productName: "Demo Offer",
     ghl: {},
   };
@@ -157,7 +163,12 @@ describe("POST /api/paypal/webhook", () => {
 
     expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
       offerConfigFixture.ghl,
-      expect.objectContaining({ offerId: "demo-offer" }),
+      expect.objectContaining({
+        offerId: "demo-offer",
+        provider: "paypal",
+        productPageUrl: "https://store.example.com/products/demo-offer",
+        purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      }),
     );
   });
 

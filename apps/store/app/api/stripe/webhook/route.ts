@@ -190,9 +190,15 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   });
 
   let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
+  let licenseTier: string | null = null;
+  let licenseEntitlements: string[] | null = null;
+  let licenseFeatures: Record<string, unknown> | null = null;
 
   if (customerEmail) {
     const { tier, entitlements, features } = extractLicenseConfig(offerConfig?.metadata, offerId);
+    licenseTier = tier ?? null;
+    licenseEntitlements = entitlements.length > 0 ? entitlements : null;
+    licenseFeatures = Object.keys(features).length > 0 ? features : null;
 
     const amountMajorUnits =
       typeof session.amount_total === "number" ? Number((session.amount_total / 100).toFixed(2)) : null;
@@ -296,6 +302,20 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
     return;
   }
 
+  const productPageUrl =
+    offerConfig?.metadata?.productPageUrl
+      ?? metadata.productPageUrl
+      ?? metadata.product_page_url
+      ?? null;
+
+  const purchaseUrl =
+    metadata.purchaseUrl
+      ?? metadata.purchase_url
+      ?? metadata.checkoutUrl
+      ?? metadata.checkout_url
+      ?? offerConfig?.metadata?.purchaseUrl
+      ?? null;
+
   try {
     if (!customerEmail) {
       logger.warn("ghl.skip_missing_email", {
@@ -333,9 +353,15 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
       currency: session.currency ?? null,
       landerId,
       metadata,
+      productPageUrl,
+      purchaseUrl,
+      provider: "stripe",
       licenseKey: licenseResult?.licenseKey ?? undefined,
       licenseId: licenseResult?.licenseId ?? undefined,
       licenseAction: licenseResult?.action ?? undefined,
+      licenseEntitlements: licenseEntitlements ?? undefined,
+      licenseTier: licenseTier ?? undefined,
+      licenseFeatures: licenseFeatures ?? undefined,
     });
 
     if (syncResult) {

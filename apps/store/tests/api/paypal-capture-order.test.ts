@@ -57,7 +57,10 @@ describe("POST /api/paypal/capture-order", () => {
     successUrl: "https://example.com/success",
     cancelUrl: "https://example.com/cancel",
     mode: "payment",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     productName: "Demo Offer",
     ghl: {},
   };
@@ -69,7 +72,10 @@ describe("POST /api/paypal/capture-order", () => {
     offerId: "demo-offer",
     landerId: "demo-offer",
     customerEmail: "buyer@example.com",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     status: "pending",
     source: "paypal",
     createdAt: new Date(),
@@ -112,15 +118,24 @@ describe("POST /api/paypal/capture-order", () => {
     expect(payload.orderId).toBe("order_123");
 
     expect(capturePayPalOrderMock).toHaveBeenCalledWith("order_123");
-    expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith("checkout-id", "completed");
+    expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith(
+      "paypal_order_123",
+      "completed",
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          productPageUrl: "https://store.example.com/products/demo-offer",
+          purchaseUrl: "https://store.example.com/checkout/demo-offer",
+        }),
+      }),
+    );
 
     const upsertCall = upsertOrderMock.mock.calls[0][0] as Record<string, unknown>;
     expect(upsertCall).toMatchObject({
-      stripe_session_id: "paypal_order_123",
-      stripe_payment_intent_id: "paypal_capture_123",
-      amount_total: 9900,
-      customer_email: "buyer@example.com",
-      payment_status: "COMPLETED",
+      stripeSessionId: "paypal_order_123",
+      stripePaymentIntentId: "paypal_capture_123",
+      amountTotal: 9900,
+      customerEmail: "buyer@example.com",
+      paymentStatus: "COMPLETED",
       source: "paypal",
     });
 
@@ -130,6 +145,11 @@ describe("POST /api/paypal/capture-order", () => {
         offerId: "demo-offer",
         customerEmail: "buyer@example.com",
         amountTotal: 9900,
+        provider: "paypal",
+        productPageUrl: "https://store.example.com/products/demo-offer",
+        purchaseUrl: "https://store.example.com/checkout/demo-offer",
+        licenseEntitlements: ["demo-offer"],
+        licenseTier: "demo-offer",
       }),
     );
   });

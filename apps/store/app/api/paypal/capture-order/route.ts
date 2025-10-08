@@ -89,6 +89,9 @@ export async function POST(request: NextRequest) {
     await upsertOrder(orderData);
 
     let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
+    let licenseTier: string | null = null;
+    let licenseEntitlements: string[] | null = null;
+    let licenseFeatures: Record<string, unknown> | null = null;
 
     if (payer?.email_address) {
       const { tier, entitlements, features } = (() => {
@@ -124,6 +127,10 @@ export async function POST(request: NextRequest) {
           features: featuresMap,
         };
       })();
+
+      licenseTier = tier ?? null;
+      licenseEntitlements = entitlements.length > 0 ? entitlements : null;
+      licenseFeatures = Object.keys(features).length > 0 ? features : null;
 
       const amountMajorUnits = typeof amountTotal === "number" ? Number((amountTotal / 100).toFixed(2)) : null;
 
@@ -161,6 +168,7 @@ export async function POST(request: NextRequest) {
           const now = new Date().toISOString();
           await upsertOrder({
             stripePaymentIntentId: orderData.stripePaymentIntentId,
+            source: orderData.source,
             metadata: {
               license: {
                 action: licenseResult.action ?? null,
@@ -201,6 +209,32 @@ export async function POST(request: NextRequest) {
 
     if (checkoutSession?.offerId && payer?.email_address) {
       const offer = getOfferConfig(checkoutSession.offerId);
+      const sessionMetadata = (checkoutSession.metadata ?? {}) as Record<string, unknown>;
+
+      const sessionProductPage = sessionMetadata["productPageUrl"]
+        ?? sessionMetadata["product_page_url"]
+        ?? sessionMetadata["productPageURL"];
+      const sessionPurchaseUrl = sessionMetadata["purchaseUrl"]
+        ?? sessionMetadata["purchase_url"]
+        ?? sessionMetadata["checkoutUrl"]
+        ?? sessionMetadata["checkout_url"];
+
+      const productPageUrl =
+        (typeof offer?.metadata?.productPageUrl === "string" ? offer.metadata.productPageUrl : undefined)
+        ?? (typeof sessionProductPage === "string" ? sessionProductPage : undefined)
+        ?? null;
+
+      const purchaseUrl =
+        (typeof sessionPurchaseUrl === "string" ? sessionPurchaseUrl : undefined)
+        ?? (typeof offer?.metadata?.purchaseUrl === "string" ? offer.metadata.purchaseUrl : undefined)
+        ?? null;
+
+      const amountFormatted = capture?.amount?.value && capture?.amount?.currency_code
+        ? new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: capture.amount.currency_code,
+          }).format(Number(capture.amount.value))
+        : undefined;
 
       try {
         syncResult = await syncOrderWithGhl(offer?.ghl, {
@@ -211,12 +245,19 @@ export async function POST(request: NextRequest) {
           stripeSessionId: sessionId,
           stripePaymentIntentId: orderData.stripePaymentIntentId,
           amountTotal: amountTotal,
+          amountFormatted,
           currency: orderData.currency,
           landerId: checkoutSession.landerId,
           metadata: orderData.metadata as Record<string, string>,
+          productPageUrl,
+          purchaseUrl,
+          provider: "paypal",
           licenseKey: licenseResult?.licenseKey ?? undefined,
           licenseId: licenseResult?.licenseId ?? undefined,
           licenseAction: licenseResult?.action ?? undefined,
+          licenseEntitlements: licenseEntitlements ?? undefined,
+          licenseTier: licenseTier ?? undefined,
+          licenseFeatures: licenseFeatures ?? undefined,
         });
       } catch (ghlError) {
         console.error("Failed to sync with GHL:", ghlError);
