@@ -110,7 +110,10 @@ const checkoutSessionFixture: CheckoutSessionRecord = {
   offerId: "demo-offer",
   landerId: "demo-offer",
   customerEmail: "buyer@example.com",
-  metadata: {},
+  metadata: {
+    productPageUrl: "https://store.example.com/products/demo-offer",
+    purchaseUrl: "https://store.example.com/checkout/demo-offer",
+  },
   status: "pending",
   source: "stripe",
   createdAt: new Date(),
@@ -151,6 +154,8 @@ function buildCheckoutSessionEvent() {
       offerId: "demo-offer",
       landerId: "demo-offer",
       productName: "Demo Offer",
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
     },
     client_reference_id: null,
     payment_status: "paid",
@@ -281,7 +286,14 @@ describe("POST /api/stripe/webhook", () => {
 
     expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
       offerConfigFixture.ghl,
-      expect.objectContaining({ offerId: "demo-offer" }),
+      expect.objectContaining({
+        offerId: "demo-offer",
+        provider: "stripe",
+        productPageUrl: "https://store.example.com/products/demo-offer",
+        purchaseUrl: "https://store.example.com/checkout/demo-offer",
+        licenseEntitlements: ["demo-offer"],
+        licenseTier: "demo-offer",
+      }),
     );
 
     expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith(

@@ -136,6 +136,25 @@ export async function POST(request: NextRequest) {
         // Sync with GHL
         if (checkoutSession?.offerId && payer?.email_address) {
           const offer = getOfferConfig(checkoutSession.offerId);
+          const sessionMetadata = (checkoutSession?.metadata ?? {}) as Record<string, unknown>;
+
+          const sessionProductPage = sessionMetadata["productPageUrl"]
+            ?? sessionMetadata["product_page_url"]
+            ?? sessionMetadata["productPageURL"];
+          const sessionPurchaseUrl = sessionMetadata["purchaseUrl"]
+            ?? sessionMetadata["purchase_url"]
+            ?? sessionMetadata["checkoutUrl"]
+            ?? sessionMetadata["checkout_url"];
+
+          const productPageUrl =
+            (typeof offer?.metadata?.productPageUrl === "string" ? offer.metadata.productPageUrl : undefined)
+            ?? (typeof sessionProductPage === "string" ? sessionProductPage : undefined)
+            ?? null;
+
+          const purchaseUrl =
+            (typeof sessionPurchaseUrl === "string" ? sessionPurchaseUrl : undefined)
+            ?? (typeof offer?.metadata?.purchaseUrl === "string" ? offer.metadata.purchaseUrl : undefined)
+            ?? null;
 
           try {
             await syncOrderWithGhl(offer?.ghl, {
@@ -149,6 +168,9 @@ export async function POST(request: NextRequest) {
               currency: orderData.currency,
               landerId: checkoutSession.landerId,
               metadata: orderData.metadata as Record<string, string>,
+              productPageUrl,
+              purchaseUrl,
+              provider: "paypal",
             });
           } catch (ghlError) {
             console.error("Failed to sync with GHL:", ghlError);
