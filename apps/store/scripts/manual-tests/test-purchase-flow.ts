@@ -1,10 +1,16 @@
+/**
+ * Run with: npx tsx scripts/manual-tests/test-purchase-flow.ts
+ */
+
 import { config } from "dotenv";
 import crypto from "crypto";
 import Stripe from "stripe";
-import { getOptionalStripeWebhookSecret } from "./lib/stripe-environment";
+
+import { getOptionalStripeWebhookSecret } from "../../lib/stripe-environment";
 
 // Load environment variables
-config({ path: "../../.env" });
+config({ path: "../../../.env.local" });
+config({ path: "../../../.env" });
 
 const WEBHOOK_SECRET = getOptionalStripeWebhookSecret("test") || getOptionalStripeWebhookSecret();
 const API_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL || "http://localhost:3000";
@@ -213,7 +219,7 @@ async function checkDatabase() {
   console.log("\n📊 Checking database for results...\n");
 
   try {
-    const { ensureDatabase, query } = await import("./lib/database");
+    const { ensureDatabase, query } = await import("../../lib/database");
 
     const isConfigured = await ensureDatabase();
     if (!isConfigured) {

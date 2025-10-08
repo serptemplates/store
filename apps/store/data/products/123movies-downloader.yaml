@@ -2,12 +2,12 @@ slug: 123movies-downloader
 platform: 123movies
 seo_title: 123movies Downloader | Download 123movies Downloader for Offline Access
 seo_description: Download videos, images, and content from 123movies with our reliable downloader tool. Fast, secure, and easy to use.
-product_page_url: https://store.serp.co/products/123movies-downloader
+product_page_url: https://apps.serp.co/123movies-downloader
 purchase_url: https://serp.ly/123movies-downloader
 stripe:
   price_id: price_1S99wh06JrOmKRCmkF8J8XUh
-  success_url: https://store.serp.co/products/123movies-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/123movies-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=123movies-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sv6Czh24RpPTaL
@@ -87,7 +87,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-123movies-downloader
+    - purchase-123movies-downloader
 pre_release: true
 reviews:
 - name: Alex Martinez
@@ -113,4 +113,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68dfb084613b1b797cce7bdf
+buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880

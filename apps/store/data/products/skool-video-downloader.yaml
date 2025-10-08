@@ -2,12 +2,12 @@ slug: skool-video-downloader
 platform: Skool
 seo_title: Skool Video Downloader | How to Download Skool Videos for Offline Viewing
 seo_description: Download Skool classroom and community videos for reliable offline viewing, protect your course access, and back up every lesson effortlessly.
-product_page_url: https://store.serp.co/products/skool-video-downloader
-purchase_url: https://serp.ly/skool-video-downloader-extension
+product_page_url: https://apps.serp.co/skool-video-downloader
+purchase_url: https://serp.ly/skool-video-downloader
 stripe:
   price_id: price_1S9BFU06JrOmKRCmMYncsgKb
-  success_url: https://store.serp.co/products/skool-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/skool-video-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=skool-video-downloader
   metadata:
     source: lander-template
 ghl:

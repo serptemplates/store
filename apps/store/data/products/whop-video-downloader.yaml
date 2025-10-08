@@ -2,12 +2,12 @@ slug: whop-video-downloader
 platform: Whop
 seo_title: Whop Video Downloader | Download Whop Video Downloader for Offline Access
 seo_description: Download videos, images, and content from whop video with our reliable downloader tool. Fast, secure, and easy to use.
-product_page_url: https://store.serp.co/products/whop-video-downloader
+product_page_url: https://apps.serp.co/whop-video-downloader
 purchase_url: https://serp.ly/whop-video-downloader
 stripe:
   price_id: price_1S99gJ06JrOmKRCmkAYY713T
-  success_url: https://store.serp.co/products/whop-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/whop-video-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=whop-video-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sv6Ie4IH2swYcq
@@ -87,7 +87,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-whop-video-downloader
+    - purchase-whop-downloader
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Whop Video Downloader

@@ -1,3 +1,8 @@
+"""Interactive helper to inspect checkout flows.
+
+Run with: python scripts/manual-tests/inspect_checkout.py
+"""
+
 from playwright.sync_api import sync_playwright
 import time
 

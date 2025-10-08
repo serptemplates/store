@@ -101,7 +101,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-kajabi-video-downloader
+    - purchase-kajabi-downloader
 pre_release: true
 reviews:
 - name: Alex Martinez
@@ -130,4 +130,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: null
+buy_button_destination: https://ghl.serp.co/payment-link/68e02c5b219709c8dde26735

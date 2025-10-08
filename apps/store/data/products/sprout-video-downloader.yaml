@@ -117,7 +117,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-sprout-video-downloader
+    - purchase-sprout-video-downloader
 new_release: true
 reviews:
 - name: Alex Martinez

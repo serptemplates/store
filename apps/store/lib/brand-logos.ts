@@ -42,7 +42,6 @@ const brandLogoMap: Record<string, string> = {
   'stockvault-downloader': '/brand-logos/stockvault.png',
   'stocksy-downloader': '/brand-logos/stocksy.png',
   'alamy-downloader': '/brand-logos/alamy.png',
-  'creative-market-downloader': '/brand-logos/creative-market.png',
   'skillshare-downloader': '/brand-logos/skillshare.png',
   'udemy-downloader': '/brand-logos/udemy.png',
   'coursera-downloader': '/brand-logos/coursera.png',

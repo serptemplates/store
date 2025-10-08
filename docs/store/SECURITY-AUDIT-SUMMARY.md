@@ -333,11 +333,11 @@ The following were found to be properly implemented:
 ## 📞 Support Resources
 
 ### Documentation
-- `/apps/store/SECURITY-AUDIT.md` - Audit findings
-- `/apps/store/SECURITY-IMPLEMENTATION-GUIDE.md` - Implementation guide
-- `/apps/store/PRE-LAUNCH-CHECKLIST.md` - Launch checklist
-- `/apps/store/FINAL-REVIEW.md` - Feature review
-- `/apps/store/PRODUCTION-CHECKLIST.md` - Production config
+- `/docs/store/SECURITY-AUDIT.md` - Audit findings
+- `/docs/store/SECURITY-IMPLEMENTATION-GUIDE.md` - Implementation guide
+- `/docs/store/PRE-LAUNCH-CHECKLIST.md` - Launch checklist
+- `/docs/store/FINAL-REVIEW.md` - Feature review
+- `/docs/store/PRODUCTION-CHECKLIST.md` - Production config
 
 ### External Resources
 - Stripe Security: https://stripe.com/docs/security

@@ -16,7 +16,7 @@ pnpm install
 pnpm dev
 ```
 
-The dev script runs `@apps/store` on port 3000. See `apps/store/README.md` for detailed product management and testing workflows.
+The dev script runs `@apps/store` on port 3000. See `docs/store/README.md` for detailed product management and testing workflows.
 
 ## Blog Content
 

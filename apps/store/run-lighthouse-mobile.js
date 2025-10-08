@@ -3,12 +3,18 @@
 const lighthouse = require('lighthouse');
 const chromeLauncher = require('chrome-launcher');
 const fs = require('fs');
+const path = require('path');
+
+const REPORTS_DIR = path.join(__dirname, 'reports');
+if (!fs.existsSync(REPORTS_DIR)) {
+  fs.mkdirSync(REPORTS_DIR, { recursive: true });
+}
 
 // Pages to test
 const PAGES_TO_TEST = [
   { path: '/', name: 'Homepage' },
-  { path: '/demo-ecommerce-product', name: 'Demo Ecommerce Product' },
-  { path: '/demo-landing-product', name: 'Demo Landing Product' },
+  { path: '/loom-video-downloader', name: 'Loom Video Downloader' },
+  { path: '/youtube-downloader', name: 'Youtube Downloader' },
   { path: '/blog', name: 'Blog' }
 ];
 
@@ -179,8 +185,9 @@ async function testAllPages() {
   }
 
   // Save detailed report
-  fs.writeFileSync('lighthouse-mobile-report.json', JSON.stringify(results, null, 2));
-  console.log('\n📁 Detailed report saved to: lighthouse-mobile-report.json');
+  const reportJsonPath = path.join(REPORTS_DIR, 'lighthouse-mobile-report.json');
+  fs.writeFileSync(reportJsonPath, JSON.stringify(results, null, 2));
+  console.log(`\n📁 Detailed report saved to: ${reportJsonPath}`);
 
   // Generate HTML summary
   const htmlReport = `
@@ -245,8 +252,9 @@ async function testAllPages() {
 </html>
   `;
 
-  fs.writeFileSync('lighthouse-mobile-report.html', htmlReport);
-  console.log('📄 HTML report saved to: lighthouse-mobile-report.html');
+  const reportHtmlPath = path.join(REPORTS_DIR, 'lighthouse-mobile-report.html');
+  fs.writeFileSync(reportHtmlPath, htmlReport);
+  console.log(`📄 HTML report saved to: ${reportHtmlPath}`);
 }
 
 // Run the tests

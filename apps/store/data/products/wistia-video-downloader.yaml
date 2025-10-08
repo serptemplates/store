@@ -113,7 +113,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-wistia-video-downloader
+    - purchase-wistia-downloader
 new_release: true
 reviews:
 - name: Alex Martinez

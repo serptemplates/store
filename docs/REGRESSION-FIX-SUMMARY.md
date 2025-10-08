@@ -177,7 +177,7 @@ If issues occur, the old behavior can be restored by reverting the two main file
 
 ## 📚 Related Documentation
 
-- [Technical Documentation](./apps/store/ACCOUNT-CHECKOUT-FIX.md) - Deep dive into the fix
+- [Technical Documentation](./store/ACCOUNT-CHECKOUT-FIX.md) - Deep dive into the fix
 - [Demo Script](./apps/store/demo-checkout-fix.js) - Interactive demonstration
 - [Unit Tests](./apps/store/__tests__/checkout-store-metadata-update.test.ts) - Test coverage
 
