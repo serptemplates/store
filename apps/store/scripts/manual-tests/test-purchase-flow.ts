@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import crypto from "crypto";
 import Stripe from "stripe";
 
-import { getOptionalStripeWebhookSecret } from "../../lib/stripe-environment";
+import { getOptionalStripeWebhookSecret } from "../../lib/payments/stripe-environment";
 
 // Load environment variables
 config({ path: "../../../.env.local" });

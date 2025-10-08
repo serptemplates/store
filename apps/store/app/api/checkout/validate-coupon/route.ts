@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-import { validateCoupon as validateCouponCode } from "@/lib/coupons";
+import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
 
 const requestSchema = z.object({

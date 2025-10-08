@@ -78,7 +78,7 @@ pnpm dev
 ```
 
 ### 5. Request Validation Middleware (DONE)
-**Location:** `apps/store/lib/request-validation.ts`
+**Location:** `apps/store/lib/checkout/request-validation.ts`
 
 Utilities for:
 - ✅ Payload size limits (100KB JSON, 50KB text by default)
@@ -88,7 +88,7 @@ Utilities for:
 
 **Usage Example:**
 ```typescript
-import { withRequestValidation } from '@/lib/request-validation';
+import { withRequestValidation } from '@/lib/checkout/request-validation';
 
 export async function POST(request: NextRequest) {
   return withRequestValidation(
@@ -164,7 +164,7 @@ This enables the startup validation in `instrumentation.ts`.
 
 **a) Checkout API** (`apps/store/app/api/checkout/session/route.ts`):
 ```typescript
-import { withRequestValidation } from '@/lib/request-validation';
+import { withRequestValidation } from '@/lib/checkout/request-validation';
 
 export async function POST(request: NextRequest) {
   return withRequestValidation(

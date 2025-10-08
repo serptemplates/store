@@ -2,11 +2,11 @@ import { cookies } from "next/headers";
 
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
 import AccountVerificationFlow from "@/components/account/AccountVerificationFlow";
-import { getAccountFromSessionCookie } from "@/lib/account-service";
-import { findRecentOrdersByEmail } from "@/lib/checkout-store";
+import { getAccountFromSessionCookie } from "@/lib/account/service";
+import { findRecentOrdersByEmail } from "@/lib/checkout/store";
 import { fetchLicenseForOrder } from "@/lib/license-service";
 import { getSiteConfig } from "@/lib/site-config";
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 

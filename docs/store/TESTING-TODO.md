@@ -12,5 +12,5 @@
 - [ ] Expand Playwright coverage to mobile breakpoints once smoke suite is stable to replace the current multi-device responsiveness spec.
 - [x] Backfill PayPal API route tests mirroring Stripe coverage and ensure dual-source checkout parity.
 - [ ] Capture screenshots or DOM snapshots for key landing pages to guard against accidental layout regressions.
-- [x] Add fixture-based tests for `lib/product` and `productToHomeTemplate` to lock critical transformations.
+- [x] Add fixture-based tests for `lib/products/product` and `productToHomeTemplate` to lock critical transformations.
 - [x] Wire live Stripe dry-run, Lighthouse budgets, and monitoring endpoint checks so cashflow and performance regressions fail fast.

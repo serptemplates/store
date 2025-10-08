@@ -45,7 +45,7 @@ This had two problems:
 
 ### 1. New `updateOrderMetadata` Function
 
-Created a dedicated function in `checkout-store.ts` that:
+Created a dedicated function in `checkout/store.ts` that:
 - Accepts lookup keys: `stripePaymentIntentId` and/or `stripeSessionId`
 - Tries payment intent ID first (more specific)
 - Falls back to session ID if payment intent doesn't match
@@ -168,7 +168,7 @@ To verify the fix works:
 
 ## Related Files
 
-- `apps/store/lib/checkout-store.ts` - Added `updateOrderMetadata` function
+- `apps/store/lib/checkout/store.ts` - Added `updateOrderMetadata` function
 - `apps/store/app/api/stripe/webhook/route.ts` - Updated to use new function
 - `apps/store/__tests__/checkout-store-metadata-update.test.ts` - Comprehensive tests
 

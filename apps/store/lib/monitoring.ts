@@ -1,6 +1,6 @@
-import { countPendingCheckoutSessionsOlderThan, getRecentOrderStats } from "@/lib/checkout-store";
+import { countPendingCheckoutSessionsOlderThan, getRecentOrderStats } from "@/lib/checkout/store";
 import { countErroredWebhookLogsSince, countPendingWebhookLogsOlderThan } from "@/lib/webhook-logs";
-import sendOpsAlert from "@/lib/ops-notify";
+import sendOpsAlert from "@/lib/notifications/ops";
 
 export type CheckoutMonitorIssue = {
   key: string;

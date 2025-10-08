@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar, Clock, FileText, User } from "lucide-react";
 
 import { getAllPosts } from "@/lib/blog";
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";

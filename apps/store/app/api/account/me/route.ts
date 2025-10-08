@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getAccountFromSessionCookie } from "@/lib/account-service";
+import { getAccountFromSessionCookie } from "@/lib/account/service";
 
 export async function GET(request: NextRequest) {
   const sessionCookie = request.cookies.get("store_account_session")?.value ?? null;

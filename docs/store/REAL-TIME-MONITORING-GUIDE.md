@@ -110,7 +110,7 @@ Your `SLACK_ALERT_WEBHOOK_URL` is already in place. Now let's enhance it for rea
 **Create Enhanced Notification Function:**
 
 ```typescript
-// lib/sales-notify.ts
+// lib/notifications/sales.ts
 import logger from './logger';
 
 const SLACK_WEBHOOK_URL = process.env.SLACK_ALERT_WEBHOOK_URL;
@@ -266,7 +266,7 @@ export async function notifyPaymentFailure(data: {
 // In app/api/stripe/webhook/route.ts
 // Add after successful order creation:
 
-import { notifyNewSale, notifyPaymentFailure } from '@/lib/sales-notify';
+import { notifyNewSale, notifyPaymentFailure } from '@/lib/notifications/sales';
 
 // After order is saved successfully:
 await notifyNewSale({
@@ -296,7 +296,7 @@ await notifyPaymentFailure({
 // app/api/monitoring/errors/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/database';
-import { sendOpsAlert } from '@/lib/ops-notify';
+import { sendOpsAlert } from '@/lib/notifications/ops';
 
 export async function GET(request: NextRequest) {
   const token = request.headers.get('authorization')?.replace('Bearer ', '');

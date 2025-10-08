@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getProductData } from "@/lib/product";
+import { getProductData } from "@/lib/products/product";
 
 export function GET() {
   const product = getProductData();

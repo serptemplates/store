@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { capturePayPalOrder, isPayPalConfigured } from "@/lib/paypal";
+import { capturePayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
 import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
   type CheckoutOrderUpsert,
-} from "@/lib/checkout-store";
+} from "@/lib/checkout/store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
-import { getOfferConfig } from "@/lib/offer-config";
+import { getOfferConfig } from "@/lib/products/offer-config";
 import { createLicenseForOrder } from "@/lib/license-service";
 
 const requestSchema = z.object({

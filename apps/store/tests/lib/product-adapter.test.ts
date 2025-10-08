@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { productToHomeTemplate } from "@/lib/product-adapter";
-import type { ProductData } from "@/lib/product-schema";
+import { productToHomeTemplate } from "@/lib/products/product-adapter";
+import type { ProductData } from "@/lib/products/product-schema";
 
 const baseProduct: ProductData = {
   slug: "sample-product",

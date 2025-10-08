@@ -3,15 +3,15 @@ import path from "node:path";
 
 import { config as loadEnv } from "dotenv";
 
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import {
   extractVimeoId,
   extractYouTubeId,
   resolveUploadDate,
   type SupportedVideoPlatform,
-} from "@/lib/video";
-import type { ProductData } from "@/lib/product-schema";
-import type { ExternalVideoMetadata } from "@/lib/video-metadata";
+} from "@/lib/products/video";
+import type { ProductData } from "@/lib/products/product-schema";
+import type { ExternalVideoMetadata } from "@/lib/products/video-metadata";
 
 const repoRoot = path.resolve(process.cwd(), "../../");
 loadEnv({ path: path.join(repoRoot, ".env.local") });

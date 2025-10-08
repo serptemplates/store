@@ -3,10 +3,10 @@ import ClientHome from "../ClientHome";
 import HybridPage from "./hybrid-page";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { getAllPosts } from "@/lib/blog";
-import { getAllProducts, getProductData, getProductSlugs } from "@/lib/product";
+import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
-import { getProductVideoEntries } from "@/lib/video";
+import { getProductVideoEntries } from "@/lib/products/video";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

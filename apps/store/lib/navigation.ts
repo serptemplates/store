@@ -1,6 +1,6 @@
 import type { PrimaryNavbarProps, PrimaryNavLink, PrimaryNavProductLink } from "@/components/navigation/PrimaryNavbar";
-import { getAllProducts } from "@/lib/product";
-import type { ProductData } from "@/lib/product-schema";
+import { getAllProducts } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 import { getSiteConfig } from "@/lib/site-config";
 import type { SiteConfig } from "@/lib/site-config";
 

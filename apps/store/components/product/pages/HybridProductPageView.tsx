@@ -16,13 +16,13 @@ import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
 // Removed: useCheckoutRedirect - now using direct link to unified checkout page
-import { getBrandLogoPath } from "@/lib/brand-logos"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import type { BlogPostMeta } from "@/lib/blog"
-import { productToHomeTemplate } from "@/lib/product-adapter"
-import type { ProductData } from "@/lib/product-schema"
+import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import type { ProductData } from "@/lib/products/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
-import type { ProductVideoEntry } from "@/lib/video"
+import type { ProductVideoEntry } from "@/lib/products/video"
 
 export interface HybridProductPageViewProps {
   product: ProductData

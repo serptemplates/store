@@ -10,7 +10,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeCodeTitles from "rehype-code-titles";
 
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";

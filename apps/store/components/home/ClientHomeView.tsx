@@ -12,10 +12,10 @@ import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
 import type { BlogPostMeta } from "@/lib/blog"
-import { productToHomeTemplate } from "@/lib/product-adapter"
-import type { ProductData } from "@/lib/product-schema"
+import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import type { ProductData } from "@/lib/products/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
-import type { ProductVideoEntry } from "@/lib/video"
+import type { ProductVideoEntry } from "@/lib/products/video"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
 

@@ -3,10 +3,10 @@ import path from "node:path";
 
 import type { MetadataRoute } from "next";
 
-import { getProductData, getProductSlugs } from "@/lib/product";
+import { getProductData, getProductSlugs } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { getAllPosts } from "@/lib/blog";
-import { getProductVideoEntries } from "@/lib/video";
+import { getProductVideoEntries } from "@/lib/products/video";
 
 export const runtime = "nodejs";
 

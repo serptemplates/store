@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { getAllProducts } from "@/lib/product";
-import { productToHomeTemplate } from "@/lib/product-adapter";
+import { getAllProducts } from "@/lib/products/product";
+import { productToHomeTemplate } from "@/lib/products/product-adapter";
 
 const ALLOWED_PREFIXES = [
   "https://store.serp.co/",

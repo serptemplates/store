@@ -8,7 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z, ZodError, ZodSchema } from 'zod';
 import logger from '../logger';
-import { getOptionalStripeWebhookSecret } from '../stripe-environment';
+import { getOptionalStripeWebhookSecret } from '../payments/stripe-environment';
 
 // ============= Validation Result Types =============
 

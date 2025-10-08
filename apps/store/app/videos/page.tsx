@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 
-import { getAllProducts } from "@/lib/product";
-import { getProductVideoEntries } from "@/lib/video";
+import { getAllProducts } from "@/lib/products/product";
+import { getProductVideoEntries } from "@/lib/products/video";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
 import { buildPrimaryNavProps } from "@/lib/navigation";

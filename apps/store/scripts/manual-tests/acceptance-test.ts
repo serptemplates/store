@@ -19,7 +19,7 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 
 import { query } from '../../lib/database';
-import { requireStripeSecretKey } from '../../lib/stripe-environment';
+import { requireStripeSecretKey } from '../../lib/payments/stripe-environment';
 
 const projectRoot = resolve(__dirname, '..', '..');
 config({ path: resolve(projectRoot, '.env.local') });
@@ -128,7 +128,7 @@ async function testPaymentProcessor() {
 
     try {
       // Import database functions
-      const { updateCheckoutSessionStatus, upsertOrder } = await import('../../lib/checkout-store');
+      const { updateCheckoutSessionStatus, upsertOrder } = await import('../../lib/checkout/store');
 
       // Wait for database to be saved
       await sleep(2000);
@@ -180,7 +180,7 @@ async function testPaymentProcessor() {
           log.info('Triggering GHL sync...');
           try {
             const { syncOrderWithGhl } = await import('../../lib/ghl-client');
-            const { getOfferConfig } = await import('../../lib/offer-config');
+            const { getOfferConfig } = await import('../../lib/products/offer-config');
 
             const offerConfig = getOfferConfig(checkoutSession.offer_id);
             if (offerConfig?.ghl) {

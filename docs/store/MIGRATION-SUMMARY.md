@@ -140,7 +140,7 @@ NEXT_PUBLIC_GTM_ID=GTM-...
 ### Monitoring Setup
 - Webhook logs: `lib/webhook-logs.ts`
 - Error tracking: `lib/logger.ts`
-- Ops alerts: `lib/ops-notify.ts`
+- Ops alerts: `lib/notifications/ops.ts`
 
 ## Next Steps
 

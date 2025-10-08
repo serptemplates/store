@@ -7,7 +7,7 @@ import {
   getAccountFromSessionCookie,
   verifyAccountWithCode,
   verifyAccountWithToken,
-} from "@/lib/account-service";
+} from "@/lib/account/service";
 
 const bodySchema = z.object({
   email: z.string().email().optional(),

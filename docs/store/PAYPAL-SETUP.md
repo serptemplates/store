@@ -182,7 +182,7 @@ The PayPal button can be customized in `components/paypal-button.tsx`:
 Currently configured for immediate capture. To change to authorize-first:
 
 ```typescript
-// In lib/paypal.ts, change intent:
+// In lib/payments/paypal.ts, change intent:
 intent: "AUTHORIZE"  // Instead of "CAPTURE"
 ```
 

@@ -2,12 +2,12 @@ import dynamic from "next/dynamic"
 import NextLink from "next/link"
 import Script from "next/script"
 
-import { CATEGORY_RULES, PRIMARY_CATEGORIES } from "@/lib/category-constants"
-import { getAllProducts } from "@/lib/product"
+import { CATEGORY_RULES, PRIMARY_CATEGORIES } from "@/lib/products/category-constants"
+import { getAllProducts } from "@/lib/products/product"
 import { getSiteConfig } from "@/lib/site-config"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { buildPrimaryNavProps } from "@/lib/navigation"
-import type { ProductData } from "@/lib/product-schema"
+import type { ProductData } from "@/lib/products/product-schema"
 import { WhoIsBehind } from "./WhoIsBehind"
 
 const ProductsFilter = dynamic(

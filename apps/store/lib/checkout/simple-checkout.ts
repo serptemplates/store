@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
-import { getProductData } from './product';
-import { getStripeMode, requireStripeSecretKey } from './stripe-environment';
+import { getProductData } from '@/lib/products/product';
+import { getStripeMode, requireStripeSecretKey } from '@/lib/payments/stripe-environment';
 
 /**
  * Simple checkout that creates Stripe prices on the fly from product data
