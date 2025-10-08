@@ -1,8 +1,26 @@
+import * as fs from "fs";
 import { config } from "dotenv";
-import { ensureDatabase, query } from "./lib/database";
+import * as path from "path";
+import { ensureDatabase, query } from "../../apps/store/lib/database";
 
-// Load environment variables
-config({ path: "../../.env" });
+function loadEnv() {
+  const candidates = [
+    path.resolve(process.cwd(), ".env"),
+    path.resolve(process.cwd(), "../.env"),
+    path.resolve(process.cwd(), "../../.env"),
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      config({ path: candidate });
+      return;
+    }
+  }
+
+  config();
+}
+
+loadEnv();
 
 async function checkDatabase() {
   console.log("📊 Database Status Check\n");

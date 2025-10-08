@@ -9,6 +9,29 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+function findStoreRoot(): string {
+  let current = process.cwd();
+  const { root } = path.parse(current);
+
+  while (current && current !== root) {
+    const candidate = path.join(current, 'apps', 'store');
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+    current = path.dirname(current);
+  }
+
+  const fallback = path.join(process.cwd(), 'apps', 'store');
+  if (fs.existsSync(fallback)) {
+    return fallback;
+  }
+
+  throw new Error('Unable to locate apps/store directory. Run this script from the repository root.');
+}
+
+const storeRoot = findStoreRoot();
+const repoRoot = path.resolve(storeRoot, '..', '..');
+
 interface FileCheck {
   file: string;
   issues: string[];
@@ -107,8 +130,10 @@ class MobilePatternChecker {
       }
     });
 
+    const relativePath = path.relative(repoRoot, filePath);
+
     return {
-      file: filePath.replace(process.cwd(), '.'),
+      file: relativePath ? `./${relativePath}` : path.basename(filePath),
       issues,
       warnings,
       goodPatterns
@@ -121,6 +146,11 @@ class MobilePatternChecker {
   }
 
   scanDirectory(dir: string, extensions: string[] = ['.tsx', '.jsx']) {
+    if (!fs.existsSync(dir)) {
+      console.warn(`⚠️  Skipping missing directory: ${path.relative(repoRoot, dir)}`);
+      return;
+    }
+
     const files = this.getFiles(dir, extensions);
 
     console.log(`🔍 Scanning ${files.length} files for mobile patterns...\n`);
@@ -219,8 +249,9 @@ class MobilePatternChecker {
     this.generateRecommendations();
 
     // Save detailed report
-    fs.writeFileSync('mobile-patterns-report.json', JSON.stringify(this.results, null, 2));
-    console.log('\n📁 Detailed report saved to: mobile-patterns-report.json');
+    const outputPath = path.resolve(process.cwd(), 'mobile-patterns-report.json');
+    fs.writeFileSync(outputPath, JSON.stringify(this.results, null, 2));
+    console.log(`\n📁 Detailed report saved to: ${path.relative(process.cwd(), outputPath)}`);
   }
 
   generateRecommendations() {
@@ -265,18 +296,20 @@ class MobilePatternChecker {
 // Quick viewport check for critical pages
 async function quickViewportCheck() {
   const critical = [
-    'apps/store/app/layout.tsx',
-    'apps/store/app/page.tsx',
-    'apps/store/app/[slug]/page.tsx',
+    { label: 'layout.tsx', file: path.join(storeRoot, 'app', 'layout.tsx') },
+    { label: 'home page', file: path.join(storeRoot, 'app', 'page.tsx') },
+    { label: '[slug] page', file: path.join(storeRoot, 'app', '[slug]', 'page.tsx') },
   ];
 
   console.log('\n🔍 Quick Viewport Check:\n');
 
-  critical.forEach(file => {
+  critical.forEach(({ label, file }) => {
     if (fs.existsSync(file)) {
       const content = fs.readFileSync(file, 'utf-8');
       const hasViewport = content.includes('viewport') || content.includes('Viewport');
-      console.log(`   ${hasViewport ? '✅' : '❌'} ${file.split('/').pop()}`);
+      console.log(`   ${hasViewport ? '✅' : '❌'} ${label}`);
+    } else {
+      console.log(`   ⚠️  Missing file: ${path.relative(repoRoot, file)}`);
     }
   });
 }
@@ -286,10 +319,10 @@ async function main() {
   const checker = new MobilePatternChecker();
 
   // Scan app directory
-  checker.scanDirectory('app');
+  checker.scanDirectory(path.join(storeRoot, 'app'));
 
   // Scan components directory
-  checker.scanDirectory('components');
+  checker.scanDirectory(path.join(storeRoot, 'components'));
 
   // Generate report
   checker.generateReport();

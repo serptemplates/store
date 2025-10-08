@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+const repoRoot = path.resolve(__dirname, '..', '..');
+process.chdir(repoRoot);
+
 console.log('🚀 Mobile Performance Optimizer\n');
 console.log('Current Score: 77/100');
 console.log('Target Score: 90+/100\n');
@@ -126,7 +129,7 @@ const inter = Inter({
 });
 
 // Lazy load heavy components
-const Analytics = dynamic(() => import('./components/Analytics'), {
+const Analytics = dynamic(() => import('./Analytics'), {
   ssr: false,
   loading: () => null,
 });
