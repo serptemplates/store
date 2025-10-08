@@ -1,1 +1,2 @@
 - use playwright MCP server to see browser console and network logs, and correct your errors and fix items
+- always run lint and type check for 0 errors/warnings before considering a task to be completed
