@@ -8,15 +8,17 @@ import type { ProductData } from "@/lib/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/product-adapter";
 import type { BlogPostMeta } from "@/lib/blog";
+import type { ProductVideoEntry } from "@/lib/video";
 
 export interface ProductStructuredDataScriptsProps {
   product: ProductData;
   posts?: BlogPostMeta[];
   siteConfig?: SiteConfig;
   images: string[];
+  videoEntries?: ProductVideoEntry[];
 }
 
-export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images }: ProductStructuredDataScriptsProps) {
+export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
   const homeProps = productToHomeTemplate(product, posts);
   const productSchema = generateProductSchemaLD({
     product: {
@@ -31,8 +33,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         text: review.review,
       })),
     } as any,
-    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://serp.app/${product.slug}`,
-    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://serp.app",
+    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://apps.serp.co/${product.slug}`,
+    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co",
     currency: "USD",
     preRelease: product.pre_release ?? false,
     expectedLaunchDate: undefined,
@@ -43,7 +45,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       { name: "Home", url: "/" },
       { name: product.name },
     ],
-    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://serp.app",
+    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co",
   });
 
   const softwareAppSchema = generateWebApplicationSchema({
@@ -70,11 +72,11 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       typeof screenshot === "string" ? screenshot : screenshot.url,
     ) ?? images,
     softwareVersion: "1.0",
-    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://serp.app/${product.slug}`,
+    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://apps.serp.co/${product.slug}`,
     downloadUrl: product.purchase_url,
     author: {
       name: "SERP Apps",
-      url: "https://serp.app",
+      url: "https://apps.serp.co",
     },
     datePublished: new Date().toISOString(),
     featureList: product.features?.map((feature) =>
@@ -99,18 +101,70 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         }
       : null;
 
-  const videoScripts = (product.product_videos ?? []).map((video, index) => {
-    const videoId = video.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
+  const baseUrl = siteConfig?.site?.domain
+    ? siteConfig.site.domain.startsWith('http')
+      ? siteConfig.site.domain.replace(/\/$/, '')
+      : `https://${siteConfig.site.domain.replace(/\/$/, '')}`
+    : typeof window !== 'undefined'
+      ? window.location.origin
+      : 'https://apps.serp.co';
+
+  const videoObjects = videoEntries ?? [];
+  const supportedRegions = Array.isArray((product as any).supported_regions)
+    ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
+    : [];
+  const primaryRegion = supportedRegions[0] ?? 'Worldwide';
+
+  const videoScripts = videoObjects.map((entry) => {
+    const thumbnailUrl = entry.thumbnailUrl
+      ? [entry.thumbnailUrl]
+      : images && images.length > 0
+      ? images
+      : undefined;
 
     return {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
-      name: `${product.name} Demo Video ${index + 1}`,
-      description: `Product demonstration for ${product.name}`,
-      thumbnailUrl: videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : images[0],
-      uploadDate: new Date().toISOString(),
-      contentUrl: video,
-      embedUrl: video.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/'),
+      name: entry.title,
+      description: entry.description,
+      thumbnailUrl,
+      uploadDate: entry.uploadDate,
+      duration: entry.duration,
+      contentUrl: entry.url,
+      embedUrl: entry.embedUrl,
+      url: `${baseUrl}${entry.watchPath}`,
+      mainEntityOfPage: `${baseUrl}${entry.watchPath}`,
+      inLanguage: 'en-US',
+      isFamilyFriendly: true,
+      requiresSubscription: false,
+      sameAs: [entry.url, `${baseUrl}/${product.slug}`].filter(Boolean),
+      regionsAllowed: supportedRegions.length ? supportedRegions : [primaryRegion],
+      contentLocation: {
+        '@type': 'Place',
+        name: primaryRegion,
+      },
+      potentialAction: {
+        '@type': 'WatchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${baseUrl}${entry.watchPath}`,
+        },
+      },
+      isPartOf: {
+        '@type': 'Product',
+        name: product.name,
+        url: `${baseUrl}/${product.slug}`,
+      },
+      offers: product.purchase_url
+        ? {
+            '@type': 'Offer',
+            url: product.purchase_url,
+            price: product.pricing?.price?.replace(/[^0-9.]/g, '') || '0',
+            priceCurrency: 'USD',
+            availability: product.pre_release ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
+          }
+        : undefined,
+      videoQuality: 'HD',
     };
   });
 

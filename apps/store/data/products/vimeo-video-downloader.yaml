@@ -10,7 +10,7 @@ stripe:
   cancel_url: https://store.serp.co/products/vimeo-video-downloader
   metadata:
     source: lander-template
-buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
+buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
 ghl:
   source: Stripe Checkout
   tag_ids:
@@ -77,7 +77,7 @@ features:
 description: Vimeo Video Downloader is a powerful desktop application that allows you to download any Vimeo video with just one click, including private videos, live stream replays, and restricted content that normally can't be downloaded. Built for content creators, educators, and professionals who need reliable video backup and offline access, it preserves original 4K quality while offering bulk download capabilities and seamless compatibility across Windows, macOS, and Linux.
 product_videos:
   - https://www.youtube.com/watch?v=-_zu7XgFuKs
-  - https://www.youtube.com/watch?v=QMkRoTwzWyg
+  - https://www.youtube.com/watch?v=jKf8VqvLGqQ
 related_videos:
   - https://www.youtube.com/watch?v=ZnoC6IZg4s4
   - https://www.youtube.com/watch?v=MeLNJSwCnwk

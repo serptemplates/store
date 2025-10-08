@@ -88,8 +88,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
 
   const breadcrumbItems: ProductBreadcrumbItem[] = useMemo(() => (
     [
-      { label: "Shop", href: "/shop" },
-      { label: "Products", href: "/shop" },
+      { label: "Home", href: "/" },
       { label: product.title || product.name },
     ]
   ), [product.title, product.name])

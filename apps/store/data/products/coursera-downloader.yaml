@@ -102,7 +102,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-coursera-downloader
-pre_release: false
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Coursera Downloader

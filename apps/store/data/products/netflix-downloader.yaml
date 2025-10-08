@@ -117,7 +117,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-netflix-downloader
-pre_release: false
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Netflix Downloader

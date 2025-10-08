@@ -195,11 +195,16 @@ export function PayPalCheckoutButton({
   affiliateId,
   metadata,
   customer,
-}: PayPalButtonProps & { buttonText?: string }) {
+  disabled = false,
+}: PayPalButtonProps & { buttonText?: string; disabled?: boolean }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handlePayPalCheckout = async () => {
+    if (disabled || loading) {
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -249,7 +254,7 @@ export function PayPalCheckoutButton({
   return (
     <button
       onClick={handlePayPalCheckout}
-      disabled={loading}
+      disabled={loading || disabled}
       className={`${className} group inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#FFC439] hover:bg-[#F5B800] px-8 text-base font-semibold text-black shadow-lg transition-all hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed`}
     >
       {loading ? (

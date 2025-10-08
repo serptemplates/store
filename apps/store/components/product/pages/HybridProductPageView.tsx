@@ -22,20 +22,28 @@ import { productToHomeTemplate } from "@/lib/product-adapter"
 import type { ProductData } from "@/lib/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
+import type { ProductVideoEntry } from "@/lib/video"
 
 export interface HybridProductPageViewProps {
   product: ProductData
   posts: BlogPostMeta[]
   siteConfig: SiteConfig
+  videoEntries?: ProductVideoEntry[]
 }
 
-export function HybridProductPageView({ product, posts, siteConfig }: HybridProductPageViewProps) {
+export function HybridProductPageView({ product, posts, siteConfig, videoEntries }: HybridProductPageViewProps) {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const router = useRouter()
 
   const homeProps = productToHomeTemplate(product, posts)
+
+  const resolvedVideos = useMemo(
+    () => (videoEntries ?? []).filter((entry): entry is ProductVideoEntry => Boolean(entry)),
+    [videoEntries],
+  )
+  const selectedVideoEntry = resolvedVideos[selectedVideoIndex]
 
   const price = product.pricing
   const handle = product.slug
@@ -70,34 +78,25 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (selectedVideoIndex >= resolvedVideos.length) {
+      setSelectedVideoIndex(0)
+    }
+  }, [selectedVideoIndex, resolvedVideos.length])
+
   const Footer = useCallback(() => <FooterComposite />, [])
   const productUrl = typeof window !== "undefined" ? `${window.location.origin}/${product.slug}` : `https://store.com/${product.slug}`
 
   return (
     <>
-      <ProductStructuredDataScripts product={product} posts={posts} siteConfig={siteConfig} images={allImages} />
+      <ProductStructuredDataScripts
+        product={product}
+        posts={posts}
+        siteConfig={siteConfig}
+        images={allImages}
+        videoEntries={resolvedVideos}
+      />
       <ProductStructuredData product={product} url={productUrl} />
-
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-xl font-bold">
-              {siteConfig.site?.name || "Store"}
-            </Link>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-600 hover:text-gray-900">
-                Home
-              </Link>
-              <Link href="/shop" className="text-gray-600 hover:text-gray-900">
-                Shop
-              </Link>
-              <Link href="/blog" className="text-gray-600 hover:text-gray-900">
-                Blog
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
 
       <StickyPurchaseBar
         product={product}
@@ -126,10 +125,6 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
             <nav className="text-sm mb-4">
               <Link href="/" className="text-gray-500 hover:text-gray-700">
                 Home
-              </Link>
-              <span className="mx-2 text-gray-400">/</span>
-              <Link href="/shop" className="text-gray-500 hover:text-gray-700">
-                Shop
               </Link>
               <span className="mx-2 text-gray-400">/</span>
               <span className="text-gray-900">{product.name}</span>
@@ -239,27 +234,32 @@ export function HybridProductPageView({ product, posts, siteConfig }: HybridProd
         </div>
       </div>
 
-      {product.product_videos && product.product_videos.length > 0 && (
+      {resolvedVideos.length > 0 && (
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
-              <iframe
-                key={selectedVideoIndex}
-                src={product.product_videos[selectedVideoIndex]
-                  .replace("watch?v=", "embed/")
-                  .replace("vimeo.com/", "player.vimeo.com/video/")
-                  .replace("youtu.be/", "youtube.com/embed/")}
-                className="absolute inset-0 w-full h-full"
-                allowFullScreen
-                title={`Product Demo Video ${selectedVideoIndex + 1}`}
-              />
+              {selectedVideoEntry && (
+                <iframe
+                  key={selectedVideoEntry.slug}
+                  src={selectedVideoEntry.embedUrl}
+                  className="absolute inset-0 h-full w-full"
+                  allowFullScreen
+                  title={selectedVideoEntry.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                />
+              )}
+              {selectedVideoEntry && (
+                <div className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow">
+                  <Link href={selectedVideoEntry.watchPath}>View watch page</Link>
+                </div>
+              )}
             </div>
 
-            {product.product_videos.length > 1 && (
+            {resolvedVideos.length > 1 && (
               <div className="flex items-center gap-2 mt-4 justify-center">
-                {product.product_videos.map((_, index) => (
+                {resolvedVideos.map((video, index) => (
                   <button
-                    key={index}
+                    key={video.slug}
                     onClick={() => setSelectedVideoIndex(index)}
                     className={`h-1 rounded-full transition-all duration-300 ${
                       selectedVideoIndex === index ? "w-8 bg-blue-600" : "w-2 bg-gray-300 hover:bg-gray-400"

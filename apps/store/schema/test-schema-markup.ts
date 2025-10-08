@@ -16,8 +16,8 @@ const testProduct = {
   description: 'This is a test product for schema validation',
   seo_title: 'Test Product - Schema Testing',
   seo_description: 'Test Product for schema.org validation',
-  product_page_url: 'https://serp.app/test-product',
-  purchase_url: 'https://serp.app/buy/test-product',
+  product_page_url: 'https://apps.serp.co/test-product',
+  purchase_url: 'https://apps.serp.co/buy/test-product',
   price: '99.99',
   images: ['/image1.jpg', '/image2.jpg'],
   tagline: 'Best test product ever',
@@ -47,8 +47,8 @@ const testProduct = {
 
 const productSchema = generateProductSchemaLD({
   product: testProduct,
-  url: 'https://serp.app/test-product',
-  storeUrl: 'https://serp.app',
+  url: 'https://apps.serp.co/test-product',
+  storeUrl: 'https://apps.serp.co',
   currency: 'USD',
 });
 
@@ -79,11 +79,9 @@ console.log('');
 const breadcrumbSchema = generateBreadcrumbSchema({
   items: [
     { name: 'Home', url: '/' },
-    { name: 'Shop', url: '/shop' },
-    { name: 'Products', url: '/shop/products' },
     { name: 'Test Product' },
   ],
-  storeUrl: 'https://serp.app',
+  storeUrl: 'https://apps.serp.co',
 });
 
 console.log('✅ Breadcrumb Schema:');
@@ -93,7 +91,7 @@ console.log('');
 
 // Test Organization Schema
 const orgSchema = generateOrganizationSchema({
-  storeUrl: 'https://serp.app',
+  storeUrl: 'https://apps.serp.co',
   storeName: 'SERP Apps',
   description: 'Download automation tools',
 });

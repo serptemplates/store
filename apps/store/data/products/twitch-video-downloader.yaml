@@ -99,7 +99,7 @@ supported_operating_systems:
 - firefox
 - edge
 status: draft
-pre_release: false
+pre_release: true
 categories:
 - Downloader
 - Live Stream

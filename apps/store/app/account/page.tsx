@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { cookies } from "next/headers";
 
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
@@ -6,6 +5,10 @@ import AccountVerificationFlow from "@/components/account/AccountVerificationFlo
 import { getAccountFromSessionCookie } from "@/lib/account-service";
 import { findRecentOrdersByEmail } from "@/lib/checkout-store";
 import { fetchLicenseForOrder } from "@/lib/license-service";
+import { getSiteConfig } from "@/lib/site-config";
+import { getAllProducts } from "@/lib/product";
+import { buildPrimaryNavProps } from "@/lib/navigation";
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +26,10 @@ export default async function AccountPage({
     (searchParams ? await searchParams : undefined) ?? {};
   const sessionCookie = cookieStore.get("store_account_session")?.value ?? null;
   const account = await getAccountFromSessionCookie(sessionCookie);
+
+  const siteConfig = getSiteConfig();
+  const products = getAllProducts();
+  const navProps = buildPrimaryNavProps({ products, siteConfig });
 
   let verifiedRecently = normalizeParam(params?.verified) === "1";
   let prefilledEmail = normalizeParam(params?.email) ?? "";
@@ -56,24 +63,7 @@ export default async function AccountPage({
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
-          <Link href="/" className="flex items-center gap-2 text-slate-900">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-semibold text-white shadow-sm">
-              SA
-            </span>
-            <span className="text-lg font-semibold tracking-tight">SERP Apps</span>
-          </Link>
-          <div className="flex items-center gap-6 text-sm font-medium text-slate-600">
-            <Link href="/shop" className="hover:text-slate-900">
-              Shop
-            </Link>
-            <a href="https://serp.ly/@serp/support" className="hover:text-slate-900" target="_blank" rel="noreferrer">
-              Support
-            </a>
-          </div>
-        </nav>
-      </header>
+      <PrimaryNavbar {...navProps} />
 
       <main className="flex-1 py-16 px-4">
         <div className="max-w-2xl mx-auto space-y-10">

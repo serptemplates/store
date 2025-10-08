@@ -103,6 +103,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-teachable-video-downloader
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Teachable Video Downloader

@@ -10,8 +10,10 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeCodeTitles from "rehype-code-titles";
 
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { getAllProducts } from "@/lib/product";
 import { getSiteConfig } from "@/lib/site-config";
-import { SiteNavbar } from "@repo/ui/composites/SiteNavbar";
+import { buildPrimaryNavProps } from "@/lib/navigation";
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 
@@ -63,20 +65,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const siteConfig = getSiteConfig();
   const siteName = siteConfig.site?.name ?? "SERP Downloaders";
-  const ctaHref = siteConfig.cta?.href;
-  const ctaText = siteConfig.cta?.text ?? "Checkout";
+  const products = getAllProducts();
+  const navProps = buildPrimaryNavProps({ products, siteConfig });
 
   // Generate Article schema for SEO
   const articleSchema = generateArticleSchema({
     headline: post.meta.title,
     description: post.meta.description,
-    image: post.meta.image || 'https://serp.app/og-image.png',
+    image: post.meta.image || 'https://apps.serp.co/og-image.png',
     datePublished: post.meta.date,
     dateModified: (post.meta as any).dateModified || post.meta.date,
     author: {
       name: post.meta.author,
     },
-    url: `https://serp.app/blog/${slug}`,
+    url: `https://apps.serp.co/blog/${slug}`,
     wordCount: post.content.split(' ').length,
     keywords: post.meta.tags,
     articleSection: (post.meta as any).category,
@@ -88,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       { name: 'Blog', url: '/blog' },
       { name: post.meta.title },
     ],
-    storeUrl: 'https://serp.app',
+    storeUrl: 'https://apps.serp.co',
   });
 
   return (
@@ -110,13 +112,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
 
     <div className="flex min-h-screen flex-col bg-background">
-      <SiteNavbar
-        site={{ name: siteName, categories: [], buyUrl: ctaHref }}
-        Link={Link}
-        ctaHref={ctaHref}
-        ctaText={ctaText}
-        showCta={false}
-      />
+      <PrimaryNavbar {...navProps} />
 
       <main className="flex-1 bg-background">
         <article className="container max-w-4xl py-12 md:py-20">

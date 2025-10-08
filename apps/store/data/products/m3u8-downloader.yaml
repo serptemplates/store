@@ -115,6 +115,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
   - purchase-m3u8-downloader
+pre_release: true
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with M3u8 Downloader

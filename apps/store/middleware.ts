@@ -11,11 +11,11 @@ const REDIRECT_MAPPINGS: Record<string, string> = {
 
   // Add more mappings as needed
   "/old-product-url": "/new-product-slug",
-  "/legacy/store": "/shop",
+  "/legacy/store": "/",
 
   // Category redirects
-  "/category/downloaders": "/shop?category=downloaders",
-  "/category/tools": "/shop?category=tools",
+  "/category/downloaders": "/",
+  "/category/tools": "/",
 
   // Common GHL paths
   "/funnel/*": "/", // Redirect all funnel pages to home for now
@@ -140,10 +140,10 @@ export function middleware(request: NextRequest) {
   // but we can add a catch-all for common 404 patterns
   const is404Pattern =
     pathname.length > 1 && // Not the homepage
-    !pathname.startsWith('/shop') && // Not shop pages
     !pathname.startsWith('/blog') && // Not blog pages
     !pathname.startsWith('/checkout') && // Not checkout pages
     !pathname.startsWith('/account') && // Allow account pages
+    !pathname.startsWith('/watch') && // Allow dedicated watch pages
     !pathname.match(/^\/[a-z0-9-]+$/) && // Not product pages (single segment slugs)
     !pathname.includes('.'); // Not static files
 

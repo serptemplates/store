@@ -19,6 +19,7 @@ export type NavbarProps = {
   Link?: LinkComponent; // optional Link component (e.g., next/link)
   ctaHref?: string; // overrides site.buyUrl
   ctaText?: string; // defaults to "Get It Now"
+  logo?: string; // 
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
   showLinks?: boolean; // whether to render blog/categories links
@@ -28,6 +29,7 @@ export type NavbarProps = {
 export function Navbar({
   site,
   blogHref = "/blog",
+  logo = "/logo.png",
   brand,
   Link,
   ctaHref,
@@ -48,9 +50,7 @@ export function Navbar({
       <div className="container">
         <div className="flex h-16 items-center justify-between">
           <LinkComp href="/" className="flex items-center space-x-2">
-            {brand ?? (
-              <span className="text-2xl font-bold text-primary">{site.name}</span>
-            )}
+            {logo}
           </LinkComp>
 
           <div className="hidden md:flex md:items-center md:gap-4">
@@ -61,6 +61,12 @@ export function Navbar({
                   className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                 >
                   Blog
+                </LinkComp>
+                <LinkComp
+                  href="/videos"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                >
+                  Videos
                 </LinkComp>
                 {categories.map((category) => (
                   <LinkComp
@@ -102,6 +108,13 @@ export function Navbar({
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Blog
+                  </LinkComp>
+                  <LinkComp
+                    href="/videos"
+                    className="block px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Videos
                   </LinkComp>
                   {categories.map((category) => (
                     <LinkComp

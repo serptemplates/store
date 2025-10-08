@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+set -e
+
+# Ensure Next app stays lint- and type-safe before pushing
+
+echo "→ Linting @apps/store"
+pnpm --filter @apps/store lint
+
+echo "→ Type checking @apps/store"
+pnpm --filter @apps/store typecheck
+
+echo "→ Building @apps/store"
+NEXT_TELEMETRY_DISABLED=1 pnpm --filter @apps/store build
+
+echo "✓ Pre-push checks passed"

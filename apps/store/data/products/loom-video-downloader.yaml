@@ -46,8 +46,8 @@ description: "The Loom Video Downloader browser extension adds a reliable downlo
   \ complex tooling."
 product_videos:
 - https://www.youtube.com/watch?v=bbkhxMpIH4w
-- https://www.youtube.com/watch?v=EY8549tG34c
 related_videos:
+- https://www.youtube.com/watch?v=EY8549tG34c
 - https://www.youtube.com/watch?v=4MnyU0kPxlE
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg
@@ -154,4 +154,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: null
+buy_button_destination: https://ghl.serp.co/payment-link/68e02c70613b1bd3c1ce7f87

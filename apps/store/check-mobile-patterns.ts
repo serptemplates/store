@@ -267,7 +267,7 @@ async function quickViewportCheck() {
   const critical = [
     'apps/store/app/layout.tsx',
     'apps/store/app/page.tsx',
-    'apps/store/app/shop/products/[handle]/page.tsx',
+    'apps/store/app/[slug]/page.tsx',
   ];
 
   console.log('\n🔍 Quick Viewport Check:\n');
