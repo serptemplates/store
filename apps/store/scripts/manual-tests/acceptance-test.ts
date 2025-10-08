@@ -4,6 +4,8 @@
  * ACCEPTANCE TEST SUITE
  * Verifies all systems receive purchase data correctly
  *
+ * Run with: npx tsx scripts/manual-tests/acceptance-test.ts
+ *
  * Acceptance Criteria:
  * 1. ✅ GHL gets purchase data
  * 2. ✅ PostgreSQL gets purchase data
@@ -13,13 +15,15 @@
  */
 
 import Stripe from 'stripe';
-import { query } from './lib/database';
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import { requireStripeSecretKey } from './lib/stripe-environment';
 
-// Load environment variables from .env.local
-config({ path: resolve(__dirname, '.env.local') });
+import { query } from '../../lib/database';
+import { requireStripeSecretKey } from '../../lib/stripe-environment';
+
+const projectRoot = resolve(__dirname, '..', '..');
+config({ path: resolve(projectRoot, '.env.local') });
+config({ path: resolve(projectRoot, '.env') });
 
 let stripeSecret: string;
 try {
@@ -39,7 +43,7 @@ const TEST_CONFIG = {
   testEmail: `test-${Date.now()}@acceptance.com`,
   testName: 'Acceptance Test User',
   affiliateId: `ACCEPT-${Date.now()}`,
-  productId: 'demo-ecommerce-product',
+  productId: 'loom-video-downloader',
 };
 
 // Color codes
@@ -124,7 +128,7 @@ async function testPaymentProcessor() {
 
     try {
       // Import database functions
-      const { updateCheckoutSessionStatus, upsertOrder } = await import('./lib/checkout-store');
+      const { updateCheckoutSessionStatus, upsertOrder } = await import('../../lib/checkout-store');
 
       // Wait for database to be saved
       await sleep(2000);
@@ -175,8 +179,8 @@ async function testPaymentProcessor() {
         if (process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID) {
           log.info('Triggering GHL sync...');
           try {
-            const { syncOrderWithGhl } = await import('./lib/ghl-client');
-            const { getOfferConfig } = await import('./lib/offer-config');
+            const { syncOrderWithGhl } = await import('../../lib/ghl-client');
+            const { getOfferConfig } = await import('../../lib/offer-config');
 
             const offerConfig = getOfferConfig(checkoutSession.offer_id);
             if (offerConfig?.ghl) {
@@ -418,7 +422,7 @@ async function testGoogleAnalytics() {
     // Check for analytics script in page
     log.info('Checking for GA implementation...');
 
-    const pageResponse = await fetch('http://localhost:3000/demo-ecommerce-product');
+    const pageResponse = await fetch('http://localhost:3000/loom-video-downloader');
     const pageHtml = await pageResponse.text();
 
     const hasGTM = pageHtml.includes('googletagmanager.com') || pageHtml.includes('GTM-');

@@ -14,7 +14,7 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-loom-video-downloader
+    - purchase-loom-video-downloader
 name: Loom Video Downloader
 tagline: Download Loom-hosted videos anywhere with one click and save them forever.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg

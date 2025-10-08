@@ -98,7 +98,6 @@ supported_operating_systems:
 status: draft
 categories:
 - Downloader
-- Live Stream
 keywords:
 - m3u8 downloader
 pricing:
@@ -114,7 +113,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-m3u8-downloader
+    - purchase-m3u8-downloader
 pre_release: true
 reviews:
 - name: Alex Martinez
@@ -143,4 +142,4 @@ return_policy:
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: null
+buy_button_destination: https://ghl.serp.co/payment-link/68e6c46a613b1b64e9cea03c

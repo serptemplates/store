@@ -106,7 +106,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-tiktok-downloader
+    - purchase-tiktok-downloader
 new_release: true
 reviews:
 - name: Alex Martinez

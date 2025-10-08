@@ -27,12 +27,12 @@ const steps: Array<{
   {
     title: "Automated payment flow",
     description: "Create Stripe session, confirm webhook + DB writes, trigger GHL sync",
-    command: [pnpmCmd, "exec", "tsx", "automated-payment-test.ts"],
+    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/automated-payment-test.ts"],
   },
   {
     title: "Acceptance suite",
     description: "Verify Stripe, Postgres, email, and GHL automation end-to-end",
-    command: [pnpmCmd, "exec", "tsx", "acceptance-test.ts"],
+    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/acceptance-test.ts"],
   },
 ];
 

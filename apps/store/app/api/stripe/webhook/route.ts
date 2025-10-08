@@ -120,7 +120,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, 
   const offerId = metadata.offerId
     ?? metadata.productSlug
     ?? session.client_reference_id
-    ?? (process.env.NODE_ENV === 'development' ? 'demo-ecommerce-product' : null);
+    ?? (process.env.NODE_ENV === 'development' ? 'loom-video-downloader' : null);
 
   if (!offerId) {
     logger.error("webhook.missing_offer_id", {

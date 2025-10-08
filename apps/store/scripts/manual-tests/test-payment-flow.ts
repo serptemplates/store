@@ -2,10 +2,10 @@
 
 /**
  * Test script to verify payment flow and data passing
- * Run with: npx tsx test-payment-flow.ts
+ * Run with: npx tsx scripts/manual-tests/test-payment-flow.ts
  */
 
-import { query } from './lib/database';
+import { query } from '../../lib/database';
 
 console.log('🧪 Payment Flow Test Suite\n');
 
@@ -155,7 +155,7 @@ try {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      offerId: 'demo-ecommerce-product',
+      offerId: 'loom-video-downloader',
       quantity: 1,
       metadata: {
         test: 'true',
@@ -184,7 +184,7 @@ try {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      offerId: 'demo-ecommerce-product',
+      offerId: 'loom-video-downloader',
       quantity: 1
     })
   });
@@ -231,6 +231,6 @@ if (allConfigured) {
 console.log('\n🔗 Useful Links:');
 console.log('- Stripe Test Dashboard: https://dashboard.stripe.com/test/payments');
 console.log('- PayPal Sandbox: https://developer.paypal.com/dashboard/sandbox');
-console.log('- Product Page: http://localhost:3000/demo-ecommerce-product');
+console.log('- Product Page: http://localhost:3000/loom-video-downloader');
 
 process.exit(0);

@@ -1,3 +1,8 @@
+"""Manual checkout smoke using Playwright.
+
+Run with: python scripts/manual-tests/test_checkout_with_playwright.py
+"""
+
 import asyncio
 from playwright.async_api import async_playwright
 

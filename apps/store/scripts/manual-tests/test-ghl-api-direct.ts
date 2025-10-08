@@ -1,7 +1,12 @@
+/**
+ * Run with: npx tsx scripts/manual-tests/test-ghl-api-direct.ts
+ */
+
 import { config } from "dotenv";
 
 // Load environment variables
-config({ path: "../../.env" });
+config({ path: "../../../.env.local" });
+config({ path: "../../../.env" });
 
 const GHL_BASE_URL = "https://services.leadconnectorhq.com";
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;

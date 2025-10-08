@@ -4,8 +4,8 @@ import type { NextRequest } from "next/server";
 // Define redirect mappings from old GHL store URLs to new URLs
 const REDIRECT_MAPPINGS: Record<string, string> = {
   // Old GHL store URLs -> New store URLs
-  "/store/product-1": "/demo-ecommerce-product",
-  "/store/product-2": "/demo-landing-product",
+  "/store/product-1": "/loom-video-downloader",
+  "/store/product-2": "/youtube-downloader",
   "/ghl/checkout": "/checkout",
   "/ghl/success": "/checkout/success",
 

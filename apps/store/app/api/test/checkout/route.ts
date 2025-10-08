@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     let session;
     try {
       session = await createSimpleCheckout({
-        offerId: body.offerId || 'demo-ecommerce-product',
+        offerId: body.offerId || 'loom-video-downloader',
         quantity: body.quantity || 1,
         metadata: body.metadata || {},
         customer: body.customer,
@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
         const saveResult = await upsertCheckoutSession({
           stripeSessionId: session.id,  // Changed from stripe_session_id to stripeSessionId
           paymentIntentId: session.payment_intent as string | null,  // Changed from stripe_payment_intent_id
-          offerId: body.offerId || 'demo-ecommerce-product',  // Changed from offer_id
-          landerId: body.offerId || 'demo-ecommerce-product',  // Changed from lander_id
+          offerId: body.offerId || 'loom-video-downloader',  // Changed from offer_id
+          landerId: body.offerId || 'loom-video-downloader',  // Changed from lander_id
           customerEmail: body.customer?.email || null,  // Changed from customer_email
           metadata: {
             ...body.metadata,

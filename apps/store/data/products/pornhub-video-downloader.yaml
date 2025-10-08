@@ -2,12 +2,12 @@ slug: pornhub-video-downloader
 platform: Pornhub
 seo_title: Pornhub Video Downloader | Download Pornhub Video Downloader for Offline Access
 seo_description: Pornhub video downloader
-product_page_url: https://store.serp.co/products/pornhub-video-downloader
+product_page_url: https://apps.serp.co/pornhub-video-downloader
 purchase_url: https://serp.ly/pornhub-video-downloader
 stripe:
   price_id: price_1RvXN806JrOmKRCmg1bHRufg
-  success_url: https://store.serp.co/products/pornhub-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/pornhub-video-downloader
+  success_url: https://apps.serp.co/checkout/success
+  cancel_url: https://apps.serp.co/checkout?product=pornhub-video-downloader
   metadata:
     source: generated
     stripe_product_id: prod_Sqsjylj8Z89k1v
@@ -85,7 +85,7 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-pornhub-video-downloader
+    - purchase-pornhub-video-downloader
 new_release: true
 reviews:
 - name: Alex Martinez

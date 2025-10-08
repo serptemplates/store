@@ -5,7 +5,7 @@
  */
 
 import Stripe from 'stripe';
-import { getStripeMode, requireStripeSecretKey } from './lib/stripe-environment';
+import { getStripeMode, requireStripeSecretKey } from '../../lib/stripe-environment';
 
 console.log('🧪 Testing Stripe Connection Directly\n');
 

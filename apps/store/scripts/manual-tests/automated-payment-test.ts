@@ -3,12 +3,12 @@
 /**
  * Automated Payment Flow Test
  * This script automatically tests both Stripe and PayPal flows
- * Run with: npx tsx automated-payment-test.ts
+ * Run with: npx tsx scripts/manual-tests/automated-payment-test.ts
  */
 
 import Stripe from 'stripe';
-import { query } from './lib/database';
-import { requireStripeSecretKey } from './lib/stripe-environment';
+import { query } from '../../lib/database';
+import { requireStripeSecretKey } from '../../lib/stripe-environment';
 
 const stripe = new Stripe(requireStripeSecretKey('test'), {
   apiVersion: '2024-04-10' as any,
@@ -54,7 +54,7 @@ async function testStripeFlow() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        offerId: 'demo-ecommerce-product',
+        offerId: 'loom-video-downloader',
         quantity: 1,
         metadata: {
           test: 'automated',
@@ -208,7 +208,7 @@ async function testPayPalFlow() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        offerId: 'demo-ecommerce-product',
+        offerId: 'loom-video-downloader',
         quantity: 1,
         affiliateId: 'PAYPAL_TEST',
         customer: {
@@ -384,7 +384,7 @@ async function runAllTests() {
   console.log('\n🔗 Dashboard Links:');
   console.log('• Stripe: https://dashboard.stripe.com/test/payments');
   console.log('• PayPal: https://developer.paypal.com/dashboard/sandbox');
-  console.log('• Product: http://localhost:3000/demo-ecommerce-product');
+  console.log('• Product: http://localhost:3000/loom-video-downloader');
 }
 
 // Run the tests
