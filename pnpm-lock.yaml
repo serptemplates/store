@@ -211,6 +211,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.17
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.17)
       tsx:
         specifier: ^4.20.6
         version: 4.20.6
@@ -238,12 +241,18 @@ importers:
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.1.1)
+      next:
+        specifier: ^14 || ^15
+        version: 15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.55.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^18 || ^19
         version: 19.1.1
       react-dom:
         specifier: ^18 || ^19
         version: 19.1.1(react@19.1.1)
+      react-icons:
+        specifier: ^5
+        version: 5.5.0(react@19.1.1)
     devDependencies:
       '@types/react':
         specifier: ^19
@@ -275,15 +284,24 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      embla-carousel-react:
+        specifier: ^8
+        version: 8.6.0(react@19.1.1)
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.1.1)
+      next:
+        specifier: ^14 || ^15
+        version: 15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.55.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^18 || ^19
         version: 19.1.1
       react-dom:
         specifier: ^18 || ^19
         version: 19.1.1(react@19.1.1)
+      react-icons:
+        specifier: ^5
+        version: 5.5.0(react@19.1.1)
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.6.0
@@ -4824,6 +4842,11 @@ packages:
 
   tailwind-merge@2.6.0:
     resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
+
+  tailwindcss-animate@1.0.7:
+    resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
 
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
@@ -10798,6 +10821,10 @@ snapshots:
   symbol-tree@3.2.4: {}
 
   tailwind-merge@2.6.0: {}
+
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.17):
+    dependencies:
+      tailwindcss: 3.4.17
 
   tailwindcss@3.4.17:
     dependencies:
