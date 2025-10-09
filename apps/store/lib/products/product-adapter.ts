@@ -96,7 +96,7 @@ export function productToHomeTemplate(
     (link): link is string =>
       typeof link === "string" && allowedPrefixes.some((prefix) => link.startsWith(prefix)),
   ) ?? `https://store.serp.co/products/${product.slug}`;
-  const ctaText = product.pricing?.cta_text ?? "Checkout";
+  const ctaText = product.pricing?.cta_text ?? "Get It Now";
   const videoUrl = product.product_videos?.[0];
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);

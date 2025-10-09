@@ -90,6 +90,11 @@ const nextConfig = {
             hostname: 'ui-avatars.com',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'i.ytimg.com',
+            pathname: '/**',
+          },
         ],
       },
 
