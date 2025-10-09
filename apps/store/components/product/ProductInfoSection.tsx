@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAnalytics } from "@/components/analytics/gtm";
+import { parsePriceString } from "@/lib/analytics-utils";
 
 export interface ProductInfoSectionProps {
   title: string;
@@ -36,12 +37,8 @@ export function ProductInfoSection({
   const { trackClickBuyButton } = useAnalytics();
 
   const handleCheckout = () => {
-    // Extract numeric price
-    let numericPrice = 0;
-    if (displayPrice) {
-      const priceStr = displayPrice.replace(/[^0-9.]/g, '');
-      numericPrice = parseFloat(priceStr) || 0;
-    }
+    // Extract numeric price using utility function
+    const numericPrice = parsePriceString(displayPrice);
 
     // Track the buy button click
     trackClickBuyButton({

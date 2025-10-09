@@ -21,6 +21,7 @@ import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
 import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
 import { useAnalytics } from "@/components/analytics/gtm"
+import { parsePriceString } from "@/lib/analytics-utils"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -132,12 +133,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [])
 
   const handleStickyCtaClick = useCallback(() => {
-    // Extract numeric price
-    let numericPrice = 0;
-    if (homeProps.pricing?.price) {
-      const priceStr = homeProps.pricing.price.replace(/[^0-9.]/g, '');
-      numericPrice = parseFloat(priceStr) || 0;
-    }
+    // Extract numeric price using utility function
+    const numericPrice = parsePriceString(homeProps.pricing?.price);
 
     // Track the buy button click
     const checkoutType = useExternalBuyDestination ? 'ghl' : 'stripe';
@@ -233,12 +230,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: useExternalBuyDestination
                   ? undefined
                   : () => {
-                      // Extract numeric price
-                      let numericPrice = 0;
-                      if (homeProps.pricing?.price) {
-                        const priceStr = homeProps.pricing.price.replace(/[^0-9.]/g, '');
-                        numericPrice = parseFloat(priceStr) || 0;
-                      }
+                      // Extract numeric price using utility function
+                      const numericPrice = parsePriceString(homeProps.pricing?.price);
 
                       // Track the buy button click
                       trackClickBuyButton({

@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useAnalytics } from "./gtm";
 import type { ProductData } from "@/lib/products/product-schema";
+import { parsePriceString } from "@/lib/analytics-utils";
 
 interface ProductPageTrackingProps {
   product: ProductData;
@@ -12,14 +13,8 @@ export function ProductPageTracking({ product }: ProductPageTrackingProps) {
   const { trackViewProduct } = useAnalytics();
 
   useEffect(() => {
-    // Extract price from product data
-    let price = 0;
-    
-    // Try to get price from pricing object
-    if (product.pricing?.price) {
-      const priceStr = product.pricing.price.replace(/[^0-9.]/g, '');
-      price = parseFloat(priceStr) || 0;
-    }
+    // Extract price from product data using utility function
+    const price = parsePriceString(product.pricing?.price);
 
     // Track product view
     trackViewProduct({

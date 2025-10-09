@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { parseCookies, parsePriceString, clearTrackingCookies } from "@/lib/analytics-utils";
 
 type ConversionData = {
   sessionId: string;
@@ -33,11 +34,15 @@ export function ConversionTracking() {
     // Fetch session details for accurate tracking
     const trackConversion = async () => {
       try {
-        // Check if we've already tracked this conversion
-        const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
-        if (alreadyTracked) {
+        const storageKey = `tracked_${sessionId}`;
+        
+        // Check if we've already tracked this conversion (early return)
+        if (sessionStorage.getItem(storageKey)) {
           return;
         }
+
+        // Mark as tracked immediately to prevent race conditions
+        sessionStorage.setItem(storageKey, "true");
 
         // Try to fetch actual order data from API
         let orderData: {
@@ -71,18 +76,16 @@ export function ConversionTracking() {
             };
           } else {
             // Fallback to cookies or default data if API fails
-            const cookies = Object.fromEntries(
-              document.cookie.split('; ').map(c => c.split('='))
-            );
+            const cookies = parseCookies();
             
             orderData = {
-              value: parseFloat(cookies.ghl_price) || 97.00,
+              value: parsePriceString(cookies.ghl_price) || 97.00,
               currency: "USD",
               items: [
                 {
                   id: cookies.ghl_product || "product-1",
                   name: (cookies.ghl_product || "product-1").replace(/-/g, ' '),
-                  price: parseFloat(cookies.ghl_price) || 97.00,
+                  price: parsePriceString(cookies.ghl_price) || 97.00,
                   quantity: 1
                 }
               ],
@@ -106,18 +109,34 @@ export function ConversionTracking() {
           };
         }
 
-        // Google Analytics 4 - Purchase Event
-        if (typeof window.gtag !== "undefined") {
+        // Build GA4-compliant items array
+        const ga4Items = orderData.items.map(item => ({
+          item_id: item.id,
+          item_name: item.name,
+          price: item.price,
+          quantity: item.quantity
+        }));
+
+        // Prefer dataLayer (GTM) as primary tracking method
+        if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+              transaction_id: sessionId,
+              value: orderData.value,
+              currency: orderData.currency,
+              payment_provider: orderData.paymentProvider,
+              items: ga4Items,
+            },
+          });
+        } else if (typeof window.gtag === "function") {
+          // Fallback to gtag if dataLayer is not available
           window.gtag("event", "purchase", {
             transaction_id: sessionId,
             value: orderData.value,
             currency: orderData.currency,
-            items: orderData.items.map(item => ({
-              item_id: item.id,
-              item_name: item.name,
-              price: item.price,
-              quantity: item.quantity
-            }))
+            items: ga4Items,
+            transport_type: "beacon",
           });
         }
 
@@ -133,20 +152,6 @@ export function ConversionTracking() {
               quantity: item.quantity
             })),
             num_items: orderData.items.reduce((sum, item) => sum + item.quantity, 0)
-          });
-        }
-
-        // Google Tag Manager - Enhanced Ecommerce
-        if (typeof window.dataLayer !== "undefined") {
-          window.dataLayer.push({
-            event: "purchase",
-            ecommerce: {
-              transaction_id: sessionId,
-              value: orderData.value,
-              currency: orderData.currency,
-              payment_provider: orderData.paymentProvider,
-              items: orderData.items
-            }
           });
         }
 
@@ -187,19 +192,16 @@ export function ConversionTracking() {
             }))
           });
         }
-
-        // Store conversion tracking status in sessionStorage to prevent duplicates
-        sessionStorage.setItem(`tracked_${sessionId}`, "true");
         
         // Clear GHL checkout cookies after successful tracking
         if (document.cookie.includes('ghl_checkout')) {
-          document.cookie = 'ghl_checkout=; Max-Age=0; path=/';
-          document.cookie = 'ghl_product=; Max-Age=0; path=/';
-          document.cookie = 'ghl_price=; Max-Age=0; path=/';
+          clearTrackingCookies();
         }
 
       } catch (error) {
         console.error("Error tracking conversion:", error);
+        // Remove the tracking flag on error so it can be retried
+        sessionStorage.removeItem(`tracked_${sessionId}`);
       }
     };
 

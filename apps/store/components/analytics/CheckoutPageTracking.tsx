@@ -13,13 +13,11 @@ export function CheckoutPageTracking() {
     
     if (!productSlug) return;
 
-    // Track begin_checkout event
-    // We'll use a placeholder value since we don't have the product details here
-    // In a real implementation, you might fetch product details or pass them as props
+    // Track begin_checkout event without value (we don't have accurate price here)
+    // This prevents poisoning revenue attribution with false zeros
     trackBeginCheckout({
       productName: productSlug,
       productId: productSlug,
-      value: 0, // This should be populated with actual price
       currency: 'USD',
     });
   }, [searchParams, trackBeginCheckout]);

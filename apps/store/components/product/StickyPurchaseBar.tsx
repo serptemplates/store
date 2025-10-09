@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { ProductData } from "@/lib/products/product-schema";
 import { useAnalytics } from "@/components/analytics/gtm";
+import { parsePriceString } from "@/lib/analytics-utils";
 
 export interface StickyPurchaseBarProps {
   product: ProductData;
@@ -34,12 +35,8 @@ export function StickyPurchaseBar({
   }
 
   const handleCheckout = () => {
-    // Extract numeric price
-    let numericPrice = 0;
-    if (price) {
-      const priceStr = price.replace(/[^0-9.]/g, '');
-      numericPrice = parseFloat(priceStr) || 0;
-    }
+    // Extract numeric price using utility function
+    const numericPrice = parsePriceString(price);
 
     // Track the buy button click
     trackClickBuyButton({

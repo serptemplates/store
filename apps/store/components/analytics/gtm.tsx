@@ -142,7 +142,18 @@ export function useAnalytics() {
   }) => {
     const currency = data.currency || 'USD';
     
-    // GA4 - view_item event
+    // Prefer dataLayer (GTM) as primary method
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'view_product',
+        product_id: data.productId,
+        product_name: data.productName,
+        price: data.price,
+        currency: currency,
+      });
+    }
+    
+    // GA4 - view_item event (fallback)
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'view_item', {
         currency: currency,
@@ -153,17 +164,6 @@ export function useAnalytics() {
           price: data.price,
           quantity: 1,
         }],
-      });
-    }
-
-    // GTM
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
-        event: 'view_product',
-        product_id: data.productId,
-        product_name: data.productName,
-        price: data.price,
-        currency: currency,
       });
     }
 
@@ -185,17 +185,7 @@ export function useAnalytics() {
     checkoutType: 'stripe' | 'paypal' | 'ghl';
     price?: number;
   }) => {
-    // GA4 - custom event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'click_buy_button', {
-        product_id: data.productId,
-        product_name: data.productName,
-        checkout_type: data.checkoutType,
-        value: data.price,
-      });
-    }
-
-    // GTM
+    // Prefer dataLayer (GTM) as primary method
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'click_buy_button',
@@ -203,6 +193,18 @@ export function useAnalytics() {
         product_name: data.productName,
         checkout_type: data.checkoutType,
         value: data.price,
+      });
+    }
+    
+    // GA4 - custom event (fallback)
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'click_buy_button', {
+        product_id: data.productId,
+        product_name: data.productName,
+        checkout_type: data.checkoutType,
+        value: data.price,
+        // Use beacon transport for redirects to prevent event loss
+        transport_type: 'beacon',
       });
     }
 
@@ -218,46 +220,58 @@ export function useAnalytics() {
 
   const trackBeginCheckout = (data: {
     productName: string;
-    value: number;
+    value?: number;
     currency?: string;
     productId?: string;
   }) => {
     const currency = data.currency || 'USD';
     
-    // GA4 - begin_checkout event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'begin_checkout', {
-        currency: currency,
-        value: data.value,
-        items: [{
-          item_id: data.productId || data.productName,
-          item_name: data.productName,
-          price: data.value,
-          quantity: 1,
-        }],
-      });
+    // Build event payload, omitting value if not provided
+    const eventData: any = {
+      currency: currency,
+      items: [{
+        item_id: data.productId || data.productName,
+        item_name: data.productName,
+        quantity: 1,
+      }],
+    };
+    
+    // Only include value if it's a valid number (not 0 or undefined)
+    if (data.value && data.value > 0) {
+      eventData.value = data.value;
+      eventData.items[0].price = data.value;
     }
-
-    // GTM
+    
+    // Prefer dataLayer (GTM) as primary method
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'begin_checkout',
         product_name: data.productName,
-        value: data.value,
+        ...(data.value && data.value > 0 ? { value: data.value } : {}),
         currency: currency,
       });
+    }
+    
+    // GA4 - begin_checkout event (fallback if GTM not available)
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'begin_checkout', eventData);
     }
 
     // Facebook Pixel - InitiateCheckout
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'InitiateCheckout', {
-        value: data.value,
-        currency: currency,
+      const fbData: any = {
         content_name: data.productName,
         content_ids: [data.productId || data.productName],
         content_type: 'product',
+        currency: currency,
         num_items: 1,
-      });
+      };
+      
+      if (data.value && data.value > 0) {
+        fbData.value = data.value;
+      }
+      
+      (window as any).fbq('track', 'InitiateCheckout', fbData);
     }
   };
 
@@ -266,22 +280,24 @@ export function useAnalytics() {
     productName?: string;
     productId?: string;
   }) => {
-    // GA4 - custom event for outbound clicks
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'outbound_click', {
-        link_url: data.linkUrl,
-        product_name: data.productName,
-        product_id: data.productId,
-      });
-    }
-
-    // GTM
+    // Prefer dataLayer (GTM) as primary method
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'outbound_click',
         link_url: data.linkUrl,
         product_name: data.productName,
         product_id: data.productId,
+      });
+    }
+    
+    // GA4 - custom event for outbound clicks (fallback)
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'outbound_click', {
+        link_url: data.linkUrl,
+        product_name: data.productName,
+        product_id: data.productId,
+        // Use beacon transport for navigation events
+        transport_type: 'beacon',
       });
     }
   };
@@ -293,22 +309,15 @@ export function useAnalytics() {
     items?: Array<{ id: string; name: string; price: number; quantity: number }>;
     paymentProvider?: string;
   }) => {
-    // GA4 - purchase event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'purchase', {
-        transaction_id: data.transactionId,
-        value: data.value,
-        currency: data.currency,
-        items: data.items?.map(item => ({
-          item_id: item.id,
-          item_name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-      });
-    }
-
-    // GTM
+    // Build GA4-compliant items array
+    const ga4Items = data.items?.map(item => ({
+      item_id: item.id,
+      item_name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    })) || [];
+    
+    // Prefer dataLayer (GTM) as primary method
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'purchase',
@@ -316,7 +325,18 @@ export function useAnalytics() {
         value: data.value,
         currency: data.currency,
         payment_provider: data.paymentProvider,
-        items: data.items,
+        items: ga4Items,
+      });
+    }
+    
+    // GA4 - purchase event (fallback)
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'purchase', {
+        transaction_id: data.transactionId,
+        value: data.value,
+        currency: data.currency,
+        items: ga4Items,
+        transport_type: 'beacon',
       });
     }
 

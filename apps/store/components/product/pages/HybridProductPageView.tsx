@@ -25,6 +25,7 @@ import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
 import { useAnalytics } from "@/components/analytics/gtm"
+import { parsePriceString } from "@/lib/analytics-utils"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -67,12 +68,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const { affiliateId } = useAffiliateTracking()
 
   const handleCheckout = useCallback(() => {
-    // Extract numeric price
-    let numericPrice = 0;
-    if (price?.price) {
-      const priceStr = price.price.replace(/[^0-9.]/g, '');
-      numericPrice = parseFloat(priceStr) || 0;
-    }
+    // Extract numeric price using utility function
+    const numericPrice = parsePriceString(price?.price);
 
     // Track the buy button click
     trackClickBuyButton({
