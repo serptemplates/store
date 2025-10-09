@@ -1,8 +1,8 @@
 slug: stocksy-downloader
 platform: Stocksy
-seo_title: Stocksy Downloader | Download Stocksy Downloader for Offline Access
-seo_description: Download videos, images, and content from stocksy with our reliable
-  downloader tool. Fast, secure, and easy to use.
+seo_title: Stocksy Stock Downloader | Save Creative Assets
+seo_description: Download videos, images, and content from stocksy with our
+  reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/stocksy-downloader
 purchase_url: https://serp.ly/stocksy-downloader
 stripe:
@@ -13,77 +13,79 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6HBmlo3YNTe9
 name: Stocksy Downloader
-tagline: Download videos, images, and content from stocksy with our reliable downloader
-  tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from stocksy with our reliable
+  downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stocksy-downloader/main/images/stocksy-downloader.gif
 github_repo_url: https://github.com/serpapps/stocksy-downloader
 github_repo_tags: []
 features:
-- Download premium stock photos from Stocksy
-- Support for authentic and diverse photography
-- Batch photographer collections/searches downloads
-- Automatic rights management and license tracking
-- Organize by photographer/theme
-- Resume downloads with recovery
-- Cross-platform support
-- photo viewer
-- CLI tools
-- Integration with professional design applications
-- Export photo data/licensing information
-- Advanced search across photo libraries
-- Secure local storage
-- Regular compatibility updates
-- High-res photography
-- Bandwidth management for large photo files
-- Backup and restore for photo archives
-- Smart categorization
-- Creative project workflow integration
-- Photographer discovery and curation features
-description: Download videos, images, and content from stocksy with our reliable downloader
-  tool. Fast, secure, and easy to use.
+  - Download premium stock photos from Stocksy
+  - Support for authentic and diverse photography
+  - Batch photographer collections/searches downloads
+  - Automatic rights management and license tracking
+  - Organize by photographer/theme
+  - Resume downloads with recovery
+  - Cross-platform support
+  - photo viewer
+  - CLI tools
+  - Integration with professional design applications
+  - Export photo data/licensing information
+  - Advanced search across photo libraries
+  - Secure local storage
+  - Regular compatibility updates
+  - High-res photography
+  - Bandwidth management for large photo files
+  - Backup and restore for photo archives
+  - Smart categorization
+  - Creative project workflow integration
+  - Photographer discovery and curation features
+description: Download videos, images, and content from stocksy with our reliable
+  downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
-  alt: Stocksy Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
+    alt: Stocksy Downloader website preview
 faqs:
-- question: How do I download images from Stocksy?
-  answer: 'To download from Stocksy: 1) Create an account and choose a subscription
-    plan, 2) Search for desired images, 3) Select image size and license type, 4)
-    Download through the official platform. Always use legitimate methods and respect
-    licensing terms.'
-- question: Are there free alternatives to downloading from Stocksy?
-  answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay
-    that offer high-quality images. However, Stocksy may offer unique content and
-    commercial licenses. Always check licensing requirements for your intended use.
-- question: What image formats does Stocksy provide?
-  answer: Stocksy typically provides images in JPEG and PNG formats, with some platforms
-    offering additional formats like SVG, EPS, or TIFF. Resolution options usually
-    range from web-optimized sizes to high-resolution print quality.
-- question: Can I use Stocksy images for commercial purposes?
-  answer: Commercial use of Stocksy images depends on the specific license you purchase.
-    Standard licenses typically allow commercial use with some restrictions, while
-    extended licenses offer broader usage rights. Always read the license agreement
-    carefully.
-- question: What are the licensing requirements for Stocksy images?
-  answer: 'Stocksy images come with specific licensing terms that may require: 1)
-    Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage
-    scope, 4) Prohibition of resale. Always comply with the license terms to avoid
-    legal issues.'
+  - question: How do I download images from Stocksy?
+    answer: 'To download from Stocksy: 1) Create an account and choose a
+      subscription plan, 2) Search for desired images, 3) Select image size and
+      license type, 4) Download through the official platform. Always use
+      legitimate methods and respect licensing terms.'
+  - question: Are there free alternatives to downloading from Stocksy?
+    answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay
+      that offer high-quality images. However, Stocksy may offer unique content
+      and commercial licenses. Always check licensing requirements for your
+      intended use.
+  - question: What image formats does Stocksy provide?
+    answer: Stocksy typically provides images in JPEG and PNG formats, with some
+      platforms offering additional formats like SVG, EPS, or TIFF. Resolution
+      options usually range from web-optimized sizes to high-resolution print
+      quality.
+  - question: Can I use Stocksy images for commercial purposes?
+    answer: Commercial use of Stocksy images depends on the specific license you
+      purchase. Standard licenses typically allow commercial use with some
+      restrictions, while extended licenses offer broader usage rights. Always
+      read the license agreement carefully.
+  - question: What are the licensing requirements for Stocksy images?
+    answer: 'Stocksy images come with specific licensing terms that may require: 1)
+      Attribution to the creator, 2) Restrictions on redistribution, 3) Limits
+      on usage scope, 4) Prohibition of resale. Always comply with the license
+      terms to avoid legal issues.'
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
-- Creative Assets
+  - Downloader
+  - Creative Assets
 keywords:
-- stocksy downloader
+  - stocksy downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -97,29 +99,30 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-stocksy-downloader
+    - purchase-stocksy-downloader
 pre_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Stocksy Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Stocksy Downloader lets me pull everything
-    from Stocksy in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Stocksy downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Stocksy used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Stocksy content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Stocksy assets for clients and the batch features in Stocksy
-    Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Stocksy Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Stocksy Downloader lets me pull
+      everything from Stocksy in minutes. The speeds are great and files stay
+      organized.
+  - name: Jamie Nguyen
+    title: Rock solid Stocksy downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Stocksy used to be hit or miss. This downloader is
+      stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Stocksy content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Stocksy assets for clients and the batch features in Stocksy
+      Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

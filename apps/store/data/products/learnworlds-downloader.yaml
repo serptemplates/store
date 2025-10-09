@@ -1,8 +1,8 @@
 slug: learnworlds-downloader
 platform: Learnworlds
-seo_title: Learnworlds Downloader | Download Learnworlds Downloader for Offline Access
-seo_description: Download videos, images, and content from learnworlds with our reliable
-  downloader tool. Fast, secure, and easy to use.
+seo_title: Learnworlds Downloader | Fast & Easy Content Downloads
+seo_description: Download videos, images, and content from learnworlds with our
+  reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/learnworlds-downloader
 purchase_url: https://serp.ly/learnworlds-downloader
 stripe:
@@ -13,81 +13,82 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6HyAc6gl3zkH
 name: Learnworlds Downloader
-tagline: Download videos, images, and content from learnworlds with our reliable downloader
-  tool. Fast, secure, and easy to use.
+tagline: Download videos, images, and content from learnworlds with our reliable
+  downloader tool. Fast, secure, and easy to use.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learnworlds-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/learnworlds-downloader/main/images/learnworlds-downloader.gif
 github_repo_url: https://github.com/serpapps/learnworlds-downloader
 github_repo_tags: []
 features:
-- Download complete LearnWorlds courses and academies
-- Extract interactive videos and SCORM content
-- Maintain academy structure and course hierarchy
-- Support for social learning features and discussions
-- Multi-language subtitles
-- Batch download entire learning academies
-- Resume interrupted transfers with smart recovery
-- Command-line interface for educational automation
-- Cross-platform support
-- Built-in video player with interactive elements
-- Integration with enterprise learning systems
-- Export certificates/learning analytics
-- Search academy content
-- Privacy protection
-- Regular compatibility updates
-- Organize by academy/subject
-- Backup and restore capabilities for learning data
-- Offline learning with progress synchronization
-- Support for virtual classroom recordings
-- Smart content recommendation and organization
-description: Download videos, images, and content from learnworlds with our reliable
-  downloader tool. Fast, secure, and easy to use.
+  - Download complete LearnWorlds courses and academies
+  - Extract interactive videos and SCORM content
+  - Maintain academy structure and course hierarchy
+  - Support for social learning features and discussions
+  - Multi-language subtitles
+  - Batch download entire learning academies
+  - Resume interrupted transfers with smart recovery
+  - Command-line interface for educational automation
+  - Cross-platform support
+  - Built-in video player with interactive elements
+  - Integration with enterprise learning systems
+  - Export certificates/learning analytics
+  - Search academy content
+  - Privacy protection
+  - Regular compatibility updates
+  - Organize by academy/subject
+  - Backup and restore capabilities for learning data
+  - Offline learning with progress synchronization
+  - Support for virtual classroom recordings
+  - Smart content recommendation and organization
+description: Download videos, images, and content from learnworlds with our
+  reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learnworlds-downloader.jpg
-  alt: Learnworlds Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learnworlds-downloader.jpg
+    alt: Learnworlds Downloader website preview
 faqs:
-- question: How can I download Learnworlds courses for offline viewing?
-  answer: 'To download Learnworlds courses, you typically need: 1) An active subscription
-    or course purchase, 2) Official Learnworlds mobile app (if available for offline
-    viewing), 3) Third-party tools (use with caution). Always check Learnworlds''s
-    terms of service and only download content you''ve legitimately purchased or have
-    access to.'
-- question: Is it allowed to download Learnworlds course content?
-  answer: Downloading Learnworlds courses is subject to the platform's terms of service
-    and copyright laws. Most educational platforms allow offline viewing through their
-    official apps but prohibit redistribution or sharing. Always respect intellectual
-    property rights and only download content you've purchased or have legitimate
-    access to.
-- question: What formats do Learnworlds course downloads come in?
-  answer: Learnworlds course downloads typically come in MP4 format for videos, and
-    may include PDF files for course materials, subtitles in SRT format, and audio
-    files in MP3 format. The exact formats depend on the original content and the
-    downloader used.
-- question: Can I download Learnworlds courses to multiple devices?
-  answer: This depends on Learnworlds's licensing terms. Many platforms allow downloads
-    to a limited number of devices per account. Check your subscription details and
-    the platform's device limits. Using third-party downloaders may violate terms
-    of service.
-- question: How do I organize downloaded Learnworlds course materials?
-  answer: 'Best practices for organizing downloaded Learnworlds courses: 1) Create
-    folders by course name and instructor, 2) Maintain original file names when possible,
-    3) Include course descriptions and syllabi, 4) Back up important courses, 5) Use
-    media management software for better organization.'
+  - question: How can I download Learnworlds courses for offline viewing?
+    answer: 'To download Learnworlds courses, you typically need: 1) An active
+      subscription or course purchase, 2) Official Learnworlds mobile app (if
+      available for offline viewing), 3) Third-party tools (use with caution).
+      Always check Learnworlds''s terms of service and only download content
+      you''ve legitimately purchased or have access to.'
+  - question: Is it allowed to download Learnworlds course content?
+    answer: Downloading Learnworlds courses is subject to the platform's terms of
+      service and copyright laws. Most educational platforms allow offline
+      viewing through their official apps but prohibit redistribution or
+      sharing. Always respect intellectual property rights and only download
+      content you've purchased or have legitimate access to.
+  - question: What formats do Learnworlds course downloads come in?
+    answer: Learnworlds course downloads typically come in MP4 format for videos,
+      and may include PDF files for course materials, subtitles in SRT format,
+      and audio files in MP3 format. The exact formats depend on the original
+      content and the downloader used.
+  - question: Can I download Learnworlds courses to multiple devices?
+    answer: This depends on Learnworlds's licensing terms. Many platforms allow
+      downloads to a limited number of devices per account. Check your
+      subscription details and the platform's device limits. Using third-party
+      downloaders may violate terms of service.
+  - question: How do I organize downloaded Learnworlds course materials?
+    answer: 'Best practices for organizing downloaded Learnworlds courses: 1) Create
+      folders by course name and instructor, 2) Maintain original file names
+      when possible, 3) Include course descriptions and syllabi, 4) Back up
+      important courses, 5) Use media management software for better
+      organization.'
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
-- Course Platforms
+  - Downloader
+  - Course Platforms
 keywords:
-- learnworlds downloader
+  - learnworlds downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -101,29 +102,30 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-learnworlds-downloader
+    - purchase-learnworlds-downloader
 pre_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Learnworlds Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Learnworlds Downloader lets me pull everything
-    from Learnworlds in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Learnworlds downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Learnworlds used to be hit or miss. This downloader is
-    stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Learnworlds content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Learnworlds assets for clients and the batch features in Learnworlds
-    Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Learnworlds Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Learnworlds Downloader lets me pull
+      everything from Learnworlds in minutes. The speeds are great and files
+      stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Learnworlds downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Learnworlds used to be hit or miss. This downloader is
+      stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Learnworlds content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Learnworlds assets for clients and the batch features in
+      Learnworlds Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
