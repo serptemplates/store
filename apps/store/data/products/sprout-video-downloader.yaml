@@ -18,65 +18,65 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/sprout-video-down
 github_repo_url: https://github.com/serpapps/sprout-video-downloader
 github_repo_tags: []
 features:
-- Download Sprout Video content and business videos
-- Support for secure and private video hosting
-- Batch video libraries/collections downloads
-- Auto metadata extraction and organization
-- Custom folder structures by project and campaign
-- Resume downloads
-- Cross-platform support
-- Built-in video player with business-grade controls
-- Command-line interface for enterprise workflows
-- Integration with business video management systems
-- Export video performance data/analytics
-- Search business video libraries
-- Enterprise-grade privacy and security features
-- Regular updates to maintain Sprout Video compatibility
-- Support for various video formats and qualities
-- Bandwidth optimization
-- Backup & sync for team collaboration
-- Smart organization
-- Offline access with synchronized viewing progress
-- Advanced user management and access controls
+  - Download Sprout Video content and business videos
+  - Support for secure and private video hosting
+  - Batch video libraries/collections downloads
+  - Auto metadata extraction and organization
+  - Custom folder structures by project and campaign
+  - Resume downloads
+  - Cross-platform support
+  - Built-in video player with business-grade controls
+  - CLI automation
+  - Integration with business video managements
+  - Export video performance data/analytics
+  - Search business video libraries
+  - Enterprise-grade security
+  - Regular compatibility updates
+  - Multiple video formats & qualities
+  - Bandwidth optimization
+  - Backup & sync for team collaboration
+  - Smart organization
+  - Offline access with synchronized viewing progress
+  - Advanced user management and access controls
 description: Get quick access to Sprout Video Downloader content for offline use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
-  alt: Sprout Video Downloader website preview
-- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
-  alt: Sprout Video Downloader screenshot
-- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
-  alt: Sprout Video Downloader screenshot
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
+    alt: Sprout Video Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
+    alt: Sprout Video Downloader screenshot
+  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
+    alt: Sprout Video Downloader screenshot
 faqs:
-- question: How do I use the Sprout downloader?
-  answer: Install the browser extension, navigate to Sprout, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Sprout, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Sprout content?
-  answer: The downloader works with most publicly accessible content on Sprout. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+  - question: How do I use the Sprout downloader?
+    answer: Install the browser extension, navigate to Sprout, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+  - question: What quality options are available?
+    answer: The downloader supports all available quality levels from Sprout, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+  - question: Does this work with all Sprout content?
+    answer: The downloader works with most publicly accessible content on Sprout. Some restricted or DRM-protected content may not be downloadable.
+  - question: Will downloads continue if my internet connection drops?
+    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+  - question: Is there a download limit?
+    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+  - question: How do I organize my downloaded content?
+    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+  - question: Does this work on all browsers?
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+  - question: Is my data kept private?
+    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
+  - Downloader
 keywords:
-- sprout video downloader
+  - sprout video downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -89,26 +89,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-sprout-video-downloader
+    - purchase-sprout-video-downloader
 new_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Sprout Video Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Sprout Video Downloader lets me pull everything from Sprout in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Sprout downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Sprout used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Sprout content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Sprout assets for clients and the download in Sprout Video Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Sprout Video Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Sprout Video Downloader lets me pull everything from Sprout in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Sprout downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Sprout used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Sprout content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Sprout assets for clients and the download in Sprout Video Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

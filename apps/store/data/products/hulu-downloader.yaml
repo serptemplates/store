@@ -18,62 +18,62 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/hulu-downloader/m
 github_repo_url: https://github.com/serpapps/hulu-downloader
 github_repo_tags: []
 features:
-- High-quality Hulu shows and downloads
-- Support for live TV recordings and DVR content
-- Batch series seasons/episodes downloads
-- Automatic commercial detection and removal
-- Multiple subtitle and audio track support
-- Resume downloads
-- Cross-platform support
-- Built-in media player with advanced controls
-- Organize by network/genre
-- Duplicate detection and content management
-- CLI tools
-- Integration with home theater systems
-- Export show schedules/episode guides
-- Local-only storage for privacy
-- Regular compatibility updates
-- Support for various video formats and qualities
-- Bandwidth optimization
-- Search capabilities across content libraries
-- Backup & sync
-- Offline viewing with progress synchronization
+  - High-quality Hulu shows and downloads
+  - Support for live TV recordings and DVR content
+  - Batch series seasons/episodes downloads
+  - Automatic commercial detection and removal
+  - Multiple subtitle and audio track support
+  - Resume downloads
+  - Cross-platform support
+  - Built-in media player
+  - Organize by network/genre
+  - Duplicate detection
+  - CLI tools
+  - Integration with home theaters
+  - Export show schedules/episode guides
+  - Local-only storage for privacy
+  - Regular compatibility updates
+  - Multiple video formats & qualities
+  - Bandwidth optimization
+  - Search content libraries
+  - Backup & sync
+  - Offline viewing with sync
 description: Download videos, images, and content from hulu with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/hulu-downloader.jpg
-  alt: Hulu Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/hulu-downloader.jpg
+    alt: Hulu Downloader website preview
 faqs:
-- question: How do I use the Hulu downloader?
-  answer: Install the browser extension, navigate to Hulu, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Hulu, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Hulu content?
-  answer: The downloader works with most publicly accessible content on Hulu. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+  - question: How do I use the Hulu downloader?
+    answer: Install the browser extension, navigate to Hulu, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+  - question: What quality options are available?
+    answer: The downloader supports all available quality levels from Hulu, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+  - question: Does this work with all Hulu content?
+    answer: The downloader works with most publicly accessible content on Hulu. Some restricted or DRM-protected content may not be downloadable.
+  - question: Will downloads continue if my internet connection drops?
+    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+  - question: Is there a download limit?
+    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+  - question: How do I organize my downloaded content?
+    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+  - question: Does this work on all browsers?
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+  - question: Is my data kept private?
+    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
-- Movies & TV
+  - Downloader
+  - Movies & TV
 keywords:
-- hulu downloader
+  - hulu downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -86,26 +86,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-hulu-downloader
+    - purchase-hulu-downloader
 pre_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Hulu Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Hulu Downloader lets me pull everything from Hulu in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Hulu downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Hulu used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Hulu content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Hulu assets for clients and the download in Hulu Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Hulu Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Hulu Downloader lets me pull everything from Hulu in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Hulu downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Hulu used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Hulu content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Hulu assets for clients and the download in Hulu Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

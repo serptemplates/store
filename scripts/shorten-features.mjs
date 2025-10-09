@@ -5,6 +5,14 @@ import { parseDocument } from "yaml";
 
 const productsDir = path.resolve("/home/runner/work/store/store/apps/store/data/products");
 
+// Files to exclude from processing
+const excludedFiles = [
+  'skool-video-downloader.yaml',
+  'vimeo-video-downloader.yaml',
+  'loom-video-downloader.yaml',
+  'ai-voice-cloner-app.yaml'
+];
+
 // Mapping patterns for shortening features
 const shorteningRules = [
   // Generic patterns
@@ -47,6 +55,55 @@ const shorteningRules = [
   { from: /Organize downloads by .+ categories/i, to: (m) => `Category-based organization` },
   { from: /Filter (?:by|and sort by) (.+)/i, to: (m) => `Filter by ${m[1]}` },
   { from: /Sort (?:by|and filter by) (.+)/i, to: (m) => `Sort by ${m[1]}` },
+  
+  // Additional patterns for wordy features
+  { from: /(?:Cross-platform|Platform) (?:compatibility|support) \((.+?)\)/i, to: () => `Cross-platform support` },
+  { from: /Command-line and GUI workflows/i, to: () => `CLI & GUI workflows` },
+  { from: /Metadata extraction for (.+)/i, to: (m) => `Metadata extraction (${m[1].replace(/, and /g, ', ')})` },
+  { from: /Integration with (?:popular )?(.+? (?:players?|libraries|applications|software|center systems))/i, to: (m) => `${m[1]} integration` },
+  { from: /Command-line interface for (.+)/i, to: () => `CLI automation` },
+  { from: /Search capabilities across (.+)/i, to: (m) => `Search ${m[1]}` },
+  { from: /Download high-resolution (.+?) with quality selection/i, to: (m) => `High-res ${m[1]} downloads` },
+  { from: /Batch processing (?:capabilities )?for (.+)/i, to: (m) => `Batch ${m[1]}` },
+  { from: /Custom folder organization and file naming/i, to: () => `Custom folder organization` },
+  { from: /Duplicate detection and content management/i, to: () => `Duplicate detection` },
+  { from: /Bandwidth management and download optimization/i, to: () => `Bandwidth optimization` },
+  { from: /Progress tracking with detailed analytics/i, to: () => `Progress tracking` },
+  { from: /Offline viewing with progress synchronization/i, to: () => `Offline viewing with sync` },
+  { from: /Advanced filtering by (.+)/i, to: (m) => `Filter by ${m[1]}` },
+  { from: /Support for various (.+?) formats and (?:sizes|resolutions)/i, to: (m) => `Multiple ${m[1]} formats` },
+  { from: /(?:Support for|Support) editorial and commercial licenses/i, to: () => `Editorial & commercial licenses` },
+  { from: /Batch (.+?) collections\/searches downloads/i, to: (m) => `Batch ${m[1]} downloads` },
+  { from: /Automatic(?:ally)? (.+?) and (?:.+?) tracking/i, to: (m) => `Auto ${m[1]}` },
+  { from: /Organize by (.+?)\/(.+)/i, to: (m) => `Organize by ${m[1]}/${m[2]}` },
+  { from: /Integration with (.+?) workflows/i, to: (m) => `${m[1]} workflow integration` },
+  { from: /Export (.+?) data\/(?:licensing )?(?:.+?) information/i, to: (m) => `Export ${m[1]} data` },
+  { from: /Advanced search across (.+)/i, to: (m) => `Advanced search in ${m[1]}` },
+  { from: /Smart categorization/i, to: () => `Smart categories` },
+  { from: /Professional (.+?) features/i, to: (m) => `Pro ${m[1]}` },
+  { from: /Quality control and (.+?) tools/i, to: (m) => `Quality control tools` },
+  { from: /High-res and (.+?) formats/i, to: (m) => `High-res & ${m[1]}` },
+  { from: /Advanced (.+?) management and (?:usage )?tracking/i, to: (m) => `Advanced ${m[1]} tracking` },
+  { from: /Professional search and filtering capabilities/i, to: () => `Pro search & filtering` },
+  { from: /Duplicate detection across (.+)/i, to: (m) => `Duplicate detection (${m[1]})` },
+  { from: /Enterprise-grade (.+?) and (.+?) features/i, to: () => `Enterprise-grade security` },
+  { from: /Regular updates to maintain (.+?) compatibility/i, to: (m) => `Regular ${m[1]} updates` },
+  { from: /Export capabilities for (.+)/i, to: (m) => `Export for ${m[1]}` },
+  { from: /Smart bandwidth management for (.+)/i, to: () => `Smart bandwidth management` },
+  { from: /Backup and sync for (.+)/i, to: (m) => `Backup & sync (${m[1]})` },
+  { from: /Advanced metadata and keyword management/i, to: () => `Advanced metadata management` },
+  { from: /(?:Bandwidth|Download) optimization/i, to: () => `Bandwidth optimization` },
+  { from: /Backup and restore (?:options )?for (.+)/i, to: (m) => `Backup & restore ${m[1]}` },
+  { from: /(?:License|Rights) compliance tracking and management/i, to: () => `License compliance tracking` },
+  { from: /AI-powered (.+?) and (.+)/i, to: (m) => `AI ${m[1]}` },
+  { from: /Seamless integration with (.+)/i, to: (m) => `${m[1]} integration` },
+  { from: /(.+?) viewer/i, to: (m) => `Built-in ${m[1]} viewer` },
+  { from: /Support for various (.+?) and (.+)/i, to: (m) => `Multiple ${m[1]} & ${m[2]}` },
+  { from: /Multi-(?:model|stream) recording (?:and monitoring )?capabilities/i, to: () => `Multi-stream recording` },
+  { from: /Automatic export in various formats \((.+?)\)/i, to: () => `Multiple export formats` },
+  { from: /Bandwidth-efficient downloads with throttling controls/i, to: () => `Bandwidth throttling` },
+  { from: /(.+?) workflow integration features/i, to: (m) => `${m[1]} workflow integration` },
+  { from: /Support for various (.+)/i, to: (m) => `Multiple ${m[1]}` },
 ];
 
 // Additional simple replacements for common wordy phrases
@@ -129,6 +186,12 @@ let processedCount = 0;
 console.log(`Processing ${files.length} product YAML files...`);
 
 for (const file of files) {
+  // Skip excluded files
+  if (excludedFiles.includes(file)) {
+    console.log(`⊘ Skipped (excluded): ${file}`);
+    continue;
+  }
+  
   const filePath = path.join(productsDir, file);
   try {
     if (processFile(filePath)) {

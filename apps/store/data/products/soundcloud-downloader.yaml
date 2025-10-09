@@ -18,62 +18,62 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/soundcloud-downlo
 github_repo_url: https://github.com/serpapps/soundcloud-downloader
 github_repo_tags: []
 features:
-- Download SoundCloud tracks and playlists
-- Support for high-quality audio downloads up to 320kbps
-- Batch artist discographies/liked tracks downloads
-- Automatic Metadata extraction
-- Organize by artist, genre,/playlist
-- Resume downloads
-- Cross-platform support
-- Built-in audio player with SoundCloud-style controls
-- CLI tools
-- Integration with music management applications
-- Export track data/listening analytics
-- Search music libraries
-- Local-only storage for privacy
-- Regular compatibility updates
-- Support for various audio formats (MP3, FLAC, WAV)
-- Bandwidth management for large music collections
-- Backup and restore options for music libraries
-- Smart categorization
-- Music discovery and recommendation features
-- Artist following and new release tracking
+  - Download SoundCloud tracks and playlists
+  - Support for high-quality audio downloads up to 320kbps
+  - Batch artist discographies/liked tracks downloads
+  - Automatic Metadata extraction
+  - Organize by artist, genre,/playlist
+  - Resume downloads
+  - Cross-platform support
+  - Built-in audio player with SoundCloud-style controls
+  - CLI tools
+  - music management applications integration
+  - Export track data/listening analytics
+  - Search music libraries
+  - Local-only storage for privacy
+  - Regular compatibility updates
+  - Multiple audio formats (MP3, FLAC, WAV)
+  - Bandwidth management for large music collections
+  - Backup & restore music libraries
+  - Smart categories
+  - Music discovery and recommendation features
+  - Artist following and new release tracking
 description: Download videos, images, and content from soundcloud with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundcloud-downloader.jpg
-  alt: Soundcloud Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundcloud-downloader.jpg
+    alt: Soundcloud Downloader website preview
 faqs:
-- question: How do I use the Soundcloud downloader?
-  answer: Install the browser extension, navigate to Soundcloud, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Soundcloud, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Soundcloud content?
-  answer: The downloader works with most publicly accessible content on Soundcloud. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+  - question: How do I use the Soundcloud downloader?
+    answer: Install the browser extension, navigate to Soundcloud, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+  - question: What quality options are available?
+    answer: The downloader supports all available quality levels from Soundcloud, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+  - question: Does this work with all Soundcloud content?
+    answer: The downloader works with most publicly accessible content on Soundcloud. Some restricted or DRM-protected content may not be downloadable.
+  - question: Will downloads continue if my internet connection drops?
+    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+  - question: Is there a download limit?
+    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+  - question: How do I organize my downloaded content?
+    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+  - question: Does this work on all browsers?
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+  - question: Is my data kept private?
+    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
-- Social Media
+  - Downloader
+  - Social Media
 keywords:
-- soundcloud downloader
+  - soundcloud downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -86,26 +86,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-soundcloud-downloader
+    - purchase-soundcloud-downloader
 pre_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Soundcloud Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Soundcloud Downloader lets me pull everything from Soundcloud in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Soundcloud downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Soundcloud used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Soundcloud content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Soundcloud assets for clients and the download in Soundcloud Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Soundcloud Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Soundcloud Downloader lets me pull everything from Soundcloud in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Soundcloud downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Soundcloud used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Soundcloud content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Soundcloud assets for clients and the download in Soundcloud Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase

@@ -18,62 +18,62 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/instagram-downloa
 github_repo_url: https://github.com/serpapps/instagram-downloader
 github_repo_tags: []
 features:
-- Original quality Instagram content
-- IGTV, Reels & carousel support
-- Batch profile/highlight downloads
-- Auto story archiving
-- Post metadata extraction
-- Profile picture/bio download
-- Private account support
-- Resume downloads
-- Organize by user or date
-- Duplicate detection
-- Cross-platform support
-- Command-line tools
-- Media viewer with slideshow
-- Multi-format data export
-- Media center integration
-- Local-only storage for privacy
-- Regular compatibility updates
-- Bandwidth-efficient downloads
-- Search & filter downloads
-- Backup & sync options
+  - Original quality Instagram content
+  - IGTV, Reels & carousel support
+  - Batch profile/highlight downloads
+  - Auto story archiving
+  - Post metadata extraction
+  - Profile picture/bio download
+  - Private account support
+  - Resume downloads
+  - Organize by user or date
+  - Duplicate detection
+  - Cross-platform support
+  - Command-line tools
+  - Built-in Media viewer
+  - Multi-format data export
+  - Media center integration
+  - Local-only storage for privacy
+  - Regular compatibility updates
+  - Bandwidth-efficient downloads
+  - Search & filter downloads
+  - Backup & sync options
 description: Download videos, images, and content from instagram with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg
-  alt: Instagram Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg
+    alt: Instagram Downloader website preview
 faqs:
-- question: Can I download Instagram Stories before they disappear?
-  answer: Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles.
-- question: Does this work with Instagram Reels and IGTV videos?
-  answer: Absolutely! The downloader supports all Instagram video formats including Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded in its original quality and aspect ratio.
-- question: Will the downloader save Instagram captions and hashtags?
-  answer: Yes! All post metadata including captions, hashtags, location tags, and timestamps are saved with your downloads. This makes it easy to organize and search your saved content later.
-- question: Can I download from private Instagram accounts I follow?
-  answer: You can download content from private accounts that you have access to view. Simply authenticate with your Instagram account, and you'll be able to save content from any account you follow.
-- question: What about Instagram carousel posts with multiple images?
-  answer: Carousel posts are fully supported! All images and videos in a carousel are downloaded and can be saved as separate files or kept together in a folder, depending on your preference.
-- question: Does this preserve the original image quality?
-  answer: Yes, the downloader fetches the highest resolution version available from Instagram. Images and videos are saved without compression or quality loss, giving you the same quality the creator uploaded.
-- question: Can I download my own Instagram content as a backup?
-  answer: Definitely! Many users use this downloader to backup their own Instagram content. It's a fast way to create local copies of all your posts, Stories, and Reels for safekeeping.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Ensure your browser is up to date for optimal performance.
+  - question: Can I download Instagram Stories before they disappear?
+    answer: Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles.
+  - question: Does this work with Instagram Reels and IGTV videos?
+    answer: Absolutely! The downloader supports all Instagram video formats including Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded in its original quality and aspect ratio.
+  - question: Will the downloader save Instagram captions and hashtags?
+    answer: Yes! All post metadata including captions, hashtags, location tags, and timestamps are saved with your downloads. This makes it easy to organize and search your saved content later.
+  - question: Can I download from private Instagram accounts I follow?
+    answer: You can download content from private accounts that you have access to view. Simply authenticate with your Instagram account, and you'll be able to save content from any account you follow.
+  - question: What about Instagram carousel posts with multiple images?
+    answer: Carousel posts are fully supported! All images and videos in a carousel are downloaded and can be saved as separate files or kept together in a folder, depending on your preference.
+  - question: Does this preserve the original image quality?
+    answer: Yes, the downloader fetches the highest resolution version available from Instagram. Images and videos are saved without compression or quality loss, giving you the same quality the creator uploaded.
+  - question: Can I download my own Instagram content as a backup?
+    answer: Definitely! Many users use this downloader to backup their own Instagram content. It's a fast way to create local copies of all your posts, Stories, and Reels for safekeeping.
+  - question: Does this work on all browsers?
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Ensure your browser is up to date for optimal performance.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
 status: draft
 categories:
-- Downloader
-- Social Media
+  - Downloader
+  - Social Media
 keywords:
-- instagram downloader
+  - instagram downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -86,26 +86,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-  - purchase-instagram-downloader
+    - purchase-instagram-downloader
 pre_release: true
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Instagram Downloader
-  rating: 5.0
-  date: '2025-02-12'
-  review: I manage content libraries and Instagram Downloader lets me pull everything from Instagram in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Instagram downloads
-  rating: 4.9
-  date: '2025-03-03'
-  review: Downloading from Instagram used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Instagram content
-  rating: 4.8
-  date: '2025-01-28'
-  review: We archive Instagram assets for clients and the download in Instagram Downloader keep our workflows smooth. Totally worth the price.
+  - name: Alex Martinez
+    title: Saves hours every week with Instagram Downloader
+    rating: 5.0
+    date: '2025-02-12'
+    review: I manage content libraries and Instagram Downloader lets me pull everything from Instagram in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Instagram downloads
+    rating: 4.9
+    date: '2025-03-03'
+    review: Downloading from Instagram used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Instagram content
+    rating: 4.8
+    date: '2025-01-28'
+    review: We archive Instagram assets for clients and the download in Instagram Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-- Worldwide
+  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
