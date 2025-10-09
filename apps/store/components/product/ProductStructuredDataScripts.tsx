@@ -19,6 +19,15 @@ export interface ProductStructuredDataScriptsProps {
 }
 
 export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
+  const parsePrice = (value?: string | null): string | null => {
+    if (!value) return null;
+    const cleaned = value.toString().replace(/[^0-9.]/g, "");
+    if (!cleaned) return null;
+    const numeric = Number.parseFloat(cleaned);
+    if (!Number.isFinite(numeric)) return null;
+    return numeric.toFixed(2);
+  };
+
   const homeProps = productToHomeTemplate(product, posts);
   const normalizedStoreUrl = (() => {
     if (siteConfig?.site?.domain) {
@@ -30,11 +39,18 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const productPath = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;
   const productId = `${productUrl}#product`;
+  const resolvedCurrency = product.pricing?.currency?.trim() || "USD";
+  const normalizedPrice = parsePrice(product.pricing?.price) ?? "0.00";
+  const normalizedImages = images.length
+    ? images
+    : [product.featured_image, product.featured_image_gif]
+        .flat()
+        .filter((value): value is string => Boolean(value && value.trim().length > 0));
   const productSchema = generateProductSchemaLD({
     product: {
       ...product,
-      price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
-      images,
+      price: normalizedPrice,
+      images: normalizedImages,
       isDigital: true,
       reviews: product.reviews?.map((review) => ({
         ...review,
@@ -46,7 +62,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     url: productUrl,
     storeUrl: normalizedStoreUrl,
     productId,
-    currency: "USD",
+    currency: resolvedCurrency,
     preRelease: product.pre_release ?? false,
     expectedLaunchDate: undefined,
   });
@@ -65,8 +81,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web Browser",
     offers: {
-      price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
-      priceCurrency: "USD",
+      price: normalizedPrice,
+      priceCurrency: resolvedCurrency,
     },
     aggregateRating:
       product.reviews && product.reviews.length > 0
@@ -79,15 +95,16 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
             worstRating: 1,
           }
         : undefined,
-    screenshot: product.screenshots?.map((screenshot) =>
-      typeof screenshot === "string" ? screenshot : screenshot.url,
-    ) ?? images,
+    screenshot:
+      product.screenshots?.map((screenshot) =>
+        typeof screenshot === "string" ? screenshot : screenshot.url,
+      ) ?? normalizedImages,
     softwareVersion: "1.0",
-    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://apps.serp.co/${product.slug}`,
+    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `${normalizedStoreUrl}/${product.slug}`,
     downloadUrl: product.purchase_url,
     author: {
-      name: "SERP Apps",
-      url: "https://apps.serp.co",
+      name: siteConfig?.site?.name?.trim() || "SERP Apps",
+      url: normalizedStoreUrl,
     },
     datePublished: new Date().toISOString(),
     featureList: product.features?.map((feature) =>
@@ -169,8 +186,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         ? {
             '@type': 'Offer',
             url: product.purchase_url,
-            price: product.pricing?.price?.replace(/[^0-9.]/g, '') || '0',
-            priceCurrency: 'USD',
+            price: normalizedPrice,
+            priceCurrency: resolvedCurrency,
             availability: product.pre_release ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
           }
         : undefined,

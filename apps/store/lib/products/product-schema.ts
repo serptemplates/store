@@ -76,6 +76,8 @@ const pricingSchema = z
     note: z.string().trim().optional(),
     cta_text: z.string().trim().optional(),
     cta_href: z.string().trim().optional(),
+    currency: z.string().trim().optional(),
+    availability: z.string().trim().optional(),
     benefits: z.array(z.string().trim()).optional().default([]),
   })
   .optional();

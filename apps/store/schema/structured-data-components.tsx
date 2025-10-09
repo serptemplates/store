@@ -1,6 +1,15 @@
 import Script from "next/script";
 import type { ProductData } from "@/lib/products/product-schema";
 
+const parsePrice = (value?: string | null): string | null => {
+  if (!value) return null;
+  const cleaned = value.toString().replace(/[^0-9.]/g, "");
+  if (!cleaned) return null;
+  const numeric = Number.parseFloat(cleaned);
+  if (!Number.isFinite(numeric)) return null;
+  return numeric.toFixed(2);
+};
+
 interface StructuredDataProps {
   product: ProductData;
   url: string;
@@ -8,12 +17,38 @@ interface StructuredDataProps {
 
 export function ProductStructuredData({ product, url }: StructuredDataProps) {
   // Product Schema
+  const normalizedPrice = parsePrice(product.pricing?.price) ?? "0.00";
+  const priceCurrency = product.pricing?.currency?.trim() || "USD";
+  const primaryImage = product.featured_image || product.screenshots?.[0]?.url || "/api/og";
+  const imageList = [
+    product.featured_image,
+    product.featured_image_gif,
+    ...(product.screenshots?.map((shot) => (typeof shot === "string" ? shot : shot.url)) ?? []),
+  ].filter((value): value is string => Boolean(value && value.trim().length > 0));
+  const resolvedImages = imageList.length ? Array.from(new Set(imageList)) : [primaryImage];
+
+  const ratingValues = (product.reviews ?? [])
+    .map((review) => (typeof (review as any).rating === "number" ? (review as any).rating : undefined))
+    .filter((value): value is number => typeof value === "number" && Number.isFinite(value));
+
+  const aggregateRating = ratingValues.length
+    ? {
+        "@type": "AggregateRating",
+        ratingValue: Number(
+          ratingValues.reduce((sum, value) => sum + value, 0) / ratingValues.length,
+        ).toFixed(2),
+        reviewCount: ratingValues.length,
+        bestRating: "5",
+        worstRating: "1",
+      }
+    : undefined;
+
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.featured_image || product.screenshots?.[0]?.url,
+    image: resolvedImages,
     url: url,
     sku: product.slug,
     brand: {
@@ -23,29 +58,27 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
     offers: {
       "@type": "Offer",
       url: url,
-      priceCurrency: "USD",
-      price: product.pricing?.price?.replace(/[^0-9.]/g, '') || "0",
+      priceCurrency,
+      price: normalizedPrice,
       priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: "https://schema.org/InStock",
       seller: {
         "@type": "Organization",
-        name: "Store"
+        name: "SERP Apps"
       }
     },
-    aggregateRating: product.reviews && product.reviews.length > 0 ? {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: product.reviews.length,
-      bestRating: "5",
-      worstRating: "1"
-    } : undefined,
+    aggregateRating,
     review: product.reviews?.map(review => ({
       "@type": "Review",
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: "5",
-        bestRating: "5"
-      },
+      reviewRating:
+        typeof (review as any).rating === "number"
+          ? {
+              "@type": "Rating",
+              ratingValue: (review as any).rating,
+              bestRating: "5",
+              worstRating: "1",
+            }
+          : undefined,
       author: {
         "@type": "Person",
         name: review.name
