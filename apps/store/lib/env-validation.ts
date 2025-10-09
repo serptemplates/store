@@ -77,6 +77,17 @@ const ENV_CONFIGS: EnvConfig[] = [
     description: "PostHog API host (defaults to https://us.i.posthog.com)",
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
+  {
+    name: "POSTHOG_API_KEY",
+    required: false,
+    description: "Server-side PostHog API key for recording checkout completions",
+  },
+  {
+    name: "POSTHOG_API_HOST",
+    required: false,
+    description: "Server-side PostHog API host (defaults to https://us.i.posthog.com)",
+    validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
+  },
 ];
 
 interface ValidationResult {

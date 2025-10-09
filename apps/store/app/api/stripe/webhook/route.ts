@@ -14,6 +14,7 @@ import {
   updateCheckoutSessionStatus,
   updateOrderMetadata,
 } from "@/lib/checkout/store";
+import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { syncOrderWithGhl, GhlRequestError, RETRYABLE_STATUS_CODES } from "@/lib/ghl-client";
 import { getStripeClient } from "@/lib/payments/stripe";
@@ -459,12 +460,15 @@ async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent)
   const stripeSessionId = sessionRecord?.stripeSessionId ?? null;
   const offerId = sessionRecord?.offerId ?? metadata.offerId ?? null;
   const landerId = sessionRecord?.landerId ?? metadata.landerId ?? null;
+  const sessionMetadata = sessionRecord?.metadata ?? {};
 
   const customerEmail =
     sessionRecord?.customerEmail ??
     paymentIntent.receipt_email ??
     metadata.customerEmail ??
     null;
+
+  const amountTotalCents = paymentIntent.amount_received ?? paymentIntent.amount ?? null;
 
   if (sessionRecord) {
     await updateCheckoutSessionStatus(sessionRecord.stripeSessionId, "completed", {
@@ -497,6 +501,33 @@ async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent)
     paymentStatus: paymentIntent.status ?? null,
     paymentMethod,
     source: "stripe",
+  });
+
+  const sessionAffiliate = (sessionMetadata as Record<string, unknown>).affiliateId;
+  const affiliateId =
+    (typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined) ??
+    (typeof sessionAffiliate === "string" ? sessionAffiliate : undefined) ??
+    null;
+
+  const combinedMetadata: Record<string, unknown> = {
+    ...(sessionMetadata as Record<string, unknown>),
+    ...metadata,
+  };
+
+  trackCheckoutCompleted({
+    provider: "stripe",
+    amountTotalCents,
+    currency: paymentIntent.currency ?? null,
+    offerId,
+    landerId,
+    affiliateId,
+    checkoutSessionId,
+    stripeSessionId,
+    stripePaymentIntentId: paymentIntent.id,
+    paymentMethod,
+    customerEmail,
+    customerName,
+    metadata: combinedMetadata,
   });
 }
 
