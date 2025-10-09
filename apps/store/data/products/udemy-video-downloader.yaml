@@ -78,7 +78,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

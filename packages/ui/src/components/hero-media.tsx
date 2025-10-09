@@ -1,5 +1,11 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { getVideoEmbedUrl } from "../utils";
 import { FaPlay } from "react-icons/fa6";
 import { Button } from "../button";
@@ -26,7 +32,11 @@ export type HeroMediaProps = {
   className?: string;
 };
 
-const HeroMedia = ({ className, items }: HeroMediaProps) => {
+export type HeroMediaHandle = {
+  open: (index?: number) => void;
+};
+
+const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(({ className, items }, ref) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: false,
@@ -57,6 +67,23 @@ const HeroMedia = ({ className, items }: HeroMediaProps) => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open: (index = 0) => {
+        const boundedIndex = Math.max(0, Math.min(index, items.length - 1));
+        const target = items[boundedIndex];
+        if (!target) return;
+        setDialogItem(target);
+        setSelectedIndex(boundedIndex);
+        if (emblaApi) {
+          emblaApi.scrollTo(boundedIndex);
+        }
+      },
+    }),
+    [items, emblaApi]
+  );
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -96,11 +123,19 @@ const HeroMedia = ({ className, items }: HeroMediaProps) => {
                 <div
                   key={index}
                   className={cn(
-                    isOnlyOneItem ? "lg:flex-[0_0_100%]" : "lg:flex-[0_0_48%]",
-                    "min-w-0 flex-[0_0_100%]"
+                    isOnlyOneItem
+                      ? "lg:flex-[0_0_100%]"
+                      : index === selectedIndex
+                      ? "lg:flex-[0_0_58%]"
+                      : "lg:flex-[0_0_42%]",
+                    "min-w-0 flex-[0_0_100%] transition-[flex-basis] duration-300 ease-out"
                   )}
                 >
-                  <Item item={item} onClick={() => setDialogItem(item)} />
+                  <Item
+                    item={item}
+                    onClick={() => setDialogItem(item)}
+                    isActive={index === selectedIndex}
+                  />
                 </div>
               ))}
             </div>
@@ -186,18 +221,25 @@ const HeroMedia = ({ className, items }: HeroMediaProps) => {
       )}
     </>
   );
-};
+});
 
 const Item = ({
   item,
   onClick,
+  isActive,
 }: {
   item: SHeroMediaItem;
   onClick?: () => void;
+  isActive?: boolean;
 }) => {
   return (
     <button
-      className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted/40 border-2 border-gray-300"
+      className={cn(
+        "relative aspect-video w-full overflow-hidden rounded-2xl border-2 bg-muted/40 transition duration-300 ease-out",
+        isActive
+          ? "border-primary shadow-2xl shadow-primary/20 scale-[1.02]"
+          : "border-gray-300 hover:border-primary/60 hover:scale-[1.01]"
+      )}
       onClick={onClick}
     >
       {item.type === "video" && (
@@ -246,5 +288,7 @@ const Thumbnails = ({ items, selectedIndex, onScroll }: ThumbnailsProps) => {
     </div>
   );
 };
+
+HeroMedia.displayName = "HeroMedia";
 
 export default HeroMedia;

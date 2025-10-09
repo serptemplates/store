@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Check, Zap, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@repo/ui";
 import { cn } from "@repo/ui";
+import SocialProofBanner from "@repo/ui/social-proof-banner";
 
 export type PricingCtaProps = {
   heading?: string;
@@ -61,6 +62,11 @@ export function PricingCta({
     price || priceLabel || originalPrice || priceNote
   );
 
+  const socialProofConfig = {
+    userCount: 694,
+    starRating: 5,
+  } as const;
+
   // Calculate discount percentage if original price exists
   let discountPercentage = 0;
   if (originalPrice && price) {
@@ -89,6 +95,13 @@ export function PricingCta({
               {subheading ||
                 "Start using our product immediately after checkout. No waiting, no delays."}
             </p>
+
+            <SocialProofBanner
+              className="hidden lg:block mb-8"
+              avatars={[]}
+              userCount={socialProofConfig.userCount}
+              starRating={socialProofConfig.starRating}
+            />
 
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
             <div className="hidden lg:block space-y-4 mb-8">
@@ -168,60 +181,6 @@ export function PricingCta({
               </div>
             </div>
 
-            {/* Trust indicators - Hidden on mobile */}
-            <div className="hidden lg:flex flex-wrap items-center gap-6 mb-6">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    className="w-5 h-5 text-yellow-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-                <span className="ml-2 text-sm text-gray-600">
-                  Trusted by 14,745+ customers
-                </span>
-              </div>
-            </div>
-
-            {/* Security badges - Hidden on mobile */}
-            <div className="hidden lg:flex items-center gap-4 text-sm text-gray-500">
-              <div className="flex items-center gap-1">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-                <span>Secure Checkout</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                  />
-                </svg>
-                <span>SSL Encrypted</span>
-              </div>
-            </div>
           </div>
 
           {/* Right side - pricing card */}
@@ -239,11 +198,18 @@ export function PricingCta({
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                   {heading || "Get Instant Access"}
                 </h2>
-                {subheading && (
-                  <p className="text-base md:text-lg text-gray-600 mt-2">
-                    {subheading}
-                  </p>
-                )}
+                <p className="text-base md:text-lg text-gray-600 mt-2">
+                  {subheading ||
+                    "Start using our product immediately after checkout. No waiting, no delays."}
+                </p>
+              </div>
+
+              <div className="mb-6 lg:hidden">
+                <SocialProofBanner
+                  avatars={[]}
+                  userCount={socialProofConfig.userCount}
+                  starRating={socialProofConfig.starRating}
+                />
               </div>
 
               {/* Pricing */}

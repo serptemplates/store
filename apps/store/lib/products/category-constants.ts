@@ -3,7 +3,7 @@ export const PRIMARY_CATEGORIES = [
   "Artificial Intelligence",
   "Adult",
   "Course Platforms",
-  "Live Stream",
+  "Livestream",
   "Creative Assets",
   "Image Hosting",
   "Movies & TV",
@@ -70,7 +70,7 @@ export const CATEGORY_RULES: CategoryRule[] = [
     ],
   },
   {
-    label: "Live Stream",
+    label: "Livestream",
     keywords: [
       "livestream",
       "live stream",

@@ -7,7 +7,7 @@ import SmartLink from "./components/smart-link";
 export type SocialProofBannerProps = {
   userCount: number;
   starRating: number;
-  description: string;
+  description?: string;
   avatars: string[];
   link?: {
     label: string;
@@ -31,6 +31,11 @@ const SocialProofBanner = ({
   }
 
   const extraCount = userCount - avatars.length;
+  const descriptionText = description?.trim() ?? "";
+  const hasDescription = descriptionText.length > 0;
+  const linkLabel = link?.label?.trim();
+  const linkUrl = link?.url?.trim();
+  const hasLink = Boolean(linkLabel && linkUrl);
 
   return (
     <div className={cn(className, "mx-auto w-full max-w-5xl")}>
@@ -48,18 +53,26 @@ const SocialProofBanner = ({
         </div>
         <Laurel className="size-20 text-indigo-300 block lg:hidden" />
 
-        <div className="flex">
-          <div className="mx-2.5 text-sm text-center text-gray-700 font-medium w-[370px]">
-            <p>
-              {description}{" "}
-              {link && (
-                <SmartLink href={link.url} className="font-bold text-blue-600">
-                  {link.label}
-                </SmartLink>
-              )}
-            </p>
+        {(hasDescription || hasLink) && (
+          <div className="flex">
+            <div className="mx-2.5 text-sm text-center text-gray-700 font-medium w-[370px]">
+              <p>
+                {hasDescription ? descriptionText : null}
+                {hasLink && (
+                  <>
+                    {hasDescription ? " " : null}
+                    <SmartLink
+                      href={linkUrl!}
+                      className="font-bold text-blue-600"
+                    >
+                      {linkLabel}
+                    </SmartLink>
+                  </>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="flex flex-nowrap items-center gap-2">
           <div className="flex -space-x-2">

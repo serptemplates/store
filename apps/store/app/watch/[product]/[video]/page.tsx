@@ -303,7 +303,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
         </aside>
       </div>
       </main>
-      <FooterComposite site={{ name: navSiteName }} />
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </>
   );
 }

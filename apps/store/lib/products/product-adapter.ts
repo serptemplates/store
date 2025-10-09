@@ -66,6 +66,16 @@ function toFaqs(faqs: ProductData["faqs"]): FAQ[] | undefined {
   return faqs;
 }
 
+function parsePriceToNumber(value?: string | null): number | null {
+  if (!value) return null;
+  const numeric = Number.parseFloat(value.replace(/[^0-9.]/g, ""));
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
+function formatPrice(value: number): string {
+  return `$${Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2)}`;
+}
+
 export function productToHomeTemplate(
   product: ProductData,
   posts: BlogPostMeta[] = []
@@ -91,6 +101,16 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
+  const currentPriceValue = parsePriceToNumber(product.pricing?.price);
+  let derivedOriginalPrice = product.pricing?.original_price ?? undefined;
+
+  if (!derivedOriginalPrice && currentPriceValue != null) {
+    if (Math.abs(currentPriceValue - 17) < 0.01) {
+      derivedOriginalPrice = formatPrice(37);
+    } else if (Math.abs(currentPriceValue - 27) < 0.01) {
+      derivedOriginalPrice = formatPrice(47);
+    }
+  }
 
   return {
     platform,
@@ -118,7 +138,7 @@ export function productToHomeTemplate(
       subheading: product.tagline,
       priceLabel: product.pricing?.label,
       price: product.pricing?.price,
-      originalPrice: product.pricing?.original_price,
+      originalPrice: derivedOriginalPrice,
       priceNote: product.pricing?.note,
       benefits:
         product.pricing?.benefits && product.pricing.benefits.length > 0

@@ -9,6 +9,7 @@ import { getSiteConfig } from "@/lib/site-config";
 import { getAllProducts } from "@/lib/products/product";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
+import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 export const dynamic = "force-dynamic";
 
@@ -83,19 +84,7 @@ export default async function AccountPage({
         </div>
       </main>
 
-      <footer className="border-t border-slate-200 bg-slate-900 text-slate-300">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold text-white">Need a hand?</p>
-            <p className="text-sm text-slate-400">
-              Visit <a href="https://serp.ly/@serp/support" className="text-slate-200 hover:text-white" target="_blank" rel="noreferrer">Support</a> for help.
-            </p>
-          </div>
-          <div className="text-xs text-slate-500">
-            © {new Date().getFullYear()} SERP Apps. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

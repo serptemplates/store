@@ -306,10 +306,6 @@
           "type": "string",
           "minLength": 1
         },
-        "price_valid_until": {
-          "type": "string",
-          "format": "date"
-        },
         "note": {
           "type": "string"
         },

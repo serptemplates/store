@@ -36,7 +36,7 @@ features:
   - Bandwidth management for live recording
   - Backup and restore for stream archives
   - Smart categorization
-  - Live stream monitoring and alerts
+  - Livestream monitoring and alerts
   - Advanced recording scheduling and automation
 description: Get quick access to Stream Downloader content for offline use.
 product_videos: []
@@ -71,7 +71,7 @@ supported_operating_systems:
 status: draft
 categories:
   - Downloader
-  - Live Stream
+  - Livestream
 keywords:
   - stream downloader
 pricing:
@@ -82,7 +82,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

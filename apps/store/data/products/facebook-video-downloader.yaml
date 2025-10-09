@@ -37,7 +37,7 @@ features:
   - Bandwidth-efficient downloads
   - Backup and restore capabilities
   - Support for Facebook Watch and IGTV content
-  - Live stream recording and archiving features
+  - Livestream recording and archiving features
 description: Download videos, images, and content from facebook video with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
@@ -82,7 +82,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

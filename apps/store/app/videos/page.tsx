@@ -98,8 +98,6 @@ export default function VideosPage() {
     })),
   };
 
-  const filters = Array.from(new Set(sortedItems.map((item) => item.productName))).slice(0, 12);
-
   return (
     <>
       <PrimaryNavbar {...navProps} />
@@ -114,9 +112,9 @@ export default function VideosPage() {
           />
         </div>
         <Script id="videos-itemlist" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
-        <VideoLibraryShell siteName={siteName} filters={filters} videos={sortedItems} />
+        <VideoLibraryShell videos={sortedItems} />
       </main>
-      <FooterComposite site={{ name: siteName }} />
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </>
   );
 }

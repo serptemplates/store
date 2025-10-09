@@ -1,13 +1,16 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@repo/ui/lib/utils";
 
 export interface PrimaryNavLink {
   label: string;
-  href: string;
+  href?: string;
   external?: boolean;
+  children?: Array<{ label: string; href: string; external?: boolean }>;
 }
 
 export interface PrimaryNavProductLink {
@@ -39,6 +42,16 @@ export function PrimaryNavbar({
     [],
   );
   const ctaIsExternal = ctaHref ? /^https?:/i.test(ctaHref) : false;
+
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const handleOpenDropdown = useCallback((label: string) => {
+    setOpenDropdown(label);
+  }, []);
+
+  const handleCloseDropdown = useCallback(() => {
+    setOpenDropdown(null);
+  }, []);
 
   const productColumns = useMemo(() => {
     const columnCount = 4;
@@ -93,11 +106,36 @@ export function PrimaryNavbar({
           )}
         </NextLink>
         <div className="hidden items-center gap-6 text-sm text-muted-foreground sm:flex">
-          <div className="relative group">
-            <button className="font-medium transition-colors hover:text-foreground" type="button">
+          <div
+            className="relative"
+            onMouseEnter={() => handleOpenDropdown("__apps__")}
+            onMouseLeave={handleCloseDropdown}
+            onFocus={() => handleOpenDropdown("__apps__")}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                handleCloseDropdown();
+              }
+            }}
+          >
+            <button
+              className="flex items-center gap-1 font-medium transition-colors hover:text-foreground focus:text-foreground focus:outline-none"
+              type="button"
+              aria-expanded={openDropdown === "__apps__"}
+            >
               Apps
+              <ChevronDown
+                className={cn(
+                  "h-3.5 w-3.5 transition-transform",
+                  openDropdown === "__apps__" ? "rotate-180" : undefined
+                )}
+              />
             </button>
-            <div className="absolute right-0 top-full z-50 mt-2 hidden w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl group-hover:block group-focus-within:block">
+            <div
+              className={cn(
+                "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl",
+                openDropdown === "__apps__" ? "block" : "hidden"
+              )}
+            >
               <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {productColumns.map((column, columnIndex) => (
                   <div key={columnIndex} className="space-y-2">
@@ -117,7 +155,74 @@ export function PrimaryNavbar({
           </div>
 
           {navLinks.map((link) => {
-            if (link.external) {
+            if (link.children && link.children.length > 0) {
+              const isOpen = openDropdown === link.label;
+              return (
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => handleOpenDropdown(link.label)}
+                  onMouseLeave={handleCloseDropdown}
+                  onFocus={() => handleOpenDropdown(link.label)}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                      handleCloseDropdown();
+                    }
+                  }}
+                >
+                  <button
+                    className="flex items-center gap-1 font-medium transition-colors hover:text-foreground focus:text-foreground focus:outline-none"
+                    type="button"
+                    aria-expanded={isOpen}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={cn(
+                        "h-3.5 w-3.5 transition-transform",
+                        isOpen ? "rotate-180" : undefined
+                      )}
+                    />
+                  </button>
+                  <div
+                    className={cn(
+                      "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-56 rounded-md border border-border bg-card p-3 shadow-xl",
+                      isOpen ? "block" : "hidden"
+                    )}
+                  >
+                    <ul className="space-y-1 text-left text-sm">
+                      {link.children.map((child) => (
+                        <li key={child.href}>
+                          <a
+                            href={child.href}
+                            className="flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition hover:bg-muted/40 hover:text-foreground"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {child.label}
+                            <svg
+                              className="h-3.5 w-3.5 text-muted-foreground"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M5 12h14M12 5l7 7-7 7"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              );
+            }
+
+            if (link.external && link.href) {
               return (
                 <a
                   key={link.label}
@@ -131,7 +236,7 @@ export function PrimaryNavbar({
               );
             }
 
-            return (
+            return link.href ? (
               <NextLink
                 key={link.label}
                 href={{ pathname: link.href } as any}
@@ -139,6 +244,10 @@ export function PrimaryNavbar({
               >
                 {link.label}
               </NextLink>
+            ) : (
+              <span key={link.label} className="transition-colors hover:text-foreground">
+                {link.label}
+              </span>
             );
           })}
 
@@ -174,7 +283,30 @@ export function PrimaryNavbar({
         </div>
         <div className="mt-3 flex flex-col gap-2 border-t border-border/60 pt-3">
           {navLinks.map((link) => {
-            if (link.external) {
+            if (link.children && link.children.length > 0) {
+              return (
+                <details key={`mobile-${link.label}`}>
+                  <summary className="cursor-pointer list-none font-medium text-foreground">
+                    {link.label}
+                  </summary>
+                  <div className="mt-2 flex flex-col gap-2 pl-2">
+                    {link.children.map((child) => (
+                      <a
+                        key={`mobile-${child.href}`}
+                        href={child.href}
+                        className="text-sm text-muted-foreground transition hover:text-foreground"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                </details>
+              );
+            }
+
+            if (link.external && link.href) {
               return (
                 <a
                   key={`mobile-${link.label}`}
@@ -188,7 +320,7 @@ export function PrimaryNavbar({
               );
             }
 
-            return (
+            return link.href ? (
               <NextLink
                 key={`mobile-${link.label}`}
                 href={{ pathname: link.href } as any}
@@ -196,6 +328,10 @@ export function PrimaryNavbar({
               >
                 {link.label}
               </NextLink>
+            ) : (
+              <span key={`mobile-${link.label}`} className="text-muted-foreground">
+                {link.label}
+              </span>
             );
           })}
           {showCta && ctaHref && (
