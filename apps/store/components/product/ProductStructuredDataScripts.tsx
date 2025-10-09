@@ -20,6 +20,16 @@ export interface ProductStructuredDataScriptsProps {
 
 export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
   const homeProps = productToHomeTemplate(product, posts);
+  const normalizedStoreUrl = (() => {
+    if (siteConfig?.site?.domain) {
+      const trimmed = siteConfig.site.domain.trim().replace(/\/$/, "");
+      return trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+    }
+    return "https://apps.serp.co";
+  })();
+  const productPath = product.slug?.replace(/^\/+/, "") ?? "";
+  const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;
+  const productId = `${productUrl}#product`;
   const productSchema = generateProductSchemaLD({
     product: {
       ...product,
@@ -33,8 +43,9 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         text: review.review,
       })),
     } as any,
-    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://apps.serp.co/${product.slug}`,
-    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co",
+    url: productUrl,
+    storeUrl: normalizedStoreUrl,
+    productId,
     currency: "USD",
     preRelease: product.pre_release ?? false,
     expectedLaunchDate: undefined,
@@ -45,7 +56,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       { name: "Home", url: "/" },
       { name: product.name },
     ],
-    storeUrl: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co",
+    storeUrl: normalizedStoreUrl,
   });
 
   const softwareAppSchema = generateWebApplicationSchema({
@@ -101,13 +112,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         }
       : null;
 
-  const baseUrl = siteConfig?.site?.domain
-    ? siteConfig.site.domain.startsWith('http')
-      ? siteConfig.site.domain.replace(/\/$/, '')
-      : `https://${siteConfig.site.domain.replace(/\/$/, '')}`
-    : typeof window !== 'undefined'
-      ? window.location.origin
-      : 'https://apps.serp.co';
+  const baseUrl = normalizedStoreUrl;
 
   const videoObjects = videoEntries ?? [];
   const supportedRegions = Array.isArray((product as any).supported_regions)
@@ -116,6 +121,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const primaryRegion = supportedRegions[0] ?? 'Worldwide';
 
   const videoScripts = videoObjects.map((entry) => {
+    const watchUrl = `${baseUrl}${entry.watchPath}`;
     const thumbnailUrl = entry.thumbnailUrl
       ? [entry.thumbnailUrl]
       : images && images.length > 0
@@ -132,12 +138,18 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       duration: entry.duration,
       contentUrl: entry.url,
       embedUrl: entry.embedUrl,
-      url: `${baseUrl}${entry.watchPath}`,
-      mainEntityOfPage: `${baseUrl}${entry.watchPath}`,
+      url: watchUrl,
+      mainEntityOfPage: watchUrl,
       inLanguage: 'en-US',
       isFamilyFriendly: true,
       requiresSubscription: false,
-      sameAs: [entry.url, `${baseUrl}/${product.slug}`].filter(Boolean),
+      sameAs: Array.from(
+        new Set(
+          [entry.url, productUrl].filter(
+            (value): value is string => typeof value === 'string' && value.length > 0,
+          ),
+        ),
+      ),
       regionsAllowed: supportedRegions.length ? supportedRegions : [primaryRegion],
       contentLocation: {
         '@type': 'Place',
@@ -151,9 +163,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         },
       },
       isPartOf: {
-        '@type': 'Product',
-        name: product.name,
-        url: `${baseUrl}/${product.slug}`,
+        '@id': productId,
       },
       offers: product.purchase_url
         ? {

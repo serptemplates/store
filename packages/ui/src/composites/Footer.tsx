@@ -10,7 +10,6 @@ export type FooterProps = {
 
 const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
   { label: "Videos", href: "/videos" },
-  { label: "Privacy Policy", href: "/privacy" },
   {
     label: "Terms of Service",
     href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
@@ -22,7 +21,6 @@ const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
     external: true,
   },
   { label: "DMCA", href: "/dmca" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export function Footer({
