@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
@@ -44,14 +44,27 @@ export function PrimaryNavbar({
   const ctaIsExternal = ctaHref ? /^https?:/i.test(ctaHref) : false;
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }, []);
 
   const handleOpenDropdown = useCallback((label: string) => {
+    clearCloseTimer();
     setOpenDropdown(label);
-  }, []);
+  }, [clearCloseTimer]);
 
   const handleCloseDropdown = useCallback(() => {
-    setOpenDropdown(null);
-  }, []);
+    clearCloseTimer();
+    closeTimer.current = setTimeout(() => {
+      setOpenDropdown(null);
+      closeTimer.current = null;
+    }, 150);
+  }, [clearCloseTimer]);
 
   const productColumns = useMemo(() => {
     const columnCount = 4;
@@ -112,7 +125,11 @@ export function PrimaryNavbar({
             onMouseLeave={handleCloseDropdown}
             onFocus={() => handleOpenDropdown("__apps__")}
             onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+              const nextTarget = event.relatedTarget as Node | null;
+              if (!nextTarget) {
+                return;
+              }
+              if (!event.currentTarget.contains(nextTarget)) {
                 handleCloseDropdown();
               }
             }}
@@ -135,6 +152,8 @@ export function PrimaryNavbar({
                 "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl",
                 openDropdown === "__apps__" ? "block" : "hidden"
               )}
+              onMouseEnter={clearCloseTimer}
+              onMouseLeave={handleCloseDropdown}
             >
               <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {productColumns.map((column, columnIndex) => (
@@ -165,7 +184,11 @@ export function PrimaryNavbar({
                   onMouseLeave={handleCloseDropdown}
                   onFocus={() => handleOpenDropdown(link.label)}
                   onBlur={(event) => {
-                    if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                    const nextTarget = event.relatedTarget as Node | null;
+                    if (!nextTarget) {
+                      return;
+                    }
+                    if (!event.currentTarget.contains(nextTarget)) {
                       handleCloseDropdown();
                     }
                   }}
@@ -188,6 +211,8 @@ export function PrimaryNavbar({
                       "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-56 rounded-md border border-border bg-card p-3 shadow-xl",
                       isOpen ? "block" : "hidden"
                     )}
+                    onMouseEnter={clearCloseTimer}
+                    onMouseLeave={handleCloseDropdown}
                   >
                     <ul className="space-y-1 text-left text-sm">
                       {link.children.map((child) => (

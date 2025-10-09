@@ -6,12 +6,11 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "clean:next": "node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(_){}\"",
-    "prebuild": "pnpm run clean:next",
-    "pretypecheck": "pnpm run clean:next",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "typecheck:clean": "pnpm run clean:next && pnpm run typecheck",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:smoke": "playwright test --project=\"Desktop Chrome\"",
