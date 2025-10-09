@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
+import { useAnalytics } from "@/components/analytics/gtm";
 
 export interface ProductInfoSectionProps {
   title: string;
@@ -32,8 +33,24 @@ export function ProductInfoSection({
   githubUrl,
 }: ProductInfoSectionProps) {
   const router = useRouter();
+  const { trackClickBuyButton } = useAnalytics();
 
   const handleCheckout = () => {
+    // Extract numeric price
+    let numericPrice = 0;
+    if (displayPrice) {
+      const priceStr = displayPrice.replace(/[^0-9.]/g, '');
+      numericPrice = parseFloat(priceStr) || 0;
+    }
+
+    // Track the buy button click
+    trackClickBuyButton({
+      productId: productSlug || 'unknown',
+      productName: title,
+      checkoutType: 'stripe',
+      price: numericPrice,
+    });
+
     const params = new URLSearchParams();
     params.set("product", productSlug || "");
     if (affiliateId) {

@@ -20,6 +20,7 @@ import type { ProductVideoEntry } from "@/lib/products/video"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
 import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
+import { useAnalytics } from "@/components/analytics/gtm"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -34,6 +35,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
+  const { trackClickBuyButton, trackOutboundClick } = useAnalytics()
   const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
   const buyButtonDestination = product.buy_button_destination ?? undefined
   const useExternalBuyDestination = Boolean(buyButtonDestination)
@@ -130,12 +132,34 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [])
 
   const handleStickyCtaClick = useCallback(() => {
+    // Extract numeric price
+    let numericPrice = 0;
+    if (homeProps.pricing?.price) {
+      const priceStr = homeProps.pricing.price.replace(/[^0-9.]/g, '');
+      numericPrice = parseFloat(priceStr) || 0;
+    }
+
+    // Track the buy button click
+    const checkoutType = useExternalBuyDestination ? 'ghl' : 'stripe';
+    trackClickBuyButton({
+      productId: product.slug,
+      productName: product.name,
+      checkoutType,
+      price: numericPrice,
+    });
+
+    // Track outbound click if it's an external destination
     if (useExternalBuyDestination) {
+      trackOutboundClick({
+        linkUrl: resolvedPricingHref,
+        productName: product.name,
+        productId: product.slug,
+      });
       window.open(resolvedPricingHref, "_blank", "noopener,noreferrer")
     } else {
       window.location.href = checkoutHref
     }
-  }, [useExternalBuyDestination, resolvedPricingHref, checkoutHref])
+  }, [useExternalBuyDestination, resolvedPricingHref, checkoutHref, product.slug, product.name, homeProps.pricing, trackClickBuyButton, trackOutboundClick])
 
   const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://store.serp.co"
   const breadcrumbSchema = {
@@ -209,6 +233,21 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: useExternalBuyDestination
                   ? undefined
                   : () => {
+                      // Extract numeric price
+                      let numericPrice = 0;
+                      if (homeProps.pricing?.price) {
+                        const priceStr = homeProps.pricing.price.replace(/[^0-9.]/g, '');
+                        numericPrice = parseFloat(priceStr) || 0;
+                      }
+
+                      // Track the buy button click
+                      trackClickBuyButton({
+                        productId: product.slug,
+                        productName: product.name,
+                        checkoutType: 'stripe',
+                        price: numericPrice,
+                      });
+
                       window.location.href = checkoutHref
                     },
                 ctaLoading: false,

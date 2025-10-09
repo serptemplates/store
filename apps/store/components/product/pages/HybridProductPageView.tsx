@@ -24,6 +24,7 @@ import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
+import { useAnalytics } from "@/components/analytics/gtm"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -37,6 +38,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const router = useRouter()
+  const { trackClickBuyButton } = useAnalytics()
 
   const homeProps = productToHomeTemplate(product, posts)
 
@@ -65,9 +67,24 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const { affiliateId } = useAffiliateTracking()
 
   const handleCheckout = useCallback(() => {
+    // Extract numeric price
+    let numericPrice = 0;
+    if (price?.price) {
+      const priceStr = price.price.replace(/[^0-9.]/g, '');
+      numericPrice = parseFloat(priceStr) || 0;
+    }
+
+    // Track the buy button click
+    trackClickBuyButton({
+      productId: product.slug,
+      productName: product.name,
+      checkoutType: 'stripe',
+      price: numericPrice,
+    });
+
     const checkoutUrl = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`
     router.push(checkoutUrl as any)
-  }, [product.slug, affiliateId, router])
+  }, [product.slug, product.name, affiliateId, router, price, trackClickBuyButton])
 
   useEffect(() => {
     const handleScroll = () => {
