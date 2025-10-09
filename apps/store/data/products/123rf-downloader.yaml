@@ -18,57 +18,63 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/123rf-downloader/
 github_repo_url: https://github.com/serpapps/123rf-downloader
 github_repo_tags: []
 features:
-  - Download royalty-free stock images and vectors
-  - Batch processing for creative project collections
-  - Support for various image formats and resolutions
-  - Auto metadata extraction and keyword tagging
-  - Organize by project/usage rights
-  - Resume downloads with recovery
-  - Cross-platform support
-  - image viewer
-  - Design workflow CLI
-  - Integration with creative software applications
-  - Export image data/license information
-  - Search capabilities across stock image libraries
-  - Local-only storage for privacy
-  - Regular compatibility updates
-  - High-res downloads
-  - Bandwidth management for large image collections
-  - Backup & sync
-  - Smart categorization
-  - License compliance tracking and management
-  - Professional workflow integration features
+- Download royalty-free stock images and vectors
+- Batch processing for creative project collections
+- Support for various image formats and resolutions
+- Auto metadata extraction and keyword tagging
+- Organize by project/usage rights
+- Resume downloads with recovery
+- Cross-platform support
+- image viewer
+- Design workflow CLI
+- Integration with creative software applications
+- Export image data/license information
+- Search capabilities across stock image libraries
+- Local-only storage for privacy
+- Regular compatibility updates
+- High-res downloads
+- Bandwidth management for large image collections
+- Backup & sync
+- Smart categorization
+- License compliance tracking and management
+- Professional workflow integration features
 description: Download videos, images, and content from 123rf with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123rf-downloader.jpg
-    alt: 123rf Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123rf-downloader.jpg
+  alt: 123rf Downloader website preview
 faqs:
-  - question: How do I download images from 123rf?
-    answer: 'To download from 123rf: 1) Create an account and choose a subscription plan, 2) Search for desired images, 3) Select image size and license type, 4) Download through the official platform. Always use legitimate methods and respect licensing terms.'
-  - question: Are there free alternatives to downloading from 123rf?
-    answer: Yes, there are free stock photo sites like Unsplash, Pexels, and Pixabay that offer high-quality images. However, 123rf may offer unique content and commercial licenses. Always check licensing requirements for your intended use.
-  - question: What image formats does 123rf provide?
-    answer: 123rf typically provides images in JPEG and PNG formats, with some platforms offering additional formats like SVG, EPS, or TIFF. Resolution options usually range from web-optimized sizes to high-resolution print quality.
-  - question: Can I use 123rf images for commercial purposes?
-    answer: Commercial use of 123rf images depends on the specific license you purchase. Standard licenses typically allow commercial use with some restrictions, while extended licenses offer broader usage rights. Always read the license agreement carefully.
-  - question: What are the licensing requirements for 123rf images?
-    answer: '123rf images come with specific licensing terms that may require: 1) Attribution to the creator, 2) Restrictions on redistribution, 3) Limits on usage scope, 4) Prohibition of resale. Always comply with the license terms to avoid legal issues.'
+- question: How do I use the 123rf downloader?
+  answer: Install the browser extension, navigate to 123rf, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from 123rf, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all 123rf content?
+  answer: The downloader works with most publicly accessible content on 123rf. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
 status: draft
 categories:
-  - Downloader
-  - Creative Assets
-  - Image Hosting
+- Downloader
+- Creative Assets
+- Image Hosting
 keywords:
-  - 123rf downloader
+- 123rf downloader
 pricing:
   label: One-time payment
   price: $17.00
@@ -81,26 +87,26 @@ pricing:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-123rf-downloader
+  - purchase-123rf-downloader
 pre_release: true
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with 123rf Downloader
-    rating: 5.0
-    date: '2025-02-12'
-    review: I manage content libraries and 123rf Downloader lets me pull everything from 123rf in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid 123rf downloads
-    rating: 4.9
-    date: '2025-03-03'
-    review: Downloading from 123rf used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing 123rf content
-    rating: 4.8
-    date: '2025-01-28'
-    review: We archive 123rf assets for clients and the batch features in 123rf Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with 123rf Downloader
+  rating: 5.0
+  date: '2025-02-12'
+  review: I manage content libraries and 123rf Downloader lets me pull everything from 123rf in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid 123rf downloads
+  rating: 4.9
+  date: '2025-03-03'
+  review: Downloading from 123rf used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing 123rf content
+  rating: 4.8
+  date: '2025-01-28'
+  review: We archive 123rf assets for clients and the download in 123rf Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
-  - Worldwide
+- Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
