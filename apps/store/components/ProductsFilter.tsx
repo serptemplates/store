@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 import { PRIMARY_CATEGORIES } from "@/lib/products/category-constants";
-
 import { ProductSearchBar, type ProductCategory } from "./ProductSearchBar";
 
 export type ProductListItem = {
@@ -26,6 +25,97 @@ const PRIMARY_CATEGORY_ENTRIES = PRIMARY_CATEGORIES.map((name) => ({
 const PRIMARY_CATEGORY_ORDER = new Map(
   PRIMARY_CATEGORY_ENTRIES.map((entry, index) => [entry.id, index] as const),
 );
+
+const BASE_BADGE_CLASSES =
+  "w-fit rounded-full px-3 py-1 text-xs font-medium transition-colors";
+
+type BadgePalette = {
+  background: string;
+  text: string;
+  hoverBackground?: string;
+  hoverText?: string;
+};
+
+const CATEGORY_BADGE_PALETTE: Record<string, BadgePalette> = {
+  downloader: {
+    background: "bg-[#e5f4ff]",
+    text: "text-[#0d4d8f]",
+    hoverBackground: "group-hover:bg-[#d5ecff]",
+    hoverText: "group-hover:text-[#0a3c70]",
+  },
+  "artificial intelligence": {
+    background: "bg-[#ede7ff]",
+    text: "text-[#5530c1]",
+    hoverBackground: "group-hover:bg-[#ded2ff]",
+    hoverText: "group-hover:text-[#44249f]",
+  },
+  adult: {
+    background: "bg-[#ffe8ed]",
+    text: "text-[#9b1c31]",
+    hoverBackground: "group-hover:bg-[#ffd3dc]",
+    hoverText: "group-hover:text-[#851326]",
+  },
+  "course platforms": {
+    background: "bg-[#f1f5f9]",
+    text: "text-[#1e293b]",
+    hoverBackground: "group-hover:bg-[#e2e8f0]",
+    hoverText: "group-hover:text-[#111827]",
+  },
+  livestream: {
+    background: "bg-[#fff1d6]",
+    text: "text-[#a15c00]",
+    hoverBackground: "group-hover:bg-[#ffe3ad]",
+    hoverText: "group-hover:text-[#7b4600]",
+  },
+  "creative assets": {
+    background: "bg-[#fbe7ff]",
+    text: "text-[#7d2a8f]",
+    hoverBackground: "group-hover:bg-[#f4d2ff]",
+    hoverText: "group-hover:text-[#662175]",
+  },
+  "image hosting": {
+    background: "bg-[#e5fbf2]",
+    text: "text-[#0f766e]",
+    hoverBackground: "group-hover:bg-[#ccf4e3]",
+    hoverText: "group-hover:text-[#0b5c56]",
+  },
+  "movies & tv": {
+    background: "bg-[#e9edff]",
+    text: "text-[#3546d3]",
+    hoverBackground: "group-hover:bg-[#d4dbff]",
+    hoverText: "group-hover:text-[#2b3bb1]",
+  },
+  "social media": {
+    background: "bg-[#dbe8ff]",
+    text: "text-[#1a46ad]",
+    hoverBackground: "group-hover:bg-[#c5d8ff]",
+    hoverText: "group-hover:text-[#15398d]",
+  },
+};
+
+const DEFAULT_BADGE_PALETTE: BadgePalette = {
+  background: "bg-[#f6f8fa]",
+  text: "text-[#2f363d]",
+  hoverBackground: "group-hover:bg-[#eaeef2]",
+  hoverText: "group-hover:text-[#1f2328]",
+};
+
+function getBadgePalette(category?: string): BadgePalette {
+  return CATEGORY_BADGE_PALETTE[category?.toLowerCase() ?? ""] ?? DEFAULT_BADGE_PALETTE;
+}
+
+function getCategoryBadgeClasses(category?: string) {
+  const palette = getBadgePalette(category);
+  return [
+    BASE_BADGE_CLASSES,
+    palette.background,
+    palette.text,
+    palette.hoverBackground ?? "",
+    palette.hoverText ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
 
 export function ProductsFilter({ products }: { products: ProductListItem[] }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,19 +146,21 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
     });
 
     const allEntry = counts.get("all");
-    const orderedPrimary = PRIMARY_CATEGORY_ENTRIES.map(({ id }) => counts.get(id))
-      .filter((entry): entry is ProductCategory => Boolean(entry && entry.count > 0));
+
+    const primary = PRIMARY_CATEGORY_ENTRIES.map(({ id }) => counts.get(id))
+      .filter((entry): entry is ProductCategory => Boolean(entry && entry.count > 0))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
     const additional = Array.from(counts.values())
       .filter(
         (entry) =>
           entry.id !== "all" && !PRIMARY_CATEGORY_ORDER.has(entry.id) && entry.count > 0,
       )
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
     return [
       ...(allEntry ? [allEntry] : []),
-      ...orderedPrimary,
+      ...primary,
       ...additional,
     ];
   }, [products]);
@@ -137,38 +229,43 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filtered.map((product) => (
-          <Link
-            key={product.slug}
-            href={`/${product.slug}`}
-            className={`group relative flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border ${
-              product.pre_release || product.new_release || product.popular ? "overflow-hidden" : ""
-            }`}
-          >
-            {product.pre_release && (
-              <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-purple-500 to-purple-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
-                Pre Release
-              </div>
-            )}
-            {product.new_release && !product.pre_release && (
-              <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-emerald-500 to-teal-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
-                New Release
-              </div>
-            )}
-            {product.popular && !product.pre_release && !product.new_release && (
-              <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
-                Most Popular
-              </div>
-            )}
-            <span className="w-fit rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground transition group-hover:bg-primary/10 group-hover:text-foreground">
-              {product.categories[0] ?? "App"}
-            </span>
-            <h3 className="text-sm font-semibold text-foreground">{product.name}</h3>
-            <span className="mt-auto text-sm font-medium text-primary transition group-hover:underline">
-              {product.pre_release ? "Learn More →" : "View →"}
-            </span>
-          </Link>
-        ))}
+        {filtered.map((product) => {
+          const primaryCategory = product.categories[0];
+          const badgeClasses = getCategoryBadgeClasses(primaryCategory);
+          const showNewReleaseBadge = product.new_release && !product.pre_release;
+          const showPopularBadge = product.popular && !product.pre_release && !showNewReleaseBadge;
+
+          return (
+            <Link
+              key={product.slug}
+              href={`/${product.slug}`}
+              className={`group relative flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border ${
+                product.pre_release || showNewReleaseBadge || showPopularBadge ? "overflow-hidden" : ""
+              }`}
+            >
+              {product.pre_release && (
+                <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-purple-500 to-purple-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
+                  Pre Release
+                </div>
+              )}
+              {showNewReleaseBadge && (
+                <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-emerald-500 to-teal-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
+                  New Release
+                </div>
+              )}
+              {showPopularBadge && (
+                <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
+                  Most Popular
+                </div>
+              )}
+              <span className={badgeClasses}>{primaryCategory ?? "App"}</span>
+              <h3 className="text-sm font-semibold text-foreground">{product.name}</h3>
+              <span className="mt-auto text-sm font-medium text-primary transition group-hover:underline">
+                {product.pre_release ? "Learn More →" : "View →"}
+              </span>
+            </Link>
+          );
+        })}
 
         {filtered.length === 0 && (
           <div className="rounded-2xl border border-dashed border-border/60 bg-muted/30 p-10 text-center text-sm text-muted-foreground">

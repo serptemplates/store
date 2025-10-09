@@ -4,8 +4,7 @@ import { getSiteConfig } from "@/lib/site-config";
 import { DelayedGTM } from "@/components/DelayedGTM";
 
 const STORE_TITLE = "SERP Apps";
-const STORE_DESCRIPTION =
-  "Browse the full SERP Apps catalog of downloaders, automations, and growth tools.";
+const STORE_DESCRIPTION = "Browse the full catalog of SERP products.";
 
 export const metadata: Metadata = {
   title: STORE_TITLE,
