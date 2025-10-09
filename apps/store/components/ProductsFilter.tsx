@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 
-import { PRIMARY_CATEGORIES } from "@/lib/category-constants";
+import { PRIMARY_CATEGORIES } from "@/lib/products/category-constants";
 
 import { ProductSearchBar, type ProductCategory } from "./ProductSearchBar";
 

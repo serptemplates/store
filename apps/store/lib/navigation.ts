@@ -1,14 +1,21 @@
 import type { PrimaryNavbarProps, PrimaryNavLink, PrimaryNavProductLink } from "@/components/navigation/PrimaryNavbar";
-import { getAllProducts } from "@/lib/product";
-import type { ProductData } from "@/lib/product-schema";
+import { getAllProducts } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 import { getSiteConfig } from "@/lib/site-config";
 import type { SiteConfig } from "@/lib/site-config";
 
 const NAV_LINKS: PrimaryNavLink[] = [
   { label: "Videos", href: "/videos" },
-  { label: "Articles", href: "/blog" },
+  { label: "Guides", href: "/blog" },
   { label: "Github", href: "https://github.com/serpapps", external: true },
-  { label: "Help", href: "https://serp.ly/@serp/support", external: true },
+  {
+    label: "Support",
+    children: [
+      { label: "Help Center", href: "https://serpcompany.tawk.help/", external: true },
+      { label: "Tickets", href: "https://serpcompany.tawk.help/#tickets", external: true },
+      { label: "Chat Support", href: "https://tawk.to/serpcompany", external: true },
+    ],
+  },
   { label: "Account", href: "/account" },
 ];
 

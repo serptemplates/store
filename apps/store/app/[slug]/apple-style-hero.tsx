@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { ProductData } from "@/lib/product-schema";
+import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
-import { getBrandLogoPath } from "@/lib/brand-logos";
+import { getBrandLogoPath } from "@/lib/products/brand-logos";
 
 interface AppleStyleHeroProps {
   product: ProductData;

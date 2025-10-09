@@ -12,7 +12,7 @@ import {
   getOptionalStripeWebhookSecret,
   getRuntimeEnvironment,
   getStripeMode,
-} from "@/lib/stripe-environment";
+} from "@/lib/payments/stripe-environment";
 
 interface EnvConfig {
   name: string;

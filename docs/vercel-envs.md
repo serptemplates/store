@@ -32,6 +32,9 @@ GHL_API_BASE_URL=https://services.leadconnectorhq.com
 GHL_PAT_LOCATION=pit_xxx_replace_me
 GHL_LOCATION_ID=XM0gbS5U3qNXtUksyJ6o
 GHL_AFFILIATE_FIELD_ID=contact_field_id_for_affiliate_tracking
+# Optional overrides (auto-detects `contact.purchase_metadata` / `contact.license_keys_v2` when left unset)
+GHL_CUSTOM_FIELD_PURCHASE_METADATA=contact_field_id_for_purchase_metadata
+GHL_CUSTOM_FIELD_LICENSE_KEYS_V2=contact_field_id_for_license_keys_v2
 SLACK_ALERT_WEBHOOK_URL=https://hooks.slack.com/services/xxx/yyy/zzz
 MONITORING_TOKEN=choose_a_random_secret
 CHECKOUT_MONITOR_STALE_SESSION_MINUTES=15

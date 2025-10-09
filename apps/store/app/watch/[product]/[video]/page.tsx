@@ -4,9 +4,9 @@ import Link from "next/link";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 
-import { getAllProducts, getProductData, getProductSlugs } from "@/lib/product";
+import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
-import { getProductVideoEntries } from "@/lib/video";
+import { getProductVideoEntries } from "@/lib/products/video";
 import { getSiteBaseUrl, toAbsoluteUrl } from "@/lib/urls";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
@@ -303,7 +303,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
         </aside>
       </div>
       </main>
-      <FooterComposite site={{ name: navSiteName }} />
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </>
   );
 }

@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 import type Stripe from "stripe";
 
-import { getOfferConfig } from "@/lib/offer-config";
-import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/stripe";
-import { getOptionalStripePaymentConfigId } from "@/lib/stripe-environment";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout-store";
+import { getOfferConfig } from "@/lib/products/offer-config";
+import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/payments/stripe";
+import { getOptionalStripePaymentConfigId } from "@/lib/payments/stripe-environment";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
 import { checkoutSessionSchema, sanitizeInput } from "@/lib/validation/checkout";
 import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
 import logger from "@/lib/logger";
-import { validateCoupon as validateCouponCode } from "@/lib/coupons";
+import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 
 function buildErrorResponse(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
   // If no Stripe configuration, use simple checkout
   if (!offer) {
     try {
-      const { createSimpleCheckout } = await import('@/lib/simple-checkout');
+      const { createSimpleCheckout } = await import('@/lib/checkout/simple-checkout');
       const session = await createSimpleCheckout({
         offerId: parsedBody.offerId,
         quantity: parsedBody.quantity,

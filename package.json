@@ -2,11 +2,6 @@
   "name": "emd-monorepo",
   "packageManager": "pnpm@9.11.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "sites/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "pnpm --filter @apps/store dev",
     "build": "pnpm -r --parallel build",
@@ -23,7 +18,8 @@
     "test:perf": "node scripts/lighthouse-budget.mjs",
     "sync:shopify:products": "node scripts/sync-shopify-products.mjs",
     "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
-    "validate:products": "pnpm --filter @apps/store validate:products"
+    "validate:products": "pnpm --filter @apps/store validate:products",
+    "update:video-metadata": "pnpm --filter @apps/store update:video-metadata"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

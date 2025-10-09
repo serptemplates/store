@@ -4,11 +4,11 @@ import Script from "next/script";
 
 import { generateProductSchemaLD, generateBreadcrumbSchema } from "@/schema/product-schema-ld";
 import { generateWebApplicationSchema } from "@/schema/software-app-schema";
-import type { ProductData } from "@/lib/product-schema";
+import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
-import { productToHomeTemplate } from "@/lib/product-adapter";
+import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import type { BlogPostMeta } from "@/lib/blog";
-import type { ProductVideoEntry } from "@/lib/video";
+import type { ProductVideoEntry } from "@/lib/products/video";
 
 export interface ProductStructuredDataScriptsProps {
   product: ProductData;

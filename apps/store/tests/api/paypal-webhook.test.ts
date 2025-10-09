@@ -1,16 +1,16 @@
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { OfferConfig } from "@/lib/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout-store";
+import type { OfferConfig } from "@/lib/products/offer-config";
+import type { CheckoutSessionRecord } from "@/lib/checkout/store";
 
 process.env.PAYPAL_WEBHOOK_ID = process.env.PAYPAL_WEBHOOK_ID ?? "webhook_test";
 
-vi.mock("@/lib/paypal", () => ({
+vi.mock("@/lib/payments/paypal", () => ({
   verifyPayPalWebhook: vi.fn(),
   getPayPalOrder: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   findCheckoutSessionByStripeSessionId: vi.fn(),
   updateCheckoutSessionStatus: vi.fn(),
   upsertOrder: vi.fn(),
@@ -20,7 +20,7 @@ vi.mock("@/lib/ghl-client", () => ({
   syncOrderWithGhl: vi.fn(),
 }));
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
 }));
 
@@ -28,14 +28,14 @@ vi.mock("@/lib/webhook-logs", () => ({
   recordWebhookLog: vi.fn(),
 }));
 
-import { verifyPayPalWebhook, getPayPalOrder } from "@/lib/paypal";
+import { verifyPayPalWebhook, getPayPalOrder } from "@/lib/payments/paypal";
 import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout-store";
+} from "@/lib/checkout/store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
-import { getOfferConfig } from "@/lib/offer-config";
+import { getOfferConfig } from "@/lib/products/offer-config";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 
 const verifyPayPalWebhookMock = vi.mocked(verifyPayPalWebhook);
@@ -92,7 +92,10 @@ describe("POST /api/paypal/webhook", () => {
     offerId: "demo-offer",
     landerId: "demo-offer",
     customerEmail: "buyer@example.com",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     status: "pending",
     source: "paypal",
     createdAt: new Date(),
@@ -105,7 +108,10 @@ describe("POST /api/paypal/webhook", () => {
     successUrl: "https://example.com/success",
     cancelUrl: "https://example.com/cancel",
     mode: "payment",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     productName: "Demo Offer",
     ghl: {},
   };
@@ -157,7 +163,12 @@ describe("POST /api/paypal/webhook", () => {
 
     expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
       offerConfigFixture.ghl,
-      expect.objectContaining({ offerId: "demo-offer" }),
+      expect.objectContaining({
+        offerId: "demo-offer",
+        provider: "paypal",
+        productPageUrl: "https://store.example.com/products/demo-offer",
+        purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      }),
     );
   });
 

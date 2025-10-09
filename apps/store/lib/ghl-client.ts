@@ -6,6 +6,10 @@ const GHL_BASE_URL = (process.env.GHL_API_BASE_URL ?? "https://services.leadconn
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 const GHL_AUTH_TOKEN = process.env.GHL_PAT_LOCATION ?? process.env.GHL_API_TOKEN;
 const GHL_API_VERSION = process.env.GHL_API_VERSION ?? "2021-07-28";
+const GHL_CUSTOM_FIELD_PURCHASE_METADATA = process.env.GHL_CUSTOM_FIELD_PURCHASE_METADATA;
+const GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 = process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2;
+const DEFAULT_PURCHASE_METADATA_FIELD_KEY = "contact.purchase_metadata";
+const DEFAULT_LICENSE_KEYS_FIELD_KEY = "contact.license_keys_v2";
 
 export const RETRYABLE_STATUS_CODES = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
 const MAX_ATTEMPTS = 3;
@@ -231,10 +235,132 @@ export type GhlSyncContext = {
   currency?: string | null;
   landerId?: string | null;
   metadata?: Record<string, string>;
+  productPageUrl?: string | null;
+  purchaseUrl?: string | null;
+  provider?: string | null;
   licenseKey?: string | null | undefined;
   licenseId?: string | null | undefined;
   licenseAction?: string | null | undefined;
+  licenseEntitlements?: string[] | null | undefined;
+  licenseTier?: string | null | undefined;
+  licenseFeatures?: Record<string, unknown> | null | undefined;
 };
+
+type ContactCustomFieldDescriptor = {
+  id: string;
+  fieldKey?: string | null;
+};
+
+let contactCustomFieldCache: Map<string, string> | null = null;
+let contactCustomFieldFetchPromise: Promise<Map<string, string>> | null = null;
+
+async function fetchContactCustomFieldCache(): Promise<Map<string, string>> {
+  if (!GHL_AUTH_TOKEN || !GHL_LOCATION_ID) {
+    return new Map();
+  }
+
+  try {
+    const response = await ghlRequest<{ customFields?: ContactCustomFieldDescriptor[] }>(
+      `/locations/${GHL_LOCATION_ID}/customFields?model=contact`
+    );
+
+    const map = new Map<string, string>();
+    for (const field of response.customFields ?? []) {
+      const fieldKey = field.fieldKey ?? null;
+      if (typeof fieldKey === "string" && fieldKey.length > 0 && field.id) {
+        map.set(fieldKey, field.id);
+      }
+    }
+    return map;
+  } catch (error) {
+    logger.warn("ghl.custom_field_fetch_failed", {
+      fieldType: "contact",
+      locationId: GHL_LOCATION_ID,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return new Map();
+  }
+}
+
+async function getContactCustomFieldIdByKey(fieldKey: string): Promise<string | undefined> {
+  if (!fieldKey || typeof fieldKey !== "string") {
+    return undefined;
+  }
+
+  if (contactCustomFieldCache?.has(fieldKey)) {
+    return contactCustomFieldCache.get(fieldKey);
+  }
+
+  if (!contactCustomFieldFetchPromise) {
+    contactCustomFieldFetchPromise = fetchContactCustomFieldCache().finally(() => {
+      contactCustomFieldFetchPromise = null;
+    });
+  }
+
+  const cache = await contactCustomFieldFetchPromise;
+  contactCustomFieldCache = cache;
+  return cache.get(fieldKey);
+}
+
+async function resolveFieldSpecifier(specifier: string | undefined, fallbackFieldKey?: string): Promise<string | undefined> {
+  if (specifier && specifier.length > 0) {
+    if (specifier.startsWith("contact.")) {
+      const resolved = await getContactCustomFieldIdByKey(specifier);
+      if (resolved) {
+        return resolved;
+      }
+      logger.warn("ghl.custom_field_lookup_unresolved", {
+        fieldKey: specifier,
+        locationId: GHL_LOCATION_ID,
+      });
+      return undefined;
+    }
+    return specifier;
+  }
+
+  if (fallbackFieldKey) {
+    return getContactCustomFieldIdByKey(fallbackFieldKey);
+  }
+
+  return undefined;
+}
+
+async function resolveContactCustomFieldIds(
+  initial?: Record<string, string>,
+): Promise<Record<string, string>> {
+  const resolved: Record<string, string> = {};
+
+  if (initial) {
+    for (const [contextKey, specifier] of Object.entries(initial)) {
+      const fieldId = await resolveFieldSpecifier(specifier);
+      if (fieldId) {
+        resolved[contextKey] = fieldId;
+      }
+    }
+  }
+
+  if (!resolved.purchaseMetadataJson) {
+    const fieldId = await resolveFieldSpecifier(
+      GHL_CUSTOM_FIELD_PURCHASE_METADATA,
+      DEFAULT_PURCHASE_METADATA_FIELD_KEY,
+    );
+    if (fieldId) {
+      resolved.purchaseMetadataJson = fieldId;
+    }
+  }
+
+  if (!resolved.licenseKeysJson) {
+    const fieldId = await resolveFieldSpecifier(
+      GHL_CUSTOM_FIELD_LICENSE_KEYS_V2,
+      DEFAULT_LICENSE_KEYS_FIELD_KEY,
+    );
+    if (fieldId) {
+      resolved.licenseKeysJson = fieldId;
+    }
+  }
+
+  return resolved;
+}
 
 export type SyncOutcome = {
   contactId?: string;
@@ -271,6 +397,148 @@ function renderTemplate(template: string | undefined, context: Record<string, un
   }) || fallback;
 }
 
+function compactObject(input: Record<string, unknown>): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(input)) {
+    if (value === undefined || value === null) {
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        continue;
+      }
+      result[key] = value;
+      continue;
+    }
+
+    if (typeof value === "object") {
+      const nested = compactObject(value as Record<string, unknown>);
+      if (Object.keys(nested).length === 0) {
+        continue;
+      }
+      result[key] = nested;
+      continue;
+    }
+
+    if (typeof value === "string" && value.trim().length === 0) {
+      continue;
+    }
+
+    result[key] = value;
+  }
+
+  return result;
+}
+
+function buildPurchaseMetadata(context: GhlSyncContext): string | undefined {
+  const amountDecimal = typeof context.amountTotal === "number"
+    ? Number((context.amountTotal / 100).toFixed(2))
+    : undefined;
+
+  const productPageUrl = context.productPageUrl
+    ?? context.metadata?.productPageUrl
+    ?? context.metadata?.product_page_url
+    ?? context.metadata?.productPageURL;
+
+  const checkoutUrl = context.purchaseUrl
+    ?? context.metadata?.purchaseUrl
+    ?? context.metadata?.purchase_url
+    ?? context.metadata?.checkoutUrl
+    ?? context.metadata?.checkout_url;
+
+  const metadataPayload = context.metadata && Object.keys(context.metadata).length > 0
+    ? context.metadata
+    : undefined;
+
+  const licenseDetails = context.licenseKey
+    || (context.licenseEntitlements && context.licenseEntitlements.length > 0)
+    || context.licenseId
+    || context.licenseAction
+    ? compactObject({
+        key: context.licenseKey ?? undefined,
+        id: context.licenseId ?? undefined,
+        action: context.licenseAction ?? undefined,
+        entitlements: context.licenseEntitlements ?? undefined,
+        tier: context.licenseTier ?? undefined,
+        features: context.licenseFeatures && Object.keys(context.licenseFeatures).length > 0
+          ? context.licenseFeatures
+          : undefined,
+      })
+    : undefined;
+
+  const payload = compactObject({
+    provider: context.provider ?? undefined,
+    product: compactObject({
+      id: context.offerId,
+      name: context.offerName,
+      pageUrl: productPageUrl ?? undefined,
+      purchaseUrl: checkoutUrl ?? undefined,
+      landerId: context.landerId ?? undefined,
+    }),
+    customer: compactObject({
+      email: context.customerEmail,
+      name: context.customerName ?? undefined,
+      phone: context.customerPhone ?? undefined,
+    }),
+    payment: compactObject({
+      amountCents: typeof context.amountTotal === "number" ? context.amountTotal : undefined,
+      amount: amountDecimal,
+      amountFormatted: context.amountFormatted ?? undefined,
+      currency: context.currency ?? undefined,
+      stripeSessionId: context.stripeSessionId ?? undefined,
+      stripePaymentIntentId: context.stripePaymentIntentId ?? undefined,
+    }),
+    metadata: metadataPayload,
+    license: licenseDetails,
+  });
+
+  if (Object.keys(payload).length === 0) {
+    return undefined;
+  }
+
+  try {
+    return JSON.stringify(payload, null, 2);
+  } catch (error) {
+    logger.error("ghl.purchase_metadata_stringify_failed", {
+      offerId: context.offerId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return undefined;
+  }
+}
+
+function buildLicenseKeysPayload(context: GhlSyncContext): string | undefined {
+  const hasLicenseData = Boolean(
+    context.licenseKey
+      || context.licenseId
+      || context.licenseAction
+      || (context.licenseEntitlements && context.licenseEntitlements.length > 0)
+  );
+
+  if (!hasLicenseData) {
+    return undefined;
+  }
+
+  const payload = compactObject({
+    key: context.licenseKey ?? undefined,
+    id: context.licenseId ?? undefined,
+    action: context.licenseAction ?? undefined,
+    entitlements: context.licenseEntitlements ?? undefined,
+    tier: context.licenseTier ?? undefined,
+  });
+
+  try {
+    return JSON.stringify(payload, null, 2);
+  } catch (error) {
+    logger.error("ghl.license_keys_payload_stringify_failed", {
+      offerId: context.offerId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return undefined;
+  }
+}
+
 export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, context: GhlSyncContext): Promise<SyncOutcome | null> {
   if (!config) {
     logger.debug("ghl.skip_no_config", { offerId: context.offerId });
@@ -298,21 +566,32 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     amountDecimal: context.amountTotal != null ? context.amountTotal / 100 : undefined,
   };
 
-  const contactCustomFields = buildCustomFieldPayload(config.contactCustomFieldIds, {
+  const purchaseMetadataJson = buildPurchaseMetadata(context);
+  const licenseKeysJson = buildLicenseKeysPayload(context);
+
+  const contactFieldContext: Record<string, unknown> = {
     ...baseContext,
-  });
+    purchaseMetadataJson,
+    licenseKeysJson,
+  };
+
+  const resolvedContactCustomFieldIds = await resolveContactCustomFieldIds(config.contactCustomFieldIds);
+
+  const contactCustomFields = buildCustomFieldPayload(resolvedContactCustomFieldIds, contactFieldContext);
 
   const affiliateFieldId = process.env.GHL_AFFILIATE_FIELD_ID;
   if (affiliateFieldId && affiliateIdValue) {
     contactCustomFields.push({ id: affiliateFieldId, value: affiliateIdValue });
   }
 
+  const contactSource = config.source ?? (context.provider === "paypal" ? "PayPal Checkout" : "Stripe Checkout");
+
   const contactResult = await upsertContact({
     email: context.customerEmail,
     firstName,
     lastName,
     phone: context.customerPhone ?? undefined,
-    source: config.source ?? "Stripe Checkout",
+    source: contactSource,
     tags: config.tagIds,
     customFields: contactCustomFields,
   });

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Product, formatPrice } from "@/lib/products-data"
-import { getBrandLogoPath } from "@/lib/brand-logos"
+import { Product, formatPrice } from "@/lib/products/products-data"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 
 interface ProductGridProps {
   products: Product[]

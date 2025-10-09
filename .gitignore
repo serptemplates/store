@@ -69,3 +69,5 @@ screenshots
 test-results
 .playwright-mcp
 playwright-report
+apps/store/playwright-report/
+apps/store/reports/

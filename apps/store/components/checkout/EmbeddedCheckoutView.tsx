@@ -8,7 +8,7 @@ import {
   EmbeddedCheckout
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
-import { requireStripePublishableKey } from "@/lib/stripe-environment"
+import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())

@@ -20,7 +20,7 @@ vi.mock("@/lib/rate-limit", () => ({
   withRateLimit: async (_request: NextRequest, _config: unknown, handler: () => Promise<Response>) => handler(),
 }))
 
-vi.mock("@/lib/stripe", () => ({
+vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: () => ({
     checkout: { sessions: { create: mocks.stripeCheckoutCreate } },
     products: {
@@ -32,20 +32,20 @@ vi.mock("@/lib/stripe", () => ({
   isUsingTestKeys: mocks.isUsingTestKeys,
 }))
 
-vi.mock("@/lib/stripe-environment", () => ({
+vi.mock("@/lib/payments/stripe-environment", () => ({
   getOptionalStripePaymentConfigId: () => undefined,
 }))
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   markStaleCheckoutSessions: mocks.markStaleCheckoutSessions,
   upsertCheckoutSession: mocks.upsertCheckoutSession,
 }))
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: mocks.getOfferConfig,
 }))
 
-vi.mock("@/lib/coupons", () => ({
+vi.mock("@/lib/payments/coupons", () => ({
   validateCoupon: vi.fn(async () => ({ valid: false })),
 }))
 
@@ -58,12 +58,12 @@ vi.mock("@/lib/logger", () => ({
   },
 }))
 
-vi.mock("@/lib/paypal", () => ({
+vi.mock("@/lib/payments/paypal", () => ({
   createPayPalOrder: mocks.createPayPalOrder,
   isPayPalConfigured: mocks.isPayPalConfigured,
 }))
 
-vi.mock("@/lib/product", () => ({
+vi.mock("@/lib/products/product", () => ({
   getProductData: mocks.getProductData,
 }))
 

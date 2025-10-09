@@ -21,7 +21,7 @@ describe("updateOrderMetadata", () => {
     mockEnsureDatabase.mockReset();
     
     // Import after mocks are set up
-    const module = await import("@/lib/checkout-store");
+    const module = await import("@/lib/checkout/store");
     updateOrderMetadata = module.updateOrderMetadata;
   });
 

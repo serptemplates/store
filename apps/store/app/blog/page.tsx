@@ -5,14 +5,14 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar, Clock, FileText, User } from "lucide-react";
 
 import { getAllPosts } from "@/lib/blog";
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();
@@ -32,9 +32,6 @@ export default function BlogIndexPage() {
             <div className="mx-auto max-w-4xl text-center">
               <Badge variant="secondary" className="mb-4 px-3 py-1 text-xs uppercase tracking-wide">Insights</Badge>
               <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">Blog</h1>
-              <p className="text-lg text-muted-foreground">
-                Tips, tutorials, and deep dives on keeping your download workflows compliant and reliable.
-              </p>
             </div>
           </div>
         </section>
@@ -51,18 +48,23 @@ export default function BlogIndexPage() {
                   <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
                     <Card className="h-full overflow-hidden transition-all group-hover:-translate-y-1 group-hover:shadow-lg">
                       {post.image ? (
-                        <div className="relative aspect-video w-full overflow-hidden">
-                          <Image src={post.image} alt={post.title} fill className="object-cover transition duration-300 group-hover:scale-105" />
+                        <div className="relative h-36 w-full overflow-hidden rounded-md bg-muted">
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition duration-300 group-hover:scale-105"
+                          />
                         </div>
                       ) : (
-                        <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+                        <div className="flex h-36 w-full items-center justify-center rounded-md bg-gradient-to-br from-primary/10 to-primary/5">
                           <div className="text-center">
-                            <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                              <FileText className="h-7 w-7 text-primary/60" />
+                            <div className="mx-auto mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                              <FileText className="h-6 w-6 text-primary/60" />
                             </div>
-                            <div className="flex flex-wrap justify-center gap-2">
+                            <div className="flex flex-wrap justify-center gap-2 text-xs text-muted-foreground">
                               {post.tags.slice(0, 2).map((tag) => (
-                                <Badge key={tag} variant="secondary" className="text-xs">
+                                <Badge key={tag} variant="secondary" className="px-2 py-1 text-[11px]">
                                   {tag}
                                 </Badge>
                               ))}
@@ -70,7 +72,7 @@ export default function BlogIndexPage() {
                           </div>
                         </div>
                       )}
-                      <CardHeader>
+                      <CardHeader className="space-y-3">
                         {!post.image && post.tags.length > 0 && (
                           <div className="mb-2 flex flex-wrap gap-2">
                             {post.tags.slice(0, 2).map((tag) => (
@@ -83,7 +85,6 @@ export default function BlogIndexPage() {
                         <CardTitle className="line-clamp-2 text-lg font-semibold">
                           {post.title}
                         </CardTitle>
-                        <CardDescription className="line-clamp-3 text-sm">{post.description}</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
@@ -114,7 +115,7 @@ export default function BlogIndexPage() {
         </section>
       </main>
 
-      <FooterComposite />
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

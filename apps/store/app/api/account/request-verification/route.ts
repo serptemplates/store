@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-import { requestAccountVerification } from "@/lib/account-service";
+import { requestAccountVerification } from "@/lib/account/service";
 
 const schema = z.object({
   email: z.string().email("A valid email is required"),

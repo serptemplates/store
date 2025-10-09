@@ -1,8 +1,7 @@
 "use client";
 
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
-import { Hero, type HeroMediaItem } from "./sections/Hero";
 import { PricingCta, type PricingCtaProps } from "./sections/PricingCta";
 import { FeaturesSection } from "./sections/FeaturesSection";
 // Removed TestimonialsSection - using SocialProofScreenshots instead
@@ -11,6 +10,9 @@ import { PostsSection } from "./sections/PostsSection";
 import { FaqSection, type FAQ } from "./sections/FaqSection";
 import { AboutSection } from "./sections/AboutSection";
 import { teamMembers } from "./data/team";
+import type { HeroMediaItem } from "./sections/Hero";
+import { FaYoutube } from "react-icons/fa6";
+import Hero from "@repo/ui/components/hero";
 
 type UI = {
   Navbar: ComponentType<any>;
@@ -24,7 +26,6 @@ type UI = {
   Badge: ComponentType<any>;
   Input: ComponentType<any>; // kept for compatibility though not used in the hero anymore
 };
-
 
 export type HomeTemplateProps = {
   ui: UI;
@@ -48,7 +49,15 @@ export type HomeTemplateProps = {
   testimonialsHeading?: string;
   posts?: import("./sections/PostsSection").PostItem[];
   postsTitle?: string;
-  pricing?: Omit<PricingCtaProps, "ctaHref" | "ctaText" | "onCtaClick" | "ctaLoading" | "ctaDisabled" | "terms"> & {
+  pricing?: Omit<
+    PricingCtaProps,
+    | "ctaHref"
+    | "ctaText"
+    | "onCtaClick"
+    | "ctaLoading"
+    | "ctaDisabled"
+    | "terms"
+  > & {
     ctaHref?: string;
     ctaText?: string;
     enabled?: boolean;
@@ -59,6 +68,7 @@ export type HomeTemplateProps = {
   };
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;
+  videoSection?: ReactNode;
 };
 
 export function HomeTemplate({
@@ -86,8 +96,20 @@ export function HomeTemplate({
   pricing,
   breadcrumbs,
   showPosts = true,
+  videoSection,
 }: HomeTemplateProps) {
-  const { Navbar, Footer, Button, Badge, Input, Card, CardHeader, CardTitle, CardContent, CardDescription } = ui as any;
+  const {
+    Navbar,
+    Footer,
+    Button,
+    Badge,
+    Input,
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent,
+    CardDescription,
+  } = ui as any;
 
   const heroMediaItems: HeroMediaItem[] = [];
   if (videoUrl) {
@@ -103,7 +125,7 @@ export function HomeTemplate({
 
   if (Array.isArray(screenshots) && screenshots.length > 0) {
     const validScreenshots = screenshots
-      .filter(shot => shot.src && shot.src.trim() !== '')
+      .filter((shot) => shot.src && shot.src.trim() !== "")
       .slice(0, 6)
       .map((shot) => ({
         type: "image" as const,
@@ -119,7 +141,10 @@ export function HomeTemplate({
 
   const defaultFeatures = [
     { title: "One-click download from any video page", description: "" },
-    { title: "100% privacy-friendly – no tracking or data collection", description: "" },
+    {
+      title: "100% privacy-friendly – no tracking or data collection",
+      description: "",
+    },
     { title: "Auto-detect videos on the page", description: "" },
     { title: "Smart Page Scan", description: "" },
     { title: "Embedded Video Support", description: "" },
@@ -147,47 +172,130 @@ export function HomeTemplate({
     }) ?? defaultFeatures;
 
   const defaultFaqs: FAQ[] = [
-    { question: `Can I download any ${platform} video?`, answer: `You can download your own videos and those shared with you when you have permission. If the owner restricts downloads or the video is private, you may not be able to download it.` },
-    { question: `Why dont I see a download option on ${platform}?`, answer: `Availability depends on the owners settings and plan limits. Owners can disable downloads, and some free-plan limitations may apply.` },
-    { question: `Is it legal to download ${platform} videos?`, answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.` },
-    { question: `Is it legal to download ${platform} videos?`, answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.` },
-    { question: `Is it legal to download ${platform} videos?`, answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.` },
+    {
+      question: `Can I download any ${platform} video?`,
+      answer: `You can download your own videos and those shared with you when you have permission. If the owner restricts downloads or the video is private, you may not be able to download it.`,
+    },
+    {
+      question: `Why dont I see a download option on ${platform}?`,
+      answer: `Availability depends on the owners settings and plan limits. Owners can disable downloads, and some free-plan limitations may apply.`,
+    },
+    {
+      question: `Is it legal to download ${platform} videos?`,
+      answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.`,
+    },
+    {
+      question: `Is it legal to download ${platform} videos?`,
+      answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.`,
+    },
+    {
+      question: `Is it legal to download ${platform} videos?`,
+      answer: `Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.`,
+    },
   ];
 
   const faqList = faqs ?? defaultFaqs;
-  const defaultBenefitList = normalizedFeatures.slice(0, 5).map((feature) => feature.title);
-  const pricingBenefitList = pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
+  const defaultBenefitList = normalizedFeatures
+    .slice(0, 5)
+    .map((feature) => feature.title);
+  const pricingBenefitList =
+    pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
+  const pricingSectionId = (pricing?.id ?? "pricing").replace(/^#/, "");
+  const pricingSectionEnabled = pricing?.enabled ?? true;
+  const heroCtaHref = pricingSectionEnabled
+    ? `#${pricingSectionId}`
+    : ctaHref;
+  const heroCtaLabel = (ctaText ?? "Get It Now").toUpperCase();
+  const heroVideoLinkLabel = "Watch demo";
+  const heroVideoHref = videoUrl
+    ? videoUrl
+    : exampleUrl
+    ? exampleUrl
+    : "#";
+  const firstVideoIndex = heroMediaItems.findIndex((item) => item.type === "video");
 
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-background">
         {Array.isArray(breadcrumbs) && breadcrumbs.length > 0 && (
-          <nav className="container pt-8 text-sm text-muted-foreground" aria-label="Breadcrumb">
-            <ol className="flex flex-wrap items-center gap-2">
-              {breadcrumbs.map((crumb, index) => {
-                const isLast = index === breadcrumbs.length - 1;
-                return (
-                  <li key={`${crumb.label}-${index}`} className="flex items-center gap-2">
-                    {crumb.href && !isLast ? (
-                      <a
-                        href={crumb.href}
-                        className="transition-colors hover:text-primary"
-                      >
-                        {crumb.label}
-                      </a>
-                    ) : (
-                      <span className={isLast ? "text-foreground" : undefined}>{crumb.label}</span>
-                    )}
-                    {!isLast && <span className="text-muted-foreground">/</span>}
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
+          <div className="border-b bg-gray-50">
+            <nav
+              className="mx-auto max-w-6xl px-4 py-4 text-sm text-muted-foreground"
+              aria-label="Breadcrumb"
+            >
+              <ol className="flex flex-wrap items-center gap-2">
+                {breadcrumbs.map((crumb, index) => {
+                  const isLast = index === breadcrumbs.length - 1;
+                  return (
+                    <li
+                      key={`${crumb.label}-${index}`}
+                      className="flex items-center gap-2 text-sm"
+                    >
+                      {crumb.href && !isLast ? (
+                        <a
+                          href={crumb.href}
+                          className="transition-colors hover:text-primary"
+                        >
+                          {crumb.label}
+                        </a>
+                      ) : (
+                        <span
+                          className={isLast ? "text-foreground" : undefined}
+                        >
+                          {crumb.label}
+                        </span>
+                      )}
+                      {!isLast && (
+                        <span className="text-muted-foreground">/</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          </div>
         )}
-        {/* Hero (input removed, CTA changed) */}
         <Hero
+          title={heroTitle}
+          description={heroDescription}
+          links={[
+            ...(firstVideoIndex !== -1
+              ? [
+                  {
+                    label: heroVideoLinkLabel,
+                    url: undefined,
+                    variant: "outline" as const,
+                    icon: <FaYoutube className="text-red-500" />,
+                    openMediaIndex: firstVideoIndex,
+                  },
+                ]
+              : videoUrl
+              ? [
+                  {
+                    label: heroVideoLinkLabel,
+                    url: heroVideoHref,
+                    variant: "outline" as const,
+                    icon: <FaYoutube className="text-red-500" />,
+                  },
+                ]
+              : []),
+            {
+              label: heroCtaLabel,
+              url: heroCtaHref,
+            },
+          ]}
+          media={heroMediaItems.map((item) => ({
+            src: item.src,
+            type: item.type,
+            title: item.title,
+            alt: item.alt,
+            thumbnail:
+              item.type === "video" ? item.lightThumbnailSrc : undefined,
+          }))}
+        />
+        {/* Hero (input removed, CTA changed) */}
+        {/* <Hero
           badgeText={badgeText}
           heroTitle={heroTitle}
           heroDescription={heroDescription}
@@ -199,10 +307,12 @@ export function HomeTemplate({
           lightThumbnailSrc={heroLightThumbnailSrc}
           darkThumbnailSrc={heroDarkThumbnailSrc}
           ui={{ Badge, Button }}
-        />
+        /> */}
 
         {/* Features */}
         <FeaturesSection features={normalizedFeatures} />
+
+        {videoSection}
 
         {/* Social Proof Screenshots */}
         <SocialProofScreenshots />

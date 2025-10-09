@@ -2,8 +2,8 @@ import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
 
-import { formatPrice } from "@/lib/products-data"
-import { getBrandLogoPath } from "@/lib/brand-logos"
+import { formatPrice } from "@/lib/products/products-data"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import { generateBreadcrumbSchema, generateProductSchemaLD } from "@/schema/product-schema-ld"
 
 interface ProductPageViewProps {

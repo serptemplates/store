@@ -1,27 +1,67 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { config as loadEnv } from "dotenv";
 
-import { getAllProducts } from "@/lib/product";
+import { getAllProducts } from "@/lib/products/product";
 import {
   extractVimeoId,
   extractYouTubeId,
   resolveUploadDate,
   type SupportedVideoPlatform,
-} from "@/lib/video";
-import type { ProductData } from "@/lib/product-schema";
-import type { ExternalVideoMetadata } from "@/lib/video-metadata";
+} from "@/lib/products/video";
+import type { ProductData } from "@/lib/products/product-schema";
+import type { ExternalVideoMetadata } from "@/lib/products/video-metadata";
 
-const repoRoot = path.resolve(process.cwd(), "../../");
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const storeDir = path.resolve(scriptDir, "..");
+const repoRoot = path.resolve(storeDir, "..", "..");
+
 loadEnv({ path: path.join(repoRoot, ".env.local") });
 loadEnv({ path: path.join(repoRoot, ".env") });
+loadEnv({ path: path.join(storeDir, ".env.local") });
+loadEnv({ path: path.join(storeDir, ".env") });
 loadEnv({ path: path.join(process.cwd(), ".env.local") });
 loadEnv({ path: path.join(process.cwd(), ".env") });
 
-const outputPath = path.join(process.cwd(), "data", "video-metadata.json");
+function resolveDataRoot(): string {
+  const candidates = [
+    process.env.PRODUCTS_ROOT,
+    path.join(storeDir, "data"),
+    path.join(repoRoot, "apps", "store", "data"),
+    path.join(repoRoot, "data"),
+  ].filter((value): value is string => Boolean(value));
+
+  for (const candidate of candidates) {
+    const absolute = path.isAbsolute(candidate)
+      ? candidate
+      : path.resolve(process.cwd(), candidate);
+
+    if (fs.existsSync(path.join(absolute, "products"))) {
+      return absolute;
+    }
+  }
+
+  const checkedPaths = candidates
+    .map((value) => (path.isAbsolute(value) ? value : path.resolve(process.cwd(), value)))
+    .join(", ");
+
+  throw new Error(
+    `Unable to locate product data directory (looked in: ${checkedPaths || "<none>"}). ` +
+      "Set PRODUCTS_ROOT to override the data directory.",
+  );
+}
+
 const debugLogsEnabled = process.env.DEBUG_VIDEO_METADATA === "1";
 const youtubeApiKey = process.env.YOUTUBE_API_KEY;
+
+const dataRoot = resolveDataRoot();
+if (debugLogsEnabled) {
+  console.log(`Using product data root: ${dataRoot}`);
+}
+
+const outputPath = path.join(dataRoot, "video-metadata.json");
 
 function normalizeKey(url: string): { key: string; platform: SupportedVideoPlatform; id?: string } {
   const youTubeId = extractYouTubeId(url);
@@ -636,6 +676,7 @@ const fallbackMetadataForUrl = (url: string): ExternalVideoMetadata | undefined 
     await new Promise((resolve) => setTimeout(resolve, processed % 5 === 0 ? 1_000 : 200));
   }
 
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(updatedMetadata, null, 2), "utf8");
   console.log(`Saved metadata for ${Object.keys(updatedMetadata).length} videos to ${outputPath}`);
 }

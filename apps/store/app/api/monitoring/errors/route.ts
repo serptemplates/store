@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/database';
-import { sendOpsAlert } from '@/lib/ops-notify';
+import { sendOpsAlert } from '@/lib/notifications/ops';
 
 export async function GET(request: NextRequest) {
   const token = request.headers.get('authorization')?.replace('Bearer ', '');

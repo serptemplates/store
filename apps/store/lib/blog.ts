@@ -14,6 +14,11 @@ export type BlogPostMeta = {
   readingTime: string;
 };
 
+// Slug must be only alphanumeric, dash and underscore.
+function sanitizeSlug(input: string): string {
+  return input.replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
 // Resolve relative to the app workspace so dev server + builds find the content directory
 // Update: Blog content is now in sites/apps.serp.co/content/blog
 const blogRoot = path.join(process.cwd(), "../../sites/apps.serp.co/content/blog");
@@ -27,7 +32,7 @@ export function getAllPosts(): BlogPostMeta[] {
     .readdirSync(blogRoot)
     .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
     .map<BlogPostMeta | null>((file) => {
-      const slug = file.replace(/\.mdx?$/, "");
+      const slug = sanitizeSlug(file.replace(/\.mdx?$/, ""));
       const filePath = path.join(blogRoot, file);
       const raw = fs.readFileSync(filePath, "utf8");
       const { data, content } = matter(raw);
@@ -54,7 +59,7 @@ export function getAllPosts(): BlogPostMeta[] {
         title,
         description,
         date: data.date ?? new Date().toISOString(),
-        author: data.author ?? "SERP Apps",
+        author: data.author ?? "Devin Schumacher",
         tags: Array.isArray(data.tags) ? data.tags : [],
         image: data.image,
         readingTime: stats.text,
@@ -106,7 +111,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
       title,
       description,
       date: data.date ?? new Date().toISOString(),
-      author: data.author ?? "SERP Apps",
+      author: data.author ?? "Devin Schumacher",
       tags: Array.isArray(data.tags) ? data.tags : [],
       image: data.image,
       readingTime: stats.text,

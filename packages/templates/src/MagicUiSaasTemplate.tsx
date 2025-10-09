@@ -1,7 +1,6 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { cn } from "@repo/ui/lib/utils";
 import HeroVideoDialog from "@repo/ui/magic/HeroVideoDialog";
 import TestimonialsCarousel from "@repo/ui/sections/TestimonialsCarousel";
 
@@ -52,7 +51,9 @@ export function MagicUiSaasTemplate({
                 <div className="w-fit rounded-full bg-accent px-2 py-0.5 text-center text-xs font-medium text-primary sm:text-sm">
                   📣 {platform}
                 </div>
-                <p className="text-xs font-medium text-primary sm:text-sm">{badgeText}</p>
+                <p className="text-xs font-medium text-primary sm:text-sm">
+                  {badgeText}
+                </p>
               </div>
             )}
 

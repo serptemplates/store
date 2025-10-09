@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { getBrandLogoPath } from "@/lib/brand-logos"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 
 interface OrderSummaryProps {
   product: any

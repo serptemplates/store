@@ -1,14 +1,14 @@
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { OfferConfig } from "@/lib/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout-store";
+import type { OfferConfig } from "@/lib/products/offer-config";
+import type { CheckoutSessionRecord } from "@/lib/checkout/store";
 
-vi.mock("@/lib/paypal", () => ({
+vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: vi.fn(),
   capturePayPalOrder: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout-store", () => ({
+vi.mock("@/lib/checkout/store", () => ({
   findCheckoutSessionByStripeSessionId: vi.fn(),
   updateCheckoutSessionStatus: vi.fn(),
   upsertOrder: vi.fn(),
@@ -18,19 +18,19 @@ vi.mock("@/lib/ghl-client", () => ({
   syncOrderWithGhl: vi.fn(),
 }));
 
-vi.mock("@/lib/offer-config", () => ({
+vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
 }));
 
 import { POST } from "@/app/api/paypal/capture-order/route";
-import { isPayPalConfigured, capturePayPalOrder } from "@/lib/paypal";
+import { isPayPalConfigured, capturePayPalOrder } from "@/lib/payments/paypal";
 import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout-store";
+} from "@/lib/checkout/store";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
-import { getOfferConfig } from "@/lib/offer-config";
+import { getOfferConfig } from "@/lib/products/offer-config";
 
 const isPayPalConfiguredMock = vi.mocked(isPayPalConfigured);
 const capturePayPalOrderMock = vi.mocked(capturePayPalOrder);
@@ -57,7 +57,10 @@ describe("POST /api/paypal/capture-order", () => {
     successUrl: "https://example.com/success",
     cancelUrl: "https://example.com/cancel",
     mode: "payment",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     productName: "Demo Offer",
     ghl: {},
   };
@@ -69,7 +72,10 @@ describe("POST /api/paypal/capture-order", () => {
     offerId: "demo-offer",
     landerId: "demo-offer",
     customerEmail: "buyer@example.com",
-    metadata: {},
+    metadata: {
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    },
     status: "pending",
     source: "paypal",
     createdAt: new Date(),
@@ -112,15 +118,24 @@ describe("POST /api/paypal/capture-order", () => {
     expect(payload.orderId).toBe("order_123");
 
     expect(capturePayPalOrderMock).toHaveBeenCalledWith("order_123");
-    expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith("checkout-id", "completed");
+    expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith(
+      "paypal_order_123",
+      "completed",
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          productPageUrl: "https://store.example.com/products/demo-offer",
+          purchaseUrl: "https://store.example.com/checkout/demo-offer",
+        }),
+      }),
+    );
 
     const upsertCall = upsertOrderMock.mock.calls[0][0] as Record<string, unknown>;
     expect(upsertCall).toMatchObject({
-      stripe_session_id: "paypal_order_123",
-      stripe_payment_intent_id: "paypal_capture_123",
-      amount_total: 9900,
-      customer_email: "buyer@example.com",
-      payment_status: "COMPLETED",
+      stripeSessionId: "paypal_order_123",
+      stripePaymentIntentId: "paypal_capture_123",
+      amountTotal: 9900,
+      customerEmail: "buyer@example.com",
+      paymentStatus: "COMPLETED",
       source: "paypal",
     });
 
@@ -130,6 +145,11 @@ describe("POST /api/paypal/capture-order", () => {
         offerId: "demo-offer",
         customerEmail: "buyer@example.com",
         amountTotal: 9900,
+        provider: "paypal",
+        productPageUrl: "https://store.example.com/products/demo-offer",
+        purchaseUrl: "https://store.example.com/checkout/demo-offer",
+        licenseEntitlements: ["demo-offer"],
+        licenseTier: "demo-offer",
       }),
     );
   });
