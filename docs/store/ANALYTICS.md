@@ -139,7 +139,7 @@ For external GHL checkout flows, the implementation uses cookies to preserve tra
    - `ghl_checkout=1` - Flags this as a GHL checkout
    - `ghl_product={productId}` - Stores product identifier
    - `ghl_price={price}` - Stores product price
-   - Cookies expire in 24 hours
+   - Cookies expire in 24 hours (86400 seconds)
 
 2. **On Success Page Return**:
    - ConversionTracking reads cookies if API data unavailable

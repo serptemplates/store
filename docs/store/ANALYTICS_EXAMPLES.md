@@ -115,9 +115,12 @@ export function NewsletterSignupTracking() {
 ### Example 4: Using TrackedBuyButton Component
 
 ```tsx
+import { useRouter } from "next/navigation";
 import { TrackedBuyButton } from "@/components/analytics/TrackedBuyButton";
 
 export function ProductPricingSection({ product }) {
+  const router = useRouter();
+
   return (
     <div className="pricing-section">
       <h2>{product.name}</h2>
@@ -170,8 +173,8 @@ export function WishlistButton({ product }) {
       currency: 'USD',
     });
 
-    // Add to wishlist logic
-    addToWishlist(product.slug);
+    // Add to wishlist logic (implement your own wishlist functionality)
+    // Example: localStorage.setItem('wishlist', JSON.stringify([...wishlist, product.slug]));
   };
 
   return (
@@ -203,8 +206,8 @@ export function ProductSearch() {
       search_location: "header",
     });
 
-    // Perform search
-    performSearch(query);
+    // Perform search (implement your own search functionality)
+    // Example: router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
   return (
