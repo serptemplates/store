@@ -18,25 +18,26 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/twitch-video-down
 github_repo_url: https://github.com/serpapps/twitch-video-downloader
 github_repo_tags: []
 features:
-- Download Twitch VODs and highlights in high quality
-- Live stream recording with automatic archiving
-- Extract chat logs and viewer interactions
-- Support for subscriber-only and restricted content
-- Automatic thumbnail and preview generation
-- Resume downloads
-- Command-line tools
-- Cross-platform support
-- Custom folder organization
-- Built-in video player with timestamp navigation
-- streaming software integration
-- Duplicate detection to avoid redundant downloads
-- Export stream metadata/statistics
-- Privacy-focused design with secure storage
-- Regular compatibility updates
-- Bandwidth-efficient downloads
-- Search downloaded streams
-- Backup and restore capabilities
-- Support for various video formats and qualities
+  - Download Twitch VODs and highlights in high quality
+  - Livestream recording with automatic archiving
+  - Batch download streamer's entire video library
+  - Extract chat logs and viewer interactions
+  - Support for subscriber-only and restricted content
+  - Automatic thumbnail and preview generation
+  - Resume downloads
+  - Command-line tools
+  - Cross-platform support
+  - Custom folder organization
+  - Built-in video player with timestamp navigation
+  - streaming software integration
+  - Duplicate detection to avoid redundant downloads
+  - Export stream metadata/statistics
+  - Privacy-focused design with secure storage
+  - Regular compatibility updates
+  - Bandwidth-efficient downloads
+  - Search downloaded streams
+  - Backup and restore capabilities
+  - Support for various video formats and qualities
 description: Download videos, images, and content from twitch video with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
@@ -70,9 +71,9 @@ supported_operating_systems:
 status: draft
 pre_release: true
 categories:
-- Downloader
-- Live Stream
-- Social Media
+  - Downloader
+  - Livestream
+  - Social Media
 keywords:
 - twitch video downloader
 pricing:
@@ -83,7 +84,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

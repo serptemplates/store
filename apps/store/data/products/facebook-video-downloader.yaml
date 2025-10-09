@@ -18,25 +18,26 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/facebook-video-do
 github_repo_url: https://github.com/serpapps/facebook-video-downloader
 github_repo_tags: []
 features:
-- High-quality Facebook downloads quality
-- Support for public and private video content
-- Extract video metadata including descriptions and comments
-- Auto thumbnail and preview image extraction
-- Resume downloads
-- Cross-platform support
-- Command-line tools
-- Custom folder organization and naming schemes
-- Built-in media player
-- Integration with social media management platforms
-- Duplicate detection to avoid redundant downloads
-- Export video data and statistics
-- Privacy-focused design with secure local storage
-- Regular compatibility updates
-- Search downloaded videos
-- Bandwidth-efficient downloads
-- Backup and restore capabilities
-- Support for Facebook Watch and IGTV content
-- Live stream recording and archiving features
+  - High-quality Facebook downloads quality
+  - Support for public and private video content
+  - Batch from pages, groups,/profiles downloads
+  - Extract video metadata including descriptions and comments
+  - Auto thumbnail and preview image extraction
+  - Resume downloads
+  - Cross-platform support
+  - Command-line tools
+  - Custom folder organization and naming schemes
+  - Built-in media player
+  - Integration with social media management platforms
+  - Duplicate detection to avoid redundant downloads
+  - Export video data and statistics
+  - Privacy-focused design with secure local storage
+  - Regular compatibility updates
+  - Search downloaded videos
+  - Bandwidth-efficient downloads
+  - Backup and restore capabilities
+  - Support for Facebook Watch and IGTV content
+  - Livestream recording and archiving features
 description: Download videos, images, and content from facebook video with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
@@ -81,7 +82,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

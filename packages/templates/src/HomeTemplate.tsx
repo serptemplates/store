@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import { PricingCta, type PricingCtaProps } from "./sections/PricingCta";
 import { FeaturesSection } from "./sections/FeaturesSection";
@@ -68,6 +68,7 @@ export type HomeTemplateProps = {
   };
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;
+  videoSection?: ReactNode;
 };
 
 export function HomeTemplate({
@@ -95,6 +96,7 @@ export function HomeTemplate({
   pricing,
   breadcrumbs,
   showPosts = true,
+  videoSection,
 }: HomeTemplateProps) {
   const {
     Navbar,
@@ -198,6 +200,19 @@ export function HomeTemplate({
     .map((feature) => feature.title);
   const pricingBenefitList =
     pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
+  const pricingSectionId = (pricing?.id ?? "pricing").replace(/^#/, "");
+  const pricingSectionEnabled = pricing?.enabled ?? true;
+  const heroCtaHref = pricingSectionEnabled
+    ? `#${pricingSectionId}`
+    : ctaHref;
+  const heroCtaLabel = (ctaText ?? "Get It Now").toUpperCase();
+  const heroVideoLinkLabel = "Watch demo";
+  const heroVideoHref = videoUrl
+    ? videoUrl
+    : exampleUrl
+    ? exampleUrl
+    : "#";
+  const firstVideoIndex = heroMediaItems.findIndex((item) => item.type === "video");
 
   return (
     <>
@@ -245,15 +260,29 @@ export function HomeTemplate({
           title={heroTitle}
           description={heroDescription}
           links={[
+            ...(firstVideoIndex !== -1
+              ? [
+                  {
+                    label: heroVideoLinkLabel,
+                    url: undefined,
+                    variant: "outline" as const,
+                    icon: <FaYoutube className="text-red-500" />,
+                    openMediaIndex: firstVideoIndex,
+                  },
+                ]
+              : videoUrl
+              ? [
+                  {
+                    label: heroVideoLinkLabel,
+                    url: heroVideoHref,
+                    variant: "outline" as const,
+                    icon: <FaYoutube className="text-red-500" />,
+                  },
+                ]
+              : []),
             {
-              label: heroVideoTitle ? heroVideoTitle : "Watch demo video",
-              url: videoUrl ? videoUrl : exampleUrl ? exampleUrl : "#",
-              variant: "outline",
-              icon: <FaYoutube className="text-red-500" />,
-            },
-            {
-              label: ctaText,
-              url: ctaHref,
+              label: heroCtaLabel,
+              url: heroCtaHref,
             },
           ]}
           media={heroMediaItems.map((item) => ({
@@ -282,6 +311,8 @@ export function HomeTemplate({
 
         {/* Features */}
         <FeaturesSection features={normalizedFeatures} />
+
+        {videoSection}
 
         {/* Social Proof Screenshots */}
         <SocialProofScreenshots />

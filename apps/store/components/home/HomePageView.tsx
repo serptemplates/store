@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic"
-import NextLink from "next/link"
 import Script from "next/script"
 
 import { CATEGORY_RULES, PRIMARY_CATEGORIES } from "@/lib/products/category-constants"
@@ -9,6 +8,7 @@ import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { buildPrimaryNavProps } from "@/lib/navigation"
 import type { ProductData } from "@/lib/products/product-schema"
 import { WhoIsBehind } from "./WhoIsBehind"
+import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
 const ProductsFilter = dynamic(
   () => import("@/components/ProductsFilter").then((mod) => ({ default: mod.ProductsFilter })),
@@ -89,7 +89,7 @@ function deriveCategories(product: ProductData): string[] {
     }
 
     if (slug.includes("live") || slug.includes("stream") || name.includes("stream")) {
-      addCategory("Live Stream")
+      addCategory("Livestream")
     }
 
     if (
@@ -186,15 +186,6 @@ function deriveCategories(product: ProductData): string[] {
 
   return [...recognized, ...additional]
 }
-
-const navLinks = [
-  { label: "Videos", href: "/videos" as const },
-  { label: "Articles", href: "/blog" as const },
-  { label: "Github", href: "https://github.com/serpapps" as const },
-  { label: "Help", href: "https://serp.ly/@serp/support" as const },
-  { label: "Account", href: "/account" as const },
-  
-]
 
 const heroDescription =
   "Browse the full SERP Apps catalog of downloaders, automations, and growth tools."
@@ -318,22 +309,7 @@ export function HomePageView() {
           <ProductsFilter products={filterItems} />
         </main>
 
-        <footer className="border-t bg-muted/40">
-          <div className="container flex flex-col gap-2 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <p>&copy; {new Date().getFullYear()} SERP Apps </p>
-            <div className="flex gap-4">
-              <NextLink href="/blog" target="_blank" rel="noopener noreferrer" className="underline">
-                Blog
-              </NextLink>
-              <NextLink href="https://github.com/serpapps/legal/blob/main/terms-conditions.md" target="_blank" rel="noopener noreferrer" className="underline">
-                Terms & Conditions
-              </NextLink>
-              <NextLink href="https://github.com/serpapps/legal/blob/main/refund-policy.md" target="_blank" rel="noopener noreferrer" className="underline">
-                Refund Policy
-              </NextLink>
-            </div>
-          </div>
-        </footer>
+        <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
       </div>
     </>
   )

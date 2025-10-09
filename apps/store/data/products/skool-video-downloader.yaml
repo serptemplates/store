@@ -101,7 +101,6 @@ keywords:
 pricing:
   price: '$27.00'
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 reviews:
   - name: Alex Martinez

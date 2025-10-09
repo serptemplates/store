@@ -31,7 +31,6 @@ pricing:
   original_price: '27.00'
   currency: USD
   availability: InStock
-  price_valid_until: 2026-12-31
   note: Instant download • Lifetime updates
   cta_text: Get it Now
   benefits:
@@ -56,7 +55,7 @@ features:
   - Optimized speeds
   - Zero data tracking
   - Regular updates
-  - Live stream recordings
+  - Livestream recordings
   - Download history
   - Ad-free experience
   - Malware-free

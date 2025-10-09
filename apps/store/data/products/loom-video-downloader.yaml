@@ -94,7 +94,6 @@ keywords:
 pricing:
   price: $17.00
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 new_release: true
 reviews:

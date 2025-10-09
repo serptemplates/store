@@ -18,25 +18,26 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/stream-downloader
 github_repo_url: https://github.com/serpapps/stream-downloader
 github_repo_tags: []
 features:
-- Download live streams from various platforms
-- Support for multiple streaming protocols and formats
-- Automatic stream detection and quality selection
-- Organize by platform/streamer
-- Resume interrupted recordings with recovery
-- Cross-platform support
-- Built-in stream player with recording controls
-- CLI tools
-- streaming integration
-- Export stream data/recording statistics
-- Search capabilities across recorded streams
-- Privacy protection
-- Regular compatibility updates
-- Support for various streaming formats and qualities
-- Bandwidth management for live recording
-- Backup and restore for stream archives
-- Smart categorization
-- Live stream monitoring and alerts
-- Advanced recording scheduling and automation
+  - Download live streams from various platforms
+  - Support for multiple streaming protocols and formats
+  - Batch recording from multiple sources simultaneously
+  - Automatic stream detection and quality selection
+  - Organize by platform/streamer
+  - Resume interrupted recordings with recovery
+  - Cross-platform support
+  - Built-in stream player with recording controls
+  - CLI tools
+  - streaming integration
+  - Export stream data/recording statistics
+  - Search capabilities across recorded streams
+  - Privacy protection
+  - Regular compatibility updates
+  - Support for various streaming formats and qualities
+  - Bandwidth management for live recording
+  - Backup and restore for stream archives
+  - Smart categorization
+  - Livestream monitoring and alerts
+  - Advanced recording scheduling and automation
 description: Get quick access to Stream Downloader content for offline use.
 product_videos: []
 related_videos: []
@@ -69,8 +70,8 @@ supported_operating_systems:
 - edge
 status: draft
 categories:
-- Downloader
-- Live Stream
+  - Downloader
+  - Livestream
 keywords:
 - stream downloader
 pricing:
@@ -81,7 +82,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

@@ -84,7 +84,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
     }
   }, [selectedVideoIndex, resolvedVideos.length])
 
-  const Footer = useCallback(() => <FooterComposite />, [])
+  const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
+  const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
   const productUrl = typeof window !== "undefined" ? `${window.location.origin}/${product.slug}` : `https://store.com/${product.slug}`
 
   return (

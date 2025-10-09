@@ -16,6 +16,7 @@ import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 
 import { mdxComponents } from "@/components/mdx-components";
 import { generateArticleSchema, generateBreadcrumbSchema } from "@/schema";
@@ -67,6 +68,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const siteName = siteConfig.site?.name ?? "SERP Downloaders";
   const products = getAllProducts();
   const navProps = buildPrimaryNavProps({ products, siteConfig });
+  const recommendedPosts = getAllPosts()
+    .filter((entry) => entry.slug !== slug)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
 
   // Generate Article schema for SEO
   const articleSchema = generateArticleSchema({
@@ -182,6 +187,54 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             />
           </div>
 
+          {recommendedPosts.length > 0 && (
+            <section className="mt-16 border-t pt-10">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <h2 className="text-2xl font-semibold tracking-tight text-foreground">Read more</h2>
+                <Link href="/blog" className="text-sm font-medium text-primary hover:underline">
+                  View all posts →
+                </Link>
+              </div>
+              <div className="grid gap-6 md:grid-cols-3">
+                {recommendedPosts.map((related) => (
+                  <Card key={related.slug} className="h-full border-border/60 bg-card/60 transition hover:-translate-y-1 hover:border-border hover:shadow-lg">
+                    <CardHeader className="space-y-2">
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                        {format(new Date(related.date), "MMM d, yyyy")}
+                      </p>
+                      <CardTitle className="line-clamp-2 text-base">
+                        <Link href={`/blog/${related.slug}`} className="hover:text-primary">
+                          {related.title}
+                        </Link>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3 text-sm text-muted-foreground">
+                      <p className="line-clamp-3">{related.description}</p>
+                      <Link
+                        href={`/blog/${related.slug}`}
+                        className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
+                      >
+                        Read article
+                        <svg
+                          className="h-4 w-4"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14" />
+                          <path d="M12 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )}
+
           <footer className="mt-12 border-t pt-8">
             <Link href="/blog" className="text-sm font-medium text-primary hover:underline">
               ← Back to Blog
@@ -190,7 +243,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </article>
       </main>
 
-      <FooterComposite />
+      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
     </>
   );

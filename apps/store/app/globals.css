@@ -183,3 +183,23 @@ pre code.hljs {
 .code-line.highlighted {
   @apply bg-gray-800 -mx-4 px-4 border-l-4 border-blue-500;
 }
+
+@keyframes ctaPulse {
+  0%,
+  100% {
+    box-shadow: 0 12px 20px -12px rgba(79, 70, 229, 0.45);
+  }
+  50% {
+    box-shadow: 0 16px 26px -12px rgba(99, 102, 241, 0.65);
+  }
+}
+
+.cta-pulse {
+  animation: ctaPulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-pulse {
+    animation: none;
+  }
+}
