@@ -39,6 +39,11 @@ const ENV_CONFIGS: EnvConfig[] = [
     required: false,
     description: "GoHighLevel Location ID",
   },
+  {
+    name: "GHL_PAYMENT_WEBHOOK_SECRET",
+    required: false,
+    description: "Shared secret to validate incoming GHL payment webhooks",
+  },
   
   // Site Configuration
   {
