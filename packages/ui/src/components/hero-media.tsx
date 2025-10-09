@@ -126,8 +126,8 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(({ className, item
                     isOnlyOneItem
                       ? "lg:flex-[0_0_100%]"
                       : index === selectedIndex
-                      ? "lg:flex-[0_0_58%]"
-                      : "lg:flex-[0_0_42%]",
+                        ? "lg:flex-[0_0_65%]"
+                        : "lg:flex-[0_0_35%]",
                     "min-w-0 flex-[0_0_100%] transition-[flex-basis] duration-300 ease-out"
                   )}
                 >

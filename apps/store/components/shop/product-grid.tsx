@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Product, formatPrice } from "@/lib/products/products-data"
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
+import { shouldShowNewReleaseBanner } from "@/lib/products/badge-config"
 
 interface ProductGridProps {
   products: Product[]
@@ -24,9 +25,12 @@ export function ProductGrid({ products }: ProductGridProps) {
         const brandLogoPath = getBrandLogoPath(product.handle)
         const imageSource = brandLogoPath || product.thumbnail
 
+        const showNewReleaseBadge =
+          product.new_release && !product.pre_release && shouldShowNewReleaseBanner(product.handle)
+
         const bannerType = product.pre_release
           ? "preRelease"
-          : product.new_release
+          : showNewReleaseBadge
             ? "newRelease"
             : product.popular
               ? "popular"

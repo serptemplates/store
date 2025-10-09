@@ -132,24 +132,28 @@ export function PrimaryNavbar({
             </button>
             <div
               className={cn(
-                "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl",
-                openDropdown === "__apps__" ? "block" : "hidden"
+                "absolute right-0 top-full z-50 pt-3 transition",
+                openDropdown === "__apps__"
+                  ? "pointer-events-auto opacity-100"
+                  : "pointer-events-none opacity-0"
               )}
             >
-              <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {productColumns.map((column, columnIndex) => (
-                  <div key={columnIndex} className="space-y-2">
-                    {column.map((item) => (
-                      <NextLink
-                        key={item.slug}
-                        href={toProductHref(item.slug)}
-                        className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {item.name}
-                      </NextLink>
-                    ))}
-                  </div>
-                ))}
+              <div className="w-[min(90vw,60rem)] rounded-md border border-border bg-card p-6 shadow-xl">
+                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {productColumns.map((column, columnIndex) => (
+                    <div key={columnIndex} className="space-y-2">
+                      {column.map((item) => (
+                        <NextLink
+                          key={item.slug}
+                          href={toProductHref(item.slug)}
+                          className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {item.name}
+                        </NextLink>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -185,38 +189,40 @@ export function PrimaryNavbar({
                   </button>
                   <div
                     className={cn(
-                      "pointer-events-auto absolute right-0 top-full z-50 mt-2 w-56 rounded-md border border-border bg-card p-3 shadow-xl",
-                      isOpen ? "block" : "hidden"
+                      "absolute right-0 top-full z-50 pt-3 transition",
+                      isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 text-left text-sm">
-                      {link.children.map((child) => (
-                        <li key={child.href}>
-                          <a
-                            href={child.href}
-                            className="flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition hover:bg-muted/40 hover:text-foreground"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {child.label}
-                            <svg
-                              className="h-3.5 w-3.5 text-muted-foreground"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                    <div className="w-56 rounded-md border border-border bg-card p-3 shadow-xl">
+                      <ul className="space-y-1 text-left text-sm">
+                        {link.children.map((child) => (
+                          <li key={child.href}>
+                            <a
+                              href={child.href}
+                              className="flex items-center justify-between rounded-md px-3 py-2 text-muted-foreground transition hover:bg-muted/40 hover:text-foreground"
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
-                              <path
-                                d="M5 12h14M12 5l7 7-7 7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                              {child.label}
+                              <svg
+                                className="h-3.5 w-3.5 text-muted-foreground"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M5 12h14M12 5l7 7-7 7"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               );

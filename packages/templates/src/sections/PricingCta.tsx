@@ -63,8 +63,9 @@ export function PricingCta({
   );
 
   const socialProofConfig = {
-    userCount: 694,
+    userCount: 1938,
     starRating: 5,
+    userLabel: "Users",
   } as const;
 
   // Calculate discount percentage if original price exists
@@ -101,6 +102,7 @@ export function PricingCta({
               avatars={[]}
               userCount={socialProofConfig.userCount}
               starRating={socialProofConfig.starRating}
+              userLabel={socialProofConfig.userLabel}
             />
 
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
@@ -209,6 +211,7 @@ export function PricingCta({
                   avatars={[]}
                   userCount={socialProofConfig.userCount}
                   starRating={socialProofConfig.starRating}
+                  userLabel={socialProofConfig.userLabel}
                 />
               </div>
 

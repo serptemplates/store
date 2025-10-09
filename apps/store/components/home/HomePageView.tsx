@@ -9,6 +9,7 @@ import { buildPrimaryNavProps } from "@/lib/navigation"
 import type { ProductData } from "@/lib/products/product-schema"
 import { WhoIsBehind } from "./WhoIsBehind"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
+import { shouldShowNewReleaseBanner } from "@/lib/products/badge-config"
 
 const ProductsFilter = dynamic(
   () => import("@/components/ProductsFilter").then((mod) => ({ default: mod.ProductsFilter })),
@@ -187,8 +188,7 @@ function deriveCategories(product: ProductData): string[] {
   return [...recognized, ...additional]
 }
 
-const heroDescription =
-  "Browse the full SERP Apps catalog of downloaders, automations, and growth tools."
+const heroDescription = "Browse the full catalog of SERP products."
 
 export function HomePageView() {
   const products = getAllProducts()
@@ -201,7 +201,7 @@ export function HomePageView() {
     name: "SERP Apps",
     url: "https://apps.serp.co",
     logo: "https://apps.serp.co/logo.png",
-    description: "Browse the full SERP Apps catalog of downloaders, automations, and growth tools.",
+    description: "Browse the full catalog of SERP products.",
     sameAs: ["https://github.com/serpapps", "https://twitter.com/serpapps"],
     contactPoint: {
       "@type": "ContactPoint",
@@ -261,6 +261,8 @@ export function HomePageView() {
       ),
     )
 
+    const displayNewRelease = Boolean(product.new_release && shouldShowNewReleaseBanner(product.slug))
+
     return {
       slug: product.slug,
       name: product.name,
@@ -268,7 +270,7 @@ export function HomePageView() {
       keywords,
       platform: product.platform,
       pre_release: product.pre_release ?? false,
-      new_release: product.new_release ?? false,
+      new_release: displayNewRelease,
       popular: product.popular ?? false,
     }
   })
