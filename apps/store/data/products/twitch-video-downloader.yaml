@@ -19,7 +19,7 @@ github_repo_url: https://github.com/serpapps/twitch-video-downloader
 github_repo_tags: []
 features:
   - Download Twitch VODs and highlights in high quality
-  - Live stream recording with automatic archiving
+  - Livestream recording with automatic archiving
   - Batch download streamer's entire video library
   - Extract chat logs and viewer interactions
   - Support for subscriber-only and restricted content
@@ -72,7 +72,7 @@ status: draft
 pre_release: true
 categories:
   - Downloader
-  - Live Stream
+  - Livestream
   - Social Media
 keywords:
   - twitch video downloader
@@ -84,7 +84,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

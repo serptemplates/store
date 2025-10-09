@@ -23,7 +23,7 @@ features:
   - Batch downloads for series/collections
   - Auto subtitle extraction
   - Supports various containers/codecs
-  - Live stream recording
+  - Livestream recording
   - Format conversion & optimization
   - Thumbnail extraction
   - Command-line tools
@@ -86,7 +86,6 @@ pricing:
   cta_text: Get it Now
   benefits: []
   currency: USD
-  price_valid_until: '2026-12-31'
   availability: InStock
 ghl:
   source: Stripe Checkout

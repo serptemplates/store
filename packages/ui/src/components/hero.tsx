@@ -1,7 +1,7 @@
 "use client";
 
-import HeroMedia from "./hero-media";
-import SocialProofBanner from "@repo/ui/social-proof-banner";
+import { useMemo, useRef } from "react";
+import HeroMedia, { type HeroMediaHandle } from "./hero-media";
 import { Button } from "@repo/ui";
 import { getYoutubeThumbnail, useHeroTitle } from "../utils";
 import type { HeroMediaProps } from "./hero-media";
@@ -9,9 +9,11 @@ import SmartLink from "./smart-link";
 
 export type HeroLink = {
   label: string;
-  url: string;
+  url?: string;
   icon?: React.ReactNode;
   variant?: "outline" | "default";
+  onClick?: () => void;
+  openMediaIndex?: number;
 };
 
 type HeroProps = {
@@ -23,14 +25,42 @@ type HeroProps = {
 };
 
 const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
-  media =
-    media &&
-    media.map((item) => {
+  const mediaRef = useRef<HeroMediaHandle>(null);
+
+  const processedMedia = useMemo(() => {
+    if (!media) return undefined;
+    return media.map((item) => {
       if (item.type === "video") {
-        item.thumbnail = getYoutubeThumbnail(item.src) || item.thumbnail;
+        return {
+          ...item,
+          thumbnail: getYoutubeThumbnail(item.src) || item.thumbnail,
+        };
       }
       return item;
     });
+  }, [media]);
+
+  const resolvedLinks = useMemo(() => {
+    if (!links) return undefined;
+    return links.map((link) => {
+      if (link.onClick) {
+        return link;
+      }
+
+      if (typeof link.openMediaIndex === "number") {
+        return {
+          ...link,
+          onClick: () => {
+            const targetIndex =
+              link.openMediaIndex !== undefined ? link.openMediaIndex : 0;
+            mediaRef.current?.open(targetIndex);
+          },
+        };
+      }
+
+      return link;
+    });
+  }, [links]);
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100">
@@ -44,28 +74,17 @@ const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
                 {description}
               </p>
             </div>
-            {links && links.length > 0 && (
+            {resolvedLinks && resolvedLinks.length > 0 && (
               <div className="flex flex-col gap-5 sm:justify-center sm:flex-row">
-                {links.map((link, index) => (
+                {resolvedLinks.map((link, index) => (
                   <LinkItem key={index} link={link} />
                 ))}
               </div>
             )}
           </div>
-          {media && media.length > 0 && (
-            <HeroMedia items={media} className="mt-16" />
+          {processedMedia && processedMedia.length > 0 && (
+            <HeroMedia ref={mediaRef} items={processedMedia} className="mt-16" />
           )}
-          <SocialProofBanner
-            avatars={[]}
-            description="Users are already unlocking premium entertainment with SERP Apps—instant access, lifetime updates, and top-tier support included."
-            link={{
-              label: "Join them today!",
-              url: "#pricing",
-            }}
-            starRating={5}
-            userCount={694}
-            className="mt-16"
-          />
         </div>
       </div>
     </section>
@@ -95,6 +114,25 @@ const Title = ({ title, highlight }: TitleProps) => {
 };
 
 const LinkItem = ({ link }: { link: HeroLink }) => {
+  if (link.onClick) {
+    return (
+      <Button
+        variant={link.variant || "default"}
+        size="lg"
+        className="font-bold"
+        type="button"
+        onClick={link.onClick}
+      >
+        {link.icon}
+        {link.label}
+      </Button>
+    );
+  }
+
+  if (!link.url) {
+    return null;
+  }
+
   return (
     <Button
       variant={link.variant || "default"}

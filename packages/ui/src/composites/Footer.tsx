@@ -1,5 +1,6 @@
 export type FooterSite = {
   name?: string;
+  url?: string;
 };
 
 export type FooterProps = {
@@ -10,7 +11,16 @@ export type FooterProps = {
 const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
   { label: "Videos", href: "/videos" },
   { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
+  {
+    label: "Terms of Service",
+    href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
+    external: true,
+  },
+  {
+    label: "Refund Policy",
+    href: "https://github.com/serpapps/legal/blob/main/refund-policy.md",
+    external: true,
+  },
   { label: "DMCA", href: "/dmca" },
   { label: "Contact", href: "/contact" },
 ];
@@ -20,17 +30,22 @@ export function Footer({
   site,
 }: FooterProps) {
   const brandName = site?.name ?? "SERP";
+  const brandUrl = site?.url ?? "https://serp.co";
 
   return (
     <footer className="border-t bg-muted/30">
       <div className="container py-8">
         <div className="flex flex-col items-center gap-4 text-center text-sm text-muted-foreground md:flex-row md:justify-between">
-          <p>
-            ©
-            <a href="https://serp.co" target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">
+          <p className="flex items-center gap-1">
+            <span>©</span>
+            <a
+              href={brandUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-primary hover:underline"
+            >
               {brandName}
             </a>
-            . 
           </p>
           {legalLinks?.length ? (
             <nav aria-label="Legal">

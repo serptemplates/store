@@ -4,28 +4,54 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { ProductSearchBar, type ProductCategory } from '@/components/ProductSearchBar';
+
 import type { VideoListingItem } from './types';
 
 interface VideoLibraryShellProps {
-  siteName: string;
-  filters: string[];
   videos: VideoListingItem[];
 }
 
-export default function VideoLibraryShell({
-  siteName,
-  filters,
-  videos,
-}: VideoLibraryShellProps) {
-  const [query, setQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState<string>('All');
+function toCategoryId(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+}
 
-  const normalizedQuery = query.trim().toLowerCase();
+export default function VideoLibraryShell({ videos }: VideoLibraryShellProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const categories: ProductCategory[] = useMemo(() => {
+    const counts = new Map<string, number>();
+    videos.forEach((video) => {
+      counts.set(video.productName, (counts.get(video.productName) ?? 0) + 1);
+    });
+
+    const sorted = Array.from(counts.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([name, count]) => ({
+        id: toCategoryId(name),
+        name,
+        count,
+      }));
+
+    return [
+      { id: 'all', name: 'All Videos', count: videos.length },
+      ...sorted,
+    ];
+  }, [videos]);
+
+  const selectedCategoryName =
+    selectedCategory === 'all'
+      ? null
+      : categories.find((category) => category.id === selectedCategory)?.name ?? null;
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredVideos = useMemo(() => {
     return videos.filter((video) => {
-      const matchesFilter = activeFilter === 'All' || video.productName === activeFilter;
-      if (!matchesFilter) {
+      const matchesCategory =
+        selectedCategory === 'all' || (selectedCategoryName ? video.productName === selectedCategoryName : false);
+      if (!matchesCategory) {
         return false;
       }
 
@@ -39,7 +65,7 @@ export default function VideoLibraryShell({
 
       return haystack.some((value) => value.includes(normalizedQuery));
     });
-  }, [videos, activeFilter, normalizedQuery]);
+  }, [videos, selectedCategory, selectedCategoryName, normalizedQuery]);
 
   const visibleVideos = filteredVideos;
   return (
@@ -53,55 +79,13 @@ export default function VideoLibraryShell({
 
         </header>
 
-        <div className="mx-auto flex w-full flex-col gap-4">
-          <form
-            className="mx-auto flex w-full max-w-3xl items-center gap-2 rounded-full border border-border bg-background px-4 py-2 shadow-sm"
-            role="search"
-            onSubmit={(event) => event.preventDefault()}
-          >
-            <svg
-              className="h-4 w-4 flex-shrink-0 text-muted-foreground"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M11 5C7.686 5 5 7.686 5 11C5 14.314 7.686 17 11 17C12.657 17 14.156 16.328 15.242 15.242C16.328 14.156 17 12.657 17 11C17 7.686 14.314 5 11 5ZM3 11C3 6.582 6.582 3 11 3C15.418 3 19 6.582 19 11C19 12.85 18.372 14.554 17.318 15.926L20.707 19.293L19.293 20.707L15.926 17.318C14.554 18.372 12.85 19 11 19C6.582 19 3 15.418 3 11Z"
-                fill="currentColor"
-              />
-            </svg>
-            <input
-              type="search"
-              placeholder="Search videos"
-              className="w-full bg-transparent text-sm outline-none"
-              aria-label="Search videos"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </form>
-
-          <div className="flex flex-wrap justify-center gap-2">
-            {['All', ...filters].map((filter) => {
-              const isActive = activeFilter === filter;
-              return (
-                <button
-                  key={filter}
-                  type="button"
-                  className={`inline-flex items-center rounded-full border px-5 py-2 text-sm font-medium transition ${
-                    isActive
-                      ? 'border-transparent bg-foreground text-background'
-                      : 'border-border bg-background text-foreground hover:border-foreground/40'
-                  }`}
-                  onClick={() => setActiveFilter(filter)}
-                  aria-pressed={isActive}
-                >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <ProductSearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {visibleVideos.map((item) => (
@@ -120,9 +104,6 @@ export default function VideoLibraryShell({
                         unoptimized
                       />
                     </div>
-                    <span className="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white">
-                      {item.source === 'primary' ? 'Demo' : 'Related'}
-                    </span>
                   </>
                 ) : (
                   <div className="flex aspect-video items-center justify-center bg-muted text-xs text-muted-foreground">
@@ -131,12 +112,11 @@ export default function VideoLibraryShell({
                 )}
               </Link>
               <div className="flex flex-col gap-1">
-                <h3 className="text-sm font-semibold leading-snug text-foreground">
+                <h3 className="text-sm font-medium leading-snug text-foreground">
                   <Link href={item.watchPath} className="hover:text-primary">
                     {item.title}
                   </Link>
                 </h3>
-                <p className="text-xs text-muted-foreground">{item.productName}</p>
               </div>
             </article>
           ))}
