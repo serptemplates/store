@@ -1,9 +1,9 @@
 slug: thinkific-downloader
 platform: Thinkific
-seo_title: Download Thinkific Courses - Thinkific Course Downloader
-seo_description: Download Thinkific courses and lessons for offline learning
-  with our course downloader. Save educational content with videos, materials,
-  and resources included.
+seo_title: Thinkific Downloader - Download Thinkific Videos | Browser Extension & App
+seo_description: Download Thinkific videos in high quality with our easy-to-use
+  video downloader. Save Thinkific content for offline viewing with support for
+  multiple formats and resolutions.
 product_page_url: https://apps.serp.co/thinkific-downloader
 purchase_url: https://serp.ly/thinkific-downloader
 stripe:
@@ -14,8 +14,8 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6Ip7FMh0twtd
 name: Thinkific Downloader
-tagline: Download Thinkific courses and educational content for offline
-  learning. Fast and reliable course downloader.
+tagline: Download Thinkific videos quickly and easily for offline viewing. Fast,
+  reliable, and secure video downloader.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/thinkific-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/thinkific-downloader/main/images/thinkific-downloader.gif
 github_repo_url: https://github.com/serpapps/thinkific-downloader

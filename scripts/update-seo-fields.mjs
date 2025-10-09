@@ -11,6 +11,7 @@ function analyzeProduct(data) {
   const platform = data.platform || "";
   const slug = data.slug || "";
   const features = data.features || [];
+  const supportedOS = data.supported_operating_systems || [];
   
   // Determine if it's a video downloader, image downloader, or other type
   let contentType = "content";
@@ -41,42 +42,61 @@ function analyzeProduct(data) {
     contentType = "images";
   }
   
-  return { platform, contentType, actionVerb };
+  // Determine platform type (browser extension, app, or both)
+  const hasBrowserSupport = supportedOS.some(os => ['chrome', 'firefox', 'edge', 'safari'].includes(os.toLowerCase()));
+  const hasDesktopSupport = supportedOS.some(os => ['windows', 'mac', 'macos', 'linux'].includes(os.toLowerCase()));
+  
+  let platformType = "";
+  if (hasBrowserSupport && hasDesktopSupport) {
+    platformType = "Browser Extension & App";
+  } else if (hasBrowserSupport) {
+    platformType = "Browser Extension";
+  } else if (hasDesktopSupport) {
+    platformType = "App";
+  } else {
+    platformType = "Tool";
+  }
+  
+  return { platform, contentType, actionVerb, platformType };
 }
 
 // Helper function to create better SEO title
 function createSeoTitle(data) {
-  const { platform, contentType } = analyzeProduct(data);
+  const { platform, contentType, platformType } = analyzeProduct(data);
+  
+  // Use the full product name from data.name
+  const productName = data.name;
   
   // Use the actual platform name from data
   let platformName = platform || data.name.replace(/(video downloader|downloader|video|audio)/gi, "").trim();
   
   // Special case handling
   if (data.slug === "pdf-downloader") {
-    return `Download PDFs - PDF Document Downloader Tool`;
+    return `${productName} - Download PDFs | ${platformType}`;
   } else if (data.slug === "khan-academy-downloader") {
     platformName = "Khan Academy";
   } else if (data.slug === "linkedin-learning-downloader") {
     platformName = "LinkedIn Learning";
   }
   
+  // Format: [Product Name] - Download [Platform] [Content Type] | [Platform Type]
   if (contentType === "videos") {
-    return `Download ${platformName} Videos - ${platformName} Video Downloader Tool`;
+    return `${productName} - Download ${platformName} Videos | ${platformType}`;
   } else if (contentType === "audio") {
-    return `Download ${platformName} Audio - ${platformName} Audio Downloader`;
+    return `${productName} - Download ${platformName} Audio | ${platformType}`;
   } else if (contentType === "images") {
-    return `Download ${platformName} Images - ${platformName} Image Downloader`;
+    return `${productName} - Download ${platformName} Images | ${platformType}`;
   } else if (contentType === "gifs") {
-    return `Download ${platformName} GIFs - ${platformName} GIF Downloader`;
+    return `${productName} - Download ${platformName} GIFs | ${platformType}`;
   } else if (contentType === "PDFs") {
-    return `Download PDFs - PDF Document Downloader Tool`;
+    return `${productName} - Download PDFs | ${platformType}`;
   } else if (contentType === "thumbnails") {
-    return `Download Video Thumbnails - Thumbnail Downloader Tool`;
+    return `${productName} - Download Video Thumbnails | ${platformType}`;
   } else if (contentType === "courses") {
-    return `Download ${platformName} Courses - ${platformName} Course Downloader`;
+    return `${productName} - Download ${platformName} Courses | ${platformType}`;
   }
   
-  return `Download ${platformName} Content - ${platformName} Downloader Tool`;
+  return `${productName} - Download ${platformName} Content | ${platformType}`;
 }
 
 // Helper function to create better tagline
@@ -152,28 +172,13 @@ function updateYamlFile(filePath) {
     const doc = YAML.parseDocument(content);
     const data = doc.toJSON();
     
-    // Check if this file needs updating (has the problematic pattern or generic "content" wording)
+    // Check if this file needs updating
+    // Update all files that have "Tool" in the title (old format)
+    // or don't have the new "Browser Extension" / "App" format
     const needsUpdate = 
       (data.seo_title && (
-        data.seo_title.includes("Download " + data.name + " for Offline Access") ||
-        data.seo_title.includes("| Download " + data.name) ||
-        (data.seo_title.includes("Content - ") && !data.seo_title.includes("Videos - ") && !data.seo_title.includes("Images - ") && !data.seo_title.includes("Audio - ")) ||
-        data.seo_title.includes("Download Pdf PDFs") ||
-        (data.seo_title.includes("Download Khan Courses") && data.slug === "khan-academy-downloader")
-      )) ||
-      (data.seo_description && (
-        data.seo_description.includes("Download " + data.name + " content for offline") ||
-        data.seo_description.includes("downloader content for offline") ||
-        (data.seo_description.includes("content with our reliable") && !data.seo_description.includes("videos in high quality")) ||
-        data.seo_description.includes("Download Pdf PDFs") ||
-        (data.seo_description.includes("Download Khan courses") && data.slug === "khan-academy-downloader")
-      )) ||
-      (data.tagline && (
-        data.tagline.includes("Download " + data.name + " instantly to your device") ||
-        data.tagline.includes("downloader instantly to your device") ||
-        (data.tagline.includes("content quickly and easily") && !data.tagline.includes("videos quickly and easily")) ||
-        data.tagline.includes("Download Pdf PDFs") ||
-        (data.tagline.includes("Download Khan courses") && data.slug === "khan-academy-downloader")
+        data.seo_title.includes("Tool") || // Update old ones with "Tool"
+        (!data.seo_title.includes("Browser Extension") && !data.seo_title.includes("App"))
       ));
     
     if (!needsUpdate) {

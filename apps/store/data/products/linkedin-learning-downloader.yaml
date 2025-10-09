@@ -1,9 +1,10 @@
 slug: linkedin-learning-downloader
 platform: Linkedin
-seo_title: Download Linkedin Courses - Linkedin Course Downloader
-seo_description: Download Linkedin courses and lessons for offline learning with
-  our course downloader. Save educational content with videos, materials, and
-  resources included.
+seo_title: Linkedin Learning Downloader - Download LinkedIn Learning Courses |
+  Browser Extension & App
+seo_description: Download LinkedIn Learning courses and lessons for offline
+  learning with our course downloader. Save educational content with videos,
+  materials, and resources included.
 product_page_url: https://apps.serp.co/linkedin-learning-downloader
 purchase_url: https://serp.ly/linkedin-learning-downloader
 stripe:
@@ -14,8 +15,8 @@ stripe:
     source: generated
     stripe_product_id: prod_Sv6HSdCX0irIOM
 name: Linkedin Learning Downloader
-tagline: Download Linkedin courses and educational content for offline learning.
-  Fast and reliable course downloader.
+tagline: Download LinkedIn Learning courses and educational content for offline
+  learning. Fast and reliable course downloader.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/linkedin-learning-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/linkedin-learning-downloader/main/images/linkedin-learning-downloader.gif
 github_repo_url: https://github.com/serpapps/linkedin-learning-downloader
