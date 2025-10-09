@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, ChangeEvent } from "react"
+import { useState, useEffect, useCallback, ChangeEvent, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import {
@@ -10,6 +10,7 @@ import {
 import { PayPalCheckoutButton } from "@/components/paypal-button"
 import { trackCheckoutError, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
+import type { EcommerceItem } from "@/lib/analytics/gtm"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())
@@ -63,8 +64,23 @@ export function EmbeddedCheckoutView() {
     setIsLoading(false)
   }, [productSlug, router])
 
+  const finalPrice = typeof product?.price === "number" ? Number(product.price) : 67.0
+  const currency = typeof product?.currency === "string" ? product.currency : "USD"
+
+  const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
+    if (!product || !productSlug) {
+      return undefined
+    }
+    return {
+      item_id: product.slug ?? productSlug,
+      item_name: product.name ?? productSlug,
+      price: Number(finalPrice.toFixed(2)),
+      quantity: 1,
+    }
+  }, [product, productSlug, finalPrice])
+
   useEffect(() => {
-    if (!productSlug) {
+    if (!productSlug || !product || !ecommerceItem) {
       return
     }
 
@@ -72,8 +88,11 @@ export function EmbeddedCheckoutView() {
       productSlug,
       productName,
       affiliateId: affiliateId ?? null,
+      currency,
+      value: finalPrice,
+      ecommerceItem,
     })
-  }, [productSlug, productName, affiliateId])
+  }, [productSlug, product, productName, affiliateId, currency, finalPrice, ecommerceItem])
 
   // Create Stripe checkout session
   const fetchClientSecret = useCallback(async () => {
@@ -114,6 +133,10 @@ export function EmbeddedCheckoutView() {
         productSlug: productSlug ?? null,
         productName,
         affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+        isInitialSelection: true,
       })
 
       return data.client_secret
@@ -128,7 +151,7 @@ export function EmbeddedCheckoutView() {
       })
       return null
     }
-  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName])
+  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName, currency, finalPrice, ecommerceItem])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
@@ -161,9 +184,12 @@ export function EmbeddedCheckoutView() {
         productSlug: productSlug ?? null,
         productName,
         affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
       })
     }
-  }, [showPayPal, productSlug, productName, affiliateId])
+  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
 
   const handleSelectPayPal = useCallback(() => {
     setShowPayPal(true)
@@ -172,6 +198,9 @@ export function EmbeddedCheckoutView() {
         productSlug: productSlug ?? null,
         productName,
         affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
       })
 
       trackCheckoutSessionReady({
@@ -179,9 +208,12 @@ export function EmbeddedCheckoutView() {
         productSlug: productSlug ?? null,
         productName,
         affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
       })
     }
-  }, [showPayPal, productSlug, productName, affiliateId])
+  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
 
   if (isLoading || !product) {
     return (
@@ -190,8 +222,6 @@ export function EmbeddedCheckoutView() {
       </div>
     )
   }
-
-  const finalPrice = product?.price || 67.00
 
   const paypalMetadata: Record<string, string> = {
     landerId: productSlug || '',
