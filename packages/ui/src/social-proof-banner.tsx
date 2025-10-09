@@ -7,6 +7,7 @@ import SmartLink from "./components/smart-link";
 export type SocialProofBannerProps = {
   userCount: number;
   starRating: number;
+  userLabel?: string;
   description?: string;
   avatars: string[];
   link?: {
@@ -21,6 +22,7 @@ const SocialProofBanner = ({
   starRating,
   className,
   userCount,
+  userLabel,
   avatars,
   link,
 }: SocialProofBannerProps) => {
@@ -30,12 +32,13 @@ const SocialProofBanner = ({
     );
   }
 
-  const extraCount = userCount - avatars.length;
+  const extraCount = Math.max(0, userCount - avatars.length);
   const descriptionText = description?.trim() ?? "";
   const hasDescription = descriptionText.length > 0;
   const linkLabel = link?.label?.trim();
   const linkUrl = link?.url?.trim();
   const hasLink = Boolean(linkLabel && linkUrl);
+  const resolvedUserLabel = userLabel?.trim() || "Users";
 
   return (
     <div className={cn(className, "mx-auto w-full max-w-5xl")}>
@@ -45,7 +48,10 @@ const SocialProofBanner = ({
           <div className="text-4xl text-center font-black text-black">
             <span>{userCount}+</span>
           </div>
-          <div className="flex items-center gap-1">
+          <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-indigo-500">
+            {resolvedUserLabel}
+          </span>
+          <div className="mt-1 flex items-center gap-1">
             {[...Array(starRating)].map((_, i) => (
               <FaStar key={i} className="h-4 w-4 fill-orange-400" />
             ))}
@@ -84,9 +90,11 @@ const SocialProofBanner = ({
                 className="border-2 border-purple-100"
               />
             ))}
-            <Avatar className="border-2 border-purple-100 text-[10px] font-bold">
-              {`+${extraCount}`}
-            </Avatar>
+            {extraCount > 0 ? (
+              <Avatar className="border-2 border-purple-100 text-[10px] font-bold">
+                {`+${extraCount}`}
+              </Avatar>
+            ) : null}
           </div>
         </div>
         <Laurel className="size-20 text-indigo-300 hidden lg:block" />
