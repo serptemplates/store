@@ -241,12 +241,18 @@ importers:
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.1.1)
+      next:
+        specifier: ^14 || ^15
+        version: 15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.55.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^18 || ^19
         version: 19.1.1
       react-dom:
         specifier: ^18 || ^19
         version: 19.1.1(react@19.1.1)
+      react-icons:
+        specifier: ^5
+        version: 5.5.0(react@19.1.1)
     devDependencies:
       '@types/react':
         specifier: ^19
@@ -278,15 +284,24 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      embla-carousel-react:
+        specifier: ^8
+        version: 8.6.0(react@19.1.1)
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.1.1)
+      next:
+        specifier: ^14 || ^15
+        version: 15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.55.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^18 || ^19
         version: 19.1.1
       react-dom:
         specifier: ^18 || ^19
         version: 19.1.1(react@19.1.1)
+      react-icons:
+        specifier: ^5
+        version: 5.5.0(react@19.1.1)
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.6.0

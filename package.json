@@ -2,11 +2,6 @@
   "name": "emd-monorepo",
   "packageManager": "pnpm@9.11.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "sites/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "pnpm --filter @apps/store dev",
     "build": "pnpm -r --parallel build",

@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { Check, Zap, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@repo/ui";
-import { cn } from "@repo/ui/lib/utils";
+import { cn } from "@repo/ui";
 
 export type PricingCtaProps = {
   heading?: string;
@@ -53,15 +53,19 @@ export function PricingCta({
   className,
   id,
 }: PricingCtaProps) {
-  const listItems = (benefits?.length ? benefits : features?.length ? features : defaultBenefits).slice(0, 8);
+  const listItems = (
+    benefits?.length ? benefits : features?.length ? features : defaultBenefits
+  ).slice(0, 8);
 
-  const showPriceDetails = Boolean(price || priceLabel || originalPrice || priceNote);
+  const showPriceDetails = Boolean(
+    price || priceLabel || originalPrice || priceNote
+  );
 
   // Calculate discount percentage if original price exists
   let discountPercentage = 0;
   if (originalPrice && price) {
-    const originalNum = parseFloat(originalPrice.replace(/[^0-9.]/g, ''));
-    const currentNum = parseFloat(price.replace(/[^0-9.]/g, ''));
+    const originalNum = parseFloat(originalPrice.replace(/[^0-9.]/g, ""));
+    const currentNum = parseFloat(price.replace(/[^0-9.]/g, ""));
     if (originalNum && currentNum) {
       discountPercentage = Math.round((1 - currentNum / originalNum) * 100);
     }
@@ -71,11 +75,10 @@ export function PricingCta({
     <section
       id={id}
       className={cn("py-10 sm:py-16 lg:py-20 px-4", className)}
-      style={{ backgroundColor: '#f8f8f8' }}
+      style={{ backgroundColor: "#f8f8f8" }}
     >
-      <div className="relative mx-auto" style={{ maxWidth: '1200px' }}>
+      <div className="relative mx-auto" style={{ maxWidth: "1200px" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-
           {/* Left side content - Hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
             {/* Product Title & Description */}
@@ -83,38 +86,84 @@ export function PricingCta({
               {heading || "Get Instant Access"}
             </h2>
             <p className="text-lg md:text-xl text-gray-600 mb-6 lg:mb-8">
-              {subheading || "Start using our product immediately after checkout. No waiting, no delays."}
+              {subheading ||
+                "Start using our product immediately after checkout. No waiting, no delays."}
             </p>
 
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
             <div className="hidden lg:block space-y-4 mb-8">
               <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#fbbf24' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg
+                  className="w-6 h-6 mt-1 flex-shrink-0"
+                  style={{ color: "#fbbf24" }}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Instant Download</h3>
-                  <p className="text-sm text-gray-600">Get access immediately after payment</p>
+                  <h3 className="font-semibold text-gray-900">
+                    Instant Download
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Get access immediately after payment
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#4ade80' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <svg
+                  className="w-6 h-6 mt-1 flex-shrink-0"
+                  style={{ color: "#4ade80" }}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Lifetime Updates</h3>
-                  <p className="text-sm text-gray-600">All future updates included at no extra cost</p>
+                  <h3 className="font-semibold text-gray-900">
+                    Lifetime Updates
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    All future updates included at no extra cost
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: '#60a5fa' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                <svg
+                  className="w-6 h-6 mt-1 flex-shrink-0"
+                  style={{ color: "#60a5fa" }}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                  />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Premium Support</h3>
-                  <p className="text-sm text-gray-600">Get help when you need it</p>
+                  <h3 className="font-semibold text-gray-900">
+                    Premium Support
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Get help when you need it
+                  </p>
                 </div>
               </div>
             </div>
@@ -123,25 +172,52 @@ export function PricingCta({
             <div className="hidden lg:flex flex-wrap items-center gap-6 mb-6">
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  <svg
+                    key={i}
+                    className="w-5 h-5 text-yellow-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
-                <span className="ml-2 text-sm text-gray-600">Trusted by 14,745+ customers</span>
+                <span className="ml-2 text-sm text-gray-600">
+                  Trusted by 14,745+ customers
+                </span>
               </div>
             </div>
 
             {/* Security badges - Hidden on mobile */}
             <div className="hidden lg:flex items-center gap-4 text-sm text-gray-500">
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
                 </svg>
                 <span>Secure Checkout</span>
               </div>
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  />
                 </svg>
                 <span>SSL Encrypted</span>
               </div>
@@ -150,13 +226,14 @@ export function PricingCta({
 
           {/* Right side - pricing card */}
           <div className="relative order-1 lg:order-2">
-            <div className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
-                 style={{
-                   padding: '30px 25px 25px',
-                   boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
-                   border: '1px solid #e5e5e5'
-                 }}>
-
+            <div
+              className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
+              style={{
+                padding: "30px 25px 25px",
+                boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
+                border: "1px solid #e5e5e5",
+              }}
+            >
               {/* Product Title - Mobile Only */}
               <div className="text-center mb-4 lg:hidden">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -173,32 +250,41 @@ export function PricingCta({
               {showPriceDetails && (
                 <div className="text-center mb-4">
                   {originalPrice && (
-                    <div className="line-through mb-1 text-2xl sm:text-3xl"
-                         style={{
-                           color: '#9ca3af',
-                           fontWeight: '400',
-                           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
-                         }}>
+                    <div
+                      className="line-through mb-1 text-2xl sm:text-3xl"
+                      style={{
+                        color: "#9ca3af",
+                        fontWeight: "400",
+                        fontFamily:
+                          "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                      }}
+                    >
                       {originalPrice}
                     </div>
                   )}
                   {price && (
-                    <div className="font-bold text-5xl sm:text-6xl"
-                         style={{
-                           lineHeight: '0.9',
-                           color: '#000000',
-                           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                           letterSpacing: '-0.02em'
-                         }}>
+                    <div
+                      className="font-bold text-5xl sm:text-6xl"
+                      style={{
+                        lineHeight: "0.9",
+                        color: "#000000",
+                        fontFamily:
+                          "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
                       {price}
                     </div>
                   )}
                   {priceLabel && (
-                    <div className="mt-2" style={{
-                      color: '#6b7280',
-                      fontSize: '14px',
-                      fontStyle: 'italic'
-                    }}>
+                    <div
+                      className="mt-2"
+                      style={{
+                        color: "#6b7280",
+                        fontSize: "14px",
+                        fontStyle: "italic",
+                      }}
+                    >
                       {priceLabel}
                     </div>
                   )}
@@ -208,44 +294,59 @@ export function PricingCta({
               {/* Discount Badge */}
               {discountPercentage > 0 && (
                 <div className="mb-5 mx-auto w-full">
-                  <div className="py-2.5 px-4 rounded-md text-center font-bold"
-                       style={{
-                         backgroundColor: '#ef4444',
-                         color: 'white',
-                         fontSize: '13px',
-                         letterSpacing: '0.01em'
-                       }}>
+                  <div
+                    className="py-2.5 px-4 rounded-md text-center font-bold"
+                    style={{
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      fontSize: "13px",
+                      letterSpacing: "0.01em",
+                    }}
+                  >
                     {discountPercentage}% OFF - but only TODAY, on THURSDAY
                   </div>
                 </div>
               )}
 
-              <div style={{ borderTop: '1px solid #e5e7eb', marginBottom: '20px', marginTop: '15px' }}></div>
+              <div
+                style={{
+                  borderTop: "1px solid #e5e7eb",
+                  marginBottom: "20px",
+                  marginTop: "15px",
+                }}
+              ></div>
 
               {/* Benefits List */}
               <div className="mb-6">
                 <div className="space-y-2.5">
                   {listItems.map((feat, index) => (
                     <div key={index} className="flex items-center gap-2.5">
-                      <span className="flex items-center justify-center rounded-full flex-shrink-0"
-                            style={{
-                              backgroundColor: '#dcfce7',
-                              width: '20px',
-                              height: '20px'
-                            }}>
-                        <Check style={{
-                          color: '#16a34a',
-                          width: '12px',
-                          height: '12px',
-                          strokeWidth: '3'
-                        }} />
+                      <span
+                        className="flex items-center justify-center rounded-full flex-shrink-0"
+                        style={{
+                          backgroundColor: "#dcfce7",
+                          width: "20px",
+                          height: "20px",
+                        }}
+                      >
+                        <Check
+                          style={{
+                            color: "#16a34a",
+                            width: "12px",
+                            height: "12px",
+                            strokeWidth: "3",
+                          }}
+                        />
                       </span>
-                      <span style={{
-                        color: '#374151',
-                        fontSize: '15px',
-                        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                        lineHeight: '1.4'
-                      }}>
+                      <span
+                        style={{
+                          color: "#374151",
+                          fontSize: "15px",
+                          fontFamily:
+                            "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                          lineHeight: "1.4",
+                        }}
+                      >
                         {feat}
                       </span>
                     </div>
@@ -253,120 +354,135 @@ export function PricingCta({
                 </div>
               </div>
 
-              <div style={{ borderTop: '1px solid #e5e7eb', marginBottom: '20px' }}></div>
+              <div
+                style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }}
+              ></div>
 
               {/* Additional info if provided */}
-              {(benefits?.length || features?.length) && benefits?.length !== listItems.length && (
-                <div className="mb-4">
-              <p className="text-left mb-3" style={{
-                color: '#374151',
-                fontSize: '14px',
-                lineHeight: '1.5'
-              }}>
-                Included: <strong>300 critical conversion checkpoints</strong>
-              </p>
-              <p className="text-left mb-4" style={{
-                color: '#374151',
-                fontSize: '14px',
-                lineHeight: '1.5'
-              }}>
-                Checklist last updated: <strong>October 2nd 2025</strong>
-              </p>
-            </div>
-          )}
-
-          {/* CTA Button */}
-          <div className="mb-5">
-            {onCtaClick ? (
-              <button
-                type="button"
-                onClick={onCtaClick}
-                disabled={ctaDisabled || ctaLoading}
-                className="w-full font-bold transition-all text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
-                style={{
-                  backgroundImage: 'linear-gradient(#ffe252, #fed300)',
-                  color: '#000000',
-                  fontWeight: '700',
-                  borderRadius: '101px',
-                  borderTop: 'none',
-                  borderLeft: 'none',
-                  borderRight: 'none',
-                  borderBottom: '5px solid #d0ad00',
-                  boxShadow: '0 3px 0 1px #000000',
-                  fontFamily: '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                  letterSpacing: '0px',
-                  lineHeight: '1.3em',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  zIndex: 2
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 5px 0 1px #000000';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 3px 0 1px #000000';
-                }}
-              >
-                {ctaLoading ? (
-                  <>
-                    <Loader2 className="inline h-5 w-5 animate-spin mr-2" />
-                    Processing...
-                  </>
-                ) : (
-                  ctaText
+              {(benefits?.length || features?.length) &&
+                benefits?.length !== listItems.length && (
+                  <div className="mb-4">
+                    <p
+                      className="text-left mb-3"
+                      style={{
+                        color: "#374151",
+                        fontSize: "14px",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      Included:{" "}
+                      <strong>300 critical conversion checkpoints</strong>
+                    </p>
+                    <p
+                      className="text-left mb-4"
+                      style={{
+                        color: "#374151",
+                        fontSize: "14px",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      Checklist last updated: <strong>October 2nd 2025</strong>
+                    </p>
+                  </div>
                 )}
-              </button>
-            ) : (
-              <a
-                href={ctaHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
-                style={{
-                  backgroundImage: 'linear-gradient(#ffe252, #fed300)',
-                  color: '#000000',
-                  fontWeight: '700',
-                  borderRadius: '101px',
-                  borderTop: 'none',
-                  borderLeft: 'none',
-                  borderRight: 'none',
-                  borderBottom: '5px solid #d0ad00',
-                  boxShadow: '0 3px 0 1px #000000',
-                  fontFamily: '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                  letterSpacing: '0px',
-                  lineHeight: '1.3em',
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  zIndex: 2,
-                  display: 'inline-block'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 5px 0 1px #000000';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 3px 0 1px #000000';
-                }}
-              >
-                {ctaText}
-              </a>
-            )}
-            {ctaExtra}
-          </div>
+
+              {/* CTA Button */}
+              <div className="mb-5">
+                {onCtaClick ? (
+                  <button
+                    type="button"
+                    onClick={onCtaClick}
+                    disabled={ctaDisabled || ctaLoading}
+                    className="w-full font-bold transition-all text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
+                    style={{
+                      backgroundImage: "linear-gradient(#ffe252, #fed300)",
+                      color: "#000000",
+                      fontWeight: "700",
+                      borderRadius: "101px",
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      borderBottom: "5px solid #d0ad00",
+                      boxShadow: "0 3px 0 1px #000000",
+                      fontFamily:
+                        '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                      letterSpacing: "0px",
+                      lineHeight: "1.3em",
+                      cursor: "pointer",
+                      position: "relative",
+                      zIndex: 2,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 5px 0 1px #000000";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 3px 0 1px #000000";
+                    }}
+                  >
+                    {ctaLoading ? (
+                      <>
+                        <Loader2 className="inline h-5 w-5 animate-spin mr-2" />
+                        Processing...
+                      </>
+                    ) : (
+                      ctaText
+                    )}
+                  </button>
+                ) : (
+                  <a
+                    href={ctaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
+                    style={{
+                      backgroundImage: "linear-gradient(#ffe252, #fed300)",
+                      color: "#000000",
+                      fontWeight: "700",
+                      borderRadius: "101px",
+                      borderTop: "none",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      borderBottom: "5px solid #d0ad00",
+                      boxShadow: "0 3px 0 1px #000000",
+                      fontFamily:
+                        '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                      letterSpacing: "0px",
+                      lineHeight: "1.3em",
+                      textDecoration: "none",
+                      cursor: "pointer",
+                      position: "relative",
+                      zIndex: 2,
+                      display: "inline-block",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 5px 0 1px #000000";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 3px 0 1px #000000";
+                    }}
+                  >
+                    {ctaText}
+                  </a>
+                )}
+                {ctaExtra}
+              </div>
 
               {/* Terms/Disclaimer - only show if custom terms provided */}
               {terms && (
-                <div className="text-center leading-relaxed"
-                     style={{
-                       color: '#6b7280',
-                       fontSize: '13px',
-                       lineHeight: '1.5',
-                       fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif'
-                     }}>
+                <div
+                  className="text-center leading-relaxed"
+                  style={{
+                    color: "#6b7280",
+                    fontSize: "13px",
+                    lineHeight: "1.5",
+                    fontFamily:
+                      "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                  }}
+                >
                   {terms}
                 </div>
               )}
