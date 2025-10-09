@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundcloud-downloader.jpg
   alt: Soundcloud Downloader website preview
 faqs:
-- question: Can I download entire playlists from Soundcloud?
-  answer: Yes! The batch download feature lets you download complete playlists, albums, or user profiles from Soundcloud. All tracks are saved with proper metadata and organization.
-- question: What audio quality and formats does this support?
-  answer: The downloader supports high-quality audio downloads from Soundcloud in formats like MP3, AAC, FLAC, and WAV. You can choose between smaller files or lossless quality depending on your needs.
-- question: Does this save Soundcloud track metadata and artwork?
-  answer: Absolutely! All available metadata including artist, title, album, genre, and cover art is saved with each download. This ensures your music library is properly organized and displays correctly in media players.
-- question: Can I download tracks from private Soundcloud accounts I follow?
-  answer: Yes, if you have access to view private content on Soundcloud, the downloader can save it. Simply authenticate with your account to download content from creators you follow.
-- question: Does this work with Soundcloud podcasts and longer audio content?
-  answer: Yes! The downloader handles audio of any length, from short sound clips to multi-hour podcasts or DJ sets. Long-form content is fully supported.
-- question: How fast are downloads from Soundcloud?
-  answer: Download speeds are typically very fast since audio files are smaller than videos. Most tracks download in seconds, and even large playlists complete quickly thanks to parallel downloading.
-- question: Can I automatically organize my Soundcloud downloads?
-  answer: Yes! The downloader includes smart organization that can sort tracks by artist, album, genre, or playlist. You can also define custom folder structures and naming patterns.
-- question: Is there a limit on how many tracks I can download?
-  answer: No artificial limits! Download as many tracks as your storage allows. The downloader is optimized for bulk operations, making it perfect for building offline music libraries from Soundcloud.
+- question: How do I use the Soundcloud downloader?
+  answer: Install the browser extension, navigate to Soundcloud, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Soundcloud, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Soundcloud content?
+  answer: The downloader works with most publicly accessible content on Soundcloud. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Soundcloud content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Soundcloud assets for clients and the batch features in Soundcloud Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Soundcloud assets for clients and the download in Soundcloud Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

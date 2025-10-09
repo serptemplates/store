@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
   alt: Eporner Video Downloader website preview
 faqs:
-- question: How do I use this downloader?
-  answer: Simply copy the video URL from Eporner, paste it into the downloader, select your preferred quality and format, then click download. The video will be saved to your chosen location in seconds.
-- question: What video quality options are available?
-  answer: The downloader supports all available quality levels from Eporner, typically ranging from 360p up to 4K or higher. You can choose the quality that balances file size with visual quality for your needs.
-- question: Can I download multiple videos at the same time?
-  answer: Yes! The batch download feature allows you to queue multiple videos and download them simultaneously. This saves time when you need to download several videos from Eporner.
-- question: Does this work on both Windows and Mac?
-  answer: The downloader is cross-platform compatible and works on Windows, Mac, and Linux. It also offers browser extensions for Chrome, Firefox, and Edge for convenient downloading directly from Eporner.
+- question: How do I use the Eporner downloader?
+  answer: Install the browser extension, navigate to Eporner, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Eporner, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Eporner content?
+  answer: The downloader works with most publicly accessible content on Eporner. Some restricted or DRM-protected content may not be downloadable.
 - question: Will downloads continue if my internet connection drops?
-  answer: Yes, the downloader includes resume capability. If your connection is interrupted, simply restart the download and it will continue from where it stopped, avoiding wasted bandwidth.
-- question: Can I convert videos to different formats?
-  answer: Absolutely! The downloader supports format conversion to MP4, AVI, MKV, WebM, and more. You can also extract audio-only files in MP3, AAC, or other audio formats.
-- question: Is there a download limit or file size restriction?
-  answer: No artificial limits! You can download videos of any length or file size, limited only by your available storage space. The downloader handles long-form content and large files efficiently.
-- question: How do I organize my downloaded videos?
-  answer: The downloader includes auto-organization features. Videos can be sorted by date, channel, playlist, or quality. You can also set up custom naming patterns and folder structures for easy management.
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Eporner content
   rating: 4.8
   date: 2025-01-28
-  review: We archive Eporner assets for clients and the batch features in Eporner Video Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Eporner assets for clients and the download in Eporner Video Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

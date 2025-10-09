@@ -49,8 +49,6 @@ faqs:
   answer: Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles.
 - question: Does this work with Instagram Reels and IGTV videos?
   answer: Absolutely! The downloader supports all Instagram video formats including Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded in its original quality and aspect ratio.
-- question: Can I download multiple Instagram posts at once?
-  answer: Yes, batch downloading is fully supported. You can queue multiple posts, entire profiles, or even content from specific hashtags. The downloader processes them efficiently in the background.
 - question: Will the downloader save Instagram captions and hashtags?
   answer: Yes! All post metadata including captions, hashtags, location tags, and timestamps are saved with your downloads. This makes it easy to organize and search your saved content later.
 - question: Can I download from private Instagram accounts I follow?
@@ -61,6 +59,8 @@ faqs:
   answer: Yes, the downloader fetches the highest resolution version available from Instagram. Images and videos are saved without compression or quality loss, giving you the same quality the creator uploaded.
 - question: Can I download my own Instagram content as a backup?
   answer: Definitely! Many users use this downloader to backup their own Instagram content. It's a fast way to create local copies of all your posts, Stories, and Reels for safekeeping.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Ensure your browser is up to date for optimal performance.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Instagram content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Instagram assets for clients and the batch features in Instagram Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Instagram assets for clients and the download in Instagram Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

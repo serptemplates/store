@@ -43,22 +43,22 @@ product_videos: []
 related_videos: []
 screenshots: []
 faqs:
-- question: What types of content can I download from Patreon?
-  answer: This downloader supports all content types from Patreon including videos, images, audio files, and documents. Each content type is downloaded in its original format and quality.
-- question: How do I download content from Patreon?
-  answer: Copy any content URL from Patreon, paste it into the downloader, select your preferences, and click download. The content will be saved to your computer quickly and efficiently.
-- question: Can I download entire profiles or collections?
-  answer: Yes! The batch download feature lets you download all content from a user profile, collection, or category. This is ideal for archiving or creating offline libraries of Patreon content.
+- question: How do I use the Patreon downloader?
+  answer: Install the browser extension, navigate to Patreon, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
 - question: What quality options are available?
-  answer: The downloader provides all quality levels available from Patreon. For videos, this includes HD and 4K where available. For images and documents, you always get the highest resolution version.
-- question: Does this work on mobile devices?
-  answer: While primarily designed for desktop use, the downloader works on any device with a modern browser. Mobile-optimized versions and apps are also available for on-the-go downloading from Patreon.
-- question: Can I schedule downloads for later?
-  answer: Yes! You can queue downloads and set them to start at specific times. This is useful for downloading large amounts of content during off-peak hours or when you have unlimited bandwidth.
-- question: How does the downloader handle duplicate content?
-  answer: Built-in duplicate detection prevents downloading the same content twice. The downloader checks file names and content signatures to skip duplicates, saving storage space and time.
-- question: Is my download history and data kept private?
-  answer: Yes! All downloads and activity happen locally on your device. No download history or personal data is sent to external servers, ensuring complete privacy and security.
+  answer: The downloader supports all available quality levels from Patreon, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Patreon content?
+  answer: The downloader works with most publicly accessible content on Patreon. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -102,7 +102,7 @@ reviews:
   title: Ideal for organizing Patreon content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Patreon assets for clients and the batch features in Patreon Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Patreon assets for clients and the download in Patreon Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

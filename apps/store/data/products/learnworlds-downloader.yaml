@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/learnworlds-downloader.jpg
   alt: Learnworlds Downloader website preview
 faqs:
-- question: Can I download entire courses from Learnworlds?
-  answer: Yes! This downloader supports batch downloading of complete courses including all video lectures, course materials, and resources from Learnworlds. Perfect for offline learning or creating backups of courses you've purchased.
-- question: Does this download Learnworlds subtitles and transcripts?
-  answer: Absolutely! The downloader saves all available subtitles, closed captions, and transcripts in multiple languages. This is essential for accessibility and for reviewing course content without video playback.
-- question: Will this work with Learnworlds course materials like PDFs and assignments?
-  answer: Yes, the downloader handles all course assets including lecture videos, PDFs, documents, quizzes, and supplementary materials from Learnworlds. Everything is organized by course structure for easy navigation.
-- question: Can I download Learnworlds content if I'm enrolled in the course?
-  answer: Yes, as long as you have valid access to a Learnworlds course, you can download all its content for offline viewing. This is perfect for studying without internet or preserving courses you've paid for.
-- question: How are Learnworlds courses organized after downloading?
-  answer: Downloaded courses maintain their original structure with folders for each section and module. Files are named clearly with lecture numbers and titles, making it easy to follow along with the course material.
-- question: What video quality can I download from Learnworlds?
-  answer: The downloader supports all quality levels offered by Learnworlds, typically including 720p, 1080p, and sometimes higher resolutions. Choose the quality that balances video clarity with storage space.
-- question: Can I resume interrupted downloads from Learnworlds?
-  answer: Yes, the downloader includes smart resume capability. If a download is interrupted, you can continue from where it stopped without re-downloading completed files, saving time and bandwidth.
-- question: Is this useful for creating course backups?
-  answer: Absolutely! Many users download their Learnworlds courses as backups since course access can be time-limited or platforms can remove content. Having local copies ensures permanent access to your educational investments.
+- question: How do I use the Learnworlds downloader?
+  answer: Install the browser extension, navigate to Learnworlds, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Learnworlds, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Learnworlds content?
+  answer: The downloader works with most publicly accessible content on Learnworlds. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Learnworlds content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Learnworlds assets for clients and the batch features in Learnworlds Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Learnworlds assets for clients and the download in Learnworlds Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

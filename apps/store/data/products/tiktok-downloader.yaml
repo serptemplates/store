@@ -51,14 +51,14 @@ faqs:
   answer: You can only download content from accounts you have access to view. If you follow a private account and can see their content, the downloader can save those videos. Content from accounts you cannot view cannot be downloaded.
 - question: Will this save the original audio track or just the video?
   answer: The downloader saves complete videos with original audio intact. You can also extract just the audio track separately if needed, which is useful for saving trending sounds or music.
-- question: Can I download entire TikTok profiles or hashtag collections?
-  answer: Yes! The batch download feature lets you download all videos from a user profile, specific hashtags, or your saved collections. This is perfect for creating backups or building content libraries.
 - question: How does this handle TikTok's video quality?
   answer: Videos are downloaded at the highest quality available from TikTok. The downloader preserves the original resolution and bitrate without re-encoding, ensuring you get the best possible quality.
 - question: Is my TikTok account information safe when using this?
   answer: Your privacy and security are priorities. The downloader uses secure authentication methods and never stores your credentials. All operations happen locally on your device.
 - question: Can I organize downloaded TikToks by creator or topic?
   answer: Yes, the downloader includes smart organization features. You can automatically sort videos by creator, hashtag, date, or create custom folders. Video metadata like captions and hashtags are also saved for easy searching.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge for the best experience.
 supported_operating_systems:
 - windows
 - mac
@@ -102,7 +102,7 @@ reviews:
   title: Ideal for organizing Tiktok content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Tiktok assets for clients and the batch features in Tiktok Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Tiktok assets for clients and the download in Tiktok Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

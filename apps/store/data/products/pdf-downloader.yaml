@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pdf-downloader.jpg
   alt: Pdf Downloader website preview
 faqs:
-- question: Can I download entire documents from Pdf?
-  answer: Yes! The downloader can save complete documents from Pdf in their original format. Perfect for offline reading, archiving, or creating backups of important files.
-- question: What file formats are supported for Pdf downloads?
-  answer: The downloader supports multiple formats including PDF, EPUB, and text formats. You can choose the format that works best for your reading device or intended use.
-- question: Does this preserve Pdf document formatting?
-  answer: Yes! Downloaded documents maintain their original formatting, images, and layout. What you download looks exactly like the original document on Pdf.
-- question: Can I download Pdf books or long documents?
-  answer: Absolutely! The downloader handles documents of any length, from short articles to complete books. Large files are downloaded efficiently without issues.
-- question: Does this work with subscription-only Pdf content?
-  answer: If you have an active subscription or access to premium content on Pdf, you can download it. The downloader respects your account permissions and access levels.
-- question: Can I convert Pdf documents to different formats?
-  answer: Yes! The downloader includes format conversion capabilities. You can convert between PDF, EPUB, MOBI, and text formats to match your preferred reading device.
-- question: How are downloaded Pdf documents organized?
-  answer: Documents can be organized by author, category, date, or custom folders. Metadata like title, author, and publication info is preserved for easy library management.
-- question: Is there a limit to how many documents I can download?
-  answer: No! You can download as many documents as your storage allows. The downloader is perfect for building comprehensive offline libraries from Pdf.
+- question: How do I use the Pdf downloader?
+  answer: Install the browser extension, navigate to Pdf, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Pdf, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Pdf content?
+  answer: The downloader works with most publicly accessible content on Pdf. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -103,7 +103,7 @@ reviews:
   title: Ideal for organizing Pdf content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Pdf assets for clients and the batch features in Pdf Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Pdf assets for clients and the download in Pdf Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

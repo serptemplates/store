@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/terabox-downloader.jpg
   alt: Terabox Downloader website preview
 faqs:
-- question: Can I download entire folders from Terabox?
-  answer: Yes! The batch download feature allows you to download complete folders and directory structures from Terabox. All files and subfolders are preserved exactly as organized online.
-- question: Does this handle large files from Terabox?
-  answer: Absolutely! The downloader is optimized for large file transfers. It supports files of any size and includes resume capability if downloads are interrupted.
-- question: How fast are downloads from Terabox compared to the web interface?
-  answer: The downloader typically achieves faster speeds than the web interface by using optimized connection handling and parallel downloading. Most users see significantly improved download times.
-- question: Can I schedule Terabox downloads for off-peak hours?
-  answer: Yes! You can queue downloads and set them to start at specific times. This is useful for downloading large files during night hours or when you have unlimited bandwidth.
-- question: Does this preserve Terabox file metadata and timestamps?
-  answer: Yes, all file metadata including creation dates, modification times, and file attributes are preserved. This ensures your local copies match the cloud versions exactly.
-- question: Can I download shared Terabox links from other users?
-  answer: Yes! The downloader works with public share links from Terabox. If you have a share link, you can download the files even without a Terabox account.
-- question: How does the downloader handle duplicate files from Terabox?
-  answer: Built-in duplicate detection prevents downloading the same file twice. The downloader checks file signatures and can skip or overwrite duplicates based on your preferences.
-- question: Is this useful for backing up my Terabox storage?
-  answer: Absolutely! Many users rely on this downloader to create local backups of their Terabox files. It ensures you have offline copies of important data stored in the cloud.
+- question: How do I use the Terabox downloader?
+  answer: Install the browser extension, navigate to Terabox, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Terabox, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Terabox content?
+  answer: The downloader works with most publicly accessible content on Terabox. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Terabox content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Terabox assets for clients and the batch features in Terabox Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Terabox assets for clients and the download in Terabox Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:

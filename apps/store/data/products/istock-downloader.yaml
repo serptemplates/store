@@ -45,22 +45,22 @@ screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/istock-downloader.jpg
   alt: Istock Downloader website preview
 faqs:
-- question: How do I download images from Istock?
-  answer: Simply copy the image URL or post link from Istock, paste it into the downloader, and click download. The image will be saved to your computer in its original quality within seconds.
-- question: Can I download images in bulk?
-  answer: Yes! The batch download feature allows you to download multiple images, entire galleries, or even whole user profiles at once. This is perfect for creating collections or backups of Istock content.
-- question: Does this preserve the original image quality?
-  answer: Absolutely! The downloader fetches the highest resolution version available from Istock. Images are saved without any compression or quality degradation, giving you pristine originals.
-- question: What image formats are supported?
-  answer: The downloader supports all common formats including JPG, PNG, GIF, WebP, and more. You can also convert images to different formats during download if needed.
-- question: Can I download without watermarks?
-  answer: If Istock content includes watermarks, the downloader saves images as they appear. For watermark-free downloads, ensure you have proper licenses or download your own content.
-- question: Does this work with private or restricted content?
-  answer: You can download content you have permission to view. If you're logged in and can access certain images, the downloader will work. However, content you cannot normally view cannot be downloaded.
-- question: How are downloaded images organized?
-  answer: Images can be automatically organized by date, source, or custom folders. The downloader preserves metadata like titles, descriptions, and tags, making it easy to search and manage your collection.
-- question: Is there a limit to how many images I can download?
-  answer: No download limits! You can save as many images as your storage allows. The downloader is optimized for handling large batches efficiently without slowing down your computer.
+- question: How do I use the Istock downloader?
+  answer: Install the browser extension, navigate to Istock, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Istock, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+- question: Does this work with all Istock content?
+  answer: The downloader works with most publicly accessible content on Istock. Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
 - windows
 - mac
@@ -104,7 +104,7 @@ reviews:
   title: Ideal for organizing Istock content
   rating: 4.8
   date: '2025-01-28'
-  review: We archive Istock assets for clients and the batch features in Istock Downloader keep our workflows smooth. Totally worth the price.
+  review: We archive Istock assets for clients and the download in Istock Downloader keep our workflows smooth. Totally worth the price.
 supported_regions:
 - Worldwide
 return_policy:
