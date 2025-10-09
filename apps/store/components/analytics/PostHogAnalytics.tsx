@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, Suspense, useEffect } from "react";
 import posthog from "posthog-js";
 import { wireGlobalErrorListeners } from "@/lib/analytics/posthog";
 
@@ -49,6 +49,17 @@ function initializePostHog() {
 }
 
 export function PostHogAnalytics({ children }: PropsWithChildren) {
+  return (
+    <>
+      {children}
+      <Suspense fallback={null}>
+        <PostHogClient />
+      </Suspense>
+    </>
+  );
+}
+
+function PostHogClient() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -73,5 +84,5 @@ export function PostHogAnalytics({ children }: PropsWithChildren) {
     });
   }, [pathname, searchParams]);
 
-  return children;
+  return null;
 }
