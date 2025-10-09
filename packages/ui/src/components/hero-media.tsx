@@ -56,7 +56,6 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
         loop: hasMultipleItems,
         containScroll: "trimSnaps" as const,
         skipSnaps: false,
-        inViewThreshold: 0.4,
       }),
       [hasMultipleItems],
     );
@@ -131,28 +130,33 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
 
     return (
       <>
-        <div className={cn(className, "relative mx-auto w-full")}>
+        <div
+          className={cn(
+            className,
+            "relative mx-auto w-full max-w-5xl px-3 sm:px-6",
+          )}
+        >
           <Carousel
             className="group"
             opts={carouselOptions}
             setApi={setCarouselApi}
           >
-            <CarouselContent className="items-stretch -ml-2 sm:-ml-4">
+            <CarouselContent className="ml-0 flex items-stretch gap-4 sm:gap-6">
               {items.map((item, index) => (
                 <CarouselItem
                   key={index}
                   className={cn(
-                    "pl-2 sm:pl-4",
-                    hasMultipleItems
-                      ? "md:basis-[85%] lg:basis-[70%]"
-                      : "basis-full",
+                    "basis-full pl-0 sm:pl-0",
+                    hasMultipleItems ? "md:basis-full" : "basis-full",
                   )}
                 >
-                  <Item
-                    item={item}
-                    onClick={() => setDialogItem(item)}
-                    isActive={index === selectedIndex}
-                  />
+                  <div className="mx-auto w-full max-w-3xl">
+                    <Item
+                      item={item}
+                      onClick={() => setDialogItem(item)}
+                      isActive={index === selectedIndex}
+                    />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -306,4 +310,3 @@ const Thumbnails = ({ items, selectedIndex, onScroll }: ThumbnailsProps) => {
 HeroMedia.displayName = "HeroMedia";
 
 export default HeroMedia;
-
