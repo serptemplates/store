@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Search, ChevronDown, X } from "lucide-react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import { Search, ChevronDown, X, Check } from "lucide-react";
 
 export type ProductCategory = {
   id: string;
@@ -9,24 +16,32 @@ export type ProductCategory = {
   count: number;
 };
 
+export type CategorySelection =
+  | { mode: "all"; excluded: string[] }
+  | { mode: "custom"; included: string[] };
+
 export type ProductSearchBarProps = {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   categories: ProductCategory[];
-  selectedCategory: string;
-  setSelectedCategory: (value: string) => void;
+  categorySelection: CategorySelection;
+  setCategorySelection: Dispatch<SetStateAction<CategorySelection>>;
   showPreRelease?: boolean;
   setShowPreRelease?: (value: boolean) => void;
   showNewReleases?: boolean;
   setShowNewReleases?: (value: boolean) => void;
 };
 
+function normalizeCategoryId(categoryId: string) {
+  return categoryId.trim().toLowerCase();
+}
+
 export function ProductSearchBar({
   searchQuery,
   setSearchQuery,
   categories,
-  selectedCategory,
-  setSelectedCategory,
+  categorySelection,
+  setCategorySelection,
   showPreRelease,
   setShowPreRelease,
   showNewReleases,
@@ -34,6 +49,11 @@ export function ProductSearchBar({
 }: ProductSearchBarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const allCategoryIds = useMemo(
+    () => categories.filter((category) => category.id !== "all").map((category) => category.id),
+    [categories],
+  );
 
   useEffect(() => {
     const handler = (event: MouseEvent) => {
@@ -46,8 +66,87 @@ export function ProductSearchBar({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const selectedCategoryLabel =
-    categories.find((category) => category.id === selectedCategory)?.name ?? "All Apps";
+  const isAllMode = categorySelection.mode === "all";
+
+  const selectedCategoryLabel = useMemo(() => {
+    if (isAllMode) {
+      if (categorySelection.excluded.length === 0) {
+        return "Select All";
+      }
+
+      if (categorySelection.excluded.length <= 2) {
+        const names = categories
+          .filter((category) => categorySelection.excluded.includes(category.id))
+          .map((category) => category.name);
+        return `All except ${names.join(", ")}`;
+      }
+
+      return `All except ${categorySelection.excluded.length} categories`;
+    }
+
+    if (categorySelection.included.length === 0) {
+      return "Select categories";
+    }
+
+    const entries = categories.filter((category) =>
+      categorySelection.included.includes(category.id),
+    );
+
+    if (entries.length <= 2) {
+      return entries.map((entry) => entry.name).join(", ");
+    }
+
+    return `${entries.length} categories`;
+  }, [categories, categorySelection, isAllMode]);
+
+  const toggleCategory = (rawCategoryId: string) => {
+    const categoryId = normalizeCategoryId(rawCategoryId);
+
+    setCategorySelection((current) => {
+      if (categoryId === "all") {
+        if (current.mode === "all") {
+          return { mode: "custom", included: [] };
+        }
+        return { mode: "all", excluded: [] };
+      }
+
+      if (current.mode === "all") {
+        const excluded = new Set(current.excluded);
+        if (excluded.has(categoryId)) {
+          excluded.delete(categoryId);
+        } else {
+          excluded.add(categoryId);
+        }
+        return { mode: "all", excluded: Array.from(excluded) };
+      }
+
+      const included = new Set(current.included);
+      if (included.has(categoryId)) {
+        included.delete(categoryId);
+      } else {
+        included.add(categoryId);
+      }
+      return { mode: "custom", included: Array.from(included) };
+    });
+  };
+
+  const hasActiveCategoryFilters =
+    (isAllMode && categorySelection.excluded.length > 0) ||
+    (!isAllMode && categorySelection.included.length > 0);
+
+  const isCategorySelected = (categoryId: string) => {
+    if (categoryId === "all") {
+      return isAllMode && categorySelection.excluded.length === 0;
+    }
+
+    if (isAllMode) {
+      return !categorySelection.excluded.includes(categoryId);
+    }
+
+    return categorySelection.included.includes(categoryId);
+  };
+
+  const showClearButton = searchQuery.trim().length > 0 || hasActiveCategoryFilters;
 
   return (
     <div className="mb-10">
@@ -70,7 +169,7 @@ export function ProductSearchBar({
             aria-haspopup="listbox"
             aria-expanded={dropdownOpen}
           >
-            <span className={selectedCategory === "all" ? "text-muted-foreground" : undefined}>
+            <span className={!hasActiveCategoryFilters ? "text-muted-foreground" : undefined}>
               {selectedCategoryLabel}
             </span>
             <ChevronDown
@@ -80,22 +179,35 @@ export function ProductSearchBar({
 
           {dropdownOpen && (
             <div className="absolute z-20 mt-2 w-full max-h-64 overflow-auto rounded-lg border border-border bg-background shadow-lg">
-              {categories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory(category.id);
-                    setDropdownOpen(false);
-                  }}
-                  className={`flex w-full items-center justify-between px-4 py-2 text-sm transition hover:bg-muted/60 ${
-                    selectedCategory === category.id ? "bg-primary/10 text-primary" : ""
-                  }`}
-                >
-                  <span>{category.name}</span>
-                  <span className="text-xs text-muted-foreground">{category.count}</span>
-                </button>
-              ))}
+              {categories.map((category) => {
+                const selected = isCategorySelected(category.id);
+
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() => toggleCategory(category.id)}
+                    className={`flex w-full items-center justify-between px-4 py-2 text-sm transition hover:bg-muted/60 ${
+                      selected ? "bg-primary/10 text-primary" : ""
+                    }`}
+                    aria-pressed={selected}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span
+                        className={`flex h-4 w-4 items-center justify-center rounded-sm border ${
+                          selected
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-muted-foreground/40"
+                        }`}
+                      >
+                        {selected && <Check className="h-3 w-3" />}
+                      </span>
+                      {category.name}
+                    </span>
+                    <span className="text-xs text-muted-foreground">{category.count}</span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -150,28 +262,31 @@ export function ProductSearchBar({
           </button>
         )}
 
-        {(searchQuery.trim() || selectedCategory !== "all") && (
-          <button
-            type="button"
-            onClick={() => {
-              setSearchQuery("");
-              setSelectedCategory("all");
-            }}
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-red-500/50 bg-red-500/10 px-4 text-sm font-medium text-red-600 transition hover:bg-red-500/20 dark:text-red-400"
-          >
-            <X className="h-4 w-4" />
-            Clear filters
-          </button>
-        )}
+        <button
+          type="button"
+          disabled={!showClearButton}
+          onClick={() => {
+            if (!showClearButton) return;
+            setSearchQuery("");
+            setCategorySelection({ mode: "all", excluded: [] });
+          }}
+          className={`inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-red-500/50 bg-red-500/10 px-4 text-sm font-medium text-red-600 transition hover:bg-red-500/20 dark:text-red-400 ${
+            showClearButton ? "" : "pointer-events-none select-none opacity-0 invisible"
+          }`}
+          aria-hidden={!showClearButton}
+        >
+          <X className="h-4 w-4" />
+          Clear filters
+        </button>
       </div>
 
-      {(searchQuery.trim() || selectedCategory !== "all") && (
+      {(searchQuery.trim() || hasActiveCategoryFilters) && (
         <p className="mt-3 text-sm text-muted-foreground">
           Showing results for
           {searchQuery.trim() && (
             <span className="mx-1 font-semibold text-foreground">“{searchQuery.trim()}”</span>
           )}
-          {selectedCategory !== "all" && (
+          {hasActiveCategoryFilters && (
             <span className="ml-1 font-semibold text-foreground">in {selectedCategoryLabel}</span>
           )}
         </p>

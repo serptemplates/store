@@ -4,7 +4,11 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 import { PRIMARY_CATEGORIES } from "@/lib/products/category-constants";
-import { ProductSearchBar, type ProductCategory } from "./ProductSearchBar";
+import {
+  ProductSearchBar,
+  type ProductCategory,
+  type CategorySelection,
+} from "./ProductSearchBar";
 
 export type ProductListItem = {
   slug: string;
@@ -117,15 +121,135 @@ function getCategoryBadgeClasses(category?: string) {
     .join(" ");
 }
 
-export function ProductsFilter({ products }: { products: ProductListItem[] }) {
+function createInitialSelection(initial?: string[]): CategorySelection {
+  if (!initial || initial.length === 0) {
+    return { mode: "all", excluded: [] };
+  }
+
+  const normalized = Array.from(
+    new Set(
+      initial
+        .map((value) => value.trim().toLowerCase())
+        .filter((value) => value.length > 0),
+    ),
+  );
+
+  if (normalized.length === 0) {
+    return { mode: "all", excluded: [] };
+  }
+
+  if (normalized.length === 1 && normalized[0] === "all") {
+    return { mode: "all", excluded: [] };
+  }
+
+  if (normalized.includes("all")) {
+    return {
+      mode: "custom",
+      included: normalized.filter((value) => value !== "all"),
+    };
+  }
+
+  return { mode: "custom", included: normalized };
+}
+
+export type FilterOptions = {
+  searchQuery: string;
+  categorySelection: CategorySelection;
+  showPreRelease: boolean;
+  showNewReleases: boolean;
+};
+
+export function filterProducts(
+  products: ProductListItem[],
+  { searchQuery, categorySelection, showPreRelease, showNewReleases }: FilterOptions,
+): ProductListItem[] {
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const excludedCategorySet =
+    categorySelection.mode === "all"
+      ? new Set(categorySelection.excluded.map((category) => category.toLowerCase()))
+      : null;
+
+  const includedCategorySet =
+    categorySelection.mode === "custom"
+      ? new Set(categorySelection.included.map((category) => category.toLowerCase()))
+      : null;
+
+  const filteredProducts = products.filter((product) => {
+    if (!showPreRelease && product.pre_release) {
+      return false;
+    }
+
+    if (!showNewReleases && product.new_release) {
+      return false;
+    }
+
+    if (
+      excludedCategorySet &&
+      product.categories.some((category) => excludedCategorySet.has(category.toLowerCase()))
+    ) {
+      return false;
+    }
+
+    if (includedCategorySet) {
+      if (includedCategorySet.size === 0) {
+        return false;
+      }
+
+      const matchesIncluded = product.categories.some((category) =>
+        includedCategorySet.has(category.toLowerCase()),
+      );
+
+      if (!matchesIncluded) {
+        return false;
+      }
+    }
+
+    if (!normalizedQuery) {
+      return true;
+    }
+
+    return (
+      product.name.toLowerCase().includes(normalizedQuery) ||
+      (product.platform?.toLowerCase().includes(normalizedQuery) ?? false) ||
+      product.keywords.some((keyword) => keyword.toLowerCase().includes(normalizedQuery))
+    );
+  });
+
+  return filteredProducts.sort((a, b) => {
+    if (a.new_release !== b.new_release) {
+      return a.new_release ? -1 : 1;
+    }
+
+    if (a.popular !== b.popular) {
+      return a.popular ? -1 : 1;
+    }
+
+    if (a.pre_release !== b.pre_release) {
+      return a.pre_release ? 1 : -1;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+}
+
+export function ProductsFilter({
+  products,
+  initialSelectedCategories,
+}: {
+  products: ProductListItem[];
+  initialSelectedCategories?: string[];
+}) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [categorySelection, setCategorySelection] = useState<CategorySelection>(() =>
+    createInitialSelection(initialSelectedCategories),
+  );
   const [showPreRelease, setShowPreRelease] = useState(true);
   const [showNewReleases, setShowNewReleases] = useState(true);
 
   const categories: ProductCategory[] = useMemo(() => {
     const counts = new Map<string, ProductCategory>();
-    counts.set("all", { id: "all", name: "All Apps", count: products.length });
+    counts.set("all", { id: "all", name: "Select All", count: products.length });
 
     PRIMARY_CATEGORY_ENTRIES.forEach((entry) => {
       counts.set(entry.id, { ...entry, count: 0 });
@@ -165,54 +289,16 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
     ];
   }, [products]);
 
-  const filtered = useMemo(() => {
-    const normalizedQuery = searchQuery.trim().toLowerCase();
-
-    const filteredProducts = products.filter((product) => {
-      // Filter out pre-release products if toggle is off
-      if (!showPreRelease && product.pre_release) return false;
-
-      // Filter to show only new releases if toggle is on
-      if (showNewReleases && !showPreRelease) {
-        // If showing new releases but not pre-release, only show new releases and regular products
-        // (this keeps new releases visible when coming soon is hidden)
-      } else if (!showNewReleases && product.new_release) {
-        // If new releases toggle is off, hide new release products
-        return false;
-      }
-
-      const matchesCategory =
-        selectedCategory === "all" ||
-        product.categories.some((category) => category.toLowerCase() === selectedCategory);
-
-      if (!matchesCategory) return false;
-
-      if (!normalizedQuery) return true;
-
-      return (
-        product.name.toLowerCase().includes(normalizedQuery) ||
-        (product.platform?.toLowerCase().includes(normalizedQuery) ?? false) ||
-        product.keywords.some((keyword) => keyword.toLowerCase().includes(normalizedQuery))
-      );
-    });
-
-    // Sort: new releases first, then available products, then pre-release products
-    return filteredProducts.sort((a, b) => {
-      if (a.new_release !== b.new_release) {
-        return a.new_release ? -1 : 1;
-      }
-
-      if (a.popular !== b.popular) {
-        return a.popular ? -1 : 1;
-      }
-
-      if (a.pre_release !== b.pre_release) {
-        return a.pre_release ? 1 : -1;
-      }
-
-      return a.name.localeCompare(b.name);
-    });
-  }, [products, searchQuery, selectedCategory, showPreRelease, showNewReleases]);
+  const filtered = useMemo(
+    () =>
+      filterProducts(products, {
+        searchQuery,
+        categorySelection,
+        showPreRelease,
+        showNewReleases,
+      }),
+    [products, categorySelection, searchQuery, showPreRelease, showNewReleases],
+  );
 
   return (
     <div className="space-y-10">
@@ -220,8 +306,8 @@ export function ProductsFilter({ products }: { products: ProductListItem[] }) {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        categorySelection={categorySelection}
+        setCategorySelection={setCategorySelection}
         showPreRelease={showPreRelease}
         setShowPreRelease={setShowPreRelease}
         showNewReleases={showNewReleases}

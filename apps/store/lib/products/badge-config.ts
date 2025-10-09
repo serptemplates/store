@@ -6,6 +6,7 @@ const NEW_RELEASE_BANNER_SLUGS = [
   "circle-downloader",
   "whop-video-downloader",
   "youtube-downloader",
+  "123movies-downloader",
 ] as const;
 
 const newReleaseBannerSet = new Set<string>(NEW_RELEASE_BANNER_SLUGS);
