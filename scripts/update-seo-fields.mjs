@@ -159,21 +159,21 @@ function updateYamlFile(filePath) {
         data.seo_title.includes("| Download " + data.name) ||
         (data.seo_title.includes("Content - ") && !data.seo_title.includes("Videos - ") && !data.seo_title.includes("Images - ") && !data.seo_title.includes("Audio - ")) ||
         data.seo_title.includes("Download Pdf PDFs") ||
-        data.seo_title.includes("Download Khan Courses") && data.slug === "khan-academy-downloader"
+        (data.seo_title.includes("Download Khan Courses") && data.slug === "khan-academy-downloader")
       )) ||
       (data.seo_description && (
         data.seo_description.includes("Download " + data.name + " content for offline") ||
         data.seo_description.includes("downloader content for offline") ||
         (data.seo_description.includes("content with our reliable") && !data.seo_description.includes("videos in high quality")) ||
         data.seo_description.includes("Download Pdf PDFs") ||
-        data.seo_description.includes("Download Khan courses") && data.slug === "khan-academy-downloader"
+        (data.seo_description.includes("Download Khan courses") && data.slug === "khan-academy-downloader")
       )) ||
       (data.tagline && (
         data.tagline.includes("Download " + data.name + " instantly to your device") ||
         data.tagline.includes("downloader instantly to your device") ||
         (data.tagline.includes("content quickly and easily") && !data.tagline.includes("videos quickly and easily")) ||
         data.tagline.includes("Download Pdf PDFs") ||
-        data.tagline.includes("Download Khan courses") && data.slug === "khan-academy-downloader"
+        (data.tagline.includes("Download Khan courses") && data.slug === "khan-academy-downloader")
       ));
     
     if (!needsUpdate) {
