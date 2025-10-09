@@ -54,14 +54,66 @@ function normaliseError(error: unknown): { name: string; message: string; stack?
   };
 }
 
-export function captureFrontendError(error: unknown, properties?: Record<string, unknown>): void {
-  if (!isPostHogReady()) {
+const OPS_ALERT_ENDPOINT = "/api/analytics/exception";
+
+function notifyOpsOfError(
+  normalised: { name: string; message: string; stack?: string },
+  properties?: Record<string, unknown>,
+  url?: string,
+  userAgent?: string,
+): void {
+  if (typeof window === "undefined") {
     return;
   }
 
+  const payload = JSON.stringify({
+    ...normalised,
+    url,
+    userAgent,
+    properties,
+  });
+
+  if (process.env.NODE_ENV !== "production") {
+    // eslint-disable-next-line no-console
+    console.debug("[analytics] forwarding exception to Slack ops channel", normalised);
+  }
+
+  try {
+    if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+      const blob = new Blob([payload], { type: "application/json" });
+      const sent = navigator.sendBeacon(OPS_ALERT_ENDPOINT, blob);
+      if (sent) {
+        return;
+      }
+    }
+  } catch {
+    // Ignore sendBeacon failures and fall back to fetch.
+  }
+
+  if (typeof fetch !== "function") {
+    return;
+  }
+
+  fetch(OPS_ALERT_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: payload,
+    keepalive: true,
+  }).catch(() => {});
+}
+
+export function captureFrontendError(error: unknown, properties?: Record<string, unknown>): void {
   const normalised = normaliseError(error);
   const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : undefined;
   const url = typeof window !== "undefined" ? window.location.href : undefined;
+
+  notifyOpsOfError(normalised, properties, url, userAgent);
+
+  if (!isPostHogReady()) {
+    return;
+  }
 
   if (typeof (posthog as unknown as { captureException?: Function }).captureException === "function") {
     (posthog as unknown as { captureException: (error: unknown, props?: Record<string, unknown>) => void }).captureException(
@@ -90,10 +142,6 @@ export function wireGlobalErrorListeners(): void {
   }
 
   const errorHandler = (event: ErrorEvent) => {
-    if (!isPostHogReady()) {
-      return;
-    }
-
     captureFrontendError(event.error ?? event.message, {
       source: "window-error",
       filename: event.filename,
@@ -103,10 +151,6 @@ export function wireGlobalErrorListeners(): void {
   };
 
   const rejectionHandler = (event: PromiseRejectionEvent) => {
-    if (!isPostHogReady()) {
-      return;
-    }
-
     captureFrontendError(event.reason, {
       source: "unhandled-rejection",
     });
