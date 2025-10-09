@@ -4,13 +4,19 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from "react";
-import { getVideoEmbedUrl } from "../utils";
 import { FaPlay } from "react-icons/fa6";
 import { Button } from "../button";
 import { cn } from "../lib/utils";
-import useEmblaCarousel from "embla-carousel-react";
+import { getVideoEmbedUrl } from "../utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "./ui/carousel";
 
 export type SHeroMediaItem =
   | {
@@ -36,192 +42,204 @@ export type HeroMediaHandle = {
   open: (index?: number) => void;
 };
 
-const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(({ className, items }, ref) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-  });
+const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
+  ({ className, items }, ref) => {
+    const [carouselApi, setCarouselApi] = useState<CarouselApi | undefined>();
+    const hasMultipleItems = items.length > 1;
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [dialogItem, setDialogItem] = useState<SHeroMediaItem | null>(null);
+    const closeDialog = useCallback(() => setDialogItem(null), []);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [dialogItem, setDialogItem] = useState<SHeroMediaItem | null>(null);
-  const closeDialog = useCallback(() => setDialogItem(null), []);
+    const carouselOptions = useMemo(
+      () => ({
+        align: "center" as const,
+        loop: hasMultipleItems,
+        containScroll: "trimSnaps" as const,
+        skipSnaps: false,
+      }),
+      [hasMultipleItems],
+    );
 
-  const onControl = (action: "prev" | "next") => {
-    if (!emblaApi) return;
-    if (action === "prev") {
-      emblaApi.scrollPrev();
-    } else {
-      emblaApi.scrollNext();
-    }
-  };
-
-  const onScroll = useCallback(
-    (index: number) => {
-      if (!emblaApi) return;
-      emblaApi.scrollTo(index);
-    },
-    [emblaApi]
-  );
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      open: (index = 0) => {
-        const boundedIndex = Math.max(0, Math.min(index, items.length - 1));
-        const target = items[boundedIndex];
-        if (!target) return;
-        setDialogItem(target);
-        setSelectedIndex(boundedIndex);
-        if (emblaApi) {
-          emblaApi.scrollTo(boundedIndex);
+    const handleControl = useCallback(
+      (action: "prev" | "next") => {
+        if (!carouselApi) return;
+        if (action === "prev") {
+          carouselApi.scrollPrev();
+        } else {
+          carouselApi.scrollNext();
         }
       },
-    }),
-    [items, emblaApi]
-  );
+      [carouselApi],
+    );
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+    const handleScrollTo = useCallback(
+      (index: number) => {
+        if (!carouselApi) return;
+        carouselApi.scrollTo(index);
+      },
+      [carouselApi],
+    );
 
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
+    useImperativeHandle(
+      ref,
+      () => ({
+        open: (index = 0) => {
+          const boundedIndex = Math.max(0, Math.min(index, items.length - 1));
+          const target = items[boundedIndex];
+          if (!target) return;
+          setDialogItem(target);
+          setSelectedIndex(boundedIndex);
+          carouselApi?.scrollTo(boundedIndex);
+        },
+      }),
+      [items, carouselApi],
+    );
 
-  useEffect(() => {
-    if (dialogItem == null) return;
+    useEffect(() => {
+      if (!carouselApi) return;
 
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeDialog();
-      }
-    };
+      const handleSelect = () => {
+        setSelectedIndex(carouselApi.selectedScrollSnap());
+      };
 
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [dialogItem, closeDialog]);
+      handleSelect();
+      carouselApi.on("select", handleSelect);
+      carouselApi.on("reInit", handleSelect);
 
-  const isOnlyOneItem = items.length === 1;
+      return () => {
+        carouselApi.off("select", handleSelect);
+        carouselApi.off("reInit", handleSelect);
+      };
+    }, [carouselApi]);
 
-  return (
-    <>
-      <div className={cn(className, "relative w-full mx-auto")}>
-        <div className="relative">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-10 touch-pan-y touch-pinch-zoom">
+    useEffect(() => {
+      if (dialogItem == null) return;
+
+      const handleKey = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeDialog();
+        }
+      };
+
+      window.addEventListener("keydown", handleKey);
+      return () => window.removeEventListener("keydown", handleKey);
+    }, [dialogItem, closeDialog]);
+
+    const isOnlyOneItem = items.length === 1;
+
+    return (
+      <>
+        <div
+          className={cn(
+            className,
+            "relative mx-auto w-full max-w-5xl px-3 sm:px-6",
+          )}
+        >
+          <Carousel
+            className="group"
+            opts={carouselOptions}
+            setApi={setCarouselApi}
+          >
+            <CarouselContent className="ml-0 flex items-stretch gap-4 sm:gap-6">
               {items.map((item, index) => (
-                <div
+                <CarouselItem
                   key={index}
                   className={cn(
-                    isOnlyOneItem
-                      ? "lg:flex-[0_0_100%]"
-                      : index === selectedIndex
-                        ? "lg:flex-[0_0_65%]"
-                        : "lg:flex-[0_0_35%]",
-                    "min-w-0 flex-[0_0_100%] transition-[flex-basis] duration-300 ease-out"
+                    "basis-full pl-0 sm:pl-0",
+                    hasMultipleItems ? "md:basis-full" : "basis-full",
                   )}
                 >
-                  <Item
-                    item={item}
-                    onClick={() => setDialogItem(item)}
-                    isActive={index === selectedIndex}
-                  />
-                </div>
+                  <div className="mx-auto w-full max-w-3xl">
+                    <Item
+                      item={item}
+                      onClick={() => setDialogItem(item)}
+                      isActive={index === selectedIndex}
+                    />
+                  </div>
+                </CarouselItem>
               ))}
-            </div>
-          </div>
+            </CarouselContent>
 
-          {/* Controls */}
+            {!isOnlyOneItem && (
+              <>
+                <Button
+                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:left-4 md:-left-10"
+                  variant="outline"
+                  onClick={() => handleControl("prev")}
+                >
+                  <ChevronLeft />
+                </Button>
+
+                <Button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:right-4 md:-right-10"
+                  variant="outline"
+                  onClick={() => handleControl("next")}
+                >
+                  <ChevronRight />
+                </Button>
+              </>
+            )}
+          </Carousel>
+
           {!isOnlyOneItem && (
-            <>
-              <Button
-                className="rounded-full w-8 h-8 absolute left-0 top-1/2 -translate-y-1/2 translate-x-2 lg:-translate-x-10 transition-all"
-                variant="outline"
-                onClick={() => onControl("prev")}
-              >
-                <ChevronLeft />
-              </Button>
-
-              <Button
-                className="rounded-full w-8 h-8 absolute right-0 top-1/2 -translate-y-1/2 -translate-x-2 lg:translate-x-10 transition-all"
-                variant="outline"
-                onClick={() => onControl("next")}
-              >
-                <ChevronRight />
-              </Button>
-            </>
+            <Thumbnails
+              items={items}
+              onScroll={handleScrollTo}
+              selectedIndex={selectedIndex}
+            />
           )}
         </div>
 
-        {/* Thumbnails */}
-        {!isOnlyOneItem && (
-          <Thumbnails
-            items={items}
-            onScroll={onScroll}
-            selectedIndex={selectedIndex}
-          />
-        )}
-      </div>
-
-      {/* Dialog */}
-      {dialogItem != null && (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4"
-          role="dialog"
-          aria-modal
-          onClick={() => closeDialog()}
-        >
+        {dialogItem != null && (
           <div
-            className="relative flex max-h-[90vh] w-full max-w-5xl items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4"
+            role="dialog"
+            aria-modal
+            onClick={() => closeDialog()}
           >
-            <Button
-              variant="outline"
-              aria-label="Close Dialog"
-              className="absolute right-4 top-4 w-8 h-8 rounded-full"
-              onClick={() => closeDialog()}
+            <div
+              className="relative flex max-h-[90vh] w-full max-w-5xl items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
             >
-              <span className="sr-only">Close Dialog</span>
-              <X />
-            </Button>
+              <Button
+                variant="outline"
+                aria-label="Close Dialog"
+                className="absolute right-4 top-4 h-8 w-8 rounded-full"
+                onClick={() => closeDialog()}
+              >
+                <span className="sr-only">Close Dialog</span>
+                <X />
+              </Button>
 
-            <div className="w-full aspect-video">
-              {dialogItem.type === "video" && (
-                <iframe
-                  src={getVideoEmbedUrl(dialogItem.src)}
-                  title={dialogItem.title}
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  className="w-full h-full rounded-2xl"
-                  allowFullScreen
-                />
-              )}
+              <div className="aspect-video w-full">
+                {dialogItem.type === "video" && (
+                  <iframe
+                    src={getVideoEmbedUrl(dialogItem.src)}
+                    title={dialogItem.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    className="h-full w-full rounded-2xl"
+                    allowFullScreen
+                  />
+                )}
 
-              {dialogItem.type === "image" && (
-                <img
-                  src={dialogItem.src}
-                  alt={dialogItem.alt || "Media"}
-                  className="w-full h-full object-contain rounded-2xl"
-                  loading="lazy"
-                />
-              )}
+                {dialogItem.type === "image" && (
+                  <img
+                    src={dialogItem.src}
+                    alt={dialogItem.alt || "Media"}
+                    className="h-full w-full rounded-2xl object-contain"
+                    loading="lazy"
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </>
-  );
-});
+        )}
+      </>
+    );
+  },
+);
 
 const Item = ({
   item,
@@ -237,22 +255,22 @@ const Item = ({
       className={cn(
         "relative aspect-video w-full overflow-hidden rounded-2xl border-2 bg-muted/40 transition duration-300 ease-out",
         isActive
-          ? "border-primary shadow-2xl shadow-primary/20 scale-[1.02]"
-          : "border-gray-300 hover:border-primary/60 hover:scale-[1.01]"
+          ? "scale-[1.01] border-primary shadow-2xl shadow-primary/20"
+          : "border-gray-300 opacity-80 hover:scale-[1.01] hover:border-primary/60 hover:opacity-100",
       )}
       onClick={onClick}
     >
       {item.type === "video" && (
         <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <div className="bg-black/70 rounded-full p-3">
-            <FaPlay className="w-6 h-6 text-white" />
+          <div className="rounded-full bg-black/70 p-3">
+            <FaPlay className="h-6 w-6 text-white" />
           </div>
         </div>
       )}
       <img
         src={item.type === "video" ? item.thumbnail : item.src}
         alt={item.title}
-        className="w-full h-full object-cover"
+        className="h-full w-full object-cover"
       />
     </button>
   );
@@ -272,16 +290,16 @@ const Thumbnails = ({ items, selectedIndex, onScroll }: ThumbnailsProps) => {
           key={index}
           onClick={() => onScroll(index)}
           className={cn(
-            "flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden transition-all",
+            "h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg transition-all",
             selectedIndex === index
               ? "border-2 border-primary"
-              : "opacity-70 hover:opacity-100"
+              : "opacity-70 hover:opacity-100",
           )}
         >
           <img
             src={item.type === "video" ? item.thumbnail : item.src}
             alt={item.title}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </button>
       ))}
