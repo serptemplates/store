@@ -20,7 +20,7 @@ github_repo_url: https://github.com/serpapps/vectorstock-downloader
 github_repo_tags: []
 features:
   - Vector graphics and illustrations
-  - Scalable vector formats
+  - Scalable formats (SVG, EPS, AI)
   - Batch artist portfolios/collections downloads
   - Auto license management and tracking
   - Organize by style/category
