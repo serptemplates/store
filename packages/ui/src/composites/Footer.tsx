@@ -20,7 +20,11 @@ const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
     href: "https://github.com/serpapps/legal/blob/main/refund-policy.md",
     external: true,
   },
-  { label: "DMCA", href: "/dmca" },
+  {
+    label: "DMCA",
+    href: "https://serp.co/legal/dmca",
+    external: true,
+  },
 ];
 
 export function Footer({
