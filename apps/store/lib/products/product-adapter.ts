@@ -83,7 +83,7 @@ export function productToHomeTemplate(
   const platform = derivePlatform(product);
   const badgeText = product.status?.toUpperCase() ?? "LIVE";
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
-  const heroDescription = product.tagline || product.seo_description;
+  const heroDescription = "";
   const allowedPrefixes = ["https://store.serp.co/", "https://ghl.serp.co/"];
   const candidateLinks = [
     product.buy_button_destination,

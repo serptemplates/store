@@ -81,7 +81,7 @@ export function HomeTemplate({
   heroVideoTitle,
   badgeText = ``,
   heroTitle = `${platform} Video Downloader`,
-  heroDescription = `Download ${platform} videos, audio, and transcripts instantly. `,
+  heroDescription = "",
   ctaTitle = `Start Downloading ${platform} Videos Now`,
   ctaDescription = `Join users who trust our ${platform} downloader`,
   ctaHref = "#download",
