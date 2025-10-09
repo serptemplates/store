@@ -156,7 +156,12 @@ function getYouTubeVideoId(candidate: string): string | null {
       return pathSegments[0];
     }
 
-    if (hostname.endsWith("youtube.com")) {
+    const youtubeHostnames = [
+      "youtube.com",
+      "www.youtube.com",
+      "m.youtube.com"
+    ];
+    if (youtubeHostnames.includes(hostname)) {
       if (url.pathname === "/watch") {
         return url.searchParams.get("v");
       }
