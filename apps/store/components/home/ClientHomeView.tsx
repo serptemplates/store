@@ -12,13 +12,14 @@ import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
+import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { BlogPostMeta } from "@/lib/blog"
+import type { PrimaryNavProps } from "@/lib/navigation"
+import { trackCheckoutSuccessBanner, trackProductCheckoutClick, trackProductPageView } from "@/lib/analytics/product"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
-import type { SiteConfig } from "@/lib/site-config"
 import type { ProductVideoEntry } from "@/lib/products/video"
-import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
-import type { PrimaryNavProps } from "@/lib/navigation"
+import type { SiteConfig } from "@/lib/site-config"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -119,6 +120,16 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const [showStickyBar, setShowStickyBar] = useState(false)
 
   useEffect(() => {
+    trackProductPageView(product, { affiliateId })
+  }, [product, affiliateId])
+
+  useEffect(() => {
+    if (checkoutSuccess) {
+      trackCheckoutSuccessBanner(product, { affiliateId })
+    }
+  }, [checkoutSuccess, product, affiliateId])
+
+  useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
     }
@@ -128,13 +139,33 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handleStickyCtaClick = useCallback(() => {
+  const handlePrimaryCtaClick = useCallback(() => {
+    trackProductCheckoutClick(product, {
+      placement: "pricing",
+      destination: useExternalBuyDestination ? "external" : "checkout",
+      affiliateId,
+    })
+
     if (useExternalBuyDestination) {
       window.open(resolvedPricingHref, "_blank", "noopener,noreferrer")
     } else {
       window.location.href = checkoutHref
     }
-  }, [useExternalBuyDestination, resolvedPricingHref, checkoutHref])
+  }, [product, useExternalBuyDestination, resolvedPricingHref, checkoutHref, affiliateId])
+
+  const handleStickyCtaClick = useCallback(() => {
+    trackProductCheckoutClick(product, {
+      placement: "sticky_bar",
+      destination: useExternalBuyDestination ? "external" : "checkout",
+      affiliateId,
+    })
+
+    if (useExternalBuyDestination) {
+      window.open(resolvedPricingHref, "_blank", "noopener,noreferrer")
+    } else {
+      window.location.href = checkoutHref
+    }
+  }, [product, useExternalBuyDestination, resolvedPricingHref, checkoutHref, affiliateId])
 
   const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://store.serp.co"
   const breadcrumbSchema = {
@@ -203,11 +234,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 ...homeProps.pricing,
                 originalPrice: homeProps.pricing.originalPrice || "$27.99",
                 priceNote: "Use the product on a single project",
-                onCtaClick: useExternalBuyDestination
-                  ? undefined
-                  : () => {
-                      window.location.href = checkoutHref
-                    },
+                onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,
                 ctaHref: resolvedPricingHref,
@@ -256,6 +283,10 @@ function StickyProductCTA({ show, productName, onCtaClick, ctaHref, external }: 
               href={ctaHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(event) => {
+                event.preventDefault();
+                onCtaClick();
+              }}
               className={ctaClasses}
             >
               <span aria-hidden className="text-base">🚀</span>

@@ -8,6 +8,7 @@ import {
   EmbeddedCheckout
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
+import { trackCheckoutError, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 
 // Initialize Stripe
@@ -45,6 +46,7 @@ export function EmbeddedCheckoutView() {
   const [termsAcceptedAt, setTermsAcceptedAt] = useState(
     () => new Date().toISOString()
   )
+  const productName = product?.name ?? null
 
   useEffect(() => {
     if (productSlug) {
@@ -60,6 +62,18 @@ export function EmbeddedCheckoutView() {
     }
     setIsLoading(false)
   }, [productSlug, router])
+
+  useEffect(() => {
+    if (!productSlug) {
+      return
+    }
+
+    trackCheckoutPageViewed({
+      productSlug,
+      productName,
+      affiliateId: affiliateId ?? null,
+    })
+  }, [productSlug, productName, affiliateId])
 
   // Create Stripe checkout session
   const fetchClientSecret = useCallback(async () => {
@@ -86,16 +100,35 @@ export function EmbeddedCheckoutView() {
 
       if (data.error) {
         setError(data.error)
+        trackCheckoutError(data.error, {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_response",
+        })
         return null
       }
+
+      trackCheckoutSessionReady({
+        provider: "stripe",
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+      })
 
       return data.client_secret
     } catch (err) {
       console.error("Error creating checkout session:", err)
       setError("Failed to initialize checkout. Please try again.")
+      trackCheckoutError(err, {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        step: "create_session_fetch",
+      })
       return null
     }
-  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt])
+  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
@@ -120,6 +153,35 @@ export function EmbeddedCheckoutView() {
       setTermsAcceptedAt(new Date().toISOString())
     }
   }
+
+  const handleSelectStripe = useCallback(() => {
+    setShowPayPal(false)
+    if (showPayPal) {
+      trackCheckoutPaymentMethodSelected("stripe", {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+      })
+    }
+  }, [showPayPal, productSlug, productName, affiliateId])
+
+  const handleSelectPayPal = useCallback(() => {
+    setShowPayPal(true)
+    if (!showPayPal) {
+      trackCheckoutPaymentMethodSelected("paypal", {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+      })
+
+      trackCheckoutSessionReady({
+        provider: "paypal",
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+      })
+    }
+  }, [showPayPal, productSlug, productName, affiliateId])
 
   if (isLoading || !product) {
     return (
@@ -148,7 +210,7 @@ export function EmbeddedCheckoutView() {
         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
           <div className="flex items-center justify-center gap-4">
             <button
-              onClick={() => setShowPayPal(false)}
+              onClick={handleSelectStripe}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                 !showPayPal
                   ? "bg-blue-600 text-white"
@@ -158,7 +220,7 @@ export function EmbeddedCheckoutView() {
               Pay with Stripe
             </button>
             <button
-              onClick={() => setShowPayPal(true)}
+              onClick={handleSelectPayPal}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                 showPayPal
                   ? "bg-blue-600 text-white"

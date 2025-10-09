@@ -1,8 +1,9 @@
 "use client";
 
+import { usePathname, useSearchParams } from "next/navigation";
 import { PropsWithChildren, useEffect } from "react";
 import posthog from "posthog-js";
-import { usePathname, useSearchParams } from "next/navigation";
+import { wireGlobalErrorListeners } from "@/lib/analytics/posthog";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
@@ -44,6 +45,7 @@ function initializePostHog() {
   }
 
   analyticsWindow.__POSTHOG_INITIALIZED__ = true;
+  wireGlobalErrorListeners();
 }
 
 export function PostHogAnalytics({ children }: PropsWithChildren) {
