@@ -134,18 +134,206 @@ export function useAnalytics() {
     }
   };
 
+  const trackViewProduct = (data: {
+    productId: string;
+    productName: string;
+    price: number;
+    currency?: string;
+  }) => {
+    const currency = data.currency || 'USD';
+    
+    // GA4 - view_item event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'view_item', {
+        currency: currency,
+        value: data.price,
+        items: [{
+          item_id: data.productId,
+          item_name: data.productName,
+          price: data.price,
+          quantity: 1,
+        }],
+      });
+    }
+
+    // GTM
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'view_product',
+        product_id: data.productId,
+        product_name: data.productName,
+        price: data.price,
+        currency: currency,
+      });
+    }
+
+    // Facebook Pixel - ViewContent
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: data.productName,
+        content_ids: [data.productId],
+        content_type: 'product',
+        value: data.price,
+        currency: currency,
+      });
+    }
+  };
+
+  const trackClickBuyButton = (data: {
+    productId: string;
+    productName: string;
+    checkoutType: 'stripe' | 'paypal' | 'ghl';
+    price?: number;
+  }) => {
+    // GA4 - custom event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'click_buy_button', {
+        product_id: data.productId,
+        product_name: data.productName,
+        checkout_type: data.checkoutType,
+        value: data.price,
+      });
+    }
+
+    // GTM
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'click_buy_button',
+        product_id: data.productId,
+        product_name: data.productName,
+        checkout_type: data.checkoutType,
+        value: data.price,
+      });
+    }
+
+    // Store product info in cookies for GHL flow
+    if (data.checkoutType === 'ghl') {
+      document.cookie = `ghl_checkout=1;path=/;max-age=86400;SameSite=Lax`;
+      document.cookie = `ghl_product=${data.productId};path=/;max-age=86400;SameSite=Lax`;
+      if (data.price) {
+        document.cookie = `ghl_price=${data.price};path=/;max-age=86400;SameSite=Lax`;
+      }
+    }
+  };
+
+  const trackBeginCheckout = (data: {
+    productName: string;
+    value: number;
+    currency?: string;
+    productId?: string;
+  }) => {
+    const currency = data.currency || 'USD';
+    
+    // GA4 - begin_checkout event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'begin_checkout', {
+        currency: currency,
+        value: data.value,
+        items: [{
+          item_id: data.productId || data.productName,
+          item_name: data.productName,
+          price: data.value,
+          quantity: 1,
+        }],
+      });
+    }
+
+    // GTM
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'begin_checkout',
+        product_name: data.productName,
+        value: data.value,
+        currency: currency,
+      });
+    }
+
+    // Facebook Pixel - InitiateCheckout
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        value: data.value,
+        currency: currency,
+        content_name: data.productName,
+        content_ids: [data.productId || data.productName],
+        content_type: 'product',
+        num_items: 1,
+      });
+    }
+  };
+
+  const trackOutboundClick = (data: {
+    linkUrl: string;
+    productName?: string;
+    productId?: string;
+  }) => {
+    // GA4 - custom event for outbound clicks
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'outbound_click', {
+        link_url: data.linkUrl,
+        product_name: data.productName,
+        product_id: data.productId,
+      });
+    }
+
+    // GTM
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'outbound_click',
+        link_url: data.linkUrl,
+        product_name: data.productName,
+        product_id: data.productId,
+      });
+    }
+  };
+
   const trackPurchase = (data: {
     transactionId: string;
     value: number;
     currency: string;
     items?: Array<{ id: string; name: string; price: number; quantity: number }>;
+    paymentProvider?: string;
   }) => {
-    trackEvent('purchase', {
-      transaction_id: data.transactionId,
-      value: data.value,
-      currency: data.currency,
-      items: data.items,
-    });
+    // GA4 - purchase event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'purchase', {
+        transaction_id: data.transactionId,
+        value: data.value,
+        currency: data.currency,
+        items: data.items?.map(item => ({
+          item_id: item.id,
+          item_name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      });
+    }
+
+    // GTM
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'purchase',
+        transaction_id: data.transactionId,
+        value: data.value,
+        currency: data.currency,
+        payment_provider: data.paymentProvider,
+        items: data.items,
+      });
+    }
+
+    // Facebook Pixel - Purchase
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'Purchase', {
+        value: data.value,
+        currency: data.currency,
+        content_ids: data.items?.map(item => item.id) || [],
+        content_type: 'product',
+        contents: data.items?.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+        })),
+        num_items: data.items?.reduce((sum, item) => sum + item.quantity, 0) || 1,
+      });
+    }
   };
 
   const trackAddToCart = (data: {
@@ -187,6 +375,10 @@ export function useAnalytics() {
   return {
     trackEvent,
     trackPageView,
+    trackViewProduct,
+    trackClickBuyButton,
+    trackBeginCheckout,
+    trackOutboundClick,
     trackPurchase,
     trackAddToCart,
     trackViewContent,

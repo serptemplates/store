@@ -19,6 +19,7 @@ import type { SiteConfig } from "@/lib/site-config"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { PrimaryNavProps } from "@/lib/navigation"
+import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -164,6 +165,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   return (
     <>
+      <ProductPageTracking product={product} />
+      
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { ProductData } from "@/lib/products/product-schema";
+import { useAnalytics } from "@/components/analytics/gtm";
 
 export interface StickyPurchaseBarProps {
   product: ProductData;
@@ -26,12 +27,28 @@ export function StickyPurchaseBar({
   affiliateId,
 }: StickyPurchaseBarProps) {
   const router = useRouter();
+  const { trackClickBuyButton } = useAnalytics();
 
   if (!show) {
     return null;
   }
 
   const handleCheckout = () => {
+    // Extract numeric price
+    let numericPrice = 0;
+    if (price) {
+      const priceStr = price.replace(/[^0-9.]/g, '');
+      numericPrice = parseFloat(priceStr) || 0;
+    }
+
+    // Track the buy button click
+    trackClickBuyButton({
+      productId: product.slug || "",
+      productName: product.name,
+      checkoutType: 'stripe',
+      price: numericPrice,
+    });
+
     const params = new URLSearchParams();
     params.set("product", product.slug || "");
     if (affiliateId) {

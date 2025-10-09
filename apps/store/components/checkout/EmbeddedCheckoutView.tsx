@@ -9,6 +9,7 @@ import {
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
+import { CheckoutPageTracking } from "@/components/analytics/CheckoutPageTracking"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())
@@ -143,6 +144,7 @@ export function EmbeddedCheckoutView() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <CheckoutPageTracking />
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Payment Method Toggle */}
         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">

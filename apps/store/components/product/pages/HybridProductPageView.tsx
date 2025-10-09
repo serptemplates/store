@@ -23,6 +23,7 @@ import type { ProductData } from "@/lib/products/product-schema"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
+import { ProductPageTracking } from "@/components/analytics/ProductPageTracking"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -90,6 +91,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
 
   return (
     <>
+      <ProductPageTracking product={product} />
+      
       <ProductStructuredDataScripts
         product={product}
         posts={posts}

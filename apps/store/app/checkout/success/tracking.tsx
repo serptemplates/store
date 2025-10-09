@@ -33,23 +33,78 @@ export function ConversionTracking() {
     // Fetch session details for accurate tracking
     const trackConversion = async () => {
       try {
-        // In production, create an endpoint to fetch order details
-        // const response = await fetch(`/api/orders/${sessionId}`);
-        // const orderData = await response.json();
+        // Check if we've already tracked this conversion
+        const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
+        if (alreadyTracked) {
+          return;
+        }
 
-        // For now, using mock data - replace with actual order data
-        const orderData = {
-          value: 97.00,
-          currency: "USD",
-          items: [
-            {
-              id: "product-1",
-              name: "Product Name",
-              price: 97.00,
-              quantity: 1
-            }
-          ]
+        // Try to fetch actual order data from API
+        let orderData: {
+          value: number;
+          currency: string;
+          items: Array<{
+            id: string;
+            name: string;
+            price: number;
+            quantity: number;
+          }>;
+          paymentProvider?: string;
         };
+
+        try {
+          const response = await fetch(`/api/orders/${sessionId}`);
+          if (response.ok) {
+            const data = await response.json();
+            orderData = {
+              value: data.value || 97.00,
+              currency: data.currency || "USD",
+              items: data.items || [
+                {
+                  id: data.offerId || "product-1",
+                  name: data.items?.[0]?.name || "Product",
+                  price: data.value || 97.00,
+                  quantity: 1
+                }
+              ],
+              paymentProvider: data.paymentProvider,
+            };
+          } else {
+            // Fallback to cookies or default data if API fails
+            const cookies = Object.fromEntries(
+              document.cookie.split('; ').map(c => c.split('='))
+            );
+            
+            orderData = {
+              value: parseFloat(cookies.ghl_price) || 97.00,
+              currency: "USD",
+              items: [
+                {
+                  id: cookies.ghl_product || "product-1",
+                  name: (cookies.ghl_product || "product-1").replace(/-/g, ' '),
+                  price: parseFloat(cookies.ghl_price) || 97.00,
+                  quantity: 1
+                }
+              ],
+              paymentProvider: cookies.ghl_checkout === '1' ? 'ghl' : 'unknown',
+            };
+          }
+        } catch (fetchError) {
+          // Fallback to default data if fetch fails
+          console.warn("Failed to fetch order data, using fallback:", fetchError);
+          orderData = {
+            value: 97.00,
+            currency: "USD",
+            items: [
+              {
+                id: "product-1",
+                name: "Product Name",
+                price: 97.00,
+                quantity: 1
+              }
+            ]
+          };
+        }
 
         // Google Analytics 4 - Purchase Event
         if (typeof window.gtag !== "undefined") {
@@ -89,6 +144,7 @@ export function ConversionTracking() {
               transaction_id: sessionId,
               value: orderData.value,
               currency: orderData.currency,
+              payment_provider: orderData.paymentProvider,
               items: orderData.items
             }
           });
@@ -134,18 +190,20 @@ export function ConversionTracking() {
 
         // Store conversion tracking status in sessionStorage to prevent duplicates
         sessionStorage.setItem(`tracked_${sessionId}`, "true");
+        
+        // Clear GHL checkout cookies after successful tracking
+        if (document.cookie.includes('ghl_checkout')) {
+          document.cookie = 'ghl_checkout=; Max-Age=0; path=/';
+          document.cookie = 'ghl_product=; Max-Age=0; path=/';
+          document.cookie = 'ghl_price=; Max-Age=0; path=/';
+        }
 
       } catch (error) {
         console.error("Error tracking conversion:", error);
       }
     };
 
-    // Check if we've already tracked this conversion
-    const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
-
-    if (!alreadyTracked) {
-      trackConversion();
-    }
+    trackConversion();
   }, [sessionId]);
 
   return null;
