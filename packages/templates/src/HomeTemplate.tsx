@@ -202,9 +202,10 @@ export function HomeTemplate({
     pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
   const pricingSectionId = (pricing?.id ?? "pricing").replace(/^#/, "");
   const pricingSectionEnabled = pricing?.enabled ?? true;
-  const heroCtaHref = pricingSectionEnabled
-    ? `#${pricingSectionId}`
-    : ctaHref;
+  const heroCtaHref =
+    ctaHref ??
+    (pricingSectionEnabled ? `#${pricingSectionId}` : undefined) ??
+    "#pricing";
   const heroCtaLabel = (ctaText ?? "Get It Now").toUpperCase();
   const heroVideoLinkLabel = "Watch demo";
   const heroVideoHref = videoUrl

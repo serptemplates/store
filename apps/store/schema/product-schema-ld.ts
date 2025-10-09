@@ -34,6 +34,7 @@ export interface ProductSchemaLDOptions {
   currency?: string;
   preRelease?: boolean;
   expectedLaunchDate?: string;
+  productId?: string;
 }
 
 export function generateProductSchemaLD({
@@ -45,9 +46,25 @@ export function generateProductSchemaLD({
   currency = 'USD',
   preRelease = false,
   expectedLaunchDate,
+  productId,
 }: ProductSchemaLDOptions) {
+  const resolvedProductId = productId ?? `${url}#product`;
+
   // Get primary image or use placeholder
   const primaryImage = product.images?.[0] || '/api/og';
+  const normalizeImage = (imagePath: string): string => {
+    if (!imagePath) {
+      return `${storeUrl}${primaryImage}`;
+    }
+
+    if (/^https?:\/\//i.test(imagePath)) {
+      return imagePath;
+    }
+
+    const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
+    const normalizedImage = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+    return `${normalizedStoreUrl}${normalizedImage}`;
+  };
 
   // Calculate average rating if reviews exist
   const aggregateRating = product.reviews?.length ? {
@@ -140,11 +157,12 @@ export function generateProductSchemaLD({
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': resolvedProductId,
     name: product.name,
     description: product.description || product.tagline || `${product.name} - Download and automation tool`,
     image: Array.isArray(product.images)
-      ? product.images.map(img => `${storeUrl}${img}`)
-      : [`${storeUrl}${primaryImage}`],
+      ? product.images.map(img => normalizeImage(img))
+      : [normalizeImage(primaryImage)],
     url: url,
     // Brand is required for Google Shopping
     brand: {
@@ -188,6 +206,7 @@ export function generateProductSchemaLD({
     // Software-specific properties if applicable
     ...(product.isDigital && {
       '@type': ['Product', 'SoftwareApplication'],
+      '@id': resolvedProductId,
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'Web Browser',
       softwareVersion: '1.0',

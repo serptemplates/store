@@ -101,7 +101,17 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const showPosts = siteConfig.blog?.enabled !== false
 
-  const Navbar = useCallback(() => <PrimaryNavbar {...navProps} />, [navProps])
+  const productNavProps = useMemo(
+    () => ({
+      ...navProps,
+      ctaHref: null,
+      ctaText: null,
+      showCta: false,
+    }),
+    [navProps],
+  )
+
+  const Navbar = useCallback(() => <PrimaryNavbar {...productNavProps} />, [productNavProps])
 
   const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
@@ -180,8 +190,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        ctaText={siteConfig.cta?.text ?? homeProps.ctaText}
-        ctaHref={siteConfig.cta?.href ?? homeProps.ctaHref}
+        ctaHref={resolvedPricingHref}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Products", href: "/#products" },
