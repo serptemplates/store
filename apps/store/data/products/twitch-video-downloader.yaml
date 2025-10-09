@@ -1,7 +1,7 @@
 slug: twitch-video-downloader
 platform: Twitch
-seo_title: Download Twitch Videos | Twitch Video Downloader
-seo_description: Download Twitch videos easily for offline viewing. Fast, reliable Twitch video downloader with high-quality downloads.
+seo_title: Twitch Downloader | Download Twitch Downloader for Offline Access
+seo_description: Download videos, images, and content from twitch with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/twitch-video-downloader
 purchase_url: https://serp.ly/twitch-video-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Download Twitch VODs and highlights in high quality
 - Live stream recording with automatic archiving
-- Batch download streamer's entire video library
 - Extract chat logs and viewer interactions
 - Support for subscriber-only and restricted content
 - Automatic thumbnail and preview generation

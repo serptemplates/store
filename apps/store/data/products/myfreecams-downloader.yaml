@@ -1,7 +1,7 @@
 slug: myfreecams-downloader
 platform: Myfreecams
-seo_title: Download Myfreecams Videos | Myfreecams Downloader
-seo_description: Download Myfreecams videos easily for offline viewing. Fast, reliable Myfreecams video downloader with high-quality downloads.
+seo_title: Myfreecams Downloader | Download Myfreecams Downloader for Offline Access
+seo_description: Download videos, images, and content from myfreecams with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/myfreecams-downloader
 purchase_url: https://serp.ly/myfreecams-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Record MyFreeCams live shows and performances
 - Support for public and private show recording
-- Batch recording from multiple cam models
 - Automatic stream detection and quality adjustment
 - Resume interrupted recordings seamlessly
 - Cross-platform support

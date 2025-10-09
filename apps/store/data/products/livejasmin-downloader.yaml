@@ -1,7 +1,7 @@
 slug: livejasmin-downloader
 platform: Livejasmin
-seo_title: Download Livejasmin Videos | Livejasmin Downloader
-seo_description: Download Livejasmin videos easily for offline viewing. Fast, reliable Livejasmin video downloader with high-quality downloads.
+seo_title: Livejasmin Downloader | Download Livejasmin Downloader for Offline Access
+seo_description: Download videos, images, and content from livejasmin with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/livejasmin-downloader
 purchase_url: https://serp.ly/livejasmin-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Download and record LiveJasmin premium shows
 - Support for exclusive and VIP content recording
-- Batch recording from favorite performers
 - Automatic quality selection and optimization
 - Resume interrupted recordings with recovery
 - Cross-platform support

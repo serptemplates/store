@@ -1,7 +1,7 @@
 slug: stripchat-video-downloader
 platform: Stripchat
-seo_title: Download Stripchat Videos | Stripchat Video Downloader
-seo_description: Download Stripchat videos easily for offline viewing. Fast, reliable Stripchat video downloader with high-quality downloads.
+seo_title: Stripchat Downloader | Download Stripchat Downloader for Offline Access
+seo_description: Download videos, images, and content from stripchat with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/stripchat-video-downloader
 purchase_url: https://serp.ly/stripchat-video-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Download and record live cam performances
 - Support for private shows and exclusive content
-- Batch recording from multiple performers
 - Automatic quality adjustment and optimization
 - Resume interrupted recordings seamlessly
 - Cross-platform support

@@ -1,7 +1,7 @@
 slug: facebook-video-downloader
 platform: Facebook
-seo_title: Download Facebook Videos | Facebook Video Downloader
-seo_description: Download Facebook videos easily for offline viewing. Fast, reliable Facebook video downloader with high-quality downloads.
+seo_title: Facebook Downloader | Download Facebook Downloader for Offline Access
+seo_description: Download videos, images, and content from facebook with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/facebook-video-downloader
 purchase_url: https://serp.ly/facebook-video-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - High-quality Facebook downloads quality
 - Support for public and private video content
-- Batch from pages, groups,/profiles downloads
 - Extract video metadata including descriptions and comments
 - Auto thumbnail and preview image extraction
 - Resume downloads

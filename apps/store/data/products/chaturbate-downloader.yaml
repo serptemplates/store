@@ -1,7 +1,7 @@
 slug: chaturbate-downloader
 platform: Chaturbate
-seo_title: Download Chaturbate Videos | Chaturbate Downloader
-seo_description: Download Chaturbate videos easily for offline viewing. Fast, reliable Chaturbate video downloader with high-quality downloads.
+seo_title: Chaturbate Downloader | Download Chaturbate Downloader for Offline Access
+seo_description: Download videos, images, and content from chaturbate with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://store.serp.co/products/chaturbate-downloader
 purchase_url: https://serp.ly/chaturbate-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Record and download live cam shows and broadcasts
 - Automatic stream detection and quality selection
-- Batch recording for multiple performers
 - Resume interrupted recordings with smart recovery
 - Cross-platform support
 - Command-line interface for automated recording

@@ -1,7 +1,7 @@
 slug: stream-downloader
 platform: Stream
-seo_title: Download Stream Videos | Stream Downloader
-seo_description: Download Stream videos easily for offline viewing. Fast, reliable Stream video downloader with high-quality downloads.
+seo_title: Stream Downloader | Download Stream Downloader for Offline Access
+seo_description: Download videos, images, and content from stream with our reliable downloader tool. Fast, secure, and easy to use.
 product_page_url: https://apps.serp.co/stream-downloader
 purchase_url: https://serp.ly/stream-downloader
 stripe:
@@ -20,7 +20,6 @@ github_repo_tags: []
 features:
 - Download live streams from various platforms
 - Support for multiple streaming protocols and formats
-- Batch recording from multiple sources simultaneously
 - Automatic stream detection and quality selection
 - Organize by platform/streamer
 - Resume interrupted recordings with recovery
