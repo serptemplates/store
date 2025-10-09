@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, ChangeEvent } from "react"
+import { useState, useEffect, useCallback, ChangeEvent, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import {
@@ -8,7 +8,9 @@ import {
   EmbeddedCheckout
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
+import { trackCheckoutError, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
+import type { EcommerceItem } from "@/lib/analytics/gtm"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())
@@ -45,6 +47,7 @@ export function EmbeddedCheckoutView() {
   const [termsAcceptedAt, setTermsAcceptedAt] = useState(
     () => new Date().toISOString()
   )
+  const productName = product?.name ?? null
 
   useEffect(() => {
     if (productSlug) {
@@ -60,6 +63,36 @@ export function EmbeddedCheckoutView() {
     }
     setIsLoading(false)
   }, [productSlug, router])
+
+  const finalPrice = typeof product?.price === "number" ? Number(product.price) : 67.0
+  const currency = typeof product?.currency === "string" ? product.currency : "USD"
+
+  const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
+    if (!product || !productSlug) {
+      return undefined
+    }
+    return {
+      item_id: product.slug ?? productSlug,
+      item_name: product.name ?? productSlug,
+      price: Number(finalPrice.toFixed(2)),
+      quantity: 1,
+    }
+  }, [product, productSlug, finalPrice])
+
+  useEffect(() => {
+    if (!productSlug || !product || !ecommerceItem) {
+      return
+    }
+
+    trackCheckoutPageViewed({
+      productSlug,
+      productName,
+      affiliateId: affiliateId ?? null,
+      currency,
+      value: finalPrice,
+      ecommerceItem,
+    })
+  }, [productSlug, product, productName, affiliateId, currency, finalPrice, ecommerceItem])
 
   // Create Stripe checkout session
   const fetchClientSecret = useCallback(async () => {
@@ -86,16 +119,39 @@ export function EmbeddedCheckoutView() {
 
       if (data.error) {
         setError(data.error)
+        trackCheckoutError(data.error, {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_response",
+        })
         return null
       }
+
+      trackCheckoutSessionReady({
+        provider: "stripe",
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+        isInitialSelection: true,
+      })
 
       return data.client_secret
     } catch (err) {
       console.error("Error creating checkout session:", err)
       setError("Failed to initialize checkout. Please try again.")
+      trackCheckoutError(err, {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        step: "create_session_fetch",
+      })
       return null
     }
-  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt])
+  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName, currency, finalPrice, ecommerceItem])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
@@ -121,6 +177,44 @@ export function EmbeddedCheckoutView() {
     }
   }
 
+  const handleSelectStripe = useCallback(() => {
+    setShowPayPal(false)
+    if (showPayPal) {
+      trackCheckoutPaymentMethodSelected("stripe", {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+      })
+    }
+  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
+
+  const handleSelectPayPal = useCallback(() => {
+    setShowPayPal(true)
+    if (!showPayPal) {
+      trackCheckoutPaymentMethodSelected("paypal", {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+      })
+
+      trackCheckoutSessionReady({
+        provider: "paypal",
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+      })
+    }
+  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
+
   if (isLoading || !product) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -128,8 +222,6 @@ export function EmbeddedCheckoutView() {
       </div>
     )
   }
-
-  const finalPrice = product?.price || 67.00
 
   const paypalMetadata: Record<string, string> = {
     landerId: productSlug || '',
@@ -148,7 +240,7 @@ export function EmbeddedCheckoutView() {
         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
           <div className="flex items-center justify-center gap-4">
             <button
-              onClick={() => setShowPayPal(false)}
+              onClick={handleSelectStripe}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                 !showPayPal
                   ? "bg-blue-600 text-white"
@@ -158,7 +250,7 @@ export function EmbeddedCheckoutView() {
               Pay with Stripe
             </button>
             <button
-              onClick={() => setShowPayPal(true)}
+              onClick={handleSelectPayPal}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                 showPayPal
                   ? "bg-blue-600 text-white"

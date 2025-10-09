@@ -18,7 +18,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@repo/ui";
 
 import { processCheckoutSession } from "./actions";
-import { ConversionTracking } from "./tracking";
+import { ConversionTracking, type ConversionData } from "./tracking";
 
 type CheckoutVariant = "stripe" | "paypal" | "external";
 
@@ -223,17 +223,41 @@ export function SuccessContent() {
   const [error, setError] = useState<string | null>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
+  const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
   useEffect(() => {
     if (!sessionId) {
+      setOrderDetails(null);
       setProcessing(false);
       return;
     }
+
+    setOrderDetails(null);
 
     processCheckoutSession(sessionId)
       .then((result) => {
         if (!result.success) {
           console.warn("Failed to process checkout:", result.message);
+          return;
+        }
+
+        if (result.order) {
+          const conversionItems =
+            result.order.items?.map((item) => ({
+              id: item.id,
+              name: item.name,
+              price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
+              quantity: item.quantity,
+            })) ?? [];
+
+          setOrderDetails({
+            sessionId: result.order.sessionId,
+            value: result.order.amount ?? undefined,
+            currency: result.order.currency ?? undefined,
+            items: conversionItems,
+            coupon: result.order.coupon ?? undefined,
+            affiliateId: result.order.affiliateId ?? undefined,
+          });
         }
       })
       .catch((err) => {
@@ -261,6 +285,8 @@ export function SuccessContent() {
     return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
   }, []);
 
+  const resolvedSessionId = sessionId ?? orderDetails?.sessionId ?? null;
+
   useEffect(() => {
     if (successVideo.kind === "youtube") {
       setThumbnailSrc(successVideo.thumbnailUrl);
@@ -271,7 +297,7 @@ export function SuccessContent() {
 
   return (
     <div className="bg-background py-12">
-      <ConversionTracking />
+      <ConversionTracking sessionId={resolvedSessionId} order={orderDetails} provider={variant} />
       <div className="container mx-auto flex max-w-4xl flex-col gap-10 px-4">
         <section className="space-y-6">
           {processing && (
