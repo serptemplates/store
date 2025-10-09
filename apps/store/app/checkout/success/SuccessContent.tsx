@@ -7,6 +7,7 @@ import {
   CheckCircle,
   Download,
   MessageCircle,
+  Play,
   Users,
 } from "lucide-react";
 import Image from "next/image";
@@ -47,6 +48,17 @@ type WhitelistGuide = {
   alt?: string;
 };
 
+type SuccessVideoSource =
+  | {
+      kind: "youtube";
+      id: string;
+      embedUrl: string;
+      autoplayUrl: string;
+      thumbnailUrl: string;
+      fallbackThumbnailUrl?: string;
+    }
+  | { kind: "file"; src: string };
+
 const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
   stripe: {
     title: "Thank you for your purchase!",
@@ -83,7 +95,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
   {
     title: "Installation Instructions",
     description: "Step-by-step setup guides for every tool in your bundle.",
-    href: "#",
+    href: "https://github.com/orgs/serpapps/discussions/59",
     icon: BookOpen,
   },
   {
@@ -95,7 +107,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
   {
     title: "Help Center",
     description: "Search FAQs, troubleshooting articles, and walkthroughs.",
-    href: "https://apps.serp.co/support",
+    href: "https://serpcompany.tawk.help/",
     icon: MessageCircle,
   },
   {
@@ -107,6 +119,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
 ];
 
 const SUCCESS_VIDEO_SRC = process.env.NEXT_PUBLIC_SUCCESS_VIDEO_URL ?? "";
+const DEFAULT_SUCCESS_VIDEO_ID = "eTXRjdODowE";
 
 const WHITELIST_GUIDES: WhitelistGuide[] = [
   {
@@ -127,6 +140,70 @@ function getVariant(sessionId: string | null, source: string | null, paypalOrder
   return "external";
 }
 
+function getYouTubeVideoId(candidate: string): string | null {
+  const trimmed = candidate.trim();
+  if (!trimmed) return null;
+
+  const idMatcher = /^[a-zA-Z0-9_-]{11}$/;
+  if (idMatcher.test(trimmed)) return trimmed;
+
+  try {
+    const url = new URL(trimmed);
+    const hostname = url.hostname.toLowerCase();
+    const pathSegments = url.pathname.split("/").filter(Boolean);
+
+    if (hostname === "youtu.be" && pathSegments[0]) {
+      return pathSegments[0];
+    }
+
+    if (hostname.endsWith("youtube.com")) {
+      if (url.pathname === "/watch") {
+        return url.searchParams.get("v");
+      }
+
+      if (pathSegments[0] === "embed" && pathSegments[1]) {
+        return pathSegments[1];
+      }
+
+      if (pathSegments[0] === "shorts" && pathSegments[1]) {
+        return pathSegments[1];
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function buildYouTubeEmbedUrl(id: string, autoplay = false): string {
+  const params = new URLSearchParams({
+    autoplay: autoplay ? "1" : "0",
+    mute: "0",
+    playsinline: "1",
+    rel: "0",
+  });
+  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
+}
+
+function buildYouTubeThumbnailUrls(id: string): { primary: string; fallback?: string } {
+  const primary = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+  const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  return { primary, fallback };
+}
+
+function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
+  const thumbnailUrls = buildYouTubeThumbnailUrls(id);
+  return {
+    kind: "youtube",
+    id,
+    embedUrl: buildYouTubeEmbedUrl(id),
+    autoplayUrl: buildYouTubeEmbedUrl(id, true),
+    thumbnailUrl: thumbnailUrls.primary,
+    fallbackThumbnailUrl: thumbnailUrls.fallback,
+  };
+}
+
 function isInternalRoute(href: string | Route): href is Route {
   return typeof href === "string" ? href.startsWith("/") : true;
 }
@@ -139,6 +216,8 @@ export function SuccessContent() {
 
   const [processing, setProcessing] = useState(Boolean(sessionId));
   const [error, setError] = useState<string | null>(null);
+  const [isVideoActive, setIsVideoActive] = useState(false);
+  const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (!sessionId) {
@@ -164,6 +243,26 @@ export function SuccessContent() {
   const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
+  const successVideo = useMemo<SuccessVideoSource>(() => {
+    const trimmed = SUCCESS_VIDEO_SRC.trim();
+    if (trimmed) {
+      const youtubeId = getYouTubeVideoId(trimmed);
+      if (youtubeId) {
+        return buildYouTubeSuccessVideo(youtubeId);
+      }
+      return { kind: "file", src: trimmed };
+    }
+
+    return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
+  }, []);
+
+  useEffect(() => {
+    if (successVideo.kind === "youtube") {
+      setThumbnailSrc(successVideo.thumbnailUrl);
+    } else {
+      setThumbnailSrc(undefined);
+    }
+  }, [successVideo]);
 
   return (
     <div className="bg-background py-12">
@@ -226,21 +325,57 @@ export function SuccessContent() {
           </div>
         </section>
 
-        <section>
-          {SUCCESS_VIDEO_SRC ? (
+        <section className="my-12 sm:my-16">
+          {successVideo.kind === "youtube" ? (
+            isVideoActive ? (
+              <iframe
+                key={successVideo.autoplayUrl}
+                src={successVideo.autoplayUrl}
+                title="Welcome video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="aspect-video w-full rounded-md border border-border bg-black"
+                loading="lazy"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsVideoActive(true)}
+                className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
+                aria-label="Play welcome video"
+              >
+                <Image
+                  src={thumbnailSrc ?? successVideo.thumbnailUrl}
+                  alt="Welcome video thumbnail"
+                  fill
+                  className="object-cover transition duration-200 group-hover:scale-[1.01]"
+                  sizes="(max-width: 768px) 100vw, 640px"
+                  priority={false}
+                  onError={() => {
+                    if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
+                      setThumbnailSrc(successVideo.fallbackThumbnailUrl);
+                    }
+                  }}
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
+                />
+                <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
+                  <Play className="h-4 w-4" />
+                  Watch welcome video
+                </span>
+              </button>
+            )
+          ) : (
             <video
-              key={SUCCESS_VIDEO_SRC}
-              src={SUCCESS_VIDEO_SRC}
-              autoPlay
-              muted
+              key={successVideo.src}
+              src={successVideo.src}
               playsInline
               controls
+              preload="metadata"
               className="aspect-video w-full rounded-md border border-border bg-black"
             />
-          ) : (
-            <div className="flex aspect-video w-full items-center justify-center rounded-md border border-dashed border-border bg-muted/40 text-sm text-muted-foreground">
-              Add NEXT_PUBLIC_SUCCESS_VIDEO_URL to autoplay your thank-you video.
-            </div>
           )}
         </section>
 
