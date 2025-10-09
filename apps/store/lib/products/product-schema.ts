@@ -1,29 +1,31 @@
 import { z } from "zod";
 
+const trimmedString = () => z.string().trim().min(1);
+
 const screenshotSchema = z.object({
-  url: z.string(),
-  alt: z.string().optional(),
-  caption: z.string().optional(),
+  url: trimmedString(),
+  alt: z.string().trim().optional(),
+  caption: z.string().trim().optional(),
 });
 
 const reviewSchema = z.object({
-  name: z.string(),
-  review: z.string(),
-  title: z.string().optional(),
+  name: trimmedString(),
+  review: trimmedString(),
+  title: z.string().trim().optional(),
   rating: z.number().optional(),
-  date: z.string().optional(),
+  date: z.string().trim().optional(),
 });
 
 const faqSchema = z.object({
-  question: z.string(),
-  answer: z.string(),
+  question: trimmedString(),
+  answer: trimmedString(),
 });
 
 const stripeSchema = z.object({
   price_id: z.string(),
   test_price_id: z.string().optional(), // Optional test mode price ID
-  success_url: z.string().url(),
-  cancel_url: z.string().url(),
+  success_url: trimmedString().url(),
+  cancel_url: trimmedString().url(),
   mode: z.enum(["payment", "subscription"]).optional(),
   metadata: z.record(z.any()).optional().default({}),
 });
@@ -68,43 +70,45 @@ const optionalExternalUrl = z.preprocess(
 
 const pricingSchema = z
   .object({
-    label: z.string().optional(),
-    price: z.string().optional(),
-    original_price: z.string().optional(),
-    note: z.string().optional(),
-    cta_text: z.string().optional(),
-    cta_href: z.string().optional(),
-    benefits: z.array(z.string()).optional().default([]),
+    label: z.string().trim().optional(),
+    price: z.string().trim().optional(),
+    original_price: z.string().trim().optional(),
+    note: z.string().trim().optional(),
+    cta_text: z.string().trim().optional(),
+    cta_href: z.string().trim().optional(),
+    currency: z.string().trim().optional(),
+    availability: z.string().trim().optional(),
+    benefits: z.array(z.string().trim()).optional().default([]),
   })
   .optional();
 
 export const productSchema = z.object({
-  slug: z.string(),
-  platform: z.string().optional(),
-  seo_title: z.string(),
-  seo_description: z.string(),
-  product_page_url: z.string().url(),
-  purchase_url: z.string().url(),
+  slug: trimmedString(),
+  platform: z.string().trim().optional(),
+  seo_title: trimmedString(),
+  seo_description: trimmedString(),
+  product_page_url: trimmedString().url(),
+  purchase_url: trimmedString().url(),
   buy_button_destination: optionalExternalUrl,
-  name: z.string(),
-  tagline: z.string(),
-  featured_image: z.string().nullable().optional(),
-  featured_image_gif: z.string().nullable().optional(),
-  github_repo_url: z.string().url().nullable().optional(),
-  chrome_webstore_link: z.string().url().optional(),
-  firefox_addon_store_link: z.string().url().nullable().optional(),
-  github_repo_tags: z.array(z.string()).optional().default([]),
-  features: z.array(z.string()).optional().default([]),
-  description: z.string(),
-  product_videos: z.array(z.string()).optional().default([]),
-  related_videos: z.array(z.string()).optional().default([]),
+  name: trimmedString(),
+  tagline: trimmedString(),
+  featured_image: z.string().trim().nullable().optional(),
+  featured_image_gif: z.string().trim().nullable().optional(),
+  github_repo_url: z.string().trim().url().nullable().optional(),
+  chrome_webstore_link: z.string().trim().url().optional(),
+  firefox_addon_store_link: z.string().trim().url().nullable().optional(),
+  github_repo_tags: z.array(z.string().trim()).optional().default([]),
+  features: z.array(z.string().trim()).optional().default([]),
+  description: trimmedString(),
+  product_videos: z.array(z.string().trim()).optional().default([]),
+  related_videos: z.array(z.string().trim()).optional().default([]),
   screenshots: z.array(screenshotSchema).optional().default([]),
   reviews: z.array(reviewSchema).optional().default([]),
   faqs: z.array(faqSchema).optional().default([]),
-  supported_operating_systems: z.array(z.string()).optional().default([]),
-  status: z.string().optional(),
-  categories: z.array(z.string()).optional().default([]),
-  keywords: z.array(z.string()).optional().default([]),
+  supported_operating_systems: z.array(z.string().trim()).optional().default([]),
+  status: z.string().trim().optional(),
+  categories: z.array(z.string().trim()).optional().default([]),
+  keywords: z.array(z.string().trim()).optional().default([]),
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
