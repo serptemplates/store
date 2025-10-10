@@ -14,7 +14,7 @@ declare module '@paypal/checkout-server-sdk' {
 
     export class PayPalHttpClient {
       constructor(environment: Environment);
-      execute(request: any): Promise<any>;
+      execute(request: unknown): Promise<unknown>;
     }
   }
 
@@ -26,12 +26,12 @@ declare module '@paypal/checkout-server-sdk' {
 
   export namespace orders {
     export class OrdersCreateRequest {
-      requestBody(body: any): void;
+      requestBody(body: unknown): void;
     }
 
     export class OrdersCaptureRequest {
       constructor(orderId: string);
-      requestBody(body: any): void;
+      requestBody(body: unknown): void;
     }
 
     export class OrdersGetRequest {
@@ -41,12 +41,12 @@ declare module '@paypal/checkout-server-sdk' {
 
   export namespace notifications {
     export class WebhooksVerifySignatureRequest {
-      constructor(body: any);
-      requestBody(verificationObject: any): void;
+      constructor(body: unknown);
+      requestBody(verificationObject: unknown): void;
     }
     export class VerifyWebhookSignatureRequest {
       constructor();
-      requestBody(verificationObject: any): void;
+      requestBody(verificationObject: unknown): void;
     }
   }
 }

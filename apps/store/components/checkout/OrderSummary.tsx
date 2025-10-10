@@ -1,8 +1,24 @@
 import Image from "next/image"
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
+import type { CheckoutProduct } from "@/components/checkout/types"
+
+type SummaryProduct = CheckoutProduct & {
+  featured_image?: string | null;
+  thumbnail?: string | null;
+  tagline?: string;
+  description?: string;
+  pricing?: {
+    benefits?: string[];
+  };
+  metadata?: {
+    benefits?: unknown;
+    features?: unknown;
+  };
+  features?: string[];
+};
 
 interface OrderSummaryProps {
-  product: any
+  product: SummaryProduct
   displayPrice: string
   originalPrice?: string
 }
@@ -18,8 +34,17 @@ export function OrderSummary({ product, displayPrice, originalPrice }: OrderSumm
     </span>
   ) : null
 
-  const benefits = product.pricing?.benefits || product.metadata?.benefits || []
-  const features = product.features || product.metadata?.features || []
+  const benefits: string[] = Array.isArray(product.pricing?.benefits)
+    ? product.pricing?.benefits ?? []
+    : Array.isArray(product.metadata?.benefits)
+    ? product.metadata?.benefits.map((benefit) => String(benefit))
+    : []
+
+  const features: string[] = Array.isArray(product.features)
+    ? product.features
+    : Array.isArray(product.metadata?.features)
+    ? product.metadata.features.map((feature) => String(feature))
+    : []
 
   return (
     <div className="bg-white rounded-lg shadow p-6 sticky top-4">

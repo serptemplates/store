@@ -209,6 +209,10 @@ export async function POST(request: NextRequest) {
     });
 
     // Store checkout session in database
+    if (!paypalOrder.id) {
+      throw new Error("PayPal order did not return an ID");
+    }
+
     await upsertCheckoutSession({
       stripeSessionId: `paypal_${paypalOrder.id}`,
       paymentIntentId: null,

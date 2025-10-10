@@ -4,6 +4,7 @@ import { Marquee } from "../marquee";
 import { cn } from "../lib/utils";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback } from "../avatar";
+import type { HTMLAttributes } from "react";
 
 export const Highlight = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <span
@@ -16,13 +17,11 @@ export const Highlight = ({ children, className }: { children: React.ReactNode; 
   </span>
 );
 
-export interface TestimonialCardProps {
+export interface TestimonialCardProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
   role: string;
   img?: string;
   description: React.ReactNode;
-  className?: string;
-  [key: string]: any;
 }
 
 export const TestimonialCard = ({

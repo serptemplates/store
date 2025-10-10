@@ -38,6 +38,29 @@ import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 
+type PayPalOrderResponse = {
+  id: string;
+  status: string;
+  payer?: {
+    email_address?: string;
+    name?: {
+      given_name?: string;
+      surname?: string;
+    };
+  };
+  purchase_units: Array<{
+    payments?: {
+      captures?: Array<{
+        id?: string;
+        amount?: {
+          value?: string;
+          currency_code?: string;
+        };
+      }>;
+    };
+  }>;
+};
+
 const verifyPayPalWebhookMock = vi.mocked(verifyPayPalWebhook);
 const getPayPalOrderMock = vi.mocked(getPayPalOrder);
 const findCheckoutSessionByStripeSessionIdMock = vi.mocked(findCheckoutSessionByStripeSessionId);
@@ -63,7 +86,7 @@ async function postWebhook(body: Record<string, unknown>, headers: Record<string
   return POST(buildRequest(body, headers));
 }
 
-const baseOrder = {
+const baseOrder: PayPalOrderResponse = {
   id: "order_123",
   status: "COMPLETED",
   payer: {
@@ -119,7 +142,7 @@ describe("POST /api/paypal/webhook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     verifyPayPalWebhookMock.mockResolvedValue(true);
-    getPayPalOrderMock.mockResolvedValue(baseOrder as any);
+    getPayPalOrderMock.mockResolvedValue(baseOrder);
     findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
     getOfferConfigMock.mockReturnValue(offerConfigFixture);
   });
@@ -145,14 +168,15 @@ describe("POST /api/paypal/webhook", () => {
 
     expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith("checkout-id", "completed");
 
-    const orderCall = upsertOrderMock.mock.calls[0][0] as Record<string, unknown>;
-    expect(orderCall).toMatchObject({
-      stripeSessionId: "paypal_order_123",
-      customer_email: "buyer@example.com",
-      payment_method: "paypal",
-      payment_status: "completed",
-      source: "paypal",
-    });
+    expect(upsertOrderMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        stripeSessionId: "paypal_order_123",
+        customer_email: "buyer@example.com",
+        payment_method: "paypal",
+        payment_status: "completed",
+        source: "paypal",
+      }),
+    );
 
     expect(recordWebhookLogMock).toHaveBeenCalledWith(
       expect.objectContaining({

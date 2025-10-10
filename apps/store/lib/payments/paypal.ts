@@ -1,5 +1,51 @@
 import paypal from "@paypal/checkout-server-sdk";
 
+type PayPalOrderResponse = {
+  id?: string;
+  status?: string;
+  links?: Array<{ href: string; rel: string; method?: string }>;
+  payer?: {
+    email_address?: string;
+    name?: {
+      given_name?: string;
+      surname?: string;
+    };
+  };
+  purchase_units?: Array<{
+    payments?: {
+      captures?: Array<{
+        id?: string;
+        amount?: {
+          value?: string;
+          currency_code?: string;
+        };
+      }>;
+    };
+  }>;
+};
+
+type PayPalCaptureResponse = {
+  status?: string;
+  payer?: {
+    email_address?: string;
+    name?: {
+      given_name?: string;
+      surname?: string;
+    };
+  };
+  purchase_units?: Array<{
+    payments?: {
+      captures?: Array<{
+        id?: string;
+        amount?: {
+          value?: string;
+          currency_code?: string;
+        };
+      }>;
+    };
+  }>;
+};
+
 // PayPal environment configuration
 function getPayPalEnvironment() {
   const clientId = process.env.PAYPAL_CLIENT_ID;
@@ -53,7 +99,7 @@ export async function createPayPalOrder(params: {
   description?: string;
   offerId: string;
   metadata?: Record<string, string>;
-}) {
+}): Promise<PayPalOrderResponse> {
   const client = getPayPalClient();
 
   const request = new paypal.orders.OrdersCreateRequest();
@@ -84,7 +130,7 @@ export async function createPayPalOrder(params: {
   });
 
   try {
-    const response = await client.execute(request);
+    const response = await client.execute(request) as { result: PayPalOrderResponse };
     return response.result;
   } catch (error) {
     console.error("PayPal order creation failed:", error);
@@ -93,14 +139,14 @@ export async function createPayPalOrder(params: {
 }
 
 // Capture PayPal order
-export async function capturePayPalOrder(orderId: string) {
+export async function capturePayPalOrder(orderId: string): Promise<PayPalCaptureResponse> {
   const client = getPayPalClient();
 
   const request = new paypal.orders.OrdersCaptureRequest(orderId);
   request.requestBody({});
 
   try {
-    const response = await client.execute(request);
+    const response = await client.execute(request) as { result: PayPalCaptureResponse };
     return response.result;
   } catch (error) {
     console.error("PayPal order capture failed:", error);
@@ -109,13 +155,13 @@ export async function capturePayPalOrder(orderId: string) {
 }
 
 // Get PayPal order details
-export async function getPayPalOrder(orderId: string) {
+export async function getPayPalOrder(orderId: string): Promise<PayPalOrderResponse> {
   const client = getPayPalClient();
 
   const request = new paypal.orders.OrdersGetRequest(orderId);
 
   try {
-    const response = await client.execute(request);
+    const response = await client.execute(request) as { result: PayPalOrderResponse };
     return response.result;
   } catch (error) {
     console.error("Failed to get PayPal order:", error);
@@ -143,7 +189,7 @@ export async function verifyPayPalWebhook(params: {
   });
 
   try {
-    const response = await client.execute(request);
+    const response = await client.execute(request) as { result: { verification_status?: string } };
     return response.result.verification_status === "SUCCESS";
   } catch (error) {
     console.error("PayPal webhook verification failed:", error);

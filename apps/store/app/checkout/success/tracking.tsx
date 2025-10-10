@@ -1,152 +1,132 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import {
+  pushPurchaseEvent,
+  type EcommerceItem,
+} from "@/lib/analytics/gtm";
 
-type ConversionData = {
-  sessionId: string;
-  value?: number;
-  currency?: string;
-  items?: Array<{
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-  }>;
+export type ConversionItem = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
 };
 
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-    fbq?: (...args: any[]) => void;
-    dataLayer?: any[];
+export type ConversionData = {
+  sessionId: string;
+  value?: number | null;
+  currency?: string | null;
+  items?: ConversionItem[];
+  coupon?: string | null;
+  affiliateId?: string | null;
+};
+
+type ConversionTrackingProps = {
+  sessionId?: string | null;
+  order?: ConversionData | null;
+  provider?: string | null;
+};
+
+function toEcommerceItems(items?: ConversionItem[]): EcommerceItem[] {
+  if (!items || items.length === 0) {
+    return [];
   }
+
+  return items.map((item) => ({
+    item_id: item.id,
+    item_name: item.name,
+    price: Number(item.price.toFixed(2)),
+    quantity: item.quantity,
+  }));
 }
 
-export function ConversionTracking() {
-  const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id");
-
+export function ConversionTracking({ sessionId, order, provider }: ConversionTrackingProps) {
   useEffect(() => {
-    if (!sessionId) return;
-
-    // Fetch session details for accurate tracking
-    const trackConversion = async () => {
-      try {
-        // In production, create an endpoint to fetch order details
-        // const response = await fetch(`/api/orders/${sessionId}`);
-        // const orderData = await response.json();
-
-        // For now, using mock data - replace with actual order data
-        const orderData = {
-          value: 97.00,
-          currency: "USD",
-          items: [
-            {
-              id: "product-1",
-              name: "Product Name",
-              price: 97.00,
-              quantity: 1
-            }
-          ]
-        };
-
-        // Google Analytics 4 - Purchase Event
-        if (typeof window.gtag !== "undefined") {
-          window.gtag("event", "purchase", {
-            transaction_id: sessionId,
-            value: orderData.value,
-            currency: orderData.currency,
-            items: orderData.items.map(item => ({
-              item_id: item.id,
-              item_name: item.name,
-              price: item.price,
-              quantity: item.quantity
-            }))
-          });
-        }
-
-        // Facebook Pixel - Purchase Event
-        if (typeof window.fbq !== "undefined") {
-          window.fbq("track", "Purchase", {
-            value: orderData.value,
-            currency: orderData.currency,
-            content_ids: orderData.items.map(item => item.id),
-            content_type: "product",
-            contents: orderData.items.map(item => ({
-              id: item.id,
-              quantity: item.quantity
-            })),
-            num_items: orderData.items.reduce((sum, item) => sum + item.quantity, 0)
-          });
-        }
-
-        // Google Tag Manager - Enhanced Ecommerce
-        if (typeof window.dataLayer !== "undefined") {
-          window.dataLayer.push({
-            event: "purchase",
-            ecommerce: {
-              transaction_id: sessionId,
-              value: orderData.value,
-              currency: orderData.currency,
-              items: orderData.items
-            }
-          });
-        }
-
-        // TikTok Pixel (if configured)
-        if (typeof (window as any).ttq !== "undefined") {
-          (window as any).ttq.track("CompletePayment", {
-            content_type: "product",
-            content_id: orderData.items[0]?.id,
-            content_name: orderData.items[0]?.name,
-            quantity: orderData.items[0]?.quantity,
-            price: orderData.value,
-            value: orderData.value,
-            currency: orderData.currency
-          });
-        }
-
-        // Twitter Pixel (if configured)
-        if (typeof (window as any).twq !== "undefined") {
-          (window as any).twq("event", "tw-purchase", {
-            value: orderData.value,
-            currency: orderData.currency,
-            conversion_id: sessionId,
-            email_address: "" // Add if available
-          });
-        }
-
-        // Pinterest Tag (if configured)
-        if (typeof (window as any).pintrk !== "undefined") {
-          (window as any).pintrk("track", "checkout", {
-            value: orderData.value,
-            currency: orderData.currency,
-            order_id: sessionId,
-            line_items: orderData.items.map(item => ({
-              product_id: item.id,
-              product_name: item.name,
-              product_price: item.price,
-              product_quantity: item.quantity
-            }))
-          });
-        }
-
-        // Store conversion tracking status in sessionStorage to prevent duplicates
-        sessionStorage.setItem(`tracked_${sessionId}`, "true");
-
-      } catch (error) {
-        console.error("Error tracking conversion:", error);
-      }
-    };
-
-    // Check if we've already tracked this conversion
-    const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
-
-    if (!alreadyTracked) {
-      trackConversion();
+    if (!sessionId || !order) {
+      return;
     }
-  }, [sessionId]);
+
+    const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
+    if (alreadyTracked === "true") {
+      return;
+    }
+
+    const ecommerceItems = toEcommerceItems(order.items);
+
+    pushPurchaseEvent({
+      transactionId: sessionId,
+      value: order.value ?? undefined,
+      currency: order.currency ?? undefined,
+      coupon: order.coupon ?? undefined,
+      affiliation: provider ?? undefined,
+      items: ecommerceItems,
+    });
+
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "purchase", {
+        transaction_id: sessionId,
+        value: order.value ?? undefined,
+        currency: order.currency ?? undefined,
+        coupon: order.coupon ?? undefined,
+        affiliation: provider ?? undefined,
+        items: ecommerceItems,
+      });
+    }
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Purchase", {
+        value: order.value ?? undefined,
+        currency: order.currency ?? undefined,
+        content_ids: ecommerceItems.map((item) => item.item_id),
+        content_type: "product",
+        contents: ecommerceItems.map((item) => ({
+          id: item.item_id,
+          quantity: item.quantity,
+        })),
+        num_items: ecommerceItems.reduce(
+          (sum, item) => sum + (item.quantity ?? 0),
+          0,
+        ),
+      });
+    }
+
+    if (typeof window !== "undefined" && window.ttq && ecommerceItems[0]) {
+      window.ttq.track("CompletePayment", {
+        content_type: "product",
+        content_id: ecommerceItems[0].item_id,
+        content_name: ecommerceItems[0].item_name,
+        quantity: ecommerceItems[0].quantity,
+        price: order.value ?? undefined,
+        value: order.value ?? undefined,
+        currency: order.currency ?? undefined,
+      });
+    }
+
+    if (typeof window !== "undefined" && window.twq) {
+      window.twq("event", "tw-purchase", {
+        value: order.value ?? undefined,
+        currency: order.currency ?? undefined,
+        conversion_id: sessionId,
+      });
+    }
+
+    if (typeof window !== "undefined" && window.pintrk) {
+      window.pintrk("track", "checkout", {
+        value: order.value ?? undefined,
+        currency: order.currency ?? undefined,
+        order_id: sessionId,
+        line_items: ecommerceItems.map((item) => ({
+          product_id: item.item_id,
+          product_name: item.item_name,
+          product_price: item.price,
+          product_quantity: item.quantity,
+        })),
+      });
+    }
+
+    sessionStorage.setItem(`tracked_${sessionId}`, "true");
+  }, [sessionId, order, provider]);
 
   return null;
 }

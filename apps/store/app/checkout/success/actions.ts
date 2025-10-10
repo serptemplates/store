@@ -8,6 +8,21 @@ import { getOfferConfig } from "@/lib/products/offer-config";
 import { ensureAccountForPurchase } from "@/lib/account/service";
 import logger from "@/lib/logger";
 
+type ProcessedOrderDetails = {
+  sessionId: string;
+  amount: number | null;
+  currency: string | null;
+  items: Array<{ id: string; name: string; price: number; quantity: number }>;
+  coupon?: string | null;
+  affiliateId?: string | null;
+};
+
+type ProcessCheckoutResult = {
+  success: boolean;
+  message?: string;
+  order?: ProcessedOrderDetails;
+};
+
 function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {
   const tierValue = typeof metadata?.licenseTier === "string" ? metadata?.licenseTier : offerId;
   const entitlementsRaw = metadata?.licenseEntitlements;
@@ -45,7 +60,7 @@ function extractLicenseConfig(metadata: Record<string, unknown> | undefined, off
  * This is a fallback for development environments where webhooks may not be configured.
  * In production, this is redundant with the webhook but provides idempotency.
  */
-export async function processCheckoutSession(sessionId: string) {
+export async function processCheckoutSession(sessionId: string): Promise<ProcessCheckoutResult> {
   try {
     const stripe = getStripeClient();
     
@@ -222,9 +237,75 @@ export async function processCheckoutSession(sessionId: string) {
       }
     }
 
+    const orderAmount =
+      typeof session.amount_total === "number"
+        ? Number((session.amount_total / 100).toFixed(2))
+        : null;
+
+    const orderItems =
+      session.line_items?.data?.map((line) => {
+        const quantity = line.quantity ?? 1;
+        const lineTotal =
+          typeof line.amount_total === "number"
+            ? Number((line.amount_total / 100).toFixed(2))
+            : null;
+        const unitAmountFromTotal =
+          lineTotal !== null && quantity > 0
+            ? Number((lineTotal / quantity).toFixed(2))
+            : null;
+        const unitAmountFromPrice =
+          typeof line.price?.unit_amount === "number"
+            ? Number((line.price.unit_amount / 100).toFixed(2))
+            : null;
+        const resolvedUnitAmount = unitAmountFromTotal ?? unitAmountFromPrice;
+        const resolvedLineTotal =
+          lineTotal ?? (resolvedUnitAmount !== null ? Number((resolvedUnitAmount * quantity).toFixed(2)) : null);
+
+        const lineName =
+          line.description ??
+          (typeof line.price?.product === "string" ? line.price.product : undefined) ??
+          metadata.productName ??
+          metadata.offerName ??
+          offerId ??
+          "Product";
+
+        const lineId =
+          (typeof line.price?.product === "string" ? line.price.product : undefined) ??
+          metadata.productSlug ??
+          offerId ??
+          sessionId;
+
+        return {
+          id: lineId,
+          name: lineName,
+          price: resolvedUnitAmount ?? resolvedLineTotal ?? 0,
+          quantity,
+        };
+      }) ?? [
+        {
+          id: offerId ?? sessionId,
+          name: metadata.productName ?? offerId ?? "Product",
+          price: orderAmount ?? 0,
+          quantity: 1,
+        },
+      ];
+
+    const couponCode = typeof metadata.couponCode === "string" ? metadata.couponCode : undefined;
+
+    const affiliateIdValue =
+      typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined;
+
     return {
       success: true,
       message: "Order processed successfully",
+      order: {
+        sessionId,
+        amount: orderAmount,
+        currency: session.currency ?? null,
+        items: orderItems,
+        coupon: couponCode,
+        affiliateId: affiliateIdValue,
+      },
     };
   } catch (error) {
     logger.error("checkout.success.process_error", {

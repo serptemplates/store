@@ -57,7 +57,7 @@ export async function GET() {
       <!-- Custom labels for campaign management -->
       <g:custom_label_0>${product.layout_type || 'standard'}</g:custom_label_0>
       <g:custom_label_1>${product.categories?.[0] || 'general'}</g:custom_label_1>
-      ${(product as any).featured ? '<g:custom_label_2>featured</g:custom_label_2>' : ''}
+      ${product.featured ? '<g:custom_label_2>featured</g:custom_label_2>' : ''}
 
       <!-- Promotion if applicable -->
       ${product.pricing?.note ? `<g:promotion_id>limited-time-offer</g:promotion_id>` : ''}

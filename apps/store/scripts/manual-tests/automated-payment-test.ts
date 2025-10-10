@@ -10,8 +10,14 @@ import Stripe from 'stripe';
 import { query } from '../../lib/database';
 import { requireStripeSecretKey } from '../../lib/payments/stripe-environment';
 
+type PayPalOrderLink = {
+  href: string;
+  rel: string;
+};
+
+const stripeApiVersion = '2024-04-10' as Stripe.LatestApiVersion;
 const stripe = new Stripe(requireStripeSecretKey('test'), {
-  apiVersion: '2024-04-10' as any,
+  apiVersion: stripeApiVersion,
 });
 
 console.log('🤖 Automated Payment Flow Test\n');
@@ -30,8 +36,30 @@ const log = {
   info: (msg: string) => console.log(`ℹ️  ${msg}`),
 };
 
-// Test results collector
-const testResults = {
+type StripeTestDetails = {
+  sessionCreated?: boolean;
+  paymentCompleted?: boolean;
+  orderPersisted?: boolean;
+  ghlSynced?: boolean;
+  error?: string;
+};
+
+type PayPalTestDetails = {
+  orderCreated?: boolean;
+  approvalUrl?: boolean;
+  orderTracked?: boolean;
+  error?: string;
+};
+
+type GenericTestDetails = Record<string, unknown>;
+
+const testResults: {
+  stripe: { passed: boolean; details: StripeTestDetails };
+  paypal: { passed: boolean; details: PayPalTestDetails };
+  database: { passed: boolean; details: GenericTestDetails };
+  ghl: { passed: boolean; details: GenericTestDetails };
+  webhooks: { passed: boolean; details: GenericTestDetails };
+} = {
   stripe: { passed: false, details: {} },
   paypal: { passed: false, details: {} },
   database: { passed: false, details: {} },
@@ -76,7 +104,7 @@ async function testStripeFlow() {
     const sessionId = checkoutData.id || checkoutData.sessionId;
 
     log.success(`Checkout session created: ${sessionId}`);
-    (testResults.stripe.details as any)['sessionCreated'] = true;
+    testResults.stripe.details.sessionCreated = true;
 
     // Step 2: Retrieve session from Stripe
     log.info('Retrieving session from Stripe...');
@@ -117,7 +145,7 @@ async function testStripeFlow() {
         });
 
         log.success(`Payment completed: ${paymentIntent.id}`);
-        (testResults.stripe.details as any)['paymentCompleted'] = true;
+        testResults.stripe.details.paymentCompleted = true;
 
         // Trigger webhook manually for testing
         log.info('Triggering webhook event...');
@@ -165,7 +193,7 @@ async function testStripeFlow() {
       log.info(`Order ID: ${order.id}`);
       log.info(`Amount: $${(order.amount_total / 100).toFixed(2)}`);
       log.info(`Status: ${order.payment_status}`);
-      (testResults.stripe.details as any)['orderPersisted'] = true;
+      testResults.stripe.details.orderPersisted = true;
     } else {
       log.warning('Order not found in database yet');
     }
@@ -182,7 +210,7 @@ async function testStripeFlow() {
       const cs = checkoutSessions.rows[0];
       if (cs.metadata?.ghlSyncedAt) {
         log.success(`GHL synced at: ${cs.metadata.ghlSyncedAt}`);
-        (testResults.stripe.details as any)['ghlSynced'] = true;
+        testResults.stripe.details.ghlSynced = true;
       } else {
         log.warning('GHL sync pending or failed');
       }
@@ -193,7 +221,7 @@ async function testStripeFlow() {
 
   } catch (error) {
     log.error(`Stripe test failed: ${(error as Error).message}`);
-    (testResults.stripe.details as any)['error'] = (error as Error).message;
+    testResults.stripe.details.error = (error as Error).message;
   }
 }
 
@@ -223,16 +251,16 @@ async function testPayPalFlow() {
       throw new Error(`PayPal order creation failed: ${error}`);
     }
 
-    const orderData = await orderResponse.json();
+    const orderData = (await orderResponse.json()) as { orderId: string; links?: PayPalOrderLink[] };
     log.success(`PayPal order created: ${orderData.orderId}`);
-    (testResults.paypal.details as any)['orderCreated'] = true;
+    testResults.paypal.details.orderCreated = true;
 
     // Find approval URL
-    const approvalUrl = orderData.links?.find((l: any) => l.rel === 'approve')?.href;
+    const approvalUrl = orderData.links?.find((link) => link.rel === 'approve')?.href;
     if (approvalUrl) {
       log.info('PayPal approval URL generated:');
       console.log(`   ${approvalUrl}\n`);
-      (testResults.paypal.details as any)['approvalUrl'] = true;
+      testResults.paypal.details.approvalUrl = true;
     }
 
     // Step 2: Simulate capture (requires manual approval in sandbox)
@@ -252,14 +280,14 @@ async function testPayPalFlow() {
 
     if (paypalOrders && paypalOrders.rows.length > 0) {
       log.success('PayPal order tracked in database');
-      (testResults.paypal.details as any)['orderTracked'] = true;
+      testResults.paypal.details.orderTracked = true;
     }
 
     testResults.paypal.passed = true;
 
   } catch (error) {
     log.error(`PayPal test failed: ${(error as Error).message}`);
-    (testResults.paypal.details as any)['error'] = (error as Error).message;
+    testResults.paypal.details.error = (error as Error).message;
   }
 }
 

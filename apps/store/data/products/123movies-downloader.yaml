@@ -3,7 +3,7 @@ platform: 123movies
 seo_title: Download 123movies Videos | 123movies Downloader
 seo_description: Download 123movies videos easily for offline viewing. Fast,
   reliable 123movies video downloader with high-quality downloads.
-product_page_url: https://apps.serp.co/123movies-downloader
+product_page_url: https://store.serp.co/products/123movies-downloader
 purchase_url: https://serp.ly/123movies-downloader
 stripe:
   price_id: price_1S99wh06JrOmKRCmkF8J8XUh
@@ -103,7 +103,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
     - purchase-123movies-downloader
-pre_release: true
+new_release: true
 reviews:
   - name: Alex Martinez
     title: Saves hours every week with 123movies Downloader

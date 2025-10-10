@@ -34,8 +34,9 @@ try {
   process.exit(1);
 }
 
+const stripeApiVersion = '2024-04-10' as Stripe.LatestApiVersion;
 const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2024-04-10' as any,
+  apiVersion: stripeApiVersion,
 });
 
 // Test configuration
@@ -62,12 +63,17 @@ const log = {
 };
 
 // Acceptance results
-const acceptanceResults = {
-  ghlData: { passed: false, details: {} as any },
-  postgresData: { passed: false, details: {} as any },
-  analyticsData: { passed: false, details: {} as any },
-  paymentData: { passed: false, details: {} as any },
-  ghlAutomation: { passed: false, details: {} as any },
+type AcceptanceResult = {
+  passed: boolean;
+  details: Record<string, unknown>;
+};
+
+const acceptanceResults: Record<string, AcceptanceResult> = {
+  ghlData: { passed: false, details: {} },
+  postgresData: { passed: false, details: {} },
+  analyticsData: { passed: false, details: {} },
+  paymentData: { passed: false, details: {} },
+  ghlAutomation: { passed: false, details: {} },
 };
 
 async function sleep(ms: number) {
@@ -309,7 +315,7 @@ async function testPostgreSQL(sessionId: string) {
 }
 
 // ============ 3. GHL DATA & AUTOMATION TEST ============
-async function testGHLIntegration(sessionData: any) {
+async function testGHLIntegration(): Promise<void> {
   log.header('CRITERION 1 & 5: GHL GETS DATA & TRIGGERS AUTOMATION');
 
   try {
@@ -485,8 +491,8 @@ async function runAcceptanceTest() {
 
     // Run tests in sequence
     const sessionId = await testPaymentProcessor();
-    const sessionData = await testPostgreSQL(sessionId);
-    await testGHLIntegration(sessionData);
+    await testPostgreSQL(sessionId);
+    await testGHLIntegration();
     await testGoogleAnalytics();
 
     // Generate acceptance report

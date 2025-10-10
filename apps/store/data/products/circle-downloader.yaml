@@ -3,7 +3,7 @@ platform: Circle
 seo_title: Download Circle Content | Circle Downloader
 seo_description: Download Circle content easily for offline use. Fast and
   reliable Circle downloader.
-product_page_url: https://apps.serp.co/circle-downloader
+product_page_url: https://store.serp.co/products/circle-downloader
 purchase_url: https://serp.ly/circle-downloader
 stripe:
   price_id: price_1S99wl06JrOmKRCmy32X7AjP
@@ -103,7 +103,7 @@ ghl:
   source: Stripe Checkout
   tag_ids:
     - purchase-circle-downloader
-pre_release: true
+new_release: true
 reviews:
   - name: Alex Martinez
     title: Saves hours every week with Circle Downloader

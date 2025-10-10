@@ -16,6 +16,10 @@
 □ NEXT_PUBLIC_GTM_ID - Google Tag Manager container ID
 □ NEXT_PUBLIC_GA4_ID - Google Analytics 4 measurement ID
 □ NEXT_PUBLIC_FB_PIXEL_ID - Facebook Pixel ID
+□ NEXT_PUBLIC_POSTHOG_KEY - PostHog project API key (optional, enables session recording)
+□ NEXT_PUBLIC_POSTHOG_HOST - Custom PostHog API host (optional)
+□ POSTHOG_API_KEY - PostHog server API key (optional, enables backend event capture)
+□ POSTHOG_API_HOST - Custom PostHog server API host (optional)
 □ NEXT_PUBLIC_SITE_URL - Production domain (https://yourdomain.com)
 ```
 

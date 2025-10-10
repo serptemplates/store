@@ -5,6 +5,7 @@ import {
   updateCheckoutSessionStatus,
   upsertOrder,
 } from "@/lib/checkout/store";
+import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { recordWebhookLog } from "@/lib/webhook-logs";
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Extract payment details
-        const capture = paypalOrder.purchase_units[0]?.payments?.captures?.[0];
+        const capture = paypalOrder.purchase_units?.[0]?.payments?.captures?.[0];
         const payer = paypalOrder.payer;
 
         const amountTotal = capture?.amount?.value
@@ -118,6 +119,37 @@ export async function POST(request: NextRequest) {
         };
 
         await upsertOrder(orderData);
+
+        const checkoutMetadata = checkoutSession?.metadata as Record<string, unknown> | undefined;
+        const orderMetadata = (orderData.metadata ?? {}) as Record<string, unknown>;
+        const affiliateId =
+          (typeof checkoutMetadata?.affiliateId === "string" ? checkoutMetadata.affiliateId : undefined) ??
+          (typeof orderMetadata.affiliateId === "string"
+            ? (orderMetadata.affiliateId as string)
+            : undefined) ??
+          null;
+
+        const combinedMetadata: Record<string, unknown> = {
+          ...(checkoutMetadata ?? {}),
+          ...orderMetadata,
+        };
+
+        trackCheckoutCompleted({
+          provider: "paypal",
+          amountTotalCents: orderData.amount_total,
+          currency: orderData.currency,
+          offerId: orderData.offer_id,
+          landerId: orderData.lander_id,
+          affiliateId,
+          checkoutSessionId: orderData.checkout_session_id,
+          stripeSessionId: orderData.stripeSessionId,
+          stripePaymentIntentId: orderData.stripe_payment_intent_id,
+          paypalOrderId: orderId,
+          paymentMethod: orderData.payment_method,
+          customerEmail: orderData.customer_email,
+          customerName: orderData.customer_name,
+          metadata: combinedMetadata,
+        });
 
         // Record webhook success
         await recordWebhookLog({

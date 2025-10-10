@@ -20,7 +20,7 @@ export async function createSimpleCheckout(params: {
   const stripeKey = requireStripeSecretKey(stripeMode);
 
   const stripe = new Stripe(stripeKey, {
-    apiVersion: '2024-04-10' as any,
+    apiVersion: '2024-04-10',
   });
 
   // Get product data
@@ -93,40 +93,58 @@ export async function createSimpleCheckout(params: {
     console.log('[SimpleCheckout] Using price:', stripePrice.id);
     console.log('[SimpleCheckout] Customer email:', params.customer?.email);
 
-    const sessionParams = {
-      payment_method_types: ['card'] as const,
-      line_items: [{
-        price: stripePrice.id,
-        quantity: params.quantity || 1,
-      }],
-      mode: 'payment' as const,
+    const paymentMethodTypes = ['card'] as ['card'];
+
+    const sessionMetadata: Stripe.MetadataParam = {
+      offerId: product.slug,
+      landerId: product.slug,
+      productName: product.name || '',
+      environment: stripeMode,
+    };
+
+    if (params.affiliateId) {
+      sessionMetadata.affiliateId = params.affiliateId;
+    }
+
+    if (params.metadata) {
+      for (const [key, value] of Object.entries(params.metadata)) {
+        sessionMetadata[key] = value;
+      }
+    }
+
+    const sessionParams: Stripe.Checkout.SessionCreateParams = {
+      payment_method_types: paymentMethodTypes,
+      line_items: [
+        {
+          price: stripePrice.id,
+          quantity: params.quantity ?? 1,
+        },
+      ],
+      mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${product.slug}`,
       customer_email: params.customer?.email,
-      metadata: {
-        ...params.metadata,
-        offerId: product.slug,
-        landerId: product.slug,
-        affiliateId: params.affiliateId || '',
-        productName: product.name || '',
-        environment: stripeMode,
-      },
+      metadata: sessionMetadata,
       client_reference_id: product.slug,
     };
 
     console.log('[SimpleCheckout] Session params:', JSON.stringify(sessionParams, null, 2));
 
-    const session = await stripe.checkout.sessions.create(sessionParams as any);
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     console.log('[SimpleCheckout] Session created successfully:', session.id);
     console.log('[SimpleCheckout] Session URL:', session.url);
 
     return session;
-  } catch (error: any) {
+  } catch (error) {
     console.error('[SimpleCheckout] Error creating checkout session:', error);
-    console.error('[SimpleCheckout] Error message:', error.message);
-    console.error('[SimpleCheckout] Error type:', error.type);
-    console.error('[SimpleCheckout] Error stack:', error.stack);
+    if (error instanceof Error) {
+      console.error('[SimpleCheckout] Error message:', error.message);
+      console.error('[SimpleCheckout] Error stack:', error.stack);
+    }
+    if (typeof error === 'object' && error !== null && 'type' in error) {
+      console.error('[SimpleCheckout] Error type:', (error as { type?: unknown }).type);
+    }
     throw error;
   }
 }

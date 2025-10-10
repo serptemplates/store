@@ -2,6 +2,18 @@ import fs from 'fs'
 import path from 'path'
 import yaml from 'yaml'
 
+export interface ProductMetadata {
+  platform?: string;
+  seo_title?: string;
+  seo_description?: string;
+  github_repo_url?: string;
+  stripe_price_id?: string;
+  original_price?: string;
+  benefits?: string[];
+  features?: string[];
+  [key: string]: unknown;
+}
+
 export interface Product {
   id: string
   title: string
@@ -21,7 +33,7 @@ export interface Product {
     }>
     inventory_quantity?: number
   }>
-  metadata?: Record<string, any>
+  metadata?: ProductMetadata
   collection?: string
 }
 

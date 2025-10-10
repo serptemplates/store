@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import ClientHome from "../ClientHome";
 import HybridPage from "./hybrid-page";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
@@ -7,6 +8,7 @@ import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import { getProductVideoEntries } from "@/lib/products/video";
+import { buildProductMetadata } from "@/lib/products/metadata";
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -49,4 +51,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
 export function generateStaticParams() {
   return getProductSlugs().map((slug) => ({ slug }));
+}
+
+const FALLBACK_METADATA: Metadata = {
+  title: "SERP Apps",
+  description: "Browse the full catalog of SERP products.",
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const product = getProductData(slug);
+    return buildProductMetadata(product);
+  } catch {
+    return FALLBACK_METADATA;
+  }
 }

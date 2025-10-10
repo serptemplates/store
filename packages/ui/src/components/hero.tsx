@@ -18,7 +18,7 @@ export type HeroLink = {
 
 type HeroProps = {
   title: string;
-  description: string;
+  description?: string;
   highlight?: string;
   links?: HeroLink[];
   media?: HeroMediaProps["items"];
@@ -70,9 +70,11 @@ const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col items-center gap-6">
               <Title title={title} highlight={highlight} />
-              <p className="text-base text-balance text-center font-medium leading-relaxed text-gray-700 md:text-xl md:max-w-3xl">
-                {description}
-              </p>
+              {description && description.trim().length > 0 && (
+                <p className="text-base text-balance text-center font-medium leading-relaxed text-gray-700 md:text-xl md:max-w-3xl">
+                  {description}
+                </p>
+              )}
             </div>
             {resolvedLinks && resolvedLinks.length > 0 && (
               <div className="flex flex-col gap-5 sm:justify-center sm:flex-row">

@@ -36,7 +36,7 @@ async function checkWebhookError() {
     offer_id: string;
     status: string;
     last_error: string;
-    metadata: any;
+    metadata: Record<string, unknown> | null;
     updated_at: string;
   }>`
     SELECT payment_intent_id, event_type, offer_id, status, last_error, metadata, updated_at
@@ -66,7 +66,7 @@ async function checkWebhookError() {
   // Also check the checkout session metadata for GHL sync errors
   const sessionResult = await query<{
     stripe_session_id: string;
-    metadata: any;
+    metadata: Record<string, unknown> | null;
     updated_at: string;
   }>`
     SELECT stripe_session_id, metadata, updated_at

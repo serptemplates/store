@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useMemo } from "react"
+import type { Route } from "next"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -65,7 +66,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
 
   const handleCheckout = useCallback(() => {
     const checkoutUrl = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`
-    router.push(checkoutUrl as any)
+    router.push(checkoutUrl as Route)
   }, [product.slug, affiliateId, router])
 
   useEffect(() => {

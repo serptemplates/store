@@ -8,7 +8,8 @@
 import {
   generateProductSchemaLD,
   generateBreadcrumbSchema,
-  generateEducationQASchema
+  generateEducationQASchema,
+  type SchemaProduct,
 } from './index';
 
 console.log('✅ Testing All 7 Required Schema Types\n');
@@ -21,10 +22,10 @@ console.log('-'.repeat(40));
 const productSchema = generateProductSchemaLD({
   product: {
     slug: 'test-downloader',
-    name: 'Video Downloader Pro',
-    description: 'Professional video downloading tool with advanced features',
     seo_title: 'Video Downloader Pro - Best Video Download Tool',
     seo_description: 'Download videos from anywhere with advanced features',
+    name: 'Video Downloader Pro',
+    description: 'Professional video downloading tool with advanced features',
     product_page_url: 'https://apps.serp.co/video-downloader-pro',
     purchase_url: 'https://apps.serp.co/buy/video-downloader-pro',
     price: '49.99',
@@ -40,17 +41,29 @@ const productSchema = generateProductSchemaLD({
       'Multiple format conversion',
     ],
     reviews: [
-      { name: 'John Doe', review: 'Excellent tool!' },
-      { name: 'Jane Smith', review: 'Very useful' },
-      { name: 'Bob Wilson', review: 'Worth every penny' },
+      { name: 'John Doe', review: 'Excellent tool!', rating: 5, text: 'Excellent tool!' },
+      { name: 'Jane Smith', review: 'Very useful', rating: 4, text: 'Very useful' },
+      { name: 'Bob Wilson', review: 'Worth every penny', rating: 5, text: 'Worth every penny' },
     ],
     brand: 'SERP Apps',
     pricing: {
       price: '49.99',
+      benefits: [],
     },
-    layout_type: 'ecommerce' as const,
+    layout_type: 'ecommerce',
     pre_release: false,
-  } as any,
+    featured: false,
+    new_release: false,
+    popular: false,
+    supported_operating_systems: [],
+    product_videos: [],
+    related_videos: [],
+    screenshots: [],
+    faqs: [],
+    github_repo_tags: [],
+    return_policy: undefined,
+    supported_regions: [],
+  } satisfies SchemaProduct,
   url: 'https://apps.serp.co/video-downloader-pro',
   storeUrl: 'https://apps.serp.co',
   currency: 'USD',

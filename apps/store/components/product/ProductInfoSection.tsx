@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export interface ProductInfoSectionProps {
   title: string;
@@ -31,16 +31,17 @@ export function ProductInfoSection({
   features = [],
   githubUrl,
 }: ProductInfoSectionProps) {
-  const router = useRouter();
-
-  const handleCheckout = () => {
-    const params = new URLSearchParams();
-    params.set("product", productSlug || "");
-    if (affiliateId) {
-      params.set("aff", affiliateId);
-    }
-    router.push(`/checkout?${params.toString()}`);
-  };
+  const checkoutQuery: Record<string, string> = {};
+  if (productSlug) {
+    checkoutQuery.product = productSlug;
+  }
+  if (affiliateId) {
+    checkoutQuery.aff = affiliateId;
+  }
+  const checkoutHref =
+    Object.keys(checkoutQuery).length > 0
+      ? ({ pathname: "/checkout" as const, query: checkoutQuery } as const)
+      : ("/checkout" as const);
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-4">{title}</h1>
@@ -68,15 +69,15 @@ export function ProductInfoSection({
             Join Waitlist
           </button>
         ) : (
-          <button
-            onClick={handleCheckout}
+          <Link
+            href={checkoutHref}
             className="block w-full bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <span>Proceed to Checkout</span>
-          </button>
+          </Link>
         )}
 
         {/* Multiple payment options indicator */}

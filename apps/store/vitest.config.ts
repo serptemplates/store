@@ -3,8 +3,15 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["__tests__/**/*.test.ts", "lib/**/*.test.ts", "tests/**/*.test.ts"],
-    environment: "node",
+    include: [
+      "__tests__/**/*.test.ts?(x)",
+      "lib/**/*.test.ts?(x)",
+      "tests/**/*.test.ts?(x)",
+    ],
+    exclude: [
+      "tests/e2e/**",
+    ],
+    environment: "jsdom",
     reporters: "default",
     clearMocks: true,
   },

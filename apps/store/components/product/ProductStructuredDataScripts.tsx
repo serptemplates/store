@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-import { generateProductSchemaLD, generateBreadcrumbSchema } from "@/schema/product-schema-ld";
+import { generateProductSchemaLD, generateBreadcrumbSchema, type SchemaProduct } from "@/schema/product-schema-ld";
 import { generateWebApplicationSchema } from "@/schema/software-app-schema";
 import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
@@ -19,6 +19,15 @@ export interface ProductStructuredDataScriptsProps {
 }
 
 export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
+  const parsePrice = (value?: string | null): string | null => {
+    if (!value) return null;
+    const cleaned = value.toString().replace(/[^0-9.]/g, "");
+    if (!cleaned) return null;
+    const numeric = Number.parseFloat(cleaned);
+    if (!Number.isFinite(numeric)) return null;
+    return numeric.toFixed(2);
+  };
+
   const homeProps = productToHomeTemplate(product, posts);
   const normalizedStoreUrl = (() => {
     if (siteConfig?.site?.domain) {
@@ -30,23 +39,33 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const productPath = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;
   const productId = `${productUrl}#product`;
+  const resolvedCurrency = product.pricing?.currency?.trim() || "USD";
+  const normalizedPrice = parsePrice(product.pricing?.price) ?? "0.00";
+  const normalizedImages = images.length
+    ? images
+    : [product.featured_image, product.featured_image_gif]
+        .flat()
+        .filter((value): value is string => Boolean(value && value.trim().length > 0));
+  const schemaProduct: SchemaProduct = {
+    ...product,
+    price: normalizedPrice,
+    images: normalizedImages,
+    isDigital: true,
+    reviews: product.reviews?.map((review) => ({
+      name: review.name,
+      review: review.review,
+      rating: review.rating,
+      date: review.date,
+      text: review.review,
+    })),
+  };
+
   const productSchema = generateProductSchemaLD({
-    product: {
-      ...product,
-      price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
-      images,
-      isDigital: true,
-      reviews: product.reviews?.map((review) => ({
-        ...review,
-        rating: (review as any).rating,
-        date: (review as any).date,
-        text: review.review,
-      })),
-    } as any,
+    product: schemaProduct,
     url: productUrl,
     storeUrl: normalizedStoreUrl,
     productId,
-    currency: "USD",
+    currency: resolvedCurrency,
     preRelease: product.pre_release ?? false,
     expectedLaunchDate: undefined,
   });
@@ -65,34 +84,33 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Web Browser",
     offers: {
-      price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
-      priceCurrency: "USD",
+      price: normalizedPrice,
+      priceCurrency: resolvedCurrency,
     },
     aggregateRating:
       product.reviews && product.reviews.length > 0
         ? {
             ratingValue:
-              product.reviews.reduce((sum, review) => sum + ((review as any).rating || 5), 0) /
+              product.reviews.reduce((sum, review) => sum + (typeof review.rating === "number" ? review.rating : 5), 0) /
               product.reviews.length,
             ratingCount: product.reviews.length,
             bestRating: 5,
             worstRating: 1,
           }
         : undefined,
-    screenshot: product.screenshots?.map((screenshot) =>
-      typeof screenshot === "string" ? screenshot : screenshot.url,
-    ) ?? images,
+    screenshot:
+      product.screenshots?.map((screenshot) =>
+        typeof screenshot === "string" ? screenshot : screenshot.url,
+      ) ?? normalizedImages,
     softwareVersion: "1.0",
-    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `https://apps.serp.co/${product.slug}`,
+    url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `${normalizedStoreUrl}/${product.slug}`,
     downloadUrl: product.purchase_url,
     author: {
-      name: "SERP Apps",
-      url: "https://apps.serp.co",
+      name: siteConfig?.site?.name?.trim() || "SERP Apps",
+      url: normalizedStoreUrl,
     },
     datePublished: new Date().toISOString(),
-    featureList: product.features?.map((feature) =>
-      typeof feature === "string" ? feature : (feature as any).text ?? (feature as any).title,
-    ),
+    featureList: product.features?.map((feature) => feature),
     browserRequirements: "Requires a modern web browser with JavaScript enabled",
   });
 
@@ -115,9 +133,9 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const baseUrl = normalizedStoreUrl;
 
   const videoObjects = videoEntries ?? [];
-  const supportedRegions = Array.isArray((product as any).supported_regions)
-    ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
-    : [];
+  const supportedRegions = product.supported_regions
+    .map((region) => region.trim())
+    .filter((region) => region.length > 0);
   const primaryRegion = supportedRegions[0] ?? 'Worldwide';
 
   const videoScripts = videoObjects.map((entry) => {
@@ -169,8 +187,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
         ? {
             '@type': 'Offer',
             url: product.purchase_url,
-            price: product.pricing?.price?.replace(/[^0-9.]/g, '') || '0',
-            priceCurrency: 'USD',
+            price: normalizedPrice,
+            priceCurrency: resolvedCurrency,
             availability: product.pre_release ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
           }
         : undefined,

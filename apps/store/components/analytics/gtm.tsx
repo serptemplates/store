@@ -90,44 +90,51 @@ export function FacebookPixel() {
 
 // Enhanced Analytics Tracking Hook
 export function useAnalytics() {
-  const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
-    // Google Analytics 4
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', eventName, parameters);
+  const trackEvent = (eventName: string, parameters?: Record<string, unknown>) => {
+    if (typeof window === 'undefined') {
+      return;
     }
 
-    // Google Tag Manager
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
+    const payload = parameters ?? {};
+
+    if (window.gtag) {
+      window.gtag('event', eventName, payload);
+    }
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
         event: eventName,
-        ...parameters,
+        ...payload,
       });
     }
 
-    // Facebook Pixel
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', eventName, parameters);
+    if (window.fbq) {
+      window.fbq('track', eventName, payload);
     }
   };
 
   const trackPageView = (url?: string) => {
-    const pageUrl = url || window.location.pathname;
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const pageUrl = url ?? window.location.pathname;
 
     // GA4
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('config', GA4_ID, {
+    if (window.gtag) {
+      window.gtag('config', GA4_ID, {
         page_path: pageUrl,
       });
     }
 
     // Facebook
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'PageView');
+    if (window.fbq) {
+      window.fbq('track', 'PageView');
     }
 
     // GTM
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
+    if (window.dataLayer) {
+      window.dataLayer.push({
         event: 'pageview',
         page: pageUrl,
       });

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { getSiteConfig } from "@/lib/site-config";
 import { DelayedGTM } from "@/components/DelayedGTM";
+import { PostHogAnalytics } from "@/components/analytics/PostHogAnalytics";
+import { getSiteConfig } from "@/lib/site-config";
 
 const STORE_TITLE = "SERP Apps";
 const STORE_DESCRIPTION = "Browse the full catalog of SERP products.";
@@ -47,20 +48,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body className="font-sans antialiased">
-        {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              title="Google Tag Manager"
-              style={{ display: "none", visibility: "hidden" }}
-            />
-          </noscript>
-        )}
-        {children}
-        {/* Load GTM after page content to improve performance */}
-        {gtmId && <DelayedGTM gtmId={gtmId} />}
+        <PostHogAnalytics>
+          {gtmId && (
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+                height="0"
+                width="0"
+                title="Google Tag Manager"
+                style={{ display: "none", visibility: "hidden" }}
+              />
+            </noscript>
+          )}
+          {children}
+          {/* Load GTM after page content to improve performance */}
+          {gtmId && <DelayedGTM gtmId={gtmId} />}
+        </PostHogAnalytics>
       </body>
     </html>
   );

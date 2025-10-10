@@ -4,33 +4,96 @@ import Script from "next/script"
 
 import { formatPrice } from "@/lib/products/products-data"
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
-import { generateBreadcrumbSchema, generateProductSchemaLD } from "@/schema/product-schema-ld"
+import { generateBreadcrumbSchema, generateProductSchemaLD, type SchemaProduct } from "@/schema/product-schema-ld"
+
+interface ShopifyProductPrice {
+  amount: number;
+  currency_code: string;
+}
+
+interface ShopifyProductVariant {
+  prices?: ShopifyProductPrice[];
+}
+
+interface ShopifyImage {
+  url: string;
+}
+
+interface ShopifyProductMetadata {
+  platform?: string;
+  original_price?: string;
+  features?: string[];
+  benefits?: string[];
+  stripe_price_id?: string;
+  subtitle?: string;
+  price_label?: string | null;
+  github_repo_url?: string;
+}
+
+interface ShopifyProduct {
+  title: string;
+  description?: string;
+  thumbnail?: string;
+  metadata?: ShopifyProductMetadata;
+  variants?: ShopifyProductVariant[];
+  images?: ShopifyImage[];
+}
 
 interface ProductPageViewProps {
-  handle: string
-  product: any
+  handle: string;
+  product: ShopifyProduct;
 }
 
 export function ProductPageView({ handle, product }: ProductPageViewProps) {
   const price = product.variants?.[0]?.prices?.[0]
   const brandLogoPath = getBrandLogoPath(handle)
   const mainImageSource = brandLogoPath || product.thumbnail
+  const normalizedPrice = price ? Number((price.amount / 100).toFixed(2)) : 0
+  const priceString = normalizedPrice.toFixed(2)
+
+  const productImages = product.images?.map((img) => img.url).filter(Boolean) ?? []
+  const schemaProduct: SchemaProduct = {
+    slug: handle,
+    seo_title: product.title,
+    seo_description: product.description ?? product.title,
+    name: product.title,
+    description: product.description ?? product.title,
+    product_page_url: `https://apps.serp.co/${handle}`,
+    purchase_url: product.metadata?.stripe_price_id
+      ? `https://buy.stripe.com/test/${product.metadata.stripe_price_id}`
+      : `https://apps.serp.co/${handle}`,
+    price: priceString,
+    images: productImages.length > 0 ? productImages : [mainImageSource || "/api/og"],
+    tagline: product.metadata?.subtitle ?? product.title,
+    isDigital: true,
+    platform: product.metadata?.platform,
+    categories: [],
+    keywords: [],
+    features: Array.isArray(product.metadata?.features) ? product.metadata.features : [],
+    reviews: [],
+    pricing: {
+      price: product.metadata?.original_price ?? priceString,
+      benefits: Array.isArray(product.metadata?.benefits) ? product.metadata.benefits : [],
+    },
+    layout_type: "landing",
+    pre_release: false,
+    featured: false,
+    new_release: false,
+    popular: false,
+    supported_operating_systems: [],
+    product_videos: [],
+    related_videos: [],
+    screenshots: [],
+    faqs: [],
+    github_repo_tags: [],
+    supported_regions: [],
+    brand: "SERP Apps",
+    featured_image: mainImageSource ?? null,
+    featured_image_gif: null,
+  };
 
   const productSchema = generateProductSchemaLD({
-    product: {
-      slug: handle,
-      name: product.title,
-      description: product.description || "",
-      price: price?.amount ? (price.amount / 100).toString() : "0",
-      images: product.images?.map((img: any) => img.url) || [mainImageSource || "/api/og"],
-      tagline: (product as any).subtitle,
-      isDigital: true,
-      platform: product.metadata?.platform,
-      categories: (product as any).categories?.map((c: any) => c.name),
-      keywords: (product as any).tags?.map((t: any) => t.value),
-      features: product.metadata?.features,
-      reviews: product.metadata?.reviews,
-    } as any,
+    product: schemaProduct,
     url: `https://apps.serp.co/${handle}`,
     storeUrl: "https://apps.serp.co",
     currency: price?.currency_code?.toUpperCase() || "USD",
@@ -92,7 +155,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
 
             {product.images && product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2 mt-4">
-                {product.images.slice(0, 4).map((image: any, index: number) => (
+                {product.images.slice(0, 4).map((image, index) => (
                   <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
                     <Image
                       src={image.url}
@@ -147,7 +210,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
               <div className="border-t pt-6">
                 <h3 className="font-semibold text-lg mb-4">Features</h3>
                 <ul className="space-y-2">
-                  {product.metadata.features.map((feature: string, index: number) => (
+                  {product.metadata.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -163,7 +226,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
               <div className="border-t pt-6 mt-6">
                 <h3 className="font-semibold text-lg mb-4">What You Get</h3>
                 <ul className="space-y-2">
-                  {product.metadata.benefits.map((benefit: string, index: number) => (
+                  {product.metadata.benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <svg className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

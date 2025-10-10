@@ -7,6 +7,32 @@ export interface AffiliateTrackingResult {
   checkoutSuccess: boolean;
 }
 
+function readAffiliateCookie(): string | undefined {
+  if (typeof document === "undefined") {
+    return undefined;
+  }
+
+  const cookie = document.cookie
+    .split(";")
+    .map((chunk) => chunk.trim())
+    .find((chunk) => chunk.startsWith("affiliateId="));
+
+  if (!cookie) {
+    return undefined;
+  }
+
+  const [, value] = cookie.split("=");
+  if (!value) {
+    return undefined;
+  }
+
+  try {
+    return decodeURIComponent(value).trim() || undefined;
+  } catch {
+    return value.trim() || undefined;
+  }
+}
+
 /**
  * Reads affiliate and checkout status information from the current URL.
  * Automatically clears the `checkout` query parameter once observed so
@@ -31,7 +57,7 @@ export function useAffiliateTracking(): AffiliateTrackingResult {
       undefined;
     const checkout = params.get("checkout");
 
-    const normalizedAffiliate = affiliate?.trim();
+    const normalizedAffiliate = (affiliate ?? readAffiliateCookie())?.trim();
     setAffiliateId(normalizedAffiliate || undefined);
     const isSuccess = checkout === "success";
     setCheckoutSuccess(isSuccess);

@@ -8,9 +8,13 @@ vi.hoisted(() => {
   process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
 });
 
-vi.mock("node:timers/promises", () => ({
-  setTimeout: vi.fn().mockResolvedValue(undefined),
-}));
+vi.mock("node:timers/promises", () => {
+  const sleepMock = vi.fn().mockResolvedValue(undefined);
+  return {
+    setTimeout: sleepMock,
+    default: { setTimeout: sleepMock },
+  };
+});
 
 vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),

@@ -4,7 +4,11 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ProductSearchBar, type ProductCategory } from '@/components/ProductSearchBar';
+import {
+  ProductSearchBar,
+  type ProductCategory,
+  type CategorySelection,
+} from '@/components/ProductSearchBar';
 
 import type { VideoListingItem } from './types';
 
@@ -18,7 +22,10 @@ function toCategoryId(name: string) {
 
 export default function VideoLibraryShell({ videos }: VideoLibraryShellProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [categorySelection, setCategorySelection] = useState<CategorySelection>({
+    mode: 'all',
+    excluded: [],
+  });
 
   const categories: ProductCategory[] = useMemo(() => {
     const counts = new Map<string, number>();
@@ -40,19 +47,32 @@ export default function VideoLibraryShell({ videos }: VideoLibraryShellProps) {
     ];
   }, [videos]);
 
-  const selectedCategoryName =
-    selectedCategory === 'all'
-      ? null
-      : categories.find((category) => category.id === selectedCategory)?.name ?? null;
-
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredVideos = useMemo(() => {
+    const excluded =
+      categorySelection.mode === 'all'
+        ? new Set(categorySelection.excluded)
+        : null;
+    const included =
+      categorySelection.mode === 'custom'
+        ? new Set(categorySelection.included)
+        : null;
+
     return videos.filter((video) => {
-      const matchesCategory =
-        selectedCategory === 'all' || (selectedCategoryName ? video.productName === selectedCategoryName : false);
-      if (!matchesCategory) {
-        return false;
+      const categoryId = video.productName ? toCategoryId(video.productName) : null;
+
+      if (categorySelection.mode === 'all') {
+        if (categoryId && excluded?.has(categoryId)) {
+          return false;
+        }
+      } else {
+        if ((included?.size ?? 0) === 0) {
+          return false;
+        }
+        if (!categoryId || !included?.has(categoryId)) {
+          return false;
+        }
       }
 
       if (!normalizedQuery) {
@@ -65,7 +85,7 @@ export default function VideoLibraryShell({ videos }: VideoLibraryShellProps) {
 
       return haystack.some((value) => value.includes(normalizedQuery));
     });
-  }, [videos, selectedCategory, selectedCategoryName, normalizedQuery]);
+  }, [videos, categorySelection, normalizedQuery]);
 
   const visibleVideos = filteredVideos;
   return (
@@ -83,8 +103,8 @@ export default function VideoLibraryShell({ videos }: VideoLibraryShellProps) {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          categorySelection={categorySelection}
+          setCategorySelection={setCategorySelection}
         />
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

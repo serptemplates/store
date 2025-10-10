@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { formatPrice } from "@/lib/products/products-data"
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSection"
@@ -15,43 +14,28 @@ import { HybridVideoShowcaseSection } from "@/components/product/hybrid/HybridVi
 import { HybridValueStackSection } from "@/components/product/hybrid/HybridValueStackSection"
 import { HybridComparisonSection, type ComparisonRow } from "@/components/product/hybrid/HybridComparisonSection"
 import { HybridIncludedStackSection } from "@/components/product/hybrid/HybridIncludedStackSection"
+import type { ExtendedProductData } from "@/components/product/types"
 
 export interface HybridEcommerceLayoutProps {
-  product: any
+  product: ExtendedProductData
 }
 
 export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
-  const price = product.variants?.[0]?.prices?.[0] || product.pricing
+  const variantPrice = product.variants?.[0]?.prices?.[0]
   const handle: string = product.handle || product.slug
   const brandLogoPath = getBrandLogoPath(handle)
-  const mainImageSource: string | undefined = brandLogoPath || product.thumbnail || product.featured_image
+  const mainImageSource = brandLogoPath ?? product.thumbnail ?? product.featured_image ?? undefined
 
   const images = useMemo(() => {
     const gallery: Array<string | undefined> = [
       mainImageSource,
-      ...(product.screenshots ?? []).map((item: any) =>
-        typeof item === "string" ? item : item?.url,
-      ),
+      ...product.screenshots.map((item) => item.url),
     ]
 
     return Array.from(new Set(gallery.filter(Boolean))) as string[]
   }, [mainImageSource, product.screenshots])
 
   const { affiliateId } = useAffiliateTracking()
-
-  const fallbackUrl: string =
-    product.purchase_url ||
-    product.metadata?.purchase_url ||
-    product.stripe?.checkoutUrl ||
-    "#"
-
-  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
-    offerId: handle,
-    affiliateId,
-    metadata: { landerId: handle },
-    endpoint: "/api/checkout/session",
-    fallbackUrl,
-  })
 
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
@@ -67,12 +51,12 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const displayPrice = price?.amount
-    ? formatPrice(price.amount, price.currency_code || "USD")
-    : price?.price ?? null
+  const displayPrice = variantPrice?.amount
+    ? formatPrice(variantPrice.amount, variantPrice.currency_code ?? "USD")
+    : product.pricing?.price ?? null
 
-  const priceLabel = price?.label || product.pricing?.label || product.metadata?.price_label || null
-  const originalPrice = price?.original_price || product.metadata?.original_price || null
+  const priceLabel = variantPrice?.label ?? product.pricing?.label ?? product.metadata?.price_label ?? null
+  const originalPrice = variantPrice?.original_price ?? product.metadata?.original_price ?? null
 
   const benefits = useMemo(() => {
     if (Array.isArray(product.pricing?.benefits)) {
@@ -147,18 +131,10 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     displayPrice,
     originalPrice,
     priceLabel,
-    onCheckout: beginCheckout,
-    checkoutCtaLabel: product.pricing?.cta_text || "Get Instant Access with Card",
-    isCheckoutLoading,
+    productSlug: handle,
+    affiliateId,
     showWaitlist: Boolean(product.pre_release),
     onWaitlistClick: handleWaitlistClick,
-    payPalProps: !product.pre_release ? {
-      offerId: handle,
-      price: displayPrice || "0",
-      affiliateId,
-      metadata: { landerId: handle },
-      buttonText: "Pay with PayPal",
-    } : null,
     benefits,
     features: featureList,
     githubUrl,
@@ -166,13 +142,10 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     product.title,
     product.name,
     product.description,
-    product.pricing?.cta_text,
     product.pre_release,
     displayPrice,
     originalPrice,
     priceLabel,
-    beginCheckout,
-    isCheckoutLoading,
     handleWaitlistClick,
     handle,
     affiliateId,

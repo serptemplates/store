@@ -241,8 +241,8 @@ export function isDBWebhookLog(data: unknown): data is DBWebhookLog {
 /**
  * Convert snake_case database fields to camelCase
  */
-export function dbToCamelCase<T extends Record<string, any>>(row: T): Record<string, any> {
-  const result: Record<string, any> = {};
+export function dbToCamelCase<T extends Record<string, unknown>>(row: T): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(row)) {
     const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
     result[camelKey] = value;
@@ -253,8 +253,8 @@ export function dbToCamelCase<T extends Record<string, any>>(row: T): Record<str
 /**
  * Convert camelCase fields to snake_case for database
  */
-export function camelToSnakeCase<T extends Record<string, any>>(data: T): Record<string, any> {
-  const result: Record<string, any> = {};
+export function camelToSnakeCase<T extends Record<string, unknown>>(data: T): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(data)) {
     const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
     result[snakeKey] = value;
