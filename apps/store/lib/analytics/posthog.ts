@@ -30,7 +30,7 @@ export function captureEvent(event: string, properties?: Record<string, unknown>
   });
 }
 
-function normaliseError(error: unknown): { name: string; message: string; stack?: string } {
+function normalizeError(error: unknown): { name: string; message: string; stack?: string } {
   if (error instanceof Error) {
     return {
       name: error.name,
