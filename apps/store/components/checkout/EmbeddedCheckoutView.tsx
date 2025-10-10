@@ -8,6 +8,7 @@ import {
   EmbeddedCheckout
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
+import type { CheckoutProduct } from "@/components/checkout/types"
 import { trackCheckoutError, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 import type { EcommerceItem } from "@/lib/analytics/gtm"
@@ -16,13 +17,14 @@ import type { EcommerceItem } from "@/lib/analytics/gtm"
 const stripePromise = loadStripe(requireStripePublishableKey())
 
 // Mock product data
-const mockProducts: Record<string, any> = {
+const mockProducts: Record<string, CheckoutProduct> = {
   "tiktok-downloader": {
     slug: "tiktok-downloader",
     name: "TikTok Downloader",
     title: "TikTok Downloader",
     price: 67.00,
     originalPrice: 97.00,
+    currency: "USD",
   },
 }
 
@@ -38,7 +40,7 @@ export function EmbeddedCheckoutView() {
     searchParams.get("am_id")
   const affiliateId = affiliateParam?.trim() || undefined
 
-  const [product, setProduct] = useState<any>(null)
+  const [product, setProduct] = useState<CheckoutProduct | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [clientSecret, setClientSecret] = useState("")
   const [showPayPal, setShowPayPal] = useState(false)
@@ -51,11 +53,14 @@ export function EmbeddedCheckoutView() {
 
   useEffect(() => {
     if (productSlug) {
+      const fallbackName = productSlug.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
       const productData = mockProducts[productSlug] || {
         slug: productSlug,
-        name: productSlug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+        name: fallbackName,
+        title: fallbackName,
         price: 67.00,
         originalPrice: 97.00,
+        currency: "USD",
       }
       setProduct(productData)
     } else {
@@ -65,7 +70,7 @@ export function EmbeddedCheckoutView() {
   }, [productSlug, router])
 
   const finalPrice = typeof product?.price === "number" ? Number(product.price) : 67.0
-  const currency = typeof product?.currency === "string" ? product.currency : "USD"
+  const currency = product?.currency ?? "USD"
 
   const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
     if (!product || !productSlug) {

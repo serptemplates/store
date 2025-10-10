@@ -6,14 +6,6 @@ import {
   type EcommerceItem,
 } from "@/lib/analytics/gtm";
 
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-    fbq?: (...args: any[]) => void;
-    dataLayer?: any[];
-  }
-}
-
 export type ConversionItem = {
   id: string;
   name: string;
@@ -71,7 +63,7 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
       items: ecommerceItems,
     });
 
-    if (typeof window.gtag !== "undefined") {
+    if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "purchase", {
         transaction_id: sessionId,
         value: order.value ?? undefined,
@@ -82,7 +74,7 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
       });
     }
 
-    if (typeof window.fbq !== "undefined") {
+    if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "Purchase", {
         value: order.value ?? undefined,
         currency: order.currency ?? undefined,
@@ -99,8 +91,8 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
       });
     }
 
-    if (typeof (window as any).ttq !== "undefined" && ecommerceItems[0]) {
-      (window as any).ttq.track("CompletePayment", {
+    if (typeof window !== "undefined" && window.ttq && ecommerceItems[0]) {
+      window.ttq.track("CompletePayment", {
         content_type: "product",
         content_id: ecommerceItems[0].item_id,
         content_name: ecommerceItems[0].item_name,
@@ -111,16 +103,16 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
       });
     }
 
-    if (typeof (window as any).twq !== "undefined") {
-      (window as any).twq("event", "tw-purchase", {
+    if (typeof window !== "undefined" && window.twq) {
+      window.twq("event", "tw-purchase", {
         value: order.value ?? undefined,
         currency: order.currency ?? undefined,
         conversion_id: sessionId,
       });
     }
 
-    if (typeof (window as any).pintrk !== "undefined") {
-      (window as any).pintrk("track", "checkout", {
+    if (typeof window !== "undefined" && window.pintrk) {
+      window.pintrk("track", "checkout", {
         value: order.value ?? undefined,
         currency: order.currency ?? undefined,
         order_id: sessionId,

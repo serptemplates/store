@@ -28,7 +28,7 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const resolvedImages = imageList.length ? Array.from(new Set(imageList)) : [primaryImage];
 
   const ratingValues = (product.reviews ?? [])
-    .map((review) => (typeof (review as any).rating === "number" ? (review as any).rating : undefined))
+    .map((review) => review.rating)
     .filter((value): value is number => typeof value === "number" && Number.isFinite(value));
 
   const aggregateRating = ratingValues.length
@@ -71,10 +71,10 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
     review: product.reviews?.map(review => ({
       "@type": "Review",
       reviewRating:
-        typeof (review as any).rating === "number"
+        typeof review.rating === "number" && Number.isFinite(review.rating)
           ? {
               "@type": "Rating",
-              ratingValue: (review as any).rating,
+              ratingValue: review.rating,
               bestRating: "5",
               worstRating: "1",
             }

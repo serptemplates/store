@@ -1,4 +1,5 @@
 import Link, { LinkProps } from "next/link";
+import type { Route } from "next";
 import { PropsWithChildren } from "react";
 
 type SmartLinkProps = PropsWithChildren<
@@ -19,7 +20,7 @@ const SmartLink = ({
 
   if (isInternal) {
     return (
-      <Link href={href as any} className={className} {...nextLinkProps}>
+      <Link href={href as Route} className={className} {...nextLinkProps}>
         {children}
       </Link>
     );

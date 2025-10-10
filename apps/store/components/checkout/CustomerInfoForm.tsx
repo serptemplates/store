@@ -1,21 +1,23 @@
+type CustomerInfo = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  country: string;
+  postalCode: string;
+  cardholderName: string;
+  saveInfo: boolean;
+  agreeToTerms: boolean;
+};
+
 interface CustomerInfoFormProps {
-  customerInfo: {
-    email: string
-    firstName: string
-    lastName: string
-    country: string
-    postalCode: string
-    cardholderName: string
-    saveInfo: boolean
-    agreeToTerms: boolean
-  }
-  setCustomerInfo: (info: any) => void
+  customerInfo: CustomerInfo
+  setCustomerInfo: (info: CustomerInfo) => void
   errors: Record<string, string>
   paymentMethod: "stripe" | "paypal"
 }
 
 export function CustomerInfoForm({ customerInfo, setCustomerInfo, errors, paymentMethod }: CustomerInfoFormProps) {
-  const handleInputChange = (field: string, value: string | boolean) => {
+  const handleInputChange = <K extends keyof CustomerInfo>(field: K, value: CustomerInfo[K]) => {
     setCustomerInfo({ ...customerInfo, [field]: value })
   }
 

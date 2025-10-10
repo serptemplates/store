@@ -3,10 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getAllProducts } from "@/lib/products/product";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 
-const ALLOWED_PREFIXES = [
-  "https://store.serp.co/",
-  "https://ghl.serp.co/",
-];
+const ALLOWED_PREFIXES = ["https://store.serp.co/", "https://ghl.serp.co/"];
 
 const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
@@ -26,7 +23,9 @@ describe("buy button destinations", () => {
           return { slug: product.slug, href: String(href) };
         }
 
-        const isAllowed = ALLOWED_PREFIXES.some((prefix) => href.startsWith(prefix));
+        const isInternalCheckout = href.startsWith("/checkout?product=");
+        const isAllowed =
+          isInternalCheckout || ALLOWED_PREFIXES.some((prefix) => href.startsWith(prefix));
 
         return isAllowed ? null : { slug: product.slug, href };
       })

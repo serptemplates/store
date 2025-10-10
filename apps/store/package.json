@@ -66,6 +66,8 @@
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "autoprefixer": "^10.4.20",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
     "chrome-launcher": "^1.2.1",
     "critters": "^0.0.25",
     "eslint": "^8.57.0",

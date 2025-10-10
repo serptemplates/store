@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-import { generateProductSchemaLD, generateBreadcrumbSchema } from "@/schema/product-schema-ld";
+import { generateProductSchemaLD, generateBreadcrumbSchema, type SchemaProduct } from "@/schema/product-schema-ld";
 import { generateWebApplicationSchema } from "@/schema/software-app-schema";
 import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
@@ -46,19 +46,22 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     : [product.featured_image, product.featured_image_gif]
         .flat()
         .filter((value): value is string => Boolean(value && value.trim().length > 0));
+  const schemaProduct: SchemaProduct = {
+    ...product,
+    price: normalizedPrice,
+    images: normalizedImages,
+    isDigital: true,
+    reviews: product.reviews?.map((review) => ({
+      name: review.name,
+      review: review.review,
+      rating: review.rating,
+      date: review.date,
+      text: review.review,
+    })),
+  };
+
   const productSchema = generateProductSchemaLD({
-    product: {
-      ...product,
-      price: normalizedPrice,
-      images: normalizedImages,
-      isDigital: true,
-      reviews: product.reviews?.map((review) => ({
-        ...review,
-        rating: (review as any).rating,
-        date: (review as any).date,
-        text: review.review,
-      })),
-    } as any,
+    product: schemaProduct,
     url: productUrl,
     storeUrl: normalizedStoreUrl,
     productId,
@@ -88,7 +91,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       product.reviews && product.reviews.length > 0
         ? {
             ratingValue:
-              product.reviews.reduce((sum, review) => sum + ((review as any).rating || 5), 0) /
+              product.reviews.reduce((sum, review) => sum + (typeof review.rating === "number" ? review.rating : 5), 0) /
               product.reviews.length,
             ratingCount: product.reviews.length,
             bestRating: 5,
@@ -107,9 +110,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       url: normalizedStoreUrl,
     },
     datePublished: new Date().toISOString(),
-    featureList: product.features?.map((feature) =>
-      typeof feature === "string" ? feature : (feature as any).text ?? (feature as any).title,
-    ),
+    featureList: product.features?.map((feature) => feature),
     browserRequirements: "Requires a modern web browser with JavaScript enabled",
   });
 
@@ -132,9 +133,9 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const baseUrl = normalizedStoreUrl;
 
   const videoObjects = videoEntries ?? [];
-  const supportedRegions = Array.isArray((product as any).supported_regions)
-    ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
-    : [];
+  const supportedRegions = product.supported_regions
+    .map((region) => region.trim())
+    .filter((region) => region.length > 0);
   const primaryRegion = supportedRegions[0] ?? 'Worldwide';
 
   const videoScripts = videoObjects.map((entry) => {

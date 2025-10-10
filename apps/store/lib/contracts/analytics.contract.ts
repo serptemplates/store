@@ -285,7 +285,7 @@ export function validateServerSideEvent(data: unknown): boolean {
  */
 export function isGTMLoaded(): boolean {
   if (typeof window === 'undefined') return false;
-  return !!(window as any).dataLayer && Array.isArray((window as any).dataLayer);
+  return Array.isArray(window.dataLayer);
 }
 
 /**
@@ -293,5 +293,5 @@ export function isGTMLoaded(): boolean {
  */
 export function isGA4Loaded(): boolean {
   if (typeof window === 'undefined') return false;
-  return typeof (window as any).gtag === 'function';
+  return typeof window.gtag === 'function';
 }

@@ -3,9 +3,9 @@ import { z } from "zod";
 const trimmedString = () => z.string().trim().min(1);
 
 const screenshotSchema = z.object({
-  url: trimmedString(),
-  alt: z.string().trim().optional(),
-  caption: z.string().trim().optional(),
+  url: trimmedString().url(),
+  alt: trimmedString().optional(),
+  caption: trimmedString().optional(),
 });
 
 const reviewSchema = z.object({
@@ -82,6 +82,16 @@ const pricingSchema = z
   })
   .optional();
 
+const returnPolicySchema = z
+  .object({
+    days: z.number().int().nonnegative().optional(),
+    fees: z.string().trim().optional(),
+    method: z.string().trim().optional(),
+    policy_category: z.string().trim().optional(),
+    url: z.string().trim().url().optional(),
+  })
+  .optional();
+
 export const productSchema = z.object({
   slug: trimmedString(),
   platform: z.string().trim().optional(),
@@ -106,6 +116,7 @@ export const productSchema = z.object({
   reviews: z.array(reviewSchema).optional().default([]),
   faqs: z.array(faqSchema).optional().default([]),
   supported_operating_systems: z.array(z.string().trim()).optional().default([]),
+  supported_regions: z.array(z.string().trim()).optional().default([]),
   status: z.string().trim().optional(),
   categories: z.array(z.string().trim()).optional().default([]),
   keywords: z.array(z.string().trim()).optional().default([]),
@@ -114,6 +125,8 @@ export const productSchema = z.object({
   ghl: ghlSchema,
   license: licenseSchema,
   layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),
+  return_policy: returnPolicySchema,
+  featured: z.boolean().optional().default(false),
   // Pre-release / Waitlist fields
   pre_release: z.boolean().optional().default(false),
   waitlist_url: z.string().url().optional(),

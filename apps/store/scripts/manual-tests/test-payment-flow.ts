@@ -165,16 +165,19 @@ try {
   });
 
   if (response.ok) {
-    const data = await response.json();
+    const data = (await response.json()) as { url?: string };
     console.log('  ✅ Stripe checkout session created successfully');
-    console.log(`  🔗 Checkout URL: ${data.url?.substring(0, 50)}...`);
+    if (typeof data.url === 'string') {
+      console.log(`  🔗 Checkout URL: ${data.url.substring(0, 50)}...`);
+    }
   } else {
     console.log(`  ❌ Failed to create checkout session: ${response.status}`);
     const error = await response.text();
     console.log(`     Error: ${error}`);
   }
 } catch (error) {
-  console.log('  ❌ Could not reach checkout API:', (error as Error).message);
+  const message = error instanceof Error ? error.message : String(error);
+  console.log('  ❌ Could not reach checkout API:', message);
 }
 
 // Test 7: Test PayPal Order Creation
@@ -190,10 +193,10 @@ try {
   });
 
   if (response.ok) {
-    const data = await response.json();
+    const data = (await response.json()) as { orderId: string; links?: Array<{ rel: string; href: string }> };
     console.log('  ✅ PayPal order created successfully');
     console.log(`  🆔 Order ID: ${data.orderId}`);
-    const approveLink = data.links?.find((l: any) => l.rel === 'approve');
+    const approveLink = data.links?.find((link) => link.rel === 'approve');
     if (approveLink) {
       console.log(`  🔗 Approval URL: ${approveLink.href.substring(0, 50)}...`);
     }
@@ -207,7 +210,8 @@ try {
     }
   }
 } catch (error) {
-  console.log('  ❌ Could not reach PayPal API:', (error as Error).message);
+  const message = error instanceof Error ? error.message : String(error);
+  console.log('  ❌ Could not reach PayPal API:', message);
 }
 
 // Summary

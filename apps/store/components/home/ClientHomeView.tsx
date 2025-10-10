@@ -34,10 +34,24 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
-  const checkoutHref = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ""}`
-  const buyButtonDestination = product.buy_button_destination ?? undefined
-  const useExternalBuyDestination = Boolean(buyButtonDestination)
-  const resolvedPricingHref = buyButtonDestination ?? checkoutHref
+  const checkoutHrefBase = `/checkout?product=${product.slug}`
+  const checkoutHref = affiliateId ? `${checkoutHrefBase}&aff=${affiliateId}` : checkoutHrefBase
+  const hasExternalDestination =
+    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0
+  const hasEmbeddedCheckout =
+    !hasExternalDestination &&
+    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id))
+  const fallbackCtaCandidates = [
+    homeProps.ctaHref,
+    product.buy_button_destination,
+    product.purchase_url,
+    product.product_page_url,
+  ].filter((value): value is string => Boolean(value && value.trim().length > 0))
+  const fallbackCtaHref = fallbackCtaCandidates[0]
+  const primaryCtaHref = hasEmbeddedCheckout ? checkoutHref : fallbackCtaHref
+  const resolvedCtaHref = primaryCtaHref ?? checkoutHref
+  const isInternalHref = resolvedCtaHref.startsWith("/") || resolvedCtaHref.startsWith("#")
+  const useExternalBuyDestination = !hasEmbeddedCheckout && !isInternalHref
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -147,11 +161,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     if (useExternalBuyDestination) {
-      window.open(resolvedPricingHref, "_blank", "noopener,noreferrer")
+      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
     } else {
-      window.location.href = checkoutHref
+      window.location.href = resolvedCtaHref
     }
-  }, [product, useExternalBuyDestination, resolvedPricingHref, checkoutHref, affiliateId])
+  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
 
   const handleStickyCtaClick = useCallback(() => {
     trackProductCheckoutClick(product, {
@@ -161,11 +175,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     if (useExternalBuyDestination) {
-      window.open(resolvedPricingHref, "_blank", "noopener,noreferrer")
+      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
     } else {
-      window.location.href = checkoutHref
+      window.location.href = resolvedCtaHref
     }
-  }, [product, useExternalBuyDestination, resolvedPricingHref, checkoutHref, affiliateId])
+  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
 
   const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://store.serp.co"
   const breadcrumbSchema = {
@@ -221,7 +235,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        ctaHref={resolvedPricingHref}
+        ctaHref={resolvedCtaHref}
+        ctaText={homeProps.ctaText ?? "Get It Now"}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Products", href: "/#products" },
@@ -237,8 +252,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,
-                ctaHref: resolvedPricingHref,
-                ctaText: "GET IT NOW",
+                ctaHref: resolvedCtaHref,
+                ctaText: homeProps.pricing?.ctaText ?? homeProps.ctaText ?? "GET IT NOW",
                 ctaExtra: null,
               }
             : undefined
@@ -249,7 +264,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         show={showStickyBar}
         productName={product.name}
         onCtaClick={handleStickyCtaClick}
-        ctaHref={resolvedPricingHref}
+        ctaHref={resolvedCtaHref}
         external={useExternalBuyDestination}
       />
     </>

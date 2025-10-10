@@ -8,6 +8,7 @@ export {
   generateBreadcrumbSchema,
   generateOrganizationSchema,
   type ProductSchemaLDOptions,
+  type SchemaProduct,
 } from './product-schema-ld';
 
 export {

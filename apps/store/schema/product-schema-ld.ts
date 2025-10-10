@@ -12,7 +12,7 @@ import type { ProductData } from '@/lib/products/product-schema';
  */
 
 // Extended product interface for schema generation
-interface SchemaProduct extends Omit<ProductData, 'reviews'> {
+export interface SchemaProduct extends Omit<ProductData, 'reviews'> {
   price?: string;
   images?: string[];
   isDigital?: boolean;
@@ -80,7 +80,7 @@ export function generateProductSchemaLD({
     '@type': 'Review',
     reviewRating: {
       '@type': 'Rating',
-      ratingValue: review.rating || 5,
+      ratingValue: typeof review.rating === 'number' ? review.rating : 5,
       bestRating: 5,
       worstRating: 1,
     },
@@ -89,7 +89,7 @@ export function generateProductSchemaLD({
       name: review.name || 'Verified Buyer',
     },
     datePublished: review.date || new Date().toISOString(),
-    reviewBody: review.text,
+    reviewBody: review.text ?? review.review,
   }));
 
   // Build offers structure with all required fields
@@ -200,7 +200,7 @@ export function generateProductSchemaLD({
       ...(product.features?.map(feature => ({
         '@type': 'PropertyValue' as const,
         name: 'Feature',
-        value: typeof feature === 'string' ? feature : (feature as any).text,
+        value: feature,
       })) || []),
     ],
     // Software-specific properties if applicable

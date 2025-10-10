@@ -12,6 +12,8 @@ export type BlogPostMeta = {
   tags: string[];
   image?: string;
   readingTime: string;
+  category?: string;
+  dateModified?: string;
 };
 
 // Slug must be only alphanumeric, dash and underscore.
@@ -54,6 +56,14 @@ export function getAllPosts(): BlogPostMeta[] {
         .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'); // Remove links
       const description = data.description || cleanContent.substring(0, 160).trim() + '...';
 
+      const dateModified =
+        typeof data.dateModified === "string"
+          ? data.dateModified
+          : typeof data.updated === "string"
+          ? data.updated
+          : undefined;
+      const category = typeof data.category === "string" ? data.category : undefined;
+
       return {
         slug,
         title,
@@ -63,6 +73,8 @@ export function getAllPosts(): BlogPostMeta[] {
         tags: Array.isArray(data.tags) ? data.tags : [],
         image: data.image,
         readingTime: stats.text,
+        category,
+        dateModified,
       } satisfies BlogPostMeta;
     })
     .filter((post): post is BlogPostMeta => post !== null)
@@ -105,6 +117,14 @@ export function getPostBySlug(slug: string): BlogPost | null {
   // Remove the H1 from content since it's displayed separately
   const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
 
+  const dateModified =
+    typeof data.dateModified === "string"
+      ? data.dateModified
+      : typeof data.updated === "string"
+      ? data.updated
+      : undefined;
+  const category = typeof data.category === "string" ? data.category : undefined;
+
   return {
     meta: {
       slug,
@@ -115,6 +135,8 @@ export function getPostBySlug(slug: string): BlogPost | null {
       tags: Array.isArray(data.tags) ? data.tags : [],
       image: data.image,
       readingTime: stats.text,
+      category,
+      dateModified,
     },
     content: contentWithoutTitle,
   };

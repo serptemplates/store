@@ -12,23 +12,29 @@ interface RateLimitResult {
   reset: Date;
 }
 
-// In-memory store for rate limiting (replace with Redis in production)
-const rateLimitStore = new Map<string, {
-  tokens: Set<string>;
-  resetTime: number;
-}>();
-
-// Clean up expired entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, value] of rateLimitStore.entries()) {
-    if (value.resetTime < now) {
-      rateLimitStore.delete(key);
-    }
-  }
-}, 5 * 60 * 1000);
-
 export function rateLimit(config: RateLimitConfig) {
+  const rateLimitStore = new Map<
+    string,
+    {
+      count: number;
+      resetTime: number;
+    }
+  >();
+
+  const cleanupInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [key, value] of rateLimitStore.entries()) {
+      if (value.resetTime < now) {
+        rateLimitStore.delete(key);
+      }
+    }
+  }, 5 * 60 * 1000);
+
+  // Prevent the interval from keeping the process alive in serverless contexts
+  if (typeof cleanupInterval.unref === "function") {
+    cleanupInterval.unref();
+  }
+
   return async function checkRateLimit(
     request: NextRequest,
     identifier?: string
@@ -36,27 +42,25 @@ export function rateLimit(config: RateLimitConfig) {
     // Get identifier from IP address or custom identifier
     const id = identifier || getClientIp(request) || "anonymous";
     const now = Date.now();
-    const resetTime = now + config.interval;
 
     // Get or create rate limit entry
     let entry = rateLimitStore.get(id);
 
-    if (!entry || entry.resetTime < now) {
+    if (!entry || entry.resetTime <= now) {
       // Create new entry or reset expired one
       entry = {
-        tokens: new Set(),
-        resetTime: resetTime,
+        count: 0,
+        resetTime: now + config.interval,
       };
       rateLimitStore.set(id, entry);
     }
 
-    // Generate unique token for this request
-    const token = `${now}-${Math.random()}`;
-    entry.tokens.add(token);
+    entry.count += 1;
 
-    const tokensUsed = entry.tokens.size;
-    const remaining = Math.max(0, config.uniqueTokenPerInterval - tokensUsed);
-    const success = tokensUsed <= config.uniqueTokenPerInterval;
+    const success = entry.count <= config.uniqueTokenPerInterval;
+    const remaining = success
+      ? config.uniqueTokenPerInterval - entry.count
+      : 0;
 
     return {
       success,
@@ -83,6 +87,11 @@ function getClientIp(request: NextRequest): string | null {
   const cfConnectingIp = request.headers.get("cf-connecting-ip");
   if (cfConnectingIp) {
     return cfConnectingIp.trim();
+  }
+
+  const requestWithIp = request as NextRequest & { ip?: string | null | undefined };
+  if (requestWithIp.ip) {
+    return requestWithIp.ip;
   }
 
   // No IP found

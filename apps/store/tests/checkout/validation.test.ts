@@ -125,7 +125,7 @@ describe('Checkout Validation', () => {
     it('should reject invalid payment mode', () => {
       const invalidMode = {
         offerId: 'test-product',
-        mode: 'invalid' as any,
+        mode: 'invalid',
       };
 
       const result = checkoutSessionSchema.safeParse(invalidMode);
@@ -135,7 +135,7 @@ describe('Checkout Validation', () => {
     it('should reject invalid UI mode', () => {
       const invalidUIMode = {
         offerId: 'test-product',
-        uiMode: 'invalid' as any,
+        uiMode: 'invalid',
       };
 
       const result = checkoutSessionSchema.safeParse(invalidUIMode);
@@ -143,7 +143,7 @@ describe('Checkout Validation', () => {
     });
 
     it('should reject too many metadata fields', () => {
-      const tooMuchMetadata: any = {
+      const tooMuchMetadata: { offerId: string; metadata: Record<string, string> } = {
         offerId: 'test-product',
         metadata: {},
       };

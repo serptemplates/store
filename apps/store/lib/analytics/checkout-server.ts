@@ -41,6 +41,7 @@ function sanitizeMetadata(metadata?: Record<string, unknown>): Record<string, Pr
     }
 
     if (Array.isArray(value)) {
+      // We only forward array lengths to avoid serialising potentially large nested structures.
       sanitized[`${key}_count`] = value.length;
     }
   }

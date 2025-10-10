@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import NextLink from "next/link";
+import type { Route } from "next";
 import Image from "next/image";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@repo/ui/lib/utils";
@@ -37,10 +38,7 @@ export function PrimaryNavbar({
   showCta = false,
   logoSrc,
 }: PrimaryNavbarProps) {
-  const toProductHref = useCallback(
-    (slug: string) => ({ pathname: `/${slug}` } as any),
-    [],
-  );
+  const toProductHref = useCallback((slug: string) => `/${slug}` as Route, []);
   const ctaIsExternal = ctaHref ? /^https?:/i.test(ctaHref) : false;
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -297,7 +295,7 @@ export function PrimaryNavbar({
             return link.href ? (
               <NextLink
                 key={link.label}
-                href={{ pathname: link.href } as any}
+                href={link.href as Route}
                 className="transition-colors hover:text-foreground"
               >
                 {link.label}
@@ -321,7 +319,7 @@ export function PrimaryNavbar({
               </a>
             ) : (
               <NextLink
-                href={{ pathname: ctaHref } as any}
+                href={ctaHref as Route}
                 className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
               >
                 {ctaText ?? "Get Started"}
@@ -348,7 +346,7 @@ export function PrimaryNavbar({
           <div className="container flex flex-col gap-3 py-4">
             {hasProductLinks && (
               <NextLink
-                href={{ pathname: "/" } as any}
+                href={"/" as Route}
                 className="font-medium text-foreground transition hover:text-primary"
                 onClick={closeMobileMenu}
               >
@@ -398,7 +396,7 @@ export function PrimaryNavbar({
               return link.href ? (
                 <NextLink
                   key={`mobile-${link.label}`}
-                  href={{ pathname: link.href } as any}
+                  href={link.href as Route}
                   className="transition-colors hover:text-foreground"
                   onClick={closeMobileMenu}
                 >
@@ -423,7 +421,7 @@ export function PrimaryNavbar({
                 </a>
               ) : (
                 <NextLink
-                  href={{ pathname: ctaHref } as any}
+                  href={ctaHref as Route}
                   className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
                   onClick={closeMobileMenu}
                 >

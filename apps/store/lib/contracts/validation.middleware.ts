@@ -97,7 +97,7 @@ export function createWebhookValidator(
 ) {
   return async function validateWebhook(
     req: NextRequest
-  ): Promise<ValidationResult<any>> {
+  ): Promise<ValidationResult<unknown>> {
     try {
       const body = await req.text();
       const signature = req.headers.get(`${provider}-signature`) || '';
@@ -117,7 +117,7 @@ export function createWebhookValidator(
 
       // Provider-specific signature validation
       let isValid = false;
-      let parsedBody: any;
+      let parsedBody: unknown;
 
       switch (provider) {
         case 'stripe':
@@ -245,7 +245,7 @@ export function createWebhookValidator(
  * @param options.allowedFields - Whitelist of allowed fields (undefined = allow all)
  * @returns Sanitized data with same structure as input
  */
-export function sanitizeInput<T extends Record<string, any>>(
+export function sanitizeInput<T extends Record<string, unknown>>(
   data: T,
   options?: {
     stripHtml?: boolean;
@@ -255,7 +255,7 @@ export function sanitizeInput<T extends Record<string, any>>(
 ): T {
   const { stripHtml = true, maxLength = 1000, allowedFields } = options || {};
 
-  const sanitized: any = {};
+  const sanitized: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(data)) {
     // Skip fields not in allowlist if specified
@@ -280,11 +280,13 @@ export function sanitizeInput<T extends Record<string, any>>(
       sanitized[key] = clean;
     } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       // Recursively sanitize nested objects
-      sanitized[key] = sanitizeInput(value, options);
+      sanitized[key] = sanitizeInput(value as Record<string, unknown>, options);
     } else if (Array.isArray(value)) {
       // Sanitize array items
       sanitized[key] = value.map(item =>
-        typeof item === 'object' ? sanitizeInput(item, options) : item
+        typeof item === 'object' && item !== null
+          ? sanitizeInput(item as Record<string, unknown>, options)
+          : item
       );
     } else {
       // Pass through other types
@@ -347,7 +349,12 @@ export function createRateLimiter(options: {
 
 // ============= Idempotency =============
 
-const idempotencyMap = new Map<string, any>();
+type IdempotencyCacheEntry = {
+  response: unknown;
+  expiry: number;
+};
+
+const idempotencyMap = new Map<string, IdempotencyCacheEntry>();
 
 /**
  * Ensures idempotent request processing
@@ -362,7 +369,7 @@ export function createIdempotencyValidator(
 
   return function validateIdempotency(
     req: NextRequest
-  ): ValidationResult<{ isNew: boolean; cachedResponse?: any }> {
+  ): ValidationResult<{ isNew: boolean; cachedResponse?: unknown }> {
     const key = req.headers.get(keyHeader);
 
     if (!key) {
@@ -404,7 +411,7 @@ export function createIdempotencyValidator(
  */
 export function storeIdempotentResponse(
   key: string,
-  response: any,
+  response: unknown,
   ttlMs = 86400000
 ): void {
   idempotencyMap.set(key, {

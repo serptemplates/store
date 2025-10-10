@@ -57,7 +57,7 @@ function normalizeError(error: unknown): { name: string; message: string; stack?
 const OPS_ALERT_ENDPOINT = "/api/analytics/exception";
 
 function notifyOpsOfError(
-  normalised: { name: string; message: string; stack?: string },
+  normalized: { name: string; message: string; stack?: string },
   properties?: Record<string, unknown>,
   url?: string,
   userAgent?: string,
@@ -67,7 +67,7 @@ function notifyOpsOfError(
   }
 
   const payload = JSON.stringify({
-    ...normalised,
+    ...normalized,
     url,
     userAgent,
     properties,
@@ -75,7 +75,7 @@ function notifyOpsOfError(
 
   if (process.env.NODE_ENV !== "production") {
     // eslint-disable-next-line no-console
-    console.debug("[analytics] forwarding exception to Slack ops channel", normalised);
+    console.debug("[analytics] forwarding exception to Slack ops channel", normalized);
   }
 
   try {
@@ -105,11 +105,11 @@ function notifyOpsOfError(
 }
 
 export function captureFrontendError(error: unknown, properties?: Record<string, unknown>): void {
-  const normalised = normaliseError(error);
+  const normalized = normalizeError(error);
   const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : undefined;
   const url = typeof window !== "undefined" ? window.location.href : undefined;
 
-  notifyOpsOfError(normalised, properties, url, userAgent);
+  notifyOpsOfError(normalized, properties, url, userAgent);
 
   if (!isPostHogReady()) {
     return;
@@ -117,7 +117,7 @@ export function captureFrontendError(error: unknown, properties?: Record<string,
 
   if (typeof (posthog as unknown as { captureException?: Function }).captureException === "function") {
     (posthog as unknown as { captureException: (error: unknown, props?: Record<string, unknown>) => void }).captureException(
-      error instanceof Error ? error : normalised,
+      error instanceof Error ? error : normalized,
       {
         url,
         userAgent,
@@ -128,7 +128,7 @@ export function captureFrontendError(error: unknown, properties?: Record<string,
   }
 
   captureEvent("$exception", {
-    ...normalised,
+    ...normalized,
     url,
     userAgent,
     ...properties,

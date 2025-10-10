@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Extract payment details
-        const capture = paypalOrder.purchase_units[0]?.payments?.captures?.[0];
+        const capture = paypalOrder.purchase_units?.[0]?.payments?.captures?.[0];
         const payer = paypalOrder.payer;
 
         const amountTotal = capture?.amount?.value

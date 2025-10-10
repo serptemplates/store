@@ -113,9 +113,9 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const navSiteName = siteConfig.site?.name ?? siteName;
   const allProducts = getAllProducts();
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
-  const siteRegions = Array.isArray((product as any).supported_regions)
-    ? (product as any).supported_regions.filter((region: unknown): region is string => typeof region === 'string' && region.trim().length > 0)
-    : [];
+  const siteRegions = product.supported_regions
+    .map((region) => region.trim())
+    .filter((region) => region.length > 0);
   const primaryRegion = siteRegions[0] ?? 'Worldwide';
   const sameAsUrls = [entry.url, product.product_page_url, product.purchase_url].filter(Boolean);
 

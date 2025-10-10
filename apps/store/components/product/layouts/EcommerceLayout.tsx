@@ -9,23 +9,23 @@ import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import { HybridProductOverview } from "@/components/product/hybrid/HybridProductOverview"
 import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSection"
 import type { ProductBreadcrumbItem } from "@/components/product/ProductBreadcrumb"
+import type { ExtendedProductData } from "@/components/product/types"
 
 export interface EcommerceLayoutProps {
-  product: any
+  product: ExtendedProductData
 }
 
 export function EcommerceLayout({ product }: EcommerceLayoutProps) {
   const variantPrice = product.variants?.[0]?.prices?.[0]
-  const price = variantPrice || product.pricing
   const handle: string = product.handle || product.slug
   const brandLogoPath = getBrandLogoPath(handle)
-  const mainImageSource: string | undefined = brandLogoPath || product.thumbnail || product.featured_image
+  const mainImageSource = brandLogoPath ?? product.thumbnail ?? product.featured_image ?? undefined
 
   const images = useMemo(() => {
     const gallery: Array<string | undefined> = [
       mainImageSource,
-      ...(product.images ?? []).map((image: any) =>
-        typeof image === "string" ? image : image?.url,
+      ...(product.images ?? []).map((image) =>
+        typeof image === "string" ? image : image.url,
       ),
     ]
 
@@ -47,12 +47,12 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const displayPrice = price?.amount
-    ? formatPrice(price.amount, price.currency_code || "USD")
-    : price?.price ?? null
+  const displayPrice = variantPrice?.amount
+    ? formatPrice(variantPrice.amount, variantPrice.currency_code ?? "USD")
+    : product.pricing?.price ?? null
 
-  const priceLabel = price?.label || product.pricing?.label || product.metadata?.price_label || null
-  const originalPrice = price?.original_price || product.metadata?.original_price || null
+  const priceLabel = variantPrice?.label ?? product.pricing?.label ?? product.metadata?.price_label ?? null
+  const originalPrice = variantPrice?.original_price ?? product.metadata?.original_price ?? null
 
   const benefits = useMemo(() => {
     if (Array.isArray(product.pricing?.benefits)) {
