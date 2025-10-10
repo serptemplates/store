@@ -25,6 +25,69 @@ export interface SchemaProduct extends Omit<ProductData, 'reviews'> {
   }>;
 }
 
+const sanitizePriceString = (value?: string | null): string | undefined => {
+  if (value == null) return undefined;
+  const cleaned = value.toString().replace(/[^0-9.]/g, '');
+  if (!cleaned) return undefined;
+  const numeric = Number.parseFloat(cleaned);
+  if (!Number.isFinite(numeric)) return undefined;
+  return numeric.toFixed(2);
+};
+
+const collectProductImages = (product: ProductData, provided?: string[]): string[] | undefined => {
+  const candidates = [
+    ...(provided ?? []),
+    product.featured_image,
+    product.featured_image_gif,
+    ...(product.screenshots?.map((shot) => (typeof shot === 'string' ? shot : shot.url)) ?? []),
+  ]
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+    .map((value) => value.trim());
+
+  if (!candidates.length) {
+    return undefined;
+  }
+
+  return Array.from(new Set(candidates));
+};
+
+export interface SchemaProductTransformOptions {
+  price?: string | null;
+  images?: string[];
+  isDigital?: boolean;
+}
+
+export function createSchemaProduct(
+  product: ProductData,
+  { price, images, isDigital = true }: SchemaProductTransformOptions = {},
+): SchemaProduct {
+  const { reviews, ...rest } = product;
+  const normalizedPrice = sanitizePriceString(price ?? product.pricing?.price) ?? '0.00';
+  const normalizedImages = collectProductImages(product, images);
+
+  const reviewsWithRatings =
+    reviews
+      ?.filter(
+        (review): review is typeof review & { rating: number } =>
+          typeof review.rating === 'number' && Number.isFinite(review.rating),
+      )
+      .map((review) => ({
+        name: review.name,
+        review: review.review,
+        rating: review.rating,
+        date: review.date,
+        text: review.review,
+      })) ?? [];
+
+  return {
+    ...rest,
+    price: normalizedPrice,
+    images: normalizedImages,
+    isDigital,
+    reviews: reviewsWithRatings.length ? reviewsWithRatings : undefined,
+  };
+}
+
 export interface ProductSchemaLDOptions {
   product: SchemaProduct;
   url: string;
