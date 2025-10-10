@@ -2,15 +2,24 @@
 
 set -e
 
-# Ensure Next app stays lint- and type-safe before pushing
+echo "########################################"
+echo "→ Running lints..."
+echo "########################################"
+pnpm lint
 
-echo "→ Linting @apps/store"
-pnpm --filter @apps/store lint
+echo "########################################"
+echo "→ Running typechecks..."
+echo "########################################"
+pnpm typecheck
 
-echo "→ Type checking @apps/store"
-pnpm --filter @apps/store typecheck
+echo "########################################"
+echo "→ Running unit tests..."
+echo "########################################"
+pnpm test:unit
 
+echo "########################################"
 echo "→ Building @apps/store"
+echo "########################################"
 NEXT_TELEMETRY_DISABLED=1 pnpm --filter @apps/store build
 
 echo "✓ Pre-push checks passed"

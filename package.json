@@ -19,7 +19,9 @@
     "sync:shopify:products": "node scripts/sync-shopify-products.mjs",
     "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
     "validate:products": "pnpm --filter @apps/store validate:products",
-    "update:video-metadata": "pnpm --filter @apps/store update:video-metadata"
+    "update:video-metadata": "pnpm --filter @apps/store update:video-metadata",
+    "test:unit": "pnpm --filter @apps/store test",
+    "test:smoke": "pnpm --filter @apps/store test:smoke"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

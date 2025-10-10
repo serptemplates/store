@@ -8,6 +8,9 @@ export default defineConfig({
       "lib/**/*.test.ts?(x)",
       "tests/**/*.test.ts?(x)",
     ],
+    exclude: [
+      "tests/e2e/**",
+    ],
     environment: "jsdom",
     reporters: "default",
     clearMocks: true,

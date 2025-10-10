@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { validateCoupon, calculateDiscountedPrice, CouponValidation } from '@/lib/payments/coupons';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { validateCoupon, calculateDiscountedPrice, type CouponValidation } from "@/lib/payments/coupons";
 
 // Mock the Stripe client
-vi.mock('@/lib/payments/stripe', () => ({
+vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: () => ({
     promotionCodes: {
       list: vi.fn().mockResolvedValue({ data: [] }),
@@ -46,11 +46,12 @@ describe('Coupon Validation', () => {
       expect(result.error).toBe('Invalid coupon code');
     });
 
-    it('should handle Stripe API errors gracefully', async () => {
-      const stripe = require('@/lib/payments/stripe').getStripeClient();
-      stripe.promotionCodes.list = vi.fn().mockRejectedValue(new Error('API Error'));
+    it("should handle Stripe API errors gracefully", async () => {
+      const stripeModule = await import("@/lib/payments/stripe");
+      const stripe = stripeModule.getStripeClient();
+      stripe.promotionCodes.list = vi.fn().mockRejectedValue(new Error("API Error"));
 
-      const result = await validateCoupon('TESTCODE');
+      const result = await validateCoupon("TESTCODE");
       // Should continue to check local coupons
       expect(result.valid).toBe(false);
     });
@@ -145,53 +146,43 @@ describe('Coupon Validation', () => {
     });
   });
 
-  describe('Test Coupons (Development)', () => {
-    const originalEnv = process.env.NODE_ENV;
-
+  describe("Test Coupons (Development)", () => {
     beforeEach(() => {
       // Force development mode for these tests
-      Object.defineProperty(process.env, 'NODE_ENV', {
-        value: 'development',
-        writable: true,
-        configurable: true
-      });
+      vi.stubEnv("NODE_ENV", "development");
     });
 
     afterEach(() => {
-      Object.defineProperty(process.env, 'NODE_ENV', {
-        value: originalEnv,
-        writable: true,
-        configurable: true
-      });
+      vi.unstubAllEnvs();
     });
 
-    it('should validate test coupon SAVE20', async () => {
-      const result = await validateCoupon('SAVE20');
+    it("should validate test coupon SAVE20", async () => {
+      const result = await validateCoupon("SAVE20");
       expect(result.valid).toBe(true);
-      expect(result.discount?.type).toBe('percentage');
+      expect(result.discount?.type).toBe("percentage");
       expect(result.discount?.amount).toBe(20);
     });
 
-    it('should validate test coupon FIXED5', async () => {
-      const result = await validateCoupon('FIXED5');
+    it("should validate test coupon FIXED5", async () => {
+      const result = await validateCoupon("FIXED5");
       expect(result.valid).toBe(true);
-      expect(result.discount?.type).toBe('fixed');
+      expect(result.discount?.type).toBe("fixed");
       expect(result.discount?.amount).toBe(500); // $5 in cents
     });
 
-    it('should check expiration dates', async () => {
+    it("should check expiration dates", async () => {
       // Set a date in the past for testing
-      const expiredCoupon = 'BLACKFRIDAY';
+      const expiredCoupon = "BLACKFRIDAY";
       // This test depends on the actual date - adjust as needed
       const result = await validateCoupon(expiredCoupon);
 
       // Check if the coupon expiration logic works
-      const expirationDate = new Date('2025-12-01');
+      const expirationDate = new Date("2025-12-01");
       const now = new Date();
 
       if (now > expirationDate) {
         expect(result.valid).toBe(false);
-        expect(result.error).toBe('This coupon has expired');
+        expect(result.error).toBe("This coupon has expired");
       } else {
         expect(result.valid).toBe(true);
       }

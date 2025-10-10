@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
+import type { OnApproveData, PayPalScriptOptions } from "@paypal/paypal-js";
 
 interface PayPalButtonProps {
   offerId: string;
@@ -15,9 +16,37 @@ interface PayPalButtonProps {
     email?: string;
     name?: string;
   };
-  onSuccess?: (data: any) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (data: CaptureOrderResponse) => void;
+  onError?: (error: unknown) => void;
 }
+
+type PayPalOrderLink = {
+  href: string;
+  rel: string;
+  method?: string;
+};
+
+type CreateOrderResponse = {
+  orderId: string;
+  status: string;
+  links?: PayPalOrderLink[];
+};
+
+type CaptureOrderResponse = {
+  orderId: string;
+  status: string;
+  amount?: {
+    currency_code?: string;
+    value?: string;
+  };
+  payer?: {
+    email?: string;
+    name?: {
+      given_name?: string;
+      surname?: string;
+    };
+  };
+};
 
 export function PayPalButton({
   offerId,
@@ -72,7 +101,7 @@ export function PayPalButton({
         throw new Error("Failed to create PayPal order");
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as CreateOrderResponse;
       return data.orderId;
     } catch (err) {
       console.error("Error creating PayPal order:", err);
@@ -84,7 +113,7 @@ export function PayPalButton({
     }
   };
 
-  const onApprove = async (data: any) => {
+  const onApprove = async (data: OnApproveData) => {
     try {
       setLoading(true);
       setError(null);
@@ -103,11 +132,9 @@ export function PayPalButton({
         throw new Error("Failed to capture PayPal payment");
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as CaptureOrderResponse;
 
-      if (onSuccess) {
-        onSuccess(result);
-      }
+      onSuccess?.(result);
 
       // Redirect to success page
       router.push(`/checkout/success?source=paypal&order_id=${data.orderID}`);
@@ -120,7 +147,7 @@ export function PayPalButton({
     }
   };
 
-  const onErrorHandler = (err: any) => {
+  const onErrorHandler = (err: unknown) => {
     console.error("PayPal error:", err);
     setError("PayPal payment failed");
     if (onError) onError(err);
@@ -134,14 +161,16 @@ export function PayPalButton({
   // Calculate amount for display
   const amount = parseFloat(price.replace(/[^0-9.]/g, "")) * quantity;
 
+  const scriptOptions: PayPalScriptOptions = {
+    clientId: clientId,
+    currency: "USD",
+    intent: "capture",
+  };
+
   return (
     <div className={className}>
       <PayPalScriptProvider
-        options={{
-          clientId: clientId,
-          currency: "USD",
-          intent: "capture",
-        } as any}
+        options={scriptOptions}
       >
         <div className="relative">
           {loading && (
@@ -230,11 +259,11 @@ export function PayPalCheckoutButton({
         throw new Error("Failed to create PayPal order");
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as CreateOrderResponse;
 
       // Find the approval URL from PayPal response
       const approvalUrl = data.links?.find(
-        (link: any) => link.rel === "approve"
+        (link) => link.rel === "approve"
       )?.href;
 
       if (approvalUrl) {

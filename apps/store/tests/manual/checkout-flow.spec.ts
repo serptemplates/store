@@ -13,27 +13,43 @@ test.describe('Checkout Flow Integration', () => {
     // Check that Stripe checkout button is NOT present
     const stripeButton = page.locator('button:has-text("Get Instant Access with Card")');
 
-    // Check for the new unified checkout button/link
-    const checkoutLink = page.locator('a[href*="/checkout?product="]').first();
-    const checkoutExists = await checkoutLink.count() > 0;
+    // Check for the new unified checkout button/link (either internal checkout or external payment link)
+    const checkoutLinks = page.locator('a[href*="/checkout?product="], a[href^="https://ghl.serp.co/"]');
+    const checkoutExists = (await checkoutLinks.count()) > 0;
+    const checkoutLink = checkoutLinks.first();
 
     console.log('PayPal buttons found:', await paypalButton.count());
     console.log('Old Stripe buttons found:', await stripeButton.count());
-    console.log('Checkout links found:', await checkoutLink.count());
+    console.log('Checkout links found:', await checkoutLinks.count());
 
     // Should have at least one checkout link
     expect(checkoutExists).toBeTruthy();
 
     // Get the href and verify it points to checkout page
     const href = await checkoutLink.getAttribute('href');
-    expect(href).toContain('/checkout?product=loom-video-downloader');
+    expect(href).toBeTruthy();
+    if (href?.startsWith('/checkout?product=')) {
+      expect(href).toContain('loom-video-downloader');
+    } else if (href?.startsWith('https://ghl.serp.co/')) {
+      expect(href.length).toBeGreaterThan(0);
+    } else {
+      throw new Error(`Unexpected checkout link href: ${href}`);
+    }
 
-    // Click the checkout button
-    await checkoutLink.click();
-    await page.waitForLoadState('networkidle');
-
-    // Verify we're on the checkout page
-    await expect(page).toHaveURL(/.*\/checkout\?product=loom-video-downloader/);
+    // Click the checkout button and verify behaviour
+    if (href?.startsWith('/checkout?product=')) {
+      await checkoutLink.click();
+      await page.waitForLoadState('networkidle');
+      await expect(page).toHaveURL(/.*\/checkout\?product=loom-video-downloader/);
+    } else if (href?.startsWith('https://ghl.serp.co/')) {
+      const [newPage] = await Promise.all([
+        page.context().waitForEvent('page'),
+        checkoutLink.click(),
+      ]);
+      await newPage.waitForLoadState('domcontentloaded');
+      expect(newPage.url()).toContain('ghl.serp.co');
+      await newPage.close();
+    }
 
     // Verify the checkout page has payment method toggles
     const stripeToggle = page.locator('button:has-text("Pay with Stripe")');

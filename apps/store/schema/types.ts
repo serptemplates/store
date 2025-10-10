@@ -316,7 +316,7 @@ export interface CollectionPageSchema {
 export interface ItemListSchema {
   '@type': 'ItemList';
   numberOfItems?: number;
-  itemListElement: any[];
+  itemListElement: Array<Record<string, unknown>>;
 }
 
 // HowTo Schema Types

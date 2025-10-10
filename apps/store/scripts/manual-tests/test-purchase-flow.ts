@@ -111,7 +111,7 @@ function createMockCheckoutSession(): Stripe.Checkout.Session {
 }
 
 // Create and sign a webhook event
-function createSignedWebhookPayload(eventData: any): { payload: string; signature: string } {
+function createSignedWebhookPayload(eventData: Record<string, unknown>): { payload: string; signature: string } {
   const timestamp = Math.floor(Date.now() / 1000);
   const payload = JSON.stringify(eventData);
 
@@ -232,7 +232,7 @@ async function checkDatabase() {
       offer_id: string;
       customer_email: string;
       amount_total: number;
-      metadata: any;
+      metadata: Record<string, unknown> | null;
     }>`
       SELECT offer_id, customer_email, amount_total, metadata
       FROM orders
@@ -247,11 +247,12 @@ async function checkDatabase() {
       console.log(`   - Product: ${order.offer_id}`);
       console.log(`   - Customer: ${order.customer_email}`);
       console.log(`   - Amount: $${(order.amount_total / 100).toFixed(2)}`);
-      console.log(`   - Affiliate: ${order.metadata?.affiliateId || 'Not set'}`);
+      const affiliateId = typeof order.metadata?.affiliateId === 'string' ? order.metadata.affiliateId : 'Not set';
+      console.log(`   - Affiliate: ${affiliateId}`);
 
       // Check GHL sync status
       const sessionCheck = await query<{
-        metadata: any;
+        metadata: Record<string, unknown> | null;
       }>`
         SELECT metadata
         FROM checkout_sessions
@@ -262,12 +263,12 @@ async function checkDatabase() {
 
       if (sessionCheck?.rows && sessionCheck.rows.length > 0) {
         const session = sessionCheck.rows[0];
-        if (session.metadata?.ghlSyncedAt) {
+        if (typeof session.metadata?.ghlSyncedAt === 'string') {
           console.log(`\n✅ GoHighLevel sync completed at: ${session.metadata.ghlSyncedAt}`);
-          if (session.metadata?.ghlContactId) {
+          if (typeof session.metadata?.ghlContactId === 'string') {
             console.log(`   Contact ID: ${session.metadata.ghlContactId}`);
           }
-        } else if (session.metadata?.ghlSyncError) {
+        } else if (typeof session.metadata?.ghlSyncError === 'string') {
           console.log(`\n❌ GoHighLevel sync failed: ${session.metadata.ghlSyncError}`);
         } else {
           console.log("\n⏳ GoHighLevel sync pending or skipped");

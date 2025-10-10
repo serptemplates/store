@@ -24,8 +24,9 @@ const ACTIVE_MODE = getStripeMode();
 async function testStripe() {
   try {
     console.log('1️⃣ Initializing Stripe client...');
+    const stripeApiVersion = '2024-04-10' as Stripe.LatestApiVersion;
     const stripe = new Stripe(STRIPE_KEY!, {
-      apiVersion: '2024-04-10' as any,
+      apiVersion: stripeApiVersion,
     });
 
     console.log('✅ Stripe client initialized\n');
@@ -74,18 +75,19 @@ async function testStripe() {
     console.log('3. Any future expiry date and any CVC');
 
     return true;
-  } catch (error: any) {
-    console.error('❌ Stripe test failed:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('❌ Stripe test failed:', message);
 
-    if (error.type === 'StripeAuthenticationError') {
+    if (typeof error === 'object' && error !== null && 'type' in error && (error as { type?: unknown }).type === 'StripeAuthenticationError') {
       console.error('\n🔑 Authentication Error:');
       console.error('The Stripe secret key is invalid or not working.');
       console.error('Please verify your configured Stripe secret key value.');
-    } else if (error.type === 'StripeConnectionError') {
+    } else if (typeof error === 'object' && error !== null && 'type' in error && (error as { type?: unknown }).type === 'StripeConnectionError') {
       console.error('\n🌐 Connection Error:');
       console.error('Cannot connect to Stripe API.');
       console.error('Check your internet connection.');
-    } else if (error.type === 'StripeAPIError') {
+    } else if (typeof error === 'object' && error !== null && 'type' in error && (error as { type?: unknown }).type === 'StripeAPIError') {
       console.error('\n⚠️  API Error:');
       console.error('Stripe API returned an error.');
     }

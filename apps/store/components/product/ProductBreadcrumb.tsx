@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 
 export interface ProductBreadcrumbItem {
   label: string;
@@ -17,7 +18,7 @@ export function ProductBreadcrumb({ items, className }: ProductBreadcrumbProps) 
         {items.map((item, index) => (
           <li key={`${item.label}-${index}`} className="flex items-center gap-2">
             {item.href ? (
-              <Link href={item.href as any} className="hover:text-gray-700">
+              <Link href={item.href as Route} className="hover:text-gray-700">
                 {item.label}
               </Link>
             ) : (

@@ -3,6 +3,28 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OfferConfig } from "@/lib/products/offer-config";
 import type { CheckoutSessionRecord } from "@/lib/checkout/store";
 
+type PayPalCaptureResponse = {
+  status: string;
+  payer?: {
+    email_address?: string;
+    name?: {
+      given_name?: string;
+      surname?: string;
+    };
+  };
+  purchase_units: Array<{
+    payments?: {
+      captures?: Array<{
+        id?: string;
+        amount?: {
+          value?: string;
+          currency_code?: string;
+        };
+      }>;
+    };
+  }>;
+};
+
 vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: vi.fn(),
   capturePayPalOrder: vi.fn(),
@@ -85,7 +107,7 @@ describe("POST /api/paypal/capture-order", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     isPayPalConfiguredMock.mockReturnValue(true);
-    capturePayPalOrderMock.mockResolvedValue({
+    const captureResponse: PayPalCaptureResponse = {
       status: "COMPLETED",
       payer: {
         email_address: "buyer@example.com",
@@ -103,7 +125,8 @@ describe("POST /api/paypal/capture-order", () => {
           },
         },
       ],
-    } as any);
+    };
+    capturePayPalOrderMock.mockResolvedValue(captureResponse);
 
     findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
 
@@ -129,15 +152,16 @@ describe("POST /api/paypal/capture-order", () => {
       }),
     );
 
-    const upsertCall = upsertOrderMock.mock.calls[0][0] as Record<string, unknown>;
-    expect(upsertCall).toMatchObject({
-      stripeSessionId: "paypal_order_123",
-      stripePaymentIntentId: "paypal_capture_123",
-      amountTotal: 9900,
-      customerEmail: "buyer@example.com",
-      paymentStatus: "COMPLETED",
-      source: "paypal",
-    });
+    expect(upsertOrderMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        stripeSessionId: "paypal_order_123",
+        stripePaymentIntentId: "paypal_capture_123",
+        amountTotal: 9900,
+        customerEmail: "buyer@example.com",
+        paymentStatus: "COMPLETED",
+        source: "paypal",
+      }),
+    );
 
     expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
       offerConfigFixture.ghl,

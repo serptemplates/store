@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import type { ProductData } from "@/lib/products/product-schema";
+import type { BlogPostMeta } from "@/lib/blog";
 
 const baseProduct: ProductData = {
   slug: "sample-product",
@@ -34,6 +35,7 @@ const baseProduct: ProductData = {
   },
   screenshots: [],
   supported_operating_systems: [],
+  supported_regions: [],
   categories: [],
   keywords: [],
   stripe: {
@@ -44,6 +46,7 @@ const baseProduct: ProductData = {
   },
   layout_type: "landing",
   pre_release: false,
+  featured: false,
   new_release: false,
   popular: false,
   brand: "SERP Apps",
@@ -86,21 +89,29 @@ describe("productToHomeTemplate", () => {
       },
     };
 
-    const posts = [
+    const posts: BlogPostMeta[] = [
       {
         slug: "news",
         title: "Latest",
+        description: "Updates",
         date: "2024-01-01",
-        excerpt: "Updates",
+        author: "Test Author",
+        tags: [],
+        image: undefined,
+        readingTime: "1 min",
+        category: undefined,
+        dateModified: undefined,
       },
     ];
 
-    const template = productToHomeTemplate(product, posts as any);
+    const template = productToHomeTemplate(product, posts);
 
-    expect(template.ctaHref).toBe("https://store.serp.co/checkout/example");
+    expect(template.ctaHref).toBe("/checkout?product=sample-product");
     expect(template.ctaText).toBe("Get Started");
     const pricing = template.pricing!;
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
+    expect(pricing.ctaHref).toBe("/checkout?product=sample-product");
+    expect(pricing.ctaText).toBe("Get Started");
     expect(template.posts).toHaveLength(1);
     expect(template.postsTitle).toBe("Posts");
   });
@@ -110,6 +121,7 @@ describe("productToHomeTemplate", () => {
     const product: ProductData = {
       ...baseProduct,
       buy_button_destination: destination,
+      stripe: undefined,
     };
 
     const template = productToHomeTemplate(product, []);
@@ -121,6 +133,7 @@ describe("productToHomeTemplate", () => {
   it("falls back to store product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
+      stripe: undefined,
       buy_button_destination: undefined,
       pricing: {
         price: baseProduct.pricing?.price,
@@ -134,5 +147,12 @@ describe("productToHomeTemplate", () => {
     const template = productToHomeTemplate(product, []);
 
     expect(template.ctaHref).toBe("https://store.serp.co/products/sample-product");
+  });
+
+  it("uses embedded checkout CTA when Stripe configuration is available", () => {
+    const template = productToHomeTemplate(baseProduct, []);
+
+    expect(template.ctaHref).toBe("/checkout?product=sample-product");
+    expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product");
   });
 });

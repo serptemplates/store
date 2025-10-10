@@ -110,8 +110,13 @@ ${validatedData.message}
     }
 
     // Track submission event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'contact_form_submit', {
+    const maybeWindow =
+      typeof globalThis !== 'undefined' && 'window' in globalThis
+        ? (globalThis as { window?: Window }).window
+        : undefined;
+
+    if (maybeWindow?.gtag) {
+      maybeWindow.gtag('event', 'contact_form_submit', {
         event_category: 'engagement',
         event_label: validatedData.subject,
       });

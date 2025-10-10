@@ -135,7 +135,7 @@ export type PaymentStateTransition = z.infer<typeof PaymentStateTransitionContra
 export function validateStripePayment(data: unknown): {
   isValid: boolean;
   errors?: string[];
-  parsed?: any;
+  parsed?: z.infer<typeof StripeChargeContract>;
 } {
   try {
     const result = StripeChargeContract.parse(data);
@@ -157,7 +157,7 @@ export function validateStripePayment(data: unknown): {
 export function validatePayPalPayment(data: unknown): {
   isValid: boolean;
   errors?: string[];
-  parsed?: any;
+  parsed?: z.infer<typeof PayPalOrderContract>;
 } {
   try {
     const result = PayPalOrderContract.parse(data);

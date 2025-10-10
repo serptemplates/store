@@ -1,14 +1,22 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-// @ts-ignore - Testing library may not be installed
-import { render, screen, fireEvent } from '@testing-library/react';
-import { CheckoutErrorBoundary } from '@/components/checkout/CheckoutErrorBoundary';
-import React from 'react';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import "@testing-library/jest-dom/vitest";
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import React from "react";
+
+vi.mock("@/lib/dom/navigation", () => ({
+  reloadPage: vi.fn(),
+}));
+
+import { CheckoutErrorBoundary } from "@/components/checkout/CheckoutErrorBoundary";
+import { reloadPage } from "@/lib/dom/navigation";
+
+const reloadPageMock = vi.mocked(reloadPage);
 
 
 // Component that throws an error for testing
 function ThrowError({ shouldThrow }: { shouldThrow: boolean }) {
   if (shouldThrow) {
-    throw new Error('Test error');
+    throw new Error("Test error");
   }
   return <div>No error</div>;
 }
@@ -17,70 +25,62 @@ function ThrowError({ shouldThrow }: { shouldThrow: boolean }) {
 const originalConsoleError = console.error;
 beforeEach(() => {
   console.error = vi.fn();
+  reloadPageMock.mockClear();
 });
 
 afterEach(() => {
+  cleanup();
   console.error = originalConsoleError;
+  vi.unstubAllEnvs();
 });
 
-describe('CheckoutErrorBoundary', () => {
-  it('should render children when there is no error', () => {
+describe("CheckoutErrorBoundary", () => {
+  it("should render children when there is no error", () => {
     render(
       <CheckoutErrorBoundary>
         <div>Test content</div>
       </CheckoutErrorBoundary>
     );
 
-    // @ts-ignore
-    expect(screen.getByText('Test content')).toBeInTheDocument();
+    expect(screen.getByText("Test content")).toBeInTheDocument();
   });
 
-  it('should show error UI when child component throws', () => {
+  it("should show error UI when child component throws", () => {
     render(
       <CheckoutErrorBoundary>
         <ThrowError shouldThrow={true} />
       </CheckoutErrorBoundary>
     );
 
-    // @ts-ignore
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-    // @ts-ignore
+    expect(screen.getByText("Something went wrong")).toBeInTheDocument();
     expect(screen.getByText(/We encountered an error/)).toBeInTheDocument();
   });
 
-  it('should show Try Again and Go Back buttons on error', () => {
+  it("should show Try Again and Go Back buttons on error", () => {
     render(
       <CheckoutErrorBoundary>
         <ThrowError shouldThrow={true} />
       </CheckoutErrorBoundary>
     );
 
-    // @ts-ignore
-    expect(screen.getByText('Try Again')).toBeInTheDocument();
-    // @ts-ignore
-    expect(screen.getByText('Go Back')).toBeInTheDocument();
+    expect(screen.getByText("Try Again")).toBeInTheDocument();
+    expect(screen.getByText("Go Back")).toBeInTheDocument();
   });
 
-  it('should reload page when Try Again is clicked', () => {
-    const reloadMock = vi.fn();
-    Object.defineProperty(window.location, 'reload', {
-      value: reloadMock,
-      writable: true,
-    });
-
+  it("should reload page when Try Again is clicked", () => {
     render(
       <CheckoutErrorBoundary>
         <ThrowError shouldThrow={true} />
       </CheckoutErrorBoundary>
     );
 
-    fireEvent.click(screen.getByText('Try Again'));
-    expect(reloadMock).toHaveBeenCalled();
+    fireEvent.click(screen.getByText("Try Again"));
+    expect(reloadPageMock).toHaveBeenCalled();
   });
 
-  it('should go back in history when Go Back is clicked', () => {
+  it("should go back in history when Go Back is clicked", () => {
     const backMock = vi.fn();
-    Object.defineProperty(window.history, 'back', {
+    Object.defineProperty(window.history, "back", {
       value: backMock,
       writable: true,
     });
@@ -91,11 +91,11 @@ describe('CheckoutErrorBoundary', () => {
       </CheckoutErrorBoundary>
     );
 
-    fireEvent.click(screen.getByText('Go Back'));
+    fireEvent.click(screen.getByText("Go Back"));
     expect(backMock).toHaveBeenCalled();
   });
 
-  it('should use custom fallback when provided', () => {
+  it("should use custom fallback when provided", () => {
     const customFallback = <div>Custom error message</div>;
 
     render(
@@ -104,19 +104,12 @@ describe('CheckoutErrorBoundary', () => {
       </CheckoutErrorBoundary>
     );
 
-    // @ts-ignore
-    expect(screen.getByText('Custom error message')).toBeInTheDocument();
-    // @ts-ignore
-    expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
+    expect(screen.getByText("Custom error message")).toBeInTheDocument();
+    expect(screen.queryByText("Something went wrong")).not.toBeInTheDocument();
   });
 
-  it('should show error details in development mode', () => {
-    const originalEnv = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', {
-      value: 'development',
-      writable: true,
-      configurable: true
-    });
+  it("should show error details in development mode", () => {
+    vi.stubEnv("NODE_ENV", "development");
 
     render(
       <CheckoutErrorBoundary>
@@ -125,24 +118,12 @@ describe('CheckoutErrorBoundary', () => {
     );
 
     // In development, error details should be visible
-    const details = screen.getByText('Error Details (Development Only)');
-    // @ts-ignore
+    const details = screen.getByText("Error Details (Development Only)");
     expect(details).toBeInTheDocument();
-
-    Object.defineProperty(process.env, 'NODE_ENV', {
-      value: originalEnv,
-      writable: true,
-      configurable: true
-    });
   });
 
-  it('should not show error details in production mode', () => {
-    const originalEnv = process.env.NODE_ENV;
-    Object.defineProperty(process.env, 'NODE_ENV', {
-      value: 'production',
-      writable: true,
-      configurable: true
-    });
+  it("should not show error details in production mode", () => {
+    vi.stubEnv("NODE_ENV", "production");
 
     render(
       <CheckoutErrorBoundary>
@@ -151,19 +132,12 @@ describe('CheckoutErrorBoundary', () => {
     );
 
     // In production, error details should not be visible
-    const details = screen.queryByText('Error Details (Development Only)');
-    // @ts-ignore
+    const details = screen.queryByText("Error Details (Development Only)");
     expect(details).not.toBeInTheDocument();
-
-    Object.defineProperty(process.env, 'NODE_ENV', {
-      value: originalEnv,
-      writable: true,
-      configurable: true
-    });
   });
 
-  it('should log errors to console', () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error');
+  it("should log errors to console", () => {
+    const consoleErrorSpy = vi.spyOn(console, "error");
 
     render(
       <CheckoutErrorBoundary>
@@ -172,21 +146,20 @@ describe('CheckoutErrorBoundary', () => {
     );
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'Checkout error:',
+      "Checkout error:",
       expect.any(Error),
       expect.any(Object)
     );
   });
 
-  it('should recover when error is cleared', () => {
+  it("should recover when error is cleared", () => {
     const { rerender } = render(
       <CheckoutErrorBoundary>
         <ThrowError shouldThrow={true} />
       </CheckoutErrorBoundary>
     );
 
-    // @ts-ignore
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+    expect(screen.queryAllByText("Something went wrong").length).toBeGreaterThan(0);
 
     // Simulate clearing the error by re-rendering with non-throwing component
     rerender(
@@ -195,20 +168,11 @@ describe('CheckoutErrorBoundary', () => {
       </CheckoutErrorBoundary>
     );
 
-    // After clicking Try Again, the page would reload
-    // Here we're simulating the component re-rendering without error
-    const reloadMock = vi.fn(() => {
-      rerender(
-        <CheckoutErrorBoundary>
-          <ThrowError shouldThrow={false} />
-        </CheckoutErrorBoundary>
-      );
-    });
+    fireEvent.click(screen.getByText("Try Again"));
 
-    Object.defineProperty(window.location, 'reload', {
-      value: reloadMock,
-      writable: true,
-    });
+    expect(reloadPageMock).toHaveBeenCalled();
+    expect(screen.queryAllByText("Something went wrong")).toHaveLength(0);
+    expect(screen.getByText("No error")).toBeInTheDocument();
   });
 
   it('should handle async errors', async () => {

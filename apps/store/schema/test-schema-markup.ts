@@ -5,12 +5,12 @@
  * Run with: npx tsx test-schema-markup.ts
  */
 
-import { generateProductSchemaLD, generateBreadcrumbSchema, generateOrganizationSchema } from './product-schema-ld';
+import { generateProductSchemaLD, generateBreadcrumbSchema, generateOrganizationSchema, type SchemaProduct } from './product-schema-ld';
 
 console.log('🔍 Testing Schema.org Markup for Google Shopping & Rich Results\n');
 
 // Test Product Schema
-const testProduct = {
+const testProduct: SchemaProduct = {
   slug: 'test-product',
   name: 'Test Product',
   description: 'This is a test product for schema validation',
@@ -30,20 +30,38 @@ const testProduct = {
     {
       name: 'John Doe',
       review: 'Great product!',
+      rating: 5,
+      date: '2024-01-01',
+      text: 'Great product!',
     },
     {
       name: 'Jane Smith',
       review: 'Good value for money',
+      rating: 4,
+      date: '2024-01-05',
+      text: 'Good value for money',
     },
   ],
   brand: 'SERP Apps',
   sku: 'TEST-001',
   pricing: {
     price: '99.99',
+    benefits: [],
   },
-  layout_type: 'ecommerce' as const,
+  layout_type: 'ecommerce',
   pre_release: false,
-} as any;
+  featured: false,
+  new_release: false,
+  popular: false,
+  supported_operating_systems: [],
+  product_videos: [],
+  related_videos: [],
+  screenshots: [],
+  faqs: [],
+  github_repo_tags: [],
+  return_policy: undefined,
+  supported_regions: [],
+};
 
 const productSchema = generateProductSchemaLD({
   product: testProduct,

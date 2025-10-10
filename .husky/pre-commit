@@ -5,13 +5,17 @@
 
 set -e
 
-echo "→ Linting..."
-pnpm -w -r lint
+echo "########################################"
+echo "→ Running lints..."
+echo "########################################"
+pnpm lint
 
-echo "→ Typechecking..."
-pnpm -w -r --if-present typecheck
+echo "########################################"
+echo "→ Running typechecks..."
+echo "########################################"
+pnpm typecheck
 
-echo "→ Validating lander template content..."
-pnpm --filter @apps/lander-template validate:content
-
-echo "✓ Pre-commit checks passed"
+echo "########################################"
+echo "→ Running unit tests..."
+echo "########################################"
+pnpm test:unit

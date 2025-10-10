@@ -84,6 +84,12 @@ export function productToHomeTemplate(
   const badgeText = product.status?.toUpperCase() ?? "LIVE";
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
+  const hasExternalDestination =
+    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0;
+  const hasEmbeddedCheckout =
+    !hasExternalDestination &&
+    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
+  const checkoutHref = `/checkout?product=${product.slug}`;
   const allowedPrefixes = ["https://store.serp.co/", "https://ghl.serp.co/"];
   const candidateLinks = [
     product.buy_button_destination,
@@ -92,10 +98,11 @@ export function productToHomeTemplate(
     product.product_page_url,
   ];
 
-  const ctaHref = candidateLinks.find(
+  const externalCtaHref = candidateLinks.find(
     (link): link is string =>
       typeof link === "string" && allowedPrefixes.some((prefix) => link.startsWith(prefix)),
   ) ?? `https://store.serp.co/products/${product.slug}`;
+  const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
   const ctaText = product.pricing?.cta_text ?? "Get It Now";
   const videoUrl = product.product_videos?.[0];
   const screenshots = toScreenshots(product.screenshots, product);

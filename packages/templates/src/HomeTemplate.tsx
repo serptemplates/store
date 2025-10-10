@@ -14,17 +14,19 @@ import type { HeroMediaItem } from "./sections/Hero";
 import { FaYoutube } from "react-icons/fa6";
 import Hero from "@repo/ui/components/hero";
 
+type GenericComponent = ComponentType<Record<string, unknown>>;
+
 type UI = {
-  Navbar: ComponentType<any>;
-  Footer: ComponentType<any>;
-  Button: ComponentType<any>;
-  Card: ComponentType<any>;
-  CardHeader: ComponentType<any>;
-  CardTitle: ComponentType<any>;
-  CardContent: ComponentType<any>;
-  CardDescription?: ComponentType<any>;
-  Badge: ComponentType<any>;
-  Input: ComponentType<any>; // kept for compatibility though not used in the hero anymore
+  Navbar: GenericComponent;
+  Footer: GenericComponent;
+  Button: GenericComponent;
+  Card: GenericComponent;
+  CardHeader: GenericComponent;
+  CardTitle: GenericComponent;
+  CardContent: GenericComponent;
+  CardDescription?: GenericComponent;
+  Badge: GenericComponent;
+  Input: GenericComponent; // kept for compatibility though not used in the hero anymore
 };
 
 export type HomeTemplateProps = {
@@ -45,7 +47,7 @@ export type HomeTemplateProps = {
   faqs?: FAQ[];
   screenshots?: Screenshot[];
   featureHighlights?: Array<{ title: string; description?: string } | string>;
-  testimonials?: any[];
+  testimonials?: Array<Record<string, unknown>>;
   testimonialsHeading?: string;
   posts?: import("./sections/PostsSection").PostItem[];
   postsTitle?: string;
@@ -109,7 +111,7 @@ export function HomeTemplate({
     CardTitle,
     CardContent,
     CardDescription,
-  } = ui as any;
+  } = ui;
 
   const heroMediaItems: HeroMediaItem[] = [];
   if (videoUrl) {

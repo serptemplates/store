@@ -133,11 +133,11 @@ async function fetchCustomFields() {
     });
 
     if (response.ok) {
-      const data = await response.json();
+      const data = (await response.json()) as { customFields?: Array<{ id: string; fieldKey?: string; name?: string; dataType?: string }> };
       console.log("Available custom fields:");
 
       if (data.customFields && Array.isArray(data.customFields)) {
-        data.customFields.forEach((field: any) => {
+        data.customFields.forEach((field) => {
           console.log(`  - ${field.name || field.fieldKey}`);
           console.log(`    ID: ${field.id}`);
           console.log(`    Key: ${field.fieldKey}`);
@@ -145,9 +145,9 @@ async function fetchCustomFields() {
         });
 
         // Look for affiliate field
-        const affiliateField = data.customFields.find((f: any) =>
-          f.name?.toLowerCase().includes('affiliate') ||
-          f.fieldKey?.toLowerCase().includes('affiliate')
+        const affiliateField = data.customFields.find((field) =>
+          field.name?.toLowerCase().includes('affiliate') ||
+          field.fieldKey?.toLowerCase().includes('affiliate')
         );
 
         if (affiliateField) {

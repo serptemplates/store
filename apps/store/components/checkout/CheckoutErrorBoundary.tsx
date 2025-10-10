@@ -1,6 +1,7 @@
 "use client"
 
 import React, { Component, ReactNode } from 'react'
+import { reloadPage } from '@/lib/dom/navigation'
 
 interface Props {
   children: ReactNode
@@ -40,7 +41,7 @@ export class CheckoutErrorBoundary extends Component<Props, State> {
 
   handleRetry = () => {
     this.setState({ hasError: false, error: null, errorInfo: null })
-    window.location.reload()
+    reloadPage()
   }
 
   render() {

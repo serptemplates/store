@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract payment details
-    const capture = captureResult.purchase_units[0]?.payments?.captures?.[0];
+    const capture = captureResult.purchase_units?.[0]?.payments?.captures?.[0];
     const payer = captureResult.payer;
 
     const amountTotal = capture?.amount?.value

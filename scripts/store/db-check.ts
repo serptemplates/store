@@ -48,6 +48,7 @@ async function checkDatabase() {
     amount_total: number;
     created_at: string;
     source: string;
+    session_metadata: Record<string, unknown> | null;
   }>`
     SELECT o.offer_id, o.customer_email, o.amount_total, o.created_at, o.source,
            cs.metadata as session_metadata
@@ -59,7 +60,7 @@ async function checkDatabase() {
 
   if (recentOrders?.rows && recentOrders.rows.length > 0) {
     console.log("📦 Recent Orders:");
-    recentOrders.rows.forEach((order: any) => {
+    recentOrders.rows.forEach((order) => {
       const amount = order.amount_total ? `$${(order.amount_total / 100).toFixed(2)}` : 'N/A';
       const date = new Date(order.created_at).toLocaleString();
       const ghlSynced = order.session_metadata?.ghlSyncedAt ? '✅' : '❌';

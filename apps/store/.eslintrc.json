@@ -1,7 +1,11 @@
 {
   "root": true,
   "extends": "next/core-web-vitals",
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
-    "react-hooks/rules-of-hooks": "off"
+    "react-hooks/rules-of-hooks": "off",
+    "@typescript-eslint/no-explicit-any": "error"
   }
 }

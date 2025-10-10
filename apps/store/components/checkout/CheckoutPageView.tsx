@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
+import type { CheckoutProduct } from "@/components/checkout/types"
 
 // Form validation schema
 const checkoutSchema = z.object({
@@ -21,7 +22,7 @@ const checkoutSchema = z.object({
 type CheckoutFormData = z.infer<typeof checkoutSchema>
 
 // Mock product data
-const mockProducts: Record<string, any> = {
+const mockProducts: Record<string, CheckoutProduct> = {
   "tiktok-downloader": {
     slug: "tiktok-downloader",
     name: "TikTok Downloader",
@@ -44,7 +45,7 @@ export function CheckoutPageView() {
   const affiliateId = affiliateParam?.trim() || undefined
 
   const [showCoupon, setShowCoupon] = useState(false)
-  const [product, setProduct] = useState<any>(null)
+  const [product, setProduct] = useState<CheckoutProduct | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false)
   const [appliedCoupon, setAppliedCoupon] = useState<{
@@ -160,7 +161,8 @@ export function CheckoutPageView() {
     if (productSlug) {
       const productData = mockProducts[productSlug] || {
         slug: productSlug,
-        name: productSlug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+        name: productSlug.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
+        title: productSlug.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()),
         price: 67.00,
         originalPrice: 97.00,
       }

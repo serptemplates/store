@@ -3,6 +3,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OfferConfig } from "@/lib/products/offer-config";
 import type { ProductData } from "@/lib/products/product-schema";
 
+type PayPalCreateOrderResponse = {
+  id: string;
+  status: string;
+  links: Array<{
+    href: string;
+    rel: string;
+    method?: string;
+  }>;
+};
+
 vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: vi.fn(),
   createPayPalOrder: vi.fn(),
@@ -64,6 +74,7 @@ describe("POST /api/paypal/create-order", () => {
     supported_operating_systems: [],
     categories: [],
     keywords: [],
+    supported_regions: [],
     pricing: {
       price: "$99",
       benefits: [],
@@ -76,6 +87,7 @@ describe("POST /api/paypal/create-order", () => {
     },
     layout_type: "landing",
     pre_release: false,
+    featured: false,
     new_release: false,
     popular: false,
     brand: "SERP Apps",
@@ -96,11 +108,12 @@ describe("POST /api/paypal/create-order", () => {
     isPayPalConfiguredMock.mockReturnValue(true);
     getOfferConfigMock.mockReturnValue(offerConfigFixture);
     getProductDataMock.mockReturnValue(productFixture);
-    createPayPalOrderMock.mockResolvedValue({
+    const createOrderResponse: PayPalCreateOrderResponse = {
       id: "order_123",
       status: "CREATED",
       links: [],
-    } as any);
+    };
+    createPayPalOrderMock.mockResolvedValue(createOrderResponse);
   });
 
   it("creates a PayPal order and persists checkout session", async () => {
