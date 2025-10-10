@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-import { generateProductSchemaLD, generateBreadcrumbSchema, type SchemaProduct } from "@/schema/product-schema-ld";
+import { generateProductSchemaLD, generateBreadcrumbSchema, createSchemaProduct } from "@/schema";
 import { generateWebApplicationSchema } from "@/schema/software-app-schema";
 import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
@@ -46,19 +46,11 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     : [product.featured_image, product.featured_image_gif]
         .flat()
         .filter((value): value is string => Boolean(value && value.trim().length > 0));
-  const schemaProduct: SchemaProduct = {
-    ...product,
+  const schemaProduct = createSchemaProduct(product, {
     price: normalizedPrice,
     images: normalizedImages,
     isDigital: true,
-    reviews: product.reviews?.map((review) => ({
-      name: review.name,
-      review: review.review,
-      rating: review.rating,
-      date: review.date,
-      text: review.review,
-    })),
-  };
+  });
 
   const productSchema = generateProductSchemaLD({
     product: schemaProduct,
