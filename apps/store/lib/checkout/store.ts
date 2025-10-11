@@ -525,3 +525,66 @@ export async function findRecentOrdersByEmail(email: string, limit = 20): Promis
 
   return orders;
 }
+
+export async function findRefundedOrders(options?: { limit?: number; skipIfMetadataFlag?: string }): Promise<OrderRecord[]> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return [];
+  }
+
+  const safeLimit = Math.min(Math.max(Math.floor(options?.limit ?? 200), 1), 1000);
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE payment_status IS NOT NULL
+      AND payment_status ILIKE '%refund%'
+    ORDER BY updated_at DESC
+    LIMIT ${safeLimit};
+  `;
+
+  const orders = (result?.rows ?? [])
+    .map((row) => mapOrderRow(row))
+    .filter((record): record is OrderRecord => Boolean(record));
+
+  const flagKey = options?.skipIfMetadataFlag;
+
+  if (!flagKey) {
+    return orders;
+  }
+
+  return orders.filter((order) => {
+    const flagValue = order.metadata?.[flagKey];
+    if (flagValue === null || flagValue === undefined) {
+      return true;
+    }
+
+    if (typeof flagValue === "boolean") {
+      return !flagValue;
+    }
+
+    if (typeof flagValue === "string") {
+      return flagValue.trim().length === 0;
+    }
+
+    return false;
+  });
+}
