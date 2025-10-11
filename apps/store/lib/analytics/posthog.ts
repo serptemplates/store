@@ -54,54 +54,67 @@ function normalizeError(error: unknown): { name: string; message: string; stack?
   };
 }
 
-const OPS_ALERT_ENDPOINT = "/api/analytics/exception";
+type NormalizedError = ReturnType<typeof normalizeError>;
 
-function notifyOpsOfError(
-  normalized: { name: string; message: string; stack?: string },
-  properties?: Record<string, unknown>,
-  url?: string,
-  userAgent?: string,
-): void {
-  if (typeof window === "undefined") {
-    return;
+type IgnoreContext = {
+  url?: string;
+  properties?: Record<string, unknown>;
+};
+
+const THIRD_PARTY_STACK_PATTERNS = [
+  /googletagmanager\.com\/gtm\.js/i,
+  /\bgtm\.js\b/i,
+];
+
+const THIRD_PARTY_MESSAGE_PATTERNS = [
+  /getConsole/i,
+  /Cannot read properties of undefined \(reading ['"]trigger['"]\)/i,
+  /Cannot read properties of undefined \(reading ['"]events['"]\)/i,
+];
+
+const MAX_INSPECTED_PROPERTY_VALUES = 10;
+
+export function shouldIgnoreThirdPartyError(normalized: NormalizedError, context: IgnoreContext): boolean {
+  const candidates: string[] = [];
+
+  if (normalized.stack) {
+    candidates.push(normalized.stack);
   }
 
-  const payload = JSON.stringify({
-    ...normalized,
-    url,
-    userAgent,
-    properties,
-  });
-
-  if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
-    console.debug("[analytics] forwarding exception to Slack ops channel", normalized);
+  if (normalized.message) {
+    candidates.push(normalized.message);
   }
 
-  try {
-    if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
-      const blob = new Blob([payload], { type: "application/json" });
-      const sent = navigator.sendBeacon(OPS_ALERT_ENDPOINT, blob);
-      if (sent) {
-        return;
-      }
-    }
-  } catch {
-    // Ignore sendBeacon failures and fall back to fetch.
+  if (context.url) {
+    candidates.push(context.url);
   }
 
-  if (typeof fetch !== "function") {
-    return;
+  if (context.properties) {
+    const propertyValues = Object.values(context.properties)
+      .slice(0, MAX_INSPECTED_PROPERTY_VALUES)
+      .map((value) => {
+        if (value == null) {
+          return "";
+        }
+        return typeof value === "string" ? value : JSON.stringify(value);
+      });
+
+    candidates.push(...propertyValues);
   }
 
-  fetch(OPS_ALERT_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: payload,
-    keepalive: true,
-  }).catch(() => {});
+  if (candidates.length === 0) {
+    return false;
+  }
+
+  if (THIRD_PARTY_STACK_PATTERNS.some((pattern) => candidates.some((value) => pattern.test(value)))) {
+    return true;
+  }
+
+  if (THIRD_PARTY_MESSAGE_PATTERNS.some((pattern) => candidates.some((value) => pattern.test(value)))) {
+    return true;
+  }
+
+  return false;
 }
 
 export function captureFrontendError(error: unknown, properties?: Record<string, unknown>): void {
@@ -109,7 +122,13 @@ export function captureFrontendError(error: unknown, properties?: Record<string,
   const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : undefined;
   const url = typeof window !== "undefined" ? window.location.href : undefined;
 
-  notifyOpsOfError(normalized, properties, url, userAgent);
+  if (shouldIgnoreThirdPartyError(normalized, { url, properties })) {
+    if (process.env.NODE_ENV !== "production") {
+      // eslint-disable-next-line no-console
+      console.debug("[analytics] ignored third-party error", normalized);
+    }
+    return;
+  }
 
   if (!isPostHogReady()) {
     return;
