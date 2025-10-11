@@ -7,6 +7,55 @@ export function DelayedGTM({ gtmId }: { gtmId: string }) {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.__tcfapi !== 'function') {
+      type TcfCommand = 'ping' | 'addEventListener' | string;
+      type TcfCallback = (
+        returnValue: Record<string, unknown> | null,
+        success: boolean
+      ) => void;
+      type TcfApi = (
+        command: TcfCommand,
+        version: number,
+        callback: TcfCallback,
+        parameter?: unknown
+      ) => void;
+
+      const tcfStub: TcfApi = (command, _version, callback) => {
+        if (typeof callback !== 'function') {
+          return;
+        }
+
+        if (command === 'ping') {
+          callback(
+            {
+              cmpLoaded: false,
+              cmpStatus: 'stub',
+              cmpDisplayStatus: 'hidden',
+              eventStatus: 'tcloaded',
+              gdprApplies: false,
+              tcfPolicyVersion: 2,
+            },
+            true,
+          );
+          return;
+        }
+
+        if (command === 'addEventListener') {
+          callback(
+            {
+              eventStatus: 'cmpNotAvailable',
+            },
+            false,
+          );
+          return;
+        }
+
+        callback(null, false);
+      };
+
+      window.__tcfapi = tcfStub;
+    }
+
     // Delay GTM loading until after initial render
     const timer = setTimeout(() => {
       setShouldLoad(true);
