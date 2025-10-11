@@ -16,7 +16,15 @@ const GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 = process.env.GHL_CUSTOM_FIELD_LICENSE_KE
 const DEFAULT_PURCHASE_METADATA_FIELD_KEY = "contact.purchase_metadata";
 const DEFAULT_LICENSE_KEYS_FIELD_KEY = "contact.license_keys_v2";
 
-const isLeadConnectorHost = GHL_BASE_URL.includes("leadconnectorhq.com");
+const parsedHost = (() => {
+  try {
+    return new URL(GHL_BASE_URL).hostname;
+  } catch {
+    return "";
+  }
+})();
+const isLeadConnectorHost =
+  parsedHost === "leadconnectorhq.com" || parsedHost.endsWith(".leadconnectorhq.com");
 const inferredV1Base = isLeadConnectorHost ? GHL_BASE_URL : `${GHL_BASE_URL}/v1`;
 const GHL_CONTACT_API_ROOT = (process.env.GHL_API_V1_BASE_URL ?? inferredV1Base).replace(/\/$/, "");
 
