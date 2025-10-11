@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import logger from "@/lib/logger";
+import { ensureAccountForPurchase } from "@/lib/account/service";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 
 const WEBHOOK_SECRET = process.env.GHL_PAYMENT_WEBHOOK_SECRET;
@@ -119,6 +120,11 @@ function parseJsonBody(body: unknown) {
     ...payloadKeys("coupon_code"),
   );
 
+  const offerId = coalesceString(
+    ...customKeys("offer_id", "offerId", "product_id", "productId", "product_slug", "productSlug"),
+    ...payloadKeys("offer_id", "offerId", "product_id", "productId"),
+  );
+
   const createdAt = coalesceString(
     ...customKeys("created_on"),
     ...paymentKeys("created_on"),
@@ -141,6 +147,7 @@ function parseJsonBody(body: unknown) {
     couponCode,
     createdAt,
     contactId,
+    offerId,
   };
 }
 
@@ -222,6 +229,7 @@ export async function POST(request: NextRequest) {
       createdAt: parsed.createdAt,
       customerEmail: parsed.customerEmail,
       customerName: parsed.customerName,
+      offerId: parsed.offerId,
       contact: parsed.contact,
       customData: parsed.customData,
       payment: parsed.payment,
@@ -235,6 +243,25 @@ export async function POST(request: NextRequest) {
     totalAmount: parsed.totalAmount,
     currency: parsed.currency,
   });
+
+  if (parsed.customerEmail) {
+    try {
+      await ensureAccountForPurchase({
+        email: parsed.customerEmail,
+        name: parsed.customerName ?? null,
+        offerId: parsed.offerId ?? null,
+      });
+    } catch (error) {
+      logger.error("ghl.webhook.account_sync_failed", {
+        email: parsed.customerEmail,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  } else {
+    logger.warn("ghl.webhook.missing_email_for_account", {
+      identifier: resolvedIdentifier,
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }

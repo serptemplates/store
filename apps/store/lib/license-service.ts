@@ -64,6 +64,22 @@ export interface LicenseCreationResult {
   raw: unknown;
 }
 
+export interface LicenseRevocationInput {
+  eventId: string;
+  provider: string;
+  providerObjectId?: string | null;
+  userEmail: string;
+  tier?: string | null;
+  entitlements?: string[];
+  features?: Record<string, unknown> | null;
+  metadata?: Record<string, unknown> | null;
+  amount?: number | null;
+  currency?: string | null;
+  reason?: string | null;
+  originalEventId?: string | null;
+  rawEvent?: Record<string, unknown> | null;
+}
+
 function normaliseKey(data: Record<string, unknown>): string | null {
   if (typeof data.licenseKey === "string" && data.licenseKey.length > 0) {
     return data.licenseKey;
@@ -133,6 +149,41 @@ async function requestJson(url: string, options: RequestInit & { timeout?: numbe
   } finally {
     clearTimeout(timeout);
   }
+}
+
+export async function markLicenseAsRefunded(input: LicenseRevocationInput): Promise<LicenseCreationResult | null> {
+  const reason = input.reason?.trim() || "refund";
+  const eventId = input.eventId.startsWith("evt") ? input.eventId : `evt-${input.eventId}`;
+
+  const metadata = {
+    ...(input.metadata ?? {}),
+    revocationReason: reason,
+    originalEventId: input.originalEventId ?? null,
+  };
+
+  const rawEvent = {
+    ...(input.rawEvent ?? {}),
+    source: (input.rawEvent && typeof input.rawEvent.source === "string"
+      ? input.rawEvent.source
+      : "license.refund"),
+    reason,
+  };
+
+  return createLicenseForOrder({
+    id: eventId,
+    provider: input.provider,
+    providerObjectId: input.providerObjectId ?? null,
+    userEmail: input.userEmail,
+    tier: input.tier ?? undefined,
+    entitlements: input.entitlements ?? [],
+    features: input.features ?? undefined,
+    metadata,
+    status: "refunded",
+    eventType: "license.refunded",
+    amount: input.amount ?? null,
+    currency: input.currency ?? null,
+    rawEvent,
+  });
 }
 
 async function fetchLicenseFromAdmin(email: string): Promise<LicenseCreationResult | null> {

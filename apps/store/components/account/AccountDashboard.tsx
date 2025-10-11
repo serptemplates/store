@@ -23,7 +23,7 @@ export interface PurchaseSummary {
   offerId: string | null;
   purchasedAt: string | null;
   amountFormatted: string | null;
-  source: "stripe" | "paypal" | "unknown";
+  source: "stripe" | "paypal" | "ghl" | "unknown";
   licenseKey?: string | null;
   licenseStatus?: string | null;
   licenseUrl?: string | null;
@@ -185,7 +185,7 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
                     </div>
                     <div className="flex flex-col items-start gap-2 text-sm sm:items-end">
                       <Badge variant="outline" className="uppercase tracking-wide text-xs">
-                        {purchase.source}
+                        {purchase.source.toUpperCase()}
                       </Badge>
                       {purchase.licenseStatus && (
                         <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
@@ -194,6 +194,11 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
                       )}
                     </div>
                   </div>
+                  {purchase.source === "ghl" && (
+                    <p className="text-xs text-slate-500">
+                      Synced from GoHighLevel license automation.
+                    </p>
+                  )}
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4 border-t border-slate-100 pt-4 md:flex-row md:items-center md:justify-between">
                   {purchase.licenseKey ? (

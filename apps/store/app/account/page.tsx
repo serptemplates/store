@@ -5,6 +5,8 @@ import AccountVerificationFlow from "@/components/account/AccountVerificationFlo
 import { getAccountFromSessionCookie } from "@/lib/account/service";
 import { findRecentOrdersByEmail } from "@/lib/checkout/store";
 import { fetchLicenseForOrder } from "@/lib/license-service";
+import { fetchContactLicensesByEmail } from "@/lib/ghl-client";
+import { mergePurchasesWithGhlLicenses } from "@/lib/account/license-integration";
 import { getSiteConfig } from "@/lib/site-config";
 import { getAllProducts } from "@/lib/products/product";
 import { buildPrimaryNavProps } from "@/lib/navigation";
@@ -167,62 +169,75 @@ function getDevPreviewData(
 
 async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]> {
   const orders = await findRecentOrdersByEmail(email, 20);
-
-  if (!orders.length) {
-    return [];
-  }
-
   const licenseEnabled = Boolean(process.env.LICENSE_SERVICE_URL);
 
-  return Promise.all(
-    orders.map(async (order) => {
-      const amountFormatted = formatAmount(order.amountTotal, order.currency);
-      const metadata = order.metadata ?? {};
+  const purchaseSummaries = orders.length
+    ? await Promise.all(
+        orders.map(async (order) => {
+          const amountFormatted = formatAmount(order.amountTotal, order.currency);
+          const metadata = order.metadata ?? {};
 
-      const storedLicenseRaw = metadata.license;
-      const storedLicense =
-        storedLicenseRaw && typeof storedLicenseRaw === "object" && !Array.isArray(storedLicenseRaw)
-          ? (storedLicenseRaw as Record<string, unknown>)
-          : null;
+          const storedLicenseRaw = metadata.license;
+          const storedLicense =
+            storedLicenseRaw && typeof storedLicenseRaw === "object" && !Array.isArray(storedLicenseRaw)
+              ? (storedLicenseRaw as Record<string, unknown>)
+              : null;
 
-      const storedLicenseKey =
-        typeof storedLicense?.licenseKey === "string" ? storedLicense.licenseKey : null;
-      const storedLicenseStatus =
-        typeof storedLicense?.status === "string"
-          ? storedLicense.status
-          : typeof storedLicense?.action === "string"
-            ? storedLicense.action
-            : null;
-      const storedLicenseUrl =
-        typeof storedLicense?.url === "string" ? storedLicense.url : null;
+          const storedLicenseKey =
+            typeof storedLicense?.licenseKey === "string" ? storedLicense.licenseKey : null;
+          const storedLicenseStatus =
+            typeof storedLicense?.status === "string"
+              ? storedLicense.status
+              : typeof storedLicense?.action === "string"
+                ? storedLicense.action
+                : null;
+          const storedLicenseUrl =
+            typeof storedLicense?.url === "string" ? storedLicense.url : null;
 
-      let fetchedLicense = null;
+          const normalizedStatus = storedLicenseStatus?.toLowerCase() ?? null;
+          const licenseRevokedAt = metadata["licenseRevokedAt"];
+          const metadataFetchSuppressed = metadata["licenseFetchSuppressed"];
+          const licenseFetchSuppressed =
+            normalizedStatus === "revoked" ||
+            normalizedStatus === "refunded" ||
+            normalizedStatus === "cancelled" ||
+            normalizedStatus === "canceled" ||
+            licenseRevokedAt != null ||
+            metadataFetchSuppressed === true ||
+            metadataFetchSuppressed === "1";
 
-      if (licenseEnabled && !storedLicenseKey) {
-        fetchedLicense = await fetchLicenseForOrder({
-          email,
-          offerId: order.offerId,
-          orderId: order.id,
-          source: order.source,
-        }).catch(() => null);
-      }
+          let fetchedLicense = null;
 
-      const licenseKey = storedLicenseKey ?? fetchedLicense?.licenseKey ?? null;
-      const licenseStatus = storedLicenseStatus ?? fetchedLicense?.status ?? null;
-      const licenseUrl = storedLicenseUrl ?? fetchedLicense?.url ?? null;
+          if (licenseEnabled && !storedLicenseKey && !licenseFetchSuppressed) {
+            fetchedLicense = await fetchLicenseForOrder({
+              email,
+              offerId: order.offerId,
+              orderId: order.id,
+              source: order.source,
+            }).catch(() => null);
+          }
 
-      return {
-        orderId: order.id,
-        offerId: order.offerId,
-        purchasedAt: order.createdAt.toISOString(),
-        amountFormatted,
-        source: order.source,
-        licenseKey,
-        licenseStatus,
-        licenseUrl,
-      } satisfies PurchaseSummary;
-    }),
-  );
+          const licenseKey = storedLicenseKey ?? fetchedLicense?.licenseKey ?? null;
+          const licenseStatus = storedLicenseStatus ?? fetchedLicense?.status ?? null;
+          const licenseUrl = storedLicenseUrl ?? fetchedLicense?.url ?? null;
+
+          return {
+            orderId: order.id,
+            offerId: order.offerId,
+            purchasedAt: order.createdAt.toISOString(),
+            amountFormatted,
+            source: order.source,
+            licenseKey,
+            licenseStatus,
+            licenseUrl,
+          } satisfies PurchaseSummary;
+        }),
+      )
+    : [];
+
+  const ghlLicenses = await fetchContactLicensesByEmail(email).catch(() => []);
+
+  return mergePurchasesWithGhlLicenses(purchaseSummaries, ghlLicenses);
 }
 
 function formatAmount(amount: number | null, currency: string | null): string | null {

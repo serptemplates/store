@@ -10,5 +10,14 @@ declare global {
     };
     twq?: (...args: unknown[]) => void;
     pintrk?: (...args: unknown[]) => void;
+    __tcfapi?: (
+      command: string,
+      version: number,
+      callback: (
+        returnValue: Record<string, unknown> | null,
+        success: boolean
+      ) => void,
+      parameter?: unknown
+    ) => void;
   }
 }

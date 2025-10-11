@@ -135,6 +135,22 @@ export function captureFrontendError(error: unknown, properties?: Record<string,
   });
 }
 
+type ErrorEventLike = {
+  message?: string;
+  filename?: string | null;
+  lineno?: number | null;
+  colno?: number | null;
+};
+
+export function isOpaqueScriptErrorEvent(event: ErrorEventLike): boolean {
+  return (
+    event.message === "Script error." &&
+    (!event.filename || event.filename.length === 0) &&
+    (event.lineno ?? 0) === 0 &&
+    (event.colno ?? 0) === 0
+  );
+}
+
 export function wireGlobalErrorListeners(): void {
   const analyticsWindow = getAnalyticsWindow();
   if (!analyticsWindow || analyticsWindow.__POSTHOG_ERRORS_WIRED__) {
@@ -142,6 +158,11 @@ export function wireGlobalErrorListeners(): void {
   }
 
   const errorHandler = (event: ErrorEvent) => {
+    if (isOpaqueScriptErrorEvent(event)) {
+      // Ignore cross-origin script errors that provide no actionable context.
+      return;
+    }
+
     captureFrontendError(event.error ?? event.message, {
       source: "window-error",
       filename: event.filename,

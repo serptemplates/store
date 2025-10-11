@@ -36,6 +36,7 @@ schema/
 
 ```typescript
 import {
+  createSchemaProduct,
   generateProductSchemaLD,
   generateBreadcrumbSchema,
   generateOrganizationSchema
@@ -46,14 +47,11 @@ import {
 
 ```typescript
 const productSchema = generateProductSchemaLD({
-  product: {
-    slug: 'product-id',
-    name: 'Product Name',
-    description: 'Product description',
-    price: '99.99',
+  product: createSchemaProduct(productData, {
+    price: productData.pricing?.price,
     images: ['/image1.jpg', '/image2.jpg'],
-    // ... other product data
-  },
+    isDigital: true,
+  }),
   url: 'https://yoursite.com/product',
   storeUrl: 'https://yoursite.com',
   currency: 'USD',

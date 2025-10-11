@@ -7,9 +7,11 @@ import { getSiteConfig } from "@/lib/site-config"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { buildPrimaryNavProps } from "@/lib/navigation"
 import type { ProductData } from "@/lib/products/product-schema"
-import { WhoIsBehind } from "./WhoIsBehind"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { shouldShowNewReleaseBanner } from "@/lib/products/badge-config"
+import { createSchemaProduct, generateProductSchemaLD } from "@/schema"
+
+import { WhoIsBehind } from "./WhoIsBehind"
 
 const ProductsFilter = dynamic(
   () => import("@/components/ProductsFilter").then((mod) => ({ default: mod.ProductsFilter })),
@@ -26,6 +28,8 @@ const CATEGORY_ORDER = new Map(
 const CATEGORY_CANONICAL_LABELS = new Map(
   PRIMARY_CATEGORIES.map((label) => [label.toLowerCase(), label] as const),
 )
+
+const STORE_ORIGIN = "https://apps.serp.co"
 
 function deriveCategories(product: ProductData): string[] {
   if (product.categories && product.categories.length > 0) {
@@ -231,20 +235,56 @@ export function HomePageView() {
     "@type": "CollectionPage",
     name: "SERP Apps Product Catalog",
     description: "Browse all available download automation tools and growth apps",
-    url: "https://apps.serp.co",
+    url: STORE_ORIGIN,
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: products.length,
-      itemListElement: products.slice(0, 10).map((product, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Product",
-          name: product.name,
-          url: `https://apps.serp.co/${product.slug}`,
-          description: product.description || product.tagline,
-        },
-      })),
+      itemListElement: products.slice(0, 10).map((product, index) => {
+        const productUrl = `${STORE_ORIGIN}/${product.slug}`
+        const currency = product.pricing?.currency?.trim().toUpperCase() || "USD"
+        const schemaProduct = createSchemaProduct(product, {
+          price: product.pricing?.price ?? null,
+          isDigital: true,
+        })
+
+        const productSchema = generateProductSchemaLD({
+          product: schemaProduct,
+          url: productUrl,
+          storeUrl: STORE_ORIGIN,
+          storeName: "SERP Apps",
+          brandName: product.brand?.trim() || "SERP Apps",
+          currency,
+          preRelease: product.pre_release ?? false,
+        })
+
+        const {
+          name,
+          description,
+          sku,
+          brand,
+          image,
+          offers,
+          aggregateRating,
+          review,
+        } = productSchema
+
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Product",
+            name,
+            description,
+            url: productUrl,
+            sku,
+            ...(brand && { brand }),
+            ...(image && { image }),
+            offers,
+            ...(aggregateRating && { aggregateRating }),
+            ...(Array.isArray(review) && review.length > 0 && { review }),
+          },
+        }
+      }),
     },
   }
 
