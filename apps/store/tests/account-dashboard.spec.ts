@@ -20,15 +20,8 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   const errorLogs = consoleMessages.filter((entry) => entry.type === "error");
   if (errorLogs.length > 0) {
-    console.log("Console errors:", JSON.stringify(errorLogs, null, 2));
-  } else {
-    console.log("No console errors detected");
+    console.error("Console errors:", JSON.stringify(errorLogs, null, 2));
   }
-
-  console.log(
-    "Network responses:",
-    networkResponses.map((entry) => `${entry.status} ${entry.url}`),
-  );
 
   expect(errorLogs).toHaveLength(0);
 });
