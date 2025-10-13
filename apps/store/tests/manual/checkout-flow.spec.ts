@@ -50,9 +50,8 @@ test.describe("Checkout Flow Integration", () => {
     const stripeButton = page.locator('button:has-text("Pay with Stripe")').first();
     const paypalButton = page.locator('button:has-text("Pay with PayPal")').first();
 
-    if (!(await stripeButton.count()) || !(await paypalButton.count())) {
-      test.skip(true, "Internal checkout toggles not rendered for this product");
-    }
+    await expect(stripeButton, "Stripe payment toggle should be visible").toBeVisible();
+    await expect(paypalButton, "PayPal payment toggle should be visible").toBeVisible();
 
     // Stripe should be selected by default
     const stripeClass = await stripeButton.getAttribute('class');
@@ -67,19 +66,13 @@ test.describe("Checkout Flow Integration", () => {
 
     // PayPal checkout button should be visible
     const checkoutButtons = page.locator('button:has-text("Pay with PayPal")');
-    if ((await checkoutButtons.count()) < 2) {
-      test.skip(true, "Dedicated PayPal checkout button not rendered; skipping deep assertion");
-    }
+    await expect(checkoutButtons, "Expected two PayPal buttons (toggle + checkout)").toHaveCount(2);
     const paypalCheckout = checkoutButtons.nth(1);
-    await expect(paypalCheckout).toBeVisible();
+    await expect(paypalCheckout, "PayPal checkout button should be visible").toBeVisible();
 
     // Ensure Stripe iframe renders when toggled back
     await stripeButton.click();
     const stripeIframeElement = page.locator('iframe[name="embedded-checkout"], iframe[src*="checkout"], iframe[src*="link"]').first();
-    if (!(await stripeIframeElement.count())) {
-      test.skip(true, "Embedded checkout frame not available in this environment");
-    }
-
-    await expect(stripeIframeElement).toHaveCount(1);
+    await expect(stripeIframeElement, "Expected embedded checkout frame after toggling back to Stripe").toHaveCount(1);
   });
 });

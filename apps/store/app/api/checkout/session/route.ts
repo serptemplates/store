@@ -18,7 +18,20 @@ function buildErrorResponse(message: string, status = 400) {
 export async function POST(request: NextRequest) {
   // Apply rate limiting
   return withRateLimit(request, checkoutRateLimit, async () => {
-    const parseResult = checkoutSessionSchema.safeParse(await request.json());
+    let requestPayload: unknown;
+    try {
+      requestPayload = await request.json();
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        logger.debug("checkout.session.invalid_json", {
+          error: error.message,
+        });
+        return buildErrorResponse("Invalid request payload", 400);
+      }
+      throw error;
+    }
+
+    const parseResult = checkoutSessionSchema.safeParse(requestPayload);
 
   if (!parseResult.success) {
     return buildErrorResponse(
