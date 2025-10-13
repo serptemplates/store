@@ -27,19 +27,55 @@ export function isDatabaseConfigured(): boolean {
   return Boolean(connectionString);
 }
 
+const MAX_CONNECT_ATTEMPTS = Number(process.env.CHECKOUT_DB_CONNECT_ATTEMPTS ?? 3);
+const RETRY_DELAY_MS = Number(process.env.CHECKOUT_DB_RETRY_DELAY_MS ?? 500);
+
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function connectWithRetry() {
+  let attempt = 0;
+  let lastError: unknown;
+
+  const totalAttempts = Math.max(1, MAX_CONNECT_ATTEMPTS);
+
+  while (attempt < totalAttempts) {
+    attempt += 1;
+
+    try {
+      const client = createClient({ connectionString });
+      await client.connect();
+
+      if (attempt > 1) {
+        log("Connected after retries", { attempt });
+      }
+
+      return client;
+    } catch (error) {
+      lastError = error;
+      log("Failed to connect", {
+        attempt,
+        error: error instanceof Error ? error.message : String(error),
+      });
+
+      if (attempt < totalAttempts) {
+        await delay(RETRY_DELAY_MS * attempt);
+      }
+    }
+  }
+
+  throw lastError ?? new Error("Unknown database connection failure");
+}
+
 async function getClient() {
   if (!connectionString) {
     return null;
   }
 
   if (!clientPromise) {
-    clientPromise = (async () => {
-      const client = createClient({ connectionString });
-      await client.connect();
-      return client;
-    })().catch((error) => {
+    clientPromise = connectWithRetry().catch((error) => {
       clientPromise = null;
-      log("Failed to connect", { error: error instanceof Error ? error.message : error });
       throw error;
     });
   }

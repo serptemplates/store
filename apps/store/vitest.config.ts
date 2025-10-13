@@ -14,6 +14,9 @@ export default defineConfig({
     environment: "jsdom",
     reporters: "default",
     clearMocks: true,
+    env: {
+      LOG_SILENT: "true",
+    },
   },
   resolve: {
     alias: {

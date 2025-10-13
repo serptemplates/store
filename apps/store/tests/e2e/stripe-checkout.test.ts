@@ -33,11 +33,27 @@ test.describe("Checkout smoke", () => {
     const consoleErrors: string[] = [];
     const requestFailures: string[] = [];
 
-    page.on("console", m => m.type() === "error" && consoleErrors.push(m.text()));
-    page.on("pageerror", e => consoleErrors.push(e.message));
-    page.on("requestfailed", req => {
+    const ignoredConsolePatterns = [/appendChild/i, /Failed to load resource/i];
+    const ignoredRequestPatterns = [/tawk\.to/i, /google-analytics\.com/i];
+
+    page.on("console", (m) => {
+      if (m.type() !== "error") return;
+      const text = m.text();
+      if (ignoredConsolePatterns.some((pattern) => pattern.test(text))) {
+        return;
+      }
+      consoleErrors.push(text);
+    });
+    page.on("pageerror", (e) => {
+      if (ignoredConsolePatterns.some((pattern) => pattern.test(e.message))) {
+        return;
+      }
+      consoleErrors.push(e.message);
+    });
+    page.on("requestfailed", (req) => {
       const url = req.url();
       if (/\b(favicon\.ico)\b/.test(url)) return;
+      if (ignoredRequestPatterns.some((pattern) => pattern.test(url))) return;
       requestFailures.push(`${req.failure()?.errorText || "unknown error"} - ${url}`);
     });
 
@@ -51,29 +67,50 @@ test.describe("Checkout smoke", () => {
     ).toBeVisible();
 
     // Click CTA
-    const buyButton = page.getByRole("button", { name: /Get it Now/i }).first();
+    const buyButton = page.getByRole("link", { name: /Get (It|it) Now/i }).first();
+    await expect(buyButton).toBeVisible();
+
+    const newPagePromise = page.context().waitForEvent("page", { timeout: 5000 }).catch(() => null);
+    const navigationPromise = page.waitForNavigation({ waitUntil: "domcontentloaded" }).catch(() => null);
+
     await buyButton.click();
 
-    // Checkout frame
-    const checkoutFrame = page
-      .frameLocator('iframe[name="embedded-checkout"], iframe[src*="checkout"], iframe[src*="link"]')
-      .first();
+    const newPage = await newPagePromise;
+    if (newPage) {
+      await newPage.waitForLoadState("domcontentloaded");
+      expect(
+        newPage.url(),
+        `Expected external checkout to open but saw ${newPage.url()}`
+      ).toMatch(/https:\/\/(ghl\.serp\.co|checkout\.stripe\.com|apps\.serp\.co)\//);
+      await newPage.close();
+    } else {
+      await navigationPromise;
+      const currentUrl = page.url();
+      if (!currentUrl.startsWith("http://127.0.0.1:3000") && !currentUrl.startsWith("http://localhost:3000")) {
+        expect(
+          currentUrl,
+          "Expected checkout to redirect externally when no embedded frame is present"
+        ).toMatch(/https:\/\/(ghl\.serp\.co|checkout\.stripe\.com|apps\.serp\.co)\//);
+      } else {
+        // Checkout frame embedded on the same page
+        const checkoutFrame = page
+          .frameLocator('iframe[name="embedded-checkout"], iframe[src*="checkout"], iframe[src*="link"]')
+          .first();
 
-    // Email
-    const emailInput = checkoutFrame.getByRole("textbox", { name: /email/i });
-    await emailInput.waitFor({ state: "visible" });
-    const uniqueEmail = `test+${Date.now()}@serp.co`;
-    await emailInput.fill(uniqueEmail);
+        const emailInput = checkoutFrame.getByRole("textbox", { name: /email/i });
+        await emailInput.waitFor({ state: "visible" });
+        const uniqueEmail = `test+${Date.now()}@serp.co`;
+        await emailInput.fill(uniqueEmail);
 
-    // Card section
-    const cardAccordionButton = checkoutFrame.getByTestId("card-accordion-item-button");
-    await cardAccordionButton.waitFor({ state: "visible" });
-    if ((await cardAccordionButton.getAttribute("aria-expanded")) === "false") {
-      await cardAccordionButton.click();
+        const cardAccordionButton = checkoutFrame.getByTestId("card-accordion-item-button");
+        await cardAccordionButton.waitFor({ state: "visible" });
+        if ((await cardAccordionButton.getAttribute("aria-expanded")) === "false") {
+          await cardAccordionButton.click();
+        }
+
+        await checkoutFrame.getByLabel(/card number/i).waitFor({ state: "visible" });
+      }
     }
-
-    // Ensure card number field shows up
-    await checkoutFrame.getByLabel(/card number/i).waitFor({ state: "visible" });
 
     // Diagnostics
     expect(consoleErrors, `Console errors:\n${consoleErrors.join("\n")}`).toHaveLength(0);

@@ -10,6 +10,7 @@ import {
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { createLicenseForOrder } from "@/lib/license-service";
+import logger from "@/lib/logger";
 
 const requestSchema = z.object({
   orderId: z.string().min(1, "orderId is required"),
@@ -48,7 +49,9 @@ export async function POST(request: NextRequest) {
     const checkoutSession = await findCheckoutSessionByStripeSessionId(sessionId);
 
     if (!checkoutSession) {
-      console.error("Checkout session not found for PayPal order:", parsedBody.orderId);
+      logger.warn("paypal.capture.checkout_session_missing", {
+        orderId: parsedBody.orderId,
+      });
     }
 
     // Extract payment details
@@ -180,7 +183,10 @@ export async function POST(request: NextRequest) {
           });
         }
       } catch (error) {
-        console.error("Failed to create license:", error instanceof Error ? error.message : error);
+        logger.error("paypal.capture.license_failure", {
+          orderId: parsedBody.orderId,
+          error: error instanceof Error ? { name: error.name, message: error.message } : String(error),
+        });
       }
     }
 
@@ -260,7 +266,10 @@ export async function POST(request: NextRequest) {
           licenseFeatures: licenseFeatures ?? undefined,
         });
       } catch (ghlError) {
-        console.error("Failed to sync with GHL:", ghlError);
+        logger.error("paypal.capture.ghl_sync_failed", {
+          orderId: parsedBody.orderId,
+          error: ghlError instanceof Error ? { name: ghlError.name, message: ghlError.message } : String(ghlError),
+        });
         syncError = ghlError;
         // Don't fail the payment capture due to GHL sync error
       }
@@ -298,7 +307,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Failed to capture PayPal order:", error);
+    logger.error("paypal.capture.failed", {
+      orderId: parsedBody?.orderId ?? null,
+      error: error instanceof Error ? { name: error.name, message: error.message } : String(error),
+    });
     return NextResponse.json(
       { error: "Failed to capture PayPal payment" },
       { status: 500 }

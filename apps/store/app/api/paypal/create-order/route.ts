@@ -6,6 +6,7 @@ import { getProductData } from "@/lib/products/product";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
 import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
+import logger from "@/lib/logger";
 
 const requestSchema = z.object({
   offerId: z.string().min(1, "offerId is required"),
@@ -235,7 +236,9 @@ export async function POST(request: NextRequest) {
       links: paypalOrder.links,
     });
   } catch (error) {
-    console.error("Failed to create PayPal order:", error);
+    logger.error("paypal.create_order_failed", {
+      error: error instanceof Error ? { name: error.name, message: error.message } : String(error),
+    });
     return NextResponse.json(
       { error: "Failed to create PayPal order" },
       { status: 500 }

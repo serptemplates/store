@@ -205,7 +205,10 @@ export async function POST(request: NextRequest) {
               provider: "paypal",
             });
           } catch (ghlError) {
-            console.error("Failed to sync with GHL:", ghlError);
+            logger.error("paypal.webhook_ghl_sync_failed", {
+              orderId,
+              error: ghlError instanceof Error ? { name: ghlError.name, message: ghlError.message } : String(ghlError),
+            });
             // Log the error but don't fail the webhook
             await recordWebhookLog({
               paymentIntentId: orderData.stripe_payment_intent_id,
