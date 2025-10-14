@@ -6,6 +6,12 @@ import {
   type EcommerceItem,
 } from "@/lib/analytics/gtm";
 
+declare global {
+  interface Window {
+    __SERP_LAST_SESSION_ID?: string;
+  }
+}
+
 export type ConversionItem = {
   id: string;
   name: string;
@@ -123,6 +129,15 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
           product_quantity: item.quantity,
         })),
       });
+    }
+
+    if (typeof window !== "undefined") {
+      window.__SERP_LAST_SESSION_ID = sessionId;
+      try {
+        sessionStorage.setItem("tracked_session_id_debug", sessionId);
+      } catch {
+        // ignore quota errors
+      }
     }
 
     sessionStorage.setItem(`tracked_${sessionId}`, "true");

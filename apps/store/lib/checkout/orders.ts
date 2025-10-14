@@ -200,6 +200,52 @@ export async function findOrderByPaymentIntentId(paymentIntentId: string): Promi
   return mapOrderRow(result?.rows?.[0] ?? null);
 }
 
+export async function findLatestGhlOrder(params: {
+  offerId?: string | null;
+  customerEmail?: string | null;
+  excludePaymentIntentId?: string | null;
+}): Promise<OrderRecord | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const normalizedEmail = params.customerEmail ? normalizeEmail(params.customerEmail) : null;
+  const offerId = params.offerId?.trim() ?? null;
+  const excludePaymentIntentId = params.excludePaymentIntentId?.trim() ?? null;
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE source = 'ghl'
+      AND (${offerId}::text IS NULL OR offer_id = ${offerId})
+      AND (${normalizedEmail}::text IS NULL OR lower(customer_email) = ${normalizedEmail})
+      AND (${excludePaymentIntentId}::text IS NULL OR stripe_payment_intent_id <> ${excludePaymentIntentId})
+    ORDER BY created_at DESC
+    LIMIT 1;
+  `;
+
+  return mapOrderRow(result?.rows?.[0] ?? null);
+}
+
 export async function findRecentOrdersByEmail(email: string, limit = 20): Promise<OrderRecord[]> {
   const schemaReady = await ensureDatabase();
 

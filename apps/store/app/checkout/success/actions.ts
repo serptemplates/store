@@ -1,7 +1,13 @@
 "use server";
 
 import { getStripeClient } from "@/lib/payments/stripe";
-import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder, findOrderByPaymentIntentId } from "@/lib/checkout";
+import {
+  findCheckoutSessionByStripeSessionId,
+  upsertCheckoutSession,
+  upsertOrder,
+  findOrderByPaymentIntentId,
+  findLatestGhlOrder,
+} from "@/lib/checkout";
 import { createLicenseForOrder } from "@/lib/license-service";
 import { updateOrderMetadata } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
@@ -370,7 +376,21 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
   const trimmedSlug = params.productSlug?.trim();
 
   try {
-    const order = normalizedPaymentId ? await findOrderByPaymentIntentId(normalizedPaymentId) : null;
+    let order = normalizedPaymentId ? await findOrderByPaymentIntentId(normalizedPaymentId) : null;
+
+    if (!order && trimmedSlug) {
+      order = await findLatestGhlOrder({
+        offerId: trimmedSlug,
+        excludePaymentIntentId: normalizedPaymentId,
+      });
+
+      if (order) {
+        logger.info("checkout.success.ghl_fallback_order_match", {
+          offerId: trimmedSlug,
+          paymentIntentId: order.stripePaymentIntentId,
+        });
+      }
+    }
 
     const resolvedSlug = order?.offerId ?? trimmedSlug ?? null;
 
