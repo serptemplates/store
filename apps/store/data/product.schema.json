@@ -418,7 +418,7 @@
     },
     "success_url": {
       "type": "string",
-      "format": "uri"
+      "pattern": "^https://[^\\s]+$"
     },
     "cancel_url": {
       "type": "string",

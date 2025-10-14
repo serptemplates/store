@@ -14,9 +14,9 @@ describe("generateProductSchemaLD", () => {
         store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
         apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
         serply_link: "https://serp.ly/sample-product",
-        success_url: "https://apps.serp.co/checkout/success?product=sample-product",
+        success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
         cancel_url: "https://apps.serp.co/checkout?product=sample-product",
-        price: "49.99",
+        price: 49.99,
         images: ["https://cdn.example.com/image.jpg", "/local-image.png"],
         isDigital: true,
         tagline: "Sample tagline",
@@ -50,6 +50,17 @@ describe("generateProductSchemaLD", () => {
 
     expect(schema["@id"]).toBe("https://store.example.com/sample-product#product");
     expect(schema.offers).toBeTruthy();
+    if (schema.offers && !Array.isArray(schema.offers)) {
+      expect(schema.offers['@type']).toBe('Offer');
+      expect(schema.offers.price).toBe(49.99);
+      expect(schema.offers.priceSpecification).toEqual(
+        expect.objectContaining({
+          '@type': 'UnitPriceSpecification',
+          price: 49.99,
+          priceCurrency: 'USD',
+        }),
+      );
+    }
     expect(schema.image).toEqual([
       "https://cdn.example.com/image.jpg",
       "https://store.example.com/local-image.png",

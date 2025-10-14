@@ -19,9 +19,9 @@ const testProduct: SchemaProduct = {
   store_serp_co_product_page_url: 'https://store.serp.co/products/test-product',
   apps_serp_co_product_page_url: 'https://apps.serp.co/test-product',
   serply_link: 'https://serp.ly/test-product',
-  success_url: 'https://apps.serp.co/checkout/success?product=test-product',
+  success_url: 'https://apps.serp.co/checkout/success?product=test-product&session_id={CHECKOUT_SESSION_ID}',
   cancel_url: 'https://apps.serp.co/checkout?product=test-product',
-  price: '99.99',
+  price: 99.99,
   images: ['/image1.jpg', '/image2.jpg'],
   tagline: 'Best test product ever',
   isDigital: true,
@@ -79,13 +79,13 @@ console.log('- name:', !!productSchema.name ? '✓' : '✗');
 console.log('- description:', !!productSchema.description ? '✓' : '✗');
 console.log('- image:', !!productSchema.image ? '✓' : '✗');
 console.log('- brand:', !!productSchema.brand ? '✓' : '✗');
-console.log('- offers.price:', !!productSchema.offers?.price ? '✓' : '✗');
+console.log('- offers.price:', typeof productSchema.offers?.price === 'number' ? '✓' : '✗');
 console.log('- offers.priceCurrency:', !!productSchema.offers?.priceCurrency ? '✓' : '✗');
 console.log('- offers.availability:', !!productSchema.offers?.availability ? '✓' : '✗');
 console.log('- offers.seller:', !!productSchema.offers?.seller ? '✓' : '✗');
 console.log('- sku:', !!productSchema.sku ? '✓' : '✗');
 console.log('- mpn:', !!productSchema.mpn ? '✓' : '✗');
-console.log('- gtin13:', !!productSchema.gtin13 ? '✓' : '✗');
+console.log('- offers.priceSpecification:', !!productSchema.offers?.priceSpecification ? '✓' : '✗');
 console.log('');
 
 console.log('Recommended fields:');

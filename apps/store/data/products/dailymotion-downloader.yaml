@@ -5,7 +5,7 @@ seo_description: Download Dailymotion videos easily for offline viewing. Fast, r
 store_serp_co_product_page_url: https://store.serp.co/products/dailymotion-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/dailymotion-downloader
 serply_link: https://serp.ly/dailymotion-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=dailymotion-downloader
 buy_button_destination: null
 name: Dailymotion Downloader

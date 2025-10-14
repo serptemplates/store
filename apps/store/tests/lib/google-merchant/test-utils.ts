@@ -29,7 +29,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
       benefits: [],
       ...pricingOverrides,
     },
-    success_url: "https://apps.serp.co/checkout/success?product=demo-product",
+    success_url: "https://apps.serp.co/checkout/success?product=demo-product&session_id={CHECKOUT_SESSION_ID}",
     cancel_url: "https://apps.serp.co/checkout?product=demo-product",
     categories: categories ?? ["AI Tools"],
     screenshots:

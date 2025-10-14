@@ -5,7 +5,7 @@ seo_description: Download Patreon content easily for offline use. Fast and relia
 store_serp_co_product_page_url: https://store.serp.co/products/patreon-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/patreon-downloader
 serply_link: https://serp.ly/patreon-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=patreon-downloader
 buy_button_destination: https://ghl.serp.co/payment-link/68e012ab2197093319e2663b
 name: Patreon Downloader

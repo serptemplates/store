@@ -114,7 +114,7 @@ After deployment, monitor performance in Search Console:
 **Recommended Fields:**
 - sku
 - mpn
-- gtin13
+- offers.priceSpecification
 - aggregateRating
 - review
 - offers.hasMerchantReturnPolicy

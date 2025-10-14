@@ -257,6 +257,51 @@ export async function findOrderByPaymentIntentId(paymentIntentId: string): Promi
   return mapOrderRow(result?.rows?.[0] ?? null);
 }
 
+export async function findOrderByPaypalOrderId(paypalOrderId: string): Promise<OrderRecord | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const trimmed = paypalOrderId.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE source = 'paypal'
+      AND (
+        metadata ->> 'paypalOrderId' = ${trimmed}
+        OR metadata ->> 'paypal_order_id' = ${trimmed}
+        OR stripe_session_id = ${`paypal_${trimmed}`}
+      )
+    ORDER BY created_at DESC
+    LIMIT 1;
+  `;
+
+  return mapOrderRow(result?.rows?.[0] ?? null);
+}
+
 export async function findLatestGhlOrder(params: {
   offerId?: string | null;
   customerEmail?: string | null;

@@ -38,6 +38,7 @@ export interface OfferSchema {
   itemCondition?: string;
   hasMerchantReturnPolicy?: MerchantReturnPolicySchema;
   shippingDetails?: OfferShippingDetailsSchema;
+  priceSpecification?: UnitPriceSpecificationSchema;
 }
 
 export interface AggregateOfferSchema extends Omit<OfferSchema, '@type'> {
@@ -61,6 +62,12 @@ export interface OfferShippingDetailsSchema {
   shippingRate: MonetaryAmountSchema;
   shippingDestination: DefinedRegionSchema;
   deliveryTime?: ShippingDeliveryTimeSchema;
+}
+
+export interface UnitPriceSpecificationSchema {
+  '@type': 'UnitPriceSpecification';
+  price: number;
+  priceCurrency: string;
 }
 
 export interface MonetaryAmountSchema {

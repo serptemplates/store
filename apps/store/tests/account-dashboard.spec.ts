@@ -16,7 +16,7 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   await page.goto("/account?preview=1", { waitUntil: "networkidle" });
 
-  await expect(page.getByRole("heading", { name: "Purchase history" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "License Keys" })).toBeVisible();
 
   const errorLogs = consoleMessages.filter((entry) => entry.type === "error");
   if (errorLogs.length > 0) {

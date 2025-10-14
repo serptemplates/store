@@ -5,7 +5,7 @@ seo_description: Download Flickr images and graphics for offline use. Fast and r
 store_serp_co_product_page_url: https://store.serp.co/products/flickr-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/flickr-downloader
 serply_link: https://serp.ly/flickr-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=flickr-downloader
 buy_button_destination: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
 name: Flickr Downloader

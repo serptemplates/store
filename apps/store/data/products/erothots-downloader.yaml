@@ -5,7 +5,7 @@ seo_description: Download Erothots content easily for offline use. Fast and reli
 store_serp_co_product_page_url: https://store.serp.co/products/erothots-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/erothots-downloader
 serply_link: https://serp.ly/erothots-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=erothots-downloader
 buy_button_destination: null
 name: Erothots Downloader

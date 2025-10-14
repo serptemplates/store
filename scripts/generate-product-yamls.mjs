@@ -125,7 +125,7 @@ for (const slug of allSlugs) {
         stripe_product_id: productId || '',
       },
     },
-    success_url: `${appsUrl}/checkout/success`,
+    success_url: `${appsUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${appsUrl}?checkout=cancel`,
     name,
     tagline: description.slice(0, 140) || `Download ${name} instantly to your device.`,

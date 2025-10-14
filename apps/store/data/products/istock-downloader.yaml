@@ -5,7 +5,7 @@ seo_description: Download Istock images and graphics for offline use. Fast and r
 store_serp_co_product_page_url: https://store.serp.co/products/istock-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/istock-downloader
 serply_link: https://serp.ly/istock-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=istock-downloader
 buy_button_destination: null
 name: Istock Downloader

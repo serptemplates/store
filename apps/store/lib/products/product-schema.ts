@@ -41,6 +41,25 @@ const enforceHost = (host: string) =>
       }
     });
 
+const successUrlSchema = trimmedString().superRefine((value, ctx) => {
+  const sanitized = value.replaceAll("{CHECKOUT_SESSION_ID}", "checkout_session_id");
+
+  try {
+    const parsed = new URL(sanitized);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "URL must use http or https",
+      });
+    }
+  } catch (error) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Invalid URL",
+    });
+  }
+});
+
 const stripeSchema = z.object({
   price_id: z.string(),
   test_price_id: z.string().optional(), // Optional test mode price ID
@@ -142,7 +161,7 @@ export const productSchema = z.object({
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
-  success_url: trimmedString().url(),
+  success_url: successUrlSchema,
   cancel_url: trimmedString().url(),
   license: licenseSchema,
   layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),

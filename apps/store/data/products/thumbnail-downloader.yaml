@@ -5,7 +5,7 @@ seo_description: Download Thumbnail images and graphics for offline use. Fast an
 store_serp_co_product_page_url: https://store.serp.co/products/thumbnail-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/thumbnail-downloader
 serply_link: https://serp.ly/thumbnail-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=thumbnail-downloader
 buy_button_destination: null
 name: Thumbnail Downloader

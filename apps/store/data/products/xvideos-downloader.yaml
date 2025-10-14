@@ -5,7 +5,7 @@ seo_description: Download XVideos videos easily for offline viewing. Fast, relia
 store_serp_co_product_page_url: https://store.serp.co/products/xvideos-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/xvideos-downloader
 serply_link: https://serp.ly/xvideos-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=xvideos-downloader
 buy_button_destination: https://ghl.serp.co/payment-link/68df9862613b1b6817ce7b4c
 name: XVideos Downloader

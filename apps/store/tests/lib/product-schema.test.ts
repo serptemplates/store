@@ -11,7 +11,7 @@ describe("productSchema", () => {
       store_serp_co_product_page_url: "https://store.serp.co/products/example",
       apps_serp_co_product_page_url: "https://apps.serp.co/example",
       serply_link: "https://serp.ly/example",
-      success_url: "https://apps.serp.co/checkout/success?product=example",
+      success_url: "https://apps.serp.co/checkout/success?product=example&session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://apps.serp.co/checkout?product=example",
       name: "Example",
       tagline: "Example",

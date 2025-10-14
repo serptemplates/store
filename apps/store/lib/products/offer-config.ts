@@ -3,6 +3,24 @@ import { z } from "zod";
 import { getProductData } from "@/lib/products/product";
 import { isStripeTestMode } from "@/lib/payments/stripe-environment";
 
+const CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}";
+
+export function ensureSuccessUrlHasSessionPlaceholder(url: string): string {
+  if (!url || url.includes(CHECKOUT_SESSION_PLACEHOLDER)) {
+    return url;
+  }
+
+  const trimmed = url.trim();
+  if (trimmed.length === 0) {
+    return url;
+  }
+
+  const endsWithDelimiter = trimmed.endsWith("?") || trimmed.endsWith("&");
+  const separator = endsWithDelimiter ? "" : trimmed.includes("?") ? "&" : "?";
+
+  return `${trimmed}${separator}session_id=${CHECKOUT_SESSION_PLACEHOLDER}`;
+}
+
 const ghlConfigSchema = z
   .object({
     pipelineId: z.string().optional(),
@@ -61,9 +79,10 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
     const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://store.serp.co";
     const baseUrl = configuredSiteUrl ?? defaultBaseUrl;
 
-    const successUrl = isTest
+    const rawSuccessUrl = isTest
       ? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
       : product.success_url ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+    const successUrl = ensureSuccessUrlHasSessionPlaceholder(rawSuccessUrl);
     const cancelUrl = isTest
       ? `${baseUrl}/checkout?canceled=true`
       : product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;

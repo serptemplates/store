@@ -10,7 +10,7 @@ const baseProduct: ProductData = {
   store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
-  success_url: "https://apps.serp.co/checkout/success?product=sample-product",
+  success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   buy_button_destination: undefined,
   name: "Sample Product Downloader",

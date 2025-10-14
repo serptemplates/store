@@ -56,7 +56,7 @@ function createMockCheckoutSession(): Stripe.Checkout.Session {
       apps_serp_co_product_page_url: "https://apps.serp.co/linkedin-learning-downloader",
       purchaseUrl: "https://serp.ly/linkedin-learning-downloader",
       serply_link: "https://serp.ly/linkedin-learning-downloader",
-      success_url: "https://apps.serp.co/checkout/success?product=linkedin-learning-downloader",
+      success_url: "https://apps.serp.co/checkout/success?product=linkedin-learning-downloader&session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
       affiliateId: "test-affiliate-123",
       source: "test-script"

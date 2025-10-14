@@ -29,9 +29,9 @@ const productSchema = generateProductSchemaLD({
     store_serp_co_product_page_url: 'https://store.serp.co/products/video-downloader-pro',
     apps_serp_co_product_page_url: 'https://apps.serp.co/video-downloader-pro',
     serply_link: 'https://serp.ly/video-downloader-pro',
-    success_url: 'https://apps.serp.co/checkout/success?product=video-downloader-pro',
+    success_url: 'https://apps.serp.co/checkout/success?product=video-downloader-pro&session_id={CHECKOUT_SESSION_ID}',
     cancel_url: 'https://apps.serp.co/checkout?product=video-downloader-pro',
-    price: '49.99',
+    price: 49.99,
     images: ['/img1.jpg', '/img2.jpg', '/img3.jpg'],
     tagline: 'Download videos like a pro',
     isDigital: true,
@@ -77,7 +77,7 @@ console.log('  ✓ Name:', productSchema.name);
 console.log('  ✓ Price:', productSchema.offers.price);
 console.log('  ✓ Brand:', productSchema.brand.name);
 console.log('  ✓ SKU/MPN:', productSchema.sku, '/', productSchema.mpn);
-console.log('  ✓ GTIN-13:', productSchema.gtin13);
+console.log('  ✓ Price Specification:', productSchema.offers.priceSpecification);
 console.log('  ✓ Images:', productSchema.image.length, 'images');
 console.log('  ✓ Merchant Return Policy:', !!productSchema.offers.hasMerchantReturnPolicy);
 console.log('  ✓ Shipping Details:', !!productSchema.offers.shippingDetails);

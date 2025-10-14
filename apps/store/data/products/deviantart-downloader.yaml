@@ -5,7 +5,7 @@ seo_description: Download Deviantart images and graphics for offline use. Fast a
 store_serp_co_product_page_url: https://store.serp.co/products/deviantart-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/deviantart-downloader
 serply_link: https://serp.ly/deviantart-downloader
-success_url: https://apps.serp.co/checkout/success
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=deviantart-downloader
 buy_button_destination: null
 name: Deviantart Downloader

@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-import { processCheckoutSession, processGhlPayment } from "./actions";
+import { processCheckoutSession, processGhlPayment, processPaypalOrder } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
 
 type CheckoutVariant = "stripe" | "paypal" | "ghl" | "external";
@@ -229,6 +229,9 @@ export function SuccessContent() {
     if (variant === "stripe") {
       return Boolean(sessionId);
     }
+    if (variant === "paypal") {
+      return Boolean(paypalOrderId);
+    }
     if (variant === "ghl") {
       return true;
     }
@@ -312,12 +315,28 @@ export function SuccessContent() {
       };
     }
 
+    if (variant === "paypal" && paypalOrderId) {
+      setProcessing(true);
+      processPaypalOrder({ orderId: paypalOrderId })
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
+
+      return () => {
+        cancelled = true;
+      };
+    }
+
     setProcessing(false);
 
     return () => {
       cancelled = true;
     };
-  }, [variant, sessionId, ghlPaymentId, ghlProductSlug]);
+  }, [variant, sessionId, paypalOrderId, ghlPaymentId, ghlProductSlug]);
 
   const orderReference = sessionId ?? paypalOrderId ?? ghlPaymentId ?? undefined;
   const heroCopy = HERO_COPY[variant];
@@ -336,7 +355,7 @@ export function SuccessContent() {
     return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
   }, []);
 
-  const resolvedSessionId = sessionId ?? orderDetails?.sessionId ?? null;
+  const resolvedSessionId = sessionId ?? orderDetails?.sessionId ?? paypalOrderId ?? null;
 
   useEffect(() => {
     if (successVideo.kind === "youtube") {
