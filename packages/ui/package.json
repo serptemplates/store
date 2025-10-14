@@ -6,9 +6,11 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./*": "./src/*.tsx",
+    "./package.json": "./package.json",
     "./components/*": "./src/components/*.tsx",
-    "./package.json": "./package.json"
+    "./magic/*": "./src/magic/*.tsx",
+    "./sections/*": "./src/sections/*.tsx",
+    "./*": "./src/*.tsx"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

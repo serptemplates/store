@@ -4,8 +4,7 @@ The store app now leans on a clear separation between the design system packages
 
 ## Layers at a glance
 
-- **`packages/ui`** – Pure, styled primitives (buttons, badges, inputs). They accept data-only props and must not import app state or browser-only APIs. Anything that could ship as a standalone npm package belongs here.
-- **`packages/templates`** – Marketing or product sections that compose primitives into opinionated layouts (hero blocks, pricing, FAQ). They are still UI-only but can include copy, iconography, and layout glue.
+- **`packages/ui`** – Source of truth for shared UI. Primitives live at the package root (`src/button`, `src/card`, etc.) while higher-level sections live under `src/sections/**`. Everything in this package must stay framework-agnostic and avoid app-specific logic.
 - **`apps/store/components`** – Store-specific wiring that touches routing, data fetching, analytics, or checkout orchestration. Recent examples include the modular checkout view under `components/checkout/page/` and PayPal / Stripe entry points.
 - **`apps/store/app`** – Next.js routes that stitch the UI with server actions and fetchers. Route-level components should stay lean by delegating most markup to `components/`.
 - **`apps/store/lib`** – Domain logic split by capability (`checkout/`, `payments/`, `license-service/`, `ghl-client/`, etc.). UI components should only import the facades exposed by these folders (e.g., `@/lib/checkout`), never the private helpers.
@@ -24,13 +23,22 @@ When you break down new screens, mirror this structure—write a hook that prepa
 
 When a component currently in `apps/store/components` proves reusable for other apps:
 
-1. Move the JSX into `packages/templates` or `packages/ui` depending on how low-level it is.
-2. Export it from the relevant package `index.ts`.
-3. Replace the store import path with the package import, and delete the original component.
-4. Update or add stories/tests in the package to keep coverage local to the component.
+1. Move the JSX into `packages/ui`:
+   - Primitives → `src/` next to existing atoms.
+   - Marketing/landing sections → `src/sections/` (add a folder if a new section category is needed).
+2. Export it from `packages/ui/src/index.ts` (add a small barrel if the section family grows).
+3. Replace the store import path with the new `@repo/ui/...` entry point, and delete the original component.
+4. Update or add stories/tests in `packages/ui` to keep coverage local to the component.
 
 ## Guardrails
 
 - Avoid adding new top-level folders under `apps/store/components` unless the scope is broad (e.g., `checkout/`, `account/`). Small domains should live under the nearest existing folder.
 - UI code should never import private helpers from `apps/store/lib/**/internal`. Always use the public facades so refactors stay localized.
 - Use the Playwright smoke suite (`pnpm test:smoke`) after significant UI moves; it covers the product lander, checkout redirect, and account surfaces.
+
+## Migration: `@repo/templates` → consolidated UI
+
+- Replace any lingering `@repo/templates` imports with the appropriate `@repo/ui/sections/*` export or a store-local component (e.g., `ClientHomeView/HomeTemplate` now lives in the app).
+- Update TypeScript path aliases and Next.js `transpilePackages` so they only reference `@repo/ui`; no extra package entries are needed.
+- Delete any residual `packages/templates` artefacts in downstream repos—shared sections now reside under `packages/ui/src/sections/**`.
+- If another project still expects the old namespace, add a temporary shim that re-exports from the new `@repo/ui/sections/*` paths while you migrate.

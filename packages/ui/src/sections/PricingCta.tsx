@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 import { Check, Zap, ArrowRight, Loader2 } from "lucide-react";
-import { Button } from "@repo/ui";
-import { cn } from "@repo/ui";
-import SocialProofBanner from "@repo/ui/social-proof-banner";
+import { Button } from "../button";
+import { cn } from "../lib/utils";
+import SocialProofBanner from "../social-proof-banner";
 
 export type PricingCtaProps = {
   heading?: string;

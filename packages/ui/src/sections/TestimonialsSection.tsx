@@ -1,6 +1,6 @@
 "use client";
 
-import TestimonialMarquee, { type Testimonial } from "@repo/ui/sections/TestimonialMarquee";
+import TestimonialMarquee, { type Testimonial } from "./TestimonialMarquee";
 
 const fallbackTestimonials: Testimonial[] = [
   {

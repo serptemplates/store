@@ -1,6 +1,8 @@
-import type { HomeTemplateProps, FAQ, PostItem } from "@repo/templates";
+import type { FAQ } from "@repo/ui/sections/FaqSection";
+import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
+import type { HomeTemplateProps } from "@/components/home/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { ProductData } from "./product-schema";
 import type { BlogPostMeta } from "@/lib/blog";

@@ -15,7 +15,7 @@ experimental: {
   optimizeCss: true,
   optimizePackageImports: [
     '@repo/ui',
-    '@repo/templates',
+    '@repo/ui/sections',
     'react-dom',
     'react'
   ],

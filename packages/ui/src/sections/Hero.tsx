@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import HeroVideoDialog from "@repo/ui/magic/HeroVideoDialog";
-import { Progress } from "@repo/ui";
+import HeroVideoDialog from "../magic/HeroVideoDialog";
+import { Progress } from "../progress";
 
 
 

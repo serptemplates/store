@@ -15,8 +15,7 @@ Key directories:
 │   ├── lib/payments/stripe-webhook/  # Stripe webhook dispatcher + helpers
 │   ├── scripts/               # CLI utilities & manual test harnesses
 │   └── playwright.config.ts   # Smoke suite configuration
-├── packages/ui/               # Shared primitives
-├── packages/templates/        # Reusable marketing/product sections
+├── packages/ui/               # Shared primitives and sections (`src/sections/**`)
 └── docs/                      # Current documentation set (see docs/README.md)
 ```
 

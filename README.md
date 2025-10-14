@@ -5,8 +5,7 @@ This repository now focuses exclusively on the `@apps/store` Next.js commerce ap
 ## Directory Overview
 
 - `apps/store` – production storefront deployed to `https://apps.serp.co`
-- `packages/ui` – shared UI primitives consumed by the store
-- `packages/templates` – marketing page sections used across store product and blog pages
+- `packages/ui` – shared UI primitives and sections (`src/sections/**`) consumed by the store
 - `sites/apps.serp.co` – markdown blog content and store-level site metadata
 
 ## Local Development
