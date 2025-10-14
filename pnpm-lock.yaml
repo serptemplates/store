@@ -78,6 +78,9 @@ importers:
       husky:
         specifier: ^9.0.0
         version: 9.1.7
+      tsx:
+        specifier: ^4.20.6
+        version: 4.20.6
 
   apps/store:
     dependencies:
