@@ -11,8 +11,9 @@ describe("generateProductSchemaLD", () => {
         seo_description: "Sample description",
         name: "Sample Product",
         description: "Sample description",
-        store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
+        store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
         apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+        serp_co_product_page_url: "https://serp.co/products/sample-product/",
         serply_link: "https://serp.ly/sample-product",
         success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
         cancel_url: "https://apps.serp.co/checkout?product=sample-product",
@@ -31,16 +32,22 @@ describe("generateProductSchemaLD", () => {
         supported_operating_systems: [],
         product_videos: [],
         related_videos: [],
+        related_posts: [],
         screenshots: [],
         faqs: [],
         github_repo_tags: [],
         supported_regions: [],
         reviews: [],
-        pre_release: false,
+        status: "live",
         featured: false,
         new_release: false,
         popular: false,
         brand: "SERP Apps",
+        chrome_webstore_link: undefined,
+        firefox_addon_store_link: undefined,
+        edge_addons_store_link: undefined,
+        producthunt_link: undefined,
+        permission_justifications: [],
       } satisfies SchemaProduct,
       url: "https://store.example.com/sample-product",
       storeUrl: "https://store.example.com",
@@ -61,9 +68,32 @@ describe("generateProductSchemaLD", () => {
         }),
       );
     }
+    expect(Array.isArray(schema.image)).toBe(true);
+    if (!Array.isArray(schema.image)) {
+      throw new Error("Expected image to be an array of ImageObject");
+    }
+
     expect(schema.image).toEqual([
-      "https://cdn.example.com/image.jpg",
-      "https://store.example.com/local-image.png",
+      expect.objectContaining({
+        "@type": "ImageObject",
+        url: "https://cdn.example.com/image.jpg",
+        contentUrl: "https://cdn.example.com/image.jpg",
+        license: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
+        acquireLicensePage: "https://serp.co/contact",
+        creditText: "SERP Apps",
+        representativeOfPage: true,
+      }),
+      expect.objectContaining({
+        "@type": "ImageObject",
+        url: "https://store.example.com/local-image.png",
+        contentUrl: "https://store.example.com/local-image.png",
+        license: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
+      }),
     ]);
+    expect(schema.primaryImageOfPage).toEqual({
+      "@id": "https://store.example.com/sample-product#product-image-1",
+    });
+    expect(Array.isArray(schema.availableLanguage)).toBe(true);
+    expect(schema.availableLanguage).toContain("en");
   });
 });

@@ -297,10 +297,20 @@ export interface EntryPointSchema {
 // Image Schema Types
 export interface ImageObjectSchema {
   '@type': 'ImageObject';
+  '@id'?: string;
   url: string;
+  contentUrl?: string;
   caption?: string;
-  width?: string;
-  height?: string;
+  creditText?: string;
+  license?: string;
+  acquireLicensePage?: string;
+  creator?: OrganizationSchema | PersonSchema;
+  copyrightHolder?: OrganizationSchema | PersonSchema;
+  copyrightNotice?: string;
+  representativeOfPage?: boolean;
+  fileFormat?: string;
+  width?: string | number;
+  height?: string | number;
 }
 
 // Additional Property Types

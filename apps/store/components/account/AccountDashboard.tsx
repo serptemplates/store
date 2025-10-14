@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge } from "@repo/ui";
+import type { CheckoutSessionStatus } from "@/lib/checkout/types";
 
 type StatusTone = "emerald" | "amber" | "rose" | "slate";
 
@@ -27,6 +28,8 @@ export interface PurchaseSummary {
   licenseKey?: string | null;
   licenseStatus?: string | null;
   licenseUrl?: string | null;
+  paymentStatus?: string | null;
+  checkoutStatus?: CheckoutSessionStatus | null;
 }
 
 export default function AccountDashboard({ account, purchases, verifiedRecently }: AccountDashboardProps) {

@@ -1,104 +1,133 @@
-slug: pixabay-downloader
 platform: Pixabay
-seo_title: Download Pixabay Images | Pixabay Downloader
-seo_description: Download Pixabay images and graphics for offline use. Fast and reliable Pixabay content downloader.
-store_serp_co_product_page_url: https://store.serp.co/products/pixabay-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/pixabay-downloader
-serply_link: https://serp.ly/pixabay-downloader
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=pixabay-downloader
-buy_button_destination: null
 name: Pixabay Downloader
 tagline: Save Pixabay images and content instantly to your device.
+slug: pixabay-downloader
+description: Download videos, images, and content from pixabay with our reliable downloader
+  tool. Fast, secure, and easy to use.
+seo_title: Download Pixabay Images | Pixabay Downloader
+seo_description: Download Pixabay images and graphics for offline use. Fast and reliable
+  Pixabay content downloader.
+serply_link: https://serp.ly/pixabay-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/pixabay-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/pixabay-downloader
+serp_co_product_page_url: https://serp.co/products/pixabay-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=pixabay-downloader
+status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pixabay-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pixabay-downloader/main/images/pixabay-downloader.gif
-github_repo_url: https://github.com/serpapps/pixabay-downloader
-github_repo_tags: []
-features:
-  - High-quality royalty-free images and videos
-  - Batch processing
-  - Various media formats
-  - Auto Metadata extraction
-  - Organize by category and usage rights
-  - Resume downloads
-  - Cross-platform support
-  - Media viewer
-  - CLI for automated asset collection
-  - Design software integration
-  - Search downloaded media libraries
-  - Duplicate detection
-  - Privacy protection
-  - Regular compatibility updates
-  - Export capabilities for asset catalogs/portfolios
-  - Bandwidth-efficient downloads
-  - Different image sizes and resolutions
-  - Smart content categorization and tagging system
-  - Backup & sync
-  - Free usage tracking and license compliance
-description: Download videos, images, and content from pixabay with our reliable downloader tool. Fast, secure, and easy to use.
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pixabay-downloader.jpg
+  alt: Pixabay Downloader website preview
 product_videos: []
 related_videos: []
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pixabay-downloader.jpg
-    alt: Pixabay Downloader website preview
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Pixabay Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Pixabay Downloader lets me pull everything from Pixabay in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Pixabay downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Pixabay used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Pixabay content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Pixabay assets for clients and the download in Pixabay Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I use the Pixabay downloader?
-    answer: Install the browser extension, navigate to Pixabay, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Pixabay, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-  - question: Does this work with all Pixabay content?
-    answer: The downloader works with most publicly accessible content on Pixabay. Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Downloader
-  - Creative Assets
-  - Image Hosting
-keywords:
-  - pixabay downloader
+related_posts: []
+github_repo_url: https://github.com/serpapps/pixabay-downloader
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- High-quality royalty-free images and videos
+- Batch processing
+- Various media formats
+- Auto Metadata extraction
+- Organize by category and usage rights
+- Resume downloads
+- Cross-platform support
+- Media viewer
+- CLI for automated asset collection
+- Design software integration
+- Search downloaded media libraries
+- Duplicate detection
+- Privacy protection
+- Regular compatibility updates
+- Export capabilities for asset catalogs/portfolios
+- Bandwidth-efficient downloads
+- Different image sizes and resolutions
+- Smart content categorization and tagging system
+- Backup & sync
+- Free usage tracking and license compliance
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I use the Pixabay downloader?
+  answer: Install the browser extension, navigate to Pixabay, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Pixabay, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Pixabay content?
+  answer: The downloader works with most publicly accessible content on Pixabay. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with Pixabay Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Pixabay Downloader lets me pull everything
+    from Pixabay in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Pixabay downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Pixabay used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Pixabay content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Pixabay assets for clients and the download in Pixabay Downloader
+    keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Creative Assets
+- Image Hosting
+keywords:
+- pixabay downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99g106JrOmKRCmhuWBP77A
   metadata:
@@ -107,11 +136,5 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-pixabay-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-pre_release: true
+  - purchase-pixabay-downloader
+permission_justifications: []

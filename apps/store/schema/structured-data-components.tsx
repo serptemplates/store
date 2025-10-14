@@ -1,12 +1,14 @@
 import Script from "next/script"
 
 import type { ProductData } from "@/lib/products/product-schema"
+import { isPreRelease } from "@/lib/products/release-status"
 
 import {
   createSchemaProduct,
   generateBreadcrumbSchema,
   generateOrganizationSchema,
   generateProductSchemaLD,
+  generateTranslatedResultsSchema,
 } from "./product-schema-ld"
 
 const FALLBACK_STORE_URL = "https://apps.serp.co"
@@ -85,6 +87,8 @@ const buildVideoSchemas = (product: ProductData, storeUrl: string) => {
 
 export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const storeUrl = resolveStoreUrl(url)
+  const productUrl = url
+  const productId = `${productUrl.replace(/#.*$/, "")}#product`
   const currency = product.pricing?.currency?.trim()?.toUpperCase() || "USD"
 
   const schemaProduct = createSchemaProduct(product, {
@@ -92,20 +96,25 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
     isDigital: true,
   })
 
+  const productSlugPath = product.slug
+    ? (product.slug.startsWith("/") ? product.slug : `/${product.slug}`)
+    : '/'
+
   const productSchema = generateProductSchemaLD({
     product: schemaProduct,
-    url,
+    url: productUrl,
     storeUrl,
     storeName: STORE_NAME,
     brandName: product.brand?.trim() || STORE_NAME,
     currency,
-    preRelease: product.pre_release ?? false,
+    preRelease: isPreRelease(product),
+    productId,
   })
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
       { name: "Home", url: "/" },
-      { name: product.name, url: `/${product.slug}` },
+      { name: product.name, url: productSlugPath },
     ],
     storeUrl,
   })
@@ -119,6 +128,13 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
 
   const websiteSchema = buildWebsiteSchema(storeUrl)
   const videoSchemas = buildVideoSchemas(product, storeUrl)
+  const translatedResultsSchema = generateTranslatedResultsSchema({
+    url: productUrl,
+    name: product.name,
+    productId,
+    storeUrl,
+    storeName: STORE_NAME,
+  })
 
   return (
     <>
@@ -162,6 +178,14 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(websiteSchema),
+        }}
+      />
+
+      <Script
+        id="product-translated-results"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(translatedResultsSchema),
         }}
       />
     </>

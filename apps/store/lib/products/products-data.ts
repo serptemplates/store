@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import yaml from 'yaml'
+import type { ReleaseStatus } from './release-status'
 
 export interface ProductMetadata {
   platform?: string;
@@ -21,7 +22,7 @@ export interface Product {
   description?: string
   thumbnail?: string
   images?: Array<{ url: string }>
-  pre_release?: boolean
+  status: ReleaseStatus
   new_release?: boolean
   popular?: boolean
   variants: Array<{
@@ -60,6 +61,9 @@ export async function getProducts(): Promise<Product[]> {
       collection = 'stock-assets'
     }
 
+    const releaseStatus: ReleaseStatus = data.status ?? 'draft'
+    const isPreRelease = releaseStatus === 'pre_release'
+
     const product: Product = {
       id: data.slug,
       title: data.name,
@@ -73,7 +77,7 @@ export async function getProducts(): Promise<Product[]> {
         { url: data.featured_image }
       ] : [],
       collection,
-      pre_release: Boolean(data.pre_release),
+      status: releaseStatus,
       new_release: Boolean(data.new_release),
       popular: Boolean(data.popular),
       variants: [{
@@ -98,7 +102,7 @@ export async function getProducts(): Promise<Product[]> {
     }
 
     const activeBadges = [
-      product.pre_release && 'pre_release',
+      isPreRelease && 'pre_release',
       product.new_release && 'new_release',
       product.popular && 'popular'
     ].filter(Boolean) as string[]

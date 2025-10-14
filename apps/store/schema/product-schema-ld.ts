@@ -1,5 +1,21 @@
 import type { ProductData } from '@/lib/products/product-schema';
 
+const DEFAULT_IMAGE_LICENSE_URL = 'https://github.com/serpapps/legal/blob/main/terms-conditions.md';
+const DEFAULT_IMAGE_ACQUIRE_LICENSE_URL = 'https://serp.co/contact';
+const DEFAULT_TRANSLATED_LANGUAGES = [
+  'en',
+  'es',
+  'fr',
+  'de',
+  'pt',
+  'it',
+  'ja',
+  'ko',
+  'zh-Hans',
+  'zh-Hant',
+  'ar',
+];
+
 /**
  * Generate Product schema.org JSON-LD for Google Shopping eligibility
  * Required fields for Google Shopping:
@@ -98,6 +114,9 @@ export interface ProductSchemaLDOptions {
   preRelease?: boolean;
   expectedLaunchDate?: string;
   productId?: string;
+  imageLicenseUrl?: string;
+  acquireLicensePageUrl?: string;
+  translatedLanguages?: string[];
 }
 
 export function generateProductSchemaLD({
@@ -110,6 +129,9 @@ export function generateProductSchemaLD({
   preRelease = false,
   expectedLaunchDate,
   productId,
+  imageLicenseUrl = DEFAULT_IMAGE_LICENSE_URL,
+  acquireLicensePageUrl = DEFAULT_IMAGE_ACQUIRE_LICENSE_URL,
+  translatedLanguages = DEFAULT_TRANSLATED_LANGUAGES,
 }: ProductSchemaLDOptions) {
   const resolvedProductId = productId ?? `${url}#product`;
   const resolvedPrice =
@@ -119,19 +141,83 @@ export function generateProductSchemaLD({
 
   // Get primary image or use placeholder
   const primaryImage = product.images?.[0] || '/api/og';
+  const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
   const normalizeImage = (imagePath: string): string => {
     if (!imagePath) {
-      return `${storeUrl}${primaryImage}`;
+      if (/^https?:\/\//i.test(primaryImage)) {
+        return primaryImage;
+      }
+      const fallbackImage = primaryImage.startsWith('/') ? primaryImage : `/${primaryImage}`;
+      return `${normalizedStoreUrl}${fallbackImage}`;
     }
 
     if (/^https?:\/\//i.test(imagePath)) {
       return imagePath;
     }
 
-    const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
     const normalizedImage = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
     return `${normalizedStoreUrl}${normalizedImage}`;
   };
+
+  const normalizedImageUrls = Array.isArray(product.images)
+    ? product.images.map((img) => normalizeImage(img))
+    : [normalizeImage(primaryImage)];
+
+  const guessImageMimeType = (imageUrl: string): string | undefined => {
+    const base = imageUrl.split(/[?#]/)[0];
+    if (!base) return undefined;
+    const extension = base.split('.').pop();
+    if (!extension) return undefined;
+    const ext = extension.toLowerCase();
+    switch (ext) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'svg':
+        return 'image/svg+xml';
+      default:
+        return undefined;
+    }
+  };
+
+  const brandOrganization = {
+    '@type': 'Organization' as const,
+    name: brandName,
+    url: normalizedStoreUrl,
+  };
+
+  const imageObjects = normalizedImageUrls.map((imageUrl, index) => {
+    const imageId = `${resolvedProductId}-image-${index + 1}`;
+    return {
+      '@type': 'ImageObject' as const,
+      '@id': imageId,
+      url: imageUrl,
+      contentUrl: imageUrl,
+      caption: product.tagline || product.description || product.name,
+      creditText: brandName,
+      license: imageLicenseUrl,
+      acquireLicensePage: acquireLicensePageUrl,
+      creator: brandOrganization,
+      copyrightHolder: brandOrganization,
+      copyrightNotice: `© ${new Date().getFullYear()} ${brandName}. All rights reserved.`,
+      representativeOfPage: index === 0,
+      fileFormat: guessImageMimeType(imageUrl),
+    };
+  });
+
+  const availableLanguage = Array.from(
+    new Set(
+      translatedLanguages
+        .map((lang) => lang?.trim())
+        .filter((lang): lang is string => Boolean(lang && lang.length > 0)),
+    ),
+  );
 
   // Calculate average rating if reviews exist
   const aggregateRating = product.reviews?.length ? {
@@ -177,7 +263,7 @@ export function generateProductSchemaLD({
     seller: {
       '@type': 'Organization',
       name: storeName,
-      url: storeUrl,
+      url: normalizedStoreUrl,
     },
     // Return policy for Google Shopping
     hasMerchantReturnPolicy: {
@@ -232,14 +318,15 @@ export function generateProductSchemaLD({
     '@id': resolvedProductId,
     name: product.name,
     description: product.description || product.tagline || `${product.name} - Download and automation tool`,
-    image: Array.isArray(product.images)
-      ? product.images.map(img => normalizeImage(img))
-      : [normalizeImage(primaryImage)],
+    image: imageObjects.length ? imageObjects : normalizedImageUrls,
+    primaryImageOfPage: imageObjects.length ? { '@id': imageObjects[0]['@id'] } : undefined,
+    associatedMedia: imageObjects.length ? imageObjects : undefined,
     url: url,
     // Brand is required for Google Shopping
     brand: {
       '@type': 'Brand',
       name: brandName,
+      url: normalizedStoreUrl,
     },
     // SKU/identifiers (use slug as SKU for digital products)
     sku: product.slug,
@@ -279,6 +366,7 @@ export function generateProductSchemaLD({
       operatingSystem: 'Web Browser',
       softwareVersion: '1.0',
     }),
+    ...(availableLanguage.length && { availableLanguage }),
   };
 
   return schema;
@@ -338,6 +426,62 @@ export function generateOrganizationSchema({
       contactType: 'customer support',
       email: 'support@apps.serp.co',
       url: `${storeUrl}/support`,
+    },
+  };
+}
+
+export interface TranslatedResultsSchemaOptions {
+  url: string;
+  name: string;
+  productId: string;
+  storeUrl: string;
+  storeName?: string;
+  inLanguage?: string;
+  availableLanguages?: string[];
+}
+
+export function generateTranslatedResultsSchema({
+  url,
+  name,
+  productId,
+  storeUrl,
+  storeName = 'SERP Apps',
+  inLanguage = 'en',
+  availableLanguages = DEFAULT_TRANSLATED_LANGUAGES,
+}: TranslatedResultsSchemaOptions) {
+  const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
+  const normalizedAvailableLanguages = Array.from(
+    new Set(
+      (availableLanguages.length ? availableLanguages : DEFAULT_TRANSLATED_LANGUAGES)
+        .map((language) => language?.trim())
+        .filter((language): language is string => Boolean(language && language.length > 0)),
+    ),
+  );
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#translated-results`,
+    url,
+    name,
+    inLanguage,
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${normalizedStoreUrl}#website`,
+      name: storeName,
+      url: normalizedStoreUrl,
+    },
+    mainEntity: {
+      '@id': productId,
+    },
+    availableLanguage: normalizedAvailableLanguages,
+    potentialAction: {
+      '@type': 'ViewAction',
+      name: 'View translated page',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: url,
+      },
     },
   };
 }

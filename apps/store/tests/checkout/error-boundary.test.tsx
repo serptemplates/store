@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import React from "react";
 
@@ -42,7 +42,7 @@ describe("CheckoutErrorBoundary", () => {
       </CheckoutErrorBoundary>
     );
 
-    expect(screen.getByText("Test content")).toBeInTheDocument();
+    expect(screen.getByText("Test content")).toBeTruthy();
   });
 
   it("should show error UI when child component throws", () => {
@@ -52,8 +52,8 @@ describe("CheckoutErrorBoundary", () => {
       </CheckoutErrorBoundary>
     );
 
-    expect(screen.getByText("Something went wrong")).toBeInTheDocument();
-    expect(screen.getByText(/We encountered an error/)).toBeInTheDocument();
+    expect(screen.getByText("Something went wrong")).toBeTruthy();
+    expect(screen.getByText(/We encountered an error/)).toBeTruthy();
   });
 
   it("should show Try Again and Go Back buttons on error", () => {
@@ -63,8 +63,8 @@ describe("CheckoutErrorBoundary", () => {
       </CheckoutErrorBoundary>
     );
 
-    expect(screen.getByText("Try Again")).toBeInTheDocument();
-    expect(screen.getByText("Go Back")).toBeInTheDocument();
+    expect(screen.getByText("Try Again")).toBeTruthy();
+    expect(screen.getByText("Go Back")).toBeTruthy();
   });
 
   it("should reload page when Try Again is clicked", () => {
@@ -104,8 +104,8 @@ describe("CheckoutErrorBoundary", () => {
       </CheckoutErrorBoundary>
     );
 
-    expect(screen.getByText("Custom error message")).toBeInTheDocument();
-    expect(screen.queryByText("Something went wrong")).not.toBeInTheDocument();
+    expect(screen.getByText("Custom error message")).toBeTruthy();
+    expect(screen.queryByText("Something went wrong")).toBeNull();
   });
 
   it("should show error details in development mode", () => {
@@ -119,7 +119,7 @@ describe("CheckoutErrorBoundary", () => {
 
     // In development, error details should be visible
     const details = screen.getByText("Error Details (Development Only)");
-    expect(details).toBeInTheDocument();
+    expect(details).toBeTruthy();
   });
 
   it("should not show error details in production mode", () => {
@@ -133,7 +133,7 @@ describe("CheckoutErrorBoundary", () => {
 
     // In production, error details should not be visible
     const details = screen.queryByText("Error Details (Development Only)");
-    expect(details).not.toBeInTheDocument();
+    expect(details).toBeNull();
   });
 
   it("should log errors to console", () => {
@@ -172,7 +172,7 @@ describe("CheckoutErrorBoundary", () => {
 
     expect(reloadPageMock).toHaveBeenCalled();
     expect(screen.queryAllByText("Something went wrong")).toHaveLength(0);
-    expect(screen.getByText("No error")).toBeInTheDocument();
+    expect(screen.getByText("No error")).toBeTruthy();
   });
 
   it('should handle async errors', async () => {

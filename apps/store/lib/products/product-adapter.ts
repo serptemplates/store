@@ -4,8 +4,9 @@ import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
 import type { HomeTemplateProps } from "@/components/home/home-template.types";
 import { titleCase } from "@/lib/string-utils";
-import type { ProductData } from "./product-schema";
 import type { BlogPostMeta } from "@/lib/blog";
+import type { ProductData } from "./product-schema";
+import { getReleaseBadgeText } from "./release-status";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -78,12 +79,25 @@ function formatPrice(value: number): string {
   return `$${Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2)}`;
 }
 
+function resolvePosts(product: ProductData, posts: BlogPostMeta[]): BlogPostMeta[] {
+  const desiredOrder = product.related_posts ?? [];
+  if (!desiredOrder.length) {
+    return posts;
+  }
+
+  const orderIndex = new Map(desiredOrder.map((slug, index) => [slug, index]));
+
+  return posts
+    .filter((post) => orderIndex.has(post.slug))
+    .sort((a, b) => (orderIndex.get(a.slug)! - orderIndex.get(b.slug)!));
+}
+
 export function productToHomeTemplate(
   product: ProductData,
   posts: BlogPostMeta[] = []
 ): Omit<HomeTemplateProps, "ui"> {
   const platform = derivePlatform(product);
-  const badgeText = product.status?.toUpperCase() ?? "LIVE";
+  const badgeText = getReleaseBadgeText(product);
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
   const hasExternalDestination =
@@ -97,19 +111,21 @@ export function productToHomeTemplate(
     "https://ghl.serp.co/",
     "https://apps.serp.co/",
     "https://serp.ly/",
+    "https://serp.co/",
   ];
   const candidateLinks = [
     product.buy_button_destination,
     product.pricing?.cta_href,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
+    product.serp_co_product_page_url,
     product.serply_link,
   ];
 
   const externalCtaHref = candidateLinks.find(
     (link): link is string =>
       typeof link === "string" && allowedPrefixes.some((prefix) => link.startsWith(prefix)),
-  ) ?? `https://store.serp.co/products/${product.slug}`;
+  ) ?? `https://store.serp.co/product-details/product/${product.slug}`;
   const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
   const ctaText = product.pricing?.cta_text ?? "Get It Now";
   const videoUrl = product.product_videos?.[0];
@@ -118,6 +134,7 @@ export function productToHomeTemplate(
   const faqs = toFaqs(product.faqs);
   const currentPriceValue = parsePriceToNumber(product.pricing?.price);
   let derivedOriginalPrice = product.pricing?.original_price ?? undefined;
+  const resolvedPosts = resolvePosts(product, posts);
 
   if (!derivedOriginalPrice && currentPriceValue != null) {
     if (Math.abs(currentPriceValue - 17) < 0.01) {
@@ -145,8 +162,8 @@ export function productToHomeTemplate(
     featureHighlights: product.features,
     testimonials,
     testimonialsHeading: testimonials ? "Reviews" : undefined,
-    posts: posts as PostItem[],
-    postsTitle: posts.length ? "Posts" : undefined,
+    posts: resolvedPosts as PostItem[],
+    postsTitle: resolvedPosts.length ? "Posts" : undefined,
     pricing: {
       enabled: true,
       heading: product.name,

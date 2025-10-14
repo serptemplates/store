@@ -8,7 +8,7 @@ const ALLOWED_PREFIXES = ["https://store.serp.co/", "https://ghl.serp.co/"];
 const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
 const FALLBACK_PAGE_BASE = "https://apps.serp.co/";
-const STORE_PAGE_BASE = "https://store.serp.co/products/";
+const STORE_PAGE_BASE = "https://store.serp.co/product-details/product/";
 
 describe("buy button destinations", () => {
   it("ensures each product CTA points to an approved destination", () => {

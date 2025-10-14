@@ -1,104 +1,133 @@
-slug: giphy-downloader
 platform: Giphy
-seo_title: Download Giphy Images | Giphy Downloader
-seo_description: Download Giphy images and graphics for offline use. Fast and reliable Giphy content downloader.
-store_serp_co_product_page_url: https://store.serp.co/products/giphy-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/giphy-downloader
-serply_link: https://serp.ly/giphy-downloader
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=giphy-downloader
-buy_button_destination: null
 name: Giphy Downloader
 tagline: Save Giphy images and content instantly to your device.
+slug: giphy-downloader
+description: Download videos, images, and content from giphy with our reliable downloader
+  tool. Fast, secure, and easy to use.
+seo_title: Download Giphy Images | Giphy Downloader
+seo_description: Download Giphy images and graphics for offline use. Fast and reliable
+  Giphy content downloader.
+serply_link: https://serp.ly/giphy-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/giphy-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/giphy-downloader
+serp_co_product_page_url: https://serp.co/products/giphy-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=giphy-downloader
+status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/giphy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/giphy-downloader/main/images/giphy-downloader.gif
-github_repo_url: https://github.com/serpapps/giphy-downloader
-github_repo_tags: []
-features:
-  - High-quality GIFs and animated stickers
-  - Batch trending/popular content downloads
-  - Various GIF formats and resolutions
-  - Auto Metadata extraction
-  - Organize by category/trending topics
-  - Resume downloads with recovery
-  - Cross-platform support
-  - GIF viewer
-  - CLI for social media automation
-  - Media center integration
-  - Export GIF data and usage analytics
-  - Search GIF libraries
-  - Privacy protection
-  - Regular compatibility updates
-  - Animated WebP and other formats
-  - Bandwidth optimization
-  - Backup & sync
-  - Smart categorization
-  - Workflow integration
-  - Trending content discovery and recommendations
-description: Download videos, images, and content from giphy with our reliable downloader tool. Fast, secure, and easy to use.
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/giphy-downloader.jpg
+  alt: Giphy Downloader website preview
 product_videos: []
 related_videos: []
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/giphy-downloader.jpg
-    alt: Giphy Downloader website preview
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Giphy Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Giphy Downloader lets me pull everything from Giphy in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Giphy downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Giphy used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Giphy content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Giphy assets for clients and the download in Giphy Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I use the Giphy downloader?
-    answer: Install the browser extension, navigate to Giphy, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Giphy, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-  - question: Does this work with all Giphy content?
-    answer: The downloader works with most publicly accessible content on Giphy. Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Downloader
-  - Creative Assets
-  - Image Hosting
-keywords:
-  - giphy downloader
+related_posts: []
+github_repo_url: https://github.com/serpapps/giphy-downloader
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- High-quality GIFs and animated stickers
+- Batch trending/popular content downloads
+- Various GIF formats and resolutions
+- Auto Metadata extraction
+- Organize by category/trending topics
+- Resume downloads with recovery
+- Cross-platform support
+- GIF viewer
+- CLI for social media automation
+- Media center integration
+- Export GIF data and usage analytics
+- Search GIF libraries
+- Privacy protection
+- Regular compatibility updates
+- Animated WebP and other formats
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
+- Workflow integration
+- Trending content discovery and recommendations
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I use the Giphy downloader?
+  answer: Install the browser extension, navigate to Giphy, find the content you want
+    to download, and click the download button that appears. The content will be saved
+    to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Giphy, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Giphy content?
+  answer: The downloader works with most publicly accessible content on Giphy. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with Giphy Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Giphy Downloader lets me pull everything
+    from Giphy in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Giphy downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Giphy used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Giphy content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Giphy assets for clients and the download in Giphy Downloader
+    keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Creative Assets
+- Image Hosting
+keywords:
+- giphy downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99wu06JrOmKRCmq1ANhFue
   metadata:
@@ -107,11 +136,5 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-giphy-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-pre_release: true
+  - purchase-giphy-downloader
+permission_justifications: []

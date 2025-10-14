@@ -60,6 +60,8 @@ export interface OrderRecord {
   paymentStatus: string | null;
   paymentMethod: string | null;
   source: CheckoutSource;
+  checkoutSessionStatus: CheckoutSessionStatus | null;
+  checkoutSessionSource: CheckoutSource | null;
   createdAt: Date;
   updatedAt: Date;
 }

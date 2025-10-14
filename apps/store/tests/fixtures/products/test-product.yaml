@@ -1,19 +1,40 @@
-slug: test-product
 platform: Test Platform
-seo_title: Test Product
-seo_description: Test product description.
-store_serp_co_product_page_url: https://store.serp.co/products/test-product
-apps_serp_co_product_page_url: https://apps.serp.co/test-product
-serply_link: https://serp.ly/test-product
-success_url: https://apps.serp.co/checkout/success?product=test-product&session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=test-product
 name: Test Product
 tagline: The best test product.
-description: |
-  Detailed description of the test product.
+slug: test-product
+description: 'Detailed description of the test product.
+
+  '
+seo_title: Test Product
+seo_description: Test product description.
+serply_link: https://serp.ly/test-product
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/test-product
+apps_serp_co_product_page_url: https://apps.serp.co/test-product
+serp_co_product_page_url: https://serp.co/products/test-product/
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=test-product
+status: live
 screenshots: []
-reviews: []
-faqs: []
+product_videos: []
+related_videos: []
+related_posts: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
 pricing:
   label: Lifetime access
   price: $99
+  benefits: []
+faqs: []
+reviews: []
+supported_operating_systems: []
+supported_regions: []
+categories: []
+keywords: []
+layout_type: landing
+featured: false
+new_release: false
+popular: false
+permission_justifications: []
+brand: SERP Apps

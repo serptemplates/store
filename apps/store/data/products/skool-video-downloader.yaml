@@ -1,118 +1,159 @@
-slug: skool-video-downloader
 platform: Skool
-seo_title: Download Skool Videos | Skool Video Downloader
-seo_description: Download Skool videos easily for offline viewing. Fast, reliable Skool video downloader with high-quality downloads.
-store_serp_co_product_page_url: https://store.serp.co/products/skool-video-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/skool-video-downloader
-serply_link: https://serp.ly/skool-video-downloader
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=skool-video-downloader
-buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
 name: Skool Video Downloader
 tagline: Save Skool videos instantly for offline viewing.
+slug: skool-video-downloader
+description: Skool Video Downloader is a browser extension that injects a download
+  button on skool.com so you can back up every classroom video before access expires.
+  Preserve lessons from community posts, about pages, and private course areas, all
+  while keeping original quality.
+seo_title: Download Skool Videos | Skool Video Downloader
+seo_description: Download Skool videos easily for offline viewing. Fast, reliable
+  Skool video downloader with high-quality downloads.
+serply_link: https://serp.ly/skool-video-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/skool-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/skool-video-downloader
+serp_co_product_page_url: https://serp.co/products/skool-video-downloader/
+buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=skool-video-downloader
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.gif
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
+  alt: Skool Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
+  alt: Skool Video Downloader extension interface
+  caption: Floating download controls injected on Skool lesson pages
+- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%202.png
+  alt: Skool Video Downloader screenshot
+  caption: Downloading Skool videos with ease
+- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%203.png
+  alt: Skool Video Downloader interface
+  caption: Simple and intuitive download interface
+product_videos:
+- https://www.youtube.com/watch?v=J9eetd89HZk
+- https://www.youtube.com/watch?v=WRSzeFI_Q7g
+related_videos:
+- https://www.youtube.com/watch?v=Ez7vpisxEdY
+- https://www.youtube.com/watch?v=YBBSkdb1YAw
+- https://www.youtube.com/watch?v=tgDmBdReTqA
+- https://www.youtube.com/watch?v=YH-oF2cWoDI
+related_posts:
+- how-to-download-skool-platform-videos
 github_repo_url: https://github.com/serpapps/skool-downloader
 github_repo_tags:
-  - skool-downloader
-  - skool-video-downloader
-  - download-skool-videos
+- skool-downloader
+- skool-video-downloader
+- download-skool-videos
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
 features:
-  - Download full courses offline
-  - Save videos, docs, and materials
-  - Preserve course structure
-  - Auto-login for enrolled courses
-  - Batch download multiple courses
-  - Export posts and discussions
-  - Download all attachments
-  - Record live streams
-  - Track download progress
-  - Optimize file sizes
-  - Resume interrupted downloads
-  - Export to PDF and EPUB
-  - Search and filter content
-  - Backup course libraries
-  - CLI for automation
-  - Sync with note-taking apps
-  - Offline media player
-  - Works on all platforms
-  - Always Skool-compatible
-  - Local storage only
-description: Skool Video Downloader is a browser extension that injects a download button on skool.com so you can back up every classroom video before access expires. Preserve lessons from community posts, about pages, and private course areas, all while keeping original quality.
-product_videos:
-  - https://www.youtube.com/watch?v=J9eetd89HZk
-  - https://www.youtube.com/watch?v=WRSzeFI_Q7g
-related_videos:
-  - https://www.youtube.com/watch?v=Ez7vpisxEdY
-  - https://www.youtube.com/watch?v=YBBSkdb1YAw
-  - https://www.youtube.com/watch?v=tgDmBdReTqA
-  - https://www.youtube.com/watch?v=YH-oF2cWoDI
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
-    alt: Skool Video Downloader website preview
-  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
-    alt: Skool Video Downloader extension interface
-    caption: Floating download controls injected on Skool lesson pages
-  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%202.png
-    alt: Skool Video Downloader screenshot
-    caption: Downloading Skool videos with ease
-  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%203.png
-    alt: Skool Video Downloader interface
-    caption: Simple and intuitive download interface
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Skool Video Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Skool Video Downloader lets me pull everything from Skool in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Skool downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Skool used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Skool content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Skool assets for clients and the batch features in Skool Video Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I download Skool videos?
-    answer: Use our Skool video downloader extension to easily download videos from Skool communities. Simply install the extension, navigate to any Skool video, and click the download button that appears. Choose your preferred quality and format, and the video will be saved directly to your device.
-  - question: Is it legal to download from Skool?
-    answer: We're not attorneys and can't provide legal advice, as we don't know your location or specific circumstances. However, our extension simply provides an easier way to do what you could already do manually without it. You can download anything manually on your own already—we just make the process more convenient.
-  - question: What video formats are supported?
-    answer: Our downloader successfully supports every type of video and video format we've encountered on the Skool platform. We've tested it extensively with various video uploads, and it handles all formats reliably. If you encounter any format that doesn't work, let us know and we'll add support for it.
-  - question: Can I download Skool videos on mobile devices?
-    answer: We don't currently have a mobile version, but we're happy to develop one if there's demand for it. Right now, our downloader works on desktop browsers. If you'd like a mobile version, let us know by submitting a request to our project repository.
-  - question: What if I encounter an error or issue?
-    answer: Simply submit an issue to our project repository and our support team will help you right away. We'll either troubleshoot any mistakes, fix bugs if they exist, or add new features if you need them. We're committed to making sure the downloader works perfectly for you.
-  - question: Do I need to be logged into Skool to download videos?
-    answer: Yes, you must be logged into your Skool account and have access to the community or course containing the video. Our downloader works within your existing permissions—it cannot bypass Skool's access restrictions or download content from communities you're not a member of.
-  - question: Are there any risks in downloading from Skool?
-    answer: No, there are no risks when using our downloader. It's a safe, straightforward tool that works within your browser.
-  - question: Can I download videos from private or premium Skool communities?
-    answer: Yes, you can download videos from paid, premium, or private classrooms as long as you have access to them. If you're a member of the community and can watch the video on Skool, you can download it with our tool.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: live
-categories:
-  - Downloader
-  - Course Platforms
-keywords:
-  - skool video downloader
-  - download skool videos
-  - skool classroom backup
+- Download full courses offline
+- Save videos, docs, and materials
+- Preserve course structure
+- Auto-login for enrolled courses
+- Batch download multiple courses
+- Export posts and discussions
+- Download all attachments
+- Record live streams
+- Track download progress
+- Optimize file sizes
+- Resume interrupted downloads
+- Export to PDF and EPUB
+- Search and filter content
+- Backup course libraries
+- CLI for automation
+- Sync with note-taking apps
+- Offline media player
+- Works on all platforms
+- Always Skool-compatible
+- Local storage only
 pricing:
   price: $27.00
   currency: USD
   availability: InStock
+faqs:
+- question: How do I download Skool videos?
+  answer: Use our Skool video downloader extension to easily download videos from
+    Skool communities. Simply install the extension, navigate to any Skool video,
+    and click the download button that appears. Choose your preferred quality and
+    format, and the video will be saved directly to your device.
+- question: Is it legal to download from Skool?
+  answer: "We're not attorneys and can't provide legal advice, as we don't know your\
+    \ location or specific circumstances. However, our extension simply provides an\
+    \ easier way to do what you could already do manually without it. You can download\
+    \ anything manually on your own already\u2014we just make the process more convenient."
+- question: What video formats are supported?
+  answer: Our downloader successfully supports every type of video and video format
+    we've encountered on the Skool platform. We've tested it extensively with various
+    video uploads, and it handles all formats reliably. If you encounter any format
+    that doesn't work, let us know and we'll add support for it.
+- question: Can I download Skool videos on mobile devices?
+  answer: We don't currently have a mobile version, but we're happy to develop one
+    if there's demand for it. Right now, our downloader works on desktop browsers.
+    If you'd like a mobile version, let us know by submitting a request to our project
+    repository.
+- question: What if I encounter an error or issue?
+  answer: Simply submit an issue to our project repository and our support team will
+    help you right away. We'll either troubleshoot any mistakes, fix bugs if they
+    exist, or add new features if you need them. We're committed to making sure the
+    downloader works perfectly for you.
+- question: Do I need to be logged into Skool to download videos?
+  answer: "Yes, you must be logged into your Skool account and have access to the\
+    \ community or course containing the video. Our downloader works within your existing\
+    \ permissions\u2014it cannot bypass Skool's access restrictions or download content\
+    \ from communities you're not a member of."
+- question: Are there any risks in downloading from Skool?
+  answer: No, there are no risks when using our downloader. It's a safe, straightforward
+    tool that works within your browser.
+- question: Can I download videos from private or premium Skool communities?
+  answer: Yes, you can download videos from paid, premium, or private classrooms as
+    long as you have access to them. If you're a member of the community and can watch
+    the video on Skool, you can download it with our tool.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with Skool Video Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Skool Video Downloader lets me pull everything
+    from Skool in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Skool downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Skool used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Skool content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Skool assets for clients and the batch features in Skool Video
+    Downloader keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Course Platforms
+keywords:
+- skool video downloader
+- download skool videos
+- skool classroom backup
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S9BFU06JrOmKRCmMYncsgKb
   metadata:
@@ -120,10 +161,5 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-skool-video-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+  - purchase-skool-video-downloader
+permission_justifications: []

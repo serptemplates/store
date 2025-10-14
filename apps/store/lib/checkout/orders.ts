@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { ensureDatabase, query } from "@/lib/database";
 
-import type { CheckoutOrderUpsert, CheckoutSource, OrderRecord } from "./types";
+import type { CheckoutOrderUpsert, CheckoutSessionStatus, CheckoutSource, OrderRecord } from "./types";
 import { normalizeEmail, toJsonbLiteral } from "./utils";
 
 interface OrderRow {
@@ -21,6 +21,8 @@ interface OrderRow {
   payment_status: string | null;
   payment_method: string | null;
   source: CheckoutSource | null;
+  checkout_session_status?: string | null;
+  checkout_session_source?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -42,6 +44,9 @@ function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
     metadata = row.metadata as Record<string, unknown>;
   }
 
+  const checkoutSessionStatus = row.checkout_session_status ?? null;
+  const checkoutSessionSource = row.checkout_session_source ?? null;
+
   return {
     id: row.id,
     checkoutSessionId: row.checkout_session_id,
@@ -58,6 +63,8 @@ function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
     paymentStatus: row.payment_status,
     paymentMethod: row.payment_method,
     source: (row.source ?? "stripe") as CheckoutSource,
+    checkoutSessionStatus: checkoutSessionStatus as CheckoutSessionStatus | null,
+    checkoutSessionSource: checkoutSessionSource as CheckoutSource | null,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
   };
@@ -139,26 +146,34 @@ export async function findOrdersByEmailAndSource(
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE customer_email = ${normalizedEmail}
-      AND source = ${source}
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
+      )
+    WHERE o.customer_email = ${normalizedEmail}
+      AND o.source = ${source}
   `;
 
   const rows = result?.rows ?? [];
@@ -232,25 +247,33 @@ export async function findOrderByPaymentIntentId(paymentIntentId: string): Promi
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE stripe_payment_intent_id = ${paymentIntentId}
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
+      )
+    WHERE o.stripe_payment_intent_id = ${paymentIntentId}
     LIMIT 1;
   `;
 
@@ -271,31 +294,39 @@ export async function findOrderByPaypalOrderId(paypalOrderId: string): Promise<O
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE source = 'paypal'
-      AND (
-        metadata ->> 'paypalOrderId' = ${trimmed}
-        OR metadata ->> 'paypal_order_id' = ${trimmed}
-        OR stripe_session_id = ${`paypal_${trimmed}`}
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
       )
-    ORDER BY created_at DESC
+    WHERE o.source = 'paypal'
+      AND (
+        o.metadata ->> 'paypalOrderId' = ${trimmed}
+        OR o.metadata ->> 'paypal_order_id' = ${trimmed}
+        OR o.stripe_session_id = ${`paypal_${trimmed}`}
+      )
+    ORDER BY o.created_at DESC
     LIMIT 1;
   `;
 
@@ -319,29 +350,37 @@ export async function findLatestGhlOrder(params: {
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE source = 'ghl'
-      AND (${offerId}::text IS NULL OR offer_id = ${offerId})
-      AND (${normalizedEmail}::text IS NULL OR lower(customer_email) = ${normalizedEmail})
-      AND (${excludePaymentIntentId}::text IS NULL OR stripe_payment_intent_id <> ${excludePaymentIntentId})
-    ORDER BY created_at DESC
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
+      )
+    WHERE o.source = 'ghl'
+      AND (${offerId}::text IS NULL OR o.offer_id = ${offerId})
+      AND (${normalizedEmail}::text IS NULL OR lower(o.customer_email) = ${normalizedEmail})
+      AND (${excludePaymentIntentId}::text IS NULL OR o.stripe_payment_intent_id <> ${excludePaymentIntentId})
+    ORDER BY o.created_at DESC
     LIMIT 1;
   `;
 
@@ -360,27 +399,35 @@ export async function findRecentOrdersByEmail(email: string, limit = 20): Promis
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE customer_email IS NOT NULL
-      AND LOWER(customer_email) = ${normalizedEmail}
-    ORDER BY created_at DESC
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
+      )
+    WHERE o.customer_email IS NOT NULL
+      AND LOWER(o.customer_email) = ${normalizedEmail}
+    ORDER BY o.created_at DESC
     LIMIT ${safeLimit};
   `;
 
@@ -401,27 +448,35 @@ export async function findRefundedOrders(options?: { limit?: number; skipIfMetad
 
   const result = await query<OrderRow>`
     SELECT
-      id,
-      checkout_session_id,
-      stripe_session_id,
-      stripe_payment_intent_id,
-      stripe_charge_id,
-      amount_total,
-      currency,
-      offer_id,
-      lander_id,
-      customer_email,
-      customer_name,
-      metadata,
-      payment_status,
-      payment_method,
-      source,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE payment_status IS NOT NULL
-      AND payment_status ILIKE '%refund%'
-    ORDER BY updated_at DESC
+      o.id,
+      o.checkout_session_id,
+      o.stripe_session_id,
+      o.stripe_payment_intent_id,
+      o.stripe_charge_id,
+      o.amount_total,
+      o.currency,
+      o.offer_id,
+      o.lander_id,
+      o.customer_email,
+      o.customer_name,
+      o.metadata,
+      o.payment_status,
+      o.payment_method,
+      o.source,
+      o.created_at,
+      o.updated_at,
+      cs.status AS checkout_session_status,
+      cs.source AS checkout_session_source
+    FROM orders o
+    LEFT JOIN checkout_sessions cs
+      ON (
+        cs.id = o.checkout_session_id
+        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
+        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
+      )
+    WHERE o.payment_status IS NOT NULL
+      AND o.payment_status ILIKE '%refund%'
+    ORDER BY o.updated_at DESC
     LIMIT ${safeLimit};
   `;
 

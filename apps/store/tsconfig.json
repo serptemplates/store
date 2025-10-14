@@ -36,7 +36,8 @@
     "types": [
       "node",
       "next",
-      "vitest"
+      "vitest",
+      "@testing-library/jest-dom"
     ]
   },
   "include": [

@@ -32,7 +32,7 @@
     url: `https://apps.serp.co/${product.slug}`,
     storeUrl: "https://apps.serp.co",
     currency: product.pricing?.currency?.toUpperCase() ?? "USD",
-    preRelease: product.pre_release ?? false,
+    preRelease: product.status === "pre_release",
   });
 
   console.log(JSON.stringify(schema, null, 2));

@@ -46,6 +46,8 @@ describe("processPaypalOrder", () => {
       source: "paypal",
       createdAt: new Date(),
       updatedAt: new Date(),
+      checkoutSessionStatus: "completed",
+      checkoutSessionSource: "paypal",
     });
 
     productMocks.getProductData.mockReturnValue({

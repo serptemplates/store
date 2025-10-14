@@ -75,6 +75,8 @@ describe("syncAccountLicensesFromGhl", () => {
         source: "ghl",
         createdAt: new Date(),
         updatedAt: new Date(),
+        checkoutSessionStatus: null,
+        checkoutSessionSource: "ghl",
       },
     ]);
 
@@ -114,6 +116,8 @@ describe("syncAccountLicensesFromGhl", () => {
         source: "ghl",
         createdAt: new Date(),
         updatedAt: new Date(),
+        checkoutSessionStatus: null,
+        checkoutSessionSource: "ghl",
       },
     ]);
 

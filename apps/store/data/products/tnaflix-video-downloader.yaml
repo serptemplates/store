@@ -1,103 +1,131 @@
-slug: tnaflix-video-downloader
 platform: TNAFlix
-seo_title: Download TNAFlix Videos | TNAFlix Video Downloader
-seo_description: Download TNAFlix videos easily for offline viewing. Fast, reliable TNAFlix video downloader with high-quality downloads.
-store_serp_co_product_page_url: https://store.serp.co/products/tnaflix-video-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/tnaflix-video-downloader
-serply_link: https://serp.ly/tnaflix-video-downloader
-success_url: https://store.serp.co/products/tnaflix-video-downloader?checkout=success
-cancel_url: https://store.serp.co/products/tnaflix-video-downloader
-buy_button_destination: https://ghl.serp.co/payment-link/68df9aea21970984ade2630c
 name: TNAFlix Video Downloader
 tagline: Save TNAFlix videos instantly for offline viewing.
+slug: tnaflix-video-downloader
+description: Get quick access to TNAFlix Video Downloader content for offline use.
+seo_title: Download TNAFlix Videos | TNAFlix Video Downloader
+seo_description: Download TNAFlix videos easily for offline viewing. Fast, reliable
+  TNAFlix video downloader with high-quality downloads.
+serply_link: https://serp.ly/tnaflix-video-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/tnaflix-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/tnaflix-video-downloader
+serp_co_product_page_url: https://serp.co/products/tnaflix-video-downloader/
+buy_button_destination: https://ghl.serp.co/payment-link/68df9aea21970984ade2630c
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=tnaflix-video-downloader
+status: draft
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/tnaflix-video-downloader/main/images/tnaflix-video-downloader.gif
-github_repo_url: https://github.com/serpapps/tnaflix-video-downloader
-github_repo_tags: []
-features:
-  - High-quality videos with resolution options
-  - Batch download support for multiple selections
-  - Auto thumbnail and metadata extraction
-  - Resume interrupted transfers with smart recovery
-  - Cross-platform desktop application compatibility
-  - Command-line tools workflows
-  - Built-in security features and private downloading
-  - Custom folders and naming systems
-  - Duplicate detection and content organization
-  - Bandwidth management and scheduling tools
-  - Progress tracking with real-time monitoring
-  - Integrates with video management software
-  - Regular compatibility updates
-  - Local storage focus with privacy protection
-  - Multiple video containers and codecs
-  - Intelligent error recovery and retry systems
-  - User-friendly interface with visual customization
-  - Secure verification and download integrity
-  - Multi-threaded processing for optimal speeds
-  - Comprehensive logging and troubleshooting tools
-description: Get quick access to TNAFlix Video Downloader content for offline use.
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg
+  alt: TNAFlix Video Downloader website preview
 product_videos: []
 related_videos: []
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg
-    alt: TNAFlix Video Downloader website preview
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with TNAFlix Video Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and TNAFlix Video Downloader lets me pull everything from TNAFlix in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid TNAFlix downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from TNAFlix used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing TNAFlix content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive TNAFlix assets for clients and the download in TNAFlix Video Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I use the TNAFlix downloader?
-    answer: Install the browser extension, navigate to TNAFlix, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from TNAFlix, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-  - question: Does this work with all TNAFlix content?
-    answer: The downloader works with most publicly accessible content on TNAFlix. Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Downloader
-  - Adult
-keywords:
-  - tnaflix video downloader
+related_posts: []
+github_repo_url: https://github.com/serpapps/tnaflix-video-downloader
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- High-quality videos with resolution options
+- Batch download support for multiple selections
+- Auto thumbnail and metadata extraction
+- Resume interrupted transfers with smart recovery
+- Cross-platform desktop application compatibility
+- Command-line tools workflows
+- Built-in security features and private downloading
+- Custom folders and naming systems
+- Duplicate detection and content organization
+- Bandwidth management and scheduling tools
+- Progress tracking with real-time monitoring
+- Integrates with video management software
+- Regular compatibility updates
+- Local storage focus with privacy protection
+- Multiple video containers and codecs
+- Intelligent error recovery and retry systems
+- User-friendly interface with visual customization
+- Secure verification and download integrity
+- Multi-threaded processing for optimal speeds
+- Comprehensive logging and troubleshooting tools
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I use the TNAFlix downloader?
+  answer: Install the browser extension, navigate to TNAFlix, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from TNAFlix, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all TNAFlix content?
+  answer: The downloader works with most publicly accessible content on TNAFlix. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with TNAFlix Video Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and TNAFlix Video Downloader lets me pull everything
+    from TNAFlix in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid TNAFlix downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from TNAFlix used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing TNAFlix content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive TNAFlix assets for clients and the download in TNAFlix Video
+    Downloader keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Adult
+keywords:
+- tnaflix video downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99gF06JrOmKRCmxPX1Ip5o
   metadata:
@@ -106,11 +134,6 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-tnaflix-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+  - purchase-tnaflix-downloader
 new_release: true
+permission_justifications: []

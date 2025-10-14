@@ -1,95 +1,124 @@
-slug: circle-downloader
 platform: Circle
-seo_title: Download Circle Content | Circle Downloader
-seo_description: Download Circle content easily for offline use. Fast and reliable Circle downloader.
-store_serp_co_product_page_url: https://store.serp.co/products/circle-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/circle-downloader
-serply_link: https://serp.ly/circle-downloader
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=circle-downloader
-buy_button_destination: null
 name: Circle Downloader
 tagline: Save Circle content instantly to your device.
+slug: circle-downloader
+description: Download videos, images, and content from circle with our reliable downloader
+  tool. Fast, secure, and easy to use.
+seo_title: Download Circle Content | Circle Downloader
+seo_description: Download Circle content easily for offline use. Fast and reliable
+  Circle downloader.
+serply_link: https://serp.ly/circle-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/circle-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/circle-downloader
+serp_co_product_page_url: https://serp.co/products/circle-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=circle-downloader
+status: draft
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/circle-downloader/main/images/featured.gif
-github_repo_url: https://github.com/serpapps/circle-downloader
-github_repo_tags: []
-features:
-  - Download videos in original quality
-  - Batch download courses or lessons
-  - Custom folder structures
-  - Download subtitles/captions
-  - Cross-platform support
-  - Built-in video player
-  - Download queue management
-  - Progress tracking
-  - Regular updates
-  - Privacy-focused encryption
-  - Library backup/export
-  - Full offline access
-description: Download videos, images, and content from circle with our reliable downloader tool. Fast, secure, and easy to use.
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
+  alt: Circle Downloader website preview
 product_videos: []
 related_videos: []
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
-    alt: Circle Downloader website preview
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Circle Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Circle Downloader lets me pull everything from Circle in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Circle downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Circle used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Circle content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Circle assets for clients and the download in Circle Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I use the Circle downloader?
-    answer: Install the browser extension, navigate to Circle, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Circle, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-  - question: Does this work with all Circle content?
-    answer: The downloader works with most publicly accessible content on Circle. Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Downloader
-  - Course Platforms
-keywords:
-  - circle downloader
+related_posts: []
+github_repo_url: https://github.com/serpapps/circle-downloader
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- Download videos in original quality
+- Batch download courses or lessons
+- Custom folder structures
+- Download subtitles/captions
+- Cross-platform support
+- Built-in video player
+- Download queue management
+- Progress tracking
+- Regular updates
+- Privacy-focused encryption
+- Library backup/export
+- Full offline access
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I use the Circle downloader?
+  answer: Install the browser extension, navigate to Circle, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Circle, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Circle content?
+  answer: The downloader works with most publicly accessible content on Circle. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with Circle Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Circle Downloader lets me pull everything
+    from Circle in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Circle downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Circle used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Circle content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Circle assets for clients and the download in Circle Downloader
+    keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Course Platforms
+keywords:
+- circle downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99wl06JrOmKRCmy32X7AjP
   metadata:
@@ -98,11 +127,6 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-circle-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+  - purchase-circle-downloader
 new_release: true
+permission_justifications: []

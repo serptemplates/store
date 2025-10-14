@@ -10,6 +10,7 @@ import type { ProductData } from "@/lib/products/product-schema"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { shouldShowNewReleaseBanner } from "@/lib/products/badge-config"
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema"
+import { isPreRelease } from "@/lib/products/release-status"
 
 import { WhoIsBehind } from "./WhoIsBehind"
 
@@ -254,7 +255,7 @@ export function HomePageView() {
           storeName: "SERP Apps",
           brandName: product.brand?.trim() || "SERP Apps",
           currency,
-          preRelease: product.pre_release ?? false,
+          preRelease: isPreRelease(product),
         })
 
         const {
@@ -309,7 +310,7 @@ export function HomePageView() {
       categories: broadCategories,
       keywords,
       platform: product.platform,
-      pre_release: product.pre_release ?? false,
+      status: product.status ?? "draft",
       new_release: displayNewRelease,
       popular: product.popular ?? false,
     }

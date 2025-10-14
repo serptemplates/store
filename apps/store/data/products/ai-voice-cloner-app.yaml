@@ -1,100 +1,142 @@
-slug: ai-voice-cloner-app
 platform: AI
+name: AI Voice Cloner App
+tagline: Turn text into natural-sounding speech and clone voices on your own computer
+  with coding needed.
+slug: ai-voice-cloner-app
+description: AI Voice Cloner is a local text-to-speech and voice cloning app that
+  runs entirely on your machine. Generate natural-sounding speech, clone voices from
+  short samples, and maintain full control over your data with this privacy-focused
+  desktop application.
 seo_title: AI Voice Cloner | AI text to speech for voice cloning and voice generation
-seo_description: AI Text to Speech & Voice Cloning. Turn text into natural-sounding speech and clone voices on your own computer with coding needed.
-store_serp_co_product_page_url: https://store.serp.co/products/ai-voice-cloner-app
-apps_serp_co_product_page_url: https://apps.serp.co/ai-voice-cloner-app
+seo_description: AI Text to Speech & Voice Cloning. Turn text into natural-sounding
+  speech and clone voices on your own computer with coding needed.
 serply_link: https://serp.ly/ai-voice-cloner-app
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/ai-voice-cloner-app
+apps_serp_co_product_page_url: https://apps.serp.co/ai-voice-cloner-app
+serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
-buy_button_destination: null
-name: AI Voice Cloner App
-tagline: Turn text into natural-sounding speech and clone voices on your own computer with coding needed.
+status: draft
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
 featured_image_gif: null
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app.png
+  alt: AI Voice Cloner App interface screenshot 1
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app2.png
+  alt: AI Voice Cloner App interface screenshot 2
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app3.png
+  alt: AI Voice Cloner App interface screenshot 3
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app4.png
+  alt: AI Voice Cloner App interface screenshot 4
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app5.png
+  alt: AI Voice Cloner App interface screenshot 5
+- url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app6.png
+  alt: AI Voice Cloner App interface screenshot 6
+product_videos:
+- https://youtu.be/-N_H8Aejhh4
+related_videos:
+- https://youtu.be/N9kgW3dSfDU
+- https://youtu.be/84xVF-Ww_10
+related_posts: []
 github_repo_url: https://github.com/serpapps/ai-voice-cloner
 github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
 features:
-  - Text-to-Speech in your browser
-  - Voice cloning (bring a short sample)
-  - Local models saved under your control
-  - Simple, clean UI
-  - Works on Windows, macOS, and Linux
-  - CPU or NVIDIA GPU acceleration
-  - Simple & easy to use web UI
-  - Models stored locally
-description: AI Voice Cloner is a local text-to-speech and voice cloning app that runs entirely on your machine. Generate natural-sounding speech, clone voices from short samples, and maintain full control over your data with this privacy-focused desktop application.
-product_videos:
-  - https://youtu.be/-N_H8Aejhh4
-related_videos:
-  - https://youtu.be/N9kgW3dSfDU
-  - https://youtu.be/84xVF-Ww_10
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app.png
-    alt: AI Voice Cloner App interface screenshot 1
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app2.png
-    alt: AI Voice Cloner App interface screenshot 2
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app3.png
-    alt: AI Voice Cloner App interface screenshot 3
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app4.png
-    alt: AI Voice Cloner App interface screenshot 4
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app5.png
-    alt: AI Voice Cloner App interface screenshot 5
-  - url: https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app6.png
-    alt: AI Voice Cloner App interface screenshot 6
-reviews:
-  - name: Alex M
-    title: Amazing voice quality and privacy
-    rating: 5
-    date: 2025-02-12
-    review: I create audiobooks and needed a local TTS solution. AI Voice Cloner delivers incredibly natural voices and runs completely offline. The voice cloning feature is game-changing for my workflow.
-  - name: Jamie N
-    title: Perfect for content creators
-    rating: 4.9
-    date: 2025-03-03
-    review: As a video producer, I use this for voiceovers all the time. The setup was straightforward with Docker, and the voice quality is indistinguishable from real speakers. Plus, my data stays private.
-  - name: Priya P
-    title: Best local voice cloning solution
-    rating: 4.8
-    date: 2025-01-28
-    review: We needed an offline voice solution for our company projects. AI Voice Cloner is perfect - no cloud dependencies, great voice quality, and works on all our systems. Well worth the investment.
-faqs:
-  - question: How do I install AI Voice Cloner?
-    answer: Install Docker Desktop on your computer, download the AI Voice Cloner package from the website, extract it to your Desktop, and run 'docker compose up' from the terminal. The app will start a local web server at http://localhost:80 that you can access in your browser.
-  - question: Does AI Voice Cloner require an internet connection?
-    answer: No, AI Voice Cloner runs completely offline on your local computer. Once installed, you don't need an internet connection to use the text-to-speech or voice cloning features. All processing happens locally on your machine.
-  - question: How does voice cloning work?
-    answer: Voice cloning allows you to create a synthetic voice model from a short audio sample. Upload a few seconds of someone speaking, and the app will learn their voice characteristics to generate new speech in that voice from any text you provide.
-  - question: What operating systems are supported?
-    answer: AI Voice Cloner works on Windows, macOS, and Linux. It uses Docker to ensure consistent performance across all platforms. Both CPU and NVIDIA GPU acceleration are supported for faster processing.
-  - question: Is my data private and secure?
-    answer: Yes, absolutely. All voice models, audio samples, and generated speech are stored locally on your computer. Nothing is sent to the cloud or external servers. You have complete control over your data and privacy.
-  - question: Do I need a powerful computer to run this?
-    answer: AI Voice Cloner can run on most modern computers using CPU processing. For faster performance, NVIDIA GPU acceleration is supported. The first-time setup takes a few minutes to download models, but subsequent runs are quick.
-  - question: Can I use the generated voices commercially?
-    answer: Usage rights depend on the voice models you use and the audio samples you clone. Always ensure you have permission to clone someone's voice. For commercial use, verify the licensing terms of any pre-trained models you're using.
-  - question: How natural do the voices sound?
-    answer: AI Voice Cloner produces high-quality, natural-sounding speech using advanced text-to-speech models. The quality depends on the input text and voice sample used for cloning, but most users find the results very realistic and usable for various projects.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Artificial Intelligence
-keywords:
-  - ai voice cloner app
+- Text-to-Speech in your browser
+- Voice cloning (bring a short sample)
+- Local models saved under your control
+- Simple, clean UI
+- Works on Windows, macOS, and Linux
+- CPU or NVIDIA GPU acceleration
+- Simple & easy to use web UI
+- Models stored locally
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I install AI Voice Cloner?
+  answer: Install Docker Desktop on your computer, download the AI Voice Cloner package
+    from the website, extract it to your Desktop, and run 'docker compose up' from
+    the terminal. The app will start a local web server at http://localhost:80 that
+    you can access in your browser.
+- question: Does AI Voice Cloner require an internet connection?
+  answer: No, AI Voice Cloner runs completely offline on your local computer. Once
+    installed, you don't need an internet connection to use the text-to-speech or
+    voice cloning features. All processing happens locally on your machine.
+- question: How does voice cloning work?
+  answer: Voice cloning allows you to create a synthetic voice model from a short
+    audio sample. Upload a few seconds of someone speaking, and the app will learn
+    their voice characteristics to generate new speech in that voice from any text
+    you provide.
+- question: What operating systems are supported?
+  answer: AI Voice Cloner works on Windows, macOS, and Linux. It uses Docker to ensure
+    consistent performance across all platforms. Both CPU and NVIDIA GPU acceleration
+    are supported for faster processing.
+- question: Is my data private and secure?
+  answer: Yes, absolutely. All voice models, audio samples, and generated speech are
+    stored locally on your computer. Nothing is sent to the cloud or external servers.
+    You have complete control over your data and privacy.
+- question: Do I need a powerful computer to run this?
+  answer: AI Voice Cloner can run on most modern computers using CPU processing. For
+    faster performance, NVIDIA GPU acceleration is supported. The first-time setup
+    takes a few minutes to download models, but subsequent runs are quick.
+- question: Can I use the generated voices commercially?
+  answer: Usage rights depend on the voice models you use and the audio samples you
+    clone. Always ensure you have permission to clone someone's voice. For commercial
+    use, verify the licensing terms of any pre-trained models you're using.
+- question: How natural do the voices sound?
+  answer: AI Voice Cloner produces high-quality, natural-sounding speech using advanced
+    text-to-speech models. The quality depends on the input text and voice sample
+    used for cloning, but most users find the results very realistic and usable for
+    various projects.
+reviews:
+- name: Alex M
+  title: Amazing voice quality and privacy
+  rating: 5
+  date: 2025-02-12
+  review: I create audiobooks and needed a local TTS solution. AI Voice Cloner delivers
+    incredibly natural voices and runs completely offline. The voice cloning feature
+    is game-changing for my workflow.
+- name: Jamie N
+  title: Perfect for content creators
+  rating: 4.9
+  date: 2025-03-03
+  review: As a video producer, I use this for voiceovers all the time. The setup was
+    straightforward with Docker, and the voice quality is indistinguishable from real
+    speakers. Plus, my data stays private.
+- name: Priya P
+  title: Best local voice cloning solution
+  rating: 4.8
+  date: 2025-01-28
+  review: We needed an offline voice solution for our company projects. AI Voice Cloner
+    is perfect - no cloud dependencies, great voice quality, and works on all our
+    systems. Well worth the investment.
+supported_operating_systems:
+- windows
+- mac
+- linux
+supported_regions:
+- Worldwide
+categories:
+- Artificial Intelligence
+keywords:
+- ai voice cloner app
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99fd06JrOmKRCmxtuDhI3T
   metadata:
@@ -103,11 +145,6 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-ai-voice-cloner-app
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+  - purchase-ai-voice-cloner-app
 new_release: true
+permission_justifications: []

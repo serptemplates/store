@@ -30,7 +30,18 @@ export type ClientHomeProps = {
 }
 
 export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries }: ClientHomeProps) {
-  const homeProps = productToHomeTemplate(product, posts)
+  const resolvedPosts = useMemo(() => {
+    const desired = product.related_posts ?? []
+    if (!desired.length) {
+      return posts
+    }
+    const order = new Map(desired.map((slug, index) => [slug, index]))
+    return posts
+      .filter((post) => order.has(post.slug))
+      .sort((a, b) => (order.get(a.slug)! - order.get(b.slug)!))
+  }, [posts, product.related_posts])
+
+  const homeProps = productToHomeTemplate(product, resolvedPosts)
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
