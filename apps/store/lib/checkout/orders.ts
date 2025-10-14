@@ -125,6 +125,63 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
   `;
 }
 
+export async function findOrdersByEmailAndSource(
+  email: string,
+  source: CheckoutSource,
+): Promise<OrderRecord[]> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return [];
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE customer_email = ${normalizedEmail}
+      AND source = ${source}
+  `;
+
+  const rows = result?.rows ?? [];
+  return rows
+    .map((row) => mapOrderRow(row))
+    .filter((order): order is OrderRecord => Boolean(order));
+}
+
+export async function deleteOrderById(orderId: string): Promise<boolean> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return false;
+  }
+
+  const result = await query`
+    DELETE FROM orders
+    WHERE id = ${orderId}
+  `;
+
+  return Boolean(result?.rowCount);
+}
+
 export async function updateOrderMetadata(
   lookupKey: { stripePaymentIntentId?: string | null; stripeSessionId?: string | null },
   metadata: Record<string, unknown>,
