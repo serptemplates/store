@@ -36,6 +36,7 @@ export type GhlPreviewEnv = {
   offerId: string;
   amount: string;
   currency: string;
+  databaseUrl: string | null;
 };
 
 export type EnvResolution =
@@ -52,6 +53,11 @@ export function resolveGhlPreviewEnv(): EnvResolution {
   const offerId = process.env.TEST_GHL_OFFER_ID?.trim() ?? "skool-video-downloader";
   const amount = process.env.TEST_GHL_AMOUNT?.trim() ?? "27.00";
   const currency = process.env.TEST_GHL_CURRENCY?.trim() ?? "usd";
+  const databaseUrl =
+    process.env.TEST_GHL_DATABASE_URL?.trim() ??
+    process.env.CHECKOUT_DATABASE_URL?.trim() ??
+    process.env.DATABASE_URL?.trim() ??
+    null;
 
   const missing = [];
   if (!url) missing.push("TEST_GHL_URL");
@@ -72,6 +78,7 @@ export function resolveGhlPreviewEnv(): EnvResolution {
       offerId,
       amount,
       currency,
+      databaseUrl,
     },
   };
 }
@@ -106,7 +113,24 @@ export type WebhookResult = {
   body: unknown;
 };
 
-export async function postGhlWebhook(env: GhlPreviewEnv, paymentId: string): Promise<WebhookResult> {
+function shouldUseDatabaseOverride(env: GhlPreviewEnv): boolean {
+  if (!env.databaseUrl) {
+    return false;
+  }
+
+  try {
+    const hostname = new URL(env.url).hostname;
+    if (!hostname || hostname === "apps.serp.co") {
+      return false;
+    }
+  } catch {
+    return false;
+  }
+
+  return true;
+}
+
+export async function postGhlWebhook(env: GhlPreviewEnv, paymentId: string): Promise<WebhookResult & { usedDbOverride: boolean }> {
   const payload = {
     status: "paid",
     payment: {
@@ -125,12 +149,28 @@ export async function postGhlWebhook(env: GhlPreviewEnv, paymentId: string): Pro
     },
   };
 
-  const response = await fetch(`${env.url.replace(/\/$/, "")}/api/webhooks/ghl/payment`, {
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+    "x-webhook-secret": env.webhookSecret,
+  };
+
+  const useOverride = shouldUseDatabaseOverride(env);
+  const requestUrl = new URL(`${env.url.replace(/\/$/, "")}/api/webhooks/ghl/payment`);
+  if (useOverride && env.databaseUrl) {
+    headers["x-preview-db-url"] = env.databaseUrl;
+    headers["x-preview-db-token"] = env.adminToken;
+    const encodedDatabaseUrl = Buffer.from(env.databaseUrl, "utf8").toString("base64");
+    requestUrl.searchParams.set("previewDbOverride", encodedDatabaseUrl);
+    requestUrl.searchParams.set("previewDbToken", env.adminToken);
+    (payload.custom_data as Record<string, unknown>).__previewDbOverride = encodedDatabaseUrl;
+    (payload.custom_data as Record<string, unknown>).__previewDbToken = env.adminToken;
+    (payload as Record<string, unknown>).__previewDbOverride = encodedDatabaseUrl;
+    (payload as Record<string, unknown>).__previewDbToken = env.adminToken;
+  }
+
+  const response = await fetch(requestUrl.toString(), {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-webhook-secret": env.webhookSecret,
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 
@@ -139,6 +179,7 @@ export async function postGhlWebhook(env: GhlPreviewEnv, paymentId: string): Pro
   return {
     status: response.status,
     body: parseJson(bodyText),
+    usedDbOverride: useOverride,
   };
 }
 
@@ -159,16 +200,18 @@ export type PreviewRunResult = {
   paymentId: string;
   webhook: WebhookResult;
   account?: AccountResult;
+  usedDbOverride: boolean;
 };
 
 export async function runGhlPreview(env: GhlPreviewEnv, options?: { skipAccountCheck?: boolean }): Promise<PreviewRunResult> {
   const paymentId = generatePaymentId();
   const webhook = await postGhlWebhook(env, paymentId);
+  const { usedDbOverride, ...webhookResult } = webhook;
 
-  if (options?.skipAccountCheck || webhook.status !== 200) {
-    return { paymentId, webhook };
+  if (options?.skipAccountCheck || webhookResult.status !== 200) {
+    return { paymentId, webhook: webhookResult, usedDbOverride };
   }
 
   const account = await fetchGhlAccount(env);
-  return { paymentId, webhook, account };
+  return { paymentId, webhook: webhookResult, account, usedDbOverride };
 }

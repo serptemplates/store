@@ -1,29 +1,49 @@
 import { createClient, type QueryResult, type QueryResultRow } from "@vercel/postgres";
 
-// Try to use non-pooled connection first, fall back to pooled
-const connectionString =
-  process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
-  process.env.DATABASE_URL_UNPOOLED ??
-  process.env.POSTGRES_URL_NON_POOLING ??
-  process.env.CHECKOUT_DATABASE_URL ??
-  process.env.POSTGRES_URL ??
-  process.env.DATABASE_URL ??
-  process.env.POSTGRES_PRISMA_URL ??
-  process.env.SUPABASE_DB_URL ??
-  "";
-
 type Primitive = string | number | boolean | null | undefined;
 
 let clientPromise: Promise<ReturnType<typeof createClient>> | null;
 let schemaPromise: Promise<void> | null;
 let missingLogged = false;
 
+let connectionOverride: string | null = null;
+let currentConnectionString: string | null = null;
+
 function log(message: string, extra?: Record<string, unknown>) {
   const payload = extra ? ` ${JSON.stringify(extra)}` : "";
   console.info(`[checkout-db] ${message}${payload}`);
 }
 
+function resolveConnectionStringFromEnv(): string {
+  return (
+    process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
+    process.env.DATABASE_URL_UNPOOLED ??
+    process.env.POSTGRES_URL_NON_POOLING ??
+    process.env.CHECKOUT_DATABASE_URL ??
+    process.env.POSTGRES_URL ??
+    process.env.DATABASE_URL ??
+    process.env.POSTGRES_PRISMA_URL ??
+    process.env.SUPABASE_DB_URL ??
+    ""
+  );
+}
+
+function getEffectiveConnectionString(): string {
+  const override = connectionOverride?.trim();
+  const fromEnv = resolveConnectionStringFromEnv()?.trim();
+  const next = override && override.length > 0 ? override : fromEnv;
+
+  if (next !== currentConnectionString) {
+    clientPromise = null;
+    schemaPromise = null;
+    currentConnectionString = next ?? null;
+  }
+
+  return next ?? "";
+}
+
 export function isDatabaseConfigured(): boolean {
+  const connectionString = getEffectiveConnectionString();
   return Boolean(connectionString);
 }
 
@@ -34,7 +54,7 @@ async function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function connectWithRetry() {
+async function connectWithRetry(connectionString: string) {
   let attempt = 0;
   let lastError: unknown;
 
@@ -69,12 +89,14 @@ async function connectWithRetry() {
 }
 
 async function getClient() {
+  const connectionString = getEffectiveConnectionString();
+
   if (!connectionString) {
     return null;
   }
 
   if (!clientPromise) {
-    clientPromise = connectWithRetry().catch((error) => {
+    clientPromise = connectWithRetry(connectionString).catch((error) => {
       clientPromise = null;
       throw error;
     });
@@ -223,4 +245,17 @@ export async function query<O extends QueryResultRow>(
   }
 
   return client.sql<O>(strings, ...values);
+}
+
+export function setDatabaseConnectionOverride(connectionString: string | null) {
+  const normalized = connectionString?.trim() ?? null;
+
+  if (normalized === connectionOverride) {
+    return;
+  }
+
+  connectionOverride = normalized;
+  clientPromise = null;
+  schemaPromise = null;
+  currentConnectionString = null;
 }

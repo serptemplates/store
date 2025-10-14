@@ -8,6 +8,7 @@ async function main() {
   console.log(`Posting webhook for ${env.email} (${env.offerId}) to ${env.url}`);
   const result = await runGhlPreview(env);
   console.log(`Generated payment id: ${result.paymentId}`);
+  console.log(`Used DB override: ${result.usedDbOverride ? "yes" : "no"}`);
   console.log(`Webhook response: ${result.webhook.status}`, result.webhook.body);
 
   if (result.webhook.status !== 200 || (result.webhook.body as { ok?: boolean })?.ok !== true) {
