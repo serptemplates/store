@@ -167,16 +167,20 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
                   className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:left-4 md:-left-10"
                   variant="outline"
                   onClick={() => handleControl("prev")}
+                  aria-label="Previous media item"
                 >
-                  <ChevronLeft />
+                  <span className="sr-only">Previous media item</span>
+                  <ChevronLeft aria-hidden="true" />
                 </Button>
 
                 <Button
                   className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:right-4 md:-right-10"
                   variant="outline"
                   onClick={() => handleControl("next")}
+                  aria-label="Next media item"
                 >
-                  <ChevronRight />
+                  <span className="sr-only">Next media item</span>
+                  <ChevronRight aria-hidden="true" />
                 </Button>
               </>
             )}

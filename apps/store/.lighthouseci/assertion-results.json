@@ -1,16 +1,1 @@
-[
-  {
-    "name": "minScore",
-    "expected": 0.8,
-    "actual": 0.66,
-    "values": [
-      0.66
-    ],
-    "operator": ">=",
-    "passed": false,
-    "auditProperty": "performance",
-    "auditId": "categories",
-    "level": "warn",
-    "url": "https://staging-apps.serp.co/loom-video-downloader"
-  }
-]
+[]

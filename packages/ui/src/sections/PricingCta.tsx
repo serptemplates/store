@@ -219,15 +219,7 @@ export function PricingCta({
               {showPriceDetails && (
                 <div className="text-center mb-4">
                   {originalPrice && (
-                    <div
-                      className="line-through mb-1 text-2xl sm:text-3xl"
-                      style={{
-                        color: "#9ca3af",
-                        fontWeight: "400",
-                        fontFamily:
-                          "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                      }}
-                    >
+                    <div className="mb-1 text-2xl font-normal text-slate-600 line-through sm:text-3xl">
                       {originalPrice}
                     </div>
                   )}
@@ -264,13 +256,7 @@ export function PricingCta({
               {discountPercentage > 0 && (
                 <div className="mb-5 mx-auto w-full">
                   <div
-                    className="py-2.5 px-4 rounded-md text-center font-bold"
-                    style={{
-                      backgroundColor: "#ef4444",
-                      color: "white",
-                      fontSize: "13px",
-                      letterSpacing: "0.01em",
-                    }}
+                    className="rounded-md bg-rose-600 px-4 py-2.5 text-center text-[13px] font-bold tracking-wide text-white"
                   >
                     {discountPercentage}% OFF - but only TODAY, on THURSDAY
                   </div>
