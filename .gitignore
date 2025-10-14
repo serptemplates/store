@@ -71,3 +71,6 @@ test-results
 playwright-report
 apps/store/playwright-report/
 apps/store/reports/
+serp-license-key-management
+google-creds.json
+merchant-feed.*

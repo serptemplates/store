@@ -38,6 +38,7 @@ export interface OfferSchema {
   itemCondition?: string;
   hasMerchantReturnPolicy?: MerchantReturnPolicySchema;
   shippingDetails?: OfferShippingDetailsSchema;
+  priceSpecification?: UnitPriceSpecificationSchema;
 }
 
 export interface AggregateOfferSchema extends Omit<OfferSchema, '@type'> {
@@ -61,6 +62,12 @@ export interface OfferShippingDetailsSchema {
   shippingRate: MonetaryAmountSchema;
   shippingDestination: DefinedRegionSchema;
   deliveryTime?: ShippingDeliveryTimeSchema;
+}
+
+export interface UnitPriceSpecificationSchema {
+  '@type': 'UnitPriceSpecification';
+  price: number;
+  priceCurrency: string;
 }
 
 export interface MonetaryAmountSchema {
@@ -290,10 +297,20 @@ export interface EntryPointSchema {
 // Image Schema Types
 export interface ImageObjectSchema {
   '@type': 'ImageObject';
+  '@id'?: string;
   url: string;
+  contentUrl?: string;
   caption?: string;
-  width?: string;
-  height?: string;
+  creditText?: string;
+  license?: string;
+  acquireLicensePage?: string;
+  creator?: OrganizationSchema | PersonSchema;
+  copyrightHolder?: OrganizationSchema | PersonSchema;
+  copyrightNotice?: string;
+  representativeOfPage?: boolean;
+  fileFormat?: string;
+  width?: string | number;
+  height?: string | number;
 }
 
 // Additional Property Types

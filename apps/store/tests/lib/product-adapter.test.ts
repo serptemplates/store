@@ -7,20 +7,25 @@ const baseProduct: ProductData = {
   slug: "sample-product",
   seo_title: "Sample Product",
   seo_description: "Sample description",
-  product_page_url: "https://example.com/sample",
-  store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
+  store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
-  success_url: "https://apps.serp.co/checkout/success?product=sample-product",
+  serp_co_product_page_url: "https://serp.co/products/sample-product/",
+  success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   buy_button_destination: undefined,
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
   github_repo_tags: [],
+  chrome_webstore_link: undefined,
+  firefox_addon_store_link: undefined,
+  edge_addons_store_link: undefined,
+  producthunt_link: undefined,
   features: ["Feature A", "Feature B"],
   product_videos: ["https://videos.example.com/demo.mp4"],
   related_videos: [],
+  related_posts: [],
   reviews: [
     {
       name: "Happy Customer",
@@ -47,11 +52,12 @@ const baseProduct: ProductData = {
     metadata: {},
   },
   layout_type: "landing",
-  pre_release: false,
+  status: "live",
   featured: false,
   new_release: false,
   popular: false,
   brand: "SERP Apps",
+  permission_justifications: [],
 };
 
 describe("productToHomeTemplate", () => {
@@ -143,14 +149,13 @@ describe("productToHomeTemplate", () => {
         cta_href: "https://example.com/not-allowed",
       },
       serply_link: "https://serp.ly/something",
-      product_page_url: "https://store.serp.co/products/sample-product",
-      store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
+      store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
       apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
     };
 
     const template = productToHomeTemplate(product, []);
 
-    expect(template.ctaHref).toBe("https://store.serp.co/products/sample-product");
+    expect(template.ctaHref).toBe("https://store.serp.co/product-details/product/sample-product");
   });
 
   it("uses embedded checkout CTA when Stripe configuration is available", () => {
@@ -158,5 +163,56 @@ describe("productToHomeTemplate", () => {
 
     expect(template.ctaHref).toBe("/checkout?product=sample-product");
     expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product");
+  });
+
+  it("selects posts based on related_posts ordering", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      related_posts: ["post-b", "post-a"],
+    };
+
+    const posts: BlogPostMeta[] = [
+      {
+        slug: "post-a",
+        title: "Post A",
+        description: "First",
+        date: "2024-01-01",
+        author: "Author A",
+        tags: [],
+        image: undefined,
+        readingTime: "1 min",
+        category: undefined,
+        dateModified: undefined,
+      },
+      {
+        slug: "post-b",
+        title: "Post B",
+        description: "Second",
+        date: "2024-01-02",
+        author: "Author B",
+        tags: [],
+        image: undefined,
+        readingTime: "2 min",
+        category: undefined,
+        dateModified: undefined,
+      },
+      {
+        slug: "post-c",
+        title: "Post C",
+        description: "Third",
+        date: "2024-01-03",
+        author: "Author C",
+        tags: [],
+        image: undefined,
+        readingTime: "3 min",
+        category: undefined,
+        dateModified: undefined,
+      },
+    ];
+
+    const template = productToHomeTemplate(product, posts);
+    const relatedSlugs = (template.posts ?? []).map((post) => post.slug);
+
+    expect(relatedSlugs).toEqual(["post-b", "post-a"]);
   });
 });

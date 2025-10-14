@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { getProductData } from '@/lib/products/product';
 import { getStripeMode, requireStripeSecretKey } from '@/lib/payments/stripe-environment';
+import { ensureSuccessUrlHasSessionPlaceholder } from '@/lib/products/offer-config';
 
 /**
  * Simple checkout that creates Stripe prices on the fly from product data
@@ -115,7 +116,10 @@ export async function createSimpleCheckout(params: {
     }
 
     const defaultBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    const successUrl = params.successUrl ?? product.success_url ?? `${defaultBaseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+    const rawSuccessUrl = params.successUrl
+      ?? product.success_url
+      ?? `${defaultBaseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+    const successUrl = ensureSuccessUrlHasSessionPlaceholder(rawSuccessUrl);
     const cancelUrl = params.cancelUrl ?? product.cancel_url ?? `${defaultBaseUrl}/${product.slug}`;
 
     const sessionParams: Stripe.Checkout.SessionCreateParams = {

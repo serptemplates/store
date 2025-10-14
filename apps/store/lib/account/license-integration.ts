@@ -168,11 +168,11 @@ export function mergePurchasesWithGhlLicenses(
   purchases: PurchaseSummary[],
   licenses: GhlLicenseRecord[],
 ): PurchaseSummary[] {
-  if (licenses.length === 0) {
-    return purchases.slice();
-  }
-
   const normalizedPurchases = purchases.map((purchase) => ({ ...purchase }));
+
+  if (licenses.length === 0) {
+    return collapsePurchasesByOffer(normalizedPurchases);
+  }
   const existingKeys = new Set(
     normalizedPurchases
       .map((purchase) => normalizeKey(purchase.licenseKey))
@@ -226,7 +226,96 @@ export function mergePurchasesWithGhlLicenses(
     normalizedPurchases.push(buildFallbackPurchase(license, index));
   });
 
-  return normalizedPurchases;
+  return collapsePurchasesByOffer(normalizedPurchases);
 }
 
 export type { PurchaseSummary, GhlLicenseRecord };
+
+const INCOMPLETE_LICENSE_STATUSES = new Set([
+  "pending",
+  "awaiting",
+  "unknown",
+  "n/a",
+  "na",
+]);
+
+function isMeaningfulStatus(status: string | null | undefined): boolean {
+  if (!status) {
+    return false;
+  }
+
+  const normalized = status.trim().toLowerCase();
+
+  if (!normalized) {
+    return false;
+  }
+
+  return !INCOMPLETE_LICENSE_STATUSES.has(normalized);
+}
+
+function mergeDuplicatePurchaseData(target: PurchaseSummary, incoming: PurchaseSummary): void {
+  if (!target.licenseKey && incoming.licenseKey) {
+    target.licenseKey = incoming.licenseKey;
+  }
+
+  const targetStatusMeaningful = isMeaningfulStatus(target.licenseStatus);
+  const incomingStatusMeaningful = isMeaningfulStatus(incoming.licenseStatus);
+
+  if (!targetStatusMeaningful && incomingStatusMeaningful) {
+    target.licenseStatus = incoming.licenseStatus ?? null;
+  }
+
+  if (!target.licenseUrl && incoming.licenseUrl) {
+    target.licenseUrl = incoming.licenseUrl;
+  }
+
+  if (!target.amountFormatted && incoming.amountFormatted) {
+    target.amountFormatted = incoming.amountFormatted;
+  }
+
+  if (!target.purchasedAt && incoming.purchasedAt) {
+    target.purchasedAt = incoming.purchasedAt;
+  }
+
+  if (
+    (target.source === "unknown" || target.source === "ghl") &&
+    incoming.source &&
+    incoming.source !== "unknown"
+  ) {
+    target.source = incoming.source;
+  }
+}
+
+function collapsePurchasesByOffer(purchases: PurchaseSummary[]): PurchaseSummary[] {
+  if (purchases.length === 0) {
+    return [];
+  }
+
+  const result: PurchaseSummary[] = [];
+  const offerIndexMap = new Map<string, number>();
+
+  purchases.forEach((purchase) => {
+    const normalizedOfferId = normalizeOfferId(purchase.offerId);
+
+    if (!normalizedOfferId) {
+      result.push({ ...purchase });
+      return;
+    }
+
+    const existingIndex = offerIndexMap.get(normalizedOfferId);
+
+    if (existingIndex === undefined) {
+      const copy = { ...purchase };
+      result.push(copy);
+      offerIndexMap.set(normalizedOfferId, result.length - 1);
+      return;
+    }
+
+    const existing = result[existingIndex];
+    const merged = { ...existing };
+    mergeDuplicatePurchaseData(merged, purchase);
+    result[existingIndex] = merged;
+  });
+
+  return result;
+}

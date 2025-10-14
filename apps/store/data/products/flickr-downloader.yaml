@@ -1,105 +1,133 @@
-slug: flickr-downloader
 platform: Flickr
-seo_title: Download Flickr Images | Flickr Downloader
-seo_description: Download Flickr images and graphics for offline use. Fast and reliable Flickr content downloader.
-product_page_url: https://store.serp.co/products/flickr-downloader
-store_serp_co_product_page_url: https://store.serp.co/products/flickr-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/flickr-downloader
-serply_link: https://serp.ly/flickr-downloader
-success_url: https://apps.serp.co/checkout/success
-cancel_url: https://apps.serp.co/checkout?product=flickr-downloader
-buy_button_destination: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
 name: Flickr Downloader
 tagline: Save Flickr images and content instantly to your device.
+slug: flickr-downloader
+description: Download videos, images, and content from flickr with our reliable downloader
+  tool. Fast, secure, and easy to use.
+seo_title: Download Flickr Images | Flickr Downloader
+seo_description: Download Flickr images and graphics for offline use. Fast and reliable
+  Flickr content downloader.
+serply_link: https://serp.ly/flickr-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/flickr-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/flickr-downloader
+serp_co_product_page_url: https://serp.co/products/flickr-downloader/
+buy_button_destination: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=flickr-downloader
+status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/flickr-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/flickr-downloader/main/images/flickr-downloader.gif
-github_repo_url: https://github.com/serpapps/flickr-downloader
-github_repo_tags: []
-features:
-  - High-res Flickr downloads and albums
-  - Batch photographer portfolios/collections downloads
-  - Creative Commons and rights-managed content
-  - Auto Metadata extraction
-  - Organize by photographer/album
-  - Resume downloads
-  - Cross-platform support
-  - Photo viewer
-  - CLI tools
-  - Integrates with photo management applications
-  - Export photo data/licensing information
-  - Search capabilities across photo libraries
-  - Local-only storage for privacy
-  - Regular compatibility updates
-  - Various image formats and qualities
-  - Bandwidth management for large photo collections
-  - Backup & restore options for photo archives
-  - Smart categorization
-  - Creative Commons license tracking
-  - Photography workflow integration features
-description: Download videos, images, and content from flickr with our reliable downloader tool. Fast, secure, and easy to use.
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/flickr-downloader.jpg
+  alt: Flickr Downloader website preview
 product_videos: []
 related_videos: []
-screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/flickr-downloader.jpg
-    alt: Flickr Downloader website preview
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Flickr Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Flickr Downloader lets me pull everything from Flickr in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Flickr downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Flickr used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Flickr content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Flickr assets for clients and the download in Flickr Downloader keep our workflows smooth. Totally worth the price.
-faqs:
-  - question: How do I use the Flickr downloader?
-    answer: Install the browser extension, navigate to Flickr, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Flickr, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-  - question: Does this work with all Flickr content?
-    answer: The downloader works with most publicly accessible content on Flickr. Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
-supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-supported_regions:
-  - Worldwide
-status: draft
-categories:
-  - Downloader
-  - Creative Assets
-  - Image Hosting
-keywords:
-  - flickr downloader
+related_posts: []
+github_repo_url: https://github.com/serpapps/flickr-downloader
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- High-res Flickr downloads and albums
+- Batch photographer portfolios/collections downloads
+- Creative Commons and rights-managed content
+- Auto Metadata extraction
+- Organize by photographer/album
+- Resume downloads
+- Cross-platform support
+- Photo viewer
+- CLI tools
+- Integrates with photo management applications
+- Export photo data/licensing information
+- Search capabilities across photo libraries
+- Local-only storage for privacy
+- Regular compatibility updates
+- Various image formats and qualities
+- Bandwidth management for large photo collections
+- Backup & restore options for photo archives
+- Smart categorization
+- Creative Commons license tracking
+- Photography workflow integration features
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ""
-  note: ""
+  original_price: ''
+  note: ''
   cta_text: Get it Now
-  benefits: []
   currency: USD
   availability: InStock
+  benefits: []
+faqs:
+- question: How do I use the Flickr downloader?
+  answer: Install the browser extension, navigate to Flickr, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Flickr, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Flickr content?
+  answer: The downloader works with most publicly accessible content on Flickr. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
+reviews:
+- name: Alex Martinez
+  title: Saves hours every week with Flickr Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Flickr Downloader lets me pull everything
+    from Flickr in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Flickr downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Flickr used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Flickr content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Flickr assets for clients and the download in Flickr Downloader
+    keep our workflows smooth. Totally worth the price.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Creative Assets
+- Image Hosting
+keywords:
+- flickr downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99ws06JrOmKRCmFvK8ceNO
   metadata:
@@ -108,11 +136,5 @@ stripe:
 ghl:
   source: Stripe Checkout
   tag_ids:
-    - purchase-flickr-downloader
-return_policy:
-  days: 0
-  fees: Non-refundable purchase
-  method: No returns accepted
-  policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-pre_release: true
+  - purchase-flickr-downloader
+permission_justifications: []

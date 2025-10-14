@@ -53,7 +53,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
   const priceString = normalizedPrice.toFixed(2)
 
   const productImages = product.images?.map((img) => img.url).filter(Boolean) ?? []
-  const storeProductUrl = `https://store.serp.co/products/${handle}`
+  const storeProductUrl = `https://store.serp.co/product-details/product/${handle}`
   const appsProductUrl = `https://apps.serp.co/${handle}`
   const serplyLink = product.metadata?.serply_link ?? `https://serp.ly/${handle}`
   const successUrl = `${appsProductUrl}/checkout/success`
@@ -64,13 +64,12 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     seo_description: product.description ?? product.title,
     name: product.title,
     description: product.description ?? product.title,
-    product_page_url: storeProductUrl,
     store_serp_co_product_page_url: storeProductUrl,
     apps_serp_co_product_page_url: appsProductUrl,
     serply_link: serplyLink,
     success_url: successUrl,
     cancel_url: cancelUrl,
-    price: priceString,
+    price: normalizedPrice,
     images: productImages.length > 0 ? productImages : [mainImageSource || "/api/og"],
     tagline: product.metadata?.subtitle ?? product.title,
     isDigital: true,
@@ -79,12 +78,13 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     keywords: [],
     features: Array.isArray(product.metadata?.features) ? product.metadata.features : [],
     reviews: [],
+    related_posts: [],
     pricing: {
       price: product.metadata?.original_price ?? priceString,
       benefits: Array.isArray(product.metadata?.benefits) ? product.metadata.benefits : [],
     },
     layout_type: "landing",
-    pre_release: false,
+    status: "live",
     featured: false,
     new_release: false,
     popular: false,
@@ -98,6 +98,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     brand: "SERP Apps",
     featured_image: mainImageSource ?? null,
     featured_image_gif: null,
+    permission_justifications: [],
   };
 
   const productSchema = generateProductSchemaLD({

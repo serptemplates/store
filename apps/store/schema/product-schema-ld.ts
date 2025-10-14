@@ -1,5 +1,21 @@
 import type { ProductData } from '@/lib/products/product-schema';
 
+const DEFAULT_IMAGE_LICENSE_URL = 'https://github.com/serpapps/legal/blob/main/terms-conditions.md';
+const DEFAULT_IMAGE_ACQUIRE_LICENSE_URL = 'https://serp.co/contact';
+const DEFAULT_TRANSLATED_LANGUAGES = [
+  'en',
+  'es',
+  'fr',
+  'de',
+  'pt',
+  'it',
+  'ja',
+  'ko',
+  'zh-Hans',
+  'zh-Hant',
+  'ar',
+];
+
 /**
  * Generate Product schema.org JSON-LD for Google Shopping eligibility
  * Required fields for Google Shopping:
@@ -13,7 +29,7 @@ import type { ProductData } from '@/lib/products/product-schema';
 
 // Extended product interface for schema generation
 export interface SchemaProduct extends Omit<ProductData, 'reviews'> {
-  price?: string;
+  price?: number | null;
   images?: string[];
   isDigital?: boolean;
   reviews?: Array<{
@@ -25,13 +41,13 @@ export interface SchemaProduct extends Omit<ProductData, 'reviews'> {
   }>;
 }
 
-const sanitizePriceString = (value?: string | null): string | undefined => {
-  if (value == null) return undefined;
+const normalizePriceValue = (value?: string | null): number | null => {
+  if (value == null) return null;
   const cleaned = value.toString().replace(/[^0-9.]/g, '');
-  if (!cleaned) return undefined;
+  if (!cleaned) return null;
   const numeric = Number.parseFloat(cleaned);
-  if (!Number.isFinite(numeric)) return undefined;
-  return numeric.toFixed(2);
+  if (!Number.isFinite(numeric)) return null;
+  return Number(numeric.toFixed(2));
 };
 
 const collectProductImages = (product: ProductData, provided?: string[]): string[] | undefined => {
@@ -62,7 +78,7 @@ export function createSchemaProduct(
   { price, images, isDigital = true }: SchemaProductTransformOptions = {},
 ): SchemaProduct {
   const { reviews, ...rest } = product;
-  const normalizedPrice = sanitizePriceString(price ?? product.pricing?.price) ?? '0.00';
+  const normalizedPrice = normalizePriceValue(price ?? product.pricing?.price) ?? null;
   const normalizedImages = collectProductImages(product, images);
 
   const reviewsWithRatings =
@@ -98,6 +114,9 @@ export interface ProductSchemaLDOptions {
   preRelease?: boolean;
   expectedLaunchDate?: string;
   productId?: string;
+  imageLicenseUrl?: string;
+  acquireLicensePageUrl?: string;
+  translatedLanguages?: string[];
 }
 
 export function generateProductSchemaLD({
@@ -110,24 +129,95 @@ export function generateProductSchemaLD({
   preRelease = false,
   expectedLaunchDate,
   productId,
+  imageLicenseUrl = DEFAULT_IMAGE_LICENSE_URL,
+  acquireLicensePageUrl = DEFAULT_IMAGE_ACQUIRE_LICENSE_URL,
+  translatedLanguages = DEFAULT_TRANSLATED_LANGUAGES,
 }: ProductSchemaLDOptions) {
   const resolvedProductId = productId ?? `${url}#product`;
+  const resolvedPrice =
+    typeof product.price === 'number'
+      ? product.price
+      : normalizePriceValue(product.pricing?.price ?? null) ?? 0;
 
   // Get primary image or use placeholder
   const primaryImage = product.images?.[0] || '/api/og';
+  const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
   const normalizeImage = (imagePath: string): string => {
     if (!imagePath) {
-      return `${storeUrl}${primaryImage}`;
+      if (/^https?:\/\//i.test(primaryImage)) {
+        return primaryImage;
+      }
+      const fallbackImage = primaryImage.startsWith('/') ? primaryImage : `/${primaryImage}`;
+      return `${normalizedStoreUrl}${fallbackImage}`;
     }
 
     if (/^https?:\/\//i.test(imagePath)) {
       return imagePath;
     }
 
-    const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
     const normalizedImage = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
     return `${normalizedStoreUrl}${normalizedImage}`;
   };
+
+  const normalizedImageUrls = Array.isArray(product.images)
+    ? product.images.map((img) => normalizeImage(img))
+    : [normalizeImage(primaryImage)];
+
+  const guessImageMimeType = (imageUrl: string): string | undefined => {
+    const base = imageUrl.split(/[?#]/)[0];
+    if (!base) return undefined;
+    const extension = base.split('.').pop();
+    if (!extension) return undefined;
+    const ext = extension.toLowerCase();
+    switch (ext) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'svg':
+        return 'image/svg+xml';
+      default:
+        return undefined;
+    }
+  };
+
+  const brandOrganization = {
+    '@type': 'Organization' as const,
+    name: brandName,
+    url: normalizedStoreUrl,
+  };
+
+  const imageObjects = normalizedImageUrls.map((imageUrl, index) => {
+    const imageId = `${resolvedProductId}-image-${index + 1}`;
+    return {
+      '@type': 'ImageObject' as const,
+      '@id': imageId,
+      url: imageUrl,
+      contentUrl: imageUrl,
+      caption: product.tagline || product.description || product.name,
+      creditText: brandName,
+      license: imageLicenseUrl,
+      acquireLicensePage: acquireLicensePageUrl,
+      creator: brandOrganization,
+      copyrightHolder: brandOrganization,
+      copyrightNotice: `© ${new Date().getFullYear()} ${brandName}. All rights reserved.`,
+      representativeOfPage: index === 0,
+      fileFormat: guessImageMimeType(imageUrl),
+    };
+  });
+
+  const availableLanguage = Array.from(
+    new Set(
+      translatedLanguages
+        .map((lang) => lang?.trim())
+        .filter((lang): lang is string => Boolean(lang && lang.length > 0)),
+    ),
+  );
 
   // Calculate average rating if reviews exist
   const aggregateRating = product.reviews?.length ? {
@@ -160,7 +250,7 @@ export function generateProductSchemaLD({
     '@type': 'Offer',
     url: url,
     priceCurrency: currency,
-    price: product.price || '0.00',
+    price: resolvedPrice,
     priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
     // Set availability based on pre_release flag
     availability: preRelease
@@ -173,7 +263,7 @@ export function generateProductSchemaLD({
     seller: {
       '@type': 'Organization',
       name: storeName,
-      url: storeUrl,
+      url: normalizedStoreUrl,
     },
     // Return policy for Google Shopping
     hasMerchantReturnPolicy: {
@@ -183,6 +273,11 @@ export function generateProductSchemaLD({
       merchantReturnDays: 30,
       returnMethod: 'https://schema.org/ReturnByMail',
       returnFees: 'https://schema.org/FreeReturn',
+    },
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: resolvedPrice,
+      priceCurrency: currency,
     },
     // Shipping details (required for physical products, optional for digital)
     shippingDetails: product.isDigital ? {
@@ -219,24 +314,23 @@ export function generateProductSchemaLD({
   // Main Product schema
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': product.isDigital ? ['Product', 'SoftwareApplication'] : 'Product',
     '@id': resolvedProductId,
     name: product.name,
     description: product.description || product.tagline || `${product.name} - Download and automation tool`,
-    image: Array.isArray(product.images)
-      ? product.images.map(img => normalizeImage(img))
-      : [normalizeImage(primaryImage)],
+    image: imageObjects.length ? imageObjects : normalizedImageUrls,
+    primaryImageOfPage: imageObjects.length ? { '@id': imageObjects[0]['@id'] } : undefined,
+    associatedMedia: imageObjects.length ? imageObjects : undefined,
     url: url,
     // Brand is required for Google Shopping
     brand: {
       '@type': 'Brand',
       name: brandName,
+      url: normalizedStoreUrl,
     },
     // SKU/identifiers (use slug as SKU for digital products)
     sku: product.slug,
     mpn: product.slug, // Manufacturer Part Number
-    // GTIN-13 (optional but recommended) - generate a placeholder
-    gtin13: generateGTIN13(product.slug),
     // Category for better classification
     category: product.categories?.join(' > ') || 'Software > Automation Tools',
     // Offer details
@@ -268,47 +362,14 @@ export function generateProductSchemaLD({
     ],
     // Software-specific properties if applicable
     ...(product.isDigital && {
-      '@type': ['Product', 'SoftwareApplication'],
-      '@id': resolvedProductId,
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'Web Browser',
       softwareVersion: '1.0',
-      offers: {
-        ...offers,
-        '@type': 'AggregateOffer',
-        lowPrice: product.price || '0.00',
-        highPrice: product.price || '0.00',
-        offerCount: 1,
-      },
     }),
+    ...(availableLanguage.length && { availableLanguage }),
   };
 
   return schema;
-}
-
-/**
- * Generate a consistent GTIN-13 from product slug
- * This is a placeholder - in production, use real GTINs
- */
-function generateGTIN13(slug: string): string {
-  // Create a numeric hash from the slug
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) {
-    hash = ((hash << 5) - hash) + slug.charCodeAt(i);
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-
-  // Ensure positive number and pad to 12 digits
-  const base = Math.abs(hash).toString().padEnd(12, '0').slice(0, 12);
-
-  // Calculate check digit (GTIN-13 standard)
-  let sum = 0;
-  for (let i = 0; i < 12; i++) {
-    sum += parseInt(base[i]) * (i % 2 === 0 ? 1 : 3);
-  }
-  const checkDigit = (10 - (sum % 10)) % 10;
-
-  return base + checkDigit;
 }
 
 /**
@@ -365,6 +426,62 @@ export function generateOrganizationSchema({
       contactType: 'customer support',
       email: 'support@apps.serp.co',
       url: `${storeUrl}/support`,
+    },
+  };
+}
+
+export interface TranslatedResultsSchemaOptions {
+  url: string;
+  name: string;
+  productId: string;
+  storeUrl: string;
+  storeName?: string;
+  inLanguage?: string;
+  availableLanguages?: string[];
+}
+
+export function generateTranslatedResultsSchema({
+  url,
+  name,
+  productId,
+  storeUrl,
+  storeName = 'SERP Apps',
+  inLanguage = 'en',
+  availableLanguages = DEFAULT_TRANSLATED_LANGUAGES,
+}: TranslatedResultsSchemaOptions) {
+  const normalizedStoreUrl = storeUrl.replace(/\/$/, '');
+  const normalizedAvailableLanguages = Array.from(
+    new Set(
+      (availableLanguages.length ? availableLanguages : DEFAULT_TRANSLATED_LANGUAGES)
+        .map((language) => language?.trim())
+        .filter((language): language is string => Boolean(language && language.length > 0)),
+    ),
+  );
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#translated-results`,
+    url,
+    name,
+    inLanguage,
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${normalizedStoreUrl}#website`,
+      name: storeName,
+      url: normalizedStoreUrl,
+    },
+    mainEntity: {
+      '@id': productId,
+    },
+    availableLanguage: normalizedAvailableLanguages,
+    potentialAction: {
+      '@type': 'ViewAction',
+      name: 'View translated page',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: url,
+      },
     },
   };
 }

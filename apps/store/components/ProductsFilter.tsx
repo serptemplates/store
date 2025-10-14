@@ -9,6 +9,7 @@ import {
   type ProductCategory,
   type CategorySelection,
 } from "./ProductSearchBar";
+import { isPreRelease, type ReleaseStatus } from "@/lib/products/release-status";
 
 export type ProductListItem = {
   slug: string;
@@ -16,7 +17,7 @@ export type ProductListItem = {
   categories: string[];
   keywords: string[];
   platform?: string;
-  pre_release?: boolean;
+  status: ReleaseStatus;
   new_release?: boolean;
   popular?: boolean;
 };
@@ -176,7 +177,9 @@ export function filterProducts(
       : null;
 
   const filteredProducts = products.filter((product) => {
-    if (!showPreRelease && product.pre_release) {
+    const productIsPreRelease = isPreRelease(product.status);
+
+    if (!showPreRelease && productIsPreRelease) {
       return false;
     }
 
@@ -225,8 +228,10 @@ export function filterProducts(
       return a.popular ? -1 : 1;
     }
 
-    if (a.pre_release !== b.pre_release) {
-      return a.pre_release ? 1 : -1;
+    const aPreRelease = isPreRelease(a.status);
+    const bPreRelease = isPreRelease(b.status);
+    if (aPreRelease !== bPreRelease) {
+      return aPreRelease ? 1 : -1;
     }
 
     return a.name.localeCompare(b.name);
@@ -318,18 +323,19 @@ export function ProductsFilter({
         {filtered.map((product) => {
           const primaryCategory = product.categories[0];
           const badgeClasses = getCategoryBadgeClasses(primaryCategory);
-          const showNewReleaseBadge = product.new_release && !product.pre_release;
-          const showPopularBadge = product.popular && !product.pre_release && !showNewReleaseBadge;
+          const isProductPreRelease = isPreRelease(product.status);
+          const showNewReleaseBadge = product.new_release && !isProductPreRelease;
+          const showPopularBadge = product.popular && !isProductPreRelease && !showNewReleaseBadge;
 
           return (
             <Link
               key={product.slug}
               href={`/${product.slug}`}
               className={`group relative flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-border/60 transition duration-200 hover:-translate-y-1 hover:border-border hover:shadow-lg hover:ring-border ${
-                product.pre_release || showNewReleaseBadge || showPopularBadge ? "overflow-hidden" : ""
+                isProductPreRelease || showNewReleaseBadge || showPopularBadge ? "overflow-hidden" : ""
               }`}
             >
-              {product.pre_release && (
+              {isProductPreRelease && (
                 <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-purple-500 to-purple-600 px-12 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-md">
                   Pre Release
                 </div>
@@ -347,7 +353,7 @@ export function ProductsFilter({
               <span className={badgeClasses}>{primaryCategory ?? "App"}</span>
               <h3 className="text-sm font-semibold text-foreground">{product.name}</h3>
               <span className="mt-auto text-sm font-medium text-primary transition group-hover:underline">
-                {product.pre_release ? "Learn More →" : "View →"}
+                {isProductPreRelease ? "Learn More →" : "View →"}
               </span>
             </Link>
           );

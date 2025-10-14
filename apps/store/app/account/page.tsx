@@ -266,6 +266,8 @@ async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]>
             licenseKey,
             licenseStatus,
             licenseUrl,
+            paymentStatus: order.paymentStatus,
+            checkoutStatus: order.checkoutSessionStatus,
           } satisfies PurchaseSummary;
         }),
       )

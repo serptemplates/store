@@ -30,7 +30,18 @@ export type ClientHomeProps = {
 }
 
 export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries }: ClientHomeProps) {
-  const homeProps = productToHomeTemplate(product, posts)
+  const resolvedPosts = useMemo(() => {
+    const desired = product.related_posts ?? []
+    if (!desired.length) {
+      return posts
+    }
+    const order = new Map(desired.map((slug, index) => [slug, index]))
+    return posts
+      .filter((post) => order.has(post.slug))
+      .sort((a, b) => (order.get(a.slug)! - order.get(b.slug)!))
+  }, [posts, product.related_posts])
+
+  const homeProps = productToHomeTemplate(product, resolvedPosts)
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
@@ -47,7 +58,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     product.serply_link,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
-    product.product_page_url,
   ].filter((value): value is string => Boolean(value && value.trim().length > 0))
   const fallbackCtaHref = fallbackCtaCandidates[0]
   const primaryCtaHref = hasEmbeddedCheckout ? checkoutHref : fallbackCtaHref
