@@ -123,4 +123,19 @@ describe("POST /api/webhooks/ghl/payment", () => {
     expect(recordWebhookLogMock).not.toHaveBeenCalled();
     expect(upsertOrderMock).not.toHaveBeenCalled();
   });
+
+  it("returns 500 when persistence fails", async () => {
+    ensureDatabaseMock.mockResolvedValue(true);
+    recordWebhookLogMock.mockRejectedValueOnce(new Error("boom"));
+
+    const response = await postWebhook({
+      status: "success",
+    });
+
+    expect(response.status).toBe(500);
+    const body = await response.json();
+    expect(body.error).toBe("Failed to process webhook");
+    expect(body.detail).toContain("boom");
+    expect(upsertOrderMock).not.toHaveBeenCalled();
+  });
 });

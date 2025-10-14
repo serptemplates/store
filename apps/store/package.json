@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "test:smoke": "playwright test --project=\"Desktop Chrome\"",
     "test:stripe-live": "vitest --run tests/integration/stripe-live.test.ts",
+    "test:ghl-preview": "tsx scripts/test-ghl-preview.ts",
     "test:safe": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:smoke",
     "validate:products": "tsx scripts/validate-products.ts",
     "validate:content": "node scripts/validate-product.mjs",

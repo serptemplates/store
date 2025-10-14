@@ -255,43 +255,43 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Database unavailable" }, { status: 500 });
   }
 
-  await recordWebhookLog({
-    paymentIntentId: `ghl_${resolvedIdentifier}`,
-    stripeSessionId: null,
-    eventType: "ghl.payment.received",
-    offerId: null,
-    landerId: null,
-    status: webhookStatus,
-    metadata: {
-      source: parsed.paymentSource ?? "ghl",
+  try {
+    await recordWebhookLog({
+      paymentIntentId: `ghl_${resolvedIdentifier}`,
+      stripeSessionId: null,
+      eventType: "ghl.payment.received",
+      offerId: null,
+      landerId: null,
+      status: webhookStatus,
+      metadata: {
+        source: parsed.paymentSource ?? "ghl",
+        paymentStatus: parsed.paymentStatus,
+        transactionId: parsed.transactionId,
+        paymentId: parsed.paymentId,
+        contactId: parsed.contactId,
+        totalAmount: parsed.totalAmount,
+        currency: parsed.currency,
+        couponCode: parsed.couponCode,
+        createdAt: parsed.createdAt,
+        customerEmail: parsed.customerEmail,
+        customerName: parsed.customerName,
+        offerId: parsed.offerId,
+        contact: parsed.contact,
+        customData: parsed.customData,
+        payment: parsed.payment,
+      },
+    });
+
+    logger.info("ghl.webhook.received", {
+      status: webhookStatus,
+      identifier: resolvedIdentifier,
       paymentStatus: parsed.paymentStatus,
-      transactionId: parsed.transactionId,
-      paymentId: parsed.paymentId,
-      contactId: parsed.contactId,
       totalAmount: parsed.totalAmount,
       currency: parsed.currency,
-      couponCode: parsed.couponCode,
-      createdAt: parsed.createdAt,
-      customerEmail: parsed.customerEmail,
-      customerName: parsed.customerName,
-      offerId: parsed.offerId,
-      contact: parsed.contact,
-      customData: parsed.customData,
-      payment: parsed.payment,
-    },
-  });
+    });
 
-  logger.info("ghl.webhook.received", {
-    status: webhookStatus,
-    identifier: resolvedIdentifier,
-    paymentStatus: parsed.paymentStatus,
-    totalAmount: parsed.totalAmount,
-    currency: parsed.currency,
-  });
+    const ghlPaymentIntentId = `ghl_${resolvedIdentifier}`;
 
-  const ghlPaymentIntentId = `ghl_${resolvedIdentifier}`;
-
-  try {
     await upsertOrder({
       stripePaymentIntentId: ghlPaymentIntentId,
       stripeSessionId: ghlPaymentIntentId,
@@ -318,11 +318,19 @@ export async function POST(request: NextRequest) {
       source: "ghl",
     });
   } catch (error) {
-    logger.error("ghl.webhook.order_upsert_failed", {
+    const message = error instanceof Error ? error.message : String(error);
+    logger.error("ghl.webhook.processing_failed", {
       identifier: resolvedIdentifier,
       offerId: parsed.offerId,
-      error: error instanceof Error ? error.message : String(error),
+      error: message,
     });
+    return NextResponse.json(
+      {
+        error: "Failed to process webhook",
+        detail: message,
+      },
+      { status: 500 },
+    );
   }
 
   if (parsed.customerEmail) {
