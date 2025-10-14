@@ -11,11 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
 import { useSearchParams } from "next/navigation";
-
-import { Button } from "@repo/ui";
 
 import { processCheckoutSession, processGhlPayment } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
@@ -24,7 +20,7 @@ type CheckoutVariant = "stripe" | "paypal" | "ghl" | "external";
 
 type CtaDefinition = {
   label: string;
-  href: Route | string;
+  href: string;
   variant?: "default" | "outline";
   icon?: ComponentType<{ className?: string }>;
 };
@@ -217,10 +213,6 @@ function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
     thumbnailUrl: thumbnailUrls.primary,
     fallbackThumbnailUrl: thumbnailUrls.fallback,
   };
-}
-
-function isInternalRoute(href: string | Route): href is Route {
-  return typeof href === "string" ? href.startsWith("/") : true;
 }
 
 export function SuccessContent() {
@@ -441,31 +433,6 @@ export function SuccessContent() {
               )}
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              {heroCopy.ctas.map((cta) => {
-                const Icon = cta.icon;
-                return (
-                  <Button
-                    key={cta.label}
-                    asChild
-                    variant={cta.variant ?? "default"}
-                    className="flex-1"
-                  >
-                    {isInternalRoute(cta.href) ? (
-                      <Link href={cta.href}>
-                        {Icon ? <Icon className="mr-2 h-4 w-4" /> : null}
-                        {cta.label}
-                      </Link>
-                    ) : (
-                      <a href={cta.href}>
-                        {Icon ? <Icon className="mr-2 h-4 w-4" /> : null}
-                        {cta.label}
-                      </a>
-                    )}
-                  </Button>
-                );
-              })}
-            </div>
           </div>
         </section>
 
