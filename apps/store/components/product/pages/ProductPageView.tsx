@@ -69,7 +69,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     serply_link: serplyLink,
     success_url: successUrl,
     cancel_url: cancelUrl,
-    price: normalizedPrice,
+    price: formatPrice(normalizedPrice),
     images: productImages.length > 0 ? productImages : [mainImageSource || "/api/og"],
     tagline: product.metadata?.subtitle ?? product.title,
     isDigital: true,
