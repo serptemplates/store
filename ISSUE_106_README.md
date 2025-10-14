@@ -116,14 +116,41 @@ A checkbox/toggle on the checkout page that lets customers upgrade from a single
 
 ---
 
+## 💳 Payment Method Strategy
+
+Your store uses **three distinct payment methods**:
+
+### 1. Stripe Checkout (~50 products)
+- **Implementation**: Full order bump support with multi-line items
+- **Complexity**: Medium - Standard Stripe API
+- **Timeline**: Week 1-2
+
+### 2. PayPal Checkout (all non-GHL products)
+- **Implementation**: Order bump support with multi-item orders
+- **Complexity**: Medium - PayPal order creation API
+- **Timeline**: Week 2
+
+### 3. GHL Payment Links (~45 products)
+- **Challenge**: External redirect, no UI control
+- **Options**:
+  - **Option A**: Disable order bump (simple, recommended for Phase 1)
+  - **Option B**: Pre-redirect modal with bundle link (complex, Phase 2)
+- **Timeline**: 10 minutes (Option A) or 3-4 hours (Option B)
+
+**Recommended Rollout**:
+1. **Phase 1**: Implement for Stripe + PayPal products (50 products)
+2. **Phase 2**: Evaluate GHL product demand and implement Option B if needed
+
+---
+
 ## 💡 Alternative Options Considered
 
 ### ❌ Option 2: Stripe Native Upsell
-- **Issue**: Only works in hosted mode, not embedded
+- **Issue**: Only works in hosted mode, not embedded; doesn't address PayPal or GHL
 - **Decision**: Not compatible with current setup
 
 ### ❌ Option 3: Post-Purchase Upsell
-- **Issue**: Lower conversion, worse UX, two transactions
+- **Issue**: Lower conversion, worse UX, two transactions; doesn't work for GHL products
 - **Decision**: Sub-optimal for conversion rates
 
 ---

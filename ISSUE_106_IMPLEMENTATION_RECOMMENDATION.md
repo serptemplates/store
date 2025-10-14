@@ -6,10 +6,13 @@ Add an 'order bump' / 'upsell' functionality on all downloader checkout pages wh
 ## Current Architecture Analysis
 
 ### 1. Checkout System
-The current checkout system is built using:
-- **Stripe Checkout** - Both embedded and hosted modes
-- **PayPal integration** - Alternative payment method
-- **API Route**: `apps/store/app/api/checkout/session/route.ts` (506 lines)
+The current checkout system is built using **three payment methods**:
+- **Stripe Checkout** - Both embedded and hosted modes (~50 products)
+- **PayPal integration** - Alternative payment method on checkout page
+- **GHL Payment Links** - External payment links (~45 products use `buy_button_destination` with `ghl.serp.co/payment-link`)
+- **API Routes**: 
+  - Stripe: `apps/store/app/api/checkout/session/route.ts` (506 lines)
+  - PayPal: `apps/store/app/api/paypal/create-order/route.ts`
 - **UI Component**: `apps/store/components/checkout/EmbeddedCheckoutView.tsx`
 - **Product Schema**: `apps/store/lib/products/product-schema.ts`
 
@@ -48,9 +51,13 @@ The current checkout system is built using:
 
 **Implementation Steps**:
 
-1. **Create "All Downloaders" Bundle Product** (~1-2 hours)
+1. **Create "All Downloaders" Bundle Product** (~2-3 hours)
    - Create `/apps/store/data/products/all-downloaders-bundle.yaml`
    - Set appropriate metadata and entitlements
+   - Configure for **all three payment methods**:
+     - Stripe `price_id` for Stripe checkout
+     - PayPal pricing configuration
+     - GHL payment link for external flow
    - Add to product catalog
 
 2. **Update Product Schema** (~30 min)
@@ -72,17 +79,26 @@ The current checkout system is built using:
    - Update price calculation dynamically when toggled
    - Show clear pricing breakdown
 
-4. **Update API Session Creation** (~2-3 hours)
-   - Modify `apps/store/app/api/checkout/session/route.ts`
-   - Add logic to detect order bump in request
-   - Create multiple line items when bump is selected:
-     ```typescript
-     lineItems: [
-       { price: originalPriceId, quantity: 1 },
-       { price: bundleUpgradePriceId, quantity: 1 }  // Additional $47
-     ]
-     ```
-   - Update metadata to track order bump selection
+4. **Update API Session Creation** (~4-5 hours)
+   - **For Stripe checkout** - Modify `apps/store/app/api/checkout/session/route.ts`
+     - Add logic to detect order bump in request
+     - Create multiple line items when bump is selected:
+       ```typescript
+       lineItems: [
+         { price: originalPriceId, quantity: 1 },
+         { price: bundleUpgradePriceId, quantity: 1 }  // Additional $47
+       ]
+       ```
+     - Update metadata to track order bump selection
+   
+   - **For PayPal checkout** - Modify `apps/store/app/api/paypal/create-order/route.ts`
+     - Add order bump support with line items
+     - PayPal supports multiple items in orders
+     - Calculate adjusted total with bundle upgrade
+   
+   - **For GHL payment links** - Handle at UI level
+     - When user selects order bump on a GHL product, redirect to bundle's GHL link instead
+     - Or disable order bump for GHL products (document this decision)
 
 5. **Update Analytics** (~1-2 hours)
    - Track order bump views
@@ -101,7 +117,7 @@ The current checkout system is built using:
    - Test license generation for bundle purchases
    - Test analytics tracking
 
-**Estimated Total Time**: 12-18 hours
+**Estimated Total Time**: 16-24 hours (increased due to PayPal and GHL handling)
 
 **UI Mockup Concept**:
 ```
@@ -160,9 +176,90 @@ The current checkout system is built using:
 
 ---
 
-## Detailed Implementation Plan for Option 1 (RECOMMENDED)
+## Payment Method Considerations
 
-### Phase 1: Foundation (Day 1)
+### Three Payment Methods in Use
+
+Your store currently supports **three distinct payment flows**:
+
+#### 1. **Stripe Checkout** (~50 products)
+- Products with `stripe.price_id` configured
+- Embedded checkout on `/checkout?product=slug`
+- Full control over UI and line items
+- ✅ **Best fit for order bump** - Native multi-line item support
+
+#### 2. **PayPal Checkout** (available on all non-GHL products)
+- Toggle option on embedded checkout page
+- Uses `/api/paypal/create-order`
+- PayPal supports line items in order creation
+- ✅ **Order bump compatible** - Can add bundle as additional item
+
+#### 3. **GHL Payment Links** (~45 products)
+- Products with `buy_button_destination: https://ghl.serp.co/payment-link/...`
+- External redirect to GoHighLevel payment form
+- No control over checkout UI
+- ⚠️ **Limited order bump capability** - Two approaches:
+  - **Option A**: Replace link with bundle's GHL link when bump selected
+  - **Option B**: Disable order bump for GHL products (simpler)
+
+### Recommended Approach by Payment Method
+
+#### For Stripe/PayPal Products (50 products)
+✅ **Full Order Bump Implementation**
+- Add checkbox to `/checkout` page
+- Update APIs to handle multiple line items
+- Stripe: `lineItems: [base, bundle]`
+- PayPal: `items: [base, bundle]` in order creation
+- Track acceptance rates and revenue lift
+
+#### For GHL Payment Link Products (45 products)
+🔀 **Two Options**:
+
+**Option A: Dynamic Link Switching** (More complex, better UX)
+```typescript
+// In product page CTA
+const finalLink = orderBumpSelected 
+  ? 'https://ghl.serp.co/payment-link/ALL_DOWNLOADERS_BUNDLE_ID'
+  : product.buy_button_destination;
+```
+- Pros: Consistent upsell across all products
+- Cons: User leaves current product context, GHL won't show original product
+- Implementation: 2-3 additional hours
+
+**Option B: Disable for GHL Products** (Simpler, cleaner) ⭐
+```typescript
+// Only show order bump if NOT using GHL link
+const showOrderBump = !product.buy_button_destination?.includes('ghl.serp.co');
+```
+- Pros: Cleaner implementation, no edge cases
+- Cons: Only 50 products get order bump (still majority of traffic)
+- Implementation: 10 minutes
+
+**Recommendation**: Start with **Option B** (disable for GHL) in Phase 1, evaluate adding Option A in Phase 2 if GHL products show strong demand.
+
+### GHL Product Considerations
+
+Products using GHL payment links are **external checkout flows**:
+- User clicks CTA → Redirects to GoHighLevel payment form
+- No control over checkout UI or items
+- Cannot add order bump checkbox or modify cart
+- Would need to be handled at the CTA/button level (before redirect)
+
+**Alternative for GHL Products**:
+1. Create bundle GHL payment link in GoHighLevel
+2. On product page, before redirect, show modal:
+   - "Upgrade to All Downloaders for +$47?"
+   - If yes: Redirect to bundle GHL link
+   - If no: Redirect to original product GHL link
+3. Track with analytics before redirect
+
+This adds complexity but provides upsell opportunity for GHL products.
+
+---
+
+## Updated Implementation Plan
+
+### Phase 1: Foundation (Day 1-2)
 
 #### 1.1 Create Bundle Product
 ```yaml
@@ -175,12 +272,20 @@ pricing:
   price: $64.00
   original_price: $1,500.00
   currency: USD
+
+# Stripe configuration
 stripe:
-  price_id: price_xxx  # Create in Stripe
+  price_id: price_xxx  # Create in Stripe Dashboard
   success_url: https://apps.serp.co/checkout/success
   cancel_url: https://apps.serp.co/checkout?product=all-downloaders-bundle
+
+# GHL payment link (for GHL products that want to upgrade)
+buy_button_destination: https://ghl.serp.co/payment-link/BUNDLE_LINK_ID
+
+# License configuration
 license:
   entitlements: ["all-downloaders"]
+
 # ... other fields
 ```
 
@@ -200,8 +305,8 @@ const orderBumpSchema = z.object({
 order_bump: orderBumpSchema,
 ```
 
-#### 1.3 Configure Order Bumps on Downloader Products
-Update each downloader product YAML to include:
+#### 1.3 Configure Order Bumps on Products
+For Stripe/PayPal products only (exclude GHL):
 ```yaml
 order_bump:
   enabled: true
@@ -212,7 +317,7 @@ order_bump:
   badge_text: "SAVE $1,500+"
 ```
 
-### Phase 2: UI Components (Day 2)
+### Phase 2: UI Components (Day 3-4)
 
 #### 2.1 Create OrderBumpCard Component
 ```tsx
@@ -286,9 +391,9 @@ const finalPrice = basePrice + orderBumpPrice;
 )}
 ```
 
-### Phase 3: Backend Integration (Day 3)
+### Phase 3: Backend Integration (Day 5-7)
 
-#### 3.1 Update Checkout Session API
+#### 3.1 Update Stripe Checkout Session API
 ```typescript
 // apps/store/app/api/checkout/session/route.ts
 
@@ -337,9 +442,48 @@ if (parsedBody.orderBump?.enabled && parsedBody.orderBump.targetProductSlug) {
 // Continue with session creation using lineItems
 ```
 
-#### 3.2 Update Webhook Handler
+#### 3.2 Update PayPal Order Creation API
 ```typescript
-// apps/store/app/api/webhooks/stripe/route.ts
+// apps/store/app/api/paypal/create-order/route.ts
+
+// Add orderBump to request schema
+const requestSchema = z.object({
+  // ... existing fields
+  orderBump: z.object({
+    enabled: z.boolean(),
+    targetProductSlug: z.string().optional(),
+    additionalPrice: z.number().optional(),
+  }).optional(),
+});
+
+// In order creation logic:
+const items = [
+  {
+    name: offer.productName,
+    unit_amount: { currency_code: "USD", value: basePrice.toFixed(2) },
+    quantity: "1",
+  }
+];
+
+if (parsedBody.orderBump?.enabled && parsedBody.orderBump.targetProductSlug) {
+  const bundleOffer = getOfferConfig(parsedBody.orderBump.targetProductSlug);
+  
+  items.push({
+    name: bundleOffer.productName || "All Downloaders Bundle",
+    unit_amount: { currency_code: "USD", value: parsedBody.orderBump.additionalPrice.toFixed(2) },
+    quantity: "1",
+  });
+  
+  metadataFromRequest.orderBumpAccepted = "true";
+  metadataFromRequest.orderBumpProduct = parsedBody.orderBump.targetProductSlug;
+}
+
+// Use items array in PayPal order creation
+```
+
+#### 3.3 Update Webhook Handler
+```typescript
+// apps/store/app/api/webhooks/stripe/route.ts (and PayPal equivalent)
 
 // In checkout.session.completed handler:
 if (session.metadata?.orderBumpAccepted === "true") {
@@ -359,7 +503,7 @@ if (session.metadata?.orderBumpAccepted === "true") {
 }
 ```
 
-### Phase 4: Analytics & Tracking (Day 4)
+### Phase 4: Analytics & Tracking (Day 8)
 
 #### 4.1 Add Tracking Events
 ```typescript

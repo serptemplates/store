@@ -76,13 +76,25 @@ apps/store/tests/e2e/order-bump-checkout.test.ts
 
 ## Implementation Checklist
 
+### Pre-Implementation: Payment Method Analysis
+- [ ] Confirm current payment method distribution:
+  - Stripe/PayPal products: ~50 (embedded checkout)
+  - GHL payment link products: ~45 (external redirect)
+- [ ] Decide on GHL product strategy:
+  - [ ] Option A: Disable order bump for GHL products (simpler)
+  - [ ] Option B: Redirect to bundle GHL link when bump selected (more complex)
+- [ ] Create bundle GHL payment link in GoHighLevel (if doing Option B)
+
 ### Phase 1: Foundation
 - [ ] Create all-downloaders-bundle.yaml product
 - [ ] Create Stripe product and price in Dashboard
+- [ ] **Create PayPal pricing configuration**
+- [ ] **Create GHL payment link for bundle (if supporting GHL products)**
 - [ ] Add price_id to bundle YAML
 - [ ] Update product-schema.ts with order_bump schema
 - [ ] Run validation: `pnpm validate:products`
-- [ ] Add order_bump config to 3-5 test products
+- [ ] Add order_bump config to 3-5 test products (Stripe/PayPal only initially)
+- [ ] **Decide: Enable for GHL products or disable?**
 
 ### Phase 2: UI Components
 - [ ] Create OrderBumpCard.tsx component
@@ -96,13 +108,17 @@ apps/store/tests/e2e/order-bump-checkout.test.ts
 
 ### Phase 3: Backend
 - [ ] Update checkoutSessionSchema in route.ts
-- [ ] Add order bump handling in POST /api/checkout/session
-- [ ] Implement multi-line item logic
+- [ ] **Add order bump handling in POST /api/checkout/session (Stripe)**
+- [ ] Implement multi-line item logic for Stripe
+- [ ] **Add order bump handling in POST /api/paypal/create-order (PayPal)**
+- [ ] Implement multi-item logic for PayPal
 - [ ] Update session metadata
 - [ ] Test with Stripe test mode
-- [ ] Update webhook handler for bundles
+- [ ] **Test with PayPal sandbox**
+- [ ] Update webhook handler for bundles (Stripe + PayPal)
 - [ ] Implement bundle license generation
-- [ ] Test end-to-end flow
+- [ ] **Handle GHL products (disable or redirect)**
+- [ ] Test end-to-end flow for all payment methods
 
 ### Phase 4: Analytics
 - [ ] Add trackOrderBumpViewed event
@@ -165,6 +181,77 @@ pnpm validate:products
 
 ---
 
+## Payment Method Implementation Details
+
+### 1. Stripe Checkout (~50 products)
+**Location**: `/checkout?product=slug` → Embedded checkout page
+
+**Implementation**:
+- Update `/api/checkout/session` to accept `orderBump` parameter
+- Create multiple line items when bump selected:
+  ```typescript
+  lineItems: [
+    { price: basePriceId, quantity: 1 },
+    { price: bundlePriceId, quantity: 1 }
+  ]
+  ```
+- Update webhook handler to detect bundle purchases via metadata
+
+**Testing**:
+- Use Stripe test cards: `4242 4242 4242 4242`
+- Verify both line items appear in Stripe Dashboard
+- Confirm bundle licenses are generated
+
+### 2. PayPal Checkout (available on all non-GHL products)
+**Location**: `/checkout?product=slug` → Toggle to PayPal option
+
+**Implementation**:
+- Update `/api/paypal/create-order` to accept `orderBump` parameter
+- Create multiple items in PayPal order:
+  ```typescript
+  items: [
+    { name: baseName, unit_amount: basePrice, quantity: "1" },
+    { name: bundleName, unit_amount: bundlePrice, quantity: "1" }
+  ]
+  ```
+- Update PayPal webhook handler to detect bundle purchases
+
+**Testing**:
+- Use PayPal sandbox account
+- Verify both items appear in PayPal order
+- Confirm total is correct (base + bundle)
+- Verify bundle licenses are generated
+
+### 3. GHL Payment Links (~45 products)
+**Location**: Product page CTA → External redirect to `ghl.serp.co/payment-link/...`
+
+**Challenge**: No control over GoHighLevel checkout UI
+
+**Option A: Disable Order Bump (Recommended)** ✅
+```typescript
+// In productToHomeTemplate or checkout page
+const hasGHLLink = product.buy_button_destination?.includes('ghl.serp.co');
+const showOrderBump = !hasGHLLink && product.order_bump?.enabled;
+```
+- Pros: Simple, clean, no edge cases
+- Cons: Only 50 products get order bump (still majority)
+
+**Option B: Pre-Redirect Modal with Bundle Link**
+1. Create bundle GHL payment link in GoHighLevel
+2. On product page, before CTA click:
+   - Show modal: "Upgrade to All Downloaders for +$47?"
+   - If yes → Redirect to bundle GHL link
+   - If no → Redirect to original product GHL link
+3. Track decision with analytics
+
+- Pros: All 95 products can have upsell
+- Cons: More complex, loses original product context
+- Adds: 3-4 hours implementation time
+
+**Recommendation**: Start with **Option A**, evaluate Option B based on demand.
+
+---
+
 ## Key Code Snippets
 
 ### 1. Product YAML Configuration
@@ -180,6 +267,8 @@ order_bump:
 ```
 
 ### 2. Checkout Request Payload
+
+**For Stripe/PayPal Checkout**:
 ```typescript
 {
   offerId: "tiktok-downloader",
@@ -202,7 +291,32 @@ lineItems: [
 ]
 ```
 
-### 4. Session Metadata
+### 4. PayPal Order Items
+```typescript
+// When order bump is selected in PayPal
+const items = [
+  {
+    name: "TikTok Downloader",
+    unit_amount: { currency_code: "USD", value: "17.00" },
+    quantity: "1"
+  },
+  {
+    name: "All Downloaders Bundle",
+    unit_amount: { currency_code: "USD", value: "47.00" },
+    quantity: "1"
+  }
+];
+
+const amount = {
+  currency_code: "USD",
+  value: "64.00",  // 17 + 47
+  breakdown: {
+    item_total: { currency_code: "USD", value: "64.00" }
+  }
+};
+```
+
+### 5. Session Metadata
 ```typescript
 metadata: {
   orderBumpAccepted: "true",

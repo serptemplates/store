@@ -70,10 +70,10 @@ A checkbox/toggle on the checkout page (before payment) that lets customers upgr
   - Feature flag controlled
 
 ### Investment Required
-- **Time**: 2-3 weeks
+- **Time**: 3-4 weeks (accounting for 3 payment methods)
 - **Team**: 2 developers + 1 QA + 1 PM
-- **Cost**: ~40-60 developer hours
-- **Expected ROI**: 300-500% in first month
+- **Cost**: ~50-75 developer hours
+- **Expected ROI**: 250-400% in first month
 
 ### Alternatives Considered
 
