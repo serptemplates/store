@@ -8,7 +8,7 @@ apps_serp_co_product_page_url: https://apps.serp.co/circle-downloader
 serply_link: https://serp.ly/circle-downloader
 success_url: https://apps.serp.co/checkout/success
 cancel_url: https://apps.serp.co/checkout?product=circle-downloader
-buy_button_destination: https://ghl.serp.co/payment-link/68dfb14367ee3b6953699836
+buy_button_destination: null
 name: Circle Downloader
 tagline: Save Circle content instantly to your device.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
