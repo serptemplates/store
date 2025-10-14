@@ -92,12 +92,19 @@ export function productToHomeTemplate(
     !hasExternalDestination &&
     (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
   const checkoutHref = `/checkout?product=${product.slug}`;
-  const allowedPrefixes = ["https://store.serp.co/", "https://ghl.serp.co/"];
+  const allowedPrefixes = [
+    "https://store.serp.co/",
+    "https://ghl.serp.co/",
+    "https://apps.serp.co/",
+    "https://serp.ly/",
+  ];
   const candidateLinks = [
     product.buy_button_destination,
     product.pricing?.cta_href,
-    product.purchase_url,
+    product.store_serp_co_product_page_url,
+    product.apps_serp_co_product_page_url,
     product.product_page_url,
+    product.serply_link,
   ];
 
   const externalCtaHref = candidateLinks.find(

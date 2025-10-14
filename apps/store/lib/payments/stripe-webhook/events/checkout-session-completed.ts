@@ -247,12 +247,46 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       ?? metadata.product_page_url
       ?? null;
 
+  const storeProductPageUrl =
+    offerConfig?.metadata?.store_serp_co_product_page_url
+      ?? metadata.store_serp_co_product_page_url
+      ?? null;
+
+  const appsProductPageUrl =
+    offerConfig?.metadata?.apps_serp_co_product_page_url
+      ?? metadata.apps_serp_co_product_page_url
+      ?? null;
+
   const purchaseUrl =
     metadata.purchaseUrl
       ?? metadata.purchase_url
+      ?? metadata.serply_link
+      ?? metadata.serplyLink
       ?? metadata.checkoutUrl
       ?? metadata.checkout_url
       ?? offerConfig?.metadata?.purchaseUrl
+      ?? offerConfig?.metadata?.serply_link
+      ?? null;
+
+  const serplyLink =
+    metadata.serply_link
+      ?? metadata.serplyLink
+      ?? purchaseUrl
+      ?? offerConfig?.metadata?.serply_link
+      ?? null;
+
+  const successUrl =
+    metadata.success_url
+      ?? metadata.successUrl
+      ?? offerConfig?.metadata?.success_url
+      ?? offerConfig?.successUrl
+      ?? null;
+
+  const cancelUrl =
+    metadata.cancel_url
+      ?? metadata.cancelUrl
+      ?? offerConfig?.metadata?.cancel_url
+      ?? offerConfig?.cancelUrl
       ?? null;
 
   try {
@@ -324,6 +358,11 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       metadata,
       productPageUrl,
       purchaseUrl,
+      storeProductPageUrl: storeProductPageUrl ?? productPageUrl,
+      appsProductPageUrl: appsProductPageUrl ?? productPageUrl,
+      serplyLink,
+      successUrl,
+      cancelUrl,
       provider: "stripe",
       licenseKey: licenseResult?.licenseKey ?? undefined,
       licenseId: licenseResult?.licenseId ?? undefined,

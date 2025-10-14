@@ -6,6 +6,7 @@
 - **Change**: Folded the former `@repo/templates` package into `@repo/ui` by promoting the reusable pieces into `src/sections/**` and relocating store-only templates into the app.
 - **Why it matters**: Keeps all shared UI behind a single package, simplifies bundler config, and prevents the template components from drifting away from the primitives they compose.
 - **Follow-up**: Downstream repos should import from `@repo/ui/sections` going forward. No runtime behaviour changes expected.
+- **Product data schema**: Introduced `store_serp_co_product_page_url` and `apps_serp_co_product_page_url`, renamed `purchase_url` to `serply_link`, and moved `success_url` / `cancel_url` out of the Stripe block so checkout metadata stays consistent across providers.
 
 ## 🎯 Problem Statement
 

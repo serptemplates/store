@@ -117,7 +117,13 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     .map((region) => region.trim())
     .filter((region) => region.length > 0);
   const primaryRegion = siteRegions[0] ?? 'Worldwide';
-  const sameAsUrls = [entry.url, product.product_page_url, product.purchase_url].filter(Boolean);
+  const sameAsUrls = [
+    entry.url,
+    product.product_page_url,
+    product.store_serp_co_product_page_url,
+    product.apps_serp_co_product_page_url,
+    product.serply_link,
+  ].filter(Boolean);
 
   const videoObjectSchema = {
     "@context": "https://schema.org",
@@ -160,10 +166,10 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
       name: product.name,
       url: productUrl,
     },
-    offers: product.purchase_url
+    offers: product.serply_link
       ? {
           "@type": "Offer",
-          url: product.purchase_url,
+          url: product.serply_link,
           price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
           priceCurrency: "USD",
           availability: product.pre_release ? "https://schema.org/PreOrder" : "https://schema.org/InStock",

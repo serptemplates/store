@@ -44,7 +44,9 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const fallbackCtaCandidates = [
     homeProps.ctaHref,
     product.buy_button_destination,
-    product.purchase_url,
+    product.serply_link,
+    product.store_serp_co_product_page_url,
+    product.apps_serp_co_product_page_url,
     product.product_page_url,
   ].filter((value): value is string => Boolean(value && value.trim().length > 0))
   const fallbackCtaHref = fallbackCtaCandidates[0]

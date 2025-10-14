@@ -177,7 +177,7 @@ async function testProduct(file) {
     return;
   }
 
-  if (!stripeConfig.success_url || !stripeConfig.cancel_url) {
+  if (!data.success_url || !data.cancel_url) {
     console.warn(`⚠️  ${slug}: missing success_url or cancel_url, skipping.`);
     return;
   }
@@ -185,6 +185,13 @@ async function testProduct(file) {
   const metadata = {
     offerId: slug,
     productSlug: slug,
+    productPageUrl: data.product_page_url,
+    store_serp_co_product_page_url: data.store_serp_co_product_page_url,
+    apps_serp_co_product_page_url: data.apps_serp_co_product_page_url,
+    purchaseUrl: data.serply_link,
+    serply_link: data.serply_link,
+    success_url: data.success_url,
+    cancel_url: data.cancel_url,
     ...(typeof stripeConfig.metadata === "object" ? stripeConfig.metadata : {}),
   };
 
@@ -193,8 +200,8 @@ async function testProduct(file) {
 
     const session = await stripe.checkout.sessions.create({
       mode: stripeConfig.mode ?? "payment",
-      success_url: stripeConfig.success_url,
-      cancel_url: stripeConfig.cancel_url,
+      success_url: data.success_url,
+      cancel_url: data.cancel_url,
       line_items: [
         {
           price: priceId,

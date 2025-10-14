@@ -222,6 +222,7 @@ export async function POST(request: NextRequest) {
         ?? sessionMetadata["productPageURL"];
       const sessionPurchaseUrl = sessionMetadata["purchaseUrl"]
         ?? sessionMetadata["purchase_url"]
+        ?? sessionMetadata["serply_link"]
         ?? sessionMetadata["checkoutUrl"]
         ?? sessionMetadata["checkout_url"];
 

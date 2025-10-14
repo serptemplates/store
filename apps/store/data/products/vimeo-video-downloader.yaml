@@ -3,18 +3,12 @@ platform: Vimeo
 seo_title: Download Vimeo Videos | Vimeo Video Downloader
 seo_description: Download Vimeo videos easily for offline viewing. Fast, reliable Vimeo video downloader with high-quality downloads.
 product_page_url: https://store.serp.co/products/vimeo-video-downloader
-purchase_url: https://serp.ly/vimeo-video-downloader
-stripe:
-  price_id: price_1S2fcZ06JrOmKRCmTwbmGNxm
-  success_url: https://apps.serp.co/checkout/success
-  cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
-  metadata:
-    source: lander-template
+store_serp_co_product_page_url: https://store.serp.co/products/vimeo-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/vimeo-video-downloader
+serply_link: https://serp.ly/vimeo-video-downloader
+success_url: https://apps.serp.co/checkout/success
+cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
 buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
-ghl:
-  source: Stripe Checkout
-  tag_ids:
-    - purchase-vimeo-video-downloader
 name: Vimeo Video Downloader
 tagline: Save Vimeo videos instantly for offline viewing.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg
@@ -25,21 +19,6 @@ github_repo_tags:
   - vimeo-video-downloader
   - download-vimeo-videos
   - download-private-vimeo-videos
-pricing:
-  label: One-time payment
-  price: '$17.00'
-  original_price: '27.00'
-  currency: USD
-  availability: InStock
-  note: Instant download • Lifetime updates
-  cta_text: Get it Now
-  benefits:
-    - Instant access after checkout
-    - Lifetime license with free updates
-    - Works on Windows, macOS, and Linux
-    - Supports private and password-protected videos
-    - Unlimited downloads with no throttling
-    - SERP Apps support when you need help
 features:
   - One-click downloads
   - Up to 4K quality
@@ -181,6 +160,29 @@ keywords:
   - how to cancel vimeo
   - what is vimeo pro
   - how to change privacy settings on vimeo
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: "27.00"
+  currency: USD
+  availability: InStock
+  note: Instant download • Lifetime updates
+  cta_text: Get it Now
+  benefits:
+    - Instant access after checkout
+    - Lifetime license with free updates
+    - Works on Windows, macOS, and Linux
+    - Supports private and password-protected videos
+    - Unlimited downloads with no throttling
+    - SERP Apps support when you need help
+stripe:
+  price_id: price_1S2fcZ06JrOmKRCmTwbmGNxm
+  metadata:
+    source: lander-template
+ghl:
+  source: Stripe Checkout
+  tag_ids:
+    - purchase-vimeo-video-downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase

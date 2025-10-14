@@ -10,7 +10,11 @@
     "seo_title",
     "seo_description",
     "product_page_url",
-    "purchase_url",
+    "store_serp_co_product_page_url",
+    "apps_serp_co_product_page_url",
+    "serply_link",
+    "success_url",
+    "cancel_url",
     "name",
     "tagline",
     "description"
@@ -36,9 +40,20 @@
       "type": "string",
       "format": "uri"
     },
-    "purchase_url": {
+    "store_serp_co_product_page_url": {
       "type": "string",
-      "format": "uri"
+      "format": "uri",
+      "pattern": "^https://store\\.serp\\.co/"
+    },
+    "apps_serp_co_product_page_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://apps\\.serp\\.co/"
+    },
+    "serply_link": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://serp\\.ly/"
     },
     "buy_button_destination": {
       "anyOf": [
@@ -375,22 +390,16 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "price_id",
-        "success_url",
-        "cancel_url"
+        "price_id"
       ],
       "properties": {
         "price_id": {
           "type": "string",
           "minLength": 1
         },
-        "success_url": {
+        "test_price_id": {
           "type": "string",
-          "format": "uri"
-        },
-        "cancel_url": {
-          "type": "string",
-          "format": "uri"
+          "minLength": 1
         },
         "mode": {
           "type": "string",
@@ -407,6 +416,14 @@
           "default": {}
         }
       }
+    },
+    "success_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "cancel_url": {
+      "type": "string",
+      "format": "uri"
     },
     "ghl": {
       "type": "object",

@@ -53,7 +53,12 @@ export type GhlSyncContext = {
   landerId?: string | null;
   metadata?: Record<string, string>;
   productPageUrl?: string | null;
+  storeProductPageUrl?: string | null;
+  appsProductPageUrl?: string | null;
   purchaseUrl?: string | null;
+  serplyLink?: string | null;
+  successUrl?: string | null;
+  cancelUrl?: string | null;
   provider?: string | null;
   licenseKey?: string | null | undefined;
   licenseId?: string | null | undefined;
@@ -80,4 +85,3 @@ export interface GhlLicenseRecord {
   issuedAt: string | null;
   raw: unknown;
 }
-

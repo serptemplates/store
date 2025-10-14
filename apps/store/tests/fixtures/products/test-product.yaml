@@ -1,16 +1,20 @@
 slug: test-product
+platform: Test Platform
 seo_title: Test Product
 seo_description: Test product description.
 product_page_url: https://example.com/test-product
-purchase_url: https://example.com/test-product/buy
+store_serp_co_product_page_url: https://store.serp.co/products/test-product
+apps_serp_co_product_page_url: https://apps.serp.co/test-product
+serply_link: https://serp.ly/test-product
+success_url: https://apps.serp.co/checkout/success?product=test-product
+cancel_url: https://apps.serp.co/checkout?product=test-product
 name: Test Product
-platform: Test Platform
 tagline: The best test product.
 description: |
   Detailed description of the test product.
-pricing:
-  label: Lifetime access
-  price: "$99"
 screenshots: []
 reviews: []
 faqs: []
+pricing:
+  label: Lifetime access
+  price: $99

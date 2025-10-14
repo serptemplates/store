@@ -2,10 +2,14 @@ slug: another-product
 seo_title: Another Product
 seo_description: Another product description.
 product_page_url: https://example.com/another-product
-purchase_url: https://example.com/another-product/buy
+store_serp_co_product_page_url: https://store.serp.co/products/another-product
+apps_serp_co_product_page_url: https://apps.serp.co/another-product
+serply_link: https://serp.ly/another-product
+success_url: https://apps.serp.co/checkout/success?product=another-product
+cancel_url: https://apps.serp.co/checkout?product=another-product
 name: Another Product
 tagline: Another great product.
 description: |
   Description for another product.
 pricing:
-  price: "$59"
+  price: $59

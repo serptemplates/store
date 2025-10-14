@@ -39,6 +39,9 @@ Recent refactors (issue #110) clarified component layering under `apps/store/com
 - [x] **Update exports:**
   - Expanded `packages/ui/src/index.ts` to surface the new section exports and trimmed package subpath mappings to primitives/sections only.
   - Store-specific templates and data shifted into `apps/store`, so the UI package now exposes shared sections exclusively.
+- [x] **Product schema update:**
+  - Added explicit `store_serp_co_product_page_url`/`apps_serp_co_product_page_url` fields, renamed `purchase_url` → `serply_link`, and promoted `success_url`/`cancel_url` to the top level.
+  - Updated validation logic, offer config metadata, and all fixtures/tests to use the new fields while keeping backward-compatible fallbacks for existing metadata.
 - [x] **Update consumers:**
   - Updated Store app components (`ClientHomeView`, `HybridProductPageView`, product adapter) to import from `@repo/ui/sections/*` and a local `HomeTemplate`.
   - Refreshed architecture docs to mention the new import path; no other packages referenced the old namespace.

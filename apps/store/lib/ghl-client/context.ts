@@ -61,13 +61,20 @@ export function buildPurchaseMetadata(context: GhlSyncContext): string | undefin
     : undefined;
 
   const productPageUrl = context.productPageUrl
+    ?? context.storeProductPageUrl
+    ?? context.appsProductPageUrl
     ?? context.metadata?.productPageUrl
     ?? context.metadata?.product_page_url
+    ?? context.metadata?.store_serp_co_product_page_url
+    ?? context.metadata?.apps_serp_co_product_page_url
     ?? context.metadata?.productPageURL;
 
   const checkoutUrl = context.purchaseUrl
     ?? context.metadata?.purchaseUrl
     ?? context.metadata?.purchase_url
+    ?? context.metadata?.serply_link
+    ?? context.metadata?.serplyLink
+    ?? context.serplyLink
     ?? context.metadata?.checkoutUrl
     ?? context.metadata?.checkout_url;
 
@@ -162,4 +169,3 @@ export function buildLicenseKeysPayload(context: GhlSyncContext): string | undef
     return undefined;
   }
 }
-
