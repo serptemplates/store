@@ -1,9 +1,0 @@
-[submodule "serp-license-key-management"]
-	path = serp-license-key-management
-	url = https://github.com/serpcompany/serp-license-key-management.git
-[submodule "serp-extension-manager"]
-	path = serp-extension-manager
-	url = https://github.com/serpcompany/serp-extension-manager
-[submodule "serp-extensions-monorepo"]
-	path = serp-extensions-monorepo
-	url = https://github.com/serpcompany/serp-extensions-monorepo
