@@ -275,19 +275,23 @@
       ],
       "default": "landing"
     },
-    "pre_release": {
+    "featured": {
       "type": "boolean",
       "default": false
     },
-    "expected_launch_date": {
-      "type": "string",
-      "format": "date"
+    "pre_release": {
+      "type": "boolean",
+      "default": false
     },
     "waitlist_url": {
       "type": "string",
       "format": "uri"
     },
     "new_release": {
+      "type": "boolean",
+      "default": false
+    },
+    "popular": {
       "type": "boolean",
       "default": false
     },
@@ -447,7 +451,19 @@
           "items": {
             "type": "string",
             "minLength": 1
-          }
+          },
+          "default": []
+        },
+        "workflow_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "opportunity_name_template": {
+          "type": "string"
         },
         "contact_custom_field_ids": {
           "type": "object",

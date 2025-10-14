@@ -102,4 +102,69 @@ describe("mergePurchasesWithGhlLicenses", () => {
     expect(result[0].source).toBe("ghl");
     expect(result[0].offerId).toBe("custom-offer");
   });
+
+  it("deduplicates purchases that share an offer while preserving the newest order metadata", () => {
+    const purchases = [
+      createPurchase({
+        orderId: "ord_new",
+        offerId: "Demo Offer",
+        purchasedAt: "2025-10-12T12:00:00.000Z",
+        amountFormatted: "$79.00",
+        source: "stripe",
+        licenseStatus: "pending",
+      }),
+      createPurchase({
+        orderId: "ord_old",
+        offerId: "demo-offer",
+        purchasedAt: "2025-10-05T12:00:00.000Z",
+        amountFormatted: "$49.00",
+        source: "stripe",
+        licenseKey: "SERP-OLD-001",
+        licenseStatus: "active",
+        licenseUrl: "https://example.com/license",
+      }),
+    ];
+
+    const result = mergePurchasesWithGhlLicenses(purchases, []);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].orderId).toBe("ord_new");
+    expect(result[0].licenseKey).toBe("SERP-OLD-001");
+    expect(result[0].licenseStatus).toBe("active");
+    expect(result[0].licenseUrl).toBe("https://example.com/license");
+    expect(result[0].amountFormatted).toBe("$79.00");
+  });
+
+  it("fills missing metadata from secondary purchases when the primary record is incomplete", () => {
+    const purchases = [
+      createPurchase({
+        orderId: "ord_primary",
+        offerId: "combined-offer",
+        purchasedAt: null,
+        amountFormatted: null,
+        source: "unknown",
+      }),
+      createPurchase({
+        orderId: "ord_secondary",
+        offerId: "Combined Offer",
+        purchasedAt: "2025-10-01T08:00:00.000Z",
+        amountFormatted: "$19.00",
+        source: "ghl",
+        licenseKey: "SERP-COMB-123",
+        licenseStatus: "processing",
+        licenseUrl: "https://example.com/license/combined",
+      }),
+    ];
+
+    const result = mergePurchasesWithGhlLicenses(purchases, []);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].orderId).toBe("ord_primary");
+    expect(result[0].purchasedAt).toBe("2025-10-01T08:00:00.000Z");
+    expect(result[0].amountFormatted).toBe("$19.00");
+    expect(result[0].source).toBe("ghl");
+    expect(result[0].licenseKey).toBe("SERP-COMB-123");
+    expect(result[0].licenseStatus).toBe("processing");
+    expect(result[0].licenseUrl).toBe("https://example.com/license/combined");
+  });
 });
