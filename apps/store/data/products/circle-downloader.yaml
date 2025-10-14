@@ -2,7 +2,6 @@ slug: circle-downloader
 platform: Circle
 seo_title: Download Circle Content | Circle Downloader
 seo_description: Download Circle content easily for offline use. Fast and reliable Circle downloader.
-product_page_url: https://store.serp.co/products/circle-downloader
 store_serp_co_product_page_url: https://store.serp.co/products/circle-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/circle-downloader
 serply_link: https://serp.ly/circle-downloader
@@ -16,26 +15,18 @@ featured_image_gif: https://raw.githubusercontent.com/serpapps/circle-downloader
 github_repo_url: https://github.com/serpapps/circle-downloader
 github_repo_tags: []
 features:
-  - Circle community content and discussions
-  - Private communities and member-only content
-  - Batch posts, comments,/shared media downloads
-  - Auto organization by community and topic
-  - Custom folders for community management
-  - Resume downloads
+  - Download videos in original quality
+  - Batch download courses or lessons
+  - Custom folder structures
+  - Download subtitles/captions
   - Cross-platform support
-  - Content viewer
-  - CLI tools
-  - Integrates with community management platforms
-  - Export community analytics/engagement data
-  - Search capabilities across community content
-  - Privacy protection designed for community use
-  - Regular compatibility updates
-  - Various content types and formats
-  - Bandwidth management for large community downloads
-  - Backup & restore options for community archives
-  - Smart categorization
-  - Offline access to community resources
-  - Member engagement tracking and analytics
+  - Built-in video player
+  - Download queue management
+  - Progress tracking
+  - Regular updates
+  - Privacy-focused encryption
+  - Library backup/export
+  - Full offline access
 description: Download videos, images, and content from circle with our reliable downloader tool. Fast, secure, and easy to use.
 product_videos: []
 related_videos: []
@@ -87,7 +78,7 @@ supported_regions:
 status: draft
 categories:
   - Downloader
-  - Social Media
+  - Course Platforms
 keywords:
   - circle downloader
 pricing:
