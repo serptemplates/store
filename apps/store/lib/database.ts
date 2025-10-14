@@ -100,7 +100,7 @@ async function runMigrations() {
       customer_email TEXT,
       metadata JSONB DEFAULT '{}'::jsonb,
       status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'abandoned')),
-      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal')),
+      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
@@ -127,7 +127,7 @@ async function runMigrations() {
       metadata JSONB DEFAULT '{}'::jsonb,
       payment_status TEXT,
       payment_method TEXT,
-      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal')),
+      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
@@ -166,6 +166,27 @@ async function runMigrations() {
 
   await client.sql`
     CREATE INDEX IF NOT EXISTS idx_webhook_logs_status ON webhook_logs (status);
+  `;
+  await client.sql`
+    ALTER TABLE checkout_sessions
+      DROP CONSTRAINT IF EXISTS checkout_sessions_source_check;
+  `;
+
+  await client.sql`
+    ALTER TABLE checkout_sessions
+      ADD CONSTRAINT checkout_sessions_source_check
+      CHECK (source IN ('stripe', 'paypal', 'ghl'));
+  `;
+
+  await client.sql`
+    ALTER TABLE orders
+      DROP CONSTRAINT IF EXISTS orders_source_check;
+  `;
+
+  await client.sql`
+    ALTER TABLE orders
+      ADD CONSTRAINT orders_source_check
+      CHECK (source IN ('stripe', 'paypal', 'ghl'));
   `;
 }
 

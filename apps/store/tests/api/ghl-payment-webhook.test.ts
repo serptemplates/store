@@ -13,13 +13,19 @@ vi.mock("@/lib/checkout", () => ({
   upsertOrder: vi.fn(),
 }));
 
+vi.mock("@/lib/database", () => ({
+  ensureDatabase: vi.fn(),
+}));
+
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import { ensureAccountForPurchase } from "@/lib/account/service";
 import { upsertOrder } from "@/lib/checkout";
+import { ensureDatabase } from "@/lib/database";
 
 const recordWebhookLogMock = vi.mocked(recordWebhookLog);
 const ensureAccountForPurchaseMock = vi.mocked(ensureAccountForPurchase);
 const upsertOrderMock = vi.mocked(upsertOrder);
+const ensureDatabaseMock = vi.mocked(ensureDatabase);
 
 function buildRequest(body: Record<string, unknown>): NextRequest {
   return new NextRequest("http://localhost/api/webhooks/ghl/payment", {
@@ -41,6 +47,7 @@ describe("POST /api/webhooks/ghl/payment", () => {
   beforeEach(() => {
     vi.stubEnv("GHL_PAYMENT_WEBHOOK_SECRET", "secret-token");
     vi.clearAllMocks();
+    ensureDatabaseMock.mockResolvedValue(true);
   });
 
   afterEach(() => {
@@ -103,5 +110,17 @@ describe("POST /api/webhooks/ghl/payment", () => {
         offerId: "youtube-downloader",
       }),
     );
+  });
+
+  it("returns 500 when database is unavailable", async () => {
+    ensureDatabaseMock.mockResolvedValue(false);
+
+    const response = await postWebhook({});
+
+    expect(response.status).toBe(500);
+    const body = await response.json();
+    expect(body).toEqual({ error: "Database unavailable" });
+    expect(recordWebhookLogMock).not.toHaveBeenCalled();
+    expect(upsertOrderMock).not.toHaveBeenCalled();
   });
 });

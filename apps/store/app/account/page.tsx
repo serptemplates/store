@@ -38,6 +38,14 @@ export default async function AccountPage({
   let prefilledEmail = normalizeParam(params?.email) ?? "";
   const verificationError = cookieStore.get("account_verification_error")?.value ?? null;
 
+  const adminTokenEnv = process.env.ACCOUNT_ADMIN_TOKEN;
+  const adminTokenParam =
+    normalizeParam(params?.adminToken) ??
+    normalizeParam(params?.admin_token) ??
+    normalizeParam(params?.admintoken);
+  const impersonateEmail =
+    normalizeParam(params?.impersonate) ?? normalizeParam(params?.impersonateEmail) ?? normalizeParam(params?.impersonate_email);
+
   if (verificationError) {
     cookieStore.delete("account_verification_error");
   }
@@ -62,6 +70,25 @@ export default async function AccountPage({
     purchases = preview.purchases;
     verifiedRecently = preview.verifiedRecently ?? verifiedRecently;
     prefilledEmail = preview.account.email;
+  }
+
+  let adminOverride = false;
+
+  if (!accountSummary && adminTokenEnv && adminTokenParam && adminTokenParam === adminTokenEnv && impersonateEmail) {
+    const adminPurchases = await buildPurchaseSummaries(impersonateEmail);
+    purchases = adminPurchases;
+    accountSummary = {
+      email: impersonateEmail,
+      name: "Admin Preview",
+      status: "admin_impersonation",
+      verifiedAt: new Date().toISOString(),
+    } satisfies DashboardAccount;
+    prefilledEmail = impersonateEmail;
+    adminOverride = true;
+  }
+
+  if (adminOverride) {
+    verifiedRecently = true;
   }
 
   return (

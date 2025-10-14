@@ -6,6 +6,7 @@ import logger from "@/lib/logger";
 import { ensureAccountForPurchase } from "@/lib/account/service";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import { upsertOrder } from "@/lib/checkout";
+import { ensureDatabase } from "@/lib/database";
 
 const WEBHOOK_SECRET = process.env.GHL_PAYMENT_WEBHOOK_SECRET;
 
@@ -245,6 +246,14 @@ export async function POST(request: NextRequest) {
     normalizedStatus && normalizedStatus.length > 0 && !successStatuses.has(normalizedStatus)
       ? "error"
       : "success";
+
+  const dbReady = await ensureDatabase();
+  if (!dbReady) {
+    logger.error("ghl.webhook.database_unavailable", {
+      identifier: resolvedIdentifier,
+    });
+    return NextResponse.json({ error: "Database unavailable" }, { status: 500 });
+  }
 
   await recordWebhookLog({
     paymentIntentId: `ghl_${resolvedIdentifier}`,
