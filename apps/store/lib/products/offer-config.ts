@@ -63,10 +63,10 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
 
     const successUrl = isTest
       ? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
-      : stripeConfig.success_url ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+      : product.success_url ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = isTest
       ? `${baseUrl}/checkout?canceled=true`
-      : stripeConfig.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
+      : product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
 
     return offerConfigSchema.parse({
       id: product.slug,
@@ -78,6 +78,12 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         productSlug: product.slug,
         productName: product.name,
         productPageUrl: product.product_page_url,
+        store_serp_co_product_page_url: product.store_serp_co_product_page_url,
+        apps_serp_co_product_page_url: product.apps_serp_co_product_page_url,
+        purchaseUrl: product.serply_link,
+        serply_link: product.serply_link,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
         environment: isTest ? 'test' : 'live',
         ...(stripeConfig.metadata ?? {}),
       },

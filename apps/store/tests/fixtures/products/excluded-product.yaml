@@ -2,7 +2,11 @@ slug: excluded-product
 seo_title: Excluded Product
 seo_description: Should be excluded.
 product_page_url: https://example.com/excluded-product
-purchase_url: https://example.com/excluded-product/buy
+store_serp_co_product_page_url: https://store.serp.co/products/excluded-product
+apps_serp_co_product_page_url: https://apps.serp.co/excluded-product
+serply_link: https://serp.ly/excluded-product
+success_url: https://apps.serp.co/checkout/success?product=excluded-product
+cancel_url: https://apps.serp.co/checkout?product=excluded-product
 name: Excluded Product
 tagline: Not for listing.
 description: |

@@ -15,6 +15,8 @@ export async function createSimpleCheckout(params: {
     name?: string;
   };
   affiliateId?: string;
+  successUrl?: string;
+  cancelUrl?: string;
 }) {
   const stripeMode = getStripeMode();
   const stripeKey = requireStripeSecretKey(stripeMode);
@@ -112,6 +114,10 @@ export async function createSimpleCheckout(params: {
       }
     }
 
+    const defaultBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const successUrl = params.successUrl ?? product.success_url ?? `${defaultBaseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = params.cancelUrl ?? product.cancel_url ?? `${defaultBaseUrl}/${product.slug}`;
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: paymentMethodTypes,
       line_items: [
@@ -121,8 +127,8 @@ export async function createSimpleCheckout(params: {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${product.slug}`,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       customer_email: params.customer?.email,
       metadata: sessionMetadata,
       client_reference_id: product.slug,

@@ -80,6 +80,10 @@ function redactObject(obj: unknown): unknown {
 }
 
 function emit(level: LogLevel, event: string, context?: Record<string, unknown>) {
+  if (process.env.LOG_SILENT === "true") {
+    return;
+  }
+
   const payload: Record<string, unknown> = {
     level,
     event,

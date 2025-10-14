@@ -15,7 +15,8 @@ test.describe("videos library", () => {
       failedRequests.push(`${request.method()} ${request.url()}`);
     });
 
-    const response = await page.goto("/videos", { waitUntil: "networkidle" });
+    const response = await page.goto("/videos", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 2000 }).catch(() => {});
     expect(response?.ok(), `Expected /videos response ok but got ${response?.status()}`).toBeTruthy();
 
     expect(

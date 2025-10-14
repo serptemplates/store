@@ -4,7 +4,7 @@ import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
@@ -175,6 +175,7 @@ export async function POST(request: NextRequest) {
             ?? sessionMetadata["productPageURL"];
           const sessionPurchaseUrl = sessionMetadata["purchaseUrl"]
             ?? sessionMetadata["purchase_url"]
+            ?? sessionMetadata["serply_link"]
             ?? sessionMetadata["checkoutUrl"]
             ?? sessionMetadata["checkout_url"];
 
@@ -205,7 +206,10 @@ export async function POST(request: NextRequest) {
               provider: "paypal",
             });
           } catch (ghlError) {
-            console.error("Failed to sync with GHL:", ghlError);
+            logger.error("paypal.webhook_ghl_sync_failed", {
+              orderId,
+              error: ghlError instanceof Error ? { name: ghlError.name, message: ghlError.message } : String(ghlError),
+            });
             // Log the error but don't fail the webhook
             await recordWebhookLog({
               paymentIntentId: orderData.stripe_payment_intent_id,

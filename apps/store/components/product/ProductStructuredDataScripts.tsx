@@ -96,7 +96,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       ) ?? normalizedImages,
     softwareVersion: "1.0",
     url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `${normalizedStoreUrl}/${product.slug}`,
-    downloadUrl: product.purchase_url,
+    downloadUrl:
+      product.serply_link ?? product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url ?? product.product_page_url,
     author: {
       name: siteConfig?.site?.name?.trim() || "SERP Apps",
       url: normalizedStoreUrl,
@@ -175,10 +176,10 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       isPartOf: {
         '@id': productId,
       },
-      offers: product.purchase_url
+      offers: product.serply_link
         ? {
             '@type': 'Offer',
-            url: product.purchase_url,
+            url: product.serply_link,
             price: normalizedPrice,
             priceCurrency: resolvedCurrency,
             availability: product.pre_release ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',

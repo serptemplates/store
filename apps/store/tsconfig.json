@@ -31,12 +31,6 @@
       ],
       "@repo/ui/*": [
         "../../packages/ui/src/*"
-      ],
-      "@repo/templates": [
-        "../../packages/templates/src/index.ts"
-      ],
-      "@repo/templates/*": [
-        "../../packages/templates/src/*"
       ]
     },
     "types": [

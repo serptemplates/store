@@ -16,7 +16,7 @@ vi.mock("@/lib/payments/stripe", () => ({
   resolvePriceForEnvironment: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
 }));
@@ -28,7 +28,7 @@ vi.mock("@/lib/checkout/simple-checkout", () => ({
 import { POST } from "@/app/api/checkout/session/route";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/payments/stripe";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { createSimpleCheckout } from "@/lib/checkout/simple-checkout";
 
 const getOfferConfigMock = vi.mocked(getOfferConfig);

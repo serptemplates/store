@@ -33,63 +33,66 @@ describe("buy button destinations", () => {
 
     expect(ctaViolations).toEqual([]);
 
-    const successViolations = products
-      .map((product) => {
-        const buy = product.buy_button_destination;
-        const needsFallback =
-          typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-        if (!needsFallback) {
-          return null;
-        }
-
-        const successUrl = product.stripe?.success_url;
-        return successUrl === FALLBACK_SUCCESS_URL
-          ? null
-          : { slug: product.slug, successUrl };
-      })
-      .filter((entry): entry is { slug: string; successUrl: string | undefined } => entry !== null);
-
-    expect(successViolations).toEqual([]);
-
-    const cancelViolations = products
-      .map((product) => {
-        const buy = product.buy_button_destination;
-        const needsFallback =
-          typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-        if (!needsFallback) {
-          return null;
-        }
-
-        const cancelUrl = product.stripe?.cancel_url;
-        const expected = `${FALLBACK_CANCEL_BASE}${product.slug}`;
-        return cancelUrl === expected ? null : { slug: product.slug, cancelUrl, expected };
-      })
-      .filter(
-        (entry): entry is { slug: string; cancelUrl: string | undefined; expected: string } =>
-          entry !== null,
-      );
-
-    expect(cancelViolations).toEqual([]);
-
-    const pageViolations: Array<{ slug: string; pageUrl: string; expected: string }> = [];
+    const successViolations: Array<{ slug: string; successUrl?: string }> = [];
 
     products.forEach((product) => {
       const buy = product.buy_button_destination;
-      const pageUrl = product.product_page_url ?? "";
+      const needsFallback =
+        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
 
-      if (typeof buy === "string" && buy.startsWith("https://ghl.serp.co/")) {
-        const expected = `${STORE_PAGE_BASE}${product.slug}`;
-        if (pageUrl !== expected) {
-          pageViolations.push({ slug: product.slug, pageUrl, expected });
-        }
+      if (!needsFallback) {
         return;
       }
 
-      const expected = `${FALLBACK_PAGE_BASE}${product.slug}`;
-      if (pageUrl !== expected) {
-        pageViolations.push({ slug: product.slug, pageUrl, expected });
+      const successUrl = product.success_url;
+      if (successUrl !== FALLBACK_SUCCESS_URL) {
+        successViolations.push({ slug: product.slug, successUrl });
+      }
+    });
+
+    expect(successViolations).toEqual([]);
+
+    const cancelViolations: Array<{ slug: string; cancelUrl?: string; expected: string }> = [];
+
+    products.forEach((product) => {
+      const buy = product.buy_button_destination;
+      const needsFallback =
+        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
+
+      if (!needsFallback) {
+        return;
+      }
+
+      const cancelUrl = product.cancel_url;
+      const expected = `${FALLBACK_CANCEL_BASE}${product.slug}`;
+      if (cancelUrl !== expected) {
+        cancelViolations.push({ slug: product.slug, cancelUrl, expected });
+      }
+    });
+
+    expect(cancelViolations).toEqual([]);
+
+    const pageViolations: Array<{ slug: string; field: "store" | "apps"; pageUrl: string; expected: string }> = [];
+
+    products.forEach((product) => {
+      const expectedStore = `${STORE_PAGE_BASE}${product.slug}`;
+      if (product.store_serp_co_product_page_url !== expectedStore) {
+        pageViolations.push({
+          slug: product.slug,
+          field: "store",
+          pageUrl: product.store_serp_co_product_page_url ?? "",
+          expected: expectedStore,
+        });
+      }
+
+      const expectedApps = `${FALLBACK_PAGE_BASE}${product.slug}`;
+      if (product.apps_serp_co_product_page_url !== expectedApps) {
+        pageViolations.push({
+          slug: product.slug,
+          field: "apps",
+          pageUrl: product.apps_serp_co_product_page_url ?? "",
+          expected: expectedApps,
+        });
       }
     });
 
