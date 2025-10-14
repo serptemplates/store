@@ -15,6 +15,7 @@ import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/notifications/ops";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { syncOrderWithGhlWithRetry } from "@/lib/payments/stripe-webhook/helpers/ghl-sync";
+import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 
 const OPS_ALERT_THRESHOLD = 3;
 
@@ -126,6 +127,27 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     paymentStatus: session.payment_status ?? null,
     paymentMethod: session.payment_method_types?.[0] ?? null,
     source: "stripe",
+  });
+
+  // Extract affiliate ID from metadata for tracking
+  const affiliateId =
+    (typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined) ?? null;
+
+  // Track checkout completion in PostHog
+  trackCheckoutCompleted({
+    provider: "stripe",
+    amountTotalCents: session.amount_total ?? null,
+    currency: session.currency ?? null,
+    offerId,
+    landerId,
+    affiliateId,
+    checkoutSessionId,
+    stripeSessionId: session.id,
+    stripePaymentIntentId: paymentIntentId,
+    paymentMethod: session.payment_method_types?.[0] ?? null,
+    customerEmail,
+    customerName: session.customer_details?.name ?? null,
+    metadata,
   });
 
   let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
