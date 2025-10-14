@@ -40,7 +40,7 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         const bannerText =
           bannerType === "preRelease"
-            ? getReleaseBadgeText(product.status).replace("-", " ")
+            ? getReleaseBadgeText(product.status).replaceAll("-", " ")
             : bannerType === "newRelease"
               ? "New Release"
               : bannerType === "popular"
