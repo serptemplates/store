@@ -1,73 +1,103 @@
-# apps.serp.co - Deployment & Configuration Guide
+# apps.serp.co – Deployment & Operations Guide
 
-## Project Overview
-This is the main SERP Apps store application deployed at https://apps.serp.co
+## Application overview
 
-## Vercel Configuration
+The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the modular checkout, Stripe/PayPal integrations, GHL sync, and license-service orchestration.
 
-### Project Details
-- **Vercel Project Name**: `apps.serp.co`
-- **Project ID**: `prj_Q3foxpYmgnDaloVMPd2CpiuxEb30`
-- **Organization**: `serpcompany`
+Key directories:
+
+```
+/ (repo root)
+├── apps/store/                # Store Next.js app
+│   ├── app/                   # Route handlers and pages
+│   ├── components/checkout/   # Modular checkout React components
+│   ├── lib/checkout/          # Checkout helpers (sessions, orders, validation)
+│   ├── lib/payments/stripe-webhook/  # Stripe webhook dispatcher + helpers
+│   ├── scripts/               # CLI utilities & manual test harnesses
+│   └── playwright.config.ts   # Smoke suite configuration
+├── packages/ui/               # Shared primitives
+├── packages/templates/        # Reusable marketing/product sections
+└── docs/                      # Current documentation set (see docs/README.md)
+```
+
+## Vercel project
+
+- **Project**: `apps.serp.co`
+- **Org**: `serpcompany`
 - **Production URL**: https://apps.serp.co
+- **`vercel.json`** (`apps/store/vercel.json`)
+  - `installCommand`: `cd ../.. && pnpm install --frozen-lockfile`
+  - `buildCommand`: `cd ../.. && pnpm --filter @apps/store build`
+  - Cron: `/api/monitoring/health?alert=1` nightly
 
-### Directory Structure
-```
-/store (monorepo root)
-├── package.json          # Workspace configuration
-├── pnpm-workspace.yaml   # PNPM workspace settings
-├── .env                  # Shared environment variables
-└── apps/
-    └── store/           # THIS APP (Vercel deploys from here)
-        ├── vercel.json   # Vercel build configuration
-        ├── .vercel/      # Vercel project link (gitignored)
-        ├── .next/        # Build output (gitignored)
-        ├── app/          # Next.js app directory
-        │   ├── layout.tsx    # Contains GTM integration
-        │   └── sitemap.ts    # Dynamic sitemap generation
-        └── data/
-            └── site.config.json  # Site configuration & GTM ID
+Vercel executes the commands from the app folder, hence the `cd ../..` before each workspace command.
+
+## Verification checklist (run locally before merging)
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test:unit
+pnpm test:smoke
 ```
 
-## Build Configuration
+The smoke suite (`pnpm test:smoke`) launches Playwright’s Desktop Chrome project and covers:
 
-### vercel.json
-Located at `/apps/store/vercel.json`:
-```json
-{
-  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm --filter @apps/store build",
-  "outputDirectory": ".next",
-  "crons": [
-    {
-      "path": "/api/monitoring/health?alert=1",
-      "schedule": "0 0 * * *"
-    }
-  ]
-}
+- Product page render and checkout CTA sanity
+- Stripe checkout redirect happy path
+- Account dashboard surface
+- Videos library regressions
+
+For full end-to-end coverage (including Stripe CLI forwarding) use:
+
+```bash
+pnpm --filter @apps/store test:e2e
 ```
 
-**Important**: Commands navigate up to monorepo root (`../..`) to run PNPM workspace commands.
+## Runtime touchpoints
 
-### Build Process
-1. Vercel clones repo and enters `/apps/store/` directory
-2. Runs install command (navigates to root, installs all dependencies)
-3. Runs build command (navigates to root, builds this specific app)
-4. Serves the `.next` directory from `/apps/store/`
+- **XML sitemap** – `/app/sitemap.ts`, exported at https://apps.serp.co/sitemap.xml. It enumerates products from `apps/store/data/products/*.yaml`.
+- **Google Tag Manager** – Configured in `apps/store/data/site.config.json` (container `GTM-WS97TH45`) and wired through `app/layout.tsx`.
+- **Health checks** – `/api/monitoring/health` (called nightly via Vercel cron) and the Playwright smoke run.
 
-## Key Features
+## Environment variables
 
-### XML Sitemap
-- **URL**: https://apps.serp.co/sitemap.xml
-- **File**: `/apps/store/app/sitemap.ts`
-- Automatically generates URLs for all products in `/data/products/*.yaml`
-- Updates on each build
+- Local development: `.env.local` at repo root and/or `apps/store/.env.local`.
+- CI / Vercel: manage through the Vercel dashboard (`Settings → Environment Variables`).
+- Scripts: use `loadScriptEnvironment` from `apps/store/scripts/utils/env.ts` when authoring new CLIs so they load `.env` files the same way as `update-video-metadata.ts` and `revoke-refunded-licenses.ts`.
 
-### Google Tag Manager
-- **Container ID**: `GTM-WS97TH45`
-- **Config File**: `/apps/store/data/site.config.json`
-- **Implementation**: `/apps/store/app/layout.tsx`
-- Loads on all pages for analytics tracking
+## Manual diagnostics
+
+The ad-hoc harnesses under `apps/store/scripts/manual-tests/` are still handy for on-call debugging. Each loads env vars via the shared utility described above.
+
+| Script | Purpose |
+| --- | --- |
+| `npx tsx scripts/manual-tests/acceptance-test.ts` | Full Stripe checkout simulation (webhooks + GHL sync). |
+| `npx tsx scripts/manual-tests/automated-payment-test.ts` | Stress-tests automated payment flow without UI. |
+| `npx tsx scripts/manual-tests/test-payment-flow.ts` | Fast preflight for DB + Stripe connectivity. |
+| `npx tsx scripts/manual-tests/test-purchase-flow.ts` | Replays `checkout.session.completed` against the webhook dispatcher. |
+| `npx tsx scripts/manual-tests/test-ghl-direct.ts` (and friends) | Exercises GoHighLevel APIs directly. |
+| `python scripts/manual-tests/test_checkout_with_playwright.py` | Interactive Playwright checkout run. |
+
+## GHL integration checks
+
+Use the integration specs when validating metadata changes:
+
+```bash
+# Stripe → GHL
+pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+
+# PayPal → GHL
+pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
+```
+
+Both tests assert that:
+
+- Orders persist with the correct source + metadata.
+- Checkout sessions record `ghlSyncedAt` / `ghlContactId`.
+- GoHighLevel contacts receive the JSON payloads in `contact.purchase_metadata` and `contact.license_keys_v2`.
+
+Override the default field keys with `GHL_CUSTOM_FIELD_PURCHASE_METADATA` / `GHL_CUSTOM_FIELD_LICENSE_KEYS_V2` when a location deviates from the default schema.
 
 ## Local Development
 

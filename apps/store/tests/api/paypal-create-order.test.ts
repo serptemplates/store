@@ -26,7 +26,7 @@ vi.mock("@/lib/products/product", () => ({
   getProductData: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
 }));
@@ -35,7 +35,7 @@ import { POST } from "@/app/api/paypal/create-order/route";
 import { isPayPalConfigured, createPayPalOrder } from "@/lib/payments/paypal";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 
 const isPayPalConfiguredMock = vi.mocked(isPayPalConfigured);
 const createPayPalOrderMock = vi.mocked(createPayPalOrder);

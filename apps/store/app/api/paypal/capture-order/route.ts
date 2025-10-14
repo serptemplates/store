@@ -6,7 +6,7 @@ import {
   updateCheckoutSessionStatus,
   upsertOrder,
   type CheckoutOrderUpsert,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { createLicenseForOrder } from "@/lib/license-service";

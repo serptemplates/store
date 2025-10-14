@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type Stripe from "stripe";
 import type { OfferConfig } from "@/lib/products/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout/store";
+import type { CheckoutSessionRecord } from "@/lib/checkout";
 
 vi.hoisted(() => {
   process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
@@ -24,7 +24,7 @@ vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   findCheckoutSessionByPaymentIntentId: vi.fn(),
   findCheckoutSessionByStripeSessionId: vi.fn(),
   markStaleCheckoutSessions: vi.fn(),
@@ -79,7 +79,7 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   updateCheckoutSessionStatus,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { syncOrderWithGhl, GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import { sendOpsAlert } from "@/lib/notifications/ops";

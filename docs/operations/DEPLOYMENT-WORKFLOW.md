@@ -24,11 +24,18 @@ git checkout -b fix/issue-description
 ### 2. Make Your Changes
 ```bash
 # Make your code changes
-# Test locally with:
+
+# Keep the compiled app running while you work
 pnpm dev
 
-# Build to verify everything works:
-cd ../.. && pnpm --filter @apps/store build
+# Run the verification stack before opening a PR
+pnpm lint
+pnpm typecheck
+pnpm test:unit
+pnpm test:smoke
+
+# Optional: build the production bundle when debugging Vercel-only issues
+pnpm --filter @apps/store build
 ```
 
 ### 3. Commit and Push
@@ -45,6 +52,14 @@ gh pr create --title "Add new feature" --body "Description of changes"
 
 # Or go to GitHub and click "Compare & pull request"
 ```
+
+**PR checklist**
+
+- [ ] `pnpm lint`
+- [ ] `pnpm typecheck`
+- [ ] `pnpm test:unit`
+- [ ] `pnpm test:smoke`
+- [ ] Linked issue / context updated (docs, plan checkboxes, etc.)
 
 ### 5. Preview Deployment
 - **Automatic**: When you create a PR, Vercel automatically creates a preview deployment

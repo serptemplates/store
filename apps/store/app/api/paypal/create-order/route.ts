@@ -3,7 +3,7 @@ import { z } from "zod";
 import { createPayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
 import logger from "@/lib/logger";

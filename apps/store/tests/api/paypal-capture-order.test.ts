@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { OfferConfig } from "@/lib/products/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout/store";
+import type { CheckoutSessionRecord } from "@/lib/checkout";
 
 type PayPalCaptureResponse = {
   status: string;
@@ -30,7 +30,7 @@ vi.mock("@/lib/payments/paypal", () => ({
   capturePayPalOrder: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   findCheckoutSessionByStripeSessionId: vi.fn(),
   updateCheckoutSessionStatus: vi.fn(),
   upsertOrder: vi.fn(),
@@ -50,7 +50,7 @@ import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
 

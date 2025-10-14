@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSimpleCheckout } from "@/lib/checkout/simple-checkout";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 
 export async function POST(request: NextRequest) {
   try {

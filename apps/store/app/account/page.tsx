@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
 import AccountVerificationFlow from "@/components/account/AccountVerificationFlow";
 import { getAccountFromSessionCookie } from "@/lib/account/service";
-import { findRecentOrdersByEmail } from "@/lib/checkout/store";
+import { findRecentOrdersByEmail } from "@/lib/checkout";
 import { fetchLicenseForOrder } from "@/lib/license-service";
 import { fetchContactLicensesByEmail } from "@/lib/ghl-client";
 import { mergePurchasesWithGhlLicenses } from "@/lib/account/license-integration";

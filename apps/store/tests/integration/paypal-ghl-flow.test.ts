@@ -11,7 +11,7 @@ const { ensureDatabase, isDatabaseConfigured, query } = await import("@/lib/data
 const {
   upsertCheckoutSession,
   findCheckoutSessionByStripeSessionId,
-} = await import("@/lib/checkout/store");
+} = await import("@/lib/checkout");
 const { getOfferConfig } = await import("@/lib/products/offer-config");
 
 const paypalConfigured = Boolean(

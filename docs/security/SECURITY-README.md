@@ -7,7 +7,7 @@
 1. **SECURITY-AUDIT-SUMMARY.md** ← Start here (Executive summary)
 2. **SECURITY-AUDIT.md** (Detailed findings)
 3. **SECURITY-IMPLEMENTATION-GUIDE.md** (How to implement)
-4. **PRE-LAUNCH-CHECKLIST.md** (Before going live)
+4. **historical/PRE-LAUNCH-CHECKLIST.md** (Before going live)
 
 ---
 
@@ -52,7 +52,7 @@ A comprehensive security audit identified and fixed 7 critical/important securit
 - `tests/security/rate-limiting.test.ts` - Rate limit tests (167 lines)
 - `SECURITY-AUDIT.md` - Audit findings (323 lines)
 - `SECURITY-IMPLEMENTATION-GUIDE.md` - Implementation guide (522 lines)
-- `PRE-LAUNCH-CHECKLIST.md` - Launch checklist (292 lines)
+- `../historical/PRE-LAUNCH-CHECKLIST.md` - Launch checklist (292 lines)
 - `SECURITY-AUDIT-SUMMARY.md` - Executive summary (373 lines)
 
 **Total:** 14 files, 2,561 lines added
@@ -300,7 +300,7 @@ After launch, implement these improvements:
 
 - `SECURITY-AUDIT.md` - Full audit findings
 - `SECURITY-IMPLEMENTATION-GUIDE.md` - Implementation steps
-- `PRE-LAUNCH-CHECKLIST.md` - Launch verification
+- `../historical/PRE-LAUNCH-CHECKLIST.md` - Launch verification
 - `SECURITY-AUDIT-SUMMARY.md` - Executive summary
 
 ### External Resources
@@ -314,7 +314,7 @@ After launch, implement these improvements:
 
 - **Stripe Support:** https://support.stripe.com
 - **Vercel Support:** https://vercel.com/help
-- **Security Issues:** See incident response procedures in PRE-LAUNCH-CHECKLIST.md
+- **Security Issues:** See incident response procedures in `../historical/PRE-LAUNCH-CHECKLIST.md`
 
 ---
 

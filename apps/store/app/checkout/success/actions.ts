@@ -1,9 +1,9 @@
 "use server";
 
 import { getStripeClient } from "@/lib/payments/stripe";
-import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder } from "@/lib/checkout/store";
+import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder } from "@/lib/checkout";
 import { createLicenseForOrder } from "@/lib/license-service";
-import { updateOrderMetadata } from "@/lib/checkout/store";
+import { updateOrderMetadata } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { ensureAccountForPurchase } from "@/lib/account/service";
 import logger from "@/lib/logger";

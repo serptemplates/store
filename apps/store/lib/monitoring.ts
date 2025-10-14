@@ -1,4 +1,4 @@
-import { countPendingCheckoutSessionsOlderThan, getRecentOrderStats } from "@/lib/checkout/store";
+import { countPendingCheckoutSessionsOlderThan, getRecentOrderStats } from "@/lib/checkout";
 import { countErroredWebhookLogsSince, countPendingWebhookLogsOlderThan } from "@/lib/webhook-logs";
 import sendOpsAlert from "@/lib/notifications/ops";
 

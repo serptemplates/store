@@ -4,7 +4,7 @@ import {
   findCheckoutSessionByStripeSessionId,
   updateCheckoutSessionStatus,
   upsertOrder,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { syncOrderWithGhl } from "@/lib/ghl-client";
 import { getOfferConfig } from "@/lib/products/offer-config";
