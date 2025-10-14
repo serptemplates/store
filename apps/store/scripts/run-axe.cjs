@@ -17,7 +17,7 @@ if (!paths.length) {
   process.exit(1);
 }
 
-const axeBin = require.resolve('@axe-core/cli/bin/axe.js');
+const axeBin = require.resolve('@axe-core/cli/dist/src/bin/cli.js');
 
 let hasFailure = false;
 
