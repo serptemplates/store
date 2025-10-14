@@ -81,7 +81,7 @@ const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
   ghl: {
     title: "Thank you for your purchase!",
     description:
-      "Your order is confirmed. We’re syncing the details from GoHighLevel and will email your access instructions shortly.",
+      "Your order is confirmed. Watch the video below for your next steps.",
     ctas: [
       { label: "Open Your Account", href: "/account" },
       { label: "Need Help?", href: "/support", variant: "outline" },
@@ -387,6 +387,60 @@ export function SuccessContent() {
               </div>
             )}
 
+            <div className="mx-auto w-full max-w-3xl">
+              {successVideo.kind === "youtube" ? (
+                isVideoActive ? (
+                  <iframe
+                    key={successVideo.autoplayUrl}
+                    src={successVideo.autoplayUrl}
+                    title="Welcome video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="aspect-video w-full rounded-md border border-border bg-black"
+                    loading="lazy"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setIsVideoActive(true)}
+                    className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
+                    aria-label="Play welcome video"
+                  >
+                    <Image
+                      src={thumbnailSrc ?? successVideo.thumbnailUrl}
+                      alt="Welcome video thumbnail"
+                      fill
+                      className="object-cover transition duration-200 group-hover:scale-[1.01]"
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      priority={false}
+                      onError={() => {
+                        if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
+                          setThumbnailSrc(successVideo.fallbackThumbnailUrl);
+                        }
+                      }}
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
+                    />
+                    <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
+                      <Play className="h-4 w-4" />
+                      Watch welcome video
+                    </span>
+                  </button>
+                )
+              ) : (
+                <video
+                  key={successVideo.src}
+                  src={successVideo.src}
+                  playsInline
+                  controls
+                  preload="metadata"
+                  className="aspect-video w-full rounded-md border border-border bg-black"
+                />
+              )}
+            </div>
+
             <div className="flex flex-col gap-3 sm:flex-row">
               {heroCopy.ctas.map((cta) => {
                 const Icon = cta.icon;
@@ -413,60 +467,6 @@ export function SuccessContent() {
               })}
             </div>
           </div>
-        </section>
-
-        <section className="my-12 sm:my-16">
-          {successVideo.kind === "youtube" ? (
-            isVideoActive ? (
-              <iframe
-                key={successVideo.autoplayUrl}
-                src={successVideo.autoplayUrl}
-                title="Welcome video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="aspect-video w-full rounded-md border border-border bg-black"
-                loading="lazy"
-              />
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsVideoActive(true)}
-                className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
-                aria-label="Play welcome video"
-              >
-                <Image
-                  src={thumbnailSrc ?? successVideo.thumbnailUrl}
-                  alt="Welcome video thumbnail"
-                  fill
-                  className="object-cover transition duration-200 group-hover:scale-[1.01]"
-                  sizes="(max-width: 768px) 100vw, 640px"
-                  priority={false}
-                  onError={() => {
-                    if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
-                      setThumbnailSrc(successVideo.fallbackThumbnailUrl);
-                    }
-                  }}
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
-                />
-                <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
-                  <Play className="h-4 w-4" />
-                  Watch welcome video
-                </span>
-              </button>
-            )
-          ) : (
-            <video
-              key={successVideo.src}
-              src={successVideo.src}
-              playsInline
-              controls
-              preload="metadata"
-              className="aspect-video w-full rounded-md border border-border bg-black"
-            />
-          )}
         </section>
 
         {hasWhitelistMedia ? (
