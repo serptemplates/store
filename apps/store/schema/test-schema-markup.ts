@@ -16,7 +16,6 @@ const testProduct: SchemaProduct = {
   description: 'This is a test product for schema validation',
   seo_title: 'Test Product - Schema Testing',
   seo_description: 'Test Product for schema.org validation',
-  product_page_url: 'https://store.serp.co/products/test-product',
   store_serp_co_product_page_url: 'https://store.serp.co/products/test-product',
   apps_serp_co_product_page_url: 'https://apps.serp.co/test-product',
   serply_link: 'https://serp.ly/test-product',

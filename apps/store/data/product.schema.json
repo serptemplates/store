@@ -35,10 +35,6 @@
       "type": "string",
       "minLength": 1
     },
-    "product_page_url": {
-      "type": "string",
-      "format": "uri"
-    },
     "store_serp_co_product_page_url": {
       "type": "string",
       "format": "uri",

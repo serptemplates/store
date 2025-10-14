@@ -77,7 +77,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       metadata: {
         productSlug: product.slug,
         productName: product.name,
-        productPageUrl: product.product_page_url,
+        productPageUrl: product.store_serp_co_product_page_url ?? product.apps_serp_co_product_page_url,
         store_serp_co_product_page_url: product.store_serp_co_product_page_url,
         apps_serp_co_product_page_url: product.apps_serp_co_product_page_url,
         purchaseUrl: product.serply_link,

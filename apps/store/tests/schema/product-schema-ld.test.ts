@@ -11,7 +11,6 @@ describe("generateProductSchemaLD", () => {
         seo_description: "Sample description",
         name: "Sample Product",
         description: "Sample description",
-        product_page_url: "https://store.serp.co/products/sample-product",
         store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
         apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
         serply_link: "https://serp.ly/sample-product",

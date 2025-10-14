@@ -2,7 +2,6 @@ slug: test-product
 platform: Test Platform
 seo_title: Test Product
 seo_description: Test product description.
-product_page_url: https://example.com/test-product
 store_serp_co_product_page_url: https://store.serp.co/products/test-product
 apps_serp_co_product_page_url: https://apps.serp.co/test-product
 serply_link: https://serp.ly/test-product

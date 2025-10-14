@@ -26,7 +26,6 @@ const productSchema = generateProductSchemaLD({
     seo_description: 'Download videos from anywhere with advanced features',
     name: 'Video Downloader Pro',
     description: 'Professional video downloading tool with advanced features',
-    product_page_url: 'https://store.serp.co/products/video-downloader-pro',
     store_serp_co_product_page_url: 'https://store.serp.co/products/video-downloader-pro',
     apps_serp_co_product_page_url: 'https://apps.serp.co/video-downloader-pro',
     serply_link: 'https://serp.ly/video-downloader-pro',

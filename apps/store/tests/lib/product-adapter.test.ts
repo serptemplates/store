@@ -7,7 +7,6 @@ const baseProduct: ProductData = {
   slug: "sample-product",
   seo_title: "Sample Product",
   seo_description: "Sample description",
-  product_page_url: "https://example.com/sample",
   store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
@@ -143,7 +142,6 @@ describe("productToHomeTemplate", () => {
         cta_href: "https://example.com/not-allowed",
       },
       serply_link: "https://serp.ly/something",
-      product_page_url: "https://store.serp.co/products/sample-product",
       store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
       apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
     };

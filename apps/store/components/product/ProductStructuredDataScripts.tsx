@@ -97,7 +97,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
     softwareVersion: "1.0",
     url: siteConfig?.site?.domain ? `https://${siteConfig.site.domain}/${product.slug}` : `${normalizedStoreUrl}/${product.slug}`,
     downloadUrl:
-      product.serply_link ?? product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url ?? product.product_page_url,
+      product.serply_link ?? product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url ?? productUrl,
     author: {
       name: siteConfig?.site?.name?.trim() || "SERP Apps",
       url: normalizedStoreUrl,

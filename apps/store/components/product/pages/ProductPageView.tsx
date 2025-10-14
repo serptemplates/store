@@ -64,7 +64,6 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     seo_description: product.description ?? product.title,
     name: product.title,
     description: product.description ?? product.title,
-    product_page_url: storeProductUrl,
     store_serp_co_product_page_url: storeProductUrl,
     apps_serp_co_product_page_url: appsProductUrl,
     serply_link: serplyLink,

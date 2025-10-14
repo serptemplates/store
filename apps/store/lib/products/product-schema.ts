@@ -115,7 +115,6 @@ export const productSchema = z.object({
   platform: z.string().trim().optional(),
   seo_title: trimmedString(),
   seo_description: trimmedString(),
-  product_page_url: trimmedString().url(),
   store_serp_co_product_page_url: enforceHost("store.serp.co"),
   apps_serp_co_product_page_url: enforceHost("apps.serp.co"),
   serply_link: enforceHost("serp.ly"),
@@ -159,6 +158,6 @@ export const productSchema = z.object({
   // Google Merchant fields
   brand: z.string().optional().default('SERP Apps'),
   sku: z.string().optional(),
-});
+}).strict();
 
 export type ProductData = z.infer<typeof productSchema>;

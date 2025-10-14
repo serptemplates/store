@@ -7,7 +7,6 @@ const baseProduct = (): ProductData => ({
   platform: "Sample",
   seo_title: " Sample Product Title ",
   seo_description: "  Sample description for SEO.  ",
-  product_page_url: "https://apps.serp.co/sample-product",
   store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",

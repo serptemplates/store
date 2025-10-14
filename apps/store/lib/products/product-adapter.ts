@@ -103,7 +103,6 @@ export function productToHomeTemplate(
     product.pricing?.cta_href,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
-    product.product_page_url,
     product.serply_link,
   ];
 

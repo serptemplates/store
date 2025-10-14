@@ -59,7 +59,6 @@ describe("POST /api/paypal/create-order", () => {
     slug: "demo-offer",
     seo_title: "Demo Product",
     seo_description: "Test product",
-    product_page_url: "https://store.serp.co/products/demo",
     store_serp_co_product_page_url: "https://store.serp.co/products/demo",
     apps_serp_co_product_page_url: "https://apps.serp.co/demo",
     serply_link: "https://serp.ly/demo",

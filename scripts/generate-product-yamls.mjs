@@ -115,7 +115,6 @@ for (const slug of allSlugs) {
     platform: name.split(' ')[0] || name,
     seo_title: `${name} | Download ${name} for Offline Access`,
     seo_description: description || `Download ${name} content for offline use with ease.`,
-    product_page_url: storeUrl,
     store_serp_co_product_page_url: storeUrl,
     apps_serp_co_product_page_url: appsUrl,
     serply_link: `https://serp.ly/${slug}`,

@@ -119,7 +119,6 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const primaryRegion = siteRegions[0] ?? 'Worldwide';
   const sameAsUrls = [
     entry.url,
-    product.product_page_url,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
     product.serply_link,

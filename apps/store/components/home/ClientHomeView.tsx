@@ -47,7 +47,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     product.serply_link,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
-    product.product_page_url,
   ].filter((value): value is string => Boolean(value && value.trim().length > 0))
   const fallbackCtaHref = fallbackCtaCandidates[0]
   const primaryCtaHref = hasEmbeddedCheckout ? checkoutHref : fallbackCtaHref

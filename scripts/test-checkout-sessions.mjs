@@ -185,7 +185,7 @@ async function testProduct(file) {
   const metadata = {
     offerId: slug,
     productSlug: slug,
-    productPageUrl: data.product_page_url,
+    productPageUrl: data.store_serp_co_product_page_url ?? data.apps_serp_co_product_page_url,
     store_serp_co_product_page_url: data.store_serp_co_product_page_url,
     apps_serp_co_product_page_url: data.apps_serp_co_product_page_url,
     purchaseUrl: data.serply_link,
