@@ -10,6 +10,7 @@ Use this index to find the tooling and configuration docs that support the store
   - `PAYPAL-SETUP.md` – PayPal account + webhook configuration.
   - `MERCHANT-CENTER-SETUP.md` – Google Merchant Center configuration notes.
   - `EMAIL-NOTIFICATIONS.md` – Transactional email setup and incident playbook.
+  - `account-license-sync.md` – How /account verification pulls licenses from GHL.
 - **Monitoring**
   - `store-post-launch-monitoring.md` – Post-launch observation checklist.
   - `MONITORING-SETUP.md` – Runtime metrics, alerts, and dashboards.

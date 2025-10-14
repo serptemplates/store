@@ -119,25 +119,7 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
 
           <CardContent className="space-y-4 text-sm text-slate-600">
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-xs uppercase tracking-wide text-slate-500">Last verified</span>
-                <span className="font-medium text-slate-900">
-                  {verifiedDate ?? "Awaiting verification"}
-                </span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-xs uppercase tracking-wide text-slate-500">Purchases</span>
-                <span className="font-medium text-slate-900">
-                  {purchases.length === 1 ? "1 purchase" : `${purchases.length} purchases`}
-                </span>
-              </div>
             </div>
-
-            {verifiedRecently && (
-              <div className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-                Email verified — your recent purchases are available below.
-              </div>
-            )}
           </CardContent>
         </Card>
       </section>
@@ -145,12 +127,8 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
       <section className="space-y-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">Purchase history</h2>
-            <p className="text-sm text-slate-500">License keys unlock automatically once your email is verified.</p>
+            <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">License Keys</h2>
           </div>
-          <span className="text-xs font-medium text-slate-500">
-            {purchases.length === 1 ? "1 purchase" : `${purchases.length} purchases`}
-          </span>
         </div>
 
         {purchases.length === 0 ? (
@@ -187,18 +165,8 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
                       <Badge variant="outline" className="uppercase tracking-wide text-xs">
                         {purchase.source.toUpperCase()}
                       </Badge>
-                      {purchase.licenseStatus && (
-                        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                          Status: <span className="ml-1 text-slate-700">{purchase.licenseStatus}</span>
-                        </span>
-                      )}
                     </div>
                   </div>
-                  {purchase.source === "ghl" && (
-                    <p className="text-xs text-slate-500">
-                      Synced from GoHighLevel license automation.
-                    </p>
-                  )}
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4 border-t border-slate-100 pt-4 md:flex-row md:items-center md:justify-between">
                   {purchase.licenseKey ? (
