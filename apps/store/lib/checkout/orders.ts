@@ -166,6 +166,40 @@ export async function updateOrderMetadata(
   return false;
 }
 
+export async function findOrderByPaymentIntentId(paymentIntentId: string): Promise<OrderRecord | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const result = await query<OrderRow>`
+    SELECT
+      id,
+      checkout_session_id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      stripe_charge_id,
+      amount_total,
+      currency,
+      offer_id,
+      lander_id,
+      customer_email,
+      customer_name,
+      metadata,
+      payment_status,
+      payment_method,
+      source,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE stripe_payment_intent_id = ${paymentIntentId}
+    LIMIT 1;
+  `;
+
+  return mapOrderRow(result?.rows?.[0] ?? null);
+}
+
 export async function findRecentOrdersByEmail(email: string, limit = 20): Promise<OrderRecord[]> {
   const schemaReady = await ensureDatabase();
 

@@ -17,10 +17,10 @@ import { useSearchParams } from "next/navigation";
 
 import { Button } from "@repo/ui";
 
-import { processCheckoutSession } from "./actions";
+import { processCheckoutSession, processGhlPayment } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
 
-type CheckoutVariant = "stripe" | "paypal" | "external";
+type CheckoutVariant = "stripe" | "paypal" | "ghl" | "external";
 
 type CtaDefinition = {
   label: string;
@@ -73,6 +73,15 @@ const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
     title: "Thank you for your purchase!",
     description:
       "Your PayPal order is confirmed. We’ve sent the receipt and login instructions to the email connected to your PayPal account.",
+    ctas: [
+      { label: "Open Your Account", href: "/account" },
+      { label: "Need Help?", href: "/support", variant: "outline" },
+    ],
+  },
+  ghl: {
+    title: "Thank you for your purchase!",
+    description:
+      "Your order is confirmed. We’re syncing the details from GoHighLevel and will email your access instructions shortly.",
     ctas: [
       { label: "Open Your Account", href: "/account" },
       { label: "Need Help?", href: "/support", variant: "outline" },
@@ -136,6 +145,7 @@ const WHITELIST_GUIDES: WhitelistGuide[] = [
 
 function getVariant(sessionId: string | null, source: string | null, paypalOrderId: string | null): CheckoutVariant {
   if (sessionId) return "stripe";
+  if (!sessionId && source && source.startsWith("ghl")) return "ghl";
   if (!sessionId && source === "paypal" && paypalOrderId) return "paypal";
   return "external";
 }
@@ -218,57 +228,106 @@ export function SuccessContent() {
   const sessionId = searchParams.get("session_id");
   const source = searchParams.get("source");
   const paypalOrderId = searchParams.get("order_id");
+  const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
+  const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
 
-  const [processing, setProcessing] = useState(Boolean(sessionId));
+  const variant = useMemo<CheckoutVariant>(() => getVariant(sessionId, source, paypalOrderId), [sessionId, source, paypalOrderId]);
+
+  const [processing, setProcessing] = useState(() => {
+    if (variant === "stripe") {
+      return Boolean(sessionId);
+    }
+    if (variant === "ghl") {
+      return true;
+    }
+    return false;
+  });
   const [error, setError] = useState<string | null>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
   useEffect(() => {
-    if (!sessionId) {
-      setOrderDetails(null);
-      setProcessing(false);
-      return;
-    }
+    let cancelled = false;
+
+    type ProcessResult = Awaited<ReturnType<typeof processCheckoutSession>>;
+
+    const applyOrderResult = (result: ProcessResult) => {
+      if (cancelled) return;
+
+      if (!result.success) {
+        console.warn("Failed to process checkout:", result.message);
+        return;
+      }
+
+      if (result.order) {
+        const conversionItems =
+          result.order.items?.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
+            quantity: item.quantity,
+          })) ?? [];
+
+        setOrderDetails({
+          sessionId: result.order.sessionId,
+          value: result.order.amount ?? undefined,
+          currency: result.order.currency ?? undefined,
+          items: conversionItems,
+          coupon: result.order.coupon ?? undefined,
+          affiliateId: result.order.affiliateId ?? undefined,
+        });
+      }
+    };
+
+    const handleError = (err: unknown) => {
+      if (cancelled) return;
+      console.error("Error processing checkout:", err);
+      setError("There was an issue processing your order. Contact support if you don't receive your license key.");
+    };
 
     setOrderDetails(null);
+    setError(null);
 
-    processCheckoutSession(sessionId)
-      .then((result) => {
-        if (!result.success) {
-          console.warn("Failed to process checkout:", result.message);
-          return;
-        }
+    if (variant === "stripe" && sessionId) {
+      setProcessing(true);
+      processCheckoutSession(sessionId)
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
+      return () => {
+        cancelled = true;
+      };
+    }
 
-        if (result.order) {
-          const conversionItems =
-            result.order.items?.map((item) => ({
-              id: item.id,
-              name: item.name,
-              price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
-              quantity: item.quantity,
-            })) ?? [];
+    if (variant === "ghl") {
+      setProcessing(true);
+      processGhlPayment({ paymentId: ghlPaymentId, productSlug: ghlProductSlug })
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
 
-          setOrderDetails({
-            sessionId: result.order.sessionId,
-            value: result.order.amount ?? undefined,
-            currency: result.order.currency ?? undefined,
-            items: conversionItems,
-            coupon: result.order.coupon ?? undefined,
-            affiliateId: result.order.affiliateId ?? undefined,
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("Error processing checkout:", err);
-        setError("There was an issue processing your order. Contact support if you don't receive your license key.");
-      })
-      .finally(() => setProcessing(false));
-  }, [sessionId]);
+      return () => {
+        cancelled = true;
+      };
+    }
 
-  const variant = useMemo<CheckoutVariant>(() => getVariant(sessionId, source, paypalOrderId), [sessionId, source, paypalOrderId]);
-  const orderReference = sessionId ?? paypalOrderId ?? undefined;
+    setProcessing(false);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [variant, sessionId, ghlPaymentId, ghlProductSlug]);
+
+  const orderReference = sessionId ?? paypalOrderId ?? ghlPaymentId ?? undefined;
   const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;

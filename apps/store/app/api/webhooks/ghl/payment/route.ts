@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import logger from "@/lib/logger";
 import { ensureAccountForPurchase } from "@/lib/account/service";
 import { recordWebhookLog } from "@/lib/webhook-logs";
+import { upsertOrder } from "@/lib/checkout";
 
 const WEBHOOK_SECRET = process.env.GHL_PAYMENT_WEBHOOK_SECRET;
 
@@ -151,6 +152,39 @@ function parseJsonBody(body: unknown) {
   };
 }
 
+function parseAmountToMinorUnits(rawAmount: string | null): number | null {
+  if (!rawAmount) {
+    return null;
+  }
+
+  const normalized = rawAmount.replace(/[^0-9.,-]/g, "").replace(/,/g, "");
+
+  if (!normalized) {
+    return null;
+  }
+
+  const parsed = Number.parseFloat(normalized);
+
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+
+  return Math.round(parsed * 100);
+}
+
+function normalizeCurrencyCode(rawCurrency: string | null): string | null {
+  if (!rawCurrency) {
+    return null;
+  }
+
+  const trimmed = rawCurrency.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  return trimmed.toUpperCase();
+}
+
 export async function POST(request: NextRequest) {
   if (request.method !== "POST") {
     return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
@@ -206,9 +240,11 @@ export async function POST(request: NextRequest) {
   }
 
   const normalizedStatus = (parsed.paymentStatus ?? "").toLowerCase();
-  const webhookStatus = normalizedStatus && normalizedStatus !== "success" && normalizedStatus !== "succeeded"
-    ? "error"
-    : "success";
+  const successStatuses = new Set(["success", "succeeded", "paid", "complete", "completed"]);
+  const webhookStatus =
+    normalizedStatus && normalizedStatus.length > 0 && !successStatuses.has(normalizedStatus)
+      ? "error"
+      : "success";
 
   await recordWebhookLog({
     paymentIntentId: `ghl_${resolvedIdentifier}`,
@@ -243,6 +279,42 @@ export async function POST(request: NextRequest) {
     totalAmount: parsed.totalAmount,
     currency: parsed.currency,
   });
+
+  const ghlPaymentIntentId = `ghl_${resolvedIdentifier}`;
+
+  try {
+    await upsertOrder({
+      stripePaymentIntentId: ghlPaymentIntentId,
+      stripeSessionId: ghlPaymentIntentId,
+      offerId: parsed.offerId ?? null,
+      landerId: parsed.offerId ?? null,
+      customerEmail: parsed.customerEmail ?? null,
+      customerName: parsed.customerName ?? null,
+      amountTotal: parseAmountToMinorUnits(parsed.totalAmount),
+      currency: normalizeCurrencyCode(parsed.currency),
+      metadata: {
+        ghl: {
+          transactionId: parsed.transactionId,
+          paymentId: parsed.paymentId,
+          contactId: parsed.contactId,
+          couponCode: parsed.couponCode,
+          paymentStatus: parsed.paymentStatus,
+          paymentSource: parsed.paymentSource,
+          customData: parsed.customData ?? null,
+          payment: parsed.payment ?? null,
+        },
+      },
+      paymentStatus: parsed.paymentStatus ?? null,
+      paymentMethod: parsed.paymentSource ?? "ghl_payment_link",
+      source: "ghl",
+    });
+  } catch (error) {
+    logger.error("ghl.webhook.order_upsert_failed", {
+      identifier: resolvedIdentifier,
+      offerId: parsed.offerId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 
   if (parsed.customerEmail) {
     try {
