@@ -1,19 +1,17 @@
 slug: tiktok-downloader
 platform: Tiktok
 seo_title: Download Tiktok Videos | Tiktok Downloader
-seo_description: Download Tiktok videos easily for offline viewing. Fast,
-  reliable Tiktok video downloader with high-quality downloads.
+seo_description: Download Tiktok videos easily for offline viewing. Fast, reliable Tiktok video downloader with high-quality downloads.
 product_page_url: https://store.serp.co/products/tiktok-downloader
-purchase_url: https://serp.ly/tiktok-downloader
-stripe:
-  price_id: price_1S99gF06JrOmKRCmcKeM0NSp
-  success_url: https://apps.serp.co/checkout/success
-  cancel_url: https://apps.serp.co/checkout?product=tiktok-downloader
-  metadata:
-    source: generated
-    stripe_product_id: prod_SqnavySFXhLMCk
+store_serp_co_product_page_url: https://store.serp.co/products/tiktok-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/tiktok-downloader
+serply_link: https://serp.ly/tiktok-downloader
+success_url: https://apps.serp.co/checkout/success
+cancel_url: https://apps.serp.co/checkout?product=tiktok-downloader
+buy_button_destination: https://ghl.serp.co/payment-link/68e022c6613b1b4c4ace7f2b
 name: Tiktok Downloader
 tagline: Save Tiktok videos instantly for offline viewing.
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
 github_repo_url: https://github.com/serpapps/tiktok-video-downloader
 github_repo_tags: []
 features:
@@ -43,40 +41,39 @@ related_videos: []
 screenshots:
   - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
     alt: Tiktok Downloader website preview
+reviews:
+  - name: Alex Martinez
+    title: Saves hours every week with Tiktok Downloader
+    rating: 5
+    date: 2025-02-12
+    review: I manage content libraries and Tiktok Downloader lets me pull everything from Tiktok in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Tiktok downloads
+    rating: 4.9
+    date: 2025-03-03
+    review: Downloading from Tiktok used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Tiktok content
+    rating: 4.8
+    date: 2025-01-28
+    review: We archive Tiktok assets for clients and the download in Tiktok Downloader keep our workflows smooth. Totally worth the price.
 faqs:
   - question: Can I download TikTok videos without the watermark?
-    answer: Yes, this downloader can save TikTok videos without the TikTok watermark
-      overlay. This gives you clean videos perfect for repurposing content,
-      creating compilations, or archiving your favorite videos.
+    answer: Yes, this downloader can save TikTok videos without the TikTok watermark overlay. This gives you clean videos perfect for repurposing content, creating compilations, or archiving your favorite videos.
   - question: Does this work with TikTok slideshows and photo posts?
-    answer: Absolutely! The downloader handles all TikTok content types including
-      videos, slideshow posts, and images. Each format is downloaded in its
-      original quality with all media preserved.
+    answer: Absolutely! The downloader handles all TikTok content types including videos, slideshow posts, and images. Each format is downloaded in its original quality with all media preserved.
   - question: Can I download videos from private TikTok accounts?
-    answer: You can only download content from accounts you have access to view. If
-      you follow a private account and can see their content, the downloader can
-      save those videos. Content from accounts you cannot view cannot be
-      downloaded.
+    answer: You can only download content from accounts you have access to view. If you follow a private account and can see their content, the downloader can save those videos. Content from accounts you cannot view cannot be downloaded.
   - question: Will this save the original audio track or just the video?
-    answer: The downloader saves complete videos with original audio intact. You can
-      also extract just the audio track separately if needed, which is useful
-      for saving trending sounds or music.
+    answer: The downloader saves complete videos with original audio intact. You can also extract just the audio track separately if needed, which is useful for saving trending sounds or music.
   - question: How does this handle TikTok's video quality?
-    answer: Videos are downloaded at the highest quality available from TikTok. The
-      downloader preserves the original resolution and bitrate without
-      re-encoding, ensuring you get the best possible quality.
+    answer: Videos are downloaded at the highest quality available from TikTok. The downloader preserves the original resolution and bitrate without re-encoding, ensuring you get the best possible quality.
   - question: Is my TikTok account information safe when using this?
-    answer: Your privacy and security are priorities. The downloader uses secure
-      authentication methods and never stores your credentials. All operations
-      happen locally on your device.
+    answer: Your privacy and security are priorities. The downloader uses secure authentication methods and never stores your credentials. All operations happen locally on your device.
   - question: Can I organize downloaded TikToks by creator or topic?
-    answer: Yes, the downloader includes smart organization features. You can
-      automatically sort videos by creator, hashtag, date, or create custom
-      folders. Video metadata like captions and hashtags are also saved for easy
-      searching.
+    answer: Yes, the downloader includes smart organization features. You can automatically sort videos by creator, hashtag, date, or create custom folders. Video metadata like captions and hashtags are also saved for easy searching.
   - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox,
-      and Edge for the best experience.
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge for the best experience.
 supported_operating_systems:
   - windows
   - mac
@@ -84,6 +81,8 @@ supported_operating_systems:
   - chrome
   - firefox
   - edge
+supported_regions:
+  - Worldwide
 status: draft
 categories:
   - Downloader
@@ -99,37 +98,19 @@ pricing:
   benefits: []
   currency: USD
   availability: InStock
+stripe:
+  price_id: price_1S99gF06JrOmKRCmcKeM0NSp
+  metadata:
+    source: generated
+    stripe_product_id: prod_SqnavySFXhLMCk
 ghl:
   source: Stripe Checkout
   tag_ids:
     - purchase-tiktok-downloader
-new_release: true
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Tiktok Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Tiktok Downloader lets me pull everything
-      from Tiktok in minutes. The speeds are great and files stay organized.
-  - name: Jamie Nguyen
-    title: Rock solid Tiktok downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Tiktok used to be hit or miss. This downloader is
-      stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Tiktok content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Tiktok assets for clients and the download in Tiktok
-      Downloader keep our workflows smooth. Totally worth the price.
-supported_regions:
-  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
-buy_button_destination: https://ghl.serp.co/payment-link/68e022c6613b1b4c4ace7f2b
+new_release: true

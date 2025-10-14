@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type Stripe from "stripe";
 import type { OfferConfig } from "@/lib/products/offer-config";
-import type { CheckoutSessionRecord } from "@/lib/checkout/store";
+import type { CheckoutSessionRecord } from "@/lib/checkout";
 
 vi.hoisted(() => {
   process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
@@ -24,7 +24,7 @@ vi.mock("@/lib/payments/stripe", () => ({
   getStripeClient: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   findCheckoutSessionByPaymentIntentId: vi.fn(),
   findCheckoutSessionByStripeSessionId: vi.fn(),
   markStaleCheckoutSessions: vi.fn(),
@@ -79,7 +79,7 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   updateCheckoutSessionStatus,
-} from "@/lib/checkout/store";
+} from "@/lib/checkout";
 import { syncOrderWithGhl, GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import { sendOpsAlert } from "@/lib/notifications/ops";
@@ -116,7 +116,12 @@ const checkoutSessionFixture: CheckoutSessionRecord = {
   customerEmail: "buyer@example.com",
   metadata: {
     productPageUrl: "https://store.example.com/products/demo-offer",
+    store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
+    apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
     purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    serply_link: "https://serp.ly/demo-offer",
+    success_url: "https://apps.example.com/checkout/success?product=demo-offer",
+    cancel_url: "https://apps.example.com/checkout?product=demo-offer",
   },
   status: "pending",
   source: "stripe",
@@ -130,7 +135,15 @@ const offerConfigFixture: OfferConfig = {
   successUrl: "https://example.com/success",
   cancelUrl: "https://example.com/cancel",
   mode: "payment",
-  metadata: {},
+  metadata: {
+    productPageUrl: "https://store.example.com/products/demo-offer",
+    store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
+    apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
+    purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    serply_link: "https://serp.ly/demo-offer",
+    success_url: "https://apps.example.com/checkout/success?product=demo-offer",
+    cancel_url: "https://apps.example.com/checkout?product=demo-offer",
+  },
   productName: "Demo Offer",
   ghl: {
     pipelineId: "pipeline_123",
@@ -159,7 +172,12 @@ function buildCheckoutSessionEvent() {
       landerId: "demo-offer",
       productName: "Demo Offer",
       productPageUrl: "https://store.example.com/products/demo-offer",
+      store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
+      apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
       purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      serply_link: "https://serp.ly/demo-offer",
+      success_url: "https://apps.example.com/checkout/success?product=demo-offer",
+      cancel_url: "https://apps.example.com/checkout?product=demo-offer",
     },
     client_reference_id: null,
     payment_status: "paid",
@@ -201,6 +219,13 @@ function buildPaymentIntentEvent(
       offerId: "demo-offer",
       landerId: "demo-offer",
       customerEmail: "buyer@example.com",
+      productPageUrl: "https://store.example.com/products/demo-offer",
+      store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
+      apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
+      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      serply_link: "https://serp.ly/demo-offer",
+      success_url: "https://apps.example.com/checkout/success?product=demo-offer",
+      cancel_url: "https://apps.example.com/checkout?product=demo-offer",
     },
     latest_charge: "ch_test_123",
     receipt_email: "buyer@example.com",

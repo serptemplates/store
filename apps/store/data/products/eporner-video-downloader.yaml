@@ -1,17 +1,14 @@
 slug: eporner-video-downloader
 platform: Eporner
 seo_title: Download Eporner Videos | Eporner Video Downloader
-seo_description: Download Eporner videos easily for offline viewing. Fast,
-  reliable Eporner video downloader with high-quality downloads.
+seo_description: Download Eporner videos easily for offline viewing. Fast, reliable Eporner video downloader with high-quality downloads.
 product_page_url: https://store.serp.co/products/eporner-video-downloader
-purchase_url: https://serp.ly/eporner-video-downloader
-stripe:
-  price_id: price_1RvXID06JrOmKRCmdSqQK07c
-  success_url: https://store.serp.co/products/eporner-video-downloader?checkout=success
-  cancel_url: https://store.serp.co/products/eporner-video-downloader
-  metadata:
-    source: generated
-    stripe_product_id: prod_SrFXvsPxRa2Ugv
+store_serp_co_product_page_url: https://store.serp.co/products/eporner-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/eporner-video-downloader
+serply_link: https://serp.ly/eporner-video-downloader
+success_url: https://store.serp.co/products/eporner-video-downloader?checkout=success
+cancel_url: https://store.serp.co/products/eporner-video-downloader
+buy_button_destination: https://ghl.serp.co/payment-link/68df98e767ee3b7d3f69979d
 name: Eporner Video Downloader
 tagline: Save Eporner videos instantly for offline viewing.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
@@ -45,37 +42,39 @@ related_videos: []
 screenshots:
   - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
     alt: Eporner Video Downloader website preview
+reviews:
+  - name: Alex Martinez
+    title: Saves hours every week with Eporner Video Downloader
+    rating: 5
+    date: 2025-02-12
+    review: I manage content libraries and Eporner Video Downloader lets me pull everything from Eporner in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Eporner downloads
+    rating: 4.9
+    date: 2025-03-03
+    review: Downloading from Eporner used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Eporner content
+    rating: 4.8
+    date: 2025-01-28
+    review: We archive Eporner assets for clients and the download in Eporner Video Downloader keep our workflows smooth. Totally worth the price.
 faqs:
   - question: How do I use the Eporner downloader?
-    answer: Install the browser extension, navigate to Eporner, find the content you
-      want to download, and click the download button that appears. The content
-      will be saved to your chosen location.
+    answer: Install the browser extension, navigate to Eporner, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
   - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Eporner,
-      ranging from standard definition up to 4K or higher where available. You
-      can select your preferred quality before downloading.
+    answer: The downloader supports all available quality levels from Eporner, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
   - question: Does this work with all Eporner content?
-    answer: The downloader works with most publicly accessible content on Eporner.
-      Some restricted or DRM-protected content may not be downloadable.
+    answer: The downloader works with most publicly accessible content on Eporner. Some restricted or DRM-protected content may not be downloadable.
   - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download.
-      However, for most content, downloads complete quickly enough that
-      interruptions are rare.
+    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
   - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You
-      can download as much content as your storage space allows, one item at a
-      time.
+    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
   - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize
-      them manually using your computer's file system, creating folders by date,
-      topic, or any system that works for you.
+    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
   - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox,
-      and Edge. Make sure your browser is up to date for the best compatibility.
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
   - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download
-      history or personal data is sent to external servers, ensuring complete
-      privacy.
+    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
   - windows
   - mac
@@ -83,6 +82,8 @@ supported_operating_systems:
   - chrome
   - firefox
   - edge
+supported_regions:
+  - Worldwide
 status: draft
 categories:
   - Downloader
@@ -98,37 +99,19 @@ pricing:
   benefits: []
   currency: USD
   availability: InStock
+stripe:
+  price_id: price_1RvXID06JrOmKRCmdSqQK07c
+  metadata:
+    source: generated
+    stripe_product_id: prod_SrFXvsPxRa2Ugv
 ghl:
   source: Stripe Checkout
   tag_ids:
     - purchase-eporner-downloader
-new_release: true
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Eporner Video Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Eporner Video Downloader lets me pull
-      everything from Eporner in minutes. The speeds are great and files stay
-      organized.
-  - name: Jamie Nguyen
-    title: Rock solid Eporner downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Eporner used to be hit or miss. This downloader is
-      stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Eporner content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Eporner assets for clients and the download in Eporner Video
-      Downloader keep our workflows smooth. Totally worth the price.
-supported_regions:
-  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68df98e767ee3b7d3f69979d
+new_release: true

@@ -1,17 +1,14 @@
 slug: youporn-video-downloader
 platform: Youporn
 seo_title: Download Youporn Videos | Youporn Video Downloader
-seo_description: Download Youporn videos easily for offline viewing. Fast,
-  reliable Youporn video downloader with high-quality downloads.
+seo_description: Download Youporn videos easily for offline viewing. Fast, reliable Youporn video downloader with high-quality downloads.
 product_page_url: https://store.serp.co/products/youporn-video-downloader
-purchase_url: https://serp.ly/youporn-video-downloader
-stripe:
-  price_id: price_1RvXMm06JrOmKRCmEXZ7GsiQ
-  success_url: https://apps.serp.co/checkout/success
-  cancel_url: https://apps.serp.co/checkout?product=youporn-video-downloader
-  metadata:
-    source: generated
-    stripe_product_id: prod_SrFXRIL4LAgGyt
+store_serp_co_product_page_url: https://store.serp.co/products/youporn-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/youporn-video-downloader
+serply_link: https://serp.ly/youporn-video-downloader
+success_url: https://apps.serp.co/checkout/success
+cancel_url: https://apps.serp.co/checkout?product=youporn-video-downloader
+buy_button_destination: https://ghl.serp.co/payment-link/68e021c467ee3b4be4699b6e
 name: Youporn Video Downloader
 tagline: Save Youporn videos instantly for offline viewing.
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
@@ -39,71 +36,45 @@ features:
   - Secure download verification and file integrity
   - Multi-threaded downloading for faster speeds
   - Comprehensive logging and debugging features
-description: "Downloads videos from YouPorn with advanced features including
-  license activation, download management, and high-quality video
-  extraction.Automatic Video Detection: Instantly detects videos on YouPorn
-  pagesMultiple Quality Options: Choose from available video qualities (SD, HD,
-  Full HD)Smart Metadata Extraction: Captures video title, thumbnail, duration,
-  views, and uploader infoDirect Downloads: Download videos directly to your
-  computer with original filenamesFeaturesAdvanced Download ManagementReal-time
-  Progress Tracking: Monitor download progress with detailed statsDownload
-  Manager Panel: Slide-out panel showing all active
-  downloadsPause/Resume/Cancel: Full control over your downloadsDownload
-  History: Track completed and failed downloadsBandwidth Monitoring: View
-  download speeds and estimated time remainingUser InterfacePlayer Button
-  Integration: Download button overlay directly on the video playerContext Menu
-  Support: Right-click anywhere on YouPorn pages to downloadProfessional Popup
-  Interface: Clean, branded interface with easy navigationHelp System: Built-in
-  help tooltips and quick help bannersResponsive Design: Works seamlessly across
-  different screen sizesSecurity & LicensingLicense Key Activation: Secure
-  activation system with email verificationSecure Storage: Encrypted storage of
-  activation status and user preferencesCloud Verification: Real-time license
-  validation through secure worker APITechnical FeaturesManifest V3 Compliance:
-  Latest Chrome extension standards for security and performanceService Worker
-  Background: Efficient background processing without performance impactOffline
-  Support: Continue downloads even when browser tabs are closedError Handling:
-  Robust error recovery and user feedbackMemory Optimization: Efficient memory
-  usage for large file downloadsSupported FeaturesVideo FormatsMP4 (various
-  qualities)Progressive download supportAdaptive quality selectionOriginal
-  filename preservationDownload OptionsSingle video downloadsBatch download
-  support (planned)Custom download locationsAutomatic file organizationBrowser
-  CompatibilityChrome (recommended)Chromium-based browsersEdge (Chromium)"
+description: "Downloads videos from YouPorn with advanced features including license activation, download management, and high-quality video extraction.Automatic Video Detection: Instantly detects videos on YouPorn pagesMultiple Quality Options: Choose from available video qualities (SD, HD, Full HD)Smart Metadata Extraction: Captures video title, thumbnail, duration, views, and uploader infoDirect Downloads: Download videos directly to your computer with original filenamesFeaturesAdvanced Download ManagementReal-time Progress Tracking: Monitor download progress with detailed statsDownload Manager Panel: Slide-out panel showing all active downloadsPause/Resume/Cancel: Full control over your downloadsDownload History: Track completed and failed downloadsBandwidth Monitoring: View download speeds and estimated time remainingUser InterfacePlayer Button Integration: Download button overlay directly on the video playerContext Menu Support: Right-click anywhere on YouPorn pages to downloadProfessional Popup Interface: Clean, branded interface with easy navigationHelp System: Built-in help tooltips and quick help bannersResponsive Design: Works seamlessly across different screen sizesSecurity & LicensingLicense Key Activation: Secure activation system with email verificationSecure Storage: Encrypted storage of activation status and user preferencesCloud Verification: Real-time license validation through secure worker APITechnical FeaturesManifest V3 Compliance: Latest Chrome extension standards for security and performanceService Worker Background: Efficient background processing without performance impactOffline Support: Continue downloads even when browser tabs are closedError Handling: Robust error recovery and user feedbackMemory Optimization: Efficient memory usage for large file downloadsSupported FeaturesVideo FormatsMP4 (various qualities)Progressive download supportAdaptive quality selectionOriginal filename preservationDownload OptionsSingle video downloadsBatch download support (planned)Custom download locationsAutomatic file organizationBrowser CompatibilityChrome (recommended)Chromium-based browsersEdge (Chromium)"
 product_videos: []
 related_videos: []
 screenshots:
   - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
     alt: Youporn Video Downloader website preview
+reviews:
+  - name: Alex Martinez
+    title: Saves hours every week with Youporn Video Downloader
+    rating: 5
+    date: 2025-02-12
+    review: I manage content libraries and Youporn Video Downloader lets me pull everything from Youporn in minutes. The speeds are great and files stay organized.
+  - name: Jamie Nguyen
+    title: Rock solid Youporn downloads
+    rating: 4.9
+    date: 2025-03-03
+    review: Downloading from Youporn used to be hit or miss. This downloader is stable, fast, and the quality is always on point.
+  - name: Priya Patel
+    title: Ideal for organizing Youporn content
+    rating: 4.8
+    date: 2025-01-28
+    review: We archive Youporn assets for clients and the download in Youporn Video Downloader keep our workflows smooth. Totally worth the price.
 faqs:
   - question: How do I use the Youporn downloader?
-    answer: Install the browser extension, navigate to Youporn, find the content you
-      want to download, and click the download button that appears. The content
-      will be saved to your chosen location.
+    answer: Install the browser extension, navigate to Youporn, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
   - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Youporn,
-      ranging from standard definition up to 4K or higher where available. You
-      can select your preferred quality before downloading.
+    answer: The downloader supports all available quality levels from Youporn, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
   - question: Does this work with all Youporn content?
-    answer: The downloader works with most publicly accessible content on Youporn.
-      Some restricted or DRM-protected content may not be downloadable.
+    answer: The downloader works with most publicly accessible content on Youporn. Some restricted or DRM-protected content may not be downloadable.
   - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download.
-      However, for most content, downloads complete quickly enough that
-      interruptions are rare.
+    answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
   - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You
-      can download as much content as your storage space allows, one item at a
-      time.
+    answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
   - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize
-      them manually using your computer's file system, creating folders by date,
-      topic, or any system that works for you.
+    answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
   - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox,
-      and Edge. Make sure your browser is up to date for the best compatibility.
+    answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
   - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download
-      history or personal data is sent to external servers, ensuring complete
-      privacy.
+    answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
 supported_operating_systems:
   - windows
   - mac
@@ -111,6 +82,8 @@ supported_operating_systems:
   - chrome
   - firefox
   - edge
+supported_regions:
+  - Worldwide
 status: draft
 categories:
   - Downloader
@@ -126,37 +99,19 @@ pricing:
   benefits: []
   currency: USD
   availability: InStock
+stripe:
+  price_id: price_1RvXMm06JrOmKRCmEXZ7GsiQ
+  metadata:
+    source: generated
+    stripe_product_id: prod_SrFXRIL4LAgGyt
 ghl:
   source: Stripe Checkout
   tag_ids:
     - purchase-youporn-downloader
-new_release: true
-reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Youporn Video Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Youporn Video Downloader lets me pull
-      everything from Youporn in minutes. The speeds are great and files stay
-      organized.
-  - name: Jamie Nguyen
-    title: Rock solid Youporn downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Youporn used to be hit or miss. This downloader is
-      stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Youporn content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Youporn assets for clients and the download in Youporn Video
-      Downloader keep our workflows smooth. Totally worth the price.
-supported_regions:
-  - Worldwide
 return_policy:
   days: 0
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
-buy_button_destination: https://ghl.serp.co/payment-link/68e021c467ee3b4be4699b6e
+new_release: true

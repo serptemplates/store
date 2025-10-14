@@ -1,45 +1,103 @@
 import { createClient, type QueryResult, type QueryResultRow } from "@vercel/postgres";
 
-// Try to use non-pooled connection first, fall back to pooled
-const connectionString =
-  process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
-  process.env.DATABASE_URL_UNPOOLED ??
-  process.env.POSTGRES_URL_NON_POOLING ??
-  process.env.CHECKOUT_DATABASE_URL ??
-  process.env.POSTGRES_URL ??
-  process.env.DATABASE_URL ??
-  process.env.POSTGRES_PRISMA_URL ??
-  process.env.SUPABASE_DB_URL ??
-  "";
-
 type Primitive = string | number | boolean | null | undefined;
 
 let clientPromise: Promise<ReturnType<typeof createClient>> | null;
 let schemaPromise: Promise<void> | null;
 let missingLogged = false;
 
+let connectionOverride: string | null = null;
+let currentConnectionString: string | null = null;
+
 function log(message: string, extra?: Record<string, unknown>) {
   const payload = extra ? ` ${JSON.stringify(extra)}` : "";
   console.info(`[checkout-db] ${message}${payload}`);
 }
 
+function resolveConnectionStringFromEnv(): string {
+  return (
+    process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
+    process.env.DATABASE_URL_UNPOOLED ??
+    process.env.POSTGRES_URL_NON_POOLING ??
+    process.env.CHECKOUT_DATABASE_URL ??
+    process.env.POSTGRES_URL ??
+    process.env.DATABASE_URL ??
+    process.env.POSTGRES_PRISMA_URL ??
+    process.env.SUPABASE_DB_URL ??
+    ""
+  );
+}
+
+function getEffectiveConnectionString(): string {
+  const override = connectionOverride?.trim();
+  const fromEnv = resolveConnectionStringFromEnv()?.trim();
+  const next = override && override.length > 0 ? override : fromEnv;
+
+  if (next !== currentConnectionString) {
+    clientPromise = null;
+    schemaPromise = null;
+    currentConnectionString = next ?? null;
+  }
+
+  return next ?? "";
+}
+
 export function isDatabaseConfigured(): boolean {
+  const connectionString = getEffectiveConnectionString();
   return Boolean(connectionString);
 }
 
+const MAX_CONNECT_ATTEMPTS = Number(process.env.CHECKOUT_DB_CONNECT_ATTEMPTS ?? 3);
+const RETRY_DELAY_MS = Number(process.env.CHECKOUT_DB_RETRY_DELAY_MS ?? 500);
+
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function connectWithRetry(connectionString: string) {
+  let attempt = 0;
+  let lastError: unknown;
+
+  const totalAttempts = Math.max(1, MAX_CONNECT_ATTEMPTS);
+
+  while (attempt < totalAttempts) {
+    attempt += 1;
+
+    try {
+      const client = createClient({ connectionString });
+      await client.connect();
+
+      if (attempt > 1) {
+        log("Connected after retries", { attempt });
+      }
+
+      return client;
+    } catch (error) {
+      lastError = error;
+      log("Failed to connect", {
+        attempt,
+        error: error instanceof Error ? error.message : String(error),
+      });
+
+      if (attempt < totalAttempts) {
+        await delay(RETRY_DELAY_MS * attempt);
+      }
+    }
+  }
+
+  throw lastError ?? new Error("Unknown database connection failure");
+}
+
 async function getClient() {
+  const connectionString = getEffectiveConnectionString();
+
   if (!connectionString) {
     return null;
   }
 
   if (!clientPromise) {
-    clientPromise = (async () => {
-      const client = createClient({ connectionString });
-      await client.connect();
-      return client;
-    })().catch((error) => {
+    clientPromise = connectWithRetry(connectionString).catch((error) => {
       clientPromise = null;
-      log("Failed to connect", { error: error instanceof Error ? error.message : error });
       throw error;
     });
   }
@@ -64,7 +122,7 @@ async function runMigrations() {
       customer_email TEXT,
       metadata JSONB DEFAULT '{}'::jsonb,
       status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'abandoned')),
-      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal')),
+      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
@@ -91,7 +149,7 @@ async function runMigrations() {
       metadata JSONB DEFAULT '{}'::jsonb,
       payment_status TEXT,
       payment_method TEXT,
-      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal')),
+      source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
@@ -131,6 +189,27 @@ async function runMigrations() {
   await client.sql`
     CREATE INDEX IF NOT EXISTS idx_webhook_logs_status ON webhook_logs (status);
   `;
+  await client.sql`
+    ALTER TABLE checkout_sessions
+      DROP CONSTRAINT IF EXISTS checkout_sessions_source_check;
+  `;
+
+  await client.sql`
+    ALTER TABLE checkout_sessions
+      ADD CONSTRAINT checkout_sessions_source_check
+      CHECK (source IN ('stripe', 'paypal', 'ghl'));
+  `;
+
+  await client.sql`
+    ALTER TABLE orders
+      DROP CONSTRAINT IF EXISTS orders_source_check;
+  `;
+
+  await client.sql`
+    ALTER TABLE orders
+      ADD CONSTRAINT orders_source_check
+      CHECK (source IN ('stripe', 'paypal', 'ghl'));
+  `;
 }
 
 export async function ensureDatabase(): Promise<boolean> {
@@ -166,4 +245,17 @@ export async function query<O extends QueryResultRow>(
   }
 
   return client.sql<O>(strings, ...values);
+}
+
+export function setDatabaseConnectionOverride(connectionString: string | null) {
+  const normalized = connectionString?.trim() ?? null;
+
+  if (normalized === connectionOverride) {
+    return;
+  }
+
+  connectionOverride = normalized;
+  clientPromise = null;
+  schemaPromise = null;
+  currentConnectionString = null;
 }

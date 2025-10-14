@@ -36,7 +36,7 @@ vi.mock("@/lib/payments/stripe-environment", () => ({
   getOptionalStripePaymentConfigId: () => undefined,
 }))
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   markStaleCheckoutSessions: mocks.markStaleCheckoutSessions,
   upsertCheckoutSession: mocks.upsertCheckoutSession,
 }))

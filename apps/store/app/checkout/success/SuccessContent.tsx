@@ -11,20 +11,16 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import type { Route } from "next";
 import { useSearchParams } from "next/navigation";
 
-import { Button } from "@repo/ui";
-
-import { processCheckoutSession } from "./actions";
+import { processCheckoutSession, processGhlPayment } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
 
-type CheckoutVariant = "stripe" | "paypal" | "external";
+type CheckoutVariant = "stripe" | "paypal" | "ghl" | "external";
 
 type CtaDefinition = {
   label: string;
-  href: Route | string;
+  href: string;
   variant?: "default" | "outline";
   icon?: ComponentType<{ className?: string }>;
 };
@@ -73,6 +69,15 @@ const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
     title: "Thank you for your purchase!",
     description:
       "Your PayPal order is confirmed. We’ve sent the receipt and login instructions to the email connected to your PayPal account.",
+    ctas: [
+      { label: "Open Your Account", href: "/account" },
+      { label: "Need Help?", href: "/support", variant: "outline" },
+    ],
+  },
+  ghl: {
+    title: "Thank you for your purchase!",
+    description:
+      "Your order is confirmed. Watch the video below for your next steps.",
     ctas: [
       { label: "Open Your Account", href: "/account" },
       { label: "Need Help?", href: "/support", variant: "outline" },
@@ -136,6 +141,7 @@ const WHITELIST_GUIDES: WhitelistGuide[] = [
 
 function getVariant(sessionId: string | null, source: string | null, paypalOrderId: string | null): CheckoutVariant {
   if (sessionId) return "stripe";
+  if (!sessionId && source && source.startsWith("ghl")) return "ghl";
   if (!sessionId && source === "paypal" && paypalOrderId) return "paypal";
   return "external";
 }
@@ -209,66 +215,111 @@ function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
   };
 }
 
-function isInternalRoute(href: string | Route): href is Route {
-  return typeof href === "string" ? href.startsWith("/") : true;
-}
-
 export function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const source = searchParams.get("source");
   const paypalOrderId = searchParams.get("order_id");
+  const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
+  const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
 
-  const [processing, setProcessing] = useState(Boolean(sessionId));
+  const variant = useMemo<CheckoutVariant>(() => getVariant(sessionId, source, paypalOrderId), [sessionId, source, paypalOrderId]);
+
+  const [processing, setProcessing] = useState(() => {
+    if (variant === "stripe") {
+      return Boolean(sessionId);
+    }
+    if (variant === "ghl") {
+      return true;
+    }
+    return false;
+  });
   const [error, setError] = useState<string | null>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
   useEffect(() => {
-    if (!sessionId) {
-      setOrderDetails(null);
-      setProcessing(false);
-      return;
-    }
+    let cancelled = false;
+
+    type ProcessResult = Awaited<ReturnType<typeof processCheckoutSession>>;
+
+    const applyOrderResult = (result: ProcessResult) => {
+      if (cancelled) return;
+
+      if (!result.success) {
+        console.warn("Failed to process checkout:", result.message);
+        return;
+      }
+
+      if (result.order) {
+        const conversionItems =
+          result.order.items?.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
+            quantity: item.quantity,
+          })) ?? [];
+
+        setOrderDetails({
+          sessionId: result.order.sessionId,
+          value: result.order.amount ?? undefined,
+          currency: result.order.currency ?? undefined,
+          items: conversionItems,
+          coupon: result.order.coupon ?? undefined,
+          affiliateId: result.order.affiliateId ?? undefined,
+        });
+      }
+    };
+
+    const handleError = (err: unknown) => {
+      if (cancelled) return;
+      console.error("Error processing checkout:", err);
+      setError("There was an issue processing your order. Contact support if you don't receive your license key.");
+    };
 
     setOrderDetails(null);
+    setError(null);
 
-    processCheckoutSession(sessionId)
-      .then((result) => {
-        if (!result.success) {
-          console.warn("Failed to process checkout:", result.message);
-          return;
-        }
+    if (variant === "stripe" && sessionId) {
+      setProcessing(true);
+      processCheckoutSession(sessionId)
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
+      return () => {
+        cancelled = true;
+      };
+    }
 
-        if (result.order) {
-          const conversionItems =
-            result.order.items?.map((item) => ({
-              id: item.id,
-              name: item.name,
-              price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
-              quantity: item.quantity,
-            })) ?? [];
+    if (variant === "ghl") {
+      setProcessing(true);
+      processGhlPayment({ paymentId: ghlPaymentId, productSlug: ghlProductSlug })
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
 
-          setOrderDetails({
-            sessionId: result.order.sessionId,
-            value: result.order.amount ?? undefined,
-            currency: result.order.currency ?? undefined,
-            items: conversionItems,
-            coupon: result.order.coupon ?? undefined,
-            affiliateId: result.order.affiliateId ?? undefined,
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("Error processing checkout:", err);
-        setError("There was an issue processing your order. Contact support if you don't receive your license key.");
-      })
-      .finally(() => setProcessing(false));
-  }, [sessionId]);
+      return () => {
+        cancelled = true;
+      };
+    }
 
-  const variant = useMemo<CheckoutVariant>(() => getVariant(sessionId, source, paypalOrderId), [sessionId, source, paypalOrderId]);
-  const orderReference = sessionId ?? paypalOrderId ?? undefined;
+    setProcessing(false);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [variant, sessionId, ghlPaymentId, ghlProductSlug]);
+
+  const orderReference = sessionId ?? paypalOrderId ?? ghlPaymentId ?? undefined;
   const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
@@ -328,86 +379,61 @@ export function SuccessContent() {
               </div>
             )}
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              {heroCopy.ctas.map((cta) => {
-                const Icon = cta.icon;
-                return (
-                  <Button
-                    key={cta.label}
-                    asChild
-                    variant={cta.variant ?? "default"}
-                    className="flex-1"
+            <div className="mx-auto w-full max-w-3xl">
+              {successVideo.kind === "youtube" ? (
+                isVideoActive ? (
+                  <iframe
+                    key={successVideo.autoplayUrl}
+                    src={successVideo.autoplayUrl}
+                    title="Welcome video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="aspect-video w-full rounded-md border border-border bg-black"
+                    loading="lazy"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setIsVideoActive(true)}
+                    className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
+                    aria-label="Play welcome video"
                   >
-                    {isInternalRoute(cta.href) ? (
-                      <Link href={cta.href}>
-                        {Icon ? <Icon className="mr-2 h-4 w-4" /> : null}
-                        {cta.label}
-                      </Link>
-                    ) : (
-                      <a href={cta.href}>
-                        {Icon ? <Icon className="mr-2 h-4 w-4" /> : null}
-                        {cta.label}
-                      </a>
-                    )}
-                  </Button>
-                );
-              })}
+                    <Image
+                      src={thumbnailSrc ?? successVideo.thumbnailUrl}
+                      alt="Welcome video thumbnail"
+                      fill
+                      className="object-cover transition duration-200 group-hover:scale-[1.01]"
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      priority={false}
+                      onError={() => {
+                        if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
+                          setThumbnailSrc(successVideo.fallbackThumbnailUrl);
+                        }
+                      }}
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
+                    />
+                    <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
+                      <Play className="h-4 w-4" />
+                      Watch welcome video
+                    </span>
+                  </button>
+                )
+              ) : (
+                <video
+                  key={successVideo.src}
+                  src={successVideo.src}
+                  playsInline
+                  controls
+                  preload="metadata"
+                  className="aspect-video w-full rounded-md border border-border bg-black"
+                />
+              )}
             </div>
-          </div>
-        </section>
 
-        <section className="my-12 sm:my-16">
-          {successVideo.kind === "youtube" ? (
-            isVideoActive ? (
-              <iframe
-                key={successVideo.autoplayUrl}
-                src={successVideo.autoplayUrl}
-                title="Welcome video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="aspect-video w-full rounded-md border border-border bg-black"
-                loading="lazy"
-              />
-            ) : (
-              <button
-                type="button"
-                onClick={() => setIsVideoActive(true)}
-                className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
-                aria-label="Play welcome video"
-              >
-                <Image
-                  src={thumbnailSrc ?? successVideo.thumbnailUrl}
-                  alt="Welcome video thumbnail"
-                  fill
-                  className="object-cover transition duration-200 group-hover:scale-[1.01]"
-                  sizes="(max-width: 768px) 100vw, 640px"
-                  priority={false}
-                  onError={() => {
-                    if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
-                      setThumbnailSrc(successVideo.fallbackThumbnailUrl);
-                    }
-                  }}
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
-                />
-                <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
-                  <Play className="h-4 w-4" />
-                  Watch welcome video
-                </span>
-              </button>
-            )
-          ) : (
-            <video
-              key={successVideo.src}
-              src={successVideo.src}
-              playsInline
-              controls
-              preload="metadata"
-              className="aspect-video w-full rounded-md border border-border bg-black"
-            />
-          )}
+          </div>
         </section>
 
         {hasWhitelistMedia ? (

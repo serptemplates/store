@@ -8,7 +8,7 @@ loadIntegrationEnv(import.meta.url);
 const { POST: createCheckoutSession } = await import("@/app/api/checkout/session/route");
 const { POST: handleStripeWebhook } = await import("@/app/api/stripe/webhook/route");
 const { ensureDatabase, isDatabaseConfigured, query } = await import("@/lib/database");
-const { findCheckoutSessionByStripeSessionId } = await import("@/lib/checkout/store");
+const { findCheckoutSessionByStripeSessionId } = await import("@/lib/checkout");
 const { getOfferConfig } = await import("@/lib/products/offer-config");
 
 const stripeSecret = process.env.STRIPE_SECRET_KEY_TEST ?? process.env.STRIPE_SECRET_KEY;

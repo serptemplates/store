@@ -5,6 +5,7 @@ describe("Logger PII Redaction", () => {
   let consoleInfoSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
+    process.env.LOG_SILENT = "false";
     consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     consoleInfoSpy = vi.spyOn(console, "info").mockImplementation(() => {});
   });

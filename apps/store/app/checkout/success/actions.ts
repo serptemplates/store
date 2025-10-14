@@ -1,11 +1,18 @@
 "use server";
 
 import { getStripeClient } from "@/lib/payments/stripe";
-import { findCheckoutSessionByStripeSessionId, upsertCheckoutSession, upsertOrder } from "@/lib/checkout/store";
+import {
+  findCheckoutSessionByStripeSessionId,
+  upsertCheckoutSession,
+  upsertOrder,
+  findOrderByPaymentIntentId,
+  findLatestGhlOrder,
+} from "@/lib/checkout";
 import { createLicenseForOrder } from "@/lib/license-service";
-import { updateOrderMetadata } from "@/lib/checkout/store";
+import { updateOrderMetadata } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { ensureAccountForPurchase } from "@/lib/account/service";
+import { getProductData } from "@/lib/products/product";
 import logger from "@/lib/logger";
 
 type ProcessedOrderDetails = {
@@ -315,6 +322,176 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     return {
       success: false,
       message: error instanceof Error ? error.message : "Failed to process order",
+    };
+  }
+}
+
+type ProcessGhlPaymentParams = {
+  paymentId?: string | null;
+  productSlug?: string | null;
+};
+
+function normalizeGhlPaymentId(rawId: string | null | undefined): string | null {
+  if (!rawId) {
+    return null;
+  }
+
+  const trimmed = rawId.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  return trimmed.startsWith("ghl_") ? trimmed : `ghl_${trimmed}`;
+}
+
+function parseDisplayPrice(value: string | null | undefined): number | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.replace(/[^0-9.,-]/g, "").replace(/,/g, "");
+  if (!normalized) {
+    return null;
+  }
+
+  const parsed = Number.parseFloat(normalized);
+  if (!Number.isFinite(parsed)) {
+    return null;
+  }
+
+  return Number(parsed.toFixed(2));
+}
+
+function coerceCurrency(code: string | null | undefined): string | null {
+  if (!code) {
+    return null;
+  }
+
+  const trimmed = code.trim();
+  return trimmed ? trimmed.toUpperCase() : null;
+}
+
+export async function processGhlPayment(params: ProcessGhlPaymentParams): Promise<ProcessCheckoutResult> {
+  const normalizedPaymentId = normalizeGhlPaymentId(params.paymentId);
+  const trimmedSlug = params.productSlug?.trim();
+
+  try {
+    let order = normalizedPaymentId ? await findOrderByPaymentIntentId(normalizedPaymentId) : null;
+
+    if (!order && trimmedSlug) {
+      order = await findLatestGhlOrder({
+        offerId: trimmedSlug,
+        excludePaymentIntentId: normalizedPaymentId,
+      });
+
+      if (order) {
+        logger.info("checkout.success.ghl_fallback_order_match", {
+          offerId: trimmedSlug,
+          paymentIntentId: order.stripePaymentIntentId,
+        });
+      }
+    }
+
+    const resolvedSlug = order?.offerId ?? trimmedSlug ?? null;
+
+    let product: ReturnType<typeof getProductData> | null = null;
+    if (resolvedSlug) {
+      try {
+        product = getProductData(resolvedSlug);
+      } catch {
+        product = null;
+      }
+    }
+
+    if (!order && !product) {
+      return {
+        success: false,
+        message: "Unable to locate GHL purchase information.",
+      };
+    }
+
+    const amountMajorUnits =
+      order?.amountTotal != null
+        ? Number((order.amountTotal / 100).toFixed(2))
+        : parseDisplayPrice(product?.pricing?.price ?? null);
+
+    const resolvedCurrency =
+      coerceCurrency(order?.currency) ??
+      coerceCurrency(product?.pricing?.currency ?? null);
+
+    const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
+    const ghlMeta = (metadata.ghl as Record<string, unknown> | undefined) ?? undefined;
+    const customData = (ghlMeta?.customData as Record<string, unknown> | undefined) ?? undefined;
+
+    const couponCode =
+      (typeof metadata.couponCode === "string" ? metadata.couponCode : undefined) ??
+      (typeof ghlMeta?.couponCode === "string" ? (ghlMeta.couponCode as string) : undefined);
+
+    const affiliateIdFromMetadata =
+      (typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined) ??
+      (typeof ghlMeta?.affiliateId === "string" ? (ghlMeta.affiliateId as string) : undefined);
+
+    const affiliateIdFromCustomData =
+      (customData && typeof customData.affiliateId === "string"
+        ? (customData.affiliateId as string)
+        : customData && typeof customData.affiliate_id === "string"
+        ? (customData.affiliate_id as string)
+        : undefined);
+
+    const affiliateId = affiliateIdFromMetadata ?? affiliateIdFromCustomData ?? null;
+
+    const itemId =
+      product?.slug ??
+      order?.offerId ??
+      resolvedSlug ??
+      normalizedPaymentId ??
+      "ghl-purchase";
+
+    const itemName =
+      product?.name ??
+      (typeof metadata.productName === "string" ? (metadata.productName as string) : undefined) ??
+      (typeof ghlMeta?.productName === "string" ? (ghlMeta.productName as string) : undefined) ??
+      "SERP Purchase";
+
+    const resolvedPrice = amountMajorUnits ?? parseDisplayPrice(product?.pricing?.price ?? null) ?? 0;
+
+    const items: ProcessedOrderDetails["items"] = [
+      {
+        id: itemId,
+        name: itemName,
+        price: resolvedPrice,
+        quantity: 1,
+      },
+    ];
+
+    const sessionId =
+      order?.stripePaymentIntentId ??
+      order?.stripeSessionId ??
+      normalizedPaymentId ??
+      (resolvedSlug ? `ghl_${resolvedSlug}_${Date.now()}` : `ghl_${Date.now()}`);
+
+    return {
+      success: true,
+      message: "GHL purchase processed",
+      order: {
+        sessionId,
+        amount: amountMajorUnits ?? resolvedPrice ?? null,
+        currency: resolvedCurrency ?? null,
+        items,
+        coupon: couponCode ?? null,
+        affiliateId,
+      },
+    };
+  } catch (error) {
+    logger.error("checkout.success.ghl_process_error", {
+      paymentId: normalizedPaymentId,
+      productSlug: params.productSlug,
+      error: error instanceof Error ? error.message : String(error),
+    });
+
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Failed to process GHL order",
     };
   }
 }

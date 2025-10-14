@@ -26,7 +26,7 @@ vi.mock("@/lib/products/product", () => ({
   getProductData: vi.fn(),
 }));
 
-vi.mock("@/lib/checkout/store", () => ({
+vi.mock("@/lib/checkout", () => ({
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
 }));
@@ -35,7 +35,7 @@ import { POST } from "@/app/api/paypal/create-order/route";
 import { isPayPalConfigured, createPayPalOrder } from "@/lib/payments/paypal";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
-import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout/store";
+import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 
 const isPayPalConfiguredMock = vi.mocked(isPayPalConfigured);
 const createPayPalOrderMock = vi.mocked(createPayPalOrder);
@@ -59,8 +59,12 @@ describe("POST /api/paypal/create-order", () => {
     slug: "demo-offer",
     seo_title: "Demo Product",
     seo_description: "Test product",
-    product_page_url: "https://example.com/demo",
-    purchase_url: "https://example.com/demo/buy",
+    product_page_url: "https://store.serp.co/products/demo",
+    store_serp_co_product_page_url: "https://store.serp.co/products/demo",
+    apps_serp_co_product_page_url: "https://apps.serp.co/demo",
+    serply_link: "https://serp.ly/demo",
+    success_url: "https://apps.serp.co/checkout/success?product=demo",
+    cancel_url: "https://apps.serp.co/checkout?product=demo",
     name: "Demo Product",
     tagline: "The best demo",
     description: "Detailed description",
@@ -81,8 +85,6 @@ describe("POST /api/paypal/create-order", () => {
     },
     stripe: {
       price_id: "price_123",
-      success_url: "https://example.com/success",
-      cancel_url: "https://example.com/cancel",
       metadata: {},
     },
     layout_type: "landing",

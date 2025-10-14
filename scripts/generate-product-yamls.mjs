@@ -107,22 +107,27 @@ for (const slug of allSlugs) {
   const image = ghi?.raw?.image || "";
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://store.serp.co";
 
+  const storeUrl = `${baseUrl}/products/${slug}`;
+  const appsUrl = `https://apps.serp.co/${slug}`;
+
   const data = {
     slug,
     platform: name.split(' ')[0] || name,
     seo_title: `${name} | Download ${name} for Offline Access`,
     seo_description: description || `Download ${name} content for offline use with ease.`,
-    product_page_url: `${baseUrl}/products/${slug}`,
-    purchase_url: `https://serp.ly/${slug}`,
+    product_page_url: storeUrl,
+    store_serp_co_product_page_url: storeUrl,
+    apps_serp_co_product_page_url: appsUrl,
+    serply_link: `https://serp.ly/${slug}`,
     stripe: {
       price_id: priceId || 'PLACEHOLDER',
-      success_url: `${baseUrl}/products/${slug}?checkout=success`,
-      cancel_url: `${baseUrl}/products/${slug}`,
       metadata: {
         source: 'generated',
         stripe_product_id: productId || '',
       },
     },
+    success_url: `${appsUrl}/checkout/success`,
+    cancel_url: `${appsUrl}?checkout=cancel`,
     name,
     tagline: description.slice(0, 140) || `Download ${name} instantly to your device.`,
     featured_image: image || '',

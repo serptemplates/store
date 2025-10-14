@@ -1,6 +1,8 @@
-import type { HomeTemplateProps, FAQ, PostItem } from "@repo/templates";
+import type { FAQ } from "@repo/ui/sections/FaqSection";
+import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
+import type { HomeTemplateProps } from "@/components/home/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { ProductData } from "./product-schema";
 import type { BlogPostMeta } from "@/lib/blog";
@@ -90,12 +92,19 @@ export function productToHomeTemplate(
     !hasExternalDestination &&
     (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
   const checkoutHref = `/checkout?product=${product.slug}`;
-  const allowedPrefixes = ["https://store.serp.co/", "https://ghl.serp.co/"];
+  const allowedPrefixes = [
+    "https://store.serp.co/",
+    "https://ghl.serp.co/",
+    "https://apps.serp.co/",
+    "https://serp.ly/",
+  ];
   const candidateLinks = [
     product.buy_button_destination,
     product.pricing?.cta_href,
-    product.purchase_url,
+    product.store_serp_co_product_page_url,
+    product.apps_serp_co_product_page_url,
     product.product_page_url,
+    product.serply_link,
   ];
 
   const externalCtaHref = candidateLinks.find(

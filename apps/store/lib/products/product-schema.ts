@@ -21,11 +21,29 @@ const faqSchema = z.object({
   answer: trimmedString(),
 });
 
+const enforceHost = (host: string) =>
+  trimmedString()
+    .url()
+    .superRefine((value, ctx) => {
+      try {
+        const parsed = new URL(value);
+        if (parsed.hostname !== host) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `URL must use host ${host}`,
+          });
+        }
+      } catch (error) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid URL",
+        });
+      }
+    });
+
 const stripeSchema = z.object({
   price_id: z.string(),
   test_price_id: z.string().optional(), // Optional test mode price ID
-  success_url: trimmedString().url(),
-  cancel_url: trimmedString().url(),
   mode: z.enum(["payment", "subscription"]).optional(),
   metadata: z.record(z.any()).optional().default({}),
 });
@@ -98,7 +116,9 @@ export const productSchema = z.object({
   seo_title: trimmedString(),
   seo_description: trimmedString(),
   product_page_url: trimmedString().url(),
-  purchase_url: trimmedString().url(),
+  store_serp_co_product_page_url: enforceHost("store.serp.co"),
+  apps_serp_co_product_page_url: enforceHost("apps.serp.co"),
+  serply_link: enforceHost("serp.ly"),
   buy_button_destination: optionalExternalUrl,
   name: trimmedString(),
   tagline: trimmedString(),
@@ -123,6 +143,8 @@ export const productSchema = z.object({
   pricing: pricingSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
+  success_url: trimmedString().url(),
+  cancel_url: trimmedString().url(),
   license: licenseSchema,
   layout_type: z.enum(["ecommerce", "landing"]).optional().default("landing"),
   return_policy: returnPolicySchema,

@@ -6,7 +6,7 @@ import Script from "next/script"
 import NextLink from "next/link"
 import Image from "next/image"
 
-import { HomeTemplate } from "@repo/templates"
+import { HomeTemplate } from "./HomeTemplate"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
@@ -44,7 +44,9 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const fallbackCtaCandidates = [
     homeProps.ctaHref,
     product.buy_button_destination,
-    product.purchase_url,
+    product.serply_link,
+    product.store_serp_co_product_page_url,
+    product.apps_serp_co_product_page_url,
     product.product_page_url,
   ].filter((value): value is string => Boolean(value && value.trim().length > 0))
   const fallbackCtaHref = fallbackCtaCandidates[0]

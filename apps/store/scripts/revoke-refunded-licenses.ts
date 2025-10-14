@@ -3,14 +3,13 @@ import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
+import { createCliParser, createScriptLogger } from "./utils/cli";
+import { loadScriptEnvironment } from "./utils/env";
 
-import { config as loadEnv } from "dotenv";
+type OrderRecord = import("@/lib/checkout").OrderRecord;
 
-type OrderRecord = import("@/lib/checkout/store").OrderRecord;
-
-let findRefundedOrdersFn: typeof import("@/lib/checkout/store").findRefundedOrders;
-let updateOrderMetadataFn: typeof import("@/lib/checkout/store").updateOrderMetadata;
+let findRefundedOrdersFn: typeof import("@/lib/checkout").findRefundedOrders;
+let updateOrderMetadataFn: typeof import("@/lib/checkout").updateOrderMetadata;
 let markLicenseAsRefundedFn: typeof import("@/lib/license-service").markLicenseAsRefunded;
 let clearContactCustomFieldFn: typeof import("@/lib/ghl-client").clearContactCustomField;
 let getOfferConfigFn: typeof import("@/lib/products/offer-config").getOfferConfig;
@@ -26,61 +25,29 @@ type CommandLineOptions = {
 };
 
 const SCRIPT_NAME = "revoke-refunded-licenses";
+const logger = createScriptLogger(SCRIPT_NAME);
 const DEFAULT_LICENSE_FIELD_KEY = "contact.license_keys_v2";
 
-function loadEnvironment() {
-  const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-  const repoRoot = path.resolve(scriptDir, "..", "..", "..");
-  const storeDir = path.resolve(scriptDir, "..");
+function parseCommandLine(argv: string[]): CommandLineOptions {
+  const parser = createCliParser(argv);
 
-  loadEnv({ path: path.join(repoRoot, ".env.local") });
-  loadEnv({ path: path.join(repoRoot, ".env") });
-  loadEnv({ path: path.join(storeDir, ".env.local") });
-  loadEnv({ path: path.join(storeDir, ".env") });
-  loadEnv({ path: path.join(process.cwd(), ".env.local") });
-  loadEnv({ path: path.join(process.cwd(), ".env") });
-}
-
-function parseArgs(argv: string[]): CommandLineOptions {
   const options: CommandLineOptions = {
-    dryRun: false,
-    includeGhl: true,
-    includeDb: true,
+    dryRun: parser.consumeBoolean({ name: "dry-run", alias: "n", defaultValue: false }),
+    includeGhl: parser.consumeBoolean({ name: "ghl", negated: "no-ghl", defaultValue: true }),
+    includeDb: parser.consumeBoolean({ name: "db", negated: "no-db", defaultValue: true }),
   };
 
-  for (const arg of argv) {
-    if (arg === "--dry-run" || arg === "-n") {
-      options.dryRun = true;
-      continue;
-    }
+  const email = parser.consumeString({ name: "email" });
+  options.email = email?.trim().toLowerCase();
 
-    if (arg.startsWith("--email=")) {
-      options.email = arg.split("=", 2)[1]?.trim().toLowerCase();
-      continue;
-    }
+  options.orderId = parser.consumeString({ name: "order" })?.trim();
 
-    if (arg.startsWith("--order=")) {
-      options.orderId = arg.split("=", 2)[1]?.trim();
-      continue;
-    }
+  const limit = parser.consumeNumber({ name: "limit" });
+  options.limit = typeof limit === "number" && Number.isFinite(limit) && limit > 0 ? limit : undefined;
 
-    if (arg.startsWith("--limit=")) {
-      const raw = Number.parseInt(arg.split("=", 2)[1] ?? "", 10);
-      if (Number.isFinite(raw) && raw > 0) {
-        options.limit = raw;
-      }
-      continue;
-    }
-
-    if (arg === "--no-ghl") {
-      options.includeGhl = false;
-      continue;
-    }
-
-    if (arg === "--no-db") {
-      options.includeDb = false;
-      continue;
-    }
+  const remaining = parser.rest();
+  if (remaining.length > 0) {
+    logger.warn(`Ignoring unknown arguments: ${remaining.join(", ")}`);
   }
 
   return options;
@@ -259,7 +226,7 @@ async function collectRefundedOrders(options: CommandLineOptions): Promise<Order
       skipIfMetadataFlag: "licenseRevokedAt",
     });
   } catch (error) {
-    console.warn(`[${SCRIPT_NAME}] Unable to query Postgres refunds:`, error);
+    logger.warn("Unable to query Postgres refunds:", error);
     return [];
   }
 
@@ -365,7 +332,7 @@ async function collectGhlRefundsFromRoster(options: CommandLineOptions): Promise
 
     return tasks;
   } catch (error) {
-    console.warn(`[${SCRIPT_NAME}] Unable to read ghl-contacts-with-license-keys.json:`, error);
+    logger.warn("Unable to read ghl-contacts-with-license-keys.json:", error);
     return [];
   }
 }
@@ -443,15 +410,13 @@ async function collectGhlRefunds(options: CommandLineOptions, baseOrders: OrderR
 async function processPostgresTask(order: OrderRecord, options: CommandLineOptions): Promise<void> {
   const email = order.customerEmail?.trim().toLowerCase();
   if (!email) {
-    console.warn(`[${SCRIPT_NAME}] Skipping order ${order.id} (missing customer email).`);
+    logger.warn(`Skipping order ${order.id} (missing customer email).`);
     return;
   }
 
   const offerId = resolveOfferId(order);
   if (!offerId) {
-    console.warn(
-      `[${SCRIPT_NAME}] Skipping order ${order.id} for ${email} (unable to determine offer/product slug).`,
-    );
+    logger.warn(`Skipping order ${order.id} for ${email} (unable to determine offer/product slug).`);
     return;
   }
 
@@ -462,18 +427,16 @@ async function processPostgresTask(order: OrderRecord, options: CommandLineOptio
   const currency = order.currency ? order.currency.toLowerCase() : null;
   const amountMajorUnits = formatCurrency(order.amountTotal);
 
-  console.log(
-    `[${SCRIPT_NAME}] ${options.dryRun ? "[dry-run] " : ""}Revoking license for ${email} (${offerId}) – order ${order.id}`,
-  );
+  logger.info(`${options.dryRun ? "[dry-run] " : ""}Revoking license for ${email} (${offerId}) – order ${order.id}`);
 
   if (options.dryRun) {
-    console.log(
-      `[${SCRIPT_NAME}]   • Would mark license service purchase as refunded (provider: ${order.source}, event: ${eventId}).`,
+    logger.info(
+      `  • Would mark license service purchase as refunded (provider: ${order.source}, event: ${eventId}).`,
     );
-    console.log(
-      `[${SCRIPT_NAME}]   • Would clear GHL field ${process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 ?? DEFAULT_LICENSE_FIELD_KEY}.`,
+    logger.info(
+      `  • Would clear GHL field ${process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 ?? DEFAULT_LICENSE_FIELD_KEY}.`,
     );
-    console.log(`[${SCRIPT_NAME}]   • Would update Postgres metadata with revoked status.`);
+    logger.info("  • Would update Postgres metadata with revoked status.");
     return;
   }
 
@@ -501,10 +464,7 @@ async function processPostgresTask(order: OrderRecord, options: CommandLineOptio
       orderId: order.id,
     },
   }).catch((error) => {
-    console.error(
-      `[${SCRIPT_NAME}]   • Failed to notify license service for ${email} (${offerId}):`,
-      error,
-    );
+    logger.error(`  • Failed to notify license service for ${email} (${offerId}):`, error);
   });
 
   await updateOrderMetadataFn(
@@ -534,12 +494,10 @@ async function processPostgresTask(order: OrderRecord, options: CommandLineOptio
   });
 
   if (!clearResult.success) {
-    console.warn(
-      `[${SCRIPT_NAME}]   • Unable to clear GHL field (${fieldSpecifier}) for ${email}; check credentials and field id.`,
-    );
+    logger.warn(`  • Unable to clear GHL field (${fieldSpecifier}) for ${email}; check credentials and field id.`);
   } else {
-    console.log(
-      `[${SCRIPT_NAME}]   • Cleared GHL custom field ${clearResult.fieldId} for contact ${clearResult.contactId ?? "<unknown>"}.`,
+    logger.info(
+      `  • Cleared GHL custom field ${clearResult.fieldId} for contact ${clearResult.contactId ?? "<unknown>"}.`,
     );
   }
 }
@@ -548,16 +506,14 @@ async function processGhlTask(task: Extract<LicenseTask, { kind: "ghl" }>, optio
   const offers = task.entitlements.length > 0 ? task.entitlements : task.offerId ? [task.offerId] : [];
   const offerLabel = offers[0] ?? "unknown-offer";
 
-  console.log(
-    `[${SCRIPT_NAME}] ${options.dryRun ? "[dry-run] " : ""}Clearing GHL license field for ${task.email} (${offerLabel}) – source ${task.sourceField}`,
+  logger.info(
+    `${options.dryRun ? "[dry-run] " : ""}Clearing GHL license field for ${task.email} (${offerLabel}) – source ${task.sourceField}`,
   );
 
   if (options.dryRun) {
-    console.log(
-      `[${SCRIPT_NAME}]   • Would send refund event to license service (provider: ghl, offerId: ${offerLabel}).`,
-    );
-    console.log(
-      `[${SCRIPT_NAME}]   • Would clear GHL field ${process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 ?? DEFAULT_LICENSE_FIELD_KEY}.`,
+    logger.info(`  • Would send refund event to license service (provider: ghl, offerId: ${offerLabel}).`);
+    logger.info(
+      `  • Would clear GHL field ${process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 ?? DEFAULT_LICENSE_FIELD_KEY}.`,
     );
     return;
   }
@@ -578,10 +534,7 @@ async function processGhlTask(task: Extract<LicenseTask, { kind: "ghl" }>, optio
     amount: null,
     currency: null,
   }).catch((error) => {
-    console.error(
-      `[${SCRIPT_NAME}]   • Failed to notify license service for ${task.email} (${offerLabel}):`,
-      error,
-    );
+    logger.error(`  • Failed to notify license service for ${task.email} (${offerLabel}):`, error);
   });
 
   const fieldSpecifier = process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 ?? DEFAULT_LICENSE_FIELD_KEY;
@@ -591,12 +544,10 @@ async function processGhlTask(task: Extract<LicenseTask, { kind: "ghl" }>, optio
   });
 
   if (!clearResult.success) {
-    console.warn(
-      `[${SCRIPT_NAME}]   • Unable to clear GHL field (${fieldSpecifier}) for ${task.email}; check credentials and field id.`,
-    );
+    logger.warn(`  • Unable to clear GHL field (${fieldSpecifier}) for ${task.email}; check credentials and field id.`);
   } else {
-    console.log(
-      `[${SCRIPT_NAME}]   • Cleared GHL custom field ${clearResult.fieldId} for contact ${clearResult.contactId ?? "<unknown>"}.`,
+    logger.info(
+      `  • Cleared GHL custom field ${clearResult.fieldId} for contact ${clearResult.contactId ?? "<unknown>"}.`,
     );
   }
 }
@@ -611,7 +562,7 @@ async function processTask(task: LicenseTask, options: CommandLineOptions): Prom
 }
 
 async function main() {
-  loadEnvironment();
+  loadScriptEnvironment(import.meta.url);
 
   const [
     checkoutStore,
@@ -619,7 +570,7 @@ async function main() {
     ghlClient,
     productsModule,
   ] = await Promise.all([
-    import("@/lib/checkout/store"),
+    import("@/lib/checkout"),
     import("@/lib/license-service"),
     import("@/lib/ghl-client"),
     import("@/lib/products/offer-config"),
@@ -632,7 +583,7 @@ async function main() {
   fetchContactLicensesByEmailFn = ghlClient.fetchContactLicensesByEmail;
   getOfferConfigFn = productsModule.getOfferConfig;
 
-  const options = parseArgs(process.argv.slice(2));
+  const options = parseCommandLine(process.argv.slice(2));
 
   const postgresOrders = await collectRefundedOrders(options);
   const tasks: LicenseTask[] = postgresOrders.map((order) => ({ kind: "postgres", order }));
@@ -641,14 +592,12 @@ async function main() {
   tasks.push(...ghlTasks);
 
   if (tasks.length === 0) {
-    console.log(`[${SCRIPT_NAME}] No refunded orders or GHL licenses found that require revocation.`);
+    logger.info("No refunded orders or GHL licenses found that require revocation.");
     return;
   }
 
-  console.log(
-    `[${SCRIPT_NAME}] Processing ${tasks.length} refund${tasks.length === 1 ? "" : "s"}${
-      options.dryRun ? " (dry run)" : ""
-    }...`,
+  logger.info(
+    `Processing ${tasks.length} refund${tasks.length === 1 ? "" : "s"}${options.dryRun ? " (dry run)" : ""}...`,
   );
 
   for (const task of tasks) {
@@ -656,10 +605,10 @@ async function main() {
     await processTask(task, options);
   }
 
-  console.log(`[${SCRIPT_NAME}] Completed.`);
+  logger.info("Completed.");
 }
 
 main().catch((error) => {
-  console.error(`[${SCRIPT_NAME}] Fatal error`, error);
+  logger.error("Fatal error", error);
   process.exitCode = 1;
 });

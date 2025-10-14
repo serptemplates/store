@@ -51,6 +51,13 @@ function createMockCheckoutSession(): Stripe.Checkout.Session {
       productSlug: "linkedin-learning-downloader",
       productName: "LinkedIn Learning Downloader",
       landerId: "linkedin-learning-downloader",
+      productPageUrl: "https://store.serp.co/products/linkedin-learning-downloader",
+      store_serp_co_product_page_url: "https://store.serp.co/products/linkedin-learning-downloader",
+      apps_serp_co_product_page_url: "https://apps.serp.co/linkedin-learning-downloader",
+      purchaseUrl: "https://serp.ly/linkedin-learning-downloader",
+      serply_link: "https://serp.ly/linkedin-learning-downloader",
+      success_url: "https://apps.serp.co/checkout/success?product=linkedin-learning-downloader",
+      cancel_url: "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
       affiliateId: "test-affiliate-123",
       source: "test-script"
     },

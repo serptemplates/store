@@ -28,6 +28,7 @@ interface ShopifyProductMetadata {
   subtitle?: string;
   price_label?: string | null;
   github_repo_url?: string;
+  serply_link?: string;
 }
 
 interface ShopifyProduct {
@@ -52,16 +53,23 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
   const priceString = normalizedPrice.toFixed(2)
 
   const productImages = product.images?.map((img) => img.url).filter(Boolean) ?? []
+  const storeProductUrl = `https://store.serp.co/products/${handle}`
+  const appsProductUrl = `https://apps.serp.co/${handle}`
+  const serplyLink = product.metadata?.serply_link ?? `https://serp.ly/${handle}`
+  const successUrl = `${appsProductUrl}/checkout/success`
+  const cancelUrl = `${appsProductUrl}?checkout=cancel`
   const schemaProduct: SchemaProduct = {
     slug: handle,
     seo_title: product.title,
     seo_description: product.description ?? product.title,
     name: product.title,
     description: product.description ?? product.title,
-    product_page_url: `https://apps.serp.co/${handle}`,
-    purchase_url: product.metadata?.stripe_price_id
-      ? `https://buy.stripe.com/test/${product.metadata.stripe_price_id}`
-      : `https://apps.serp.co/${handle}`,
+    product_page_url: storeProductUrl,
+    store_serp_co_product_page_url: storeProductUrl,
+    apps_serp_co_product_page_url: appsProductUrl,
+    serply_link: serplyLink,
+    success_url: successUrl,
+    cancel_url: cancelUrl,
     price: priceString,
     images: productImages.length > 0 ? productImages : [mainImageSource || "/api/og"],
     tagline: product.metadata?.subtitle ?? product.title,
@@ -94,7 +102,7 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
 
   const productSchema = generateProductSchemaLD({
     product: schemaProduct,
-    url: `https://apps.serp.co/${handle}`,
+    url: appsProductUrl,
     storeUrl: "https://apps.serp.co",
     currency: price?.currency_code?.toUpperCase() || "USD",
   })

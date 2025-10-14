@@ -8,7 +8,7 @@ loadEnv({ path: resolve(process.cwd(), "../../.env.local") });
 const isStaticExport = process.env.STATIC_EXPORT === "1";
 
 const nextConfig = {
-  transpilePackages: ["@repo/ui", "@repo/templates"],
+  transpilePackages: ["@repo/ui"],
 
   // Enable compression
   compress: true,
@@ -106,7 +106,6 @@ const nextConfig = {
       'lodash',
       'date-fns',
       '@repo/ui',
-      '@repo/templates',
       'react',
       'react-dom'
     ],

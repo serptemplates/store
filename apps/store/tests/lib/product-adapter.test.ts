@@ -8,7 +8,11 @@ const baseProduct: ProductData = {
   seo_title: "Sample Product",
   seo_description: "Sample description",
   product_page_url: "https://example.com/sample",
-  purchase_url: "https://example.com/sample/buy",
+  store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
+  apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+  serply_link: "https://serp.ly/sample-product",
+  success_url: "https://apps.serp.co/checkout/success?product=sample-product",
+  cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   buy_button_destination: undefined,
   name: "Sample Product Downloader",
   tagline: "Download everything",
@@ -40,8 +44,6 @@ const baseProduct: ProductData = {
   keywords: [],
   stripe: {
     price_id: "price_123",
-    success_url: "https://example.com/success",
-    cancel_url: "https://example.com/cancel",
     metadata: {},
   },
   layout_type: "landing",
@@ -140,8 +142,10 @@ describe("productToHomeTemplate", () => {
         benefits: baseProduct.pricing?.benefits ?? [],
         cta_href: "https://example.com/not-allowed",
       },
-      purchase_url: "https://serp.ly/something",
+      serply_link: "https://serp.ly/something",
       product_page_url: "https://store.serp.co/products/sample-product",
+      store_serp_co_product_page_url: "https://store.serp.co/products/sample-product",
+      apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
     };
 
     const template = productToHomeTemplate(product, []);
