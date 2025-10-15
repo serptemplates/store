@@ -76,10 +76,10 @@ async function connectWithRetry(connectionString: string) {
     attempt += 1;
 
     try {
-      const connection = usePool 
+      const connection = usePool
         ? createPool({ connectionString })
         : createClient({ connectionString });
-      
+
       await connection.connect();
 
       if (attempt > 1) {
