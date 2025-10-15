@@ -18,22 +18,26 @@ module.exports = {
       settings: FAST
         ? {
             // FAST LOCAL: no throttling, still emulate mobile layout
-            formFactor: 'mobile',
+            preset: 'desktop',
+            formFactor: 'desktop',
             throttlingMethod: 'provided',           // <- uses your real CPU/network (no slowdowns)
             screenEmulation: { disabled: true },    // let layout come from viewport below
             // A sane mobile-ish viewport so CLS/layout is representative
             // (Lighthouse will still treat as mobile via formFactor)
             onlyCategories: ['performance','accessibility','best-practices','seo'],
             disableStorageReset: true,              // speeds up re-runs
+            blockedUrlPatterns,
             // Optional: skip expensive audits if you just want a smoke-check
             // skipAudits: ['bf-cache','network-requests'],
           }
         : {
             // STRICT (CI): realistic throttling on mobile
-            formFactor: 'mobile',
+            preset: 'desktop',
+            formFactor: 'desktop',
             throttlingMethod: 'devtools',
             // let Lighthouse pick the right emulation for 'mobile'
             // (no need for emulatedFormFactor or manual screenEmulation)
+            blockedUrlPatterns,
           },
     },
     assert: {
