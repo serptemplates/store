@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { DelayedGTM } from "@/components/DelayedGTM";
 import { PostHogAnalytics } from "@/components/analytics/PostHogAnalytics";
@@ -44,6 +45,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        {/* Initialize dataLayer early for GTM tracking */}
+        <Script
+          id="gtm-datalayer-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];`,
+          }}
+        />
         {/* Preconnect to GTM for faster loading */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
