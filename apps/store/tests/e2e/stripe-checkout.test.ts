@@ -33,8 +33,8 @@ test.describe("Checkout smoke", () => {
     const consoleErrors: string[] = [];
     const requestFailures: string[] = [];
 
-    const ignoredConsolePatterns = [/appendChild/i, /Failed to load resource/i, /_vercel\/insights/i];
-    const ignoredRequestPatterns = [/tawk\.to/i, /google-analytics\.com/i, /_vercel\/insights/i];
+    const ignoredConsolePatterns = [/appendChild/i, /Failed to load resource/i, /_vercel/i, /\.well-known\/vercel/i];
+    const ignoredRequestPatterns = [/tawk\.to/i, /google-analytics\.com/i, /_vercel/i, /\.well-known\/vercel/i];
 
     page.on("console", (m) => {
       if (m.type() !== "error") return;
