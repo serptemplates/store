@@ -1,0 +1,71 @@
+name: Staging QA
+
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+jobs:
+  staging-tests:
+    name: Playwright + Lighthouse on staging
+    runs-on: ubuntu-latest
+    if: ${{ secrets.STAGING_BASE_URL != '' }}
+    env:
+      PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      PLAYWRIGHT_NO_SERVER: "1"
+      LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      STRUCTURED_DATA_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run Playwright staging suite
+        run: pnpm --filter @apps/store exec playwright test
+
+      - name: Run axe accessibility checks
+        run: pnpm --filter @apps/store run test:axe
+
+      - name: Run structured data checks
+        run: pnpm --filter @apps/store run test:structured-data
+
+      - name: Run Lighthouse checks
+        run: pnpm --filter @apps/store run test:lhci
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: apps/store/.lighthouseci
+          if-no-files-found: ignore
+
+  missing-secret:
+    name: Staging QA (missing STAGING_BASE_URL secret)
+    runs-on: ubuntu-latest
+    if: ${{ secrets.STAGING_BASE_URL == '' }}
+    steps:
+      - name: Fail because STAGING_BASE_URL is not configured
+        run: |
+          echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+          exit 1
