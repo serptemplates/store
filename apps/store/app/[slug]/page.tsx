@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import ClientHome from "../ClientHome";
-import HybridPage from "./hybrid-page";
+import dynamic from "next/dynamic";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { getAllPosts } from "@/lib/blog";
 import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/product";
@@ -9,6 +8,17 @@ import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import { getProductVideoEntries } from "@/lib/products/video";
 import { buildProductMetadata } from "@/lib/products/metadata";
+
+// Lazy load heavy page components
+const ClientHome = dynamic(() => import("../ClientHome"), {
+  loading: () => <div className="min-h-screen" />,
+  ssr: true, // Keep SSR for SEO
+});
+
+const HybridPage = dynamic(() => import("./hybrid-page"), {
+  loading: () => <div className="min-h-screen" />,
+  ssr: true, // Keep SSR for SEO
+});
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -49,21 +59,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   );
 }
 
-export function generateStaticParams() {
-  return getProductSlugs().map((slug) => ({ slug }));
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const available = new Set(getProductSlugs());
+  if (!available.has(slug)) {
+    return {};
+  }
+  const product = getProductData(slug);
+  return buildProductMetadata(product);
 }
 
-const FALLBACK_METADATA: Metadata = {
-  title: "SERP Apps",
-  description: "Browse the full catalog of SERP products.",
-};
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  try {
-    const product = getProductData(slug);
-    return buildProductMetadata(product);
-  } catch {
-    return FALLBACK_METADATA;
-  }
+export function generateStaticParams() {
+  return getProductSlugs().map((slug) => ({ slug }));
 }

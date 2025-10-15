@@ -1,7 +1,7 @@
 [
   {
     "name": "minScore",
-    "expected": 0.75,
+    "expected": 0.9,
     "actual": 0.74,
     "values": [
       0.74
@@ -10,7 +10,7 @@
     "passed": false,
     "auditProperty": "performance",
     "auditId": "categories",
-    "level": "warn",
+    "level": "error",
     "url": "http://127.0.0.1:4313/loom-video-downloader"
   }
 ]

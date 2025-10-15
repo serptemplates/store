@@ -111,7 +111,6 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const { product, entry, siteName, watchUrl, productUrl } = context;
   const baseUrl = getSiteBaseUrl();
   const siteConfig = getSiteConfig();
-  const navSiteName = siteConfig.site?.name ?? siteName;
   const allProducts = getAllProducts();
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
   const siteRegions = product.supported_regions
@@ -291,8 +290,8 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
                             width={192}
                             height={108}
                             className="h-full w-full object-cover"
-                            loading="lazy"
-                            unoptimized
+                            sizes="(max-width: 640px) 50vw, 192px"
+                            quality={75}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">Video</div>
