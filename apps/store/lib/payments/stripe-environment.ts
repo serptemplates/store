@@ -137,7 +137,29 @@ export function resolveStripeMode(mode: StripeModeInput = "auto"): StripeMode {
   }
 
   const runtime = getRuntimeEnvironment();
-  return runtime === "production" ? "live" : "test";
+  const inferred = runtime === "production" ? "live" : "test";
+
+  if (inferred === "test") {
+    const testSecret = selectSecretKeyForMode("test");
+    const testPublishable = selectPublishableKeyForMode("test");
+    const liveSecret = selectSecretKeyForMode("live");
+    const livePublishable = selectPublishableKeyForMode("live");
+
+    const missingTestSecret = !testSecret;
+    const missingTestPublishableKey = !testPublishable;
+
+    if ((missingTestSecret || missingTestPublishableKey) && liveSecret && livePublishable) {
+      emitWarning("Missing Stripe test credentials; defaulting to live mode.", {
+        runtime,
+        missingTestSecret,
+        missingTestPublishableKey,
+        fallbackMode: "live",
+      });
+      return "live";
+    }
+  }
+
+  return inferred;
 }
 
 function selectSecretKeyForMode(mode: StripeMode): string | undefined {

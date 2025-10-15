@@ -1,87 +1,42 @@
-name: Payment → GHL Integration
+name: Staging QA
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [staging]
   workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+# Prevent overlapping runs on the same branch (e.g., multiple pushes to staging)
+concurrency:
+  group: staging-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Shared across all jobs so scripts can read whichever they need
+  STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  PLAYWRIGHT_NO_SERVER: "1"
+  LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  STRUCTURED_DATA_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
 
 jobs:
-  verify-prerequisites:
-    name: Check required secrets
+  playwright:
+    name: E2E — Playwright
     runs-on: ubuntu-latest
-    outputs:
-      has-secrets: ${{ steps.evaluate.outputs.has-secrets }}
-      missing: ${{ steps.evaluate.outputs.missing }}
+    timeout-minutes: 30
     steps:
-      - id: evaluate
-        shell: bash
-        env:
-          STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
-          STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
-          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-          PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
-          GHL_PAT_LOCATION: ${{ secrets.GHL_PAT_LOCATION }}
-          GHL_API_BASE_URL: ${{ secrets.GHL_API_BASE_URL }}
-          GHL_API_VERSION: ${{ secrets.GHL_API_VERSION }}
+      - name: Ensure STAGING_BASE_URL secret is set
         run: |
-          set -euo pipefail
-          missing=""
-          required_vars=(
-            STRIPE_SECRET_KEY_TEST
-            STRIPE_WEBHOOK_SECRET_TEST
-            PAYPAL_CLIENT_ID
-            PAYPAL_CLIENT_SECRET
-            DATABASE_URL
-            GHL_LOCATION_ID
-            GHL_PAT_LOCATION
-            GHL_API_BASE_URL
-            GHL_API_VERSION
-          )
-
-          for var in "${required_vars[@]}"; do
-            if [ -z "${!var:-}" ]; then
-              if [ -z "$missing" ]; then
-                missing="$var"
-              else
-                missing="$missing, $var"
-              fi
-            fi
-          done
-
-          if [ -z "$missing" ]; then
-            echo "has-secrets=true" >> "$GITHUB_OUTPUT"
-            echo "missing=" >> "$GITHUB_OUTPUT"
-          else
-            echo "has-secrets=false" >> "$GITHUB_OUTPUT"
-            echo "missing=$missing" >> "$GITHUB_OUTPUT"
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
           fi
 
-  checkout-ghl:
-    name: Stripe & PayPal to GHL
-    runs-on: ubuntu-latest
-    needs: verify-prerequisites
-    if: ${{ needs.verify-prerequisites.outputs.has-secrets == 'true' }}
-    env:
-      STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
-      STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
-      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-      STRIPE_INTEGRATION_OFFER_ID: ${{ secrets.STRIPE_INTEGRATION_OFFER_ID }}
-      PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-      PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
-      GHL_PAT_LOCATION: ${{ secrets.GHL_PAT_LOCATION }}
-      GHL_API_BASE_URL: ${{ secrets.GHL_API_BASE_URL }}
-      GHL_API_VERSION: ${{ secrets.GHL_API_VERSION }}
-      GHL_AFFILIATE_FIELD_ID: ${{ secrets.GHL_AFFILIATE_FIELD_ID }}
-    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -89,27 +44,154 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Stripe → GHL integration test
-        run: pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
-      - name: PayPal → GHL integration test
-        run: pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
+      - name: Install Playwright browsers
+        run: pnpm --filter @apps/store exec playwright install --with-deps
 
-  missing-secrets:
-    name: Payment → GHL (skipped - missing secrets)
+      - name: Run Playwright staging suite
+        run: pnpm --filter @apps/store exec playwright test
+
+  axe:
+    name: A11y — axe
     runs-on: ubuntu-latest
-    needs: verify-prerequisites
-    if: ${{ needs.verify-prerequisites.outputs.has-secrets != 'true' }}
+    timeout-minutes: 20
     steps:
-      - name: Warn about missing secrets
+      - name: Ensure STAGING_BASE_URL secret is set
         run: |
-          echo "Required secrets for payment → GHL integration tests are missing or incomplete."
-          echo "Missing secrets: ${{ needs.verify-prerequisites.outputs.missing }}"
-          echo "Please ensure all required secrets are set in the repository settings."
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # If your axe tests depend on Playwright, keep these two steps; otherwise you can remove them.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers (if axe uses Playwright)
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run axe accessibility checks
+        run: pnpm --filter @apps/store run test:axe
+
+  structured_data:
+    name: Structured Data
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Optional: include Playwright if these checks use it
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers (if structured data uses Playwright)
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run structured data checks
+        run: pnpm --filter @apps/store run test:structured-data
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Lighthouse checks
+        run: pnpm --filter @apps/store run test:lhci
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: apps/store/.lighthouseci
+          if-no-files-found: ignore
