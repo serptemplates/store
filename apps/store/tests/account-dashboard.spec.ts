@@ -44,12 +44,18 @@ test("account dashboard renders without console errors", async ({ page }) => {
     if (type !== "error") return false;
     if (text.includes("/api/account/verify")) return false;
     if (sawAccountVerify400 && /status of 400/.test(text)) return false;
-    
+
     // Log and filter generic 400 errors for debugging
     if (text === "Failed to load resource: the server responded with a status of 400 ()") {
       console.warn(`Ignoring generic 400 error from: ${location || "unknown source"}`);
       return false;
     }
+
+    // Ignore Vercel Insights errors (staging environment)
+    if (location?.includes('/_vercel/insights/') || text.includes('/_vercel/insights/')) {
+      return false;
+    }
+
     return true;
   });
 

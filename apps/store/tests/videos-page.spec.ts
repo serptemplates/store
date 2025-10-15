@@ -18,7 +18,8 @@ test.describe("videos library", () => {
       // Ignore known third-party service failures
       if (url.includes('google-analytics.com') ||
           url.includes('tawk.to') ||
-          url.includes('facebook.net')) {
+          url.includes('facebook.net') ||
+          url.includes('/_vercel/insights/')) {
         return;
       }
       failedRequests.push(`${request.method()} ${url}`);
@@ -28,13 +29,18 @@ test.describe("videos library", () => {
     await page.waitForLoadState("networkidle", { timeout: 2000 }).catch(() => {});
     expect(response?.ok(), `Expected /videos response ok but got ${response?.status()}`).toBeTruthy();
 
-    // Filter out known third-party errors (Tawk.to, etc.)
+    // Filter out known third-party errors (Tawk.to, Vercel, etc.)
     const blockingConsoleErrors = consoleMessages.filter(({ type, text, location }) => {
       if (type !== "error") return false;
 
       // Ignore generic 400 errors from third-party services
       if (text === "Failed to load resource: the server responded with a status of 400 ()") {
         console.warn(`Ignoring generic 400 error from: ${location || "unknown source"}`);
+        return false;
+      }
+
+      // Ignore Vercel Insights errors (staging environment)
+      if (location?.includes('/_vercel/insights/') || text.includes('/_vercel/insights/')) {
         return false;
       }
 

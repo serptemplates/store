@@ -33,6 +33,11 @@ test.describe("Homepage smoke", () => {
         return false;
       }
 
+      // Ignore Vercel Insights errors (staging environment)
+      if (location?.includes('/_vercel/insights/') || text.includes('/_vercel/insights/')) {
+        return false;
+      }
+
       return true;
     });
 
