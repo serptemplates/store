@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - staging
+      - copilot/fix-workflow-issue
   workflow_dispatch:
   schedule:
     - cron: "0 9 * * *"

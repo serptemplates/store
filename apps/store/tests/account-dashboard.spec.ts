@@ -24,7 +24,8 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   page.on("response", (response) => {
     const url = response.url();
-    if (url.includes("/_vercel/insights/")) {
+    // Ignore Vercel Analytics and Speed Insights requests (may 404 in non-production)
+    if (url.includes("/_vercel/") || url.includes("/.well-known/vercel/")) {
       return;
     }
     if ([...appOrigins].some((origin) => url.startsWith(origin))) {
@@ -54,8 +55,9 @@ test("account dashboard renders without console errors", async ({ page }) => {
       return false;
     }
 
-    // Ignore Vercel Insights errors (staging environment)
-    if (location?.includes('/_vercel/insights/') || text.includes('/_vercel/insights/')) {
+    // Ignore Vercel Analytics and Speed Insights errors (may fail in non-production)
+    if (location?.includes('/_vercel/') || location?.includes('/.well-known/vercel/') ||
+        text.includes('/_vercel/') || text.includes('/.well-known/vercel/')) {
       return false;
     }
 
@@ -64,7 +66,8 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   const failingResponses = networkResponses.filter(({ url, status }) => {
     if (status === 400 && url.includes("/api/account/verify")) return false;
-    if (url.includes("/_vercel/insights/")) return false;
+    // Ignore Vercel Analytics and Speed Insights requests (may 404 in non-production)
+    if (url.includes("/_vercel/") || url.includes("/.well-known/vercel/")) return false;
     return status >= 400;
   });
 

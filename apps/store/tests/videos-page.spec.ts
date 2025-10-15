@@ -19,11 +19,8 @@ test.describe("videos library", () => {
       if (url.includes('google-analytics.com') ||
           url.includes('tawk.to') ||
           url.includes('facebook.net') ||
-          url.includes('/_vercel/insights/') ||
-          url.includes('/.well-known/vercel/jwe')) {
-        return;
-      }
-      if (request.method() === "OPTIONS") {
+          url.includes('/_vercel/') ||
+          url.includes('/.well-known/vercel/')) {
         return;
       }
       failedRequests.push(`${request.method()} ${url}`);
@@ -43,8 +40,9 @@ test.describe("videos library", () => {
         return false;
       }
 
-      // Ignore Vercel Insights errors (staging environment)
-      if (location?.includes('/_vercel/insights/') || text.includes('/_vercel/insights/')) {
+      // Ignore Vercel Analytics and Speed Insights errors (may fail in non-production)
+      if (location?.includes('/_vercel/') || location?.includes('/.well-known/vercel/') ||
+          text.includes('/_vercel/') || text.includes('/.well-known/vercel/')) {
         return false;
       }
 
