@@ -244,7 +244,7 @@ async function main() {
 
   const products: ProductData[] = selectedSlugs.map(loadProduct);
 
-  const siteUrl = process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://store.serp.co";
+  const siteUrl = process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://apps.serp.co";
   const appsUrl = process.env.GOOGLE_MERCHANT_APPS_URL ?? "https://apps.serp.co";
 
   const merchantProducts: MerchantProduct[] = [];

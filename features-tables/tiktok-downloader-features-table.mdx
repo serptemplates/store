@@ -1,0 +1,72 @@
+# TikTok Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method         | Status     | Notes                              |
+| ---------------------- | ----------------------- | ----------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | TikTok pages            | Multi-method extraction | ✅ Works   | Individual video downloads only    |
+| **Feed Videos**        | For You / Following     | DOM tracking detection  | ✅ Works   | Each video downloadable separately |
+| **Profile Videos**     | User profiles           | Universal data parsing  | ✅ Works   | All videos on profile page         |
+| **Direct MP4**         | All TikTok videos       | Multiple URL sources    | ✅ Works   | Direct download from CDN           |
+| **API Extraction**     | TikTok API endpoints    | Fallback method         | ✅ Works   | When web extraction fails          |
+| **Multiple Qualities** | All TikTok videos       | Bitrate info parsing    | ✅ Works   | Multiple resolutions when available|
+| **Watermarked**        | All TikTok videos       | Download addr URLs      | ✅ Works   | Lower preference than clean URLs   |
+
+## Supported Formats
+
+- **MP4** (Primary format - direct CDN downloads)
+- **Multiple resolutions** (Extracted from bitrateInfo array)
+- **Quality variants** (playAddr, downloadAddr URLs)
+- **Bitrate extraction** (From TikTok bitrateInfo metadata)
+- **Watermarked versions** (Available via downloadAddr endpoints)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (paid product purchase)
+- Internet connection for license validation
+- Must be on supported TikTok pages
+- Cookie authentication for restricted content
+
+## Supported TikTok URLs
+
+- Primary: `https://www.tiktok.com/*`, `https://*.tiktok.com/*`
+- Video pages: `https://www.tiktok.com/@*/video/*`
+- Share links: `https://www.tiktok.com/share/video/*`
+- CDN access: `https://*.tiktokcdn.com/*`, `https://*.tiktokv.com/*`
+- International: `https://*.byteoversea.com/*`, `https://*.musical.ly/*`
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Help system** - Alt+Shift+L debug panel for feed tracking
+- **Video metadata display** - Title, description, author, likes
+- **Quality selector** - Dropdown with available formats
+- **Feed DOM tracker** - Real-time detection of scrolled videos
+- **In-page download manager** - Visual download cards
+- **Context menu integration** - Right-click download option
+
+## Technical Features
+
+- **Multi-source web extraction** - __UNIVERSAL_DATA_FOR_REHYDRATION__, SIGI_STATE, __NEXT_DATA__
+- **Embedded JSON parsing** - Extracts itemStruct from inline script tags
+- **Feed DOM tracking** - Monitors For You page with scroll position detection
+- **Cookie authentication** - Comprehensive cookie collection from .tiktok.com domains
+- **API fallback system** - Tries /api/item/detail when web extraction fails
+- **Declarative Net Request** - Dynamic referer header injection for CDN access
+- **Background processing** - Download management via service worker
+- **BitrateInfo parsing** - Extracts multiple quality variants from TikTok metadata
+- **URL preference ordering** - Prioritizes clean URLs over watermarked versions
+- **Network cache monitoring** - Captures video URLs from API requests
+- **DOM refresh system** - Periodic re-scanning of universal data for new videos
+- **Viewport detection** - Identifies currently playing video in feed
+- **tt_chain_token extraction** - Parses authentication tokens from HTML/URLs
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **TikTok network only** - Limited to TikTok domains
+- **License required** - All functionality blocked without activation
+- **Chrome only** - No support for other browsers
+- **No download history** - No persistent storage of past downloads
+- **Internet dependency** - Requires connection for license validation and video access
+- **Cookie dependency** - Restricted content requires valid session cookies
+- **Anti-bot measures** - May fail on videos with strict protection

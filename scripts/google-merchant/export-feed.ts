@@ -39,7 +39,7 @@ function parseArgs(): ScriptOptions {
       .filter(Boolean),
     language: (process.env.GOOGLE_MERCHANT_LANGUAGE ?? "en").trim().toLowerCase(),
     format: "csv",
-    siteUrl: process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://store.serp.co",
+    siteUrl: process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://apps.serp.co",
     appsUrl: process.env.GOOGLE_MERCHANT_APPS_URL ?? "https://apps.serp.co",
   };
 

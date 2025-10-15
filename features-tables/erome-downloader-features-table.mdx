@@ -1,0 +1,75 @@
+# Erome Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method         | Status     | Notes                              |
+| ---------------------- | ----------------------- | ----------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | Erome pages             | Multi-source extraction | ✅ Works   | Individual video downloads only    |
+| **Album Videos**       | Erome albums            | Multi-video detection   | ✅ Works   | Each video downloadable separately |
+| **HLS Streams**        | All Erome videos        | In-content HLS downloader| ✅ Works  | Pure content-script processing     |
+| **MP4 Direct**         | All Erome videos        | Blob streaming download | ✅ Works   | Stream fetch with progress         |
+| **WebM/OGG**           | Erome videos            | Format auto-detection   | ✅ Works   | Supports multiple container formats|
+| **Multiple Qualities** | All Erome videos        | Multi-source parsing    | ✅ Works   | From video elements & global objects|
+| **Progress Tracking**  | All downloads           | Real-time monitoring    | ✅ Works   | Visual progress bar with bytes     |
+
+## Supported Formats
+
+- **MP4** (Primary format - streamed blob downloads)
+- **WebM** (Alternative container format)
+- **OGG** (Alternative container format)
+- **HLS/M3U8** (Streaming format with in-content processing)
+- **DASH/MPD** (Detection supported, format_type: 'dash')
+- **Multiple resolutions** (Extracted from URL patterns, labels, and attributes)
+- **Quality auto-detection** (From res, data-res, data-quality, label attributes)
+- **HLS master playlist** - Selects highest quality variant
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (paid product purchase)
+- Internet connection for license validation
+- Must be on supported Erome pages
+- 18+ age verification for adult content
+
+## Supported Erome URLs
+
+- Primary: `https://erome.com/*`, `https://www.erome.com/*`
+- Albums: `https://erome.com/a/*`, `https://erome.com/album/*`
+- Videos: `https://erome.com/v/*`, `https://erome.com/video/*`
+- CDN access: `https://*.sacdnssedge.com/*`
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Help system** - Toggle-able usage instructions
+- **Video metadata display** - Thumbnail, title extracted from page
+- **Quality selector** - Dropdown with all detected formats
+- **Download progress** - Real-time progress bar with percentage and bytes
+- **In-page download manager** - Visual download cards with cancel ability
+- **Player button** - Direct download button on video player
+- **Dual DM support** - Shared download manager or standalone fallback
+
+## Technical Features
+
+- **Comprehensive source extraction** - Scans video elements, sources, scripts, globals
+- **Multi-selector video detection** - Checks multiple CSS selectors (.video video, .player video, etc.)
+- **Attribute-based quality parsing** - Extracts height from res, data-quality, label, and dataset
+- **URL pattern quality detection** - Parses resolution from URLs (_720p.mp4, /1080p/, quality=480)
+- **Content script blob streaming** - Fetches video with ReadableStream, builds blob with progress
+- **In-content HLS processing** - Pure content-script m3u8 parser and segment downloader
+- **Master playlist handling** - Selects best variant from master m3u8
+- **Global object scanning** - Checks window.eromePlayer, eromeConfig, __NUXT__, etc.
+- **Inline script mining** - Regex extraction of video URLs from embedded JavaScript
+- **Format type detection** - Auto-detects HLS, DASH, WebM, OGG from URLs and MIME types
+- **Cancellation support** - Dual cancellation check (local + shared sets)
+- **Progress restoration** - Shared download manager integration
+- **Fallback UI** - Standalone download manager when shared DM unavailable
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support (albums require individual downloads)
+- **Erome network only** - Limited to Erome domains
+- **License required** - All functionality blocked without activation
+- **Adult content only** - 18+ age restriction applies
+- **Chrome only** - No support for other browsers
+- **No download history** - No persistent storage of past downloads
+- **Internet dependency** - Requires connection for license validation and video access
+- **Content-script downloads** - Blob creation in page context (memory intensive for large files)

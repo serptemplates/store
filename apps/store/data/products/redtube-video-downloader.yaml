@@ -34,7 +34,7 @@ features:
 - Auto metadata extraction and organization
 - Resume interrupted transfers
 - Cross-platform support
-- Command-line tools
+
 - Built-in Proxy support
 - Custom naming schemes and folder structures
 - Duplicate detection

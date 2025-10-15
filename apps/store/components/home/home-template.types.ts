@@ -7,6 +7,12 @@ import type { HeroMediaItem } from "@repo/ui/sections/Hero";
 
 type GenericComponent = ComponentType<Record<string, unknown>>;
 
+export type PermissionJustificationItem = {
+  permission: string;
+  justification: string;
+  learn_more_url?: string;
+};
+
 export type HomeTemplateUi = {
   Navbar: GenericComponent;
   Footer: GenericComponent;
@@ -62,4 +68,9 @@ export type HomeTemplateProps = {
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;
   videoSection?: ReactNode;
+  permissionJustifications?: PermissionJustificationItem[];
+  about?: {
+    title: string;
+    paragraphs: string[];
+  };
 };

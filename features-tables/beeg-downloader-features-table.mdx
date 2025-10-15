@@ -1,0 +1,57 @@
+# Beeg Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method        | Status     | Notes                              |
+| ---------------------- | ----------------------- | ---------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | Beeg video pages        | API + HLS extraction   | ✅ Works   | Individual video downloads only    |
+| **HLS Streams**        | Beeg CDN delivery       | M3U8 playlist parsing  | ✅ Works   | Segments downloaded and merged     |
+| **Multiple Qualities** | All Beeg videos         | Format preference      | ✅ Works   | 240p, 480p, 720p+ available       |
+| **Context Menu**       | Right-click download    | Background integration | ✅ Works   | Download via right-click option    |
+| **Progress Tracking**  | All downloads           | Real-time monitoring   | ✅ Works   | Visual progress bar with bytes     |
+
+## Supported Formats
+
+- **MP4** (Primary format, converted from HLS streams)
+- **HLS/M3U8** (Source streams processed into segments)
+- **Multiple resolutions** (240p Low, 480p High, 720p+ HLS)
+- **Quality auto-detection** (Based on format_id patterns)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (Gumroad verification)
+- Internet connection for API calls
+- JavaScript enabled
+
+## Supported Beeg URLs
+
+- Video pages: `https://beeg.com/-[video-id]`
+- Video pages with timestamp: `https://beeg.com/[video-id]?t=[timestamp]`
+- All Beeg.com video content
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Video metadata display** - Thumbnail, title, uploader, duration, views, stats
+- **Quality selector** - Dropdown with user-friendly quality labels
+- **Download progress** - Real-time progress bar with speed and ETA
+- **In-page notifications** - Overlay system for download status
+- **Context menu integration** - Right-click download option
+
+## Technical Features
+
+- **API integration** - Uses Beeg's internal video API
+- **HLS processing** - Downloads and concatenates video segments
+- **Fallback downloads** - Chrome Downloads API backup method
+- **Cross-origin handling** - Proper headers and CORS management
+- **Error recovery** - Multiple extraction methods with retry logic
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **Beeg.com exclusive** - Only works on Beeg platform
+- **License required** - All functionality blocked without activation
+- **No live streams** - Static video content only
+- **Chrome only** - No support for other browsers
+- **Internet dependent** - Requires API connectivity
+- **No download history** - No record of previous downloads
+- **Referer dependency** - Requires proper headers for video access

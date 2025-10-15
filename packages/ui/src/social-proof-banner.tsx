@@ -15,7 +15,10 @@ export type SocialProofBannerProps = {
     url: string;
   };
   className?: string;
+  align?: "center" | "start";
 };
+
+const DEFAULT_AVATAR_PATHS = Array.from({ length: 7 }, (_, index) => `/images/social-proof/avatar-${index + 1}.jpg`);
 
 const SocialProofBanner = ({
   description,
@@ -25,32 +28,41 @@ const SocialProofBanner = ({
   userLabel,
   avatars,
   link,
+  align = "center",
 }: SocialProofBannerProps) => {
-  if (!avatars.length) {
-    avatars = [1, 2, 3, 4, 5, 6, 7].map(
-      (i) => `https://i.pravatar.cc/40?img=${i + 20}`
-    );
-  }
+  const resolvedAvatars = avatars.length ? avatars : DEFAULT_AVATAR_PATHS;
 
-  const extraCount = Math.max(0, userCount - avatars.length);
+  const extraCount = Math.max(0, userCount - resolvedAvatars.length);
   const descriptionText = description?.trim() ?? "";
   const hasDescription = descriptionText.length > 0;
   const linkLabel = link?.label?.trim();
   const linkUrl = link?.url?.trim();
   const hasLink = Boolean(linkLabel && linkUrl);
-  const resolvedUserLabel = userLabel?.trim() || "Users";
+  const trimmedUserLabel = userLabel?.trim();
+  const showUserLabel = Boolean(trimmedUserLabel && trimmedUserLabel.length > 0);
+  const containerClasses =
+    align === "start" ? "w-full" : "mx-auto w-full max-w-5xl";
+  const justifyContentClass =
+    align === "start" ? "justify-start lg:justify-start" : "justify-center";
 
   return (
-    <div className={cn(className, "mx-auto w-full max-w-5xl")}>
-      <div className="flex flex-wrap flex-row gap-y-4 items-center justify-center">
+    <div className={cn(className, containerClasses)}>
+      <div
+        className={cn(
+          "flex flex-wrap flex-row gap-y-4 items-center",
+          justifyContentClass
+        )}
+      >
         <Laurel className="size-20 text-indigo-300 -scale-x-100" />
         <div className="flex flex-col items-center justify-center">
           <div className="text-4xl text-center font-black text-black">
             <span>{userCount}+</span>
           </div>
-          <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-indigo-600">
-            {resolvedUserLabel}
-          </span>
+          {showUserLabel ? (
+            <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-indigo-600">
+              {trimmedUserLabel}
+            </span>
+          ) : null}
           <div className="mt-1 flex items-center gap-1">
             {[...Array(starRating)].map((_, i) => (
               <FaStar key={i} className="h-4 w-4 fill-orange-400" />
@@ -82,7 +94,7 @@ const SocialProofBanner = ({
 
         <div className="flex flex-nowrap items-center gap-2">
           <div className="flex -space-x-2">
-            {avatars.map((avatar, i) => (
+            {resolvedAvatars.map((avatar, i) => (
               <Avatar
                 key={i}
                 src={avatar}

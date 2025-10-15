@@ -35,13 +35,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {};
   }
 
+  const metaTitle = post.meta.seoTitle ?? post.meta.title;
+  const metaDescription = post.meta.seoDescription ?? post.meta.description;
+
   return {
-    title: post.meta.title,
-    description: post.meta.description,
+    title: metaTitle,
+    description: metaDescription,
     authors: [{ name: post.meta.author }],
     openGraph: {
-      title: post.meta.title,
-      description: post.meta.description,
+      title: metaTitle,
+      description: metaDescription,
       type: "article",
       publishedTime: post.meta.date,
       authors: [post.meta.author],
@@ -49,8 +52,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: "summary_large_image",
-      title: post.meta.title,
-      description: post.meta.description,
+      title: metaTitle,
+      description: metaDescription,
       images: post.meta.image ? [post.meta.image] : undefined,
     },
   } satisfies Metadata;
@@ -73,10 +76,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     .sort(() => 0.5 - Math.random())
     .slice(0, 3);
 
+  const metaTitle = post.meta.seoTitle ?? post.meta.title;
+  const metaDescription = post.meta.seoDescription ?? post.meta.description;
+
   // Generate Article schema for SEO
   const articleSchema = generateArticleSchema({
-    headline: post.meta.title,
-    description: post.meta.description,
+    headline: metaTitle,
+    description: metaDescription,
     image: post.meta.image || 'https://apps.serp.co/og-image.png',
     datePublished: post.meta.date,
     dateModified: post.meta.dateModified ?? post.meta.date,
@@ -93,7 +99,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     items: [
       { name: 'Home', url: '/' },
       { name: 'Blog', url: '/blog' },
-      { name: post.meta.title },
+      { name: metaTitle },
     ],
     storeUrl: 'https://apps.serp.co',
   });
@@ -144,8 +150,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Article
             </Badge>
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl">{post.meta.title}</h1>
-            {post.meta.description && (
-              <p className="text-lg text-muted-foreground">{post.meta.description}</p>
+            {metaDescription && (
+              <p className="text-lg text-muted-foreground">{metaDescription}</p>
             )}
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1">

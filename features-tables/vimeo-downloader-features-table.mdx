@@ -1,0 +1,61 @@
+# Vimeo Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method        | Status     | Notes                              |
+| ---------------------- | ----------------------- | ---------------------- | ---------- | ---------------------------------- |
+| **Standard Videos**    | Vimeo video pages       | Player config extract  | ✅ Works   | Individual video downloads         |
+| **Embedded Videos**    | Third-party sites       | Iframe detection       | ✅ Works   | Vimeo embeds on external websites  |
+| **Password Videos**    | Protected Vimeo content | Password prompt        | ✅ Works   | Requires password input            |
+| **Multiple Qualities** | All Vimeo videos        | Quality selection      | ✅ Works   | Multiple resolution options        |
+| **HLS Streams**        | Vimeo adaptive content  | FastStream processing  | ✅ Works   | Segment download and merge         |
+| **Progress Tracking**  | All downloads           | Real-time monitoring   | ✅ Works   | Visual progress with cancellation  |
+
+## Supported Formats
+
+- **Progressive MP4** (Direct download files in various qualities)
+- **HLS Streams** (Adaptive streaming with FastStream processing)
+- **Multiple resolutions** (Quality options based on available files)
+- **Thumbnail extraction** (Video preview images)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (Gumroad purchase)
+- Internet connection for API calls
+- FastStream for HLS stream processing
+
+## Supported Vimeo URLs
+
+- Standard videos: `https://vimeo.com/*`
+- Subdomains: `https://*.vimeo.com/*`
+- Player embeds: `https://player.vimeo.com/*`
+- CDN access: `https://*.vimeocdn.com/*`
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Embed detection** - Automatic detection of Vimeo embeds on external sites
+- **Password support** - Input field for password-protected videos
+- **Video metadata display** - Thumbnail, title, owner, quality, description
+- **Quality selection** - Dropdown with available resolution options
+- **Download progress** - Real-time progress bar with speed and cancellation
+- **Help system** - Built-in usage instructions
+
+## Technical Features
+
+- **Player config extraction** - Accesses `window.playerConfig` for video data
+- **FastStream integration** - Browser-based video processing for HLS streams
+- **Offscreen processing** - Heavy video processing in background
+- **IndexedDB storage** - Temporary storage for video segments
+- **Content script injection** - Automatic video detection on Vimeo pages
+- **Cookie support** - Uses Vimeo cookies for authenticated access
+- **Web navigation tracking** - Monitors page navigation for video detection
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **Vimeo exclusive** - Only works on Vimeo domains
+- **License required** - All functionality blocked without activation
+- **Chrome only** - No support for other browsers
+- **Memory optimized** - FastStream processing with reduced memory usage
+- **No download history** - No record of previous downloads
+- **Cookie dependency** - May require Vimeo login for private content

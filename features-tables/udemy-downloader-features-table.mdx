@@ -1,0 +1,65 @@
+# Udemy Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method        | Status     | Notes                              |
+| ---------------------- | ----------------------- | ---------------------- | ---------- | ---------------------------------- |
+| **Lecture Videos**     | Udemy lecture pages     | API extraction         | ✅ Works   | Individual lecture downloads       |
+| **Course Videos**      | Udemy course pages      | Bulk download          | ✅ Works   | Download all course lectures       |
+| **Multiple Qualities** | All Udemy videos        | Quality selection      | ✅ Works   | Multiple resolutions available     |
+| **HLS Streams**        | Udemy CDN delivery      | M3U8 processing        | ✅ Works   | Segment download and merge         |
+| **DASH Streams**       | Udemy adaptive streams  | FFmpeg processing      | ✅ Works   | Audio/video merge with FFmpeg      |
+| **Progress Tracking**  | All downloads           | Real-time monitoring   | ✅ Works   | Visual progress with file size     |
+
+## Supported Formats
+
+- **MP4** (Primary format from direct downloads)
+- **HLS/M3U8** (Streamed content processed into segments)
+- **DASH/MPD** (Adaptive streams with separate audio/video)
+- **Multiple resolutions** (240p, 360p, 480p, 720p, 1080p when available)
+- **FFmpeg processing** (Merges DASH audio/video streams)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required ($9 Gumroad purchase)
+- Active Udemy account with course enrollment
+- Must be logged into Udemy
+- Internet connection for API calls and authentication
+
+## Supported Udemy URLs
+
+- Lecture pages: `https://www.udemy.com/course/[slug]/learn/lecture/[id]`
+- Course pages: `https://www.udemy.com/course/[slug]/`
+- Subdomain support: `https://*.udemy.com/*`
+- Legacy URLs: `#/lecture/[lecture-id]` format
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Authentication check** - Verifies Udemy login status
+- **Lecture detection** - Automatic lecture information extraction
+- **Course listing** - Shows all lectures in current course
+- **Bulk download** - Download entire course with checkboxes
+- **Download progress** - Real-time progress tracking
+- **Settings page** - Download preferences and history
+- **Download history** - Complete tracking with CSV export
+
+## Technical Features
+
+- **Udemy API integration** - Uses official Udemy API endpoints
+- **Cookie-based auth** - Extracts Udemy authentication tokens
+- **FFmpeg.wasm integration** - Merges DASH audio/video streams
+- **Offscreen processing** - Heavy video processing in background
+- **IndexedDB storage** - Temporary file storage for large videos
+- **Segment downloading** - Handles large file downloads efficiently
+- **Course curriculum** - Complete course structure extraction
+
+## Important Limitations
+
+- **Enrollment required** - Must be enrolled in courses to download
+- **DRM protection** - Cannot download DRM-protected content
+- **Udemy exclusive** - Only works on Udemy domains
+- **License required** - All functionality blocked without $9 activation
+- **Chrome only** - No support for other browsers
+- **Authentication dependency** - Requires active Udemy login
+- **Terms of Service** - May violate Udemy's Terms of Service
+- **Corporate restrictions** - Some corporate Udemy instances may block
