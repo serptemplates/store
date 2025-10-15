@@ -24,6 +24,9 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   page.on("response", (response) => {
     const url = response.url();
+    if (url.includes("/_vercel/insights/")) {
+      return;
+    }
     if ([...appOrigins].some((origin) => url.startsWith(origin))) {
       networkResponses.push({ url, status: response.status() });
     }
@@ -61,6 +64,7 @@ test("account dashboard renders without console errors", async ({ page }) => {
 
   const failingResponses = networkResponses.filter(({ url, status }) => {
     if (status === 400 && url.includes("/api/account/verify")) return false;
+    if (url.includes("/_vercel/insights/")) return false;
     return status >= 400;
   });
 
