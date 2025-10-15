@@ -23,7 +23,8 @@ module.exports = {
       settings: FAST
         ? {
             // FAST LOCAL: no throttling, still emulate mobile layout
-            formFactor: 'mobile',
+            preset: 'desktop',
+            formFactor: 'desktop',
             throttlingMethod: 'provided',           // <- uses your real CPU/network (no slowdowns)
             screenEmulation: { disabled: true },    // let layout come from viewport below
             // A sane mobile-ish viewport so CLS/layout is representative
@@ -36,7 +37,8 @@ module.exports = {
           }
         : {
             // STRICT (CI): realistic throttling on mobile
-            formFactor: 'mobile',
+            preset: 'desktop',
+            formFactor: 'desktop',
             throttlingMethod: 'devtools',
             // let Lighthouse pick the right emulation for 'mobile'
             // (no need for emulatedFormFactor or manual screenEmulation)
