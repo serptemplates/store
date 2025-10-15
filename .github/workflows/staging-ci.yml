@@ -12,14 +12,21 @@ jobs:
   staging-tests:
     name: Playwright + Lighthouse on staging
     runs-on: ubuntu-latest
-    if: ${{ secrets.STAGING_BASE_URL != '' }}
     env:
+      STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       PLAYWRIGHT_NO_SERVER: "1"
       LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       STRUCTURED_DATA_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
     steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -59,13 +66,3 @@ jobs:
           name: lighthouse-reports
           path: apps/store/.lighthouseci
           if-no-files-found: ignore
-
-  missing-secret:
-    name: Staging QA (missing STAGING_BASE_URL secret)
-    runs-on: ubuntu-latest
-    if: ${{ secrets.STAGING_BASE_URL == '' }}
-    steps:
-      - name: Fail because STAGING_BASE_URL is not configured
-        run: |
-          echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
-          exit 1
