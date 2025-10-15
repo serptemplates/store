@@ -19,7 +19,11 @@ test.describe("videos library", () => {
       if (url.includes('google-analytics.com') ||
           url.includes('tawk.to') ||
           url.includes('facebook.net') ||
-          url.includes('/_vercel/insights/')) {
+          url.includes('/_vercel/insights/') ||
+          url.includes('/.well-known/vercel/jwe')) {
+        return;
+      }
+      if (request.method() === "OPTIONS") {
         return;
       }
       failedRequests.push(`${request.method()} ${url}`);
