@@ -9,7 +9,19 @@ const analyticsConfig = {
   debug: process.env.NODE_ENV === "development",
 }
 
-const speedInsightsEnabled = process.env.NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS === "true";
+const rawRuntimeEnv =
+  process.env.NEXT_PUBLIC_RUNTIME_ENV ??
+  process.env.NEXT_PUBLIC_APP_ENV ??
+  process.env.VERCEL_ENV ??
+  process.env.RUNTIME_ENV ??
+  process.env.NODE_ENV ??
+  ""
+
+const normalizedRuntimeEnv = rawRuntimeEnv.trim().toLowerCase()
+const isProductionRuntime = ["production", "prod", "live"].includes(normalizedRuntimeEnv)
+
+const speedInsightsEnabled =
+  process.env.NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS === "true" && isProductionRuntime
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
