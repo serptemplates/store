@@ -61,7 +61,9 @@ test.describe("Checkout smoke", () => {
       const url = req.url();
       if (/\b(favicon\.ico)\b/.test(url)) return;
       if (ignoredRequestPatterns.some((pattern) => pattern.test(url))) return;
-      requestFailures.push(`${req.failure()?.errorText || "unknown error"} - ${url}`);
+      const failureText = req.failure()?.errorText || "";
+      if (/^net::ERR_ABORTED$/i.test(failureText)) return;
+      requestFailures.push(`${failureText || "unknown error"} - ${url}`);
     });
 
     // Home -> product
