@@ -22,6 +22,7 @@
     "test:ghl-preview": "tsx scripts/test-ghl-preview.ts",
     "test:safe": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:smoke",
     "test:lhci": "lhci autorun --config=lhci.config.cjs",
+    "test:lhci:local": "node scripts/run-lhci-local.mjs",
     "validate:products": "tsx scripts/validate-products.ts",
     "validate:content": "node scripts/validate-product.mjs",
     "update:video-metadata": "tsx --tsconfig tsconfig.json scripts/update-video-metadata.ts",

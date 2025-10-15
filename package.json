@@ -24,6 +24,7 @@
     "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
     "validate:products": "pnpm --filter @apps/store validate:products",
     "update:video-metadata": "pnpm --filter @apps/store update:video-metadata",
+    "test:lhci:local": "pnpm --filter @apps/store test:lhci:local",
     "test:unit": "pnpm --filter @apps/store test:unit",
     "test:all": "pnpm --filter @apps/store test:all",
     "test:smoke": "pnpm --filter @apps/store test:smoke"

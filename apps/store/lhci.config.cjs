@@ -1,4 +1,4 @@
-const baseUrl = process.env.LHCI_BASE_URL ?? 'http://127.0.0.1:3000';
+const baseUrl = process.env.LHCI_BASE_URL ?? 'http://127.0.0.1:4313';
 
 /** @type {import('@lhci/cli/src/types').LHCIConfig} */
 module.exports = {
@@ -24,10 +24,10 @@ module.exports = {
     },
     assert: {
       assertions: {
-        'categories:performance': ['warn', { minScore: 0.8 }],
-        'categories:accessibility': ['warn', { minScore: 0.9 }],
-        'categories:best-practices': ['warn', { minScore: 0.9 }],
-        'categories:seo': ['warn', { minScore: 0.9 }],
+        'categories:performance': ['error', { minScore: 0.9 }],
+        'categories:accessibility': ['error', { minScore: 0.9 }],
+        'categories:best-practices': ['error', { minScore: 0.9 }],
+        'categories:seo': ['error', { minScore: 0.9 }],
       },
     },
     upload: {
