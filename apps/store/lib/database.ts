@@ -1,8 +1,10 @@
-import { createClient, type QueryResult, type QueryResultRow } from "@vercel/postgres";
+import { createClient, createPool, type QueryResult, type QueryResultRow } from "@vercel/postgres";
 
 type Primitive = string | number | boolean | null | undefined;
 
-let clientPromise: Promise<ReturnType<typeof createClient>> | null;
+type DatabaseConnection = ReturnType<typeof createClient> | ReturnType<typeof createPool>;
+
+let clientPromise: Promise<DatabaseConnection> | null;
 let schemaPromise: Promise<void> | null;
 let missingLogged = false;
 
@@ -25,6 +27,15 @@ function resolveConnectionStringFromEnv(): string {
     process.env.POSTGRES_PRISMA_URL ??
     process.env.SUPABASE_DB_URL ??
     ""
+  );
+}
+
+function isUnpooledConnection(): boolean {
+  // Check if we explicitly have unpooled connection strings
+  return Boolean(
+    process.env.CHECKOUT_DATABASE_URL_UNPOOLED ??
+    process.env.DATABASE_URL_UNPOOLED ??
+    process.env.POSTGRES_URL_NON_POOLING
   );
 }
 
@@ -59,19 +70,23 @@ async function connectWithRetry(connectionString: string) {
   let lastError: unknown;
 
   const totalAttempts = Math.max(1, MAX_CONNECT_ATTEMPTS);
+  const usePool = !isUnpooledConnection();
 
   while (attempt < totalAttempts) {
     attempt += 1;
 
     try {
-      const client = createClient({ connectionString });
-      await client.connect();
+      const connection = usePool 
+        ? createPool({ connectionString })
+        : createClient({ connectionString });
+      
+      await connection.connect();
 
       if (attempt > 1) {
         log("Connected after retries", { attempt });
       }
 
-      return client;
+      return connection;
     } catch (error) {
       lastError = error;
       log("Failed to connect", {
