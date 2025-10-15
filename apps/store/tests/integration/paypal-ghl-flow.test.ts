@@ -14,6 +14,8 @@ const {
 } = await import("@/lib/checkout");
 const { getOfferConfig } = await import("@/lib/products/offer-config");
 
+const { waitForGhlSync } = await import("./utils/wait-for-ghl");
+
 const paypalConfigured = Boolean(
   process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET,
 );
@@ -152,7 +154,7 @@ let captureSpy: CaptureSpy | null = null;
       expect(orderRow?.metadata?.paypalCaptureId).toBe(fakeCaptureId);
       expect(orderRow?.metadata?.affiliateId).toBe(affiliateId);
 
-      const sessionRecord = await findCheckoutSessionByStripeSessionId(sessionId);
+      const sessionRecord = await waitForGhlSync(sessionId);
       expect(sessionRecord?.status).toBe("completed");
       const sessionMetadata = (sessionRecord?.metadata ?? {}) as Record<string, unknown>;
       expect(sessionMetadata.affiliateId).toBe(affiliateId);

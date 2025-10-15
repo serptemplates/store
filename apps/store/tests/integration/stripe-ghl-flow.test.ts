@@ -11,6 +11,8 @@ const { ensureDatabase, isDatabaseConfigured, query } = await import("@/lib/data
 const { findCheckoutSessionByStripeSessionId } = await import("@/lib/checkout");
 const { getOfferConfig } = await import("@/lib/products/offer-config");
 
+const { waitForGhlSync } = await import("./utils/wait-for-ghl");
+
 const stripeSecret = process.env.STRIPE_SECRET_KEY_TEST ?? process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_TEST ?? process.env.STRIPE_WEBHOOK_SECRET;
 const ghlToken = process.env.GHL_PAT_LOCATION ?? process.env.GHL_API_TOKEN;
@@ -195,7 +197,7 @@ maybeDescribe("Stripe checkout to GHL integration", () => {
       expect(storedOrder?.rowCount).toBe(1);
       expect(storedOrder?.rows[0]?.customer_email).toBe(customerEmail);
 
-      const finalRecord = await findCheckoutSessionByStripeSessionId(sessionId);
+      const finalRecord = await waitForGhlSync(sessionId);
       expect(finalRecord?.status).toBe("completed");
       const finalMetadata = (finalRecord?.metadata ?? {}) as Record<string, unknown>;
       expect(typeof finalMetadata.ghlSyncedAt).toBe("string");
