@@ -1,7 +1,6 @@
 'use client';
 
-import Script from 'next/script';
-import { useEffect, useState } from 'react';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 export function DelayedGTM({ gtmId }: { gtmId: string }) {
   const [shouldLoad, setShouldLoad] = useState(false);

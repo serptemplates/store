@@ -6,6 +6,7 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   findOrderByPaymentIntentId,
+  findOrderByPaypalOrderId,
   findLatestGhlOrder,
 } from "@/lib/checkout";
 import { createLicenseForOrder } from "@/lib/license-service";
@@ -331,6 +332,10 @@ type ProcessGhlPaymentParams = {
   productSlug?: string | null;
 };
 
+type ProcessPaypalOrderParams = {
+  orderId: string;
+};
+
 function normalizeGhlPaymentId(rawId: string | null | undefined): string | null {
   if (!rawId) {
     return null;
@@ -492,6 +497,105 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
     return {
       success: false,
       message: error instanceof Error ? error.message : "Failed to process GHL order",
+    };
+  }
+}
+
+export async function processPaypalOrder(params: ProcessPaypalOrderParams): Promise<ProcessCheckoutResult> {
+  const trimmedOrderId = params.orderId.trim();
+
+  if (!trimmedOrderId) {
+    return {
+      success: false,
+      message: "Missing PayPal order identifier",
+    };
+  }
+
+  try {
+    const order = await findOrderByPaypalOrderId(trimmedOrderId);
+
+    if (!order) {
+      return {
+        success: false,
+        message: "Unable to locate PayPal order information.",
+      };
+    }
+
+    const metadata = (order.metadata ?? {}) as Record<string, unknown>;
+
+    const offerId =
+      order.offerId ??
+      (typeof metadata.offerId === "string" ? (metadata.offerId as string) : undefined) ??
+      (typeof metadata.productSlug === "string" ? (metadata.productSlug as string) : undefined) ??
+      null;
+
+    let product: ReturnType<typeof getProductData> | null = null;
+    if (offerId) {
+      try {
+        product = getProductData(offerId);
+      } catch {
+        product = null;
+      }
+    }
+
+    const amountMajorUnits =
+      typeof order.amountTotal === "number" ? Number((order.amountTotal / 100).toFixed(2)) : null;
+
+    const resolvedCurrency =
+      coerceCurrency(order.currency) ??
+      coerceCurrency(product?.pricing?.currency ?? null);
+
+    const couponCode =
+      (typeof metadata.couponCode === "string" ? (metadata.couponCode as string) : undefined) ??
+      (typeof metadata.coupon === "string" ? (metadata.coupon as string) : undefined);
+
+    const affiliateId =
+      (typeof metadata.affiliateId === "string" ? (metadata.affiliateId as string) : undefined) ??
+      (typeof metadata.affiliate_id === "string" ? (metadata.affiliate_id as string) : undefined) ??
+      null;
+
+    const displayPrice = parseDisplayPrice(product?.pricing?.price ?? null);
+    const resolvedPrice = amountMajorUnits ?? displayPrice ?? 0;
+
+    const itemId = product?.slug ?? offerId ?? trimmedOrderId;
+    const itemName =
+      product?.name ??
+      (typeof metadata.productName === "string" ? (metadata.productName as string) : undefined) ??
+      "SERP Purchase";
+
+    const sessionId =
+      order.stripeSessionId ??
+      order.stripePaymentIntentId ??
+      `paypal_${trimmedOrderId}`;
+
+    return {
+      success: true,
+      message: "PayPal order processed",
+      order: {
+        sessionId,
+        amount: amountMajorUnits ?? resolvedPrice ?? null,
+        currency: resolvedCurrency ?? null,
+        items: [
+          {
+            id: itemId,
+            name: itemName,
+            price: resolvedPrice,
+            quantity: 1,
+          },
+        ],
+        coupon: couponCode ?? null,
+        affiliateId,
+      },
+    };
+  } catch (error) {
+    logger.error("checkout.success.paypal_process_error", {
+      orderId: trimmedOrderId,
+      error: error instanceof Error ? error.message : String(error),
+    });
+
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Failed to process PayPal order",
     };
   }
 }

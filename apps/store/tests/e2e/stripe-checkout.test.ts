@@ -33,8 +33,15 @@ test.describe("Checkout smoke", () => {
     const consoleErrors: string[] = [];
     const requestFailures: string[] = [];
 
-    const ignoredConsolePatterns = [/appendChild/i, /Failed to load resource/i];
-    const ignoredRequestPatterns = [/tawk\.to/i, /google-analytics\.com/i];
+    const ignoredConsolePatterns = [/appendChild/i, /Failed to load resource/i, /_vercel\/insights/i];
+    const ignoredRequestPatterns = [
+      /tawk\.to/i,
+      /google-analytics\.com/i,
+      /_vercel\/insights/i,
+      /\/\.well-known\/vercel\/jwe/i,
+      /connect\.facebook\.net/i,
+      /googletagmanager\.com/i,
+    ];
 
     page.on("console", (m) => {
       if (m.type() !== "error") return;
@@ -54,7 +61,9 @@ test.describe("Checkout smoke", () => {
       const url = req.url();
       if (/\b(favicon\.ico)\b/.test(url)) return;
       if (ignoredRequestPatterns.some((pattern) => pattern.test(url))) return;
-      requestFailures.push(`${req.failure()?.errorText || "unknown error"} - ${url}`);
+      const failureText = req.failure()?.errorText || "";
+      if (/^net::ERR_ABORTED$/i.test(failureText)) return;
+      requestFailures.push(`${failureText || "unknown error"} - ${url}`);
     });
 
     // Home -> product

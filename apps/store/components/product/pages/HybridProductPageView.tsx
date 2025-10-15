@@ -25,6 +25,7 @@ import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
+import { getReleaseBadgeText, isPreRelease } from "@/lib/products/release-status"
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
@@ -41,8 +42,21 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const router = useRouter()
+  const productIsPreRelease = isPreRelease(product)
+  const releaseBadgeText = getReleaseBadgeText(product).replace("-", " ")
 
-  const homeProps = productToHomeTemplate(product, posts)
+  const resolvedPosts = useMemo(() => {
+    const desired = product.related_posts ?? []
+    if (!desired.length) {
+      return posts
+    }
+    const order = new Map(desired.map((slug, index) => [slug, index]))
+    return posts
+      .filter((post) => order.has(post.slug))
+      .sort((a, b) => (order.get(a.slug)! - order.get(b.slug)!))
+  }, [posts, product.related_posts])
+
+  const homeProps = productToHomeTemplate(product, resolvedPosts)
 
   const resolvedVideos = useMemo(
     () => (videoEntries ?? []).filter((entry): entry is ProductVideoEntry => Boolean(entry)),
@@ -146,10 +160,10 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
 
             {price && (
               <div className="mb-6">
-                {product.pre_release ? (
+                {productIsPreRelease ? (
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                      Pre Release
+                      {releaseBadgeText}
                     </span>
                     {price.price && <span className="text-2xl text-gray-500">Expected: {price.price}</span>}
                   </div>
@@ -206,7 +220,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
             </div>
 
             <div className="flex flex-col gap-4 mb-8">
-              {product.pre_release ? (
+              {productIsPreRelease ? (
                 <button
                   onClick={() => {
                     if (product.waitlist_url) {
@@ -298,9 +312,9 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         {/* About Section */}
         <AboutSection team={teamMembers} />
 
-        {posts && posts.length > 0 && (
+        {resolvedPosts && resolvedPosts.length > 0 && (
           <PostsSection
-            posts={posts}
+            posts={resolvedPosts}
             Badge={Badge}
             Card={Card}
             CardHeader={CardHeader}

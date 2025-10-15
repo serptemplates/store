@@ -1,8 +1,17 @@
-import { createClient, type QueryResult, type QueryResultRow } from "@vercel/postgres";
+import {
+  createClient,
+  createPool,
+  type QueryResult,
+  type QueryResultRow,
+} from "@vercel/postgres";
 
 type Primitive = string | number | boolean | null | undefined;
 
-let clientPromise: Promise<ReturnType<typeof createClient>> | null;
+type DatabaseClient =
+  | ReturnType<typeof createClient>
+  | ReturnType<typeof createPool>;
+
+let clientPromise: Promise<DatabaseClient> | null;
 let schemaPromise: Promise<void> | null;
 let missingLogged = false;
 
@@ -54,21 +63,49 @@ async function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function shouldUsePooledConnection(connectionString: string): boolean {
+  if (!connectionString) {
+    return false;
+  }
+
+  try {
+    const url = new URL(connectionString);
+
+    if (url.searchParams.get("pgbouncer")?.toLowerCase() === "true") {
+      return true;
+    }
+
+    return url.hostname.includes("-pooler");
+  } catch {
+    const lower = connectionString.toLowerCase();
+    return lower.includes("pgbouncer=true") || lower.includes("-pooler");
+  }
+}
+
 async function connectWithRetry(connectionString: string) {
   let attempt = 0;
   let lastError: unknown;
 
   const totalAttempts = Math.max(1, MAX_CONNECT_ATTEMPTS);
+  const usePool = shouldUsePooledConnection(connectionString);
 
   while (attempt < totalAttempts) {
     attempt += 1;
 
     try {
-      const client = createClient({ connectionString });
-      await client.connect();
+      const client = usePool
+        ? createPool({ connectionString })
+        : createClient({ connectionString });
+
+      if (!usePool) {
+        await client.connect();
+      }
 
       if (attempt > 1) {
-        log("Connected after retries", { attempt });
+        log("Connected after retries", {
+          attempt,
+          strategy: usePool ? "pool" : "direct",
+        });
       }
 
       return client;
@@ -76,6 +113,7 @@ async function connectWithRetry(connectionString: string) {
       lastError = error;
       log("Failed to connect", {
         attempt,
+        strategy: usePool ? "pool" : "direct",
         error: error instanceof Error ? error.message : String(error),
       });
 

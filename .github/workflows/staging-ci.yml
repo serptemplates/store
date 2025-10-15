@@ -1,0 +1,95 @@
+name: Staging QA
+
+on:
+  push:
+    branches:
+      - staging
+      - copilot/fix-workflow-issue
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+jobs:
+  staging-preflight:
+    name: Validate staging environment
+    runs-on: ubuntu-latest
+    env:
+      STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+  staging-tests:
+    name: ${{ matrix.title }}
+    needs: staging-preflight
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [playwright, axe, structured-data, lighthouse]
+        include:
+          - check: playwright
+            title: Playwright staging suite
+            command: pnpm --filter @apps/store exec playwright test
+            requires-browsers: true
+          - check: axe
+            title: Axe accessibility checks
+            command: pnpm --filter @apps/store run test:axe
+          - check: structured-data
+            title: Structured data checks
+            command: pnpm --filter @apps/store run test:structured-data
+          - check: lighthouse
+            title: Lighthouse checks
+            command: pnpm --filter @apps/store run test:lhci
+    env:
+      STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      PLAYWRIGHT_NO_SERVER: "1"
+      LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      STRUCTURED_DATA_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.11.0
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        if: matrix.requires-browsers == true
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        if: matrix.requires-browsers == true
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run ${{ matrix.title }}
+        run: ${{ matrix.command }}
+
+      - name: Upload Lighthouse reports
+        if: matrix.check == 'lighthouse' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: apps/store/.lighthouseci
+          if-no-files-found: ignore

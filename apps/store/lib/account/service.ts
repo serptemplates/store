@@ -19,6 +19,7 @@ import {
   clearAccountSessionCookieOptions,
 } from "@/lib/account/auth";
 import { sendVerificationEmail } from "@/lib/account/email";
+import { syncAccountLicensesFromGhl } from "@/lib/account/license-sync";
 
 export interface PurchaseAccountContext {
   email: string | null | undefined;
@@ -143,8 +144,16 @@ export async function verifyAccountWithCode(email: string, code: string): Promis
   await markAccountVerified(account.id);
 
   const refreshedAccount = await findAccountById(account.id);
+  const accountForSync = refreshedAccount ?? account;
 
-  return createSessionForAccount(refreshedAccount ?? account);
+  await syncAccountLicensesFromGhl(accountForSync).catch((error) => {
+    logger.warn("account.ghl_sync.error", {
+      email: accountForSync.email,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  });
+
+  return createSessionForAccount(accountForSync);
 }
 
 export async function verifyAccountWithToken(token: string): Promise<VerificationResult> {
@@ -163,7 +172,17 @@ export async function verifyAccountWithToken(token: string): Promise<Verificatio
   await markVerificationTokenUsed(verification.id);
   await markAccountVerified(account.id);
 
-  return createSessionForAccount(account);
+  const refreshedAccount = await findAccountById(account.id);
+  const accountForSync = refreshedAccount ?? account;
+
+  await syncAccountLicensesFromGhl(accountForSync).catch((error) => {
+    logger.warn("account.ghl_sync.error", {
+      email: accountForSync.email,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  });
+
+  return createSessionForAccount(accountForSync);
 }
 
 export function buildSessionCookie({ sessionToken, sessionExpiresAt }: VerificationResult) {

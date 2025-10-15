@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "../lib/utils";
 
 export type HeroVideoDialogProps = {
@@ -161,16 +162,18 @@ export default function HeroVideoDialog({
             {!thumbLoaded && (
               <div className="absolute inset-0 animate-pulse bg-muted" />
             )}
-            <img
+            <Image
               src={effectiveThumbnailSrc}
               alt={thumbnailAlt}
+              fill
               className={cn(
-                "h-full w-full object-cover transition-opacity duration-150",
+                "object-cover transition-opacity duration-150",
                 thumbLoaded ? "opacity-100" : "opacity-0",
               )}
               ref={imgRef}
-              loading="eager"
-              referrerPolicy="no-referrer"
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
+              quality={85}
               onLoad={() => setThumbLoaded(true)}
               onError={handleThumbError}
             />

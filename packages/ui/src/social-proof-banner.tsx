@@ -48,7 +48,7 @@ const SocialProofBanner = ({
           <div className="text-4xl text-center font-black text-black">
             <span>{userCount}+</span>
           </div>
-          <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-indigo-500">
+          <span className="mt-1 text-xs font-semibold uppercase tracking-widest text-indigo-600">
             {resolvedUserLabel}
           </span>
           <div className="mt-1 flex items-center gap-1">

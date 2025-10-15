@@ -7,10 +7,12 @@ export {
   generateProductSchemaLD,
   generateBreadcrumbSchema,
   generateOrganizationSchema,
+  generateTranslatedResultsSchema,
   createSchemaProduct,
   type ProductSchemaLDOptions,
   type SchemaProduct,
   type SchemaProductTransformOptions,
+  type TranslatedResultsSchemaOptions,
 } from './product-schema-ld';
 
 export {

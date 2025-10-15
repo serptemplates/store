@@ -1,0 +1,197 @@
+name: Staging QA
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+
+# Prevent overlapping runs on the same branch (e.g., multiple pushes to staging)
+concurrency:
+  group: staging-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Shared across all jobs so scripts can read whichever they need
+  STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  PLAYWRIGHT_NO_SERVER: "1"
+  LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+  STRUCTURED_DATA_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+
+jobs:
+  playwright:
+    name: E2E — Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run Playwright staging suite
+        run: pnpm --filter @apps/store exec playwright test
+
+  axe:
+    name: A11y — axe
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # If your axe tests depend on Playwright, keep these two steps; otherwise you can remove them.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers (if axe uses Playwright)
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run axe accessibility checks
+        run: pnpm --filter @apps/store run test:axe
+
+  structured_data:
+    name: Structured Data
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Optional: include Playwright if these checks use it
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright browsers (if structured data uses Playwright)
+        run: pnpm --filter @apps/store exec playwright install --with-deps
+
+      - name: Run structured data checks
+        run: pnpm --filter @apps/store run test:structured-data
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Ensure STAGING_BASE_URL secret is set
+        run: |
+          if [ -z "$STAGING_BASE_URL" ]; then
+            echo "STAGING_BASE_URL secret is required to run staging QA checks." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Lighthouse checks
+        run: pnpm --filter @apps/store run test:lhci
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: apps/store/.lighthouseci
+          if-no-files-found: ignore

@@ -4,6 +4,8 @@ import "./globals.css";
 import { DelayedGTM } from "@/components/DelayedGTM";
 import { PostHogAnalytics } from "@/components/analytics/PostHogAnalytics";
 import { getSiteConfig } from "@/lib/site-config";
+import { Providers } from "./providers";
+import { inter } from "./fonts";
 
 const STORE_TITLE = "SERP Apps";
 const STORE_DESCRIPTION = "Browse the full catalog of SERP products.";
@@ -55,24 +57,30 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         {/* Preconnect to GTM for faster loading */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://api.stripe.com" />
+        <link rel="dns-prefetch" href="https://js.stripe.com" />
+        <link rel="dns-prefetch" href="https://www.paypal.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="font-sans antialiased">
-        <PostHogAnalytics>
-          {gtmId && (
-            <noscript>
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-                height="0"
-                width="0"
-                title="Google Tag Manager"
-                style={{ display: "none", visibility: "hidden" }}
-              />
-            </noscript>
-          )}
-          {children}
-          {/* Load GTM after page content to improve performance */}
-          {gtmId && <DelayedGTM gtmId={gtmId} />}
-        </PostHogAnalytics>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <Providers>
+          <PostHogAnalytics>
+            {gtmId && (
+              <noscript>
+                <iframe
+                  src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+                  height="0"
+                  width="0"
+                  title="Google Tag Manager"
+                  style={{ display: "none", visibility: "hidden" }}
+                />
+              </noscript>
+            )}
+            {children}
+            {/* Load GTM after page content to improve performance */}
+            {gtmId && <DelayedGTM gtmId={gtmId} />}
+          </PostHogAnalytics>
+        </Providers>
       </body>
     </html>
   );
