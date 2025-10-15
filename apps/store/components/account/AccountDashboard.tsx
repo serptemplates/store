@@ -153,11 +153,11 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
                       <CardTitle className="text-lg font-semibold text-slate-900">
                         {purchase.offerId ?? "Unknown product"}
                       </CardTitle>
-                      <p className="text-sm text-slate-500">
+                      {/* <p className="text-sm text-slate-500">
                         {purchase.purchasedAt
                           ? `Purchased ${new Date(purchase.purchasedAt).toLocaleString()}`
                           : "Purchase date pending"}
-                      </p>
+                      </p> */}
                       {purchase.amountFormatted && (
                         <p className="text-sm text-slate-600">
                           Amount <span className="font-semibold text-slate-900">{purchase.amountFormatted}</span>

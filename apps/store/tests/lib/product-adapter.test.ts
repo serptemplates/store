@@ -101,7 +101,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "news",
         title: "Latest",
+        seoTitle: "Latest",
         description: "Updates",
+        seoDescription: "Updates",
         date: "2024-01-01",
         author: "Test Author",
         tags: [],
@@ -175,7 +177,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-a",
         title: "Post A",
+        seoTitle: "Post A",
         description: "First",
+        seoDescription: "First",
         date: "2024-01-01",
         author: "Author A",
         tags: [],
@@ -187,7 +191,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-b",
         title: "Post B",
+        seoTitle: "Post B",
         description: "Second",
+        seoDescription: "Second",
         date: "2024-01-02",
         author: "Author B",
         tags: [],
@@ -199,7 +205,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-c",
         title: "Post C",
+        seoTitle: "Post C",
         description: "Third",
+        seoDescription: "Third",
         date: "2024-01-03",
         author: "Author C",
         tags: [],

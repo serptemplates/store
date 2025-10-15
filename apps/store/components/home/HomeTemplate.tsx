@@ -295,7 +295,6 @@ export function HomeTemplate({
             ctaExtra={pricing?.ctaExtra}
             terms={pricing?.terms}
             id={pricing?.id ?? "pricing"}
-            orderBump={pricing?.orderBump}
           />
         )}
 
