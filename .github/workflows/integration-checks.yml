@@ -12,13 +12,7 @@ jobs:
   checkout-ghl:
     name: Stripe & PayPal to GHL
     runs-on: ubuntu-latest
-    if: ${{ secrets.STRIPE_SECRET_KEY_TEST != '' &&
-      secrets.STRIPE_WEBHOOK_SECRET_TEST != '' &&
-      secrets.PAYPAL_CLIENT_ID != '' &&
-      secrets.PAYPAL_CLIENT_SECRET != '' &&
-      secrets.DATABASE_URL != '' &&
-      secrets.GHL_LOCATION_ID != '' &&
-      secrets.GHL_PAT_LOCATION != '' }}
+    if: ${{ secrets.STRIPE_SECRET_KEY_TEST != '' && secrets.STRIPE_WEBHOOK_SECRET_TEST != '' && secrets.PAYPAL_CLIENT_ID != '' && secrets.PAYPAL_CLIENT_SECRET != '' && secrets.DATABASE_URL != '' && secrets.GHL_LOCATION_ID != '' && secrets.GHL_PAT_LOCATION != '' }}
     env:
       STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
       STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
@@ -57,15 +51,7 @@ jobs:
   missing-secrets:
     name: Payment → GHL (skipped - missing secrets)
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (
-      secrets.STRIPE_SECRET_KEY_TEST == '' ||
-      secrets.STRIPE_WEBHOOK_SECRET_TEST == '' ||
-      secrets.PAYPAL_CLIENT_ID == '' ||
-      secrets.PAYPAL_CLIENT_SECRET == '' ||
-      secrets.DATABASE_URL == '' ||
-      secrets.GHL_LOCATION_ID == '' ||
-      secrets.GHL_PAT_LOCATION == ''
-    ) }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (secrets.STRIPE_SECRET_KEY_TEST == '' || secrets.STRIPE_WEBHOOK_SECRET_TEST == '' || secrets.PAYPAL_CLIENT_ID == '' || secrets.PAYPAL_CLIENT_SECRET == '' || secrets.DATABASE_URL == '' || secrets.GHL_LOCATION_ID == '' || secrets.GHL_PAT_LOCATION == '') }}
     steps:
       - name: Warn about missing secrets
         run: |
