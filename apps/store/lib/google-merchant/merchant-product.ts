@@ -86,7 +86,7 @@ function buildStoreLink(product: ProductData, siteUrl: string): string | undefin
   if (!siteUrl) {
     return undefined;
   }
-  return `${siteUrl.replace(/\/$/, "")}/products/${product.slug}`;
+  return `${siteUrl.replace(/\/$/, "")}/product-details/product/${product.slug}`;
 }
 
 function buildAppsLink(product: ProductData, appsUrl: string): string | undefined {

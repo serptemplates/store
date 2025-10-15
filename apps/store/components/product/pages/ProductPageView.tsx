@@ -80,7 +80,8 @@ export function ProductPageView({ handle, product }: ProductPageViewProps) {
     reviews: [],
     related_posts: [],
     pricing: {
-      price: product.metadata?.original_price ?? priceString,
+      price: priceString,
+      original_price: product.metadata?.original_price,
       benefits: Array.isArray(product.metadata?.benefits) ? product.metadata.benefits : [],
     },
     layout_type: "landing",
