@@ -1,0 +1,82 @@
+name: Payment → GHL Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checkout-ghl:
+    name: Stripe & PayPal to GHL
+    runs-on: ubuntu-latest
+    if: |
+      ${{
+        secrets.STRIPE_SECRET_KEY_TEST != '' &&
+        secrets.STRIPE_WEBHOOK_SECRET_TEST != '' &&
+        secrets.PAYPAL_CLIENT_ID != '' &&
+        secrets.PAYPAL_CLIENT_SECRET != '' &&
+        secrets.DATABASE_URL != '' &&
+        secrets.GHL_LOCATION_ID != '' &&
+        secrets.GHL_PAT_LOCATION != ''
+      }}
+    env:
+      STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
+      STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+      STRIPE_INTEGRATION_OFFER_ID: ${{ secrets.STRIPE_INTEGRATION_OFFER_ID }}
+      PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+      PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
+      GHL_PAT_LOCATION: ${{ secrets.GHL_PAT_LOCATION }}
+      GHL_API_BASE_URL: ${{ secrets.GHL_API_BASE_URL }}
+      GHL_API_VERSION: ${{ secrets.GHL_API_VERSION }}
+      GHL_AFFILIATE_FIELD_ID: ${{ secrets.GHL_AFFILIATE_FIELD_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Stripe → GHL integration test
+        run: pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+
+      - name: PayPal → GHL integration test
+        run: pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
+
+  missing-secrets:
+    name: Payment → GHL (skipped - missing secrets)
+    runs-on: ubuntu-latest
+    if: |
+      ${{
+        github.event_name == 'push' && github.ref == 'refs/heads/main' && (
+          secrets.STRIPE_SECRET_KEY_TEST == '' ||
+          secrets.STRIPE_WEBHOOK_SECRET_TEST == '' ||
+          secrets.PAYPAL_CLIENT_ID == '' ||
+          secrets.PAYPAL_CLIENT_SECRET == '' ||
+          secrets.DATABASE_URL == '' ||
+          secrets.GHL_LOCATION_ID == '' ||
+          secrets.GHL_PAT_LOCATION == ''
+        )
+      }}
+    steps:
+      - name: Warn about missing secrets
+        run: |
+          echo "Required secrets for payment → GHL integration tests are missing." >&2
+          exit 1

@@ -62,8 +62,6 @@ CLAUDE.md
 __pycache__
 *.pyc
 .env.local
-.github
-
 .shopify
 screenshots
 test-results
