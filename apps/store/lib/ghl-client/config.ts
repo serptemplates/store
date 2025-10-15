@@ -2,17 +2,32 @@ import { GhlConfigurationError } from "./errors";
 
 const stripTrailingSlash = (value: string): string => value.replace(/\/$/, "");
 
-export const RAW_GHL_API_BASE_URL =
-  process.env.GHL_API_BASE_URL ?? "https://services.leadconnectorhq.com";
+const coalesceEnv = (value: string | undefined | null, fallback: string | undefined = undefined) => {
+  if (value && value.trim().length > 0) {
+    return value.trim();
+  }
+
+  return fallback;
+};
+
+export const RAW_GHL_API_BASE_URL = coalesceEnv(
+  process.env.GHL_API_BASE_URL,
+  "https://services.leadconnectorhq.com",
+)!;
 
 export const GHL_BASE_URL = stripTrailingSlash(RAW_GHL_API_BASE_URL);
 
-export const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
+export const GHL_LOCATION_ID = coalesceEnv(process.env.GHL_LOCATION_ID) ?? undefined;
 
-export const GHL_AUTH_TOKEN =
-  process.env.GHL_PAT_LOCATION ?? process.env.GHL_API_TOKEN ?? process.env.GHL_API_KEY;
+const rawGhlAuthToken = [
+  process.env.GHL_PAT_LOCATION,
+  process.env.GHL_API_TOKEN,
+  process.env.GHL_API_KEY,
+].find((token) => coalesceEnv(token));
 
-export const GHL_API_VERSION = process.env.GHL_API_VERSION ?? "2021-07-28";
+export const GHL_AUTH_TOKEN = coalesceEnv(rawGhlAuthToken) ?? undefined;
+
+export const GHL_API_VERSION = coalesceEnv(process.env.GHL_API_VERSION, "2021-07-28")!;
 
 export const GHL_CUSTOM_FIELD_PURCHASE_METADATA = process.env.GHL_CUSTOM_FIELD_PURCHASE_METADATA;
 export const GHL_CUSTOM_FIELD_LICENSE_KEYS_V2 = process.env.GHL_CUSTOM_FIELD_LICENSE_KEYS_V2;

@@ -27,6 +27,8 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
           GHL_PAT_LOCATION: ${{ secrets.GHL_PAT_LOCATION }}
+          GHL_API_BASE_URL: ${{ secrets.GHL_API_BASE_URL }}
+          GHL_API_VERSION: ${{ secrets.GHL_API_VERSION }}
         run: |
           set -euo pipefail
           missing=""
@@ -38,6 +40,8 @@ jobs:
             DATABASE_URL
             GHL_LOCATION_ID
             GHL_PAT_LOCATION
+            GHL_API_BASE_URL
+            GHL_API_VERSION
           )
 
           for var in "${required_vars[@]}"; do
