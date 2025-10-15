@@ -8,13 +8,11 @@ on:
     branches:
       - main
   workflow_dispatch:
-    
 
 jobs:
   checkout-ghl:
     name: Stripe & PayPal to GHL
     runs-on: ubuntu-latest
-    if: ${{ secrets.STRIPE_SECRET_KEY_TEST != '' && secrets.STRIPE_WEBHOOK_SECRET_TEST != '' && secrets.PAYPAL_CLIENT_ID != '' && secrets.PAYPAL_CLIENT_SECRET != '' && secrets.DATABASE_URL != '' && secrets.GHL_LOCATION_ID != '' && secrets.GHL_PAT_LOCATION != '' }}
     env:
       STRIPE_SECRET_KEY_TEST: ${{ secrets.STRIPE_SECRET_KEY_TEST }}
       STRIPE_WEBHOOK_SECRET_TEST: ${{ secrets.STRIPE_WEBHOOK_SECRET_TEST }}
@@ -44,6 +42,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check for required secrets
+        run: |
+          if [ -z "$STRIPE_SECRET_KEY_TEST" ] || [ -z "$STRIPE_WEBHOOK_SECRET_TEST" ] || [ -z "$PAYPAL_CLIENT_ID" ] || [ -z "$PAYPAL_CLIENT_SECRET" ] || [ -z "$DATABASE_URL" ] || [ -z "$GHL_LOCATION_ID" ] || [ -z "$GHL_PAT_LOCATION" ]; then
+            echo "Required secrets for payment → GHL integration tests are missing."
+            exit 1
+          fi
+
       - name: Stripe → GHL integration test
         run: pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
 
@@ -53,9 +58,9 @@ jobs:
   missing-secrets:
     name: Payment → GHL (skipped - missing secrets)
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && (secrets.STRIPE_SECRET_KEY_TEST == '' || secrets.STRIPE_WEBHOOK_SECRET_TEST == '' || secrets.PAYPAL_CLIENT_ID == '' || secrets.PAYPAL_CLIENT_SECRET == '' || secrets.DATABASE_URL == '' || secrets.GHL_LOCATION_ID == '' || secrets.GHL_PAT_LOCATION == '') }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
       - name: Warn about missing secrets
         run: |
-          echo "Required secrets for payment → GHL integration tests are missing." >&2
-          exit 1
+          echo "Required secrets for payment → GHL integration tests are missing or incomplete."
+          echo "Please ensure all required secrets are set in the repository settings."
