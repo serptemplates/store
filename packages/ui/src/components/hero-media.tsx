@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { FaPlay } from "react-icons/fa6";
+import Image from "next/image";
 import { Button } from "../button";
 import { cn } from "../lib/utils";
 import { getVideoEmbedUrl } from "../utils";
@@ -229,12 +230,15 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
                 )}
 
                 {dialogItem.type === "image" && (
-                  <img
-                    src={dialogItem.src}
-                    alt={dialogItem.alt || "Media"}
-                    className="h-full w-full rounded-2xl object-contain"
-                    loading="lazy"
-                  />
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={dialogItem.src}
+                      alt={dialogItem.alt || "Media"}
+                      fill
+                      className="rounded-2xl object-contain"
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -271,10 +275,15 @@ const Item = ({
           </div>
         </div>
       )}
-      <img
-        src={item.type === "video" ? item.thumbnail : item.src}
-        alt={item.title}
-        className="h-full w-full object-cover"
+      <Image
+        src={(item.type === "video" ? item.thumbnail : item.src) || ""}
+        alt={item.title || "Media"}
+        fill
+        priority={isActive}
+        fetchPriority={isActive ? "high" : "auto"}
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+        quality={90}
       />
     </button>
   );
@@ -294,16 +303,20 @@ const Thumbnails = ({ items, selectedIndex, onScroll }: ThumbnailsProps) => {
           key={index}
           onClick={() => onScroll(index)}
           className={cn(
-            "h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg transition-all",
+            "relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-lg transition-all",
             selectedIndex === index
               ? "border-2 border-primary"
               : "opacity-70 hover:opacity-100",
           )}
         >
-          <img
-            src={item.type === "video" ? item.thumbnail : item.src}
-            alt={item.title}
-            className="h-full w-full object-cover"
+          <Image
+            src={(item.type === "video" ? item.thumbnail : item.src) || ""}
+            alt={item.title || "Thumbnail"}
+            fill
+            className="object-cover"
+            sizes="96px"
+            quality={50}
+            loading={index > 3 ? "lazy" : "eager"}
           />
         </button>
       ))}

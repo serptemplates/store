@@ -100,6 +100,16 @@ const nextConfig = {
             hostname: 'i.ytimg.com',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'img.youtube.com',
+            pathname: '/**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'raw.githubusercontent.com',
+            pathname: '/**',
+          },
         ],
       },
 
