@@ -39,6 +39,8 @@ test.describe("Checkout smoke", () => {
       /google-analytics\.com/i,
       /_vercel\/insights/i,
       /\/\.well-known\/vercel\/jwe/i,
+      /connect\.facebook\.net/i,
+      /googletagmanager\.com/i,
     ];
 
     page.on("console", (m) => {
