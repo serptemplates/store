@@ -5,10 +5,10 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter";
 
 const ALLOWED_PREFIXES = ["https://store.serp.co/", "https://ghl.serp.co/"];
 
-const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success";
+const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
 const FALLBACK_PAGE_BASE = "https://apps.serp.co/";
-const STORE_PAGE_BASE = "https://store.serp.co/products/";
+const STORE_PAGE_BASE = "https://store.serp.co/product-details/product/";
 
 describe("buy button destinations", () => {
   it("ensures each product CTA points to an approved destination", () => {
@@ -45,6 +45,11 @@ describe("buy button destinations", () => {
       }
 
       const successUrl = product.success_url;
+
+      if (typeof successUrl === "string" && successUrl.startsWith("https://apps.serp.co/checkout/success")) {
+        expect(successUrl).toContain("{CHECKOUT_SESSION_ID}");
+      }
+
       if (successUrl !== FALLBACK_SUCCESS_URL) {
         successViolations.push({ slug: product.slug, successUrl });
       }

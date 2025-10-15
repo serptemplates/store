@@ -10,6 +10,7 @@ import { HybridProductOverview } from "@/components/product/hybrid/HybridProduct
 import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSection"
 import type { ProductBreadcrumbItem } from "@/components/product/ProductBreadcrumb"
 import type { ExtendedProductData } from "@/components/product/types"
+import { isPreRelease } from "@/lib/products/release-status"
 
 export interface EcommerceLayoutProps {
   product: ExtendedProductData
@@ -36,6 +37,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
 
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const waitlistEnabled = isPreRelease(product.status)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,7 +103,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     priceLabel,
     productSlug: handle,
     affiliateId,
-    showWaitlist: Boolean(product.pre_release),
+    showWaitlist: waitlistEnabled,
     onWaitlistClick: handleWaitlistClick,
     benefits,
     features: featureList,
@@ -110,7 +112,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     product.title,
     product.name,
     product.description,
-    product.pre_release,
+    waitlistEnabled,
     displayPrice,
     originalPrice,
     priceLabel,

@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Product, formatPrice } from "@/lib/products/products-data"
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import { shouldShowNewReleaseBanner } from "@/lib/products/badge-config"
+import { getReleaseBadgeText, isPreRelease } from "@/lib/products/release-status"
 
 interface ProductGridProps {
   products: Product[]
@@ -24,11 +25,12 @@ export function ProductGrid({ products }: ProductGridProps) {
         const price = product.variants[0]?.prices[0]
         const brandLogoPath = getBrandLogoPath(product.handle)
         const imageSource = brandLogoPath || product.thumbnail
+        const preRelease = isPreRelease(product.status)
 
         const showNewReleaseBadge =
-          product.new_release && !product.pre_release && shouldShowNewReleaseBanner(product.handle)
+          product.new_release && !preRelease && shouldShowNewReleaseBanner(product.handle)
 
-        const bannerType = product.pre_release
+        const bannerType = preRelease
           ? "preRelease"
           : showNewReleaseBadge
             ? "newRelease"
@@ -38,7 +40,7 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         const bannerText =
           bannerType === "preRelease"
-            ? "Pre Release"
+            ? getReleaseBadgeText(product.status).replace("-", " ")
             : bannerType === "newRelease"
               ? "New Release"
               : bannerType === "popular"

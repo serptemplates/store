@@ -9,7 +9,6 @@
     "slug",
     "seo_title",
     "seo_description",
-    "product_page_url",
     "store_serp_co_product_page_url",
     "apps_serp_co_product_page_url",
     "serply_link",
@@ -36,10 +35,6 @@
       "type": "string",
       "minLength": 1
     },
-    "product_page_url": {
-      "type": "string",
-      "format": "uri"
-    },
     "store_serp_co_product_page_url": {
       "type": "string",
       "format": "uri",
@@ -49,6 +44,11 @@
       "type": "string",
       "format": "uri",
       "pattern": "^https://apps\\.serp\\.co/"
+    },
+    "serp_co_product_page_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://(www\\.)?serp\\.co/"
     },
     "serply_link": {
       "type": "string",
@@ -93,16 +93,47 @@
       "format": "uri"
     },
     "chrome_webstore_link": {
-      "type": "string",
-      "format": "uri",
-      "minLength": 1
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://(chromewebstore\\.google\\.com|chrome\\.google\\.com)/"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "firefox_addon_store_link": {
       "anyOf": [
         {
           "type": "string",
           "format": "uri",
-          "minLength": 1
+          "pattern": "^https://addons\\.mozilla\\.org/"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "edge_addons_store_link": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://microsoftedge\\.microsoft\\.com/"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "producthunt_link": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://(www\\.)?producthunt\\.com/"
         },
         {
           "type": "null"
@@ -142,6 +173,14 @@
       "items": {
         "type": "string",
         "format": "uri"
+      },
+      "default": []
+    },
+    "related_posts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
       },
       "default": []
     },
@@ -250,7 +289,12 @@
     },
     "status": {
       "type": "string",
-      "minLength": 1
+      "enum": [
+        "draft",
+        "pre_release",
+        "live"
+      ],
+      "default": "draft"
     },
     "categories": {
       "type": "array",
@@ -276,13 +320,9 @@
       ],
       "default": "landing"
     },
-    "pre_release": {
+    "featured": {
       "type": "boolean",
       "default": false
-    },
-    "expected_launch_date": {
-      "type": "string",
-      "format": "date"
     },
     "waitlist_url": {
       "type": "string",
@@ -291,6 +331,36 @@
     "new_release": {
       "type": "boolean",
       "default": false
+    },
+    "popular": {
+      "type": "boolean",
+      "default": false
+    },
+    "permission_justifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "permission",
+          "justification"
+        ],
+        "properties": {
+          "permission": {
+            "type": "string",
+            "minLength": 1
+          },
+          "justification": {
+            "type": "string",
+            "minLength": 1
+          },
+          "learn_more_url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "default": []
     },
     "brand": {
       "type": "string",
@@ -419,11 +489,11 @@
     },
     "success_url": {
       "type": "string",
-      "format": "uri"
+      "pattern": "^(https://apps\\.serp\\.co/|http://localhost)"
     },
     "cancel_url": {
       "type": "string",
-      "format": "uri"
+      "pattern": "^(https://apps\\.serp\\.co/|http://localhost)"
     },
     "ghl": {
       "type": "object",
@@ -448,7 +518,19 @@
           "items": {
             "type": "string",
             "minLength": 1
-          }
+          },
+          "default": []
+        },
+        "workflow_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "opportunity_name_template": {
+          "type": "string"
         },
         "contact_custom_field_ids": {
           "type": "object",

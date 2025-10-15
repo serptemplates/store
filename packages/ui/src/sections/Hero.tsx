@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import HeroVideoDialog from "../magic/HeroVideoDialog";
 import { Progress } from "../progress";
 
@@ -304,13 +305,16 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
                 <button
                   type="button"
                   onClick={() => setLightboxIndex(index)}
-                  className="aspect-video w-full overflow-hidden rounded-2xl border bg-muted/40"
+                  className="relative aspect-video w-full overflow-hidden rounded-2xl border bg-muted/40"
                 >
-                  <img
+                  <Image
                     src={item.src}
                     alt={item.alt ?? item.title ?? "Product screenshot"}
-                    className="h-full w-full object-cover transition-transform duration-200 hover:scale-[1.02]"
-                    loading={index === 0 ? "eager" : "lazy"}
+                    fill
+                    className="object-cover transition-transform duration-200 hover:scale-[1.02]"
+                    priority={index === 0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
+                    quality={90}
                   />
                 </button>
               )}
@@ -397,11 +401,17 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
               </>
             )}
 
-            <img
-              src={validItems[lightboxIndex].src}
-              alt={validItems[lightboxIndex].alt ?? validItems[lightboxIndex].title ?? "Product screenshot"}
-              className="max-h-[90vh] w-full object-contain"
-            />
+            <div className="relative max-h-[90vh] w-full">
+              <Image
+                src={validItems[lightboxIndex].src}
+                alt={validItems[lightboxIndex].alt ?? validItems[lightboxIndex].title ?? "Product screenshot"}
+                width={1920}
+                height={1080}
+                className="max-h-[90vh] w-full object-contain"
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                quality={90}
+              />
+            </div>
           </div>
         </div>
       )}

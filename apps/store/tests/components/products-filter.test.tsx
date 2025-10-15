@@ -28,14 +28,14 @@ vi.stubGlobal("React", React);
 function buildProduct(overrides: Partial<ProductListItem> = {}): ProductListItem {
   return {
     slug: "sample-product",
-    name: "Sample Product",
-    categories: ["Downloader"],
-    keywords: ["sample"],
-    platform: "Sample",
-    pre_release: false,
-    new_release: false,
-    popular: false,
-    ...overrides,
+  name: "Sample Product",
+  categories: ["Downloader"],
+  keywords: ["sample"],
+  platform: "Sample",
+  status: "live",
+  new_release: false,
+  popular: false,
+  ...overrides,
   };
 }
 

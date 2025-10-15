@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { getProductVideoEntries } from "@/lib/products/video";
+import { isPreRelease } from "@/lib/products/release-status";
 import { getSiteBaseUrl, toAbsoluteUrl } from "@/lib/urls";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
@@ -110,7 +111,6 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const { product, entry, siteName, watchUrl, productUrl } = context;
   const baseUrl = getSiteBaseUrl();
   const siteConfig = getSiteConfig();
-  const navSiteName = siteConfig.site?.name ?? siteName;
   const allProducts = getAllProducts();
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
   const siteRegions = product.supported_regions
@@ -119,7 +119,6 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const primaryRegion = siteRegions[0] ?? 'Worldwide';
   const sameAsUrls = [
     entry.url,
-    product.product_page_url,
     product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
     product.serply_link,
@@ -172,7 +171,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
           url: product.serply_link,
           price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
           priceCurrency: "USD",
-          availability: product.pre_release ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
+          availability: isPreRelease(product) ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
         }
       : undefined,
     videoQuality: "HD",
@@ -291,8 +290,8 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
                             width={192}
                             height={108}
                             className="h-full w-full object-cover"
-                            loading="lazy"
-                            unoptimized
+                            sizes="(max-width: 640px) 50vw, 192px"
+                            quality={75}
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">Video</div>

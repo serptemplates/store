@@ -38,9 +38,16 @@ test.describe("Checkout Flow Integration", () => {
     // Go directly to checkout page
     await page.goto('/checkout?product=tiktok-downloader', { waitUntil: 'domcontentloaded' });
 
-    if (page.url().startsWith('https://')) {
+    const currentUrl = page.url();
+    const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:3000';
+    const baseHost = new URL(baseUrl).host;
+    const currentHost = new URL(currentUrl).host;
+
+    if (currentHost !== baseHost) {
       // External redirect (e.g., payment link) – ensure destination reached
-      expect(page.url()).toContain('ghl.serp.co');
+      expect(currentUrl).toMatch(
+        /https:\/\/(ghl\.serp\.co|checkout\.stripe\.com|apps\.serp\.co)\//,
+      );
       return;
     }
 

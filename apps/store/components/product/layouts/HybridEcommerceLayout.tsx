@@ -15,6 +15,7 @@ import { HybridValueStackSection } from "@/components/product/hybrid/HybridValue
 import { HybridComparisonSection, type ComparisonRow } from "@/components/product/hybrid/HybridComparisonSection"
 import { HybridIncludedStackSection } from "@/components/product/hybrid/HybridIncludedStackSection"
 import type { ExtendedProductData } from "@/components/product/types"
+import { isPreRelease } from "@/lib/products/release-status"
 
 export interface HybridEcommerceLayoutProps {
   product: ExtendedProductData
@@ -40,6 +41,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
+  const waitlistEnabled = isPreRelease(product.status)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,7 +135,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     priceLabel,
     productSlug: handle,
     affiliateId,
-    showWaitlist: Boolean(product.pre_release),
+    showWaitlist: waitlistEnabled,
     onWaitlistClick: handleWaitlistClick,
     benefits,
     features: featureList,
@@ -142,7 +144,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     product.title,
     product.name,
     product.description,
-    product.pre_release,
+    waitlistEnabled,
     displayPrice,
     originalPrice,
     priceLabel,

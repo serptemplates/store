@@ -23,7 +23,8 @@ export function ProductMediaGallery({ images, selectedIndex, onSelect, productNa
             fill
             className={brandLogoPath && selectedIndex === 0 ? "object-contain p-8" : "object-cover"}
             priority
-            unoptimized
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+            quality={90}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -48,7 +49,8 @@ export function ProductMediaGallery({ images, selectedIndex, onSelect, productNa
                 alt={`${productName} screenshot ${index + 1}`}
                 fill
                 className="object-cover"
-                unoptimized
+                sizes="150px"
+                quality={75}
               />
             </button>
           ))}

@@ -102,6 +102,20 @@ Create `products-feed.xml`:
 </rss>
 ```
 
+#### CLI helper
+
+We provide a helper script that builds a feed directly from the product catalogue:
+
+```bash
+# CSV (default) feed written to merchant-feed.csv
+pnpm merchant:export:store -- --format=csv --output=merchant-feed.csv
+
+# XML feed variant
+pnpm merchant:export:store -- --format=xml --output=merchant-feed.xml
+```
+
+Upload the generated file via Products → Feeds → Upload.
+
 ### Option 2: Automated Feed via API Route
 
 Create an API endpoint to generate the feed dynamically:
@@ -146,6 +160,32 @@ export async function GET() {
   });
 }
 ```
+
+### Option 3: Content API Upload Script
+
+We also ship a script that pushes products directly into Merchant Center using the Content API. This is useful for backfilling the catalogue or running on-demand syncs.
+
+1. Create a service account in Google Cloud with access to the Content API for Shopping and add it to your Merchant Center account.
+2. Export the credentials and set the following environment variables:
+   - `GOOGLE_MERCHANT_ACCOUNT_ID` – the numeric Merchant Center ID.
+   - `GOOGLE_SERVICE_ACCOUNT_EMAIL` – the service account email.
+   - `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY` – the private key (supporting `\n`-escaped newlines).
+   - Optional:
+     - `GOOGLE_MERCHANT_COUNTRIES` (comma separated, defaults to `US`).
+     - `GOOGLE_MERCHANT_LANGUAGE` (defaults to `en`).
+     - `GOOGLE_MERCHANT_SITE_URL` / `GOOGLE_MERCHANT_APPS_URL` to override link targets.
+     - `GOOGLE_SERVICE_ACCOUNT_KEY_PATH` (or `GOOGLE_SERVICE_ACCOUNT_KEY_FILE`) to point at a JSON key file if you prefer not to paste credentials into env vars.
+3. Run the script from the repo root:
+
+```bash
+# Dry run a single product
+pnpm run merchant:upload -- --slug=onlyfans-downloader --dry-run
+
+# Upload all products to the configured countries
+pnpm run merchant:upload
+```
+
+The script reads from `apps/store/data/products/*.yaml`, validates each entry with the shared schema, and inserts them via the Content API. Use `--dry-run` while testing—no requests are dispatched, but the payload summary is printed.
 
 ## Step 5: Upload Product Feed
 

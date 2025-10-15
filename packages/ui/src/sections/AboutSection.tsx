@@ -1,4 +1,5 @@
 import { type FC } from "react"
+import Image from "next/image"
 
 export interface TeamMember {
   name: string
@@ -34,12 +35,15 @@ export const AboutSection: FC<AboutSectionProps> = ({
             <div key={index} className="rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
               {/* Image with max constraints */}
               {member.image ? (
-                <div className="flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100">
-                  <img
+                <div className="relative flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100" style={{ maxWidth: '700px', maxHeight: '800px', width: '100%', aspectRatio: '7/8' }}>
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="w-full object-cover"
-                    style={{ maxWidth: '700px', maxHeight: '800px' }}
+                    fill
+                    loading="lazy"
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 700px"
+                    quality={85}
                   />
                 </div>
               ) : (

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 
 interface SocialProofScreenshot {
   id: string
@@ -44,15 +45,23 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
         <div className="space-y-4">
           {screenshots.map((screenshot) => (
             !errorImages.has(screenshot.id) && (
-              <img
+              <div
                 key={screenshot.id}
-                src={typeof screenshot.src === 'string' ? screenshot.src : screenshot.src.src || screenshot.src}
-                alt={screenshot.alt}
-                className="mx-auto"
-                style={{ width: '700px', maxWidth: '100%' }}
-                onError={() => handleImageError(screenshot.id)}
-                loading="lazy"
-              />
+                className="relative mx-auto"
+                style={{ width: '700px', maxWidth: '100%', height: 'auto' }}
+              >
+                <Image
+                  src={typeof screenshot.src === 'string' ? screenshot.src : screenshot.src.src || screenshot.src}
+                  alt={screenshot.alt}
+                  width={700}
+                  height={400}
+                  className="w-full h-auto"
+                  onError={() => handleImageError(screenshot.id)}
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  quality={85}
+                />
+              </div>
             )
           ))}
         </div>
