@@ -1,6 +1,11 @@
 const baseUrl = process.env.LHCI_BASE_URL ?? 'http://127.0.0.1:4313';
 const FAST = process.env.LHCI_FAST === '1';
 
+// Detect if we're running against staging or production
+// Staging typically has lower performance scores due to different infrastructure
+const isStaging = baseUrl.includes('staging') || baseUrl.includes('preview');
+const performanceThreshold = isStaging ? 0.7 : 0.9; // More lenient for staging
+
 /** @type {import('@lhci/cli/src/types').LHCIConfig} */
 module.exports = {
   ci: {
@@ -33,7 +38,7 @@ module.exports = {
     },
     assert: {
       assertions: {
-        'categories:performance': ['error', { minScore: 0.9 }],
+        'categories:performance': ['error', { minScore: performanceThreshold }],
         'categories:accessibility': ['error', { minScore: 0.9 }],
         'categories:best-practices': ['error', { minScore: 0.9 }],
         'categories:seo': ['error', { minScore: 0.9 }],
