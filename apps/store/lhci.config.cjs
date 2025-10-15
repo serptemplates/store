@@ -1,6 +1,16 @@
 const baseUrl = process.env.LHCI_BASE_URL ?? 'http://127.0.0.1:4313';
 const FAST = process.env.LHCI_FAST === '1';
 
+const blockedUrlPatterns = [
+  'https://*.tawk.to/*',
+  'https://*.i.posthog.com/*',
+  'https://connect.facebook.net/*',
+  'https://www.googletagmanager.com/*',
+  'https://www.google-analytics.com/*',
+  'https://static.hotjar.com/*',
+  'https://script.hotjar.com/*',
+];
+
 /** @type {import('@lhci/cli/src/types').LHCIConfig} */
 module.exports = {
   ci: {
@@ -20,6 +30,7 @@ module.exports = {
             // (Lighthouse will still treat as mobile via formFactor)
             onlyCategories: ['performance','accessibility','best-practices','seo'],
             disableStorageReset: true,              // speeds up re-runs
+            blockedUrlPatterns,
             // Optional: skip expensive audits if you just want a smoke-check
             // skipAudits: ['bf-cache','network-requests'],
           }
@@ -29,6 +40,7 @@ module.exports = {
             throttlingMethod: 'devtools',
             // let Lighthouse pick the right emulation for 'mobile'
             // (no need for emulatedFormFactor or manual screenEmulation)
+            blockedUrlPatterns,
           },
     },
     assert: {
