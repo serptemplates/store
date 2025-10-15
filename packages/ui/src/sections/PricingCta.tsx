@@ -1,10 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Check, Zap, ArrowRight, Loader2 } from "lucide-react";
-import { Button } from "../button";
+import { Check, Loader2 } from "lucide-react";
 import { cn } from "../lib/utils";
 import SocialProofBanner from "../social-proof-banner";
+import { TypographyH2, TypographyLarge, TypographyP, TypographySmall } from "@repo/ui";
 
 export type PricingCtaProps = {
   heading?: string;
@@ -25,6 +25,23 @@ export type PricingCtaProps = {
   features?: string[];
   className?: string;
   id?: string;
+  orderBump?: PricingCtaOrderBump;
+};
+
+export type PricingCtaOrderBump = {
+  id?: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  price?: string;
+  originalPrice?: string;
+  badge?: string;
+  note?: string;
+  bullets?: string[];
+  benefits?: string[];
+  image?: string;
+  terms?: string;
+  defaultSelected?: boolean;
 };
 
 const defaultBenefits = [
@@ -53,6 +70,7 @@ export function PricingCta({
   features,
   className,
   id,
+  orderBump,
 }: PricingCtaProps) {
   const listItems = (
     benefits?.length ? benefits : features?.length ? features : defaultBenefits
@@ -65,7 +83,6 @@ export function PricingCta({
   const socialProofConfig = {
     userCount: 1938,
     starRating: 5,
-    userLabel: "Users",
   } as const;
 
   // Calculate discount percentage if original price exists
@@ -78,6 +95,15 @@ export function PricingCta({
     }
   }
 
+  const hasOrderBump = Boolean(orderBump);
+  const orderBumpItems = hasOrderBump
+    ? (orderBump?.benefits?.length
+        ? orderBump.benefits
+        : orderBump?.bullets?.length
+        ? orderBump.bullets
+        : [])
+    : [];
+
   return (
     <section
       id={id}
@@ -88,22 +114,13 @@ export function PricingCta({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left side content - Hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
-            {/* Product Title & Description */}
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+            <TypographyH2 className="mb-3">
               {heading || "Get Instant Access"}
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-6 lg:mb-8">
+            </TypographyH2>
+            <TypographyP className="mb-6 max-w-xl lg:mb-8">
               {subheading ||
                 "Start using our product immediately after checkout. No waiting, no delays."}
-            </p>
-
-            <SocialProofBanner
-              className="hidden lg:block mb-8"
-              avatars={[]}
-              userCount={socialProofConfig.userCount}
-              starRating={socialProofConfig.starRating}
-              userLabel={socialProofConfig.userLabel}
-            />
+            </TypographyP>
 
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
             <div className="hidden lg:block space-y-4 mb-8">
@@ -123,12 +140,10 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Instant Download
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Instant Download</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     Get access immediately after payment
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
 
@@ -148,12 +163,10 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Lifetime Updates
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Lifetime Updates</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     All future updates included at no extra cost
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
 
@@ -173,46 +186,54 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Premium Support
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Premium Support</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     Get help when you need it
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
             </div>
+
+            <SocialProofBanner
+              className="hidden lg:block mt-8"
+              avatars={[]}
+              userCount={socialProofConfig.userCount}
+              starRating={socialProofConfig.starRating}
+              align="start"
+            />
 
           </div>
 
           {/* Right side - pricing card */}
           <div className="relative order-1 lg:order-2">
             <div
-              className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
-              style={{
-                padding: "30px 25px 25px",
-                boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
-                border: "1px solid #e5e5e5",
-              }}
+              className={cn(
+                "relative mx-auto flex flex-col gap-6 sm:mx-0",
+                hasOrderBump
+                  ? "sm:max-w-xl lg:ml-auto lg:max-w-[960px] lg:grid lg:grid-cols-2 lg:items-stretch"
+                  : "sm:max-w-md lg:max-w-[460px] lg:ml-auto"
+              )}
             >
+              <div
+                className={cn(
+                  "relative flex flex-col rounded-xl bg-white",
+                  hasOrderBump ? "h-full" : "mx-auto sm:mx-0"
+                )}
+                style={{
+                  padding: hasOrderBump ? "28px 26px 26px" : "30px 25px 25px",
+                  boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
+                  border: "1px solid #e5e5e5",
+                }}
+              >
               {/* Product Title - Mobile Only */}
               <div className="text-center mb-4 lg:hidden">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <TypographyH2>
                   {heading || "Get Instant Access"}
-                </h2>
-                <p className="text-base md:text-lg text-gray-600 mt-2">
+                </TypographyH2>
+                <TypographyP className="mt-2">
                   {subheading ||
                     "Start using our product immediately after checkout. No waiting, no delays."}
-                </p>
-              </div>
-
-              <div className="mb-6 lg:hidden">
-                <SocialProofBanner
-                  avatars={[]}
-                  userCount={socialProofConfig.userCount}
-                  starRating={socialProofConfig.starRating}
-                  userLabel={socialProofConfig.userLabel}
-                />
+                </TypographyP>
               </div>
 
               {/* Pricing */}
@@ -238,16 +259,14 @@ export function PricingCta({
                     </div>
                   )}
                   {priceLabel && (
-                    <div
-                      className="mt-2"
-                      style={{
-                        color: "#6b7280",
-                        fontSize: "14px",
-                        fontStyle: "italic",
-                      }}
-                    >
+                    <TypographySmall className="mt-2 italic text-gray-600">
                       {priceLabel}
-                    </div>
+                    </TypographySmall>
+                  )}
+                  {priceNote && (
+                    <TypographySmall className="text-gray-600">
+                      {priceNote}
+                    </TypographySmall>
                   )}
                 </div>
               )}
@@ -263,13 +282,7 @@ export function PricingCta({
                 </div>
               )}
 
-              <div
-                style={{
-                  borderTop: "1px solid #e5e7eb",
-                  marginBottom: "20px",
-                  marginTop: "15px",
-                }}
-              ></div>
+              <div className="my-4 border-t border-gray-200" />
 
               {/* Benefits List */}
               <div className="mb-6">
@@ -277,67 +290,38 @@ export function PricingCta({
                   {listItems.map((feat, index) => (
                     <div key={index} className="flex items-center gap-2.5">
                       <span
-                        className="flex items-center justify-center rounded-full flex-shrink-0"
-                        style={{
-                          backgroundColor: "#dcfce7",
-                          width: "20px",
-                          height: "20px",
-                        }}
+                        className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
                       >
-                        <Check
-                          style={{
-                            color: "#16a34a",
-                            width: "12px",
-                            height: "12px",
-                            strokeWidth: "3",
-                          }}
-                        />
+                        <Check className="h-3 w-3" strokeWidth={3} />
                       </span>
-                      <span
-                        style={{
-                          color: "#374151",
-                          fontSize: "15px",
-                          fontFamily:
-                            "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                          lineHeight: "1.4",
-                        }}
-                      >
+                      <TypographySmall className="text-gray-700">
                         {feat}
-                      </span>
+                      </TypographySmall>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div
-                style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }}
-              ></div>
+              <div className="lg:hidden mt-2 mb-6">
+                <SocialProofBanner
+                  avatars={[]}
+                  userCount={socialProofConfig.userCount}
+                  starRating={socialProofConfig.starRating}
+                />
+              </div>
+
+              <div className="my-4 border-t border-gray-200" />
 
               {/* Additional info if provided */}
               {(benefits?.length || features?.length) &&
                 benefits?.length !== listItems.length && (
                   <div className="mb-4">
-                    <p
-                      className="text-left mb-3"
-                      style={{
-                        color: "#374151",
-                        fontSize: "14px",
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      Included:{" "}
-                      <strong>300 critical conversion checkpoints</strong>
-                    </p>
-                    <p
-                      className="text-left mb-4"
-                      style={{
-                        color: "#374151",
-                        fontSize: "14px",
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      Checklist last updated: <strong>October 2nd 2025</strong>
-                    </p>
+                    <TypographySmall className="mb-3 block text-left text-gray-700">
+                      Included: <span className="font-semibold text-gray-900">300 critical conversion checkpoints</span>
+                    </TypographySmall>
+                    <TypographySmall className="block text-left text-gray-700">
+                      Checklist last updated: <span className="font-semibold text-gray-900">October 2nd 2025</span>
+                    </TypographySmall>
                   </div>
                 )}
 
@@ -428,17 +412,83 @@ export function PricingCta({
 
               {/* Terms/Disclaimer - only show if custom terms provided */}
               {terms && (
-                <div
-                  className="text-center leading-relaxed"
-                  style={{
-                    color: "#6b7280",
-                    fontSize: "13px",
-                    lineHeight: "1.5",
-                    fontFamily:
-                      "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                  }}
-                >
+                <TypographySmall className="text-center leading-relaxed text-gray-600">
                   {terms}
+                </TypographySmall>
+              )}
+              </div>
+
+              {hasOrderBump && orderBump && (
+                <div
+                  className="flex h-full flex-col rounded-xl border border-amber-200 bg-gradient-to-b from-amber-50 via-amber-50 to-white p-6 shadow-[0_12px_30px_rgba(255,170,0,0.18)]"
+                >
+                  {orderBump.badge && (
+                    <span className="inline-flex items-center self-start rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                      {orderBump.badge}
+                    </span>
+                  )}
+
+                  <div className="mt-2 space-y-2">
+                    <TypographyLarge className="text-amber-900 text-lg sm:text-xl">
+                      {orderBump.title}
+                    </TypographyLarge>
+                    {orderBump.subtitle && (
+                      <TypographySmall className="text-amber-700">
+                        {orderBump.subtitle}
+                      </TypographySmall>
+                    )}
+                    {orderBump.description && (
+                      <TypographySmall className="text-amber-700">
+                        {orderBump.description}
+                      </TypographySmall>
+                    )}
+                  </div>
+
+                  {(orderBump.price || orderBump.originalPrice) && (
+                    <div className="mt-4">
+                      {orderBump.originalPrice && (
+                        <p className="text-sm font-medium text-amber-600/80 line-through">
+                          {orderBump.originalPrice}
+                        </p>
+                      )}
+                      {orderBump.price && (
+                        <p className="text-3xl font-bold text-amber-900">
+                          {orderBump.price}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {orderBumpItems.length > 0 && (
+                    <ul className="mt-5 space-y-2">
+                      {orderBumpItems.map((item, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm text-amber-800">
+                          <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-amber-500" strokeWidth={3} />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {orderBump.note && (
+                    <TypographySmall className="mt-4 text-amber-700">
+                      {orderBump.note}
+                    </TypographySmall>
+                  )}
+
+                  <div className="mt-auto">
+                    <div className="mt-6 rounded-lg border border-amber-200 bg-white/80 p-3 text-xs font-medium text-amber-800 shadow-sm">
+                      {orderBump.defaultSelected
+                        ? "Pre-selected during checkout — deselect anytime before completing your order."
+                        : "Add this upgrade during checkout with a single click before you pay."}
+                    </div>
+
+                    {orderBump.terms && (
+                      <TypographySmall className="mt-3 block text-amber-600/90">
+                        {orderBump.terms}
+                      </TypographySmall>
+                    )}
+                  </div>
                 </div>
               )}
             </div>

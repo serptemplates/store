@@ -10,7 +10,7 @@ serply_link: https://serp.ly/tiktok-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/tiktok-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/tiktok-downloader
 serp_co_product_page_url: https://serp.co/products/tiktok-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e022c6613b1b4c4ace7f2b
+buy_button_destination:
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=tiktok-downloader
 status: draft
@@ -22,6 +22,7 @@ product_videos: []
 related_videos: []
 related_posts:
 - how-to-download-tiktok-videos
+- how-to-download-tiktok-audio-music-audio-etc-from-videos
 github_repo_url: https://github.com/serpapps/tiktok-video-downloader
 github_repo_tags: []
 chrome_webstore_link: null
@@ -39,7 +40,6 @@ features:
 - Resume downloads
 - Organize by user or category
 - Built-in player
-- Command-line tools
 - Duplicate detection
 - Media center integration
 - Export data & stats
@@ -58,6 +58,22 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  id: priority-support
+  title: Priority Support Pack
+  subtitle: Kickstart onboarding with concierge setup
+  description: Fast-track your first month with a live onboarding call and priority access to the team.
+  price: $29.00
+  original_price: $59.00
+  badge: Popular Upgrade
+  note: One-time upgrade billed together with your license.
+  benefits:
+  - Live onboarding call (30 minutes)
+  - Priority email support for 30 days
+  - Setup checklist review with our team
+  stripe:
+    price_id: price_priority_support_live
+    test_price_id: price_priority_support_test
 faqs:
 - question: Can I download TikTok videos without the watermark?
   answer: Yes, this downloader can save TikTok videos without the TikTok watermark

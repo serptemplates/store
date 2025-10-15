@@ -2,6 +2,21 @@ import { z } from "zod";
 
 const trimmedString = () => z.string().trim().min(1);
 
+const optionalTrimmedString = () =>
+  z.preprocess(
+    (value) => {
+      if (value === null || value === undefined) {
+        return undefined;
+      }
+      if (typeof value !== "string") {
+        return value;
+      }
+      const trimmed = value.trim();
+      return trimmed.length === 0 ? undefined : trimmed;
+    },
+    z.string().trim().optional(),
+  );
+
 const enforceHost = (hosts: string | string[]) => {
   const allowedHosts = Array.isArray(hosts) ? hosts : [hosts];
   return trimmedString()
@@ -150,6 +165,7 @@ const licenseSchema = z
 
 const pricingSchemaShape = {
   label: z.string().trim().optional(),
+  subheading: z.string().trim().optional(),
   price: z.string().trim().optional(),
   original_price: z.string().trim().optional(),
   note: z.string().trim().optional(),
@@ -179,6 +195,43 @@ const permissionJustificationSchema = z.object({
   justification: trimmedString(),
   learn_more_url: trimmedString().url().optional(),
 });
+
+const orderBumpSchemaShape = {
+  id: trimmedString(),
+  title: trimmedString(),
+  subtitle: optionalTrimmedString(),
+  description: optionalTrimmedString(),
+  price: z.string().trim(),
+  original_price: optionalTrimmedString(),
+  badge: optionalTrimmedString(),
+  note: optionalTrimmedString(),
+  features: z.array(z.string().trim()).optional().default([]),
+  benefits: z.array(z.string().trim()).optional().default([]),
+  image: z.string().trim().url().optional(),
+  default_selected: z.boolean().optional().default(false),
+  terms: optionalTrimmedString(),
+  stripe: stripeSchema,
+} satisfies Record<string, z.ZodTypeAny>;
+
+export const ORDER_BUMP_FIELD_ORDER = ["enabled", ...Object.keys(orderBumpSchemaShape)] as const;
+const orderBumpSchema = z
+  .object({
+    enabled: z.boolean().optional().default(true),
+    ...orderBumpSchemaShape,
+  })
+  .refine(
+    (value) => {
+      if (value.enabled === false) {
+        return true;
+      }
+      return Boolean(value.id && value.title && value.price && value.stripe?.price_id);
+    },
+    {
+      message: "order_bump requires id, title, price, and stripe.price_id when enabled.",
+      path: ["order_bump"],
+    },
+  )
+  .optional();
 
 const productSchemaShape = {
   platform: z.string().trim().optional(),
@@ -210,6 +263,7 @@ const productSchemaShape = {
   producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
   features: z.array(z.string().trim()).optional().default([]),
   pricing: pricingSchema,
+  order_bump: orderBumpSchema,
   faqs: z.array(faqSchema).optional().default([]),
   reviews: z.array(reviewSchema).optional().default([]),
   supported_operating_systems: z.array(z.string().trim()).optional().default([]),
@@ -260,6 +314,7 @@ export const PRODUCT_FIELD_ORDER = [
   "producthunt_link",
   "features",
   "pricing",
+  "order_bump",
   "faqs",
   "reviews",
   "supported_operating_systems",

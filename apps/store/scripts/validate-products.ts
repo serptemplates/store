@@ -1,7 +1,7 @@
 import { promises as fs } from "fs"
 import path from "path"
 import { parse, parseDocument, type YAMLMap } from "yaml"
-import { PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
+import { ORDER_BUMP_FIELD_ORDER, PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
 
 const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
@@ -100,6 +100,18 @@ async function main() {
       if (pricingIssue) {
         errors.push(
           `❌ ${file}: pricing."${pricingIssue.before}" must appear before "${pricingIssue.after}" to match canonical order.`,
+        )
+        continue
+      }
+    }
+
+    const orderBumpNode = document.get("order_bump", true) as YAMLMap<unknown, unknown> | undefined
+    if (orderBumpNode) {
+      const orderBumpKeys = extractKeys(orderBumpNode)
+      const orderBumpIssue = findOrderViolation(orderBumpKeys, ORDER_BUMP_FIELD_ORDER)
+      if (orderBumpIssue) {
+        errors.push(
+          `❌ ${file}: order_bump."${orderBumpIssue.before}" must appear before "${orderBumpIssue.after}" to match canonical order.`,
         )
         continue
       }

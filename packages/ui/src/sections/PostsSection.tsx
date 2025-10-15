@@ -44,8 +44,8 @@ export function PostsSection({
       <div className="mx-auto max-w-6xl">
         <h2 className="mb-8 text-center text-2xl md:text-3xl font-bold text-gray-900">{heading}</h2>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          {posts.slice(0, 3).map((post) => (
-            <a key={post.slug} href={`/blog/${post.slug}`} className="block">
+          {posts.slice(0, 3).map((post, index) => (
+            <a key={`${post.slug}-${index}`} href={`/blog/${post.slug}`} className="block">
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
                 <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                   <div className="p-6 text-center">

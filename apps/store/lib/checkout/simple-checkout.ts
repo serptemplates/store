@@ -18,6 +18,10 @@ export async function createSimpleCheckout(params: {
   affiliateId?: string;
   successUrl?: string;
   cancelUrl?: string;
+  orderBump?: {
+    id: string;
+    selected: boolean;
+  };
 }) {
   const stripeMode = getStripeMode();
   const stripeKey = requireStripeSecretKey(stripeMode);
@@ -38,6 +42,16 @@ export async function createSimpleCheckout(params: {
   // Extract price from product
   const priceString = product.pricing?.price?.replace(/[^0-9.]/g, '') || '0';
   const priceInCents = Math.round(parseFloat(priceString) * 100);
+
+  const orderBumpConfig = product.order_bump;
+  const orderBumpSelected = Boolean(
+    params.orderBump?.selected &&
+      orderBumpConfig &&
+      params.orderBump.id === orderBumpConfig.id,
+  );
+  const orderBumpPriceInCents = orderBumpSelected && orderBumpConfig?.price
+    ? Math.round(parseFloat(orderBumpConfig.price.replace(/[^0-9.]/g, '')) * 100)
+    : 0;
 
   if (priceInCents === 0) {
     throw new Error(`Invalid price for product: ${params.offerId}`);
@@ -122,14 +136,52 @@ export async function createSimpleCheckout(params: {
     const successUrl = ensureSuccessUrlHasSessionPlaceholder(rawSuccessUrl);
     const cancelUrl = params.cancelUrl ?? product.cancel_url ?? `${defaultBaseUrl}/${product.slug}`;
 
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
+        price: stripePrice.id,
+        quantity: params.quantity ?? 1,
+      },
+    ];
+
+    if (orderBumpSelected && orderBumpPriceInCents > 0 && stripeProduct.id) {
+      const orderBumpPrice = await stripe.prices.create({
+        product: stripeProduct.id,
+        unit_amount: orderBumpPriceInCents,
+        currency: 'usd',
+        metadata: {
+          order_bump_id: orderBumpConfig?.id ?? '',
+        },
+      });
+
+      lineItems.push({
+        price: orderBumpPrice.id,
+        quantity: 1,
+      });
+
+      sessionMetadata.orderBumpId = orderBumpConfig?.id ?? '';
+      sessionMetadata.orderBumpSelected = 'true';
+      sessionMetadata.orderBumpUnitCents = String(orderBumpPriceInCents);
+      if (orderBumpConfig?.price) {
+        sessionMetadata.orderBumpDisplayPrice = orderBumpConfig.price;
+      }
+
+      if (params.metadata) {
+        params.metadata.orderBumpId = orderBumpConfig?.id ?? '';
+        params.metadata.orderBumpSelected = 'true';
+        if (orderBumpConfig?.price) {
+          params.metadata.orderBumpDisplayPrice = orderBumpConfig.price;
+        }
+      }
+    } else {
+      sessionMetadata.orderBumpSelected = sessionMetadata.orderBumpSelected ?? 'false';
+      if (params.metadata && !params.metadata.orderBumpSelected) {
+        params.metadata.orderBumpSelected = 'false';
+      }
+    }
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: paymentMethodTypes,
-      line_items: [
-        {
-          price: stripePrice.id,
-          quantity: params.quantity ?? 1,
-        },
-      ],
+      line_items: lineItems,
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,

@@ -25,11 +25,16 @@ vi.mock("@/lib/checkout/simple-checkout", () => ({
   createSimpleCheckout: vi.fn(),
 }));
 
+vi.mock("@/lib/products/product", () => ({
+  getProductData: vi.fn(),
+}));
+
 import { POST } from "@/app/api/checkout/session/route";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/lib/payments/stripe";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { createSimpleCheckout } from "@/lib/checkout/simple-checkout";
+import { getProductData } from "@/lib/products/product";
 
 const getOfferConfigMock = vi.mocked(getOfferConfig);
 const getStripeClientMock = vi.mocked(getStripeClient);
@@ -38,6 +43,7 @@ const isUsingTestKeysMock = vi.mocked(isUsingTestKeys);
 const markStaleCheckoutSessionsMock = vi.mocked(markStaleCheckoutSessions);
 const upsertCheckoutSessionMock = vi.mocked(upsertCheckoutSession);
 const createSimpleCheckoutMock = vi.mocked(createSimpleCheckout);
+const getProductDataMock = vi.mocked(getProductData);
 
 function buildRequest(body: Record<string, unknown>) {
   return new NextRequest("http://localhost/api/checkout/session", {
@@ -53,6 +59,11 @@ describe("POST /api/checkout/session", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     isUsingTestKeysMock.mockReturnValue(false);
+    getProductDataMock.mockReturnValue({
+      slug: "demo-offer",
+      name: "Demo Product",
+      pricing: { price: "$99.00" },
+    } as unknown as ReturnType<typeof getProductData>);
   });
 
   it("creates a Stripe checkout session when offer is configured", async () => {
@@ -212,6 +223,12 @@ describe("POST /api/checkout/session", () => {
         email: "buyer@example.com",
       },
     });
+
+    getProductDataMock.mockReturnValueOnce({
+      slug: "unknown-offer",
+      name: "Fallback Product",
+      pricing: { price: "$99.00" },
+    } as unknown as ReturnType<typeof getProductData>);
 
     const response = await POST(request);
     expect(response.status).toBe(200);

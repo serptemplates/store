@@ -376,6 +376,9 @@
         "label": {
           "type": "string"
         },
+        "subheading": {
+          "type": "string"
+        },
         "price": {
           "type": "string"
         },
@@ -408,6 +411,94 @@
             "minLength": 1
           },
           "default": []
+        }
+      }
+    },
+    "order_bump": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "id": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "title": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "subtitle": {
+          "type": ["string", "null"]
+        },
+        "description": {
+          "type": ["string", "null"]
+        },
+        "price": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_price": {
+          "type": ["string", "null"]
+        },
+        "badge": {
+          "type": ["string", "null"]
+        },
+        "note": {
+          "type": ["string", "null"]
+        },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "image": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default_selected": {
+          "type": "boolean",
+          "default": false
+        },
+        "terms": {
+          "type": ["string", "null"]
+        },
+        "stripe": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "price_id"
+          ],
+          "properties": {
+            "price_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "test_price_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
       }
     },

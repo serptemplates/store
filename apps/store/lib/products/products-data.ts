@@ -12,7 +12,26 @@ export interface ProductMetadata {
   original_price?: string;
   benefits?: string[];
   features?: string[];
+  order_bump?: ProductOrderBumpMetadata;
   [key: string]: unknown;
+}
+
+export interface ProductOrderBumpMetadata {
+  id: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  price: string;
+  original_price?: string;
+  badge?: string;
+  note?: string;
+  features: string[];
+  benefits: string[];
+  image?: string;
+  default_selected?: boolean;
+  terms?: string;
+  stripe_price_id: string;
+  stripe_test_price_id?: string;
 }
 
 export interface Product {
@@ -36,6 +55,7 @@ export interface Product {
   }>
   metadata?: ProductMetadata
   collection?: string
+  order_bump?: ProductOrderBumpMetadata
 }
 
 // Load products from YAML files
@@ -63,6 +83,26 @@ export async function getProducts(): Promise<Product[]> {
 
     const releaseStatus: ReleaseStatus = data.status ?? 'draft'
     const isPreRelease = releaseStatus === 'pre_release'
+
+    const orderBump = data.order_bump
+      ? {
+          id: data.order_bump.id,
+          title: data.order_bump.title,
+          subtitle: data.order_bump.subtitle,
+          description: data.order_bump.description,
+          price: data.order_bump.price,
+          original_price: data.order_bump.original_price,
+          badge: data.order_bump.badge,
+          note: data.order_bump.note,
+          features: Array.isArray(data.order_bump.features) ? data.order_bump.features : [],
+          benefits: Array.isArray(data.order_bump.benefits) ? data.order_bump.benefits : [],
+          image: data.order_bump.image,
+          default_selected: Boolean(data.order_bump.default_selected),
+          terms: data.order_bump.terms,
+          stripe_price_id: data.order_bump.stripe.price_id,
+          stripe_test_price_id: data.order_bump.stripe.test_price_id,
+        }
+      : undefined;
 
     const product: Product = {
       id: data.slug,
@@ -97,8 +137,10 @@ export async function getProducts(): Promise<Product[]> {
         stripe_price_id: data.stripe?.price_id,
         original_price: data.pricing?.original_price,
         benefits: data.pricing?.benefits,
-        features: data.features
-      }
+        features: data.features,
+        order_bump: orderBump,
+      },
+      order_bump: orderBump,
     }
 
     const activeBadges = [

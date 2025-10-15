@@ -124,7 +124,11 @@ export function productToHomeTemplate(
 
   const externalCtaHref = candidateLinks.find(
     (link): link is string =>
-      typeof link === "string" && allowedPrefixes.some((prefix) => link.startsWith(prefix)),
+      typeof link === "string"
+      && (
+        link.startsWith("/")
+        || allowedPrefixes.some((prefix) => link.startsWith(prefix))
+      ),
   ) ?? `https://store.serp.co/product-details/product/${product.slug}`;
   const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
   const ctaText = product.pricing?.cta_text ?? "Get It Now";
@@ -135,6 +139,27 @@ export function productToHomeTemplate(
   const currentPriceValue = parsePriceToNumber(product.pricing?.price);
   let derivedOriginalPrice = product.pricing?.original_price ?? undefined;
   const resolvedPosts = resolvePosts(product, posts);
+  const aboutParagraphs: string[] = [];
+  if (typeof product.description === "string" && product.description.trim().length > 0) {
+    aboutParagraphs.push(product.description.trim());
+  }
+  if (aboutParagraphs.length === 0 && typeof product.tagline === "string" && product.tagline.trim().length > 0) {
+    aboutParagraphs.push(product.tagline.trim());
+  }
+  const about = aboutParagraphs.length > 0
+    ? {
+        title: "About",
+        paragraphs: aboutParagraphs,
+      }
+    : undefined;
+  const permissionJustifications =
+    product.permission_justifications
+      ?.map((entry) => ({
+        permission: entry.permission?.trim() ?? "",
+        justification: entry.justification?.trim() ?? "",
+        learn_more_url: entry.learn_more_url?.trim() || undefined,
+      }))
+      .filter((entry) => entry.permission.length > 0 && entry.justification.length > 0) ?? undefined;
 
   if (!derivedOriginalPrice && currentPriceValue != null) {
     if (Math.abs(currentPriceValue - 17) < 0.01) {
@@ -143,6 +168,39 @@ export function productToHomeTemplate(
       derivedOriginalPrice = formatPrice(47);
     }
   }
+
+  let pricingSubheading: string | undefined;
+  if (product.pricing && Object.prototype.hasOwnProperty.call(product.pricing, "subheading")) {
+    const rawSubheading = product.pricing?.subheading;
+    if (typeof rawSubheading === "string") {
+      const trimmed = rawSubheading.trim();
+      pricingSubheading = trimmed.length > 0 ? trimmed : undefined;
+    }
+  }
+
+  const rawOrderBump = product.order_bump?.enabled === false ? undefined : product.order_bump;
+  const orderBumpBenefits =
+    rawOrderBump?.benefits && rawOrderBump.benefits.length > 0 ? rawOrderBump.benefits : undefined;
+  const orderBumpFeatures =
+    rawOrderBump?.features && rawOrderBump.features.length > 0 ? rawOrderBump.features : undefined;
+  const orderBump =
+    rawOrderBump
+      ? {
+          id: rawOrderBump.id,
+          title: rawOrderBump.title,
+          subtitle: rawOrderBump.subtitle ?? undefined,
+          description: rawOrderBump.description ?? undefined,
+          price: rawOrderBump.price ?? undefined,
+          originalPrice: rawOrderBump.original_price ?? undefined,
+          badge: rawOrderBump.badge ?? undefined,
+          note: rawOrderBump.note ?? undefined,
+          benefits: orderBumpBenefits,
+          bullets: orderBumpFeatures,
+          image: rawOrderBump.image ?? undefined,
+          terms: rawOrderBump.terms ?? undefined,
+          defaultSelected: rawOrderBump.default_selected ?? false,
+        }
+      : undefined;
 
   return {
     platform,
@@ -164,10 +222,12 @@ export function productToHomeTemplate(
     testimonialsHeading: testimonials ? "Reviews" : undefined,
     posts: resolvedPosts as PostItem[],
     postsTitle: resolvedPosts.length ? "Posts" : undefined,
+    about,
+    permissionJustifications,
     pricing: {
       enabled: true,
       heading: product.name,
-      subheading: product.tagline,
+      subheading: pricingSubheading,
       priceLabel: product.pricing?.label,
       price: product.pricing?.price,
       originalPrice: derivedOriginalPrice,
@@ -181,6 +241,7 @@ export function productToHomeTemplate(
       ctaText,
       ctaHref,
       id: "pricing",
+      orderBump,
     },
   } satisfies Omit<HomeTemplateProps, "ui">;
 }

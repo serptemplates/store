@@ -20,6 +20,12 @@ const requestSchema = z.object({
     })
     .optional(),
   couponCode: z.string().optional(),
+  orderBump: z
+    .object({
+      id: z.string().min(1, "orderBump.id is required"),
+      selected: z.boolean(),
+    })
+    .optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -54,6 +60,10 @@ export async function POST(request: NextRequest) {
 
   if (parsedBody.customer?.name) {
     parsedBody.customer.name = sanitizeInput(parsedBody.customer.name);
+  }
+
+  if (parsedBody.orderBump?.id) {
+    parsedBody.orderBump.id = sanitizeInput(parsedBody.orderBump.id);
   }
 
   const offer = getOfferConfig(parsedBody.offerId);
@@ -151,29 +161,57 @@ export async function POST(request: NextRequest) {
   const price = parseFloat(priceString);
   const quantity = parsedBody.quantity ?? 1;
 
-  const subtotalCents = Math.round(price * 100) * quantity;
+  const baseSubtotalCents = Math.round(price * 100) * quantity;
+
+  const orderBumpConfig = product.order_bump;
+  const orderBumpSelected = Boolean(
+    parsedBody.orderBump?.selected &&
+      orderBumpConfig &&
+      parsedBody.orderBump.id === orderBumpConfig.id,
+  );
+  const orderBumpPriceCents = orderBumpSelected && orderBumpConfig?.price
+    ? Math.round(parseFloat(orderBumpConfig.price.replace(/[^0-9.]/g, "")) * 100)
+    : 0;
+
+  if (orderBumpConfig) {
+    metadataFromRequest.orderBumpId = orderBumpConfig.id;
+    metadataFromRequest.orderBumpSelected = orderBumpSelected ? "true" : "false";
+    if (orderBumpConfig.price) {
+      metadataFromRequest.orderBumpDisplayPrice = orderBumpConfig.price;
+    }
+    if (orderBumpSelected && orderBumpPriceCents > 0) {
+      metadataFromRequest.orderBumpUnitCents = String(orderBumpPriceCents);
+    }
+  } else if (!metadataFromRequest.orderBumpSelected) {
+    metadataFromRequest.orderBumpSelected = "false";
+  }
 
   let discountCents = 0;
   if (couponValidation?.discount) {
     if (couponValidation.discount.type === "percentage") {
-      discountCents = Math.round(subtotalCents * (couponValidation.discount.amount / 100));
+      discountCents = Math.round(baseSubtotalCents * (couponValidation.discount.amount / 100));
     } else {
       discountCents = couponValidation.discount.amount * quantity;
     }
   }
 
-  if (discountCents > subtotalCents) {
-    discountCents = subtotalCents;
+  if (discountCents > baseSubtotalCents) {
+    discountCents = baseSubtotalCents;
   }
 
-  const totalAmountCents = Math.max(0, subtotalCents - discountCents);
+  const discountedSubtotalCents = Math.max(0, baseSubtotalCents - discountCents);
+  const totalAmountCents = discountedSubtotalCents + orderBumpPriceCents;
   const totalAmount = (totalAmountCents / 100).toFixed(2);
 
   if (normalizedCouponCode) {
-    metadataFromRequest.couponSubtotalCents = String(subtotalCents);
+    metadataFromRequest.couponSubtotalCents = String(baseSubtotalCents);
     metadataFromRequest.couponDiscountCents = String(discountCents);
-    metadataFromRequest.couponAdjustedTotalCents = String(totalAmountCents);
+    metadataFromRequest.couponAdjustedTotalCents = String(discountedSubtotalCents);
   }
+
+  metadataFromRequest.checkoutBaseSubtotalCents = String(baseSubtotalCents);
+  metadataFromRequest.checkoutTotalCents = String(totalAmountCents);
+
 
   parsedBody.metadata = metadataFromRequest;
   if (normalizedCouponCode) {

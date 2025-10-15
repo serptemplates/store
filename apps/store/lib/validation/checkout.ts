@@ -63,6 +63,16 @@ export const checkoutSessionSchema = z.object({
       "Too many metadata fields (max 50)"
     )
     .optional(),
+  orderBump: z
+    .object({
+      id: z
+        .string()
+        .min(1, "Order bump id is required")
+        .max(120, "Order bump id too long")
+        .regex(/^[A-Za-z0-9_-]+$/, "Invalid order bump id format"),
+      selected: z.boolean(),
+    })
+    .optional(),
   customer: customerSchema.optional(),
   couponCode: z.string().optional(),
 });
