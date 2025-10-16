@@ -240,7 +240,7 @@ export function HomePageView() {
     mainEntity: {
       "@type": "ItemList",
       numberOfItems: products.length,
-      itemListElement: products.slice(0, 10).map((product, index) => {
+      itemListElement: products.map((product, index) => {
         const productUrl = `${STORE_ORIGIN}/${product.slug}`
         const currency = product.pricing?.currency?.trim().toUpperCase() || "USD"
         const schemaProduct = createSchemaProduct(product, {

@@ -2,8 +2,10 @@ platform: Erome
 name: Erome Downloader
 tagline: Save Erome content instantly to your device.
 slug: erome-downloader
-description: Download videos, images, and content from erome with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Erome Downloader gives creators and teams a dependable way to save Erome content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Erome with consistent quality and predictable results.
+  
+  It supports Multimedia content from Erome platform, Photos, videos, and galleries, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Erome assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Erome Content | Erome Downloader
 seo_description: Download Erome content easily for offline use. Fast and reliable
   Erome downloader.
@@ -11,7 +13,7 @@ serply_link: https://serp.ly/erome-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/erome-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/erome-downloader
 serp_co_product_page_url: https://serp.co/products/erome-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e0232567ee3b840f699b84
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=erome-downloader
 status: pre_release
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Erome downloader?
   answer: Install the browser extension, navigate to Erome, find the content you want

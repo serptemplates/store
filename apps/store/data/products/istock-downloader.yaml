@@ -2,8 +2,10 @@ platform: Istock
 name: Istock Downloader
 tagline: Save Istock images and content instantly to your device.
 slug: istock-downloader
-description: Download videos, images, and content from istock with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Istock Downloader gives creators and teams a dependable way to save Istock images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Istock with consistent quality and predictable results.
+  
+  It supports Premium iStock photos, vectors, and videos, Batch processing for creative project collections, and Exclusive and signature content, so you can move quickly from download to delivery without tedious rework. Use it to archive Istock assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Istock Images | Istock Downloader
 seo_description: Download Istock images and graphics for offline use. Fast and reliable
   Istock content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Istock downloader?
   answer: Install the browser extension, navigate to Istock, find the content you

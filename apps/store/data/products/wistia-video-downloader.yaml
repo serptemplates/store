@@ -2,7 +2,10 @@ platform: Wistia
 name: Wistia Video Downloader
 tagline: Save Wistia videos instantly for offline viewing.
 slug: wistia-video-downloader
-description: Get quick access to Wistia Video Downloader content for offline use.
+description: |
+  Wistia Video Downloader gives creators and teams a dependable way to save Wistia videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Wistia with consistent quality and predictable results.
+  
+  It supports Wistia-hosted videos and educational content, Password-protected and gated videos, and Batch video series/channel content downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Wistia assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Wistia Videos | Wistia Video Downloader
 seo_description: Download Wistia videos easily for offline viewing. Fast, reliable
   Wistia video downloader with high-quality downloads.
@@ -10,10 +13,10 @@ serply_link: https://serp.ly/wistia-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/wistia-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/wistia-video-downloader
 serp_co_product_page_url: https://serp.co/products/wistia-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e0228867ee3b3db5699b76
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=wistia-video-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/wistia-video-downloader/main/images/wistia-video-downloader.gif
 screenshots:
@@ -59,6 +62,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Wistia downloader?
   answer: Install the browser extension, navigate to Wistia, find the content you

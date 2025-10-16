@@ -170,7 +170,7 @@ describe("productToHomeTemplate", () => {
     expect(template.pricing?.ctaHref).toBe(destination);
   });
 
-  it("falls back to store product page when links are missing or unsupported", () => {
+  it("falls back to apps product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
       stripe: undefined,
@@ -187,7 +187,7 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, []);
 
-    expect(template.ctaHref).toBe("https://store.serp.co/product-details/product/sample-product");
+    expect(template.ctaHref).toBe("https://apps.serp.co/sample-product");
   });
 
   it("uses embedded checkout CTA when Stripe configuration is available", () => {

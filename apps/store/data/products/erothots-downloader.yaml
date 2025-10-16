@@ -2,8 +2,10 @@ platform: Erothots
 name: Erothots Downloader
 tagline: Save Erothots content instantly to your device.
 slug: erothots-downloader
-description: Download videos, images, and content from erothots with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Erothots Downloader gives creators and teams a dependable way to save Erothots content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Erothots with consistent quality and predictable results.
+  
+  It supports Content from Erothots platform, Various media types and formats, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Erothots assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Erothots Content | Erothots Downloader
 seo_description: Download Erothots content easily for offline use. Fast and reliable
   Erothots downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Erothots downloader?
   answer: Install the browser extension, navigate to Erothots, find the content you

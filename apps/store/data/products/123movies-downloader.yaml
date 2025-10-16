@@ -2,8 +2,10 @@ platform: 123movies
 name: 123movies Downloader
 tagline: Save 123movies videos instantly for offline viewing.
 slug: 123movies-downloader
-description: Download videos, images, and content from 123movies with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  123movies Downloader gives creators and teams a dependable way to save 123movies videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from 123movies with consistent quality and predictable results.
+  
+  It supports Movies and TV shows from streaming sites, Multiple quality/format options, and Batch movie collections/series downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive 123movies assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download 123movies Videos | 123movies Downloader
 seo_description: Download 123movies videos easily for offline viewing. Fast, reliable
   123movies video downloader with high-quality downloads.
@@ -11,10 +13,10 @@ serply_link: https://serp.ly/123movies-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/123movies-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/123movies-downloader
 serp_co_product_page_url: https://serp.co/products/123movies-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68dfb084613b1b797cce7bdf
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=123movies-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123movies-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/123movies-downloader/main/images/featured.gif
 screenshots:
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the 123movies downloader?
   answer: Install the browser extension, navigate to 123movies, find the content you

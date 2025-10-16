@@ -2,8 +2,10 @@ platform: Stocksy
 name: Stocksy Downloader
 tagline: Save Stocksy images and content instantly to your device.
 slug: stocksy-downloader
-description: Download videos, images, and content from stocksy with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Stocksy Downloader gives creators and teams a dependable way to save Stocksy images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stocksy with consistent quality and predictable results.
+  
+  It supports Premium stock photos from Stocksy, Authentic and diverse photography, and Batch photographer collections/searches downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Stocksy assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Stocksy Images | Stocksy Downloader
 seo_description: Download Stocksy images and graphics for offline use. Fast and reliable
   Stocksy content downloader.
@@ -14,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/stocksy-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=stocksy-downloader
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stocksy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stocksy-downloader/main/images/stocksy-downloader.gif
 screenshots:
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Stocksy downloader?
   answer: Install the browser extension, navigate to Stocksy, find the content you

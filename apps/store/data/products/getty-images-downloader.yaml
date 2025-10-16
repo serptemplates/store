@@ -2,8 +2,10 @@ platform: Getty
 name: Getty Images Downloader
 tagline: Save Getty Images videos instantly for offline viewing.
 slug: getty-images-downloader
-description: Download videos, images, and content from getty images with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Getty Images Downloader gives creators and teams a dependable way to save Getty Images videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Getty with consistent quality and predictable results.
+  
+  It supports Premium stock photos in full resolution, Batch processing, and RAW and professional image formats, so you can move quickly from download to delivery without tedious rework. Use it to archive Getty assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Getty Images Videos | Getty Images Downloader
 seo_description: Download Getty Images videos easily for offline viewing. Fast, reliable
   Getty Images video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Getty downloader?
   answer: Install the browser extension, navigate to Getty, find the content you want

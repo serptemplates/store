@@ -2,6 +2,7 @@ import Script from "next/script"
 
 import type { ProductData } from "@/lib/products/product-schema"
 import { isPreRelease } from "@/lib/products/release-status"
+import { canonicalizeStoreOrigin, getDefaultStoreUrl } from "@/lib/canonical-url"
 
 import {
   createSchemaProduct,
@@ -11,7 +12,7 @@ import {
   generateTranslatedResultsSchema,
 } from "./product-schema-ld"
 
-const FALLBACK_STORE_URL = "https://apps.serp.co"
+const FALLBACK_STORE_URL = getDefaultStoreUrl()
 const STORE_NAME = "SERP Apps"
 
 interface StructuredDataProps {
@@ -21,7 +22,8 @@ interface StructuredDataProps {
 
 const resolveStoreUrl = (url: string): string => {
   try {
-    return new URL(url).origin
+    const origin = new URL(url).origin
+    return canonicalizeStoreOrigin(origin)
   } catch {
     return FALLBACK_STORE_URL
   }

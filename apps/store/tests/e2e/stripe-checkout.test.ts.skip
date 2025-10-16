@@ -111,13 +111,38 @@ test.describe("Checkout smoke", () => {
         const uniqueEmail = `test+${Date.now()}@serp.co`;
         await emailInput.fill(uniqueEmail);
 
-        const cardAccordionButton = checkoutFrame.getByTestId("card-accordion-item-button");
-        await cardAccordionButton.waitFor({ state: "visible" });
-        if ((await cardAccordionButton.getAttribute("aria-expanded")) === "false") {
-          await cardAccordionButton.click();
+        const cardNumberField = checkoutFrame.getByLabel(/card number/i);
+
+        const cardNumberAlreadyVisible = await cardNumberField
+          .waitFor({ state: "visible", timeout: 1000 })
+          .then(() => true)
+          .catch(() => false);
+
+        if (!cardNumberAlreadyVisible) {
+          const cardAccordionButton = checkoutFrame.getByTestId("card-accordion-item-button");
+          const accordionVisible = await cardAccordionButton
+            .waitFor({ state: "visible", timeout: 3000 })
+            .then(() => true)
+            .catch(() => false);
+
+          if (accordionVisible) {
+            const expanded = await cardAccordionButton.getAttribute("aria-expanded");
+            if (expanded === "false") {
+              await cardAccordionButton.click();
+            }
+          } else {
+            const payWithCardButton = checkoutFrame.getByRole("button", { name: /pay with card/i }).first();
+            const buttonVisible = await payWithCardButton
+              .waitFor({ state: "visible", timeout: 3000 })
+              .then(() => true)
+              .catch(() => false);
+            if (buttonVisible) {
+              await payWithCardButton.click();
+            }
+          }
         }
 
-        await checkoutFrame.getByLabel(/card number/i).waitFor({ state: "visible" });
+        await cardNumberField.waitFor({ state: "visible" });
       }
     }
 

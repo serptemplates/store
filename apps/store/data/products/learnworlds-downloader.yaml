@@ -2,8 +2,10 @@ platform: Learnworlds
 name: Learnworlds Downloader
 tagline: Download Learnworlds course content instantly for offline learning.
 slug: learnworlds-downloader
-description: Download videos, images, and content from learnworlds with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Learnworlds Downloader gives creators and teams a dependable way to download Learnworlds course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Learnworlds with consistent quality and predictable results.
+  
+  It supports Complete LearnWorlds courses and academies, Interactive videos and SCORM content, and Maintain academy structure and course hierarchy, so you can move quickly from download to delivery without tedious rework. Use it to archive Learnworlds assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Learnworlds Courses | Learnworlds Downloader
 seo_description: Download Learnworlds courses and videos for offline learning. Fast
   and reliable course content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Learnworlds downloader?
   answer: Install the browser extension, navigate to Learnworlds, find the content

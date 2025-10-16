@@ -2,8 +2,10 @@ platform: Vectorstock
 name: Vectorstock Downloader
 tagline: Save Vectorstock images and content instantly to your device.
 slug: vectorstock-downloader
-description: Download videos, images, and content from vectorstock with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Vectorstock Downloader gives creators and teams a dependable way to save Vectorstock images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Vectorstock with consistent quality and predictable results.
+  
+  It supports Vector graphics and illustrations, Scalable formats (SVG, EPS, AI), and Batch artist portfolios/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Vectorstock assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Vectorstock Images | Vectorstock Downloader
 seo_description: Download Vectorstock images and graphics for offline use. Fast and
   reliable Vectorstock content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Vectorstock downloader?
   answer: Install the browser extension, navigate to Vectorstock, find the content

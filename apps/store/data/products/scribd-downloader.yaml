@@ -2,8 +2,10 @@ platform: Scribd
 name: Scribd Downloader
 tagline: Save Scribd documents instantly for offline reading.
 slug: scribd-downloader
-description: Download videos, images, and content from scribd with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Scribd Downloader gives creators and teams a dependable way to save Scribd documents instantly for offline reading. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Scribd with consistent quality and predictable results.
+  
+  It supports Documents and books from Scribd, PDFs, audiobooks, and text documents, and Batch user libraries/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Scribd assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Scribd Documents | Scribd Downloader
 seo_description: Download Scribd documents for offline reading. Fast and reliable
   document downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Scribd downloader?
   answer: Install the browser extension, navigate to Scribd, find the content you

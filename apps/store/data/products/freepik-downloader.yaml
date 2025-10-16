@@ -2,8 +2,10 @@ platform: Freepik
 name: Freepik Downloader
 tagline: Save Freepik images and content instantly to your device.
 slug: freepik-downloader
-description: Download videos, images, and content from freepik with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Freepik Downloader gives creators and teams a dependable way to save Freepik images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Freepik with consistent quality and predictable results.
+  
+  It supports Premium vectors, photos, and design assets, Batch processing, and Vector formats (SVG, EPS, AI) and raster images, so you can move quickly from download to delivery without tedious rework. Use it to archive Freepik assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Freepik Images | Freepik Downloader
 seo_description: Download Freepik images and graphics for offline use. Fast and reliable
   Freepik content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Freepik downloader?
   answer: Install the browser extension, navigate to Freepik, find the content you

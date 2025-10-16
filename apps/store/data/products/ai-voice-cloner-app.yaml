@@ -3,10 +3,10 @@ name: AI Voice Cloner App
 tagline: Turn text into natural-sounding speech and clone voices on your own computer
   with coding needed.
 slug: ai-voice-cloner-app
-description: AI Voice Cloner is a local text-to-speech and voice cloning app that
-  runs entirely on your machine. Generate natural-sounding speech, clone voices from
-  short samples, and maintain full control over your data with this privacy-focused
-  desktop application.
+description: |
+  AI Voice Cloner App brings studio-grade text-to-speech and cloning workflows to your own hardware, no cloud dependency required. Spin it up with Docker and experiment with hyper-realistic voices while every model, input sample, and generated clip stays under your control.
+  
+  With voice cloning, locally stored models, and optional GPU acceleration, the app balances creative freedom with privacy-first engineering. Use it to produce character voices, accessibility audio, or branded voiceovers knowing your data never leaves your desktop.
 seo_title: AI Voice Cloner | AI text to speech for voice cloning and voice generation
 seo_description: AI Text to Speech & Voice Cloning. Turn text into natural-sounding
   speech and clone voices on your own computer with coding needed.
@@ -17,7 +17,7 @@ serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
 featured_image_gif: null
 screenshots:
@@ -63,6 +63,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I install AI Voice Cloner?
   answer: Install Docker Desktop on your computer, download the AI Voice Cloner package

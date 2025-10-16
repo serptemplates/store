@@ -2,10 +2,10 @@ platform: Skool
 name: Skool Video Downloader
 tagline: Save Skool videos instantly for offline viewing.
 slug: skool-video-downloader
-description: Skool Video Downloader is a browser extension that injects a download
-  button on skool.com so you can back up every classroom video before access expires.
-  Preserve lessons from community posts, about pages, and private course areas, all
-  while keeping original quality.
+description: |
+  Skool Video Downloader gives creators and teams a dependable way to save Skool videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Skool with consistent quality and predictable results.
+  
+  It supports Download full courses offline, Save videos, docs, and materials, and Preserve course structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Skool assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Skool Videos | Skool Video Downloader
 seo_description: Download Skool videos easily for offline viewing. Fast, reliable
   Skool video downloader with high-quality downloads.
@@ -13,7 +13,7 @@ serply_link: https://serp.ly/skool-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/skool-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/skool-video-downloader
 serp_co_product_page_url: https://serp.co/products/skool-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=skool-video-downloader
 status: live
@@ -76,6 +76,7 @@ pricing:
   price: $27.00
   currency: USD
   availability: InStock
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I download Skool videos?
   answer: Use our Skool video downloader extension to easily download videos from

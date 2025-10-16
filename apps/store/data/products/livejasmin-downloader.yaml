@@ -2,8 +2,10 @@ platform: Livejasmin
 name: Livejasmin Downloader
 tagline: Save Livejasmin videos instantly for offline viewing.
 slug: livejasmin-downloader
-description: Download videos, images, and content from livejasmin with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Livejasmin Downloader gives creators and teams a dependable way to save Livejasmin videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Livejasmin with consistent quality and predictable results.
+  
+  It supports And record LiveJasmin premium shows, Exclusive and VIP content recording, and Auto quality selection and optimization, so you can move quickly from download to delivery without tedious rework. Use it to archive Livejasmin assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Livejasmin Downloader | Download Livejasmin Downloader for Offline Access
 seo_description: Download videos, images, and content from livejasmin with our reliable
   downloader tool. Fast, secure, and easy to use.
@@ -58,6 +60,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Livejasmin downloader?
   answer: Install the browser extension, navigate to Livejasmin, find the content
