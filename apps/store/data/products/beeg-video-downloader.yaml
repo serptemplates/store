@@ -2,7 +2,10 @@ platform: Beeg
 name: Beeg Video Downloader
 tagline: Save Beeg videos instantly for offline viewing.
 slug: beeg-video-downloader
-description: Get quick access to Beeg Video Downloader content for offline use.
+description: |
+  Beeg Video Downloader gives creators and teams a dependable way to save Beeg videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Beeg with consistent quality and predictable results.
+  
+  It supports High-resolution videos with quality selection, Batch processing capabilities for multiple videos, and Auto thumbnail and preview extraction, so you can move quickly from download to delivery without tedious rework. Use it to archive Beeg assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Beeg Videos | Beeg Video Downloader
 seo_description: Download Beeg videos easily for offline viewing. Fast, reliable Beeg
   video downloader with high-quality downloads.
@@ -10,10 +13,10 @@ serply_link: https://serp.ly/beeg-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/beeg-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/beeg-video-downloader
 serp_co_product_page_url: https://serp.co/products/beeg-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68df98b52197090089e262f1
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=beeg-video-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.gif
 screenshots:
@@ -58,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Beeg downloader?
   answer: Install the browser extension, navigate to Beeg, find the content you want

@@ -2,8 +2,10 @@ platform: Learndash
 name: Learndash Downloader
 tagline: Download Learndash course content instantly for offline learning.
 slug: learndash-downloader
-description: Download videos, images, and content from learndash with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Learndash Downloader gives creators and teams a dependable way to download Learndash course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Learndash with consistent quality and predictable results.
+  
+  It supports Complete LearnDash courses and lessons, Course materials, and Maintain course structure and lesson organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Learndash assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Learndash Courses | Learndash Downloader
 seo_description: Download Learndash courses and videos for offline learning. Fast
   and reliable course content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Learndash downloader?
   answer: Install the browser extension, navigate to Learndash, find the content you

@@ -2,7 +2,6 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
-import Script from "next/script"
 import NextLink from "next/link"
 import Image from "next/image"
 
@@ -12,6 +11,8 @@ import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
+import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
+import { ProductStructuredData } from "@/schema/structured-data-components"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { BlogPostMeta } from "@/lib/blog"
 import type { PrimaryNavProps } from "@/lib/navigation"
@@ -20,6 +21,7 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
+import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -145,6 +147,24 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
 
+  const productImages = useMemo(() => {
+    const candidates = [
+      product.featured_image,
+      product.featured_image_gif,
+      ...(Array.isArray(product.screenshots)
+        ? product.screenshots.map((screenshot) =>
+            typeof screenshot === "string" ? screenshot : screenshot.url,
+          )
+        : []),
+    ]
+
+    return Array.from(
+      new Set(
+        candidates.filter((value): value is string => Boolean(value && value.trim().length > 0)),
+      ),
+    )
+  }, [product])
+
   const [showStickyBar, setShowStickyBar] = useState(false)
 
   useEffect(() => {
@@ -195,41 +215,27 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     }
   }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
 
-  const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co"
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${siteUrl}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Products",
-        item: `${siteUrl}/#products`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: product.name,
-        item: `${siteUrl}/${product.slug}`,
-      },
-    ],
-  }
+  const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
+  const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
+  const productUrl = useMemo(() => {
+    if (typeof window !== "undefined") {
+      return `${window.location.origin.replace(/\/$/, "")}${productPath}`
+    }
+
+    return `${siteUrl.replace(/\/$/, "")}${productPath}`
+  }, [productPath, siteUrl])
 
   return (
     <>
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
+      <ProductStructuredDataScripts
+        product={product}
+        posts={resolvedPosts}
+        siteConfig={siteConfig}
+        images={productImages}
+        videoEntries={resolvedVideos}
       />
+
+      <ProductStructuredData product={product} url={productUrl} />
 
       {checkoutSuccess && (
         <div className="mx-auto mb-6 mt-4 w-full max-w-4xl px-4">

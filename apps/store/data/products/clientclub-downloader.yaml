@@ -2,8 +2,10 @@ platform: Clientclub
 name: Clientclub Downloader
 tagline: Save Clientclub content instantly to your device.
 slug: clientclub-downloader
-description: Download videos, images, and content from clientclub with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Clientclub Downloader gives creators and teams a dependable way to save Clientclub content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Clientclub with consistent quality and predictable results.
+  
+  It supports ClientClub client portal content and resources, Password-protected client areas, and Batch client materials/shared files downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Clientclub assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Clientclub Content | Clientclub Downloader
 seo_description: Download Clientclub content easily for offline use. Fast and reliable
   Clientclub downloader.
@@ -11,10 +13,10 @@ serply_link: https://serp.ly/clientclub-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/clientclub-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/clientclub-downloader
 serp_co_product_page_url: https://serp.co/products/clientclub-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02c2c67ee3b7cb4699bd7
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=clientclub-downloader
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/clientclub-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.gif
 screenshots:
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Clientclub downloader?
   answer: Install the browser extension, navigate to Clientclub, find the content

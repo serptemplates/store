@@ -1,6 +1,31 @@
 const baseUrl = process.env.LHCI_BASE_URL ?? 'http://127.0.0.1:4313';
 const FAST = process.env.LHCI_FAST === '1';
 
+const DEFAULT_BLOCKED_URL_PATTERNS = [
+  'https://www.google-analytics.com/**',
+  'https://stats.g.doubleclick.net/**',
+  'https://www.googletagmanager.com/**',
+  'https://js.stripe.com/**',
+];
+
+const blockedUrlPatterns = (() => {
+  const raw = process.env.LHCI_BLOCKED_URL_PATTERNS;
+
+  if (!raw) {
+    return DEFAULT_BLOCKED_URL_PATTERNS;
+  }
+
+  const normalized = raw.trim().toLowerCase();
+  if (normalized === '0' || normalized === 'false' || normalized === 'off') {
+    return undefined;
+  }
+
+  return raw
+    .split(',')
+    .map((pattern) => pattern.trim())
+    .filter(Boolean);
+})();
+
 // Detect if we're running against staging or production
 // Staging typically has lower performance scores due to different infrastructure
 const isStaging = baseUrl.includes('staging') || baseUrl.includes('preview');

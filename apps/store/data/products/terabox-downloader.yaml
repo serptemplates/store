@@ -2,8 +2,10 @@ platform: Terabox
 name: Terabox Downloader
 tagline: Save Terabox content instantly to your device.
 slug: terabox-downloader
-description: Download videos, images, and content from terabox with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Terabox Downloader gives creators and teams a dependable way to save Terabox content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Terabox with consistent quality and predictable results.
+  
+  It supports Files from TeraBox cloud storage, Large file transfers and folders, and Batch shared links/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Terabox assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Terabox Content | Terabox Downloader
 seo_description: Download Terabox content easily for offline use. Fast and reliable
   Terabox downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Terabox downloader?
   answer: Install the browser extension, navigate to Terabox, find the content you

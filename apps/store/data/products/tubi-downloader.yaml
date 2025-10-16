@@ -2,8 +2,10 @@ platform: Tubi
 name: Tubi Downloader
 tagline: Save Tubi videos instantly for offline viewing.
 slug: tubi-downloader
-description: Download videos, images, and content from tubi with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Tubi Downloader gives creators and teams a dependable way to save Tubi videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Tubi with consistent quality and predictable results.
+  
+  It supports Free movies and TV shows from Tubi, Commercial-free offline viewing, and Batch movie collections/series downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Tubi assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Tubi Videos | Tubi Downloader
 seo_description: Download Tubi videos easily for offline viewing. Fast, reliable Tubi
   video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Tubi downloader?
   answer: Install the browser extension, navigate to Tubi, find the content you want

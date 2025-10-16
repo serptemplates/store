@@ -2,8 +2,10 @@ platform: Onlyfans
 name: Onlyfans Downloader
 tagline: Save Onlyfans content instantly to your device.
 slug: onlyfans-downloader
-description: Download videos, images, and content from onlyfans with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Onlyfans Downloader gives creators and teams a dependable way to save Onlyfans content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Onlyfans with consistent quality and predictable results.
+  
+  It supports Subscriber content and media files, Photos, videos, and story content, and Batch creator profiles/posts downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Onlyfans assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Onlyfans Content | Onlyfans Downloader
 seo_description: Download Onlyfans content easily for offline use. Fast and reliable
   Onlyfans downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Onlyfans downloader?
   answer: Install the browser extension, navigate to Onlyfans, find the content you

@@ -2,8 +2,10 @@ platform: Pdf
 name: Pdf Downloader
 tagline: Save Pdf documents instantly for offline reading.
 slug: pdf-downloader
-description: Download videos, images, and content from pdf with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Pdf Downloader gives creators and teams a dependable way to save Pdf documents instantly for offline reading. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pdf with consistent quality and predictable results.
+  
+  It supports PDF documents from various sources, Batch processing for document collections, and Auto metadata extraction and indexing, so you can move quickly from download to delivery without tedious rework. Use it to archive Pdf assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Pdf Documents | Pdf Downloader
 seo_description: Download Pdf documents for offline reading. Fast and reliable document
   downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Pdf downloader?
   answer: Install the browser extension, navigate to Pdf, find the content you want

@@ -14,7 +14,7 @@ export type FeaturesSectionProps = {
 
 export function FeaturesSection({ features }: FeaturesSectionProps) {
   return (
-    <section className="container py-16 md:py-20">
+    <section className="container py-14 sm:py-18">
       <div className="mx-auto max-w-6xl">
         <div className="rounded-3xl p-6 md:p-10">
           <div className="mb-8 text-center">
@@ -25,7 +25,7 @@ export function FeaturesSection({ features }: FeaturesSectionProps) {
           <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
             {features.map((feature, index) => (
               <li key={`feature-${index}`} className="flex flex-col items-start gap-2">
-                <span className="flex items-center gap-2 text-base font-medium text-gray-900 leading-relaxed">
+                <span className="flex items-center gap-2 text-base font-medium text-gray-700 leading-relaxed">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full text-primary">
                     <CheckCircle className="h-3.5 w-3.5" />
                   </span>

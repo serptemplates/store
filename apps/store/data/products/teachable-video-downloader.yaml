@@ -2,8 +2,10 @@ platform: Teachable
 name: Teachable Video Downloader
 tagline: Save Teachable videos instantly for offline viewing.
 slug: teachable-video-downloader
-description: Download videos, images, and content from teachable video with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Teachable Video Downloader gives creators and teams a dependable way to save Teachable videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Teachable with consistent quality and predictable results.
+  
+  It supports Complete Teachable courses downloads, Course materials, and Maintain original course structure and lesson organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Teachable assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Teachable Videos | Teachable Video Downloader
 seo_description: Download Teachable videos easily for offline viewing. Fast, reliable
   Teachable video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Teachable downloader?
   answer: Install the browser extension, navigate to Teachable, find the content you

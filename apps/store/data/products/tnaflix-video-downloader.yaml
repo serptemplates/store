@@ -2,7 +2,10 @@ platform: TNAFlix
 name: TNAFlix Video Downloader
 tagline: Save TNAFlix videos instantly for offline viewing.
 slug: tnaflix-video-downloader
-description: Get quick access to TNAFlix Video Downloader content for offline use.
+description: |
+  TNAFlix Video Downloader gives creators and teams a dependable way to save TNAFlix videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from TNAFlix with consistent quality and predictable results.
+  
+  It supports High-quality videos with resolution options, Batch download support for multiple selections, and Auto thumbnail and metadata extraction, so you can move quickly from download to delivery without tedious rework. Use it to archive TNAFlix assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download TNAFlix Videos | TNAFlix Video Downloader
 seo_description: Download TNAFlix videos easily for offline viewing. Fast, reliable
   TNAFlix video downloader with high-quality downloads.
@@ -13,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/tnaflix-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9aea21970984ade2630c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=tnaflix-video-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/tnaflix-video-downloader/main/images/tnaflix-video-downloader.gif
 screenshots:
@@ -58,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the TNAFlix downloader?
   answer: Install the browser extension, navigate to TNAFlix, find the content you

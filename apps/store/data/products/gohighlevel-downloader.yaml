@@ -2,8 +2,10 @@ platform: Gohighlevel
 name: Gohighlevel Downloader
 tagline: Save Gohighlevel content instantly to your device.
 slug: gohighlevel-downloader
-description: Download videos, images, and content from gohighlevel with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Gohighlevel Downloader gives creators and teams a dependable way to save Gohighlevel content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Gohighlevel with consistent quality and predictable results.
+  
+  It supports GoHighLevel CRM data and marketing assets, Client funnels and automation content, and Batch marketing campaigns/templates downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Gohighlevel assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Gohighlevel Downloader | Download videos from GoHighLevel Course Areas
 seo_description: Download Gohighlevel course content and videos easily for offline
   use. Fast and reliable Gohighlevel downloader.
@@ -11,7 +13,7 @@ serply_link: https://serp.ly/gohighlevel-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/gohighlevel-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/gohighlevel-downloader
 serp_co_product_page_url: https://serp.co/products/gohighlevel-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68edb558613b1b35a5cec2df
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=gohighlevel-downloader
 status: pre_release
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Gohighlevel downloader?
   answer: Install the browser extension, navigate to Gohighlevel, find the content

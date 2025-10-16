@@ -2,8 +2,10 @@ platform: Alamy
 name: Alamy Downloader
 tagline: Save Alamy images and content instantly to your device.
 slug: alamy-downloader
-description: Download videos, images, and content from alamy with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Alamy Downloader gives creators and teams a dependable way to save Alamy images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Alamy with consistent quality and predictable results.
+  
+  It supports Premium stock photography from Alamy, Editorial and commercial licenses, and Batch photographer collections/searches downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Alamy assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Alamy Images | Alamy Downloader
 seo_description: Download Alamy images and graphics for offline use. Fast and reliable
   Alamy content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Alamy downloader?
   answer: Install the browser extension, navigate to Alamy, find the content you want

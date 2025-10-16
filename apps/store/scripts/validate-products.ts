@@ -108,15 +108,25 @@ function parseCompareAtAmount(price: Stripe.Price): number | undefined {
   return undefined
 }
 
-async function writePriceManifest(priceIds: Set<string>): Promise<void> {
+function formatStripeAmount(unitAmount: number, currency: string): string {
+  const normalizedCurrency = currency.toUpperCase()
+  const divisor = ZERO_DECIMAL_CURRENCIES.has(normalizedCurrency) ? 1 : 100
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: normalizedCurrency,
+  }).format(unitAmount / divisor)
+}
+
+async function writePriceManifest(priceIds: Set<string>): Promise<Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>> {
   if (priceIds.size === 0) {
-    return
+    return {}
   }
 
   const clients = createStripeClients()
   if (!clients.length) {
     console.warn("⚠️  STRIPE_SECRET_KEY or STRIPE_SECRET_KEY_TEST is not set. Skipping price manifest generation.")
-    return
+    return {}
   }
 
   const manifestEntries: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }> = {}
@@ -151,7 +161,7 @@ async function writePriceManifest(priceIds: Set<string>): Promise<void> {
 
   if (Object.keys(manifestEntries).length === 0) {
     console.warn("⚠️  Price manifest not updated because no Stripe prices could be resolved.")
-    return
+    return {}
   }
 
   const manifestDir = path.join(process.cwd(), "data", "prices")
@@ -159,6 +169,7 @@ async function writePriceManifest(priceIds: Set<string>): Promise<void> {
 
   const sortedEntries = Object.fromEntries(Object.entries(manifestEntries).sort(([a], [b]) => a.localeCompare(b)))
   await fs.writeFile(path.join(manifestDir, "manifest.json"), `${JSON.stringify(sortedEntries, null, 2)}\n`)
+  return sortedEntries
 }
 
 function extractKeys(map: YAMLMap<unknown, unknown> | null | undefined): string[] {
@@ -275,6 +286,12 @@ async function main() {
       continue
     }
 
+    if (!topLevelKeys.includes("order_bump")) {
+      warnings.push(
+        `⚠️  ${file}: Missing order_bump configuration. Add an explicit order_bump block (set enabled: false if not in use).`,
+      )
+    }
+
     const pricingNode = document.get("pricing", true) as YAMLMap<unknown, unknown> | undefined
     if (pricingNode) {
       const pricingKeys = extractKeys(pricingNode)
@@ -389,11 +406,42 @@ async function main() {
     }
   }
 
-  await writePriceManifest(referencedStripePriceIds)
+  const priceManifestEntries = await writePriceManifest(referencedStripePriceIds)
 
   const manifestPath = path.join(process.cwd(), "data", "order-bumps", "manifest.json")
   const manifestPayload = Object.fromEntries(
-    resolvedOrderBumpDefinitions.map(({ slug, definition }) => [slug, definition]),
+    resolvedOrderBumpDefinitions.map(({ slug, definition }) => {
+      const stripePriceId = definition.stripe?.price_id
+      const testStripePriceId = definition.stripe?.test_price_id
+
+      const priceEntry = stripePriceId && priceManifestEntries[stripePriceId]
+        ? priceManifestEntries[stripePriceId]
+        : testStripePriceId && priceManifestEntries[testStripePriceId]
+          ? priceManifestEntries[testStripePriceId]
+          : undefined
+
+      const normalizedDefinition = {
+        ...definition,
+        ...(definition.features ? { features: [...definition.features] } : {}),
+        ...(definition.stripe ? { stripe: { ...definition.stripe } } : {}),
+      }
+
+      if (priceEntry) {
+        normalizedDefinition.price = formatStripeAmount(priceEntry.unit_amount, priceEntry.currency)
+        const existingMode = definition.stripe?.mode
+        if (normalizedDefinition.stripe && existingMode) {
+          normalizedDefinition.stripe.mode = existingMode
+        }
+      }
+
+      if (!priceEntry && stripePriceId) {
+        warnings.push(
+          `⚠️  order-bumps/${slug}.yaml: Unable to resolve Stripe price "${stripePriceId}"; using configured price value.`,
+        )
+      }
+
+      return [slug, normalizedDefinition]
+    }),
   )
   await fs.writeFile(manifestPath, `${JSON.stringify(manifestPayload, null, 2)}\n`)
 

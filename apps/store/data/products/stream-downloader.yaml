@@ -2,7 +2,10 @@ platform: Stream
 name: Stream Downloader
 tagline: Save Stream videos instantly for offline viewing.
 slug: stream-downloader
-description: Get quick access to Stream Downloader content for offline use.
+description: |
+  Stream Downloader gives creators and teams a dependable way to save Stream videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stream with consistent quality and predictable results.
+  
+  It supports Live streams from various platforms, Multiple streaming protocols and formats, and Batch recording from multiple sources simultaneously, so you can move quickly from download to delivery without tedious rework. Use it to archive Stream assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Stream Downloader | Download Stream Downloader for Offline Access
 seo_description: Download videos, images, and content from stream with our reliable
   downloader tool. Fast, secure, and easy to use.
@@ -13,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/stream-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=stream-downloader
-status: draft
+status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stream-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stream-downloader/main/images/stream-downloader.gif
 screenshots:
@@ -59,6 +62,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Stream downloader?
   answer: Install the browser extension, navigate to Stream, find the content you

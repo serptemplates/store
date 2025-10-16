@@ -2,8 +2,10 @@ platform: Tumblr
 name: Tumblr Video Downloader
 tagline: Save Tumblr videos instantly for offline viewing.
 slug: tumblr-video-downloader
-description: Download videos, images, and content from tumblr video with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Tumblr Video Downloader gives creators and teams a dependable way to save Tumblr videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Tumblr with consistent quality and predictable results.
+  
+  It supports Tumblr videos and GIFs in original quality, Blog archives and tag-based content, and Batch entire user blogs/reblogs downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Tumblr assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Tumblr Videos | Tumblr Video Downloader
 seo_description: Download Tumblr videos easily for offline viewing. Fast, reliable
   Tumblr video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Tumblr downloader?
   answer: Install the browser extension, navigate to Tumblr, find the content you

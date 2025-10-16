@@ -2,7 +2,10 @@ platform: Redtube
 name: Redtube Video Downloader
 tagline: Save Redtube videos instantly for offline viewing.
 slug: redtube-video-downloader
-description: Get quick access to Redtube Video Downloader content for offline use.
+description: |
+  Redtube Video Downloader gives creators and teams a dependable way to save Redtube videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Redtube with consistent quality and predictable results.
+  
+  It supports Videos in HD quality with multiple options, Batch download support for multiple videos, and Auto metadata extraction and organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Redtube assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Redtube Videos | Redtube Video Downloader
 seo_description: Download Redtube videos easily for offline viewing. Fast, reliable
   Redtube video downloader with high-quality downloads.
@@ -10,10 +13,10 @@ serply_link: https://serp.ly/redtube-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/redtube-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/redtube-video-downloader
 serp_co_product_page_url: https://serp.co/products/redtube-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e6c46a613b1b64e9cea03c
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=redtube-video-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redtube-video-downloader/main/images/redtube-video-downloader.gif
 screenshots:
@@ -58,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Redtube downloader?
   answer: Install the browser extension, navigate to Redtube, find the content you

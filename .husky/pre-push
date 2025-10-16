@@ -18,6 +18,11 @@ echo "########################################"
 pnpm test:unit
 
 echo "########################################"
+echo "→ Running validate:products..."
+echo "########################################"
+pnpm run validate:products
+
+echo "########################################"
 echo "→ Building @apps/store"
 echo "########################################"
 NEXT_TELEMETRY_DISABLED=1 pnpm --filter @apps/store build

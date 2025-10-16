@@ -1,11 +1,8 @@
+import { canonicalizeStoreOrigin, getDefaultStoreUrl } from "./canonical-url";
 import { getSiteConfig } from "./site-config";
 
 function normalizeDomain(domain: string): string {
-  const trimmed = domain.trim().replace(/\/$/, "");
-  if (/^https?:\/\//i.test(trimmed)) {
-    return trimmed;
-  }
-  return `https://${trimmed}`;
+  return canonicalizeStoreOrigin(domain);
 }
 
 export function getSiteBaseUrl(): string {
@@ -16,10 +13,10 @@ export function getSiteBaseUrl(): string {
 
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (envUrl) {
-    return envUrl.replace(/\/$/, "");
+    return canonicalizeStoreOrigin(envUrl);
   }
 
-  return "https://apps.serp.co";
+  return getDefaultStoreUrl();
 }
 
 export function toAbsoluteUrl(path: string): string {
