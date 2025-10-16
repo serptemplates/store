@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99ww06JrOmKRCmOPtNc4AC
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HOnKhj7vvXt
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-internet-archive-downloader
 permission_justifications: []

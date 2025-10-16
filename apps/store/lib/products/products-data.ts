@@ -17,20 +17,15 @@ export interface ProductMetadata {
 }
 
 export interface ProductOrderBumpMetadata {
-  id: string;
-  title: string;
-  subtitle?: string;
+  slug: string;
+  product_slug?: string;
+  title?: string;
   description?: string;
-  price: string;
-  original_price?: string;
-  badge?: string;
-  note?: string;
-  features: string[];
-  benefits: string[];
+  price?: string;
+  features?: string[];
   image?: string;
   default_selected?: boolean;
-  terms?: string;
-  stripe_price_id: string;
+  stripe_price_id?: string;
   stripe_test_price_id?: string;
 }
 
@@ -84,24 +79,29 @@ export async function getProducts(): Promise<Product[]> {
     const releaseStatus: ReleaseStatus = data.status ?? 'draft'
     const isPreRelease = releaseStatus === 'pre_release'
 
-    const orderBump = data.order_bump
-      ? {
-          id: data.order_bump.id,
-          title: data.order_bump.title,
-          subtitle: data.order_bump.subtitle,
-          description: data.order_bump.description,
-          price: data.order_bump.price,
-          original_price: data.order_bump.original_price,
-          badge: data.order_bump.badge,
-          note: data.order_bump.note,
-          features: Array.isArray(data.order_bump.features) ? data.order_bump.features : [],
-          benefits: Array.isArray(data.order_bump.benefits) ? data.order_bump.benefits : [],
-          image: data.order_bump.image,
-          default_selected: Boolean(data.order_bump.default_selected),
-          terms: data.order_bump.terms,
-          stripe_price_id: data.order_bump.stripe.price_id,
-          stripe_test_price_id: data.order_bump.stripe.test_price_id,
-        }
+    const rawOrderBump = data.order_bump;
+    const orderBump = rawOrderBump
+      ? typeof rawOrderBump === "string"
+        ? {
+            slug: rawOrderBump,
+          }
+        : {
+            slug:
+              typeof rawOrderBump.slug === "string" && rawOrderBump.slug.trim().length > 0
+                ? rawOrderBump.slug.trim()
+                : typeof rawOrderBump.product_slug === "string" && rawOrderBump.product_slug.trim().length > 0
+                ? rawOrderBump.product_slug.trim()
+                : data.slug,
+            product_slug: rawOrderBump.product_slug,
+            title: rawOrderBump.title,
+            description: rawOrderBump.description,
+            price: rawOrderBump.price,
+            features: Array.isArray(rawOrderBump.features) ? rawOrderBump.features : undefined,
+            image: rawOrderBump.image,
+            default_selected: Boolean(rawOrderBump.default_selected),
+            stripe_price_id: rawOrderBump.stripe?.price_id,
+            stripe_test_price_id: rawOrderBump.stripe?.test_price_id,
+          }
       : undefined;
 
     const product: Product = {

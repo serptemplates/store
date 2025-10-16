@@ -30,24 +30,18 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Watermark-free HD TikTok videos
 - Batch downloads for series/collections
 - Audio extraction support
 - Various containers/codecs
-- Hashtag/description extraction
 - Profile & stats download
 - Cross-platform support
 - Resume downloads
 - Organize by user or category
 - Built-in player
-- Duplicate detection
 - Media center integration
-- Export data & stats
 - Local-only storage for privacy
 - Regular compatibility updates
 - Bandwidth-efficient downloads
-- Library search
-- Backup & sync
 - Multiple quality/format options
 pricing:
   label: One-time payment
@@ -58,22 +52,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  id: priority-support
-  title: Priority Support Pack
-  subtitle: Kickstart onboarding with concierge setup
-  description: Fast-track your first month with a live onboarding call and priority access to the team.
-  price: $29.00
-  original_price: $59.00
-  badge: Popular Upgrade
-  note: One-time upgrade billed together with your license.
-  benefits:
-  - Live onboarding call (30 minutes)
-  - Priority email support for 30 days
-  - Setup checklist review with our team
-  stripe:
-    price_id: price_priority_support_live
-    test_price_id: price_priority_support_test
+order_bump: serp-downloaders-bundle
 faqs:
 - question: Can I download TikTok videos without the watermark?
   answer: Yes, this downloader can save TikTok videos without the TikTok watermark
@@ -148,10 +127,8 @@ return_policy:
 stripe:
   price_id: price_1S99gF06JrOmKRCmcKeM0NSp
   metadata:
-    source: generated
     stripe_product_id: prod_SqnavySFXhLMCk
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-tiktok-downloader
 new_release: true

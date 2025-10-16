@@ -1,19 +1,14 @@
 export type CheckoutOrderBump = {
   id: string;
   title: string;
-  subtitle?: string;
   description?: string;
   price: number;
   priceDisplay: string;
-  originalPrice?: number;
-  originalPriceDisplay?: string;
-  note?: string;
-  badge?: string;
-  terms?: string;
   defaultSelected: boolean;
   points: string[];
   stripePriceId: string;
   stripeTestPriceId?: string;
+  terms?: string;
 };
 
 export type CheckoutProduct = {
@@ -21,8 +16,8 @@ export type CheckoutProduct = {
   name: string;
   title: string;
   price: number;
-  priceDisplay: string;
   originalPrice?: number;
+  priceDisplay: string;
   originalPriceDisplay?: string;
   currency?: string;
   note?: string;

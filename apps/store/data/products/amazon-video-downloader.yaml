@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wi06JrOmKRCmRppaSLjK
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GpeME33OEqF
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-amazon-video-downloader
 permission_justifications: []

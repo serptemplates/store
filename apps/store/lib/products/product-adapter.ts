@@ -5,8 +5,10 @@ import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
 import type { HomeTemplateProps } from "@/components/home/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
+import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import type { ProductData } from "./product-schema";
 import { getReleaseBadgeText } from "./release-status";
+import { resolveOrderBump } from "./order-bump";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -136,8 +138,16 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
-  const currentPriceValue = parsePriceToNumber(product.pricing?.price);
-  let derivedOriginalPrice = product.pricing?.original_price ?? undefined;
+  const priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const currentPriceValue = priceManifestEntry
+    ? priceManifestEntry.unitAmount / 100
+    : parsePriceToNumber(product.pricing?.price);
+  const formattedPrice = priceManifestEntry
+    ? formatAmountFromCents(priceManifestEntry.unitAmount, priceManifestEntry.currency)
+    : product.pricing?.price ?? (currentPriceValue != null ? formatPrice(currentPriceValue) : undefined);
+  let derivedOriginalPrice = priceManifestEntry?.compareAtAmount != null
+    ? formatAmountFromCents(priceManifestEntry.compareAtAmount, priceManifestEntry.currency)
+    : product.pricing?.original_price ?? undefined;
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -178,29 +188,17 @@ export function productToHomeTemplate(
     }
   }
 
-  const rawOrderBump = product.order_bump?.enabled === false ? undefined : product.order_bump;
-  const orderBumpBenefits =
-    rawOrderBump?.benefits && rawOrderBump.benefits.length > 0 ? rawOrderBump.benefits : undefined;
-  const orderBumpFeatures =
-    rawOrderBump?.features && rawOrderBump.features.length > 0 ? rawOrderBump.features : undefined;
-  const orderBump =
-    rawOrderBump
-      ? {
-          id: rawOrderBump.id,
-          title: rawOrderBump.title,
-          subtitle: rawOrderBump.subtitle ?? undefined,
-          description: rawOrderBump.description ?? undefined,
-          price: rawOrderBump.price ?? undefined,
-          originalPrice: rawOrderBump.original_price ?? undefined,
-          badge: rawOrderBump.badge ?? undefined,
-          note: rawOrderBump.note ?? undefined,
-          benefits: orderBumpBenefits,
-          bullets: orderBumpFeatures,
-          image: rawOrderBump.image ?? undefined,
-          terms: rawOrderBump.terms ?? undefined,
-          defaultSelected: rawOrderBump.default_selected ?? false,
-        }
-      : undefined;
+  const resolvedOrderBump = resolveOrderBump(product);
+  const orderBump = resolvedOrderBump
+    ? {
+        id: resolvedOrderBump.id,
+        title: resolvedOrderBump.title,
+        description: resolvedOrderBump.description,
+        price: resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price,
+        points: resolvedOrderBump.points,
+        defaultSelected: resolvedOrderBump.defaultSelected,
+      }
+    : undefined;
 
   return {
     platform,
@@ -229,7 +227,7 @@ export function productToHomeTemplate(
       heading: product.name,
       subheading: pricingSubheading,
       priceLabel: product.pricing?.label,
-      price: product.pricing?.price,
+      price: formattedPrice,
       originalPrice: derivedOriginalPrice,
       priceNote: product.pricing?.note,
       benefits:

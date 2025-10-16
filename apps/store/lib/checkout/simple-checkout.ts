@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { getProductData } from '@/lib/products/product';
+import { resolveOrderBump } from '@/lib/products/order-bump';
 import { getStripeMode, requireStripeSecretKey } from '@/lib/payments/stripe-environment';
 import { ensureSuccessUrlHasSessionPlaceholder } from '@/lib/products/offer-config';
 
@@ -43,14 +44,14 @@ export async function createSimpleCheckout(params: {
   const priceString = product.pricing?.price?.replace(/[^0-9.]/g, '') || '0';
   const priceInCents = Math.round(parseFloat(priceString) * 100);
 
-  const orderBumpConfig = product.order_bump;
+  const resolvedOrderBump = resolveOrderBump(product);
   const orderBumpSelected = Boolean(
     params.orderBump?.selected &&
-      orderBumpConfig &&
-      params.orderBump.id === orderBumpConfig.id,
+      resolvedOrderBump &&
+      params.orderBump.id === resolvedOrderBump.id,
   );
-  const orderBumpPriceInCents = orderBumpSelected && orderBumpConfig?.price
-    ? Math.round(parseFloat(orderBumpConfig.price.replace(/[^0-9.]/g, '')) * 100)
+  const orderBumpPriceInCents = orderBumpSelected && resolvedOrderBump?.priceNumber != null
+    ? Math.round(resolvedOrderBump.priceNumber * 100)
     : 0;
 
   if (priceInCents === 0) {
@@ -149,7 +150,7 @@ export async function createSimpleCheckout(params: {
         unit_amount: orderBumpPriceInCents,
         currency: 'usd',
         metadata: {
-          order_bump_id: orderBumpConfig?.id ?? '',
+          order_bump_id: resolvedOrderBump?.id ?? '',
         },
       });
 
@@ -158,18 +159,19 @@ export async function createSimpleCheckout(params: {
         quantity: 1,
       });
 
-      sessionMetadata.orderBumpId = orderBumpConfig?.id ?? '';
+      sessionMetadata.orderBumpId = resolvedOrderBump?.id ?? '';
       sessionMetadata.orderBumpSelected = 'true';
       sessionMetadata.orderBumpUnitCents = String(orderBumpPriceInCents);
-      if (orderBumpConfig?.price) {
-        sessionMetadata.orderBumpDisplayPrice = orderBumpConfig.price;
+      const displayPrice = resolvedOrderBump?.priceDisplay ?? resolvedOrderBump?.price;
+      if (displayPrice) {
+        sessionMetadata.orderBumpDisplayPrice = displayPrice;
       }
 
       if (params.metadata) {
-        params.metadata.orderBumpId = orderBumpConfig?.id ?? '';
+        params.metadata.orderBumpId = resolvedOrderBump?.id ?? '';
         params.metadata.orderBumpSelected = 'true';
-        if (orderBumpConfig?.price) {
-          params.metadata.orderBumpDisplayPrice = orderBumpConfig.price;
+        if (displayPrice) {
+          params.metadata.orderBumpDisplayPrice = displayPrice;
         }
       }
     } else {

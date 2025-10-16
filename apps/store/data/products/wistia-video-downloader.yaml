@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99gJ06JrOmKRCmN3MovrlF
   metadata:
-    source: generated
     stripe_product_id: prod_SqneqGTUexmjwU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-wistia-downloader
 new_release: true

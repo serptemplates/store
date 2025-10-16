@@ -132,10 +132,8 @@ return_policy:
 stripe:
   price_id: price_1S99gH06JrOmKRCmSnepXJPa
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6pwoyYNJYNSU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-udemy-video-downloader
 permission_justifications: []

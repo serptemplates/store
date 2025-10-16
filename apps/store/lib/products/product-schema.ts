@@ -136,7 +136,8 @@ const stripeSchemaShape = {
   price_id: z.string(),
   test_price_id: z.string().optional(),
   mode: z.enum(["payment", "subscription"]).optional(),
-  metadata: z.record(z.any()).optional().default({}),
+  metadata: z
+    .preprocess((value) => (value == null ? {} : value), z.record(z.any()).default({})),
 } satisfies Record<string, z.ZodTypeAny>;
 
 const stripeSchema = z.object(stripeSchemaShape);
@@ -197,40 +198,78 @@ const permissionJustificationSchema = z.object({
 });
 
 const orderBumpSchemaShape = {
-  id: trimmedString(),
-  title: trimmedString(),
-  subtitle: optionalTrimmedString(),
+  product_slug: optionalTrimmedString(),
+  slug: optionalTrimmedString(),
+  title: optionalTrimmedString(),
   description: optionalTrimmedString(),
-  price: z.string().trim(),
-  original_price: optionalTrimmedString(),
-  badge: optionalTrimmedString(),
-  note: optionalTrimmedString(),
-  features: z.array(z.string().trim()).optional().default([]),
-  benefits: z.array(z.string().trim()).optional().default([]),
+  price: optionalTrimmedString(),
+  features: z.array(z.string().trim()).optional(),
   image: z.string().trim().url().optional(),
-  default_selected: z.boolean().optional().default(false),
-  terms: optionalTrimmedString(),
-  stripe: stripeSchema,
+  default_selected: z.boolean().optional(),
+  stripe: stripeSchema.optional(),
 } satisfies Record<string, z.ZodTypeAny>;
 
-export const ORDER_BUMP_FIELD_ORDER = ["enabled", ...Object.keys(orderBumpSchemaShape)] as const;
+export const ORDER_BUMP_FIELD_ORDER = [
+  "enabled",
+  "slug",
+  "product_slug",
+  ...Object.keys(orderBumpSchemaShape).filter((key) => key !== "slug" && key !== "product_slug"),
+] as const;
+
+export type ProductOrderBump = {
+  enabled: boolean;
+  slug?: string;
+  product_slug?: string;
+  title?: string;
+  description?: string;
+  price?: string;
+  features?: string[];
+  image?: string;
+  default_selected?: boolean;
+  stripe?: {
+    price_id?: string;
+    test_price_id?: string;
+    mode?: "payment" | "subscription";
+    metadata?: Record<string, unknown>;
+  };
+};
+
+const orderBumpObjectSchema = z.object({
+  enabled: z.boolean().optional(),
+  ...orderBumpSchemaShape,
+});
+
+const orderBumpStringSchema = z.string().trim().min(1).transform((id) => ({
+  enabled: true,
+  slug: id,
+}));
+
 const orderBumpSchema = z
-  .object({
-    enabled: z.boolean().optional().default(true),
-    ...orderBumpSchemaShape,
+  .union([orderBumpObjectSchema, orderBumpStringSchema])
+  .transform<ProductOrderBump>((raw) => {
+    const partial = raw as Partial<ProductOrderBump>;
+
+    const enabled = partial.enabled ?? true;
+    const legacyId = typeof (partial as { id?: string }).id === "string" ? (partial as { id?: string }).id : undefined;
+    const trimmedSlugProp = typeof partial.slug === "string" && partial.slug.trim().length > 0 ? partial.slug.trim() : undefined;
+    const trimmedProductSlug = typeof partial.product_slug === "string" && partial.product_slug.trim().length > 0 ? partial.product_slug.trim() : undefined;
+    const defaultSelected = partial.default_selected ?? false;
+
+    const normalized: ProductOrderBump = {
+      enabled,
+      slug: trimmedSlugProp ?? trimmedProductSlug ?? (legacyId && legacyId.trim().length > 0 ? legacyId.trim() : undefined),
+      product_slug: trimmedProductSlug,
+      title: partial.title,
+      description: partial.description,
+      price: partial.price,
+      features: partial.features,
+      image: partial.image,
+      default_selected: defaultSelected,
+      stripe: partial.stripe,
+    };
+
+    return normalized;
   })
-  .refine(
-    (value) => {
-      if (value.enabled === false) {
-        return true;
-      }
-      return Boolean(value.id && value.title && value.price && value.stripe?.price_id);
-    },
-    {
-      message: "order_bump requires id, title, price, and stripe.price_id when enabled.",
-      path: ["order_bump"],
-    },
-  )
   .optional();
 
 const productSchemaShape = {

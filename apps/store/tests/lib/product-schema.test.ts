@@ -50,22 +50,19 @@ describe("productSchema", () => {
     }
   });
 
-  it("requires order bump stripe configuration when provided", () => {
+  it("accepts an inline order bump without Stripe data", () => {
     const base = buildBaseProduct();
 
     const result = productSchema.safeParse({
       ...base,
       order_bump: {
-        id: "priority-support",
+        slug: "priority-support",
         title: "Priority Support",
         price: "$29.00",
       },
     });
 
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.issues.some((issue) => issue.path.join(".") === "order_bump.stripe")).toBe(true);
-    }
+    expect(result.success).toBe(true);
   });
 
   it("accepts a well-formed order bump definition", () => {
@@ -74,15 +71,11 @@ describe("productSchema", () => {
     const result = productSchema.safeParse({
       ...base,
       order_bump: {
-        id: "priority-support",
+        slug: "priority-support",
         title: "Priority Support",
-        subtitle: "One-time upgrade",
         description: "Live onboarding call and fast-track support.",
         price: "$29.00",
-        original_price: "$59.00",
-        badge: "Best Value",
-        note: "Billed once at checkout.",
-        benefits: [
+        features: [
           "Kickoff call with a product specialist",
           "Priority support channel for 30 days",
         ],
@@ -90,6 +83,21 @@ describe("productSchema", () => {
           price_id: "price_orderbump_live",
           test_price_id: "price_orderbump_test",
         },
+      },
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("allows referencing another product for order bump details", () => {
+    const base = buildBaseProduct();
+
+    const result = productSchema.safeParse({
+      ...base,
+      order_bump: {
+        slug: "serp-downloaders-bundle",
+        product_slug: "serp-downloaders-bundle",
+        description: "Upgrade to the full downloader bundle.",
       },
     });
 

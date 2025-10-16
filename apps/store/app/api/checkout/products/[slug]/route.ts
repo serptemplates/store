@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
+import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getProductData } from "@/lib/products/product";
+import { resolveOrderBump } from "@/lib/products/order-bump";
 
 function parsePrice(value?: string | null): number | undefined {
   if (!value) return undefined;
@@ -54,55 +56,53 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  const priceNumber = parsePrice(product.pricing?.price);
-  const originalPriceNumber = parsePrice(product.pricing?.original_price);
+  const priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const priceNumber = priceEntry ? priceEntry.unitAmount / 100 : parsePrice(product.pricing?.price);
+  const priceDisplay = priceEntry
+    ? formatAmountFromCents(priceEntry.unitAmount, priceEntry.currency)
+    : formatPriceDisplay(product.pricing?.price, priceNumber ?? 0);
+  const originalPriceNumber = priceEntry?.compareAtAmount != null
+    ? priceEntry.compareAtAmount / 100
+    : parsePrice(product.pricing?.original_price);
+  const originalPriceDisplay = originalPriceNumber !== undefined && originalPriceNumber !== null
+    ? priceEntry?.compareAtAmount != null
+      ? formatAmountFromCents(priceEntry.compareAtAmount, priceEntry.currency)
+      : formatPriceDisplay(product.pricing?.original_price, originalPriceNumber)
+    : undefined;
+  const currency = priceEntry?.currency ?? product.pricing?.currency ?? "USD";
 
-  const orderBumpConfig = product.order_bump?.enabled === false ? undefined : product.order_bump;
-  const orderBump =
-    orderBumpConfig && orderBumpConfig.stripe?.price_id
-      ? (() => {
-          const bumpPriceNumber = parsePrice(orderBumpConfig.price) ?? 0;
-          const bumpOriginalNumber = parsePrice(orderBumpConfig.original_price);
-          const primaryPoints =
-            orderBumpConfig.benefits && orderBumpConfig.benefits.length > 0
-              ? orderBumpConfig.benefits
-              : orderBumpConfig.features;
+  const resolvedOrderBump = resolveOrderBump(product);
+  const orderBump = resolvedOrderBump
+    ? (() => {
+        const bumpPriceNumber =
+          typeof resolvedOrderBump.priceNumber === "number"
+            ? resolvedOrderBump.priceNumber
+            : parsePrice(resolvedOrderBump.price) ?? 0;
 
-          return {
-            id: orderBumpConfig.id,
-            title: orderBumpConfig.title,
-            subtitle: orderBumpConfig.subtitle ?? undefined,
-            description: orderBumpConfig.description ?? undefined,
-            price: bumpPriceNumber,
-            priceDisplay: formatPriceDisplay(orderBumpConfig.price, bumpPriceNumber),
-            originalPrice: bumpOriginalNumber,
-            originalPriceDisplay:
-              bumpOriginalNumber !== undefined
-                ? formatPriceDisplay(orderBumpConfig.original_price, bumpOriginalNumber)
-                : undefined,
-            note: orderBumpConfig.note ?? undefined,
-            badge: orderBumpConfig.badge ?? undefined,
-            terms: orderBumpConfig.terms ?? undefined,
-            defaultSelected: Boolean(orderBumpConfig.default_selected),
-            points: normalizePoints(primaryPoints),
-            stripePriceId: orderBumpConfig.stripe.price_id,
-            stripeTestPriceId: orderBumpConfig.stripe.test_price_id ?? undefined,
-          };
-        })()
-      : undefined;
+        return {
+          id: resolvedOrderBump.id,
+          title: resolvedOrderBump.title,
+          description: resolvedOrderBump.description ?? undefined,
+          price: bumpPriceNumber,
+          priceDisplay: formatPriceDisplay(resolvedOrderBump.price, bumpPriceNumber),
+          defaultSelected: resolvedOrderBump.defaultSelected,
+          points: normalizePoints(resolvedOrderBump.points),
+          stripePriceId: resolvedOrderBump.stripePriceId,
+          stripeTestPriceId: resolvedOrderBump.stripeTestPriceId ?? undefined,
+          terms: resolvedOrderBump.terms ?? undefined,
+        };
+      })()
+    : undefined;
 
   return NextResponse.json({
     slug: product.slug,
     name: product.name,
     title: product.name ?? product.slug,
     price: priceNumber ?? 0,
-    priceDisplay: formatPriceDisplay(product.pricing?.price, priceNumber ?? 0),
+    priceDisplay,
     originalPrice: originalPriceNumber,
-    originalPriceDisplay:
-      originalPriceNumber !== undefined
-        ? formatPriceDisplay(product.pricing?.original_price, originalPriceNumber)
-        : undefined,
-    currency: product.pricing?.currency ?? "USD",
+    originalPriceDisplay,
+    currency,
     note: product.pricing?.note ?? undefined,
     orderBump,
   });

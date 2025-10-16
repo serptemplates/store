@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99gL06JrOmKRCmtPCthojb
   metadata:
-    source: generated
     stripe_product_id: prod_SrGW6pAdy73l9t
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-xvideos-downloader
 new_release: true

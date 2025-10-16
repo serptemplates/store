@@ -131,10 +131,8 @@ return_policy:
 stripe:
   price_id: price_1S99g306JrOmKRCmP9M8EStc
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HU86lnZmPqb
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-redgifs-downloader
 new_release: true

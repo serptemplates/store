@@ -128,10 +128,8 @@ return_policy:
 stripe:
   price_id: price_1S9DXF06JrOmKRCmrbemGM9U
   metadata:
-    source: generated
     stripe_product_id: prod_T5OJxcMDHKSqyk
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-spankbang-downloader
 permission_justifications: []

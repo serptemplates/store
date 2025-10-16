@@ -128,10 +128,8 @@ return_policy:
 stripe:
   price_id: price_1S99fx06JrOmKRCm2ECdO0oK
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HbJk6PCsyuX
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-m3u8-downloader
 permission_justifications: []

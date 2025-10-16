@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99fx06JrOmKRCmMixxSD1b
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Hc8d1H8bDcV
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-livejasmin-downloader
 permission_justifications: []

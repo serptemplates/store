@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99gG06JrOmKRCmmZOSX7ah
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HRal4WyIsIU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-tubi-downloader
 permission_justifications: []

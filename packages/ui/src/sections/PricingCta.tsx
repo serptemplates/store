@@ -31,16 +31,11 @@ export type PricingCtaProps = {
 export type PricingCtaOrderBump = {
   id?: string;
   title: string;
-  subtitle?: string;
   description?: string;
   price?: string;
-  originalPrice?: string;
-  badge?: string;
-  note?: string;
   bullets?: string[];
-  benefits?: string[];
+  points?: string[];
   image?: string;
-  terms?: string;
   defaultSelected?: boolean;
 };
 
@@ -72,9 +67,17 @@ export function PricingCta({
   id,
   orderBump,
 }: PricingCtaProps) {
-  const listItems = (
-    benefits?.length ? benefits : features?.length ? features : defaultBenefits
-  ).slice(0, 8);
+  const prioritizedBenefits =
+    (benefits?.filter((item): item is string => Boolean(item && item.trim())) ?? []).length > 0
+      ? benefits
+      : (features?.filter((item): item is string => Boolean(item && item.trim())) ?? []).length > 0
+        ? features
+        : defaultBenefits;
+
+  const normalizedBenefits =
+    prioritizedBenefits?.filter((item): item is string => Boolean(item && item.trim())) ?? [];
+
+  const listItems = (normalizedBenefits.length > 0 ? normalizedBenefits : defaultBenefits).slice(0, 8);
 
   const showPriceDetails = Boolean(
     price || priceLabel || originalPrice || priceNote
@@ -95,13 +98,22 @@ export function PricingCta({
     }
   }
 
-  const hasOrderBump = Boolean(orderBump);
-  const orderBumpItems = hasOrderBump
-    ? (orderBump?.benefits?.length
-        ? orderBump.benefits
-        : orderBump?.bullets?.length
-        ? orderBump.bullets
-        : [])
+  const orderBumpHasContent =
+    Boolean(orderBump?.title) ||
+    Boolean(orderBump?.description) ||
+    Boolean(orderBump?.price) ||
+    Boolean(orderBump?.image) ||
+    (orderBump?.points?.length ?? 0) > 0 ||
+    (orderBump?.bullets?.length ?? 0) > 0;
+
+  const shouldRenderOrderBump = Boolean(orderBump) && orderBumpHasContent;
+
+  const orderBumpItems: string[] = shouldRenderOrderBump
+    ? orderBump?.points?.length
+      ? orderBump.points.filter((item): item is string => Boolean(item && item.trim()))
+      : orderBump?.bullets?.length
+      ? orderBump.bullets.filter((item): item is string => Boolean(item && item.trim()))
+      : []
     : [];
 
   return (
@@ -209,7 +221,7 @@ export function PricingCta({
             <div
               className={cn(
                 "relative mx-auto flex flex-col gap-6 sm:mx-0",
-                hasOrderBump
+                shouldRenderOrderBump
                   ? "sm:max-w-xl lg:ml-auto lg:max-w-[960px] lg:grid lg:grid-cols-2 lg:items-stretch"
                   : "sm:max-w-md lg:max-w-[460px] lg:ml-auto"
               )}
@@ -217,10 +229,10 @@ export function PricingCta({
               <div
                 className={cn(
                   "relative flex flex-col rounded-xl bg-white",
-                  hasOrderBump ? "h-full" : "mx-auto sm:mx-0"
+                  shouldRenderOrderBump ? "h-full" : "mx-auto sm:mx-0"
                 )}
                 style={{
-                  padding: hasOrderBump ? "28px 26px 26px" : "30px 25px 25px",
+                  padding: shouldRenderOrderBump ? "28px 26px 26px" : "30px 25px 25px",
                   boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
                   border: "1px solid #e5e5e5",
                 }}
@@ -277,7 +289,7 @@ export function PricingCta({
                   <div
                     className="rounded-md bg-rose-600 px-4 py-2.5 text-center text-[13px] font-bold tracking-wide text-white"
                   >
-                    {discountPercentage}% OFF - but only TODAY, on THURSDAY
+                    Save {discountPercentage}% today — limited-time offer
                   </div>
                 </div>
               )}
@@ -313,18 +325,6 @@ export function PricingCta({
               <div className="my-4 border-t border-gray-200" />
 
               {/* Additional info if provided */}
-              {(benefits?.length || features?.length) &&
-                benefits?.length !== listItems.length && (
-                  <div className="mb-4">
-                    <TypographySmall className="mb-3 block text-left text-gray-700">
-                      Included: <span className="font-semibold text-gray-900">300 critical conversion checkpoints</span>
-                    </TypographySmall>
-                    <TypographySmall className="block text-left text-gray-700">
-                      Checklist last updated: <span className="font-semibold text-gray-900">October 2nd 2025</span>
-                    </TypographySmall>
-                  </div>
-                )}
-
               {/* CTA Button */}
               <div className="mb-5">
                 {onCtaClick ? (
@@ -418,78 +418,49 @@ export function PricingCta({
               )}
               </div>
 
-              {hasOrderBump && orderBump && (
-                <div
-                  className="flex h-full flex-col rounded-xl border border-amber-200 bg-gradient-to-b from-amber-50 via-amber-50 to-white p-6 shadow-[0_12px_30px_rgba(255,170,0,0.18)]"
+              {shouldRenderOrderBump && orderBump && (
+                <aside
+                  data-testid="pricing-cta-order-bump"
+                  className="flex h-full flex-col gap-5 rounded-2xl border border-slate-200 bg-white/95 p-6 shadow-[0_10px_28px_rgba(15,23,42,0.08)]"
                 >
-                  {orderBump.badge && (
-                    <span className="inline-flex items-center self-start rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                      {orderBump.badge}
+                  <div className="space-y-3">
+                    <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-amber-600">
+                      Optional upgrade
                     </span>
-                  )}
-
-                  <div className="mt-2 space-y-2">
-                    <TypographyLarge className="text-amber-900 text-lg sm:text-xl">
+                    <TypographyLarge className="text-lg font-semibold text-slate-900 sm:text-xl">
                       {orderBump.title}
                     </TypographyLarge>
-                    {orderBump.subtitle && (
-                      <TypographySmall className="text-amber-700">
-                        {orderBump.subtitle}
-                      </TypographySmall>
+                    {orderBump.price && (
+                      <p className="text-sm font-semibold text-slate-500">
+                        Add for {orderBump.price}
+                      </p>
                     )}
                     {orderBump.description && (
-                      <TypographySmall className="text-amber-700">
+                      <TypographySmall className="text-slate-600">
                         {orderBump.description}
                       </TypographySmall>
                     )}
                   </div>
 
-                  {(orderBump.price || orderBump.originalPrice) && (
-                    <div className="mt-4">
-                      {orderBump.originalPrice && (
-                        <p className="text-sm font-medium text-amber-600/80 line-through">
-                          {orderBump.originalPrice}
-                        </p>
-                      )}
-                      {orderBump.price && (
-                        <p className="text-3xl font-bold text-amber-900">
-                          {orderBump.price}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
                   {orderBumpItems.length > 0 && (
-                    <ul className="mt-5 space-y-2">
+                    <ul className="space-y-2">
                       {orderBumpItems.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-amber-800">
-                          <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-amber-500" strokeWidth={3} />
+                        <li key={index} className="flex items-start gap-3 text-sm text-slate-600">
+                          <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                            <Check className="h-3 w-3" strokeWidth={3} />
+                          </span>
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   )}
 
-                  {orderBump.note && (
-                    <TypographySmall className="mt-4 text-amber-700">
-                      {orderBump.note}
-                    </TypographySmall>
-                  )}
-
-                  <div className="mt-auto">
-                    <div className="mt-6 rounded-lg border border-amber-200 bg-white/80 p-3 text-xs font-medium text-amber-800 shadow-sm">
-                      {orderBump.defaultSelected
-                        ? "Pre-selected during checkout — deselect anytime before completing your order."
-                        : "Add this upgrade during checkout with a single click before you pay."}
-                    </div>
-
-                    {orderBump.terms && (
-                      <TypographySmall className="mt-3 block text-amber-600/90">
-                        {orderBump.terms}
-                      </TypographySmall>
-                    )}
-                  </div>
-                </div>
+                  <p className="mt-auto rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
+                    {orderBump.defaultSelected
+                      ? "Selected for you during checkout. You can remove it before paying."
+                      : "Keep an eye out for this add-on — you can include it with one click at checkout."}
+                  </p>
+                </aside>
               )}
             </div>
           </div>

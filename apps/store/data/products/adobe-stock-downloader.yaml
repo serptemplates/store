@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wh06JrOmKRCm9efFxcwZ
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GxpT96KLpzS
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-adobe-stock-downloader
 permission_justifications: []

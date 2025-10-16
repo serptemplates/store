@@ -131,10 +131,8 @@ return_policy:
 stripe:
   price_id: price_1S99wu06JrOmKRCmq1ANhFue
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HENVA7q2HeS
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-giphy-downloader
 permission_justifications: []

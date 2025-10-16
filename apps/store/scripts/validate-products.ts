@@ -1,14 +1,165 @@
 import { promises as fs } from "fs"
 import path from "path"
+import Stripe from "stripe"
+import dotenv from "dotenv"
 import { parse, parseDocument, type YAMLMap } from "yaml"
 import { ORDER_BUMP_FIELD_ORDER, PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
+import { orderBumpDefinitionSchema } from "../lib/products/order-bump-definitions"
+
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local") })
+dotenv.config({ path: path.resolve(process.cwd(), ".env") })
+
+const STRIPE_API_VERSION = "2024-04-10"
+
+const ZERO_DECIMAL_CURRENCIES = new Set([
+  "BIF",
+  "CLP",
+  "DJF",
+  "GNF",
+  "JPY",
+  "KMF",
+  "KRW",
+  "MGA",
+  "PYG",
+  "RWF",
+  "UGX",
+  "VND",
+  "VUV",
+  "XAF",
+  "XOF",
+  "XPF",
+])
+
+type StripeClientConfig = { stripe: Stripe }
 
 const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
   "pre_release",
   "new_release",
   "popular",
 ]
+
+function createStripeClients(): StripeClientConfig[] {
+  const clients: StripeClientConfig[] = []
+  const liveSecret = process.env.STRIPE_SECRET_KEY
+  const testSecret = process.env.STRIPE_SECRET_KEY_TEST
+
+  if (liveSecret) {
+    clients.push({ stripe: new Stripe(liveSecret, { apiVersion: STRIPE_API_VERSION }) })
+  }
+
+  if (testSecret) {
+    clients.push({ stripe: new Stripe(testSecret, { apiVersion: STRIPE_API_VERSION }) })
+  }
+
+  return clients
+}
+
+async function fetchStripePrice(priceId: string, clients: StripeClientConfig[]): Promise<Stripe.Price | undefined> {
+  if (!clients.length) {
+    return undefined
+  }
+
+  let lastError: unknown
+
+  for (const client of clients) {
+    try {
+      const price = await client.stripe.prices.retrieve(priceId)
+      return price
+    } catch (error: unknown) {
+      lastError = error
+      if (typeof error === "object" && error !== null && "code" in error && (error as { code?: string }).code === "resource_missing") {
+        continue
+      }
+      throw error
+    }
+  }
+
+  if (lastError) {
+    if (typeof lastError === "object" && lastError !== null && "code" in lastError && (lastError as { code?: string }).code === "resource_missing") {
+      console.warn(`⚠️  Stripe price ${priceId} was not found in the configured environments.`)
+      return undefined
+    }
+    throw lastError
+  }
+
+  return undefined
+}
+
+function parseCompareAtAmount(price: Stripe.Price): number | undefined {
+  const metadata = price.metadata ?? {}
+  const currency = price.currency?.toUpperCase?.()
+
+  if (metadata.compare_at_amount_cents) {
+    const parsed = Number.parseInt(metadata.compare_at_amount_cents, 10)
+    if (Number.isFinite(parsed)) {
+      return parsed
+    }
+  }
+
+  if (metadata.compare_at_amount) {
+    const numeric = Number.parseFloat(metadata.compare_at_amount.replace(/[^0-9.]/g, ""))
+    if (Number.isFinite(numeric)) {
+      const divisor = currency && ZERO_DECIMAL_CURRENCIES.has(currency) ? 1 : 100
+      return Math.round(numeric * divisor)
+    }
+  }
+
+  return undefined
+}
+
+async function writePriceManifest(priceIds: Set<string>): Promise<void> {
+  if (priceIds.size === 0) {
+    return
+  }
+
+  const clients = createStripeClients()
+  if (!clients.length) {
+    console.warn("⚠️  STRIPE_SECRET_KEY or STRIPE_SECRET_KEY_TEST is not set. Skipping price manifest generation.")
+    return
+  }
+
+  const manifestEntries: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }> = {}
+
+  for (const priceId of priceIds) {
+    if (!priceId || !priceId.startsWith("price_")) {
+      continue
+    }
+
+    try {
+      const price = await fetchStripePrice(priceId, clients)
+      if (!price) {
+        continue
+      }
+
+      if (typeof price.unit_amount !== "number" || !price.currency) {
+        console.warn(`⚠️  Stripe price ${priceId} is missing unit_amount or currency; skipping.`)
+        continue
+      }
+
+      const compareAt = parseCompareAtAmount(price)
+
+      manifestEntries[priceId] = {
+        unit_amount: price.unit_amount,
+        currency: price.currency.toLowerCase(),
+        ...(compareAt != null ? { compare_at_amount: compareAt } : {}),
+      }
+    } catch (error) {
+      console.warn(`⚠️  Failed to retrieve Stripe price ${priceId}:`, error)
+    }
+  }
+
+  if (Object.keys(manifestEntries).length === 0) {
+    console.warn("⚠️  Price manifest not updated because no Stripe prices could be resolved.")
+    return
+  }
+
+  const manifestDir = path.join(process.cwd(), "data", "prices")
+  await fs.mkdir(manifestDir, { recursive: true })
+
+  const sortedEntries = Object.fromEntries(Object.entries(manifestEntries).sort(([a], [b]) => a.localeCompare(b)))
+  await fs.writeFile(path.join(manifestDir, "manifest.json"), `${JSON.stringify(sortedEntries, null, 2)}\n`)
+}
 
 function extractKeys(map: YAMLMap<unknown, unknown> | null | undefined): string[] {
   if (!map || !Array.isArray(map.items)) {
@@ -55,6 +206,28 @@ async function main() {
 
   const errors: string[] = []
   const warnings: string[] = []
+  const orderBumpsDir = path.join(process.cwd(), "data", "order-bumps")
+  const orderBumpFiles = await fs.readdir(orderBumpsDir).catch(() => [])
+  const orderBumpDefinitions = orderBumpFiles
+    .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
+    .map(async (file) => {
+      const slug = file.replace(/\.ya?ml$/i, "")
+      const raw = await fs.readFile(path.join(orderBumpsDir, file), "utf8")
+      const parsed = orderBumpDefinitionSchema.parse(parse(raw))
+      return { slug, definition: parsed }
+    })
+  const resolvedOrderBumpDefinitions = await Promise.all(orderBumpDefinitions)
+  const orderBumpDefinitionMap = new Map(
+    resolvedOrderBumpDefinitions.map(({ slug, definition }) => [slug, { slug, ...definition }]),
+  )
+  const productSlugs = new Set<string>()
+  const referencedStripePriceIds = new Set<string>()
+
+  const recordPriceId = (candidate?: unknown) => {
+    if (typeof candidate === "string" && candidate.startsWith("price_")) {
+      referencedStripePriceIds.add(candidate)
+    }
+  }
 
   for (const file of yamlFiles) {
     const fullPath = path.join(productsDir, file)
@@ -82,6 +255,15 @@ async function main() {
     } catch (error) {
       errors.push(`❌ ${file}: Schema validation failed - ${(error as Error).message}`)
       continue
+    }
+
+    productSlugs.add(product.slug)
+    recordPriceId(product.stripe?.price_id)
+    recordPriceId(product.stripe?.test_price_id)
+
+    if (product.order_bump && typeof product.order_bump !== "string") {
+      recordPriceId(product.order_bump.stripe?.price_id)
+      recordPriceId(product.order_bump.stripe?.test_price_id)
     }
 
     const topLevelKeys = extractKeys(document.contents as YAMLMap<unknown, unknown>)
@@ -112,6 +294,51 @@ async function main() {
       if (orderBumpIssue) {
         errors.push(
           `❌ ${file}: order_bump."${orderBumpIssue.before}" must appear before "${orderBumpIssue.after}" to match canonical order.`,
+        )
+        continue
+      }
+    }
+
+    if (product.order_bump && product.order_bump.enabled !== false) {
+      const bump = product.order_bump
+      const bumpSlug = typeof bump.slug === "string" && bump.slug.trim().length > 0
+        ? bump.slug.trim()
+        : undefined
+      const hasInlineDetails =
+        Boolean(
+          bump.title ??
+            bump.description ??
+            bump.price ??
+            bump.product_slug ??
+            (Array.isArray(bump.features) && bump.features.length > 0),
+        ) ||
+        Boolean(bump.stripe?.price_id)
+
+      if (bumpSlug) {
+        const definition = orderBumpDefinitionMap.get(bumpSlug)
+        if (!definition && !hasInlineDetails) {
+          errors.push(
+            `❌ ${file}: order_bump references "${bumpSlug}" but no definition exists under data/order-bumps.`,
+          )
+          continue
+        }
+      } else if (!hasInlineDetails) {
+        errors.push(`❌ ${file}: order_bump must specify a slug or inline configuration details.`)
+        continue
+      }
+
+      if (hasInlineDetails && bump.price) {
+        const normalizedPrice = bump.price.trim()
+        if (normalizedPrice && !/^[\$£€]?\d+(?:\.\d{1,2})?$/.test(normalizedPrice)) {
+          warnings.push(
+            `⚠️  ${file}: order_bump "${bumpSlug ?? "(inline)"}" price "${bump.price}" is not in a typical currency format (e.g. $29 or $29.00).`,
+          )
+        }
+      }
+
+      if (hasInlineDetails && bump.stripe && !bump.stripe.price_id) {
+        errors.push(
+          `❌ ${file}: order_bump "${bumpSlug ?? "(inline)"}" is missing stripe.price_id.`,
         )
         continue
       }
@@ -150,6 +377,25 @@ async function main() {
   }
 
   warnings.forEach((message) => console.warn(message))
+
+  for (const { slug, definition } of resolvedOrderBumpDefinitions) {
+    recordPriceId(definition.stripe?.price_id)
+    recordPriceId(definition.stripe?.test_price_id)
+
+    if (definition.product_slug && !productSlugs.has(definition.product_slug)) {
+      errors.push(
+        `❌ order-bumps/${slug}.yaml references unknown product slug "${definition.product_slug}".`,
+      )
+    }
+  }
+
+  await writePriceManifest(referencedStripePriceIds)
+
+  const manifestPath = path.join(process.cwd(), "data", "order-bumps", "manifest.json")
+  const manifestPayload = Object.fromEntries(
+    resolvedOrderBumpDefinitions.map(({ slug, definition }) => [slug, definition]),
+  )
+  await fs.writeFile(manifestPath, `${JSON.stringify(manifestPayload, null, 2)}\n`)
 
   if (errors.length > 0) {
     errors.forEach((message) => console.error(message))

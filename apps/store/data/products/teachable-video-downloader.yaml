@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99gB06JrOmKRCmO2gulXc5
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6H2Dscvp1wGR
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-teachable-video-downloader
 permission_justifications: []

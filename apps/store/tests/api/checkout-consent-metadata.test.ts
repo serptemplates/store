@@ -63,9 +63,13 @@ vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: mocks.isPayPalConfigured,
 }))
 
-vi.mock("@/lib/products/product", () => ({
-  getProductData: mocks.getProductData,
-}))
+vi.mock("@/lib/products/product", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/products/product")>();
+  return {
+    ...actual,
+    getProductData: mocks.getProductData,
+  };
+})
 
 import { POST as createStripeEmbeddedCheckout } from "@/app/api/checkout/session/route"
 import { POST as createPayPalOrderEndpoint } from "@/app/api/paypal/create-order/route"
@@ -202,7 +206,7 @@ describe("checkout consent metadata", () => {
       name: "TikTok Downloader",
       pricing: { price: "$67.00" },
       order_bump: {
-        id: "priority-support",
+        slug: "priority-support",
         title: "Priority Support",
         price: "$29.00",
         stripe: {
@@ -314,9 +318,13 @@ describe("checkout consent metadata", () => {
       name: "TikTok Downloader",
       pricing: { price: "$67.00" },
       order_bump: {
-        id: "priority-support",
+        slug: "priority-support",
         title: "Priority Support",
         price: "$29.00",
+        stripe: {
+          price_id: "price_bump_live",
+          test_price_id: "price_bump_test",
+        },
       },
     })
 

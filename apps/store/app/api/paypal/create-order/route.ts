@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createPayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
+import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
+import { resolveOrderBump } from "@/lib/products/order-bump";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
@@ -157,33 +159,43 @@ export async function POST(request: NextRequest) {
 
   // Get product data for price
   const product = getProductData(parsedBody.offerId);
-  const priceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
-  const price = parseFloat(priceString);
+  const resolvedOrderBump = resolveOrderBump(product);
   const quantity = parsedBody.quantity ?? 1;
 
-  const baseSubtotalCents = Math.round(price * 100) * quantity;
+  const priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const fallbackPriceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
+  const fallbackPrice = Number.parseFloat(fallbackPriceString);
+  const unitAmountCents = priceEntry?.unitAmount ?? Math.round(Number.isFinite(fallbackPrice) ? fallbackPrice * 100 : 0);
+  const currency = priceEntry?.currency ?? product.pricing?.currency?.toUpperCase() ?? "USD";
+  const baseSubtotalCents = unitAmountCents * quantity;
 
-  const orderBumpConfig = product.order_bump;
+  const baseDisplayPrice = priceEntry
+    ? formatAmountFromCents(priceEntry.unitAmount, currency)
+    : product.pricing?.price ?? `$${fallbackPrice.toFixed(2)}`;
+
   const orderBumpSelected = Boolean(
     parsedBody.orderBump?.selected &&
-      orderBumpConfig &&
-      parsedBody.orderBump.id === orderBumpConfig.id,
+      resolvedOrderBump &&
+      parsedBody.orderBump.id === resolvedOrderBump.id,
   );
-  const orderBumpPriceCents = orderBumpSelected && orderBumpConfig?.price
-    ? Math.round(parseFloat(orderBumpConfig.price.replace(/[^0-9.]/g, "")) * 100)
-    : 0;
 
-  if (orderBumpConfig) {
-    metadataFromRequest.orderBumpId = orderBumpConfig.id;
+  const orderBumpPriceCents =
+    orderBumpSelected && resolvedOrderBump?.priceNumber != null
+      ? Math.round(resolvedOrderBump.priceNumber * 100)
+      : 0;
+
+  if (resolvedOrderBump) {
+    metadataFromRequest.orderBumpId = resolvedOrderBump.id;
     metadataFromRequest.orderBumpSelected = orderBumpSelected ? "true" : "false";
-    if (orderBumpConfig.price) {
-      metadataFromRequest.orderBumpDisplayPrice = orderBumpConfig.price;
+    metadataFromRequest.orderBumpTitle = resolvedOrderBump.title;
+    const displayPrice = resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price;
+    if (displayPrice) {
+      metadataFromRequest.orderBumpDisplayPrice = displayPrice;
     }
-    if (orderBumpSelected && orderBumpPriceCents > 0) {
-      metadataFromRequest.orderBumpUnitCents = String(orderBumpPriceCents);
-    }
+    metadataFromRequest.orderBumpUnitCents = String(orderBumpPriceCents);
   } else if (!metadataFromRequest.orderBumpSelected) {
     metadataFromRequest.orderBumpSelected = "false";
+    metadataFromRequest.orderBumpUnitCents = "0";
   }
 
   let discountCents = 0;
@@ -210,7 +222,16 @@ export async function POST(request: NextRequest) {
   }
 
   metadataFromRequest.checkoutBaseSubtotalCents = String(baseSubtotalCents);
+  metadataFromRequest.checkoutSubtotalCents = String(discountedSubtotalCents);
   metadataFromRequest.checkoutTotalCents = String(totalAmountCents);
+  metadataFromRequest.checkoutTotalWithOrderBumpCents = String(totalAmountCents);
+  metadataFromRequest.checkoutTotalWithoutOrderBumpCents = String(discountedSubtotalCents);
+  metadataFromRequest.checkoutCurrency = currency;
+  metadataFromRequest.checkoutBasePriceDisplay = baseDisplayPrice;
+
+  if (!metadataFromRequest.orderBumpUnitCents) {
+    metadataFromRequest.orderBumpUnitCents = "0";
+  }
 
 
   parsedBody.metadata = metadataFromRequest;
@@ -241,7 +262,7 @@ export async function POST(request: NextRequest) {
     // Create PayPal order
     const paypalOrder = await createPayPalOrder({
       amount: totalAmount,
-      currency: "USD",
+      currency,
       description: product.name || `Purchase of ${parsedBody.offerId}`,
       offerId: parsedBody.offerId,
       metadata: orderMetadata,

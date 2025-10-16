@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99gA06JrOmKRCmt3y1AyVP
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HlVQLlci5ux
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-storyblocks-downloader
 permission_justifications: []

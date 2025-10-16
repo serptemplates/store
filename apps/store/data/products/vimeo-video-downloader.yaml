@@ -224,9 +224,7 @@ return_policy:
 stripe:
   price_id: price_1S2fcZ06JrOmKRCmTwbmGNxm
   metadata:
-    source: lander-template
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-vimeo-video-downloader
 permission_justifications: []
