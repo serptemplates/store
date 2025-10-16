@@ -26,6 +26,10 @@ vi.mock("@/lib/products/product", () => ({
   getProductData: vi.fn(),
 }));
 
+vi.mock("@/lib/products/order-bump-definitions", () => ({
+  getOrderBumpDefinition: vi.fn(),
+}));
+
 vi.mock("@/lib/checkout", () => ({
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
@@ -36,6 +40,7 @@ import { isPayPalConfigured, createPayPalOrder } from "@/lib/payments/paypal";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
+import { getOrderBumpDefinition } from "@/lib/products/order-bump-definitions";
 
 const isPayPalConfiguredMock = vi.mocked(isPayPalConfigured);
 const createPayPalOrderMock = vi.mocked(createPayPalOrder);
@@ -43,6 +48,7 @@ const getOfferConfigMock = vi.mocked(getOfferConfig);
 const getProductDataMock = vi.mocked(getProductData);
 const markStaleCheckoutSessionsMock = vi.mocked(markStaleCheckoutSessions);
 const upsertCheckoutSessionMock = vi.mocked(upsertCheckoutSession);
+const getOrderBumpDefinitionMock = vi.mocked(getOrderBumpDefinition);
 
 function buildRequest(body: Record<string, unknown>) {
   return new NextRequest("http://localhost/api/paypal/create-order", {
@@ -116,6 +122,7 @@ describe("POST /api/paypal/create-order", () => {
     isPayPalConfiguredMock.mockReturnValue(true);
     getOfferConfigMock.mockReturnValue(offerConfigFixture);
     getProductDataMock.mockReturnValue(productFixture);
+    getOrderBumpDefinitionMock.mockReturnValue(undefined);
     const createOrderResponse: PayPalCreateOrderResponse = {
       id: "order_123",
       status: "CREATED",
@@ -189,5 +196,132 @@ describe("POST /api/paypal/create-order", () => {
     const response = await POST(buildRequest({ offerId: "demo-offer" }));
     expect(response.status).toBe(500);
     expect(await response.json()).toMatchObject({ error: "Failed to create PayPal order" });
+  });
+
+  it("includes order bump metadata and totals when selected", async () => {
+    const productWithUpsell: ProductData = {
+      ...productFixture,
+      pricing: {
+        price: "$99.00",
+        benefits: [],
+      },
+      order_bump: {
+        slug: "priority-support",
+        title: "Priority Support",
+        price: "$29.00",
+        features: [],
+        default_selected: false,
+        enabled: true,
+        stripe: {
+          price_id: "price_priority_support",
+          test_price_id: "price_priority_support_test",
+        },
+      } as ProductData["order_bump"],
+    };
+
+    getProductDataMock.mockReturnValueOnce(productWithUpsell);
+
+    const response = await POST(
+      buildRequest({
+        offerId: "demo-offer",
+        orderBump: {
+          id: "priority-support",
+          selected: true,
+        },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+
+    const paypalParams = createPayPalOrderMock.mock.calls[0]?.[0];
+    expect(paypalParams).toMatchObject({
+      amount: "128.00",
+      offerId: "demo-offer",
+    });
+    expect(paypalParams.metadata).toMatchObject({
+      orderBumpId: "priority-support",
+      orderBumpSelected: "true",
+      orderBumpUnitCents: "2900",
+      orderBumpDisplayPrice: "$29.00",
+      checkoutTotalCents: "12800",
+      checkoutSubtotalCents: "9900",
+      checkoutTotalWithOrderBumpCents: "12800",
+    });
+
+    const upsertMetadata = upsertCheckoutSessionMock.mock.calls[0]?.[0]?.metadata ?? {};
+    expect(upsertMetadata.orderBumpSelected).toBe("true");
+    expect(upsertMetadata.orderBumpUnitCents).toBe("2900");
+    expect(upsertMetadata.checkoutTotalCents).toBe("12800");
+  });
+
+  it("resolves order bump from referenced product slug", async () => {
+    getOrderBumpDefinitionMock.mockReturnValue({
+      slug: "serp-downloaders-bundle",
+      product_slug: "serp-downloaders-bundle",
+      title: "SERP Apps Downloader Library",
+      price: "$47.00",
+      features: ["Unlock every downloader"],
+      default_selected: false,
+      stripe: {
+        price_id: "price_bundle_live",
+        test_price_id: "price_bundle_test",
+      },
+      enabled: true,
+    });
+
+    const referencedProduct: ProductData = {
+      ...productFixture,
+      slug: "serp-downloaders-bundle",
+      name: "SERP Apps Downloader Library",
+      pricing: {
+        price: "$47.00",
+      },
+      stripe: {
+        price_id: "price_bundle_live",
+        test_price_id: "price_bundle_test",
+      },
+      order_bump: undefined,
+    } as ProductData;
+
+    const productWithReference: ProductData = {
+      ...productFixture,
+      order_bump: {
+        enabled: true,
+        slug: "serp-downloaders-bundle",
+        product_slug: "serp-downloaders-bundle",
+      } as ProductData["order_bump"],
+    };
+
+    getProductDataMock.mockImplementation((requestedSlug?: string) => {
+      if (!requestedSlug || requestedSlug === productWithReference.slug) {
+        return productWithReference;
+      }
+      if (requestedSlug === referencedProduct.slug) {
+        return referencedProduct;
+      }
+      return productFixture;
+    });
+
+    const response = await POST(
+      buildRequest({
+        offerId: productWithReference.slug,
+        orderBump: {
+          id: "serp-downloaders-bundle",
+          selected: true,
+        },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+
+    const paypalParams = createPayPalOrderMock.mock.calls[0]?.[0];
+    expect(paypalParams?.amount).toBe("146.00");
+    expect(paypalParams?.metadata?.orderBumpDisplayPrice).toBe("$47.00");
+    expect(paypalParams?.metadata?.orderBumpUnitCents).toBe("4700");
+
+    const upsertMetadata = upsertCheckoutSessionMock.mock.calls[0]?.[0]?.metadata ?? {};
+    expect(upsertMetadata.orderBumpUnitCents).toBe("4700");
+
+    getProductDataMock.mockImplementation(() => productFixture);
   });
 });

@@ -1,10 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Check, Zap, ArrowRight, Loader2 } from "lucide-react";
-import { Button } from "../button";
+import { Check, Loader2 } from "lucide-react";
 import { cn } from "../lib/utils";
 import SocialProofBanner from "../social-proof-banner";
+import { TypographyH2, TypographyLarge, TypographyP, TypographySmall } from "@repo/ui";
 
 export type PricingCtaProps = {
   heading?: string;
@@ -25,6 +25,18 @@ export type PricingCtaProps = {
   features?: string[];
   className?: string;
   id?: string;
+  orderBump?: PricingCtaOrderBump;
+};
+
+export type PricingCtaOrderBump = {
+  id?: string;
+  title: string;
+  description?: string;
+  price?: string;
+  bullets?: string[];
+  points?: string[];
+  image?: string;
+  defaultSelected?: boolean;
 };
 
 const defaultBenefits = [
@@ -53,10 +65,19 @@ export function PricingCta({
   features,
   className,
   id,
+  orderBump,
 }: PricingCtaProps) {
-  const listItems = (
-    benefits?.length ? benefits : features?.length ? features : defaultBenefits
-  ).slice(0, 8);
+  const prioritizedBenefits =
+    (benefits?.filter((item): item is string => Boolean(item && item.trim())) ?? []).length > 0
+      ? benefits
+      : (features?.filter((item): item is string => Boolean(item && item.trim())) ?? []).length > 0
+        ? features
+        : defaultBenefits;
+
+  const normalizedBenefits =
+    prioritizedBenefits?.filter((item): item is string => Boolean(item && item.trim())) ?? [];
+
+  const listItems = (normalizedBenefits.length > 0 ? normalizedBenefits : defaultBenefits).slice(0, 8);
 
   const showPriceDetails = Boolean(
     price || priceLabel || originalPrice || priceNote
@@ -65,7 +86,6 @@ export function PricingCta({
   const socialProofConfig = {
     userCount: 1938,
     starRating: 5,
-    userLabel: "Users",
   } as const;
 
   // Calculate discount percentage if original price exists
@@ -78,6 +98,24 @@ export function PricingCta({
     }
   }
 
+  const orderBumpHasContent =
+    Boolean(orderBump?.title) ||
+    Boolean(orderBump?.description) ||
+    Boolean(orderBump?.price) ||
+    Boolean(orderBump?.image) ||
+    (orderBump?.points?.length ?? 0) > 0 ||
+    (orderBump?.bullets?.length ?? 0) > 0;
+
+  const shouldRenderOrderBump = Boolean(orderBump) && orderBumpHasContent;
+
+  const orderBumpItems: string[] = shouldRenderOrderBump
+    ? orderBump?.points?.length
+      ? orderBump.points.filter((item): item is string => Boolean(item && item.trim()))
+      : orderBump?.bullets?.length
+      ? orderBump.bullets.filter((item): item is string => Boolean(item && item.trim()))
+      : []
+    : [];
+
   return (
     <section
       id={id}
@@ -88,22 +126,13 @@ export function PricingCta({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left side content - Hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
-            {/* Product Title & Description */}
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+            <TypographyH2 className="mb-3">
               {heading || "Get Instant Access"}
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-6 lg:mb-8">
+            </TypographyH2>
+            <TypographyP className="mb-6 max-w-xl lg:mb-8">
               {subheading ||
                 "Start using our product immediately after checkout. No waiting, no delays."}
-            </p>
-
-            <SocialProofBanner
-              className="hidden lg:block mb-8"
-              avatars={[]}
-              userCount={socialProofConfig.userCount}
-              starRating={socialProofConfig.starRating}
-              userLabel={socialProofConfig.userLabel}
-            />
+            </TypographyP>
 
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
             <div className="hidden lg:block space-y-4 mb-8">
@@ -123,12 +152,10 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Instant Download
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Instant Download</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     Get access immediately after payment
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
 
@@ -148,12 +175,10 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Lifetime Updates
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Lifetime Updates</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     All future updates included at no extra cost
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
 
@@ -173,46 +198,54 @@ export function PricingCta({
                   />
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
-                    Premium Support
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <TypographyLarge className="text-gray-900">Premium Support</TypographyLarge>
+                  <TypographySmall className="text-gray-600">
                     Get help when you need it
-                  </p>
+                  </TypographySmall>
                 </div>
               </div>
             </div>
+
+            <SocialProofBanner
+              className="hidden lg:block mt-8"
+              avatars={[]}
+              userCount={socialProofConfig.userCount}
+              starRating={socialProofConfig.starRating}
+              align="start"
+            />
 
           </div>
 
           {/* Right side - pricing card */}
           <div className="relative order-1 lg:order-2">
             <div
-              className="relative flex flex-col bg-white rounded-xl mx-auto sm:mx-0 sm:max-w-md lg:max-w-[460px] lg:ml-auto lg:p-[40px_35px_35px]"
-              style={{
-                padding: "30px 25px 25px",
-                boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
-                border: "1px solid #e5e5e5",
-              }}
+              className={cn(
+                "relative mx-auto flex flex-col gap-6 sm:mx-0",
+                shouldRenderOrderBump
+                  ? "sm:max-w-xl lg:ml-auto lg:max-w-[960px] lg:grid lg:grid-cols-2 lg:items-stretch"
+                  : "sm:max-w-md lg:max-w-[460px] lg:ml-auto"
+              )}
             >
+              <div
+                className={cn(
+                  "relative flex flex-col rounded-xl bg-white",
+                  shouldRenderOrderBump ? "h-full" : "mx-auto sm:mx-0"
+                )}
+                style={{
+                  padding: shouldRenderOrderBump ? "28px 26px 26px" : "30px 25px 25px",
+                  boxShadow: "0 4px 24px rgba(0, 0, 0, 0.12)",
+                  border: "1px solid #e5e5e5",
+                }}
+              >
               {/* Product Title - Mobile Only */}
               <div className="text-center mb-4 lg:hidden">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <TypographyH2>
                   {heading || "Get Instant Access"}
-                </h2>
-                <p className="text-base md:text-lg text-gray-600 mt-2">
+                </TypographyH2>
+                <TypographyP className="mt-2">
                   {subheading ||
                     "Start using our product immediately after checkout. No waiting, no delays."}
-                </p>
-              </div>
-
-              <div className="mb-6 lg:hidden">
-                <SocialProofBanner
-                  avatars={[]}
-                  userCount={socialProofConfig.userCount}
-                  starRating={socialProofConfig.starRating}
-                  userLabel={socialProofConfig.userLabel}
-                />
+                </TypographyP>
               </div>
 
               {/* Pricing */}
@@ -238,16 +271,14 @@ export function PricingCta({
                     </div>
                   )}
                   {priceLabel && (
-                    <div
-                      className="mt-2"
-                      style={{
-                        color: "#6b7280",
-                        fontSize: "14px",
-                        fontStyle: "italic",
-                      }}
-                    >
+                    <TypographySmall className="mt-2 italic text-gray-600">
                       {priceLabel}
-                    </div>
+                    </TypographySmall>
+                  )}
+                  {priceNote && (
+                    <TypographySmall className="text-gray-600">
+                      {priceNote}
+                    </TypographySmall>
                   )}
                 </div>
               )}
@@ -258,18 +289,12 @@ export function PricingCta({
                   <div
                     className="rounded-md bg-rose-600 px-4 py-2.5 text-center text-[13px] font-bold tracking-wide text-white"
                   >
-                    {discountPercentage}% OFF - but only TODAY, on THURSDAY
+                    Save {discountPercentage}% today — limited-time offer
                   </div>
                 </div>
               )}
 
-              <div
-                style={{
-                  borderTop: "1px solid #e5e7eb",
-                  marginBottom: "20px",
-                  marginTop: "15px",
-                }}
-              ></div>
+              <div className="my-4 border-t border-gray-200" />
 
               {/* Benefits List */}
               <div className="mb-6">
@@ -277,70 +302,29 @@ export function PricingCta({
                   {listItems.map((feat, index) => (
                     <div key={index} className="flex items-center gap-2.5">
                       <span
-                        className="flex items-center justify-center rounded-full flex-shrink-0"
-                        style={{
-                          backgroundColor: "#dcfce7",
-                          width: "20px",
-                          height: "20px",
-                        }}
+                        className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
                       >
-                        <Check
-                          style={{
-                            color: "#16a34a",
-                            width: "12px",
-                            height: "12px",
-                            strokeWidth: "3",
-                          }}
-                        />
+                        <Check className="h-3 w-3" strokeWidth={3} />
                       </span>
-                      <span
-                        style={{
-                          color: "#374151",
-                          fontSize: "15px",
-                          fontFamily:
-                            "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                          lineHeight: "1.4",
-                        }}
-                      >
+                      <TypographySmall className="text-gray-700">
                         {feat}
-                      </span>
+                      </TypographySmall>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div
-                style={{ borderTop: "1px solid #e5e7eb", marginBottom: "20px" }}
-              ></div>
+              <div className="lg:hidden mt-2 mb-6">
+                <SocialProofBanner
+                  avatars={[]}
+                  userCount={socialProofConfig.userCount}
+                  starRating={socialProofConfig.starRating}
+                />
+              </div>
+
+              <div className="my-4 border-t border-gray-200" />
 
               {/* Additional info if provided */}
-              {(benefits?.length || features?.length) &&
-                benefits?.length !== listItems.length && (
-                  <div className="mb-4">
-                    <p
-                      className="text-left mb-3"
-                      style={{
-                        color: "#374151",
-                        fontSize: "14px",
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      Included:{" "}
-                      <strong>300 critical conversion checkpoints</strong>
-                    </p>
-                    <p
-                      className="text-left mb-4"
-                      style={{
-                        color: "#374151",
-                        fontSize: "14px",
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      Checklist last updated: <strong>October 2nd 2025</strong>
-                    </p>
-                  </div>
-                )}
-
               {/* CTA Button */}
               <div className="mb-5">
                 {onCtaClick ? (
@@ -428,18 +412,55 @@ export function PricingCta({
 
               {/* Terms/Disclaimer - only show if custom terms provided */}
               {terms && (
-                <div
-                  className="text-center leading-relaxed"
-                  style={{
-                    color: "#6b7280",
-                    fontSize: "13px",
-                    lineHeight: "1.5",
-                    fontFamily:
-                      "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                  }}
-                >
+                <TypographySmall className="text-center leading-relaxed text-gray-600">
                   {terms}
-                </div>
+                </TypographySmall>
+              )}
+              </div>
+
+              {shouldRenderOrderBump && orderBump && (
+                <aside
+                  data-testid="pricing-cta-order-bump"
+                  className="flex h-full flex-col gap-5 rounded-2xl border border-slate-200 bg-white/95 p-6 shadow-[0_10px_28px_rgba(15,23,42,0.08)]"
+                >
+                  <div className="space-y-3">
+                    <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-amber-600">
+                      Optional upgrade
+                    </span>
+                    <TypographyLarge className="text-lg font-semibold text-slate-900 sm:text-xl">
+                      {orderBump.title}
+                    </TypographyLarge>
+                    {orderBump.price && (
+                      <p className="text-sm font-semibold text-slate-500">
+                        Add for {orderBump.price}
+                      </p>
+                    )}
+                    {orderBump.description && (
+                      <TypographySmall className="text-slate-600">
+                        {orderBump.description}
+                      </TypographySmall>
+                    )}
+                  </div>
+
+                  {orderBumpItems.length > 0 && (
+                    <ul className="space-y-2">
+                      {orderBumpItems.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3 text-sm text-slate-600">
+                          <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                            <Check className="h-3 w-3" strokeWidth={3} />
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <p className="mt-auto rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
+                    {orderBump.defaultSelected
+                      ? "Selected for you during checkout. You can remove it before paying."
+                      : "Keep an eye out for this add-on — you can include it with one click at checkout."}
+                  </p>
+                </aside>
               )}
             </div>
           </div>

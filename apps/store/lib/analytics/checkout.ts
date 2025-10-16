@@ -88,3 +88,13 @@ export function trackCheckoutError(error: unknown, context: CheckoutContext & { 
     area: "checkout",
   });
 }
+
+export function trackCheckoutOrderBumpToggled(
+  selected: boolean,
+  context: CheckoutContext & { orderBumpId: string; orderBumpPrice?: number | null },
+) {
+  captureEvent("checkout_order_bump_toggled", {
+    selected,
+    ...context,
+  });
+}

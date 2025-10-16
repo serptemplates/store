@@ -132,10 +132,8 @@ return_policy:
 stripe:
   price_id: price_1S99gH06JrOmKRCm3wdakg7Q
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Iz6B925CR2f
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-twitch-video-downloader
 permission_justifications: []

@@ -134,10 +134,8 @@ return_policy:
 stripe:
   price_id: price_1S99g706JrOmKRCmt9pwi3AH
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HGmec4Qc0D6
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-snapchat-video-downloader
 permission_justifications: []

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createPayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
+import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
+import { resolveOrderBump } from "@/lib/products/order-bump";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
@@ -20,6 +22,12 @@ const requestSchema = z.object({
     })
     .optional(),
   couponCode: z.string().optional(),
+  orderBump: z
+    .object({
+      id: z.string().min(1, "orderBump.id is required"),
+      selected: z.boolean(),
+    })
+    .optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -54,6 +62,10 @@ export async function POST(request: NextRequest) {
 
   if (parsedBody.customer?.name) {
     parsedBody.customer.name = sanitizeInput(parsedBody.customer.name);
+  }
+
+  if (parsedBody.orderBump?.id) {
+    parsedBody.orderBump.id = sanitizeInput(parsedBody.orderBump.id);
   }
 
   const offer = getOfferConfig(parsedBody.offerId);
@@ -147,33 +159,80 @@ export async function POST(request: NextRequest) {
 
   // Get product data for price
   const product = getProductData(parsedBody.offerId);
-  const priceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
-  const price = parseFloat(priceString);
+  const resolvedOrderBump = resolveOrderBump(product);
   const quantity = parsedBody.quantity ?? 1;
 
-  const subtotalCents = Math.round(price * 100) * quantity;
+  const priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const fallbackPriceString = product.pricing?.price?.replace(/[^0-9.]/g, "") || "0";
+  const fallbackPrice = Number.parseFloat(fallbackPriceString);
+  const unitAmountCents = priceEntry?.unitAmount ?? Math.round(Number.isFinite(fallbackPrice) ? fallbackPrice * 100 : 0);
+  const currency = priceEntry?.currency ?? product.pricing?.currency?.toUpperCase() ?? "USD";
+  const baseSubtotalCents = unitAmountCents * quantity;
+
+  const baseDisplayPrice = priceEntry
+    ? formatAmountFromCents(priceEntry.unitAmount, currency)
+    : product.pricing?.price ?? `$${fallbackPrice.toFixed(2)}`;
+
+  const orderBumpSelected = Boolean(
+    parsedBody.orderBump?.selected &&
+      resolvedOrderBump &&
+      parsedBody.orderBump.id === resolvedOrderBump.id,
+  );
+
+  const orderBumpPriceCents =
+    orderBumpSelected && resolvedOrderBump?.priceNumber != null
+      ? Math.round(resolvedOrderBump.priceNumber * 100)
+      : 0;
+
+  if (resolvedOrderBump) {
+    metadataFromRequest.orderBumpId = resolvedOrderBump.id;
+    metadataFromRequest.orderBumpSelected = orderBumpSelected ? "true" : "false";
+    metadataFromRequest.orderBumpTitle = resolvedOrderBump.title;
+    const displayPrice = resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price;
+    if (displayPrice) {
+      metadataFromRequest.orderBumpDisplayPrice = displayPrice;
+    }
+    metadataFromRequest.orderBumpUnitCents = String(orderBumpPriceCents);
+  } else if (!metadataFromRequest.orderBumpSelected) {
+    metadataFromRequest.orderBumpSelected = "false";
+    metadataFromRequest.orderBumpUnitCents = "0";
+  }
 
   let discountCents = 0;
   if (couponValidation?.discount) {
     if (couponValidation.discount.type === "percentage") {
-      discountCents = Math.round(subtotalCents * (couponValidation.discount.amount / 100));
+      discountCents = Math.round(baseSubtotalCents * (couponValidation.discount.amount / 100));
     } else {
       discountCents = couponValidation.discount.amount * quantity;
     }
   }
 
-  if (discountCents > subtotalCents) {
-    discountCents = subtotalCents;
+  if (discountCents > baseSubtotalCents) {
+    discountCents = baseSubtotalCents;
   }
 
-  const totalAmountCents = Math.max(0, subtotalCents - discountCents);
+  const discountedSubtotalCents = Math.max(0, baseSubtotalCents - discountCents);
+  const totalAmountCents = discountedSubtotalCents + orderBumpPriceCents;
   const totalAmount = (totalAmountCents / 100).toFixed(2);
 
   if (normalizedCouponCode) {
-    metadataFromRequest.couponSubtotalCents = String(subtotalCents);
+    metadataFromRequest.couponSubtotalCents = String(baseSubtotalCents);
     metadataFromRequest.couponDiscountCents = String(discountCents);
-    metadataFromRequest.couponAdjustedTotalCents = String(totalAmountCents);
+    metadataFromRequest.couponAdjustedTotalCents = String(discountedSubtotalCents);
   }
+
+  metadataFromRequest.checkoutBaseSubtotalCents = String(baseSubtotalCents);
+  metadataFromRequest.checkoutSubtotalCents = String(discountedSubtotalCents);
+  metadataFromRequest.checkoutTotalCents = String(totalAmountCents);
+  metadataFromRequest.checkoutTotalWithOrderBumpCents = String(totalAmountCents);
+  metadataFromRequest.checkoutTotalWithoutOrderBumpCents = String(discountedSubtotalCents);
+  metadataFromRequest.checkoutCurrency = currency;
+  metadataFromRequest.checkoutBasePriceDisplay = baseDisplayPrice;
+
+  if (!metadataFromRequest.orderBumpUnitCents) {
+    metadataFromRequest.orderBumpUnitCents = "0";
+  }
+
 
   parsedBody.metadata = metadataFromRequest;
   if (normalizedCouponCode) {
@@ -203,7 +262,7 @@ export async function POST(request: NextRequest) {
     // Create PayPal order
     const paypalOrder = await createPayPalOrder({
       amount: totalAmount,
-      currency: "USD",
+      currency,
       description: product.name || `Purchase of ${parsedBody.offerId}`,
       offerId: parsedBody.offerId,
       metadata: orderMetadata,

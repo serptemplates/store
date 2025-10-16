@@ -128,10 +128,8 @@ return_policy:
 stripe:
   price_id: price_1S99g706JrOmKRCmWGVr96N6
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HHLNAQEaguS
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-skillshare-downloader
 permission_justifications: []

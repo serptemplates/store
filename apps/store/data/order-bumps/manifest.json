@@ -1,0 +1,16 @@
+{
+  "serp-downloaders-bundle": {
+    "enabled": true,
+    "title": "SERP Downloaders Bundle",
+    "description": "Get access to all of our downloaders, and be able to download anything from anywhere.",
+    "price": "$47.00",
+    "features": [
+      "Access to all downloaders"
+    ],
+    "default_selected": false,
+    "stripe": {
+      "price_id": "price_1SIZI606JrOmKRCmSgAmUGTQ",
+      "test_price_id": "price_1SIZY306JrOmKRCmOoTSIyCQ"
+    }
+  }
+}

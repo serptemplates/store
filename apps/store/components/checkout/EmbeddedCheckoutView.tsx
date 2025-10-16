@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, ChangeEvent, useMemo } from "react"
+import { useState, useEffect, useCallback, ChangeEvent, useMemo, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import {
@@ -9,24 +9,13 @@ import {
 } from "@stripe/react-stripe-js"
 import { PayPalCheckoutButton } from "@/components/paypal-button"
 import type { CheckoutProduct } from "@/components/checkout/types"
-import { trackCheckoutError, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
+import { trackCheckoutError, trackCheckoutOrderBumpToggled, trackCheckoutPageViewed, trackCheckoutPaymentMethodSelected, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 import type { EcommerceItem } from "@/lib/analytics/gtm"
+import { Check, Loader2 } from "lucide-react"
 
 // Initialize Stripe
 const stripePromise = loadStripe(requireStripePublishableKey())
-
-// Mock product data
-const mockProducts: Record<string, CheckoutProduct> = {
-  "tiktok-downloader": {
-    slug: "tiktok-downloader",
-    name: "TikTok Downloader",
-    title: "TikTok Downloader",
-    price: 67.00,
-    originalPrice: 97.00,
-    currency: "USD",
-  },
-}
 
 export function EmbeddedCheckoutView() {
   const searchParams = useSearchParams()
@@ -49,28 +38,91 @@ export function EmbeddedCheckoutView() {
   const [termsAcceptedAt, setTermsAcceptedAt] = useState(
     () => new Date().toISOString()
   )
+  const [orderBumpSelected, setOrderBumpSelected] = useState(false)
+  const [isRefreshingSession, setIsRefreshingSession] = useState(false)
   const productName = product?.name ?? null
+  const initialStripeSession = useRef(true)
 
   useEffect(() => {
-    if (productSlug) {
-      const fallbackName = productSlug.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
-      const productData = mockProducts[productSlug] || {
-        slug: productSlug,
-        name: fallbackName,
-        title: fallbackName,
-        price: 67.00,
-        originalPrice: 97.00,
-        currency: "USD",
-      }
-      setProduct(productData)
-    } else {
+    if (!productSlug) {
       router.push("/")
+      return
     }
-    setIsLoading(false)
+
+    let isCancelled = false
+    const controller = new AbortController()
+
+    async function loadProduct() {
+      setIsLoading(true)
+      setError(null)
+      setProduct(null)
+      setOrderBumpSelected(false)
+
+      try {
+        const response = await fetch(`/api/checkout/products/${productSlug}`, {
+          method: "GET",
+          signal: controller.signal,
+        })
+
+        if (!response.ok) {
+          throw new Error(`Failed to load product (${response.status})`)
+        }
+
+        const data = (await response.json()) as CheckoutProduct
+
+        if (isCancelled) {
+          return
+        }
+
+        setProduct(data)
+        setOrderBumpSelected(data.orderBump?.defaultSelected ?? false)
+        initialStripeSession.current = true
+      } catch (err) {
+        if (isCancelled || (err instanceof DOMException && err.name === "AbortError")) {
+          return
+        }
+        console.error("Error loading product:", err)
+        setError("Unable to load product details. Please try again.")
+      } finally {
+        if (!isCancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    void loadProduct()
+
+    return () => {
+      isCancelled = true
+      controller.abort()
+    }
   }, [productSlug, router])
 
-  const finalPrice = typeof product?.price === "number" ? Number(product.price) : 67.0
+  const basePrice = typeof product?.price === "number" ? product.price : 67.0
+  const orderBumpPrice = product?.orderBump?.price ?? 0
+  const finalPrice = Number(
+    (basePrice + (orderBumpSelected && product?.orderBump ? orderBumpPrice : 0)).toFixed(2),
+  )
   const currency = product?.currency ?? "USD"
+  const basePriceDisplay = useMemo(
+    () =>
+      new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency,
+      }).format(basePrice),
+    [currency, basePrice],
+  )
+  const finalPriceDisplay = useMemo(
+    () =>
+      new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency,
+      }).format(finalPrice),
+    [currency, finalPrice],
+  )
+
+  const upgradePriceDisplay = product?.orderBump?.priceDisplay ?? undefined
+  const orderBumpHighlights = product?.orderBump?.points.slice(0, 3) ?? []
 
   const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
     if (!product || !productSlug) {
@@ -79,7 +131,7 @@ export function EmbeddedCheckoutView() {
     return {
       item_id: product.slug ?? productSlug,
       item_name: product.name ?? productSlug,
-      price: Number(finalPrice.toFixed(2)),
+      price: finalPrice,
       quantity: 1,
     }
   }, [product, productSlug, finalPrice])
@@ -101,9 +153,11 @@ export function EmbeddedCheckoutView() {
 
   // Create Stripe checkout session
   const fetchClientSecret = useCallback(async () => {
-    if (!product || !termsAccepted) return null
+    if (!product || !termsAccepted || !productSlug) return null
 
     try {
+      setClientSecret("")
+
       const response = await fetch("/api/checkout/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -111,11 +165,24 @@ export function EmbeddedCheckoutView() {
           offerId: productSlug,
           uiMode: "embedded", // Request embedded mode
           affiliateId,
+          orderBump: product.orderBump
+            ? {
+                id: product.orderBump.id,
+                selected: orderBumpSelected,
+              }
+            : undefined,
           metadata: {
             landerId: productSlug,
             checkoutSource: "custom_checkout_stripe",
             termsAccepted: "true",
             termsAcceptedAt,
+            ...(product.orderBump
+              ? {
+                  orderBumpId: product.orderBump.id,
+                  orderBumpSelected: orderBumpSelected ? "true" : "false",
+                  orderBumpPrice: product.orderBump.priceDisplay,
+                }
+              : {}),
           },
         }),
       })
@@ -133,6 +200,7 @@ export function EmbeddedCheckoutView() {
         return null
       }
 
+      const isInitialSelection = initialStripeSession.current
       trackCheckoutSessionReady({
         provider: "stripe",
         productSlug: productSlug ?? null,
@@ -141,8 +209,9 @@ export function EmbeddedCheckoutView() {
         currency,
         value: finalPrice,
         ecommerceItem,
-        isInitialSelection: true,
+        isInitialSelection,
       })
+      initialStripeSession.current = false
 
       return data.client_secret
     } catch (err) {
@@ -156,7 +225,7 @@ export function EmbeddedCheckoutView() {
       })
       return null
     }
-  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName, currency, finalPrice, ecommerceItem])
+  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName, currency, finalPrice, ecommerceItem, orderBumpSelected])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
@@ -165,14 +234,31 @@ export function EmbeddedCheckoutView() {
       return
     }
 
-    if (product && !showPayPal) {
-      fetchClientSecret().then(secret => {
+  if (product && !showPayPal) {
+    let isActive = true
+    setIsRefreshingSession(true)
+    setClientSecret("")
+
+    fetchClientSecret()
+      .then(secret => {
+        if (!isActive) return
         if (secret) {
           setClientSecret(secret)
         }
       })
+      .finally(() => {
+        if (isActive) {
+          setIsRefreshingSession(false)
+        }
+      })
+
+    return () => {
+      isActive = false
     }
-  }, [product, showPayPal, fetchClientSecret, termsAccepted])
+  }
+
+  setIsRefreshingSession(false)
+}, [product, showPayPal, fetchClientSecret, termsAccepted])
 
   const handleTermsChange = (event: ChangeEvent<HTMLInputElement>) => {
     const accepted = event.target.checked
@@ -181,6 +267,34 @@ export function EmbeddedCheckoutView() {
       setTermsAcceptedAt(new Date().toISOString())
     }
   }
+
+  const handleOrderBumpToggle = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked
+    setOrderBumpSelected(checked)
+
+    if (product?.orderBump) {
+      const nextValue = Number((basePrice + (checked ? orderBumpPrice : 0)).toFixed(2))
+      const nextEcommerceItem: EcommerceItem | undefined = productSlug
+        ? {
+            item_id: product.slug ?? productSlug,
+            item_name: product.name ?? productSlug,
+            price: nextValue,
+            quantity: 1,
+          }
+        : undefined
+
+      trackCheckoutOrderBumpToggled(checked, {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: nextValue,
+        ecommerceItem: nextEcommerceItem,
+        orderBumpId: product.orderBump.id,
+        orderBumpPrice: product.orderBump.price,
+      })
+    }
+  }, [product, basePrice, orderBumpPrice, productSlug, productName, affiliateId, currency])
 
   const handleSelectStripe = useCallback(() => {
     setShowPayPal(false)
@@ -238,15 +352,21 @@ export function EmbeddedCheckoutView() {
     paypalMetadata.termsAcceptedAt = termsAcceptedAt
   }
 
+  if (product?.orderBump) {
+    paypalMetadata.orderBumpId = product.orderBump.id
+    paypalMetadata.orderBumpSelected = orderBumpSelected ? "true" : "false"
+    paypalMetadata.orderBumpPrice = product.orderBump.priceDisplay
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Payment Method Toggle */}
-        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div className="bg-white rounded-lg shadow-sm px-5 py-3 mb-3">
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={handleSelectStripe}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-7 py-2.5 rounded-lg font-semibold transition-colors ${
                 !showPayPal
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -256,7 +376,7 @@ export function EmbeddedCheckoutView() {
             </button>
             <button
               onClick={handleSelectPayPal}
-              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-7 py-2.5 rounded-lg font-semibold transition-colors ${
                 showPayPal
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -269,39 +389,39 @@ export function EmbeddedCheckoutView() {
 
         {/* Checkout Content */}
         <div className="bg-white rounded-lg shadow-sm p-6">
-          {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
-            </div>
-          )}
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm">{error}</p>
+              </div>
+            )}
 
-          {!showPayPal ? (
-            // Stripe Embedded Checkout
-            clientSecret && termsAccepted ? (
-              <div id="checkout" className="relative">
-                <EmbeddedCheckoutProvider
-                  stripe={stripePromise}
-                  options={{ clientSecret }}
-                >
-                  <EmbeddedCheckout />
-                </EmbeddedCheckoutProvider>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center py-12">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">
-                    {termsAccepted ? "Loading payment form..." : "Please agree to the Terms to continue"}
-                  </p>
+            {!showPayPal ? (
+              // Stripe Embedded Checkout
+              clientSecret && termsAccepted ? (
+                <div id="checkout" className="relative">
+                  <EmbeddedCheckoutProvider
+                    stripe={stripePromise}
+                    options={{ clientSecret }}
+                  >
+                    <EmbeddedCheckout />
+                  </EmbeddedCheckoutProvider>
                 </div>
-              </div>
-            )
-          ) : (
-            // PayPal Checkout
-            <div className="space-y-4">
+              ) : (
+                <div className="flex items-center justify-center py-12">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">
+                      {termsAccepted ? "Loading payment form..." : "Please agree to the Terms to continue"}
+                    </p>
+                  </div>
+                </div>
+              )
+            ) : (
+              // PayPal Checkout
+              <div className="space-y-4">
               <PayPalCheckoutButton
                 offerId={productSlug || ''}
-                price={`$${finalPrice.toFixed(2)}`}
+                price={finalPriceDisplay}
                 affiliateId={affiliateId}
                 metadata={paypalMetadata}
                 buttonText="Pay with PayPal"
@@ -353,6 +473,71 @@ export function EmbeddedCheckoutView() {
             )}
           </div>
         </div>
+
+        {product.orderBump && (
+          <div className="mt-6 rounded-xl border border-green-200 bg-white p-6 shadow-sm min-h-56">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+              <div className="col-span-2 space-y-4">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-2xl font-semibold text-green-900">
+                    {product.orderBump.title}
+                  </h3>
+                </div>
+                {product.orderBump.description && (
+                  <p className="text-base text-green-700 leading-relaxed">
+                    {product.orderBump.description}
+                  </p>
+                )}
+
+                {orderBumpHighlights.length > 0 && (
+                  <ul className="mt-2 space-y-2 text-sm text-green-800">
+                    {orderBumpHighlights.map((point, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <Check className="mt-0.5 h-4 w-4 text-green-600" strokeWidth={3} />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3 lg:items-end lg:text-right h-full justify-start">
+                <div className="space-y-2">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-green-100 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-green-700 whitespace-nowrap">
+                    LIMITED TIME
+                    {product.orderBump.defaultSelected && (
+                      <span className="rounded-full bg-green-600/10 px-1.5 py-0.5 text-green-700">Popular</span>
+                    )}
+                  </span>
+                  <div className="flex lg:justify-end items-baseline gap-1">
+                    <span className="text-3xl font-bold text-green-900">
+                      {upgradePriceDisplay ?? "$—"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label
+              className={`flex items-center gap-3 mt-6 p-4 rounded-lg border-2 border-green-300 bg-green-50 font-medium transition cursor-pointer hover:border-green-400 hover:bg-green-100 ${
+                isRefreshingSession ? "cursor-wait opacity-70" : ""
+              }`}
+            >
+              <input
+                type="checkbox"
+                className="h-6 w-6 rounded border-green-300 text-green-600 focus:ring-green-500"
+                checked={orderBumpSelected}
+                onChange={handleOrderBumpToggle}
+                disabled={isRefreshingSession}
+              />
+              <span className="text-base text-green-900">{orderBumpSelected ? "Added ✓" : "Yes, add it to my order"}</span>
+            </label>
+
+            {product.orderBump.terms && (
+              <p className="mt-4 text-xs text-green-600">{product.orderBump.terms}</p>
+            )}
+          </div>
+        )}
 
         {/* Trust Badges */}
         <div className="mt-6 text-center">

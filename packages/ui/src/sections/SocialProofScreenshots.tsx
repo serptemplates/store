@@ -44,13 +44,12 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
           </TypographyH2>
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {screenshots.map((screenshot) => (
             !errorImages.has(screenshot.id) && (
               <div
                 key={screenshot.id}
-                className="relative mx-auto"
-                style={{ width: '700px', maxWidth: '100%', height: 'auto' }}
+                className="relative"
               >
                 <Image
                   src={typeof screenshot.src === 'string' ? screenshot.src : screenshot.src.src || screenshot.src}
@@ -60,7 +59,7 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
                   className="w-full h-auto"
                   onError={() => handleImageError(screenshot.id)}
                   loading="lazy"
-                  sizes="(max-width: 768px) 100vw, 700px"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   quality={85}
                 />
               </div>

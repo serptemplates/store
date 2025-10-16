@@ -268,14 +268,8 @@ export function HomeTemplate({
         {/* Social Proof Screenshots */}
         <SocialProofScreenshots />
 
-        {/* Permissions */}
-        <PermissionsJustificationAccordion items={permissionJustifications} />
-
         {/* FAQ */}
         <FaqSection faqs={faqList} />
-
-        {/* About Section */}
-        <AboutSection team={teamMembers} />
 
         {/* Pricing CTA (configurable per site) */}
         {(pricing?.enabled ?? true) && (
@@ -295,8 +289,13 @@ export function HomeTemplate({
             ctaExtra={pricing?.ctaExtra}
             terms={pricing?.terms}
             id={pricing?.id ?? "pricing"}
+            orderBump={pricing?.orderBump}
           />
         )}
+
+
+        {/* Team Section */}
+        <AboutSection team={teamMembers} />
 
         {/* Permissions */}
         <PermissionsJustificationAccordion items={permissionJustifications} />

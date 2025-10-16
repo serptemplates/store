@@ -17,16 +17,6 @@ import {
   type OrderSummary,
 } from "./types"
 
-const mockProducts: Record<string, CheckoutProduct> = {
-  "tiktok-downloader": {
-    slug: "tiktok-downloader",
-    name: "TikTok Downloader",
-    title: "TikTok Downloader",
-    price: 67.0,
-    originalPrice: 97.0,
-  },
-}
-
 function buildDefaultProduct(slug: string): CheckoutProduct {
   const normalizedName = slug
     .replace(/-/g, " ")
@@ -38,6 +28,9 @@ function buildDefaultProduct(slug: string): CheckoutProduct {
     title: normalizedName,
     price: 67.0,
     originalPrice: 97.0,
+    priceDisplay: "$67.00",
+    originalPriceDisplay: "$97.00",
+    currency: "USD",
   }
 }
 
@@ -214,13 +207,54 @@ export function useCheckoutPage(): UseCheckoutPageResult {
   }, [appliedCoupon, clearCoupon, couponCodeValue])
 
   useEffect(() => {
-    if (productSlug) {
-      const productData = mockProducts[productSlug] || buildDefaultProduct(productSlug)
-      setProduct(productData)
-    } else {
+    if (!productSlug) {
       router.push("/")
+      setProduct(null)
+      setIsLoading(false)
+      return
     }
-    setIsLoading(false)
+
+    let isCancelled = false
+    const controller = new AbortController()
+
+    async function loadProduct() {
+      setIsLoading(true)
+
+      try {
+        const response = await fetch(`/api/checkout/products/${productSlug}`, {
+          method: "GET",
+          signal: controller.signal,
+        })
+
+        if (!response.ok) {
+          throw new Error(`Unable to load checkout product (${response.status})`)
+        }
+
+        const data = (await response.json()) as CheckoutProduct
+
+        if (!isCancelled) {
+          setProduct(data)
+        }
+      } catch (error) {
+        if (isCancelled) {
+          return
+        }
+
+        console.error("Failed to load checkout product", error)
+        setProduct(buildDefaultProduct(productSlug))
+      } finally {
+        if (!isCancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    void loadProduct()
+
+    return () => {
+      isCancelled = true
+      controller.abort()
+    }
   }, [productSlug, router])
 
   useEffect(() => {

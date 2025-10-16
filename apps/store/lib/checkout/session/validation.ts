@@ -70,6 +70,17 @@ export async function parseCheckoutRequest(request: NextRequest): Promise<Checko
     metadata.affiliateId = body.affiliateId;
   }
 
+  if (body.orderBump?.id) {
+    body.orderBump.id = sanitizeInput(body.orderBump.id);
+  }
+
+  if (body.orderBump) {
+    metadata.orderBumpId = body.orderBump.id;
+    metadata.orderBumpSelected = body.orderBump.selected ? "true" : "false";
+  } else if (!metadata.orderBumpSelected) {
+    metadata.orderBumpSelected = "false";
+  }
+
   const { clientIp, userAgent } = extractClientIp(request);
 
   const normalizedCheckoutSource = metadata.checkoutSource?.trim();

@@ -128,10 +128,8 @@ return_policy:
 stripe:
   price_id: price_1S99wl06JrOmKRCmpsVjKERK
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GzNN1Yu0VFV
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-chaturbate-downloader
 permission_justifications: []

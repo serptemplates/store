@@ -131,10 +131,8 @@ return_policy:
 stripe:
   price_id: price_1S99gI06JrOmKRCmA9xUhbN6
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Id9wmYp3UtU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-unsplash-downloader
 permission_justifications: []

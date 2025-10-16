@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1RvXID06JrOmKRCmdSqQK07c
   metadata:
-    source: generated
     stripe_product_id: prod_SrFXvsPxRa2Ugv
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-eporner-downloader
 new_release: true

@@ -122,8 +122,38 @@ describe("productToHomeTemplate", () => {
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
     expect(pricing.ctaHref).toBe("/checkout?product=sample-product");
     expect(pricing.ctaText).toBe("Get Started");
+    expect(pricing.subheading).toBeUndefined();
     expect(template.posts).toHaveLength(1);
     expect(template.postsTitle).toBe("Posts");
+  });
+
+  it("allows overriding or suppressing the pricing subheading", () => {
+    const explicitSubheadingProduct: ProductData = {
+      ...baseProduct,
+      pricing: {
+        price: "$59",
+        benefits: [],
+        subheading: "Custom pricing message",
+      },
+    };
+
+    const templateWithExplicit = productToHomeTemplate(explicitSubheadingProduct, []);
+    expect(templateWithExplicit.pricing?.subheading).toBe("Custom pricing message");
+
+    const templateWithoutField = productToHomeTemplate(baseProduct, []);
+    expect(templateWithoutField.pricing?.subheading).toBeUndefined();
+
+    const hiddenSubheadingProduct: ProductData = {
+      ...baseProduct,
+      pricing: {
+        price: baseProduct.pricing?.price,
+        benefits: baseProduct.pricing?.benefits ?? [],
+        subheading: " ",
+      },
+    };
+
+    const templateWithBlank = productToHomeTemplate(hiddenSubheadingProduct, []);
+    expect(templateWithBlank.pricing?.subheading).toBeUndefined();
   });
 
   it("prefers buy_button_destination for CTA links when provided", () => {

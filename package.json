@@ -3,7 +3,7 @@
   "packageManager": "pnpm@9.11.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter @apps/store dev",
+    "dev": "pnpm run validate:products && pnpm --filter @apps/store dev",
     "build": "pnpm -r --parallel build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r --if-present typecheck",
@@ -27,7 +27,8 @@
     "test:lhci:local": "pnpm --filter @apps/store test:lhci:local",
     "test:unit": "pnpm --filter @apps/store test:unit",
     "test:all": "pnpm --filter @apps/store test:all",
-    "test:smoke": "pnpm --filter @apps/store test:smoke"
+    "test:smoke": "pnpm --filter @apps/store test:smoke",
+    "ci:unit": "pnpm --filter @apps/store test:unit && pnpm --filter @apps/store validate:products"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

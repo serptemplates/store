@@ -140,10 +140,8 @@ return_policy:
 stripe:
   price_id: price_1S99fd06JrOmKRCmxtuDhI3T
   metadata:
-    source: generated
     stripe_product_id: prod_SqhYIO8EBULvaD
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-ai-voice-cloner-app
 new_release: true
