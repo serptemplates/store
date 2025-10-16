@@ -1,5 +1,6 @@
 import { type FC } from "react"
 import Image from "next/image"
+import { TypographyH2, TypographyP } from "@repo/ui"
 
 export interface TeamMember {
   name: string
@@ -15,8 +16,8 @@ export interface AboutSectionProps {
 }
 
 export const AboutSection: FC<AboutSectionProps> = ({
-  title = "The faces behind SERP Apps",
-  subtitle = "Two outstanding individuals who also happen to be best friends.",
+  title = "Nice to meet ya 👋",
+  subtitle,
   team
 }) => {
   return (
@@ -24,9 +25,9 @@ export const AboutSection: FC<AboutSectionProps> = ({
       <div className="mx-auto max-w-7xl">
         {/* Title Section */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+          <TypographyH2 className="text-center">
             {title}
-          </h2>
+          </TypographyH2>
         </div>
 
         {/* Team Members */}
@@ -60,10 +61,10 @@ export const AboutSection: FC<AboutSectionProps> = ({
               )}
 
               {/* Content fills remaining space */}
-              <div className="flex-1 p-4 bg-gradient-to-br from-gray-50 to-blue-50">
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <div className="flex-1 p-5 bg-gradient-to-br from-gray-50 to-blue-50">
+                <TypographyP className="text-base leading-relaxed text-gray-700">
                   <span className="font-semibold text-gray-900">{member.name.split(' ')[0]}</span> is {member.description}
-                </p>
+                </TypographyP>
               </div>
             </div>
           ))}

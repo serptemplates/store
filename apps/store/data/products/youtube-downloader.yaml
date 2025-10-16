@@ -28,6 +28,7 @@ product_videos: []
 related_videos: []
 related_posts:
 - how-to-download-youtube-videos
+- how-to-download-youtube-videos-for-free-with-yt-dlp
 github_repo_url: https://github.com/serpapps/youtube-downloader
 github_repo_tags: []
 chrome_webstore_link: null
@@ -43,7 +44,7 @@ features:
 - Livestream recording
 - Format conversion & optimization
 - Thumbnail extraction
-- Command-line tools
+
 - Resume downloads
 - Duplicate detection
 - Custom folder organization

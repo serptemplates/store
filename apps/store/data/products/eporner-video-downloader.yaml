@@ -34,7 +34,7 @@ features:
 - Auto content metadata and tag extraction
 - Resume downloads
 - Cross-platform support
-- Command-line tools
+
 - Built-in privacy controls and secure downloading
 - Custom folder organization and file naming
 - Duplicate detection features
@@ -136,4 +136,49 @@ ghl:
   tag_ids:
   - purchase-eporner-downloader
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |-
+    Required for downloading Eporner videos directly to the user's computer.
+
+    Usage highlights:
+    - `background-enhanced.js:59` cancels downloads with the Chrome Downloads API when a user stops a transfer.
+    - `background-enhanced.js:285` initiates new downloads through the API.
+    - `background-enhanced.js:395, 404, 408` listen for download state and progress updates.
+    - `popup.js:228` looks up download details by ID to show progress inside the popup.
+- permission: activeTab
+  justification: |-
+    Needed to interact with the currently active tab so the extension can detect videos and extract their URLs.
+
+    Usage highlights:
+    - `popup.js:30-33` inspects the active tab to verify the user is on an Eporner page.
+    - `background-enhanced.js:80, 247` fetch the active tab for API requests and download orchestration.
+    - Multiple `chrome.tabs.sendMessage` calls relay instructions to content scripts running on the active tab.
+- permission: storage
+  justification: |-
+    Required to store activation status and license metadata locally, ensuring paid features unlock properly.
+
+    Usage highlights:
+    - `auth.js` `saveActivation` persists activation flags, license keys, and associated emails.
+    - `auth.js` `checkActivationStatus` restores stored activation information whenever the popup opens.
+- permission: notifications
+  justification: |-
+    Allows the extension to surface system notifications about download progress, completion, or errors.
+
+    Usage highlights:
+    - `background-enhanced.js:426` creates notifications with `chrome.notifications.create`.
+    - Lines 399-402, 406, 447-457 send completion, failure, no-video-found, and wrong-site alerts.
+- permission: contextMenus
+  justification: |-
+    Lets the extension add a "Download Eporner Video" option to the browser's right-click menu on Eporner pages.
+
+    Usage highlights:
+    - `background-enhanced.js:10` registers the context menu entry via `chrome.contextMenus.create`.
+    - `background-enhanced.js:22` handles clicks with `chrome.contextMenus.onClicked` to begin downloads.
+- permission: tabs
+  justification: |-
+    Enables tab queries, messaging, and opening helper tabs that are necessary for coordinating downloads.
+
+    Usage highlights:
+    - `popup.js:30, 44, 288` query tabs, send messages to content scripts, and open history/details tabs.
+    - `background-enhanced.js:24, 80, 86, 138, 247, 253, 442` perform tab communication for download management.

@@ -136,4 +136,49 @@ ghl:
   tag_ids:
   - purchase-xhamster-downloader
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |-
+    Required for downloading XHamster videos to local storage while monitoring progress.
+
+    Usage highlights:
+    - `background-enhanced.js:69` cancels active downloads via the Chrome Downloads API.
+    - `background-enhanced.js:375` starts new downloads.
+    - `background-enhanced.js:464, 473, 477` listen for state changes and progress updates.
+    - `popup.js:210` looks up downloads by ID to surface progress information in the popup.
+- permission: activeTab
+  justification: |-
+    Lets the extension inspect the active tab so it can verify XHamster pages and collect video metadata.
+
+    Usage highlights:
+    - `popup.js:30-33` checks the active tab before enabling download controls.
+    - `background-enhanced.js:337` retrieves active tab details to drive download logic.
+    - Additional `chrome.tabs.query` calls support video URL extraction.
+- permission: storage
+  justification: |-
+    Stores license activation state and related information locally to ensure premium features remain unlocked.
+
+    Usage highlights:
+    - `auth.js` `saveActivation` persists license status, keys, and emails.
+    - `auth.js` `checkActivationStatus` reloads stored activation details whenever the popup opens.
+- permission: notifications
+  justification: |-
+    Enables system notifications that inform users about download success, errors, or other status changes.
+
+    Usage highlights:
+    - `background-enhanced.js:495` creates notifications with `chrome.notifications.create`.
+    - Notifications track download completions and error scenarios for clear feedback.
+- permission: contextMenus
+  justification: |-
+    Allows the extension to add a "Download XHamster Video" option to the browser's context menu on supported domains.
+
+    Usage highlights:
+    - `background-enhanced.js:10` registers the context menu entry through `chrome.contextMenus.create`.
+    - `background-enhanced.js:32` handles menu clicks via `chrome.contextMenus.onClicked` to launch downloads.
+- permission: tabs
+  justification: |-
+    Supports tab querying and messaging required to coordinate downloads and open supporting pages.
+
+    Usage highlights:
+    - `popup.js:44, 265` sends messages to content scripts and opens new tabs as needed.
+    - `background-enhanced.js:34, 343, 511` exchanges messages with tabs to control download flows.

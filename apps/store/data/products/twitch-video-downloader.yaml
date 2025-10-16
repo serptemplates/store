@@ -38,7 +38,7 @@ features:
 - Subscriber-only and restricted content
 - Auto thumbnail and preview generation
 - Resume downloads
-- Command-line tools
+
 - Cross-platform support
 - Custom folder organization
 - Built-in player with timestamp navigation

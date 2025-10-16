@@ -9,6 +9,7 @@ export type ExtendedProductMetadata = {
   deliverables?: unknown[];
   bulk_tools?: unknown;
   automations?: unknown;
+  order_bump?: unknown;
 };
 
 export type ExtendedProductData = ProductData & {

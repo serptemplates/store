@@ -1,0 +1,75 @@
+# Whop Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method         | Status     | Notes                              |
+| ---------------------- | ----------------------- | ----------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | Whop pages              | Multi-source extraction | ✅ Works   | Individual video downloads only    |
+| **Mux Players**        | Whop + embedded         | Mux component parsing   | ✅ Works   | mux-player and mux-video elements  |
+| **HLS Streams**        | All Whop videos         | M3U8 segment download   | ✅ Works   | Offscreen FastStream processing    |
+| **Direct MP4**         | All Whop videos         | Chrome downloads API    | ✅ Works   | Direct download with progress      |
+| **Shadow DOM**         | Whop components         | Deep DOM traversal      | ✅ Works   | Scans shadow roots recursively     |
+| **Library Cards**      | Whop video galleries    | Card button injection   | ✅ Works   | Download buttons on video cards    |
+| **Embedded Videos**    | Third-party sites       | Iframe + Mux detection  | ✅ Works   | Detects Whop embeds on any site    |
+
+## Supported Formats
+
+- **MP4** (Primary format - direct downloads)
+- **HLS/M3U8** (Streaming format with offscreen conversion)
+- **Mux HLS** (Mux.com hosted streams)
+- **Multiple qualities** (From Mux playback variants)
+- **cast-src URLs** (Mux cast-src attribute preferred over src)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (paid product purchase)
+- Internet connection for license validation
+- Must be on supported Whop pages or embeds
+- Offscreen document API for HLS processing
+
+## Supported Whop URLs
+
+- Primary: `https://whop.com/*`, `https://*.whop.com/*`
+- Assets: `https://assets.whop.com/*`
+- Mux CDN: `https://stream.mux.com/*`, `https://image.mux.com/*`, `https://*.mux.com/*`
+- Embeds: Works on any website with Whop video embeds
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Help system** - Toggle-able usage instructions
+- **Overlay download buttons** - Positioned on video containers
+- **Library card buttons** - Floating download buttons on video cards
+- **Viewport fallback button** - Fixed position for tricky layouts
+- **Standalone media button** - For directly opened MP4/video files
+- **Download manager** - Shared in-page download cards with progress
+- **Shadow DOM awareness** - Detects videos in shadow roots
+
+## Technical Features
+
+- **Deep DOM traversal** - Recursive shadow DOM scanning with deepQueryAll
+- **Mux component extraction** - Parses mux-player and mux-video elements
+- **cast-src prioritization** - Prefers Mux cast-src over src attribute
+- **Poster inference** - Extracts thumbnails from media-poster-image shadow elements
+- **Multi-source video detection** - Checks currentSrc, src, source elements
+- **Offscreen document** - FastStream/MediaBunny HLS processing
+- **M3U8 parsing** - Master playlist variant selection
+- **Quality selection** - Highest bandwidth variant auto-selection
+- **Download queue** - Concurrent download management (max 3)
+- **AbortController cancellation** - Graceful download cancellation
+- **Chrome downloads API** - Native download with progress tracking
+- **Download manager state** - Persistent storage with chrome.storage.local
+- **Cross-tab sync** - Download state broadcast to all Whop tabs
+- **Stale entry pruning** - Auto-cleanup of old download entries (12h/2h)
+- **Activation gating** - License-protected download controls
+- **Dynamic content observation** - MutationObserver for SPA support
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **Whop network only** - Limited to Whop.com and Mux.com domains
+- **License required** - All functionality blocked without activation
+- **Chrome only** - No support for other browsers
+- **No download history** - Auto-pruning of completed downloads
+- **Internet dependency** - Requires connection for license validation and video access
+- **Mux token limitations** - playback-id fallback may require signed tokens
+- **Memory intensive** - HLS conversion done in offscreen document

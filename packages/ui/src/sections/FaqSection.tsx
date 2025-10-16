@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TypographyH2, TypographyP } from "@repo/ui";
 
 export type FAQ = { question: string; answer: string };
 
@@ -22,9 +23,9 @@ export function FaqSection({ faqs }: FaqSectionProps) {
   return (
     <section className="w-full bg-blue-50/30 py-24">
       <div className="container mx-auto max-w-3xl px-4">
-        <h2 className="mb-16 text-center text-2xl md:text-3xl font-bold text-gray-900">
-          Frequently asked questions
-        </h2>
+        <TypographyH2 className="mb-16 text-center">
+          FAQ
+        </TypographyH2>
         <div className="space-y-4">
           {faqs.map((item, index) => (
             <div
@@ -36,7 +37,7 @@ export function FaqSection({ faqs }: FaqSectionProps) {
                 className="flex w-full items-center justify-between p-8 text-left transition-all"
                 aria-expanded={openIndex === index}
               >
-                <h3 className="pr-4 text-lg font-semibold text-gray-900">
+                <h3 className="pr-4 text-base font-medium text-gray-900 md:text-lg">
                   {index + 1}. {item.question}
                 </h3>
                 <svg
@@ -60,11 +61,11 @@ export function FaqSection({ faqs }: FaqSectionProps) {
                   openIndex === index ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <div className="px-8 pb-8">
-                  <p className="text-base leading-relaxed text-gray-600">
-                    {item.answer}
-                  </p>
-                </div>
+                  <div className="px-8 pb-8">
+                    <TypographyP>
+                      {item.answer}
+                    </TypographyP>
+                  </div>
               </div>
             </div>
           ))}

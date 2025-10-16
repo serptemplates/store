@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState, type ComponentType } from "r
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
+import { TypographyH1, TypographyP, TypographySmall } from "@repo/ui";
 import HeroVideoDialog from "../magic/HeroVideoDialog";
 import { Progress } from "../progress";
 
@@ -155,24 +156,24 @@ export function Hero({
         >
           {/* Left: text content */}
           <div className="text-center lg:text-left">
-            <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
+            <TypographyH1 className="mb-6 text-4xl font-semibold md:text-5xl lg:text-6xl">
               {before}
               <span className="bg-gradient-to-r from-primary via-fuchsia-500 to-emerald-500 bg-clip-text text-transparent">
                 {` ${hi} `}
               </span>
               {after}
-            </h1>
+            </TypographyH1>
 
-            <p className="mb-6 text-base text-gray-600 lg:max-w-xl lg:pr-4">
+            <TypographyP className="mb-6 lg:max-w-xl lg:pr-4">
               {heroDescription}
-            </p>
+            </TypographyP>
 
             {Array.isArray(checklist) && checklist.length > 0 && (
               <div className="mb-8 grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:w-auto">
                 {checklist.slice(0, 6).map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-emerald-500" />
-                    <span className="text-sm text-gray-600">{item}</span>
+                    <TypographySmall className="leading-normal">{item}</TypographySmall>
                   </div>
                 ))}
               </div>

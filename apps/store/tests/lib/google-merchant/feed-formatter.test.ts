@@ -10,7 +10,7 @@ function createMerchantProduct() {
   return buildMerchantProduct(product, {
     country: "US",
     language: "en",
-    siteUrl: "https://store.serp.co",
+    siteUrl: "https://apps.serp.co",
     appsUrl: "https://apps.serp.co",
   });
 }
@@ -53,12 +53,12 @@ describe("feed-formatter", () => {
   it("serializes products to XML with expected tags", () => {
     const merchantProduct = createMerchantProduct();
     const xml = serializeMerchantProductsToXml([merchantProduct], {
-      title: "SERP Store Products",
-      link: "https://store.serp.co",
+      title: "SERP Apps",
+      link: "https://apps.serp.co",
     });
 
     expect(xml).toContain("<rss version=\"2.0\"");
-    expect(xml).toContain("<title>SERP Store Products</title>");
+    expect(xml).toContain("<title>SERP Apps</title>");
     expect(xml).toContain("<g:id>demo-product</g:id>");
     expect(xml).toContain("<g:price>19.00 USD</g:price>");
     expect(xml).toContain("<g:shipping>");

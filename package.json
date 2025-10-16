@@ -20,7 +20,7 @@
     "merchant:upload": "tsx scripts/google-merchant/upload-products.ts",
     "merchant:upload:store": "GOOGLE_MERCHANT_ACCOUNT_ID=5670488999 GOOGLE_SERVICE_ACCOUNT_KEY_PATH=google-creds.json tsx scripts/google-merchant/upload-products.ts",
     "merchant:export": "tsx scripts/google-merchant/export-feed.ts",
-    "merchant:export:store": "GOOGLE_MERCHANT_SITE_URL=https://store.serp.co GOOGLE_MERCHANT_APPS_URL=https://apps.serp.co tsx scripts/google-merchant/export-feed.ts",
+    "merchant:export:store": "GOOGLE_MERCHANT_SITE_URL=https://apps.serp.co GOOGLE_MERCHANT_APPS_URL=https://apps.serp.co tsx scripts/google-merchant/export-feed.ts",
     "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
     "validate:products": "pnpm --filter @apps/store validate:products",
     "update:video-metadata": "pnpm --filter @apps/store update:video-metadata",

@@ -38,7 +38,7 @@ features:
 - Resume interrupted video downloads with recovery
 - Cross-platform support
 - Built-in player with preview capabilities
-- Command-line tools
+
 - Video editing integration
 - Search video libraries
 - Duplicate detection

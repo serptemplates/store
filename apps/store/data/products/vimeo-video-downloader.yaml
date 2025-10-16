@@ -53,6 +53,10 @@ related_videos:
 - https://www.youtube.com/watch?v=MeLNJSwCnwk
 related_posts:
 - how-to-download-vimeo-videos
+- how-to-download-vimeo-videos-method-2-yt-dlp-at-the-m3u8-stream
+- how-to-download-vimeo-videos-streaming-via-hls-streamlink
+- downloading-password-protected-vimeo-videos-with-yt-dlp
+- downloading-long-vimeo-videos-dash-streams-with-yt-dlp
 github_repo_url: https://github.com/serpapps/vimeo-video-downloader
 github_repo_tags:
 - vimeo-downloader

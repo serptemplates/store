@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import type { StaticImageData } from "next/image"
+import { TypographyH2 } from "@repo/ui"
 
 interface SocialProofScreenshot {
   id: string
-  src: string | any // Can be either a URL string or an imported image
+  src: string | StaticImageData
   alt: string
 }
 
@@ -36,10 +38,10 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
   return (
     <section className="py-16 bg-gray-100">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+        <div className="text-center mb-12 space-y-3">
+          <TypographyH2 className="text-center">
             Happy users
-          </h2>
+          </TypographyH2>
         </div>
 
         <div className="space-y-4">

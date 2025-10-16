@@ -1,0 +1,62 @@
+# Skool Video Downloader - Supported Video Types
+
+| Video Type | Platform | Download Method | Status | Notes |
+|------------|----------|-----------------|--------|-------|
+| **Skool Native Videos** | Skool.com | HLS processing + Offscreen (FastStream) | ✅ Works | Primary feature - MUX player extraction |
+| **Community Post Videos** | Skool community posts | Shadow DOM extraction | ✅ Works | Authenticated URL detection |
+| **Classroom Videos** | Skool classrooms | HLS stream processing | ✅ Works | Educational content downloads |
+| **About Page Videos** | Skool about pages | MUX player detection | ✅ Works | Profile/promotional videos |
+| **Loom Videos** | Loom embeds/direct | HLS + direct download | ✅ Works | Multiple format support |
+| **Vimeo Videos** | Vimeo embeds/direct | Quality selection | ✅ Works | Dropdown quality chooser |
+| **YouTube Videos** | YouTube embeds | Information only | ⚠️ Info Only | Shows yt-dlp commands, no direct download |
+| **Wistia Videos** | Wistia embeds/direct | API extraction | ✅ Works | Direct download support |
+| **Password Protected** | Any platform | Password input | ✅ Works | Protected video access |
+| **Split A/V Streams** | Skool native | Offscreen merging | ✅ Works | Separate audio/video combination |
+
+## Supported Formats
+- **HLS/M3U8** (Primary - with segment processing)
+- **MP4** (Direct downloads and Offscreen processor output)
+- **Split Audio/Video** (Merged to single MP4 file)
+- **Quality**: Automatic best quality selection
+
+## Detection Methods
+- **MUX Player Detection**: Primary method for Skool native videos
+- **Shadow DOM Traversal**: Extracts authenticated URLs from protected content
+- **Script Tag Parsing**: Finds embedded video IDs in page JavaScript
+- **Iframe Detection**: Locates video embeds from supported platforms
+- **Multiple Fallback Patterns**: Platform-specific detection strategies
+
+## Requirements
+- Chrome/Chromium browser only
+- Valid license key required
+- Offscreen processing pipeline for stream processing
+- 3.5GB memory limit for large videos
+
+## Supported Platforms & URLs
+- **Skool.com**: `https://www.skool.com/*/classroom/*`, community posts, about pages
+- **Loom**: `https://www.loom.com/share/*`, `https://www.loom.com/embed/*`
+- **Vimeo**: `https://vimeo.com/*`, `https://player.vimeo.com/*`
+- **YouTube**: `https://www.youtube.com/*` (info only)
+- **Wistia**: `https://*.wistia.com/*`, `https://*.wistia.net/*`
+
+## Advanced Processing
+- **Authenticated URL Extraction**: Handles Skool's token-based video URLs
+- **Segment Batching**: 25 video segments or 20 A/V segments per batch
+- **Memory Management**: 3.5GB limit with garbage collection
+- **Progress Tracking**: Real-time download progress with speed monitoring
+- **Cancellation Support**: Can stop downloads mid-process
+
+## User Interface
+- **Multi-Platform Detection**: Automatically detects supported video types
+- **Thumbnail Display**: Shows video thumbnails with duration badges
+- **Quality Selection**: Dropdown for platforms that support multiple qualities
+- **YouTube Helper**: Generates yt-dlp commands for YouTube videos
+- **Progress Monitoring**: Real-time progress bars with percentage and speed
+
+## Important Limitations
+- **Single video processing** - One download at a time
+- **No format conversion** - Downloads in native platform formats only
+- **No subtitle downloads** - Video content only
+- **No bulk/batch downloads** - Individual video processing
+- **Memory constraints** - Large videos may fail on low-memory systems
+- **License required** - All functionality blocked without activation
