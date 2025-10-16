@@ -99,15 +99,3 @@ yt-dlp -f best \
 * Use yt-dlp (`best`) or ffmpeg (`-c copy`) to download.
 * Add headers/cookies if needed.
 ---
-title: "Download Wistia Videos via Browser Network Requests (HLS Playlist Guide)"
-slug: "download-wistia-videos-network-requests"
-seoTitle: "Download Wistia Videos with Network Requests (HLS/m3u8 Guide)"
-description: "Step-by-step instructions for finding a Wistia .m3u8 playlist in your browser's network tab and saving the video offline."
-seoDescription: "Learn how to capture Wistia HLS playlists from the browser network requests and download the video with yt-dlp or ffmpeg, including headers, cookies, and quality tips."
-tags:
-  - wistia
-  - yt-dlp
-  - hls
----
-
-# 🎥 How to Download Wistia Videos Using Network Requests
