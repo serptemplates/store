@@ -37,14 +37,14 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
 
   return (
     <section className="py-16 bg-gray-100">
-      <div className="container mx-auto px-4 max-w-6xl lg:max-w-7xl">
+      <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12 space-y-3">
           <TypographyH2 className="text-center">
             Happy users
           </TypographyH2>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {screenshots.map((screenshot) => (
             !errorImages.has(screenshot.id) && (
               <div
@@ -54,12 +54,12 @@ export function SocialProofScreenshots({ screenshots = defaultScreenshots }: Soc
                 <Image
                   src={typeof screenshot.src === 'string' ? screenshot.src : screenshot.src.src || screenshot.src}
                   alt={screenshot.alt}
-                  width={900}
-                  height={520}
+                  width={700}
+                  height={400}
                   className="w-full h-auto"
                   onError={() => handleImageError(screenshot.id)}
                   loading="lazy"
-                  sizes="(max-width: 1024px) 100vw, 600px"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   quality={85}
                 />
               </div>
