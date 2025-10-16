@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { getOfferConfig } from "@/lib/products/offer-config";
+import { getProductData } from "@/lib/products/product";
 import { getStripeClient } from "@/lib/payments/stripe";
 import { checkoutRateLimit, withRateLimit } from "@/lib/rate-limit";
 import logger from "@/lib/logger";
@@ -41,6 +42,13 @@ export async function POST(request: NextRequest) {
 
     const offer = getOfferConfig(body.offerId);
 
+    let product;
+    try {
+      product = getProductData(body.offerId);
+    } catch (error) {
+      return buildErrorResponse(`Offer ${body.offerId} is not recognized`, 404);
+    }
+
     if (!offer) {
       try {
         const { createSimpleCheckout } = await import("@/lib/checkout/simple-checkout");
@@ -50,6 +58,7 @@ export async function POST(request: NextRequest) {
           metadata: body.metadata,
           customer: body.customer,
           affiliateId: body.affiliateId,
+          orderBump: body.orderBump,
         });
 
         void persistCheckoutSession({
@@ -85,6 +94,7 @@ export async function POST(request: NextRequest) {
         metadata: metadataFromRequest,
         sessionMetadata,
         coupon: couponResult,
+        product,
       });
 
       void persistCheckoutSession({

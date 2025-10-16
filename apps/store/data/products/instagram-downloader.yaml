@@ -41,7 +41,7 @@ features:
 - Organize by user or date
 - Duplicate detection
 - Cross-platform support
-- Command-line tools
+
 - Media viewer with slideshow
 - Multi-format data export
 - Media center integration
@@ -133,10 +133,8 @@ return_policy:
 stripe:
   price_id: price_1S99wv06JrOmKRCm5BKNZ3Kj
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HurnDKF4TUS
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-instagram-downloader
 permission_justifications: []

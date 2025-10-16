@@ -35,7 +35,7 @@ features:
 - Auto metadata extraction and indexing
 - Resume downloads
 - Cross-platform support
-- Command-line tools
+
 - PDF viewer
 - Organize by category or source
 - Duplicate detection and document management
@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99g006JrOmKRCmVzelEW6H
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HOiUUVHSA9S
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-pdf-downloader
 permission_justifications: []

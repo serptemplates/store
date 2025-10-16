@@ -23,7 +23,8 @@ screenshots:
   alt: Udemy Video Downloader screenshot
 product_videos: []
 related_videos: []
-related_posts: []
+related_posts:
+- how-to-download-udemy-videos
 github_repo_url: https://github.com/serpapps/udemy-video-downloader
 github_repo_tags: []
 chrome_webstore_link: null
@@ -131,10 +132,8 @@ return_policy:
 stripe:
   price_id: price_1S99gH06JrOmKRCmSnepXJPa
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6pwoyYNJYNSU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-udemy-video-downloader
 permission_justifications: []

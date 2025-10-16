@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wx06JrOmKRCmTvX5yYRV
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HB1QfBD03L4
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-kick-clip-downloader
 permission_justifications: []

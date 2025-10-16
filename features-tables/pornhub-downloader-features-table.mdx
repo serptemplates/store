@@ -1,0 +1,62 @@
+# PornHub Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method        | Status     | Notes                              |
+| ---------------------- | ----------------------- | ---------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | PornHub video pages     | Flashvars extraction   | ✅ Works   | Individual video downloads only    |
+| **Premium Videos**     | PornHubPremium content  | Media definition API   | ✅ Works   | Requires premium account login     |
+| **Thumbzilla Videos**  | Thumbzilla platform     | yt-dlp adaptation      | ✅ Works   | Same extraction method as PornHub  |
+| **Multiple Qualities** | All supported videos    | Format preference      | ✅ Works   | 480p, 720p, 1080p+ available      |
+| **Context Menu**       | Right-click download    | Background integration | ✅ Works   | Download via right-click option    |
+| **Progress Tracking**  | All downloads           | Offscreen + Content UI | ✅ Works   | Real-time progress; refresh-proof  |
+
+## Supported Formats
+
+- MP4 (direct) and HLS/M3U8 (segmented)
+- Multiple resolutions (480p, 720p, 1080p, 4K when available)
+- Quality auto-detection (highest quality selected by default)
+- HLS is processed via offscreen document for resilience
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (Gumroad verification)
+- Internet connection for API calls
+- Must be logged into PornHub for premium content
+
+## Supported URLs
+
+- PornHub video pages: `https://www.pornhub.com/view_video.php?viewkey=[video-id]`
+- PornHubPremium: `https://www.pornhubpremium.com/view_video.php?viewkey=[video-id]`
+- Thumbzilla: `https://www.thumbzilla.com/video/ph[video-id]/[title]`
+- All PornHub network sites with viewkey parameter
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Video metadata display** - Title, thumbnail, uploader, duration, views, likes/dislikes
+- **Quality selector** - Dropdown with available MP4 formats
+- **Download progress** - Real-time progress bar with percentage and file size
+- **Error handling** - Clear messages for various failure scenarios
+- **Context menu integration** - Right-click download option
+- **Notifications** - Download completion and status updates
+
+## Technical Features
+
+- Flashvars extraction - Access page JS variables for video data
+- Media definition API - Fetch URLs from `/video/get_media` endpoints
+- HLS pipeline - Offscreen HLS processing with progress/cancel support
+- MP4 pipeline - Offscreen MP4 streaming with progress and Chrome downloads
+- Request interception - Monitor XHR/fetch for media URLs
+- Filename sanitization - Removes invalid characters and limits length
+- Organized downloads - Saves to `PornHub/` folder; progress UI in-page
+
+## Important Limitations
+
+- Single video downloads - No batch or playlist support
+- PornHub network only - PornHub, PornHubPremium, Thumbzilla
+- License required - Activation gate in popup
+- No live streams - On-demand video content only
+- Chrome only - Manifest V3
+- Viewkey dependency - Specific URL parameter format
+- No subtitle support - Not extracted
+- Premium content restrictions - May require account login

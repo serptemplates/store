@@ -38,7 +38,7 @@ features:
 - Resume interrupted video downloads with recovery
 - Cross-platform support
 - Built-in player with preview capabilities
-- Command-line tools
+
 - Video editing integration
 - Search video libraries
 - Duplicate detection
@@ -131,10 +131,8 @@ return_policy:
 stripe:
   price_id: price_1S99g106JrOmKRCmnvLb6LoL
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HyGUyULY4PF
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-pexels-video-downloader
 permission_justifications: []

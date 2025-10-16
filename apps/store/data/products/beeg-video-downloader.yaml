@@ -129,10 +129,53 @@ return_policy:
 stripe:
   price_id: price_1RvXEr06JrOmKRCmJZDJjALY
   metadata:
-    source: generated
     stripe_product_id: prod_SrFXkM8CAB2Ds8
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-beeg-video-downloader
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |-
+    Required for downloading Beeg videos directly to the user's device.
+
+    Usage highlights:
+    - `background-enhanced.js:59` cancels downloads through the Chrome Downloads API when a user stops a transfer.
+    - `background-enhanced.js:285` launches new downloads via the API.
+    - `background-enhanced.js:395` listens for download state and progress events.
+    - `popup.js:228` finds download entries by ID to display progress in the popup.
+- permission: activeTab
+  justification: |-
+    Needed to inspect and interact with the actively focused tab so the extension can validate Beeg pages and extract video data.
+
+    Usage highlights:
+    - `popup.js:30-33` checks whether the active tab is a Beeg page before enabling download controls.
+    - `background-enhanced.js:80, 247` retrieves the active tab to coordinate download operations.
+    - Multiple `chrome.tabs.sendMessage` calls communicate with content scripts running on the active tab.
+- permission: storage
+  justification: |-
+    Persists activation status, license keys, and related account metadata locally to unlock paid features reliably.
+
+    Usage highlights:
+    - `auth.js` `saveActivation` stores activation flags, license keys, and associated emails.
+    - `auth.js` `checkActivationStatus` restores stored activation information whenever the popup loads.
+- permission: notifications
+  justification: |-
+    Allows the extension to show system notifications for download progress, completion, and error handling.
+
+    Usage highlights:
+    - `background-enhanced.js:426` creates notifications with `chrome.notifications.create`.
+    - Lines 399-401, 406, 447-450, 454-457 send completion, failure, no-video-found, and wrong-site notices.
+- permission: contextMenus
+  justification: |-
+    Lets the extension add a "Download Beeg Video" option to the browser's context menu on Beeg pages.
+
+    Usage highlights:
+    - `background-enhanced.js:10-18` registers the context menu entry through `chrome.contextMenus.create`.
+    - `background-enhanced.js:22-30` handles menu clicks with `chrome.contextMenus.onClicked` to launch downloads.
+- permission: tabs
+  justification: |-
+    Enables tab lookups, messaging, and helper tab creation required for coordinating downloads and showing history.
+
+    Usage highlights:
+    - `popup.js:30, 288` queries active tabs and opens new tabs for history views.
+    - `background-enhanced.js:24, 80, 86, 138, 247, 253, 442` performs tab queries and content script messaging for download management.

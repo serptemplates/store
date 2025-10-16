@@ -34,7 +34,7 @@ features:
 - Auto thumbnail and preview extraction
 - Resume downloads
 - Cross-platform support
-- Command-line tools workflows
+ workflows
 - Built-in privacy protection and secure downloading
 - Custom folder organization and naming systems
 - Duplicate detection features
@@ -129,11 +129,54 @@ return_policy:
 stripe:
   price_id: price_1S99gL06JrOmKRCmtPCthojb
   metadata:
-    source: generated
     stripe_product_id: prod_SrGW6pAdy73l9t
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-xvideos-downloader
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |-
+    Required to download XVideos content directly to the user's device.
+
+    Usage highlights:
+    - `background-enhanced.js:63` cancels in-progress downloads using the Chrome Downloads API.
+    - `background-enhanced.js:390` initiates new file downloads through the API.
+    - `background-enhanced.js:479, 488, 492` listen for download state and progress events.
+    - `popup.js:226` searches for downloads by ID to display progress inside the popup.
+- permission: activeTab
+  justification: |-
+    Lets the extension inspect the active tab so it can detect XVideos pages and extract video URLs.
+
+    Usage highlights:
+    - `chrome.tabs.query({ active: true, currentWindow: true })` powers implicit active tab access.
+    - `popup.js:30` verifies the current page before enabling download controls.
+    - `background-enhanced.js:352` retrieves the active tab for download coordination.
+- permission: storage
+  justification: |-
+    Stores activation state and license details locally to keep premium functionality unlocked.
+
+    Usage highlights:
+    - `auth.js` `saveActivation` persists activation flags, license keys, and associated emails.
+    - `auth.js` `checkActivationStatus` restores stored activation info whenever the popup loads.
+- permission: notifications
+  justification: |-
+    Enables desktop notifications to inform users about download success, errors, or other status updates.
+
+    Usage highlights:
+    - `background-enhanced.js:510` creates notifications with `chrome.notifications.create`.
+    - Notifications surface completion and error messages for user awareness.
+- permission: contextMenus
+  justification: |-
+    Adds a "Download XVideos Video" entry to the browser context menu on supported domains.
+
+    Usage highlights:
+    - `background-enhanced.js:10` registers the context menu item via `chrome.contextMenus.create`.
+    - `background-enhanced.js:26` handles clicks with `chrome.contextMenus.onClicked` to begin downloads.
+- permission: tabs
+  justification: |-
+    Supports tab lookups, messaging, and helper tab creation necessary for managing downloads.
+
+    Usage highlights:
+    - `popup.js:30, 44, 281` query tabs, communicate with content scripts, and open new tabs.
+    - `background-enhanced.js:28, 352, 358, 526` send messages to tabs to orchestrate downloads.

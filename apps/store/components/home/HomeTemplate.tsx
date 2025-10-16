@@ -10,8 +10,10 @@ import { FaqSection } from "@repo/ui/sections/FaqSection";
 import type { FAQ } from "@repo/ui/sections/FaqSection";
 import { AboutSection } from "@repo/ui/sections/AboutSection";
 import type { HeroMediaItem } from "@repo/ui/sections/Hero";
+import { PermissionsJustificationAccordion } from "@/components/product/PermissionsJustificationAccordion";
 import type { HomeTemplateProps } from "./home-template.types";
 import { teamMembers } from "@/data/team";
+import { ProductAboutSection } from "@/components/product/ProductAboutSection";
 
 export function HomeTemplate({
   ui,
@@ -39,6 +41,8 @@ export function HomeTemplate({
   breadcrumbs,
   showPosts = true,
   videoSection,
+  permissionJustifications,
+  about,
 }: HomeTemplateProps) {
   const {
     Navbar,
@@ -252,6 +256,10 @@ export function HomeTemplate({
           ui={{ Badge, Button }}
         /> */}
 
+        {about ? (
+          <ProductAboutSection title={about.title} paragraphs={about.paragraphs} />
+        ) : null}
+
         {/* Features */}
         <FeaturesSection features={normalizedFeatures} />
 
@@ -262,9 +270,6 @@ export function HomeTemplate({
 
         {/* FAQ */}
         <FaqSection faqs={faqList} />
-
-        {/* About Section */}
-        <AboutSection team={teamMembers} />
 
         {/* Pricing CTA (configurable per site) */}
         {(pricing?.enabled ?? true) && (
@@ -284,9 +289,18 @@ export function HomeTemplate({
             ctaExtra={pricing?.ctaExtra}
             terms={pricing?.terms}
             id={pricing?.id ?? "pricing"}
+            orderBump={pricing?.orderBump}
           />
         )}
 
+
+        {/* Team Section */}
+        <AboutSection team={teamMembers} />
+
+        {/* Permissions */}
+        <PermissionsJustificationAccordion items={permissionJustifications} />
+
+        {/* Posts */}
         {showPosts && Array.isArray(posts) && posts.length > 0 && (
           <PostsSection
             posts={posts}

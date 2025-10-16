@@ -22,3 +22,4 @@ export * from "./magic/InteractiveHoverButton";
 export * from "./accordion";
 export * from "./lib/utils";
 export * from "./magic/HeroVideoDialog";
+export * from "./typography";

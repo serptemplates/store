@@ -1,0 +1,64 @@
+# M3U8 Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method         | Status     | Notes                              |
+| ---------------------- | ----------------------- | ----------------------- | ---------- | ---------------------------------- |
+| **HLS Streams**        | Any website             | M3U8 segment download   | ✅ Works   | Universal HLS stream detector      |
+| **M3U8 Playlists**     | All platforms           | Playlist parsing        | ✅ Works   | Master and media playlist support  |
+| **Live Streams**       | Streaming platforms     | Segment capture         | ✅ Works   | Captures live HLS streams          |
+| **VOD Streams**        | Video platforms         | Complete download       | ✅ Works   | On-demand HLS content              |
+| **Side Panel UI**      | Chrome sidebar          | Detected streams list   | ✅ Works   | Shows all M3U8 URLs found          |
+| **Multiple Streams**   | Same page               | Batch detection         | ✅ Works   | Lists all detected M3U8 streams    |
+
+## Supported Formats
+
+- **HLS/M3U8** (Primary format - all variants)
+- **TS segments** (Transport Stream segments)
+- **Master playlists** (Multi-quality stream lists)
+- **Media playlists** (Segment lists)
+- **Adaptive bitrate** (Multiple quality levels)
+- **Variant streams** (Different resolutions/bitrates)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Side panel API support (Chrome 114+)
+- Internet connection for stream detection
+- No license required (free tool)
+- Works on any website with M3U8 streams
+
+## Supported URLs
+
+- **Universal** - Works on any website
+- **All HTTP/HTTPS** - `http://*/*`, `https://*/*`
+- **Protocol detection** - Auto-detects M3U8 requests
+- **No domain restrictions** - Platform-agnostic
+
+## User Interface
+
+- **Side Panel** - Chrome sidebar with stream list
+- **Stream detection** - Real-time M3U8 URL capture
+- **Download buttons** - One-click download per stream
+- **Stream metadata** - URL and detection time
+- **Popup interface** - Quick access to detected streams
+- **Auto-detection** - Passive background monitoring
+
+## Technical Features
+
+- **WebRequest monitoring** - Intercepts M3U8 requests
+- **Universal detection** - Works on all websites
+- **Side panel integration** - Modern Chrome UI
+- **Offscreen processing** - HLS segment merging
+- **Storage management** - Detected streams list
+- **Background service worker** - Passive monitoring
+- **Content script** - Page-level detection support
+- **Download helper** - Separate context for downloads
+- **Tab-specific tracking** - Per-tab stream lists
+
+## Important Limitations
+
+- **Chrome only** - Requires Chromium-based browser
+- **Side panel required** - Chrome 114+ feature
+- **No DRM support** - Cannot download encrypted streams
+- **Detection-based** - Only finds streams actually loaded
+- **No direct video parsing** - Relies on network requests
+- **Storage limits** - Detected streams list has size limits

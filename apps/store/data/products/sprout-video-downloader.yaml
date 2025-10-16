@@ -132,10 +132,8 @@ return_policy:
 stripe:
   price_id: price_1S99g906JrOmKRCmqpFh4LYc
   metadata:
-    source: generated
     stripe_product_id: prod_SqnfWNeyP5TUdt
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-sprout-video-downloader
 new_release: true

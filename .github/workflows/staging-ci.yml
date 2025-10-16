@@ -30,8 +30,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        check: [playwright, axe, structured-data, lighthouse]
+        check: [unit, playwright, axe, structured-data, lighthouse]
         include:
+          - check: unit
+            title: Unit & schema checks
+            command: pnpm run ci:unit
           - check: playwright
             title: Playwright staging suite
             command: pnpm --filter @apps/store exec playwright test

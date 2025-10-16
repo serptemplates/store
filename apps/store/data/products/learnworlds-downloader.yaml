@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wz06JrOmKRCmFCzqKyrO
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HyAc6gl3zkH
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-learnworlds-downloader
 permission_justifications: []

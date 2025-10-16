@@ -34,7 +34,7 @@ features:
 - Auto metadata extraction and organization
 - Resume interrupted transfers
 - Cross-platform support
-- Command-line tools
+
 - Built-in Proxy support
 - Custom naming schemes and folder structures
 - Duplicate detection
@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99g406JrOmKRCmqPgLx00x
   metadata:
-    source: generated
     stripe_product_id: prod_SrGTducRH5aPvE
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-redtube-downloader
 new_release: true

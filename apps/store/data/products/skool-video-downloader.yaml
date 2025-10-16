@@ -41,6 +41,7 @@ related_videos:
 - https://www.youtube.com/watch?v=YH-oF2cWoDI
 related_posts:
 - how-to-download-skool-platform-videos
+- download-skool-videos-m3u8-token
 github_repo_url: https://github.com/serpapps/skool-downloader
 github_repo_tags:
 - skool-downloader
@@ -157,9 +158,7 @@ return_policy:
 stripe:
   price_id: price_1S9BFU06JrOmKRCmMYncsgKb
   metadata:
-    source: lander-template
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-skool-video-downloader
 permission_justifications: []

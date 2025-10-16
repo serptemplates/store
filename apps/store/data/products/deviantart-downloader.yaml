@@ -129,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99wp06JrOmKRCmxPZvi7YP
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GiUbl5MtRp2
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-deviantart-downloader
 permission_justifications: []

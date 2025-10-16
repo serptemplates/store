@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99g906JrOmKRCmaZzHAMEw
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HBmlo3YNTe9
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-stocksy-downloader
 permission_justifications: []

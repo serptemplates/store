@@ -1,0 +1,64 @@
+# XHamster Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method        | Status     | Notes                              |
+| ---------------------- | ----------------------- | ---------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | XHamster video pages    | yt-dlp extraction      | ✅ Works   | Individual video downloads only    |
+| **Videos Pattern**     | /videos/title-id URLs   | URL pattern matching   | ✅ Works   | Standard XHamster video format     |
+| **Movies Pattern**     | /movies/id/title.html   | URL pattern matching   | ✅ Works   | Alternative XHamster URL format    |
+| **Multiple Qualities** | All XHamster videos     | Format preference      | ✅ Works   | Multiple resolutions available     |
+| **Context Menu**       | Right-click download    | Background integration | ✅ Works   | Download via right-click option    |
+| **Progress Tracking**  | All downloads           | Real-time monitoring   | ✅ Works   | Visual progress bar with bytes     |
+
+## Supported Formats
+
+- **MP4** (Primary format)
+- **Multiple resolutions** (240p, 360p, 480p, 720p, 1080p when available)
+- **Quality auto-detection** (Highest quality selected by default)
+- **Format filtering** (Skips HLS/m3u8 streaming formats)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required ($9 product purchase)
+- Internet connection for license validation
+- Must be on supported XHamster domains
+- 18+ age verification for adult content
+
+## Supported XHamster URLs
+
+- Primary: `https://xhamster.com/*`, `https://*.xhamster.com/*`
+- Alternative domains: `xhamster.one`, `xhamster.desi`, `xhms.pro`
+- Additional domains: `xhamster2.com`, `xhamster11.com`, `xhamster20.com`, `xhamster26.com`
+- Regional variants: `xhday.com`, `xhvid.com`, `xhamster20.desi`
+- CDN access: `https://*.xhcdn.com/*`
+
+## User Interface
+
+- **License activation** - Email and license key validation system ($9)
+- **Help system** - Toggle-able usage instructions
+- **Video metadata display** - Thumbnail, title, uploader, duration, views, likes/dislikes
+- **Quality selector** - Dropdown with available formats
+- **Download progress** - Real-time progress bar with percentage
+- **Context menu integration** - Right-click download option
+- **Options and history** - Access to settings and download records
+
+## Technical Features
+
+- **yt-dlp extraction** - JavaScript adaptation of Python extractor
+- **Multi-domain support** - Works across XHamster's entire network
+- **Content script injection** - Automatic video detection on XHamster pages
+- **URL pattern matching** - Supports multiple XHamster URL formats
+- **Background processing** - Download management via service worker
+- **DOM extraction** - Video metadata from page elements
+- **Cross-context communication** - Inject script for page context access
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **XHamster network only** - Limited to XHamster domains
+- **License required** - All functionality blocked without $9 activation
+- **Adult content only** - 18+ age restriction applies
+- **Chrome only** - No support for other browsers
+- **MP4 format only** - No support for HLS/m3u8 streaming
+- **No download history** - Options and history links present but no persistent storage
+- **Internet dependency** - Requires connection for license validation

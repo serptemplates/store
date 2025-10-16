@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wh06JrOmKRCmkF8J8XUh
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Czh24RpPTaL
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-123movies-downloader
 new_release: true

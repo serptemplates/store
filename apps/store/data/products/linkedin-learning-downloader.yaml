@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99fw06JrOmKRCm59JPeRdR
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6HSdCX0irIOM
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-linkedin-learning-downloader
 permission_justifications: []

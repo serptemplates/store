@@ -155,9 +155,7 @@ return_policy:
 stripe:
   price_id: price_1S9BFJ06JrOmKRCmdpVOP8Em
   metadata:
-    source: lander-template
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-loom-video-downloader
 new_release: true

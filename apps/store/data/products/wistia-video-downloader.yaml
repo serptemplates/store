@@ -21,7 +21,8 @@ screenshots:
   alt: Wistia Video Downloader website preview
 product_videos: []
 related_videos: []
-related_posts: []
+related_posts:
+- download-wistia-videos-network-requests
 github_repo_url: https://github.com/serpapps/wistia-video-downloader
 github_repo_tags: []
 chrome_webstore_link: null
@@ -128,10 +129,8 @@ return_policy:
 stripe:
   price_id: price_1S99gJ06JrOmKRCmN3MovrlF
   metadata:
-    source: generated
     stripe_product_id: prod_SqneqGTUexmjwU
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-wistia-downloader
 new_release: true

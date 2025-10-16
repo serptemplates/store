@@ -37,7 +37,7 @@ features:
 - Auto thumbnail and preview image extraction
 - Resume downloads
 - Cross-platform support
-- Command-line tools
+
 - Custom folder organization and naming schemes
 - Built-in player
 - Integrates with social media management platforms
@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wr06JrOmKRCmnHmBidFY
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Gxbj0G8PsfX
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-facebook-video-downloader
 permission_justifications: []

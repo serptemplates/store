@@ -195,7 +195,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     }
   }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
 
-  const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://store.serp.co"
+  const siteUrl = siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://apps.serp.co"
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -262,7 +262,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
             ? {
                 ...homeProps.pricing,
                 originalPrice: homeProps.pricing.originalPrice || "$27.99",
-                priceNote: "Use the product on a single project",
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,

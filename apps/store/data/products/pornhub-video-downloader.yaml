@@ -33,7 +33,7 @@ features:
 - Auto thumbnail and preview image extraction
 - Resume downloads
 - Cross-platform
-- Command-line tools
+
 - Video format conversion and optimization tools
 - Built-in Proxy support
 - Custom folder organization and naming schemes
@@ -128,10 +128,8 @@ return_policy:
 stripe:
   price_id: price_1RvXN806JrOmKRCmg1bHRufg
   metadata:
-    source: generated
     stripe_product_id: prod_Sqsjylj8Z89k1v
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-pornhub-video-downloader
 new_release: true

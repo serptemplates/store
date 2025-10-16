@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wk06JrOmKRCm2XTuWuu0
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GHj9F6PuSPW
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-camsoda-downloader
 permission_justifications: []

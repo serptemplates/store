@@ -3,7 +3,7 @@
   "packageManager": "pnpm@9.11.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter @apps/store dev",
+    "dev": "pnpm run validate:products && pnpm --filter @apps/store dev",
     "build": "pnpm -r --parallel build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r --if-present typecheck",
@@ -20,14 +20,15 @@
     "merchant:upload": "tsx scripts/google-merchant/upload-products.ts",
     "merchant:upload:store": "GOOGLE_MERCHANT_ACCOUNT_ID=5670488999 GOOGLE_SERVICE_ACCOUNT_KEY_PATH=google-creds.json tsx scripts/google-merchant/upload-products.ts",
     "merchant:export": "tsx scripts/google-merchant/export-feed.ts",
-    "merchant:export:store": "GOOGLE_MERCHANT_SITE_URL=https://store.serp.co GOOGLE_MERCHANT_APPS_URL=https://apps.serp.co tsx scripts/google-merchant/export-feed.ts",
+    "merchant:export:store": "GOOGLE_MERCHANT_SITE_URL=https://apps.serp.co GOOGLE_MERCHANT_APPS_URL=https://apps.serp.co tsx scripts/google-merchant/export-feed.ts",
     "setup:shopify:metafields": "node scripts/setup-shopify-metafields.mjs",
     "validate:products": "pnpm --filter @apps/store validate:products",
     "update:video-metadata": "pnpm --filter @apps/store update:video-metadata",
     "test:lhci:local": "pnpm --filter @apps/store test:lhci:local",
     "test:unit": "pnpm --filter @apps/store test:unit",
     "test:all": "pnpm --filter @apps/store test:all",
-    "test:smoke": "pnpm --filter @apps/store test:smoke"
+    "test:smoke": "pnpm --filter @apps/store test:smoke",
+    "ci:unit": "pnpm --filter @apps/store test:unit && pnpm --filter @apps/store validate:products"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

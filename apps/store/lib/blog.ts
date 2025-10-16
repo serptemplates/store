@@ -3,10 +3,14 @@ import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 
+import { titleCase } from "./string-utils";
+
 export type BlogPostMeta = {
   slug: string;
   title: string;
+  seoTitle: string;
   description: string;
+  seoDescription: string;
   date: string;
   author: string;
   tags: string[];
@@ -16,14 +20,105 @@ export type BlogPostMeta = {
   dateModified?: string;
 };
 
-// Slug must be only alphanumeric, dash and underscore.
-function sanitizeSlug(input: string): string {
-  return input.replace(/[^a-zA-Z0-9_-]/g, "");
-}
+type Frontmatter = Record<string, unknown> & {
+  slug?: string;
+  title?: string;
+  description?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  excerpt?: string;
+};
 
 // Resolve relative to the app workspace so dev server + builds find the content directory
 // Update: Blog content is now in sites/apps.serp.co/content/blog
 const blogRoot = path.join(process.cwd(), "../../sites/apps.serp.co/content/blog");
+
+function slugify(input: string): string {
+  return input
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .trim() || "post";
+}
+
+function deriveSlug(fileName: string, data: Frontmatter | undefined): string {
+  if (data?.slug && typeof data.slug === "string" && data.slug.trim().length > 0) {
+    return slugify(data.slug);
+  }
+  const baseName = fileName.replace(/\.mdx?$/i, "");
+  return slugify(baseName);
+}
+
+function extractTitle(data: Frontmatter | undefined, content: string, slug: string): { title: string; seoTitle: string } {
+  const titleFromFrontmatter = typeof data?.title === "string" ? data.title.trim() : undefined;
+  const seoTitleFromFrontmatter = typeof data?.seoTitle === "string" ? data.seoTitle.trim() : undefined;
+
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  const heading = titleMatch?.[1]?.trim();
+
+  const fallback = titleCase(slug.replace(/-/g, " "));
+  const resolvedTitle = titleFromFrontmatter || heading || fallback;
+  const resolvedSeoTitle = seoTitleFromFrontmatter || resolvedTitle;
+
+  return {
+    title: resolvedTitle,
+    seoTitle: resolvedSeoTitle,
+  };
+}
+
+function cleanMarkdownBlock(block: string): string {
+  return block
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/!\[[^\]]*]\([^)]+\)/g, " ")
+    .replace(/\[[^\]]*]\([^)]+\)/g, "$1")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/^>+\s?/gm, "")
+    .replace(/[*_~`]/g, "")
+    .replace(/#{1,6}\s*/g, "")
+    .replace(/\r/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function deriveDescription(content: string, data: Frontmatter | undefined): string {
+  const fromFrontmatter =
+    (typeof data?.seoDescription === "string" && data.seoDescription.trim()) ||
+    (typeof data?.description === "string" && data.description.trim()) ||
+    (typeof data?.excerpt === "string" && data.excerpt.trim()) ||
+    "";
+
+  if (fromFrontmatter.length > 0) {
+    return truncateDescription(fromFrontmatter);
+  }
+
+  const paragraphs = content
+    .split(/\n{2,}/)
+    .map((paragraph) => cleanMarkdownBlock(paragraph))
+    .filter((paragraph) => paragraph.length > 0);
+
+  const fallbackParagraph = paragraphs[0] ?? "";
+  if (fallbackParagraph.length === 0) {
+    return "";
+  }
+
+  return truncateDescription(fallbackParagraph);
+}
+
+function truncateDescription(input: string, limit = 155): string {
+  const normalized = input.replace(/\s+/g, " ").trim();
+  if (normalized.length <= limit) {
+    return normalized;
+  }
+  const truncated = normalized.slice(0, limit);
+  const lastSpace = truncated.lastIndexOf(" ");
+  const safeSlice = lastSpace > 40 ? truncated.slice(0, lastSpace) : truncated;
+  return `${safeSlice}...`;
+}
 
 export function getAllPosts(): BlogPostMeta[] {
   if (!fs.existsSync(blogRoot)) {
@@ -34,44 +129,41 @@ export function getAllPosts(): BlogPostMeta[] {
     .readdirSync(blogRoot)
     .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
     .map<BlogPostMeta | null>((file) => {
-      const slug = sanitizeSlug(file.replace(/\.mdx?$/, ""));
       const filePath = path.join(blogRoot, file);
       const raw = fs.readFileSync(filePath, "utf8");
       const { data, content } = matter(raw);
+      const frontmatter = data as Frontmatter | undefined;
+
+      const slug = deriveSlug(file, frontmatter);
+      const { title, seoTitle } = extractTitle(frontmatter, content, slug);
+      const description = deriveDescription(content, frontmatter);
+      const seoDescription =
+        (typeof frontmatter?.seoDescription === "string" && frontmatter.seoDescription.trim()) ||
+        description;
       const stats = readingTime(content);
 
-      if (data?.draft) {
+      if (frontmatter?.draft) {
         return null;
       }
 
-      // Extract title from content H1 if not in frontmatter
-      const titleMatch = content.match(/^#\s+(.+)$/m);
-      const title = data.title || titleMatch?.[1] || slug.replace(/-/g, ' ');
-
-      // Extract description from content if not in frontmatter
-      const cleanContent = content
-        .replace(/^#.*$/gm, '') // Remove headings
-        .replace(/```[\s\S]*?```/g, '') // Remove code blocks
-        .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold
-        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'); // Remove links
-      const description = data.description || cleanContent.substring(0, 160).trim() + '...';
-
       const dateModified =
-        typeof data.dateModified === "string"
-          ? data.dateModified
-          : typeof data.updated === "string"
-          ? data.updated
+        typeof frontmatter?.dateModified === "string"
+          ? frontmatter.dateModified
+          : typeof frontmatter?.updated === "string"
+          ? frontmatter.updated
           : undefined;
-      const category = typeof data.category === "string" ? data.category : undefined;
+      const category = typeof frontmatter?.category === "string" ? frontmatter.category : undefined;
 
       return {
         slug,
         title,
+        seoTitle,
         description,
-        date: data.date ?? new Date().toISOString(),
-        author: data.author ?? "Devin Schumacher",
-        tags: Array.isArray(data.tags) ? data.tags : [],
-        image: data.image,
+        seoDescription,
+        date: typeof frontmatter?.date === "string" ? frontmatter.date : new Date().toISOString(),
+        author: typeof frontmatter?.author === "string" ? frontmatter.author : "Devin Schumacher",
+        tags: Array.isArray(frontmatter?.tags) ? (frontmatter.tags as string[]) : [],
+        image: typeof frontmatter?.image === "string" ? frontmatter.image : undefined,
         readingTime: stats.text,
         category,
         dateModified,
@@ -87,57 +179,61 @@ export type BlogPost = {
 };
 
 export function getPostBySlug(slug: string): BlogPost | null {
-  const fileName = fs.existsSync(path.join(blogRoot, `${slug}.md`))
-    ? `${slug}.md`
-    : fs.existsSync(path.join(blogRoot, `${slug}.mdx`))
-    ? `${slug}.mdx`
-    : null;
-
-  if (!fileName) {
+  if (!fs.existsSync(blogRoot)) {
     return null;
   }
 
-  const filePath = path.join(blogRoot, fileName);
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(raw);
-  const stats = readingTime(content);
+  const files = fs
+    .readdirSync(blogRoot)
+    .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"));
 
-  // Extract title from content H1 if not in frontmatter
-  const titleMatch = content.match(/^#\s+(.+)$/m);
-  const title = data.title || titleMatch?.[1] || slug.replace(/-/g, ' ');
+  for (const file of files) {
+    const filePath = path.join(blogRoot, file);
+    const raw = fs.readFileSync(filePath, "utf8");
+    const { data, content } = matter(raw);
+    const frontmatter = data as Frontmatter | undefined;
+    const derivedSlug = deriveSlug(file, frontmatter);
 
-  // Extract description from content if not in frontmatter
-  const cleanContent = content
-    .replace(/^#.*$/gm, '') // Remove headings
-    .replace(/```[\s\S]*?```/g, '') // Remove code blocks
-    .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'); // Remove links
-  const description = data.description || cleanContent.substring(0, 160).trim() + '...';
+    if (derivedSlug !== slug) {
+      continue;
+    }
 
-  // Remove the H1 from content since it's displayed separately
-  const contentWithoutTitle = content.replace(/^#\s+.+$/m, '').trim();
+    const stats = readingTime(content);
+    const { title, seoTitle } = extractTitle(frontmatter, content, derivedSlug);
+    const description = deriveDescription(content, frontmatter);
+    const seoDescription =
+      (typeof frontmatter?.seoDescription === "string" && frontmatter.seoDescription.trim()) ||
+      description;
 
-  const dateModified =
-    typeof data.dateModified === "string"
-      ? data.dateModified
-      : typeof data.updated === "string"
-      ? data.updated
-      : undefined;
-  const category = typeof data.category === "string" ? data.category : undefined;
+    // Remove the H1 from content since it's displayed separately
+    const contentWithoutTitle = content.replace(/^#\s+.+$/m, "").trim();
 
-  return {
-    meta: {
-      slug,
-      title,
-      description,
-      date: data.date ?? new Date().toISOString(),
-      author: data.author ?? "Devin Schumacher",
-      tags: Array.isArray(data.tags) ? data.tags : [],
-      image: data.image,
-      readingTime: stats.text,
-      category,
-      dateModified,
-    },
-    content: contentWithoutTitle,
-  };
+    const dateModified =
+      typeof frontmatter?.dateModified === "string"
+        ? frontmatter.dateModified
+        : typeof frontmatter?.updated === "string"
+        ? frontmatter.updated
+        : undefined;
+    const category = typeof frontmatter?.category === "string" ? frontmatter.category : undefined;
+
+    return {
+      meta: {
+        slug: derivedSlug,
+        title,
+        seoTitle,
+        description,
+        seoDescription,
+        date: typeof frontmatter?.date === "string" ? frontmatter.date : new Date().toISOString(),
+        author: typeof frontmatter?.author === "string" ? frontmatter.author : "Devin Schumacher",
+        tags: Array.isArray(frontmatter?.tags) ? (frontmatter.tags as string[]) : [],
+        image: typeof frontmatter?.image === "string" ? frontmatter.image : undefined,
+        readingTime: stats.text,
+        category,
+        dateModified,
+      },
+      content: contentWithoutTitle,
+    };
+  }
+
+  return null;
 }

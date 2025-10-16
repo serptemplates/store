@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wj06JrOmKRCmIzTdkBGx
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GMlDOkyZs7k
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-bongacams-downloader
 permission_justifications: []

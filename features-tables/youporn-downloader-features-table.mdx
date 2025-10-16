@@ -1,0 +1,66 @@
+# YouPorn Video Downloader - Supported Video Types
+
+| Video Type             | Platform                | Download Method         | Status     | Notes                              |
+| ---------------------- | ----------------------- | ----------------------- | ---------- | ---------------------------------- |
+| **Single Videos**      | YouPorn pages           | Script injection        | ✅ Works   | Individual video downloads only    |
+| **HLS Streams**        | All YouPorn videos      | M3U8 segment download   | ✅ Works   | Processed via offscreen document   |
+| **MP4 Direct**         | All YouPorn videos      | Blob streaming download | ✅ Works   | Fetch with referer headers         |
+| **Multiple Qualities** | All YouPorn videos      | Format selection        | ✅ Works   | Multiple resolutions when available|
+| **Context Menu**       | Right-click download    | Background integration  | ✅ Works   | Download via right-click option    |
+| **Player Button**      | In-player controls      | Injected UI element     | ✅ Works   | Direct download button on player   |
+| **Progress Tracking**  | All downloads           | Real-time monitoring    | ✅ Works   | Visual progress bar with bytes     |
+
+## Supported Formats
+
+- **MP4** (Primary format - blob downloads with headers)
+- **HLS/M3U8** (Streaming format with segment processing)
+- **Multiple resolutions** (Extracted from page JavaScript)
+- **Quality auto-detection** (From player configuration)
+
+## Requirements
+
+- Chrome/Chromium browser only (Manifest V3)
+- Valid license key required (paid product purchase)
+- Internet connection for license validation
+- Must be on supported YouPorn pages
+- 18+ age verification for adult content
+
+## Supported YouPorn URLs
+
+- Primary: `https://youporn.com/*`, `https://www.youporn.com/*`
+- External storage: `https://store.externulls.com/*`
+
+## User Interface
+
+- **License activation** - Email and license key validation system
+- **Help system** - Toggle-able usage instructions
+- **Video metadata display** - Title, duration, uploader, thumbnail
+- **Quality selector** - Dropdown with available formats
+- **Download progress** - Real-time progress bar with percentage
+- **Context menu integration** - Right-click download option
+- **In-page download manager** - Visual download cards with cancel ability
+- **Player button** - Direct download button injected on video player
+
+## Technical Features
+
+- **Page context injection** - inject.js for accessing player variables
+- **Player configuration parsing** - Extracts video URLs from player setup
+- **Window messaging** - Cross-context communication for video URLs
+- **Content script blob download** - Fetch with custom referer headers
+- **Download manager** - Shared UI for tracking multiple downloads
+- **Offscreen document** - HLS segment processing with FastStream
+- **Progress reporting** - Real-time download progress with speed/bytes
+- **Mutation observer** - Detects dynamically loaded video players
+- **Player button injection** - Adds download button to video controls
+- **Cancellation support** - AbortController for stopping downloads
+
+## Important Limitations
+
+- **Single video downloads** - No batch or playlist support
+- **YouPorn network only** - Limited to YouPorn domains
+- **License required** - All functionality blocked without activation
+- **Adult content only** - 18+ age restriction applies
+- **Chrome only** - No support for other browsers
+- **No download history** - No persistent storage of past downloads
+- **Internet dependency** - Requires connection for license validation and video access
+- **Content-script downloads** - Blob creation in page context (memory intensive for large files)

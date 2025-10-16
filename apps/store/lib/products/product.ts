@@ -68,3 +68,7 @@ export function getProductJson(slug?: string, indent = 2): string {
   const product = getProductData(slug);
   return JSON.stringify(product, null, indent);
 }
+
+export function getProductsDataRoot(): string {
+  return dataRoot;
+}

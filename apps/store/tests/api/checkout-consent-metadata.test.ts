@@ -63,9 +63,13 @@ vi.mock("@/lib/payments/paypal", () => ({
   isPayPalConfigured: mocks.isPayPalConfigured,
 }))
 
-vi.mock("@/lib/products/product", () => ({
-  getProductData: mocks.getProductData,
-}))
+vi.mock("@/lib/products/product", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/products/product")>();
+  return {
+    ...actual,
+    getProductData: mocks.getProductData,
+  };
+})
 
 import { POST as createStripeEmbeddedCheckout } from "@/app/api/checkout/session/route"
 import { POST as createPayPalOrderEndpoint } from "@/app/api/paypal/create-order/route"
@@ -197,6 +201,76 @@ describe("checkout consent metadata", () => {
     })
   })
 
+  it("adds order bump metadata and line item when selected", async () => {
+    mocks.getProductData.mockReturnValueOnce({
+      name: "TikTok Downloader",
+      pricing: { price: "$67.00" },
+      order_bump: {
+        slug: "priority-support",
+        title: "Priority Support",
+        price: "$29.00",
+        stripe: {
+          price_id: "price_bump_live",
+          test_price_id: "price_bump_test",
+        },
+      },
+    })
+
+    mocks.resolvePriceForEnvironment
+      .mockResolvedValueOnce({
+        id: "price_base_test",
+        unit_amount: 6700,
+        product: null,
+      })
+      .mockResolvedValueOnce({
+        id: "price_bump_test",
+        unit_amount: 2900,
+        product: null,
+      })
+
+    const requestBody = {
+      offerId: "tiktok-downloader",
+      quantity: 1,
+      uiMode: "embedded" as const,
+      orderBump: {
+        id: "priority-support",
+        selected: true,
+      },
+      metadata: {
+        landerId: "tiktok-downloader",
+        checkoutSource: "custom_checkout_stripe",
+        termsAccepted: "true",
+        termsAcceptedAt: "2024-04-30T09:15:00.000Z",
+      },
+    }
+
+    const response = await createStripeEmbeddedCheckout(
+      buildRequest("http://localhost/api/checkout/session", requestBody)
+    )
+
+    const payload = await response.json()
+    expect(response.status, JSON.stringify(payload)).toBe(200)
+
+    expect(mocks.stripeCheckoutCreate).toHaveBeenCalledTimes(1)
+    const stripeParams = mocks.stripeCheckoutCreate.mock.calls[0][0]
+
+    expect(stripeParams.line_items).toHaveLength(2)
+    expect(stripeParams.line_items[0]).toMatchObject({ price: "price_base_test", quantity: 1 })
+    expect(stripeParams.line_items[1]).toMatchObject({ price: "price_bump_test", quantity: 1 })
+
+    const metadata = stripeParams.metadata as Record<string, string>
+    expect(metadata.orderBumpSelected).toBe("true")
+    expect(metadata.orderBumpTitle).toBe("Priority Support")
+    expect(metadata.orderBumpUnitCents).toBe("2900")
+    expect(metadata.checkoutTotalWithOrderBumpCents).toBe(String(6700 + 2900))
+
+    expect(mocks.upsertCheckoutSession).toHaveBeenCalledTimes(1)
+    const storedMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>
+    expect(storedMetadata.orderBumpSelected).toBe("true")
+    expect(storedMetadata.orderBumpUnitCents).toBe("2900")
+    expect(storedMetadata.checkoutTotalWithOrderBumpCents).toBe(String(6700 + 2900))
+  })
+
   it("persists consent evidence for PayPal checkout", async () => {
     const requestBody = {
       offerId: "tiktok-downloader",
@@ -237,5 +311,57 @@ describe("checkout consent metadata", () => {
       termsAcceptedIp: "203.0.113.10",
       termsAcceptedUserAgent: "SERPTestAgent/1.0 (Checkout)",
     })
+  })
+
+  it("calculates PayPal totals with order bump selection", async () => {
+    mocks.getProductData.mockReturnValueOnce({
+      name: "TikTok Downloader",
+      pricing: { price: "$67.00" },
+      order_bump: {
+        slug: "priority-support",
+        title: "Priority Support",
+        price: "$29.00",
+        stripe: {
+          price_id: "price_bump_live",
+          test_price_id: "price_bump_test",
+        },
+      },
+    })
+
+    const requestBody = {
+      offerId: "tiktok-downloader",
+      quantity: 1,
+      orderBump: {
+        id: "priority-support",
+        selected: true,
+      },
+      metadata: {
+        landerId: "tiktok-downloader",
+        checkoutSource: "custom_checkout_paypal",
+        termsAccepted: "true",
+        termsAcceptedAt: "2024-04-30T09:15:00.000Z",
+      },
+    }
+
+    const response = await createPayPalOrderEndpoint(
+      buildRequest("http://localhost/api/paypal/create-order", requestBody)
+    )
+
+    const payload = await response.json()
+    expect(response.status, JSON.stringify(payload)).toBe(200)
+
+    expect(mocks.createPayPalOrder).toHaveBeenCalledTimes(1)
+    const paypalArgs = mocks.createPayPalOrder.mock.calls[0][0]
+    expect(paypalArgs.amount).toBe("96.00")
+
+    const metadata = paypalArgs.metadata as Record<string, string>
+    expect(metadata.orderBumpSelected).toBe("true")
+    expect(metadata.orderBumpUnitCents).toBe("2900")
+    expect(metadata.checkoutTotalCents).toBe(String(9600))
+
+    expect(mocks.upsertCheckoutSession).toHaveBeenCalledTimes(1)
+    const storedMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>
+    expect(storedMetadata.orderBumpSelected).toBe("true")
+    expect(storedMetadata.checkoutTotalCents).toBe(String(9600))
   })
 })

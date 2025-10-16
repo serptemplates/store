@@ -376,6 +376,9 @@
         "label": {
           "type": "string"
         },
+        "subheading": {
+          "type": "string"
+        },
         "price": {
           "type": "string"
         },
@@ -410,6 +413,85 @@
           "default": []
         }
       }
+    },
+    "order_bump": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "product_slug": {
+              "type": ["string", "null"],
+              "minLength": 1
+            },
+            "slug": {
+              "type": ["string", "null"],
+              "minLength": 1
+            },
+            "title": {
+              "type": ["string", "null"],
+              "minLength": 1
+            },
+            "description": {
+              "type": ["string", "null"]
+            },
+            "price": {
+              "type": ["string", "null"],
+              "minLength": 1
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "default": []
+            },
+            "image": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "default_selected": {
+              "type": "boolean",
+              "default": false
+            },
+            "stripe": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "price_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "test_price_id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                { "type": "null" }
+              ]
+            }
+          }
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
     },
     "return_policy": {
       "type": "object",
@@ -479,7 +561,7 @@
           ]
         },
         "metadata": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": {
             "type": "string"
           },

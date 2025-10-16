@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wq06JrOmKRCmT1rrKjcd
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6GEMnA4OrbWe
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-dreamstime-downloader
 permission_justifications: []

@@ -37,7 +37,7 @@ features:
 - Resume downloads
 - Cross-platform support
 - Built-in player with Dailymotion-style controls
-- Command-line tools
+
 - Organize by channel and category
 - Duplicate detection and content management
 - Video management integration
@@ -130,10 +130,8 @@ return_policy:
 stripe:
   price_id: price_1S99wo06JrOmKRCmtEGHbI2T
   metadata:
-    source: generated
     stripe_product_id: prod_Sv6Gc2uzEQtuWs
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-dailymotion-downloader
 permission_justifications: []

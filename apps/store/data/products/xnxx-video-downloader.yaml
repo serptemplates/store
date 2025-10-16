@@ -34,7 +34,7 @@ features:
 - Auto metadata extraction and organization
 - Resume interrupted transfers
 - Cross-platform support
-- Command-line tools
+
 - Built-in Proxy support
 - Custom naming schemes and folder structures
 - Duplicate detection to prevent redundant downloads
@@ -129,11 +129,53 @@ return_policy:
 stripe:
   price_id: price_1S9PBd06JrOmKRCmvSxzbjnz
   metadata:
-    source: generated
     stripe_product_id: prod_SrGYKrazcfgi5G
 ghl:
-  source: Stripe Checkout
   tag_ids:
   - purchase-xnxx-downloader
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |-
+    Required for downloading XNXX videos to the user's computer while tracking progress.
+
+    Usage highlights:
+    - `background-enhanced.js:60` cancels downloads through the Chrome Downloads API.
+    - `background-enhanced.js:357` starts new downloads.
+    - `background-enhanced.js:446, 455, 459` watch download state and progress events.
+    - `popup.js:210` looks up downloads by ID to show progress in the popup.
+- permission: activeTab
+  justification: |-
+    Enables the extension to work with the active tab, validate XNXX pages, and gather video metadata.
+
+    Usage highlights:
+    - `chrome.tabs.query({ active: true, currentWindow: true })` provides implicit access to the focused tab.
+    - Supports communication with content scripts running on the active tab.
+- permission: storage
+  justification: |-
+    Stores activation status and license information locally so paid features remain enabled.
+
+    Usage highlights:
+    - `auth.js` `saveActivation` persists activation flags, license keys, and emails.
+    - `auth.js` `checkActivationStatus` reloads stored activation details when the popup initializes.
+- permission: notifications
+  justification: |-
+    Allows the extension to issue system notifications about download completion and error states.
+
+    Usage highlights:
+    - `background-enhanced.js:477` creates notifications via `chrome.notifications.create`.
+    - Notifications inform users about finished downloads and failure scenarios.
+- permission: contextMenus
+  justification: |-
+    Adds a "Download XNXX Video" item to the right-click menu on XNXX domains for quick access.
+
+    Usage highlights:
+    - `background-enhanced.js:10` registers the context menu item with `chrome.contextMenus.create`.
+    - `background-enhanced.js:23` listens for clicks using `chrome.contextMenus.onClicked`.
+- permission: tabs
+  justification: |-
+    Supports tab queries, messaging, and opening helper tabs to coordinate downloads.
+
+    Usage highlights:
+    - `popup.js:30, 44, 265` query tabs, communicate with content scripts, and open new tabs.
+    - `background-enhanced.js:25, 319, 325, 493` handle tab messaging for download workflows.

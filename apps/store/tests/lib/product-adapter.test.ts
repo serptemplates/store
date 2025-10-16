@@ -101,7 +101,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "news",
         title: "Latest",
+        seoTitle: "Latest",
         description: "Updates",
+        seoDescription: "Updates",
         date: "2024-01-01",
         author: "Test Author",
         tags: [],
@@ -120,8 +122,38 @@ describe("productToHomeTemplate", () => {
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
     expect(pricing.ctaHref).toBe("/checkout?product=sample-product");
     expect(pricing.ctaText).toBe("Get Started");
+    expect(pricing.subheading).toBeUndefined();
     expect(template.posts).toHaveLength(1);
     expect(template.postsTitle).toBe("Posts");
+  });
+
+  it("allows overriding or suppressing the pricing subheading", () => {
+    const explicitSubheadingProduct: ProductData = {
+      ...baseProduct,
+      pricing: {
+        price: "$59",
+        benefits: [],
+        subheading: "Custom pricing message",
+      },
+    };
+
+    const templateWithExplicit = productToHomeTemplate(explicitSubheadingProduct, []);
+    expect(templateWithExplicit.pricing?.subheading).toBe("Custom pricing message");
+
+    const templateWithoutField = productToHomeTemplate(baseProduct, []);
+    expect(templateWithoutField.pricing?.subheading).toBeUndefined();
+
+    const hiddenSubheadingProduct: ProductData = {
+      ...baseProduct,
+      pricing: {
+        price: baseProduct.pricing?.price,
+        benefits: baseProduct.pricing?.benefits ?? [],
+        subheading: " ",
+      },
+    };
+
+    const templateWithBlank = productToHomeTemplate(hiddenSubheadingProduct, []);
+    expect(templateWithBlank.pricing?.subheading).toBeUndefined();
   });
 
   it("prefers buy_button_destination for CTA links when provided", () => {
@@ -175,7 +207,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-a",
         title: "Post A",
+        seoTitle: "Post A",
         description: "First",
+        seoDescription: "First",
         date: "2024-01-01",
         author: "Author A",
         tags: [],
@@ -187,7 +221,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-b",
         title: "Post B",
+        seoTitle: "Post B",
         description: "Second",
+        seoDescription: "Second",
         date: "2024-01-02",
         author: "Author B",
         tags: [],
@@ -199,7 +235,9 @@ describe("productToHomeTemplate", () => {
       {
         slug: "post-c",
         title: "Post C",
+        seoTitle: "Post C",
         description: "Third",
+        seoDescription: "Third",
         date: "2024-01-03",
         author: "Author C",
         tags: [],

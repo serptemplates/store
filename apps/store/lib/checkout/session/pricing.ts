@@ -4,6 +4,8 @@ import { getStripeClient, isUsingTestKeys, resolvePriceForEnvironment } from "@/
 import { getOptionalStripePaymentConfigId } from "@/lib/payments/stripe-environment";
 import logger from "@/lib/logger";
 import type { OfferConfig } from "@/lib/products/offer-config";
+import type { ProductData } from "@/lib/products/product-schema";
+import { resolveOrderBump } from "@/lib/products/order-bump";
 
 import type { CouponSuccess } from "./coupons";
 import type { CheckoutSessionPayload } from "./validation";
@@ -14,6 +16,7 @@ export interface StripeCheckoutBuildContext {
   metadata: Record<string, string>;
   sessionMetadata: Record<string, string>;
   coupon: CouponSuccess;
+  product: ProductData;
 }
 
 export interface StripeCheckoutBuildResult {
@@ -26,7 +29,7 @@ export interface StripeCheckoutBuildResult {
 
 export async function createStripeCheckoutSession(
   stripe: Stripe,
-  { offer, payload, metadata, sessionMetadata, coupon }: StripeCheckoutBuildContext,
+  { offer, payload, metadata, sessionMetadata, coupon, product }: StripeCheckoutBuildContext,
 ): Promise<StripeCheckoutBuildResult> {
   const mode = payload.mode ?? offer.mode;
 
@@ -69,6 +72,40 @@ export async function createStripeCheckoutSession(
 
   if (payload.affiliateId) {
     sessionMetadata.affiliateId = payload.affiliateId;
+  }
+
+  const resolvedOrderBump = resolveOrderBump(product);
+  const isOrderBumpSelected = Boolean(
+    payload.orderBump?.selected &&
+      resolvedOrderBump &&
+      payload.orderBump.id === resolvedOrderBump.id,
+  );
+
+  let orderBumpLineItem: Stripe.Checkout.SessionCreateParams.LineItem | null = null;
+  let orderBumpUnitAmount: number | null = null;
+
+  if (payload.orderBump?.selected && !resolvedOrderBump) {
+    logger.warn("checkout.order_bump_missing", {
+      offerId: offer.id,
+      requestedOrderBumpId: payload.orderBump.id,
+    });
+  }
+
+  if (resolvedOrderBump) {
+    metadata.orderBumpId = resolvedOrderBump.id;
+    sessionMetadata.orderBumpId = resolvedOrderBump.id;
+    metadata.orderBumpTitle = resolvedOrderBump.title;
+    sessionMetadata.orderBumpTitle = resolvedOrderBump.title;
+    const displayPrice = resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price;
+    if (displayPrice) {
+      metadata.orderBumpDisplayPrice = displayPrice;
+      sessionMetadata.orderBumpDisplayPrice = displayPrice;
+    }
+    metadata.orderBumpSelected = isOrderBumpSelected ? "true" : "false";
+    sessionMetadata.orderBumpSelected = isOrderBumpSelected ? "true" : "false";
+  } else {
+    metadata.orderBumpSelected = metadata.orderBumpSelected ?? "false";
+    sessionMetadata.orderBumpSelected = sessionMetadata.orderBumpSelected ?? "false";
   }
 
   const price = await resolvePriceForEnvironment({
@@ -268,14 +305,79 @@ export async function createStripeCheckoutSession(
     sessionMetadata.couponSource = metadata.couponSource;
   }
 
+  if (isOrderBumpSelected && resolvedOrderBump) {
+    let orderBumpPriceId = resolvedOrderBump.stripePriceId;
+    if (isUsingTestKeys() && resolvedOrderBump.stripeTestPriceId) {
+      orderBumpPriceId = resolvedOrderBump.stripeTestPriceId;
+    }
+
+    const orderBumpPrice = await resolvePriceForEnvironment({
+      id: `${offer.id}__order_bump_${resolvedOrderBump.id}`,
+      priceId: orderBumpPriceId,
+      productName: `${resolvedOrderBump.title} (Upgrade)`,
+      productDescription: resolvedOrderBump.description ?? undefined,
+      productImage: offer.productImage,
+    });
+
+    orderBumpUnitAmount =
+      typeof orderBumpPrice.unit_amount === "number"
+        ? orderBumpPrice.unit_amount
+        : typeof orderBumpPrice.unit_amount_decimal === "string"
+          ? Math.round(Number(orderBumpPrice.unit_amount_decimal))
+          : null;
+
+    if (orderBumpUnitAmount === null) {
+      throw new Error("Order bump price must include a fixed unit amount");
+    }
+
+    orderBumpLineItem = {
+      price: orderBumpPrice.id,
+      quantity: 1,
+    };
+
+    metadata.orderBumpUnitCents = String(orderBumpUnitAmount);
+    metadata.orderBumpPriceId = orderBumpPrice.id;
+    sessionMetadata.orderBumpUnitCents = String(orderBumpUnitAmount);
+    sessionMetadata.orderBumpPriceId = orderBumpPrice.id;
+
+    if (!metadata.orderBumpDisplayPrice) {
+      const fallbackDisplay =
+        resolvedOrderBump.priceDisplay ??
+        resolvedOrderBump.price ??
+        (typeof orderBumpPrice.unit_amount === "number"
+          ? `$${(orderBumpPrice.unit_amount / 100).toFixed(2)}`
+          : orderBumpPrice.unit_amount_decimal ?? undefined);
+      if (fallbackDisplay) {
+        metadata.orderBumpDisplayPrice = fallbackDisplay;
+        sessionMetadata.orderBumpDisplayPrice = fallbackDisplay;
+      }
+    }
+  } else {
+    metadata.orderBumpUnitCents = metadata.orderBumpUnitCents ?? "0";
+    sessionMetadata.orderBumpUnitCents = sessionMetadata.orderBumpUnitCents ?? "0";
+  }
+
+  if (orderBumpUnitAmount !== null && unitAmount !== null) {
+    const baseSubtotalCents = couponAdjustedTotalCents ?? unitAmount * quantity;
+    const combinedTotalCents = baseSubtotalCents + orderBumpUnitAmount;
+    metadata.checkoutTotalWithOrderBumpCents = String(combinedTotalCents);
+    sessionMetadata.checkoutTotalWithOrderBumpCents = String(combinedTotalCents);
+  }
+
   const paymentConfigId = getOptionalStripePaymentConfigId();
 
-  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customLineItems ?? [
-    {
-      price: price.id,
-      quantity,
-    },
-  ];
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customLineItems
+    ? [...customLineItems]
+    : [
+        {
+          price: price.id,
+          quantity,
+        },
+      ];
+
+  if (orderBumpLineItem) {
+    lineItems.push(orderBumpLineItem);
+  }
 
   let sessionParams: Stripe.Checkout.SessionCreateParams = {
     mode,
