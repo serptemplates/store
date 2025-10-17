@@ -9,6 +9,7 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "prepare": "husky",
     "dev:stripe-webhook": "node scripts/stripe-webhook-test-server.js",
+    "dev:test:stripe": "tsx scripts/dev-test-stripe.ts",
     "sync:stripe-prices": "node scripts/sync-stripe-prices.mjs",
     "generate:products": "node scripts/generate-product-yamls.mjs",
     "fetch:ghl-products": "node scripts/fetch-ghl-products.mjs",

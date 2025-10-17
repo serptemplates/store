@@ -66,36 +66,21 @@ order_bump:
 
 faqs:
 - question: Can I download Instagram Stories before they disappear?
-  answer: Yes! The downloader lets you save Instagram Stories, including photos and
-    videos, before the 24-hour expiration. You can also download Story highlights
-    that creators have saved permanently to their profiles.
+  answer: Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles.
 - question: Does this work with Instagram Reels and IGTV videos?
-  answer: Absolutely! The downloader supports all Instagram video formats including
-    Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded
-    in its original quality and aspect ratio.
+  answer: Absolutely! The downloader supports all Instagram video formats including Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded in its original quality and aspect ratio.
 - question: Will the downloader save Instagram captions and hashtags?
-  answer: Yes! All post metadata including captions, hashtags, location tags, and
-    timestamps are saved with your downloads. This makes it easy to organize and search
-    your saved content later.
+  answer: Yes! All post metadata including captions, hashtags, location tags, and timestamps are saved with your downloads. This makes it easy to organize and search your saved content later.
 - question: Can I download from private Instagram accounts I follow?
-  answer: You can download content from private accounts that you have access to view.
-    Simply authenticate with your Instagram account, and you'll be able to save content
-    from any account you follow.
+  answer: You can download content from private accounts that you have access to view. Simply authenticate with your Instagram account, and you'll be able to save content from any account you follow.
 - question: What about Instagram carousel posts with multiple images?
-  answer: Carousel posts are fully supported! All images and videos in a carousel
-    are downloaded and can be saved as separate files or kept together in a folder,
-    depending on your preference.
+  answer: Carousel posts are fully supported! All images and videos in a carousel are downloaded and can be saved as separate files or kept together in a folder, depending on your preference.
 - question: Does this preserve the original image quality?
-  answer: Yes, the downloader fetches the highest resolution version available from
-    Instagram. Images and videos are saved without compression or quality loss, giving
-    you the same quality the creator uploaded.
+  answer: Yes, the downloader fetches the highest resolution version available from Instagram. Images and videos are saved without compression or quality loss, giving you the same quality the creator uploaded.
 - question: Can I download my own Instagram content as a backup?
-  answer: Definitely! Many users use this downloader to backup their own Instagram
-    content. It's a fast way to create local copies of all your posts, Stories, and
-    Reels for safekeeping.
+  answer: Definitely! Many users use this downloader to backup their own Instagram content. It's a fast way to create local copies of all your posts, Stories, and Reels for safekeeping.
 - question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox,
-    and Edge. Ensure your browser is up to date for optimal performance.
+  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Ensure your browser is up to date for optimal performance.
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Instagram Downloader

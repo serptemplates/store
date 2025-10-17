@@ -181,6 +181,10 @@ describe("checkout consent metadata", () => {
     expect(mocks.stripeCheckoutCreate).toHaveBeenCalledTimes(1)
     const stripeParams = mocks.stripeCheckoutCreate.mock.calls[0][0]
     const metadata = stripeParams.metadata as Record<string, string>
+    const paymentIntentData = stripeParams.payment_intent_data as {
+      description?: string
+      metadata?: Record<string, string>
+    }
 
     expect(metadata.checkoutSource).toBe("custom_checkout_stripe")
     expect(metadata.termsAccepted).toBe("true")
@@ -188,6 +192,16 @@ describe("checkout consent metadata", () => {
     expect(metadata.termsAcceptedAt).toBe(TEST_TIME.toISOString())
     expect(metadata.termsAcceptedIp).toBe("203.0.113.10")
     expect(metadata.termsAcceptedUserAgent).toBe("SERPTestAgent/1.0 (Checkout)")
+
+    expect(paymentIntentData?.description).toBe("TikTok Downloader")
+    expect(paymentIntentData?.metadata).toMatchObject({
+      checkoutSource: "custom_checkout_stripe",
+      termsAccepted: "true",
+      termsAcceptedAt: TEST_TIME.toISOString(),
+      termsAcceptedAtClient: "2024-04-30T09:15:00.000Z",
+      termsAcceptedIp: "203.0.113.10",
+      termsAcceptedUserAgent: "SERPTestAgent/1.0 (Checkout)",
+    })
 
     expect(mocks.upsertCheckoutSession).toHaveBeenCalledTimes(1)
     const dbMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>
@@ -263,6 +277,18 @@ describe("checkout consent metadata", () => {
     expect(metadata.orderBumpTitle).toBe("Priority Support")
     expect(metadata.orderBumpUnitCents).toBe("2900")
     expect(metadata.checkoutTotalWithOrderBumpCents).toBe(String(6700 + 2900))
+
+    const paymentIntentData = stripeParams.payment_intent_data as {
+      description?: string
+      metadata?: Record<string, string>
+    }
+    expect(paymentIntentData?.description).toBe("TikTok Downloader")
+    expect(paymentIntentData?.metadata).toMatchObject({
+      orderBumpSelected: "true",
+      orderBumpTitle: "Priority Support",
+      orderBumpUnitCents: "2900",
+      checkoutTotalWithOrderBumpCents: String(6700 + 2900),
+    })
 
     expect(mocks.upsertCheckoutSession).toHaveBeenCalledTimes(1)
     const storedMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>

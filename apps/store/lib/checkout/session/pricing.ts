@@ -422,6 +422,25 @@ export async function createStripeCheckoutSession(
     sessionParams.cancel_url = offer.cancelUrl;
   }
 
+  const paymentIntentDescription = offer.productName ?? product.name ?? offer.id;
+  const paymentIntentMetadata: Stripe.MetadataParam = {};
+
+  const mergeMetadata = (source: Record<string, string>) => {
+    for (const [key, value] of Object.entries(source)) {
+      if (typeof value === "string") {
+        paymentIntentMetadata[key] = value;
+      }
+    }
+  };
+
+  mergeMetadata(sessionMetadata);
+  mergeMetadata(metadata);
+
+  sessionParams.payment_intent_data = {
+    description: paymentIntentDescription,
+    metadata: paymentIntentMetadata,
+  };
+
   const session = await stripe.checkout.sessions.create(sessionParams);
 
   const paymentIntentId =
