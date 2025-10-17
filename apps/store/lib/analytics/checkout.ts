@@ -16,6 +16,7 @@ type CheckoutContext = {
   value?: number | null;
   couponCode?: string | null;
   isInitialSelection?: boolean;
+  release?: string | null;
 };
 
 const DEFAULT_CURRENCY = process.env.NEXT_PUBLIC_GA_CURRENCY ?? "USD";

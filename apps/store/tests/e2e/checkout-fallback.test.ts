@@ -89,4 +89,43 @@ test.describe("Embedded checkout fallback", () => {
       page.getByText(/problem loading the embedded checkout/i, { exact: false }),
     ).toBeVisible()
   })
+
+  test("switches to fallback when the checkout session responds with non-json content", async ({ page }) => {
+    await page.route("**/api/checkout/session", async (route, request) => {
+      let body: Record<string, unknown> = {}
+      try {
+        body = (request.postDataJSON() ?? {}) as Record<string, unknown>
+      } catch {
+        body = {}
+      }
+
+      if (body.uiMode === "embedded") {
+        await route.fulfill({
+          status: 502,
+          contentType: "text/html",
+          body: "<!DOCTYPE html><html><body>502</body></html>",
+        })
+        return
+      }
+
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          id: "cs_hosted_123",
+          url: "https://checkout.stripe.com/c/pay/cs_hosted_123",
+        }),
+      })
+    })
+
+    await page.goto(CHECKOUT_PATH, { waitUntil: "domcontentloaded" })
+
+    const fallbackButton = page.getByRole("button", { name: /open secure stripe checkout/i })
+    await expect(fallbackButton).toBeVisible()
+    await expect(fallbackButton).toBeEnabled({ timeout: 15000 })
+
+    await expect(page.getByTestId("checkout-fallback-message")).toHaveText(
+      /couldn't create the embedded checkout session/i,
+    )
+  })
 })
