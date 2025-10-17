@@ -18,6 +18,11 @@ echo "########################################"
 pnpm test:unit
 
 echo "########################################"
+echo "→ Running smoke tests..."
+echo "########################################"
+pnpm test:smoke
+
+echo "########################################"
 echo "→ Running validate:products..."
 echo "########################################"
 pnpm run validate:products

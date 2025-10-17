@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-# Pre-commit: lint and typecheck across the workspace
-# Runs even if some packages don’t define typecheck (uses --if-present)
-
 set -e
 
 echo "########################################"
@@ -19,8 +16,3 @@ echo "########################################"
 echo "→ Running unit tests..."
 echo "########################################"
 pnpm test:unit
-
-echo "########################################"
-echo "→ Running smoke tests..."
-echo "########################################"
-pnpm test:smoke

@@ -50,7 +50,7 @@ let openSpy: ReturnType<typeof vi.spyOn<typeof window, "open">> | undefined
 
 const fetchCalls: string[] = []
 
-const fetchMockImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+const defaultFetchImplementation = async (input: RequestInfo | URL, init?: RequestInit) => {
   let url: string
   if (typeof input === "string") {
     url = input
@@ -92,7 +92,9 @@ const fetchMockImpl = vi.fn(async (input: RequestInfo | URL, init?: RequestInit)
 
   fetchCalls.push(url)
   return originalGlobalFetch(input, init)
-})
+}
+
+const fetchMockImpl = vi.fn(defaultFetchImplementation)
 
 globalThis.fetch = fetchMockImpl as typeof fetch
 if (typeof window !== "undefined") {
@@ -122,6 +124,8 @@ describe("EmbeddedCheckoutView fallback behaviour", () => {
     mockLoadStripe.mockReset()
 
     trackCheckoutErrorMock.mockReset()
+    fetchMockImpl.mockImplementation(defaultFetchImplementation)
+    fetchMockImpl.mockClear()
     fetchCalls.length = 0
 
     if (typeof window !== "undefined") {
@@ -194,6 +198,71 @@ describe("EmbeddedCheckoutView fallback behaviour", () => {
         expect.anything(),
         expect.objectContaining({
           step: "embedded_checkout_iframe_error",
+        }),
+      )
+    })
+  })
+
+  it("falls back when the checkout session returns non-json content", async () => {
+    mockLoadStripe.mockResolvedValue({ id: "mock-stripe" })
+
+    fetchMockImpl.mockImplementation(async (input: RequestInfo | URL, init?: RequestInit) => {
+      let url: string
+      if (typeof input === "string") {
+        url = input
+      } else if (input instanceof URL) {
+        url = input.toString()
+      } else if (typeof (input as { url?: string }).url === "string") {
+        url = (input as { url: string }).url
+      } else {
+        url = String(input)
+      }
+
+      if (url.endsWith("/api/checkout/session")) {
+        fetchCalls.push(url)
+        let bodyPayload: Record<string, unknown> = {}
+        if (init?.body && typeof init.body === "string") {
+          try {
+            bodyPayload = JSON.parse(init.body)
+          } catch {
+            bodyPayload = {}
+          }
+        }
+
+        if (bodyPayload.uiMode === "embedded") {
+          return new Response("<!DOCTYPE html><html><body>502</body></html>", {
+            status: 502,
+            headers: { "Content-Type": "text/html" },
+          })
+        }
+
+        return new Response(
+          JSON.stringify({
+            id: "cs_hosted_123",
+            url: "https://checkout.stripe.com/c/pay/cs_hosted_123",
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        )
+      }
+
+      return defaultFetchImplementation(input, init)
+    })
+
+    render(<EmbeddedCheckoutView />)
+
+    const fallbackButton = (await screen.findByRole("button", {
+      name: /open secure stripe checkout/i,
+    })) as HTMLButtonElement
+
+    await waitFor(() => {
+      expect(fallbackButton.disabled).toBe(false)
+    })
+
+    await waitFor(() => {
+      expect(trackCheckoutErrorMock).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.objectContaining({
+          step: "embedded_checkout_session_error",
         }),
       )
     })

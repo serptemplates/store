@@ -46,9 +46,13 @@ export function EmbeddedCheckoutView() {
   const initialStripeSession = useRef(true)
 
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const fallbackReasonRef = useRef<"timeout" | "stripe_load_failed" | "iframe_error" | null>(null)
+  const fallbackReasonRef = useRef<
+    "timeout" | "stripe_load_failed" | "iframe_error" | "session_error" | null
+  >(null)
   const fallbackTrackedRef = useRef(false)
-
+  const sessionFallbackCopy =
+    "We couldn't create the embedded checkout session. Continue securely on Stripe."
+  const releaseId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? null
   useEffect(() => {
     if (!productSlug) {
       router.push("/")
@@ -164,13 +168,17 @@ export function EmbeddedCheckoutView() {
         value: finalPrice,
         ecommerceItem,
         step,
+        release: releaseId,
       })
     },
-    [affiliateId, currency, ecommerceItem, finalPrice, productName, productSlug],
+    [affiliateId, currency, ecommerceItem, finalPrice, productName, productSlug, releaseId],
   )
 
   const triggerFallback = useCallback(
-    (reason: "timeout" | "stripe_load_failed" | "iframe_error", detail?: unknown) => {
+    (
+      reason: "timeout" | "stripe_load_failed" | "iframe_error" | "session_error",
+      detail?: unknown,
+    ) => {
       if (fallbackReasonRef.current && fallbackReasonRef.current !== reason) {
         setShowStripeFallback(true)
         return
@@ -187,6 +195,12 @@ export function EmbeddedCheckoutView() {
         logFallback(
           "Embedded checkout iframe reported an error",
           "embedded_checkout_iframe_error",
+          detail,
+        )
+      } else if (reason === "session_error") {
+        logFallback(
+          "Checkout session response was invalid",
+          "embedded_checkout_session_error",
           detail,
         )
       }
@@ -252,6 +266,81 @@ export function EmbeddedCheckoutView() {
   const fetchClientSecret = useCallback(async () => {
     if (!product || !termsAccepted || !productSlug) return null
 
+    const payload = {
+      offerId: productSlug,
+      uiMode: "embedded" as const,
+      affiliateId,
+      orderBump: product.orderBump
+        ? {
+            id: product.orderBump.id,
+            selected: orderBumpSelected,
+          }
+        : undefined,
+      metadata: {
+        landerId: productSlug,
+        checkoutSource: "custom_checkout_stripe",
+        termsAccepted: "true",
+        termsAcceptedAt,
+        ...(product.orderBump
+          ? {
+              orderBumpId: product.orderBump.id,
+              orderBumpSelected: orderBumpSelected ? "true" : "false",
+              orderBumpPrice: product.orderBump.priceDisplay,
+            }
+          : {}),
+      },
+    }
+
+    const createHostedFallback = async (message: string, detail: unknown) => {
+      setError(message)
+      triggerFallback("session_error", detail)
+
+      try {
+        const hostedResponse = await fetch("/api/checkout/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, uiMode: "hosted" as const }),
+        })
+
+        const hostedContentType = hostedResponse.headers.get("content-type") ?? ""
+        if (!hostedContentType.includes("application/json")) {
+          const hostedBody = await hostedResponse.text()
+          console.error("Hosted checkout returned non-JSON response:", hostedBody)
+        trackCheckoutError(new Error("Hosted checkout non-JSON response"), {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_hosted_response",
+          release: releaseId,
+        })
+          return null
+        }
+
+        const hostedData = (await hostedResponse.json()) as {
+          id?: string
+          url?: string
+        }
+
+        if (typeof hostedData?.url === "string") {
+          setStripeSessionUrl(hostedData.url)
+        }
+        if (typeof hostedData?.id === "string") {
+          setStripeSessionId(hostedData.id)
+        }
+      } catch (hostedError) {
+        console.error("Error creating hosted fallback session:", hostedError)
+        trackCheckoutError(hostedError, {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_hosted_fetch",
+          release: releaseId,
+        })
+      }
+
+      return null
+    }
+
     try {
       setClientSecret("")
       setStripeSessionId(null)
@@ -260,43 +349,65 @@ export function EmbeddedCheckoutView() {
       const response = await fetch("/api/checkout/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          offerId: productSlug,
-          uiMode: "embedded", // Request embedded mode
-          affiliateId,
-          orderBump: product.orderBump
-            ? {
-                id: product.orderBump.id,
-                selected: orderBumpSelected,
-              }
-            : undefined,
-          metadata: {
-            landerId: productSlug,
-            checkoutSource: "custom_checkout_stripe",
-            termsAccepted: "true",
-            termsAcceptedAt,
-            ...(product.orderBump
-              ? {
-                  orderBumpId: product.orderBump.id,
-                  orderBumpSelected: orderBumpSelected ? "true" : "false",
-                  orderBumpPrice: product.orderBump.priceDisplay,
-                }
-              : {}),
-          },
-        }),
+        body: JSON.stringify(payload),
       })
 
-      const data = await response.json()
+      const contentType = response.headers.get("content-type") ?? ""
 
-      if (data.error) {
-        setError(data.error)
-        trackCheckoutError(data.error, {
+      if (!contentType.includes("application/json")) {
+        const rawBody = await response.text()
+        console.error("Checkout session returned non-JSON response:", rawBody)
+        trackCheckoutError(new Error("Checkout session non-JSON response"), {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_non_json",
+          release: releaseId,
+        })
+        return createHostedFallback(sessionFallbackCopy, {
+          status: response.status,
+          body: rawBody,
+        })
+      }
+
+      const data = (await response.json()) as {
+        id?: string
+        url?: string
+        client_secret?: string
+        error?: unknown
+      }
+
+      if (!response.ok || (data && typeof data.error === "string")) {
+        const apiErrorMessage =
+          typeof data?.error === "string" ? data.error : sessionFallbackCopy
+
+        trackCheckoutError(apiErrorMessage, {
           productSlug: productSlug ?? null,
           productName,
           affiliateId: affiliateId ?? null,
           step: "create_session_response",
+          release: releaseId,
         })
-        return null
+
+        return createHostedFallback(apiErrorMessage, {
+          status: response.status,
+          data,
+        })
+      }
+
+      if (!data?.client_secret) {
+        console.error("Checkout session missing client_secret:", data)
+        trackCheckoutError(new Error("Missing client_secret"), {
+          productSlug: productSlug ?? null,
+          productName,
+          affiliateId: affiliateId ?? null,
+          step: "create_session_missing_client_secret",
+          release: releaseId,
+        })
+        return createHostedFallback(sessionFallbackCopy, {
+          status: response.status,
+          data,
+        })
       }
 
       const isInitialSelection = initialStripeSession.current
@@ -319,16 +430,31 @@ export function EmbeddedCheckoutView() {
       return data.client_secret
     } catch (err) {
       console.error("Error creating checkout session:", err)
-      setError("Failed to initialize checkout. Please try again.")
       trackCheckoutError(err, {
         productSlug: productSlug ?? null,
         productName,
         affiliateId: affiliateId ?? null,
         step: "create_session_fetch",
+        release: releaseId,
       })
-      return null
+
+      return createHostedFallback(sessionFallbackCopy, err instanceof Error ? { message: err.message } : err)
     }
-  }, [product, productSlug, affiliateId, termsAccepted, termsAcceptedAt, productName, currency, finalPrice, ecommerceItem, orderBumpSelected])
+  }, [
+    affiliateId,
+    currency,
+    ecommerceItem,
+    finalPrice,
+    orderBumpSelected,
+    product,
+    productName,
+    productSlug,
+    sessionFallbackCopy,
+    termsAccepted,
+    termsAcceptedAt,
+    triggerFallback,
+    releaseId,
+  ])
 
   // Initialize Stripe checkout when component mounts
   useEffect(() => {
@@ -571,6 +697,7 @@ export function EmbeddedCheckoutView() {
         value: finalPrice,
         ecommerceItem,
         step: "embedded_checkout_fallback_missing",
+        release: releaseId,
       })
       return
     }
@@ -583,6 +710,7 @@ export function EmbeddedCheckoutView() {
       value: finalPrice,
       ecommerceItem,
       step: "embedded_checkout_fallback_clicked",
+      release: releaseId,
     })
 
     window.open(fallbackUrl, "_blank", "noopener,noreferrer")
@@ -595,6 +723,7 @@ export function EmbeddedCheckoutView() {
     currency,
     finalPrice,
     ecommerceItem,
+    releaseId,
   ])
 
   if (isLoading || !product) {
@@ -630,7 +759,9 @@ export function EmbeddedCheckoutView() {
       ? "We couldn't load the embedded checkout. You can finish safely on Stripe in a new tab."
       : fallbackReasonRef.current === "iframe_error"
         ? "We ran into a problem loading the embedded checkout. Continue securely on Stripe."
-        : "Still waiting? Open the secure Stripe checkout in a new tab."
+        : fallbackReasonRef.current === "session_error"
+          ? sessionFallbackCopy
+          : "Still waiting? Open the secure Stripe checkout in a new tab."
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -700,7 +831,12 @@ export function EmbeddedCheckoutView() {
                         </p>
                         {termsAccepted && (
                           <>
-                            <p className="text-sm text-gray-500">{fallbackMessage}</p>
+                            <p
+                              data-testid="checkout-fallback-message"
+                              className="text-sm text-gray-500"
+                            >
+                              {fallbackMessage}
+                            </p>
                             <button
                               type="button"
                               onClick={handleOpenStripeFallback}
