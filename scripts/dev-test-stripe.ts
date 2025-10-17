@@ -14,7 +14,7 @@ function runCommand(command: string, args: string[], options: RunOptions = {}) {
 
   if (result.status !== 0) {
     const output = result.stderr?.toString()?.trim();
-    throw new Error(output || `${command} ${args.join(" ")} failed with code ${result.status}`);
+    throw new Error(output || `Command "${command}" failed with code ${result.status}`);
   }
 }
 
@@ -23,7 +23,7 @@ function tryRunCommand(command: string, args: string[]) {
 }
 
 function escapeDoubleQuotes(value: string) {
-  return value.replace(/"/g, '\\"');
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
 const tmuxVersionCheck = spawnSync("tmux", ["-V"], { stdio: "ignore" });
