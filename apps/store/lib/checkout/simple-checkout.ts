@@ -192,6 +192,19 @@ export async function createSimpleCheckout(params: {
       client_reference_id: product.slug,
     };
 
+    const paymentIntentMetadata: Stripe.MetadataParam = { ...sessionMetadata };
+
+    if (params.metadata) {
+      for (const [key, value] of Object.entries(params.metadata)) {
+        paymentIntentMetadata[key] = value;
+      }
+    }
+
+    sessionParams.payment_intent_data = {
+      description: product.name || product.slug,
+      metadata: paymentIntentMetadata,
+    };
+
     console.log('[SimpleCheckout] Session params:', JSON.stringify(sessionParams, null, 2));
 
     const session = await stripe.checkout.sessions.create(sessionParams);

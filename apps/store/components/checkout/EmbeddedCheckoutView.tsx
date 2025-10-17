@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, ChangeEvent, useMemo, useRef } from "react"
+import React, { useState, useEffect, useCallback, ChangeEvent, useMemo, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import {
@@ -13,9 +13,6 @@ import { trackCheckoutError, trackCheckoutOrderBumpToggled, trackCheckoutPageVie
 import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 import type { EcommerceItem } from "@/lib/analytics/gtm"
 import { Check, Loader2 } from "lucide-react"
-
-// Initialize Stripe
-const stripePromise = loadStripe(requireStripePublishableKey())
 
 export function EmbeddedCheckoutView() {
   const searchParams = useSearchParams()
@@ -32,6 +29,7 @@ export function EmbeddedCheckoutView() {
   const [product, setProduct] = useState<CheckoutProduct | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [clientSecret, setClientSecret] = useState("")
+  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null)
   const [showPayPal, setShowPayPal] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [termsAccepted, setTermsAccepted] = useState(true)
@@ -40,8 +38,16 @@ export function EmbeddedCheckoutView() {
   )
   const [orderBumpSelected, setOrderBumpSelected] = useState(false)
   const [isRefreshingSession, setIsRefreshingSession] = useState(false)
+  const [stripeSessionId, setStripeSessionId] = useState<string | null>(null)
+  const [stripeSessionUrl, setStripeSessionUrl] = useState<string | null>(null)
+  const [showStripeFallback, setShowStripeFallback] = useState(false)
+  const [stripeUnavailable, setStripeUnavailable] = useState(false)
   const productName = product?.name ?? null
   const initialStripeSession = useRef(true)
+
+  const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const fallbackReasonRef = useRef<"timeout" | "stripe_load_failed" | "iframe_error" | null>(null)
+  const fallbackTrackedRef = useRef(false)
 
   useEffect(() => {
     if (!productSlug) {
@@ -136,6 +142,97 @@ export function EmbeddedCheckoutView() {
     }
   }, [product, productSlug, finalPrice])
 
+  const clearFallbackTimer = useCallback(() => {
+    if (fallbackTimerRef.current) {
+      clearTimeout(fallbackTimerRef.current)
+      fallbackTimerRef.current = null
+    }
+  }, [])
+
+  const logFallback = useCallback(
+    (message: string, step: string, detail?: unknown) => {
+      if (fallbackTrackedRef.current) {
+        return
+      }
+      fallbackTrackedRef.current = true
+
+      trackCheckoutError(detail ?? message, {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+        step,
+      })
+    },
+    [affiliateId, currency, ecommerceItem, finalPrice, productName, productSlug],
+  )
+
+  const triggerFallback = useCallback(
+    (reason: "timeout" | "stripe_load_failed" | "iframe_error", detail?: unknown) => {
+      if (fallbackReasonRef.current && fallbackReasonRef.current !== reason) {
+        setShowStripeFallback(true)
+        return
+      }
+
+      fallbackReasonRef.current = reason
+
+      if (reason === "timeout") {
+        logFallback("Embedded checkout timed out", "embedded_checkout_timeout", detail)
+      } else if (reason === "stripe_load_failed") {
+        setStripeUnavailable(true)
+        logFallback("Stripe JS failed to load", "embedded_checkout_stripe_unavailable", detail)
+      } else if (reason === "iframe_error") {
+        logFallback(
+          "Embedded checkout iframe reported an error",
+          "embedded_checkout_iframe_error",
+          detail,
+        )
+      }
+
+      setShowStripeFallback(true)
+      clearFallbackTimer()
+    },
+    [clearFallbackTimer, logFallback],
+  )
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function initStripe() {
+      try {
+        const promise = loadStripe(requireStripePublishableKey())
+        if (!isMounted) {
+          return
+        }
+        setStripePromise(promise)
+        const stripe = await promise
+        if (!isMounted) {
+          return
+        }
+        if (!stripe) {
+          throw new Error("loadStripe resolved to null")
+        }
+      } catch (err) {
+        if (!isMounted) {
+          return
+        }
+        console.error("Stripe failed to initialize:", err)
+        triggerFallback(
+          "stripe_load_failed",
+          err instanceof Error ? err : new Error(String(err)),
+        )
+      }
+    }
+
+    void initStripe()
+
+    return () => {
+      isMounted = false
+    }
+  }, [triggerFallback])
+
   useEffect(() => {
     if (!productSlug || !product || !ecommerceItem) {
       return
@@ -157,6 +254,8 @@ export function EmbeddedCheckoutView() {
 
     try {
       setClientSecret("")
+      setStripeSessionId(null)
+      setStripeSessionUrl(null)
 
       const response = await fetch("/api/checkout/session", {
         method: "POST",
@@ -201,6 +300,10 @@ export function EmbeddedCheckoutView() {
       }
 
       const isInitialSelection = initialStripeSession.current
+      const sessionId = typeof data.id === "string" ? data.id : null
+      const sessionUrl = typeof data.url === "string" ? data.url : null
+      setStripeSessionId(sessionId)
+      setStripeSessionUrl(sessionUrl)
       trackCheckoutSessionReady({
         provider: "stripe",
         productSlug: productSlug ?? null,
@@ -231,34 +334,118 @@ export function EmbeddedCheckoutView() {
   useEffect(() => {
     if (!termsAccepted) {
       setClientSecret("")
+      setStripeSessionId(null)
+      setStripeSessionUrl(null)
+      clearFallbackTimer()
+      if (fallbackReasonRef.current !== "stripe_load_failed") {
+        setShowStripeFallback(false)
+        fallbackReasonRef.current = null
+        fallbackTrackedRef.current = false
+      }
       return
     }
 
-  if (product && !showPayPal) {
-    let isActive = true
-    setIsRefreshingSession(true)
-    setClientSecret("")
+    if (product && !showPayPal) {
+      let isActive = true
+      setIsRefreshingSession(true)
+      setClientSecret("")
 
-    fetchClientSecret()
-      .then(secret => {
-        if (!isActive) return
-        if (secret) {
+      fetchClientSecret()
+        .then((secret) => {
+          if (!isActive || !secret) {
+            return
+          }
           setClientSecret(secret)
-        }
-      })
-      .finally(() => {
-        if (isActive) {
-          setIsRefreshingSession(false)
-        }
-      })
+        })
+        .finally(() => {
+          if (isActive) {
+            setIsRefreshingSession(false)
+          }
+        })
+
+      return () => {
+        isActive = false
+      }
+    }
+
+    setIsRefreshingSession(false)
+  }, [product, showPayPal, fetchClientSecret, termsAccepted, clearFallbackTimer])
+
+  useEffect(() => {
+    if (showPayPal || !termsAccepted) {
+      clearFallbackTimer()
+      return
+    }
+
+    if (stripeUnavailable) {
+      clearFallbackTimer()
+      setShowStripeFallback(true)
+      return
+    }
+
+    if (clientSecret && stripePromise) {
+      clearFallbackTimer()
+      return
+    }
+
+    if (!isRefreshingSession) {
+      clearFallbackTimer()
+      return
+    }
+
+    clearFallbackTimer()
+    fallbackTimerRef.current = setTimeout(() => {
+      triggerFallback("timeout")
+    }, 8000)
 
     return () => {
-      isActive = false
+      clearFallbackTimer()
     }
-  }
+  }, [
+    showPayPal,
+    termsAccepted,
+    clientSecret,
+    stripePromise,
+    stripeUnavailable,
+    isRefreshingSession,
+    triggerFallback,
+    clearFallbackTimer,
+  ])
 
-  setIsRefreshingSession(false)
-}, [product, showPayPal, fetchClientSecret, termsAccepted])
+  useEffect(() => {
+    const handleStripeMessage = (event: MessageEvent) => {
+      if (!event || typeof event.data !== "object" || event.data === null) {
+        return
+      }
+
+      const origin = typeof event.origin === "string" ? event.origin : ""
+      if (!origin.includes("stripe.com")) {
+        return
+      }
+
+      const rawType = (event.data as { type?: string }).type
+      const messageType = typeof rawType === "string" ? rawType.toLowerCase() : ""
+      const payloadEvent = (() => {
+        const payload = (event.data as { payload?: { event?: string } }).payload
+        if (payload && typeof payload.event === "string") {
+          return payload.event.toLowerCase()
+        }
+        return ""
+      })()
+
+      if (
+        (messageType.includes("checkout") && messageType.includes("error")) ||
+        (payloadEvent.includes("checkout") && payloadEvent.includes("error"))
+      ) {
+        triggerFallback("iframe_error", event.data)
+      }
+    }
+
+    window.addEventListener("message", handleStripeMessage)
+    return () => {
+      window.removeEventListener("message", handleStripeMessage)
+    }
+  }, [triggerFallback])
 
   const handleTermsChange = (event: ChangeEvent<HTMLInputElement>) => {
     const accepted = event.target.checked
@@ -298,6 +485,13 @@ export function EmbeddedCheckoutView() {
 
   const handleSelectStripe = useCallback(() => {
     setShowPayPal(false)
+    clearFallbackTimer()
+    if (fallbackReasonRef.current !== "stripe_load_failed") {
+      setStripeUnavailable(false)
+      setShowStripeFallback(false)
+      fallbackReasonRef.current = null
+      fallbackTrackedRef.current = false
+    }
     if (showPayPal) {
       trackCheckoutPaymentMethodSelected("stripe", {
         productSlug: productSlug ?? null,
@@ -308,10 +502,20 @@ export function EmbeddedCheckoutView() {
         ecommerceItem,
       })
     }
-  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
+  }, [
+    showPayPal,
+    productSlug,
+    productName,
+    affiliateId,
+    currency,
+    finalPrice,
+    ecommerceItem,
+    clearFallbackTimer,
+  ])
 
   const handleSelectPayPal = useCallback(() => {
     setShowPayPal(true)
+    clearFallbackTimer()
     if (!showPayPal) {
       trackCheckoutPaymentMethodSelected("paypal", {
         productSlug: productSlug ?? null,
@@ -332,7 +536,55 @@ export function EmbeddedCheckoutView() {
         ecommerceItem,
       })
     }
-  }, [showPayPal, productSlug, productName, affiliateId, currency, finalPrice, ecommerceItem])
+  }, [
+    showPayPal,
+    productSlug,
+    productName,
+    affiliateId,
+    currency,
+    finalPrice,
+    ecommerceItem,
+    clearFallbackTimer,
+  ])
+
+  const handleOpenStripeFallback = useCallback(() => {
+    const fallbackUrl =
+      stripeSessionUrl ?? (stripeSessionId ? `https://checkout.stripe.com/c/pay/${stripeSessionId}` : null)
+
+    if (!fallbackUrl) {
+      trackCheckoutError("Stripe fallback requested without session URL", {
+        productSlug: productSlug ?? null,
+        productName,
+        affiliateId: affiliateId ?? null,
+        currency,
+        value: finalPrice,
+        ecommerceItem,
+        step: "embedded_checkout_fallback_missing",
+      })
+      return
+    }
+
+    trackCheckoutError("Opening hosted Stripe checkout fallback", {
+      productSlug: productSlug ?? null,
+      productName,
+      affiliateId: affiliateId ?? null,
+      currency,
+      value: finalPrice,
+      ecommerceItem,
+      step: "embedded_checkout_fallback_clicked",
+    })
+
+    window.open(fallbackUrl, "_blank", "noopener,noreferrer")
+  }, [
+    stripeSessionUrl,
+    stripeSessionId,
+    productSlug,
+    productName,
+    affiliateId,
+    currency,
+    finalPrice,
+    ecommerceItem,
+  ])
 
   if (isLoading || !product) {
     return (
@@ -357,6 +609,16 @@ export function EmbeddedCheckoutView() {
     paypalMetadata.orderBumpSelected = orderBumpSelected ? "true" : "false"
     paypalMetadata.orderBumpPrice = product.orderBump.priceDisplay
   }
+
+  const canRenderEmbeddedCheckout =
+    Boolean(clientSecret && termsAccepted && !stripeUnavailable && stripePromise)
+
+  const fallbackMessage =
+    fallbackReasonRef.current === "stripe_load_failed"
+      ? "We couldn't load the embedded checkout. You can finish safely on Stripe in a new tab."
+      : fallbackReasonRef.current === "iframe_error"
+        ? "We ran into a problem loading the embedded checkout. Continue securely on Stripe."
+        : "Still waiting? Open the secure Stripe checkout in a new tab."
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -396,8 +658,7 @@ export function EmbeddedCheckoutView() {
             )}
 
             {!showPayPal ? (
-              // Stripe Embedded Checkout
-              clientSecret && termsAccepted ? (
+              canRenderEmbeddedCheckout ? (
                 <div id="checkout" className="relative">
                   <EmbeddedCheckoutProvider
                     stripe={stripePromise}
@@ -408,11 +669,43 @@ export function EmbeddedCheckoutView() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center py-12">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">
-                      {termsAccepted ? "Loading payment form..." : "Please agree to the Terms to continue"}
-                    </p>
+                  <div className="text-center space-y-4">
+                    {!showStripeFallback && (
+                      <>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                        <p className="text-gray-600">
+                          {termsAccepted ? "Loading payment form..." : "Please agree to the Terms to continue"}
+                        </p>
+                      </>
+                    )}
+                    {showStripeFallback && (
+                      <div className="space-y-3">
+                        <div className="flex justify-center mb-2">
+                          <Loader2 className="h-6 w-6 text-blue-600 animate-spin" aria-hidden="true" />
+                        </div>
+                        <p className="text-gray-600">
+                          {termsAccepted ? "We're preparing the secure Stripe checkout." : "Please agree to the Terms to continue"}
+                        </p>
+                        {termsAccepted && (
+                          <>
+                            <p className="text-sm text-gray-500">{fallbackMessage}</p>
+                            <button
+                              type="button"
+                              onClick={handleOpenStripeFallback}
+                              className="inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+                              disabled={!stripeSessionUrl && !stripeSessionId}
+                            >
+                              Open secure Stripe checkout
+                            </button>
+                            {!stripeSessionUrl && !stripeSessionId && (
+                              <p className="text-xs text-gray-400">
+                                If the button stays disabled, refresh the page or temporarily turn off blocking extensions.
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               )

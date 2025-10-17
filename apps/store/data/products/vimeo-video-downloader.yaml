@@ -115,38 +115,21 @@ pricing:
 order_bump: serp-downloaders-bundle
 faqs:
 - question: How does the Vimeo Video Downloader extension work?
-  answer: Simply install our extension in your browser, navigate to any Vimeo video,
-    and click the download button that appears. Our extension integrates seamlessly
-    with your browser, allowing you to download videos in just one click without leaving
-    the page.
+  answer: Simply install our extension in your browser, navigate to any Vimeo video, and click the download button that appears. Our extension integrates seamlessly with your browser, allowing you to download videos in just one click without leaving the page.
 - question: What video quality options can I download?
-  answer: Our extension automatically detects all available quality options for each
-    video, from 360p up to 4K resolution. You can choose the quality that best fits
-    your needs before downloading, ensuring you get the perfect balance between file
-    size and video clarity.
+  answer: Our extension automatically detects all available quality options for each video, from 360p up to 4K resolution. You can choose the quality that best fits your needs before downloading, ensuring you get the perfect balance between file size and video clarity.
 - question: Is the extension safe to use?
-  answer: Absolutely. Our extension is built with security in mind, contains no malware
-    or adware, and doesn't collect or store your personal data. We regularly update
-    the extension to maintain compatibility and security standards.
+  answer: Absolutely. Our extension is built with security in mind, contains no malware or adware, and doesn't collect or store your personal data. We regularly update the extension to maintain compatibility and security standards.
 - question: Do I need to create an account to use the extension?
-  answer: No account required! Simply install the extension and start downloading
-    immediately. We believe in keeping things simple and hassle-free for our users.
+  answer: No account required! Simply install the extension and start downloading immediately. We believe in keeping things simple and hassle-free for our users.
 - question: Can I download multiple videos at once?
-  answer: Yes, our extension supports batch downloading. You can queue multiple videos
-    and download them sequentially, saving you time when you need to save several
-    videos.
+  answer: Yes, our extension supports batch downloading. You can queue multiple videos and download them sequentially, saving you time when you need to save several videos.
 - question: Will this work with password-protected or private videos?
-  answer: The extension can only download videos that you have legitimate access to
-    view. If you can watch a video in your browser (whether public or private content
-    you have permission to access), you can download it with our extension.
+  answer: The extension can only download videos that you have legitimate access to view. If you can watch a video in your browser (whether public or private content you have permission to access), you can download it with our extension.
 - question: What browsers are supported?
-  answer: Our extension is currently available for Chrome, Firefox, and Edge. We're
-    continuously working to expand browser compatibility and improve performance across
-    all platforms.
+  answer: Our extension is currently available for Chrome, Firefox, and Edge. We're continuously working to expand browser compatibility and improve performance across all platforms.
 - question: What if I encounter a download error?
-  answer: Most issues are resolved by refreshing the page or restarting your browser.
-    If problems persist, our support team is here to help. Check that you're using
-    the latest version of the extension, as updates often fix compatibility issues.
+  answer: Most issues are resolved by refreshing the page or restarting your browser. If problems persist, our support team is here to help. Check that you're using the latest version of the extension, as updates often fix compatibility issues.
 reviews:
 - name: Sarah Johnson
   review: This downloader is a game-changer! I needed to backup my educational content
