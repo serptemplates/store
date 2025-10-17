@@ -2,8 +2,10 @@ platform: Giphy
 name: Giphy Downloader
 tagline: Save Giphy images and content instantly to your device.
 slug: giphy-downloader
-description: Download videos, images, and content from giphy with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Giphy Downloader gives creators and teams a dependable way to save Giphy images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Giphy with consistent quality and predictable results.
+  
+  It supports High-quality GIFs and animated stickers, Batch trending/popular content downloads, and Various GIF formats and resolutions, so you can move quickly from download to delivery without tedious rework. Use it to archive Giphy assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Giphy Images | Giphy Downloader
 seo_description: Download Giphy images and graphics for offline use. Fast and reliable
   Giphy content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Giphy downloader?
   answer: Install the browser extension, navigate to Giphy, find the content you want

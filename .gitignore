@@ -71,3 +71,4 @@ apps/store/reports/
 serp-license-key-management
 google-creds.json
 merchant-feed.*
+external/

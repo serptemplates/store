@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getAllProducts } from "@/lib/products/product";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 
-const ALLOWED_PREFIXES = ["https://store.serp.co/", "https://ghl.serp.co/"];
+const ALLOWED_PREFIXES = ["https://apps.serp.co/", "https://store.serp.co/", "https://ghl.serp.co/"];
 
 const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";

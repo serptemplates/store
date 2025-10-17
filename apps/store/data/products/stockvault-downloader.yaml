@@ -2,8 +2,10 @@ platform: Stockvault
 name: Stockvault Downloader
 tagline: Save Stockvault images and content instantly to your device.
 slug: stockvault-downloader
-description: Download videos, images, and content from stockvault with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Stockvault Downloader gives creators and teams a dependable way to save Stockvault images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stockvault with consistent quality and predictable results.
+  
+  It supports Free stock graphics and design resources, Vectors, photos, and design elements, and Batch category collections/searches downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Stockvault assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Stockvault Images | Stockvault Downloader
 seo_description: Download Stockvault images and graphics for offline use. Fast and
   reliable Stockvault content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Stockvault downloader?
   answer: Install the browser extension, navigate to Stockvault, find the content

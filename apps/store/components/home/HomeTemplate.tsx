@@ -263,6 +263,7 @@ export function HomeTemplate({
         {/* Features */}
         <FeaturesSection features={normalizedFeatures} />
 
+        {/* Videos */}
         {videoSection}
 
         {/* Social Proof Screenshots */}
@@ -275,11 +276,10 @@ export function HomeTemplate({
         {(pricing?.enabled ?? true) && (
           <PricingCta
             heading={pricing?.heading ?? `Get ${platform} Downloader Today`}
-            subheading={pricing?.subheading ?? heroDescription}
             priceLabel={pricing?.priceLabel ?? "One-time purchase"}
             price={pricing?.price ?? "$47"}
             originalPrice={pricing?.originalPrice}
-            priceNote={pricing?.priceNote ?? "Lifetime access • Free updates"}
+            priceNote={pricing?.priceNote ?? ""}
             benefits={pricingBenefitList}
             ctaText={pricing?.ctaText ?? ctaText}
             ctaHref={pricing?.ctaHref ?? ctaHref}
@@ -289,7 +289,6 @@ export function HomeTemplate({
             ctaExtra={pricing?.ctaExtra}
             terms={pricing?.terms}
             id={pricing?.id ?? "pricing"}
-            orderBump={pricing?.orderBump}
           />
         )}
 

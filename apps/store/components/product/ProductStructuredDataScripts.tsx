@@ -10,6 +10,7 @@ import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import type { BlogPostMeta } from "@/lib/blog";
 import type { ProductVideoEntry } from "@/lib/products/video";
+import { canonicalizeStoreOrigin } from "@/lib/canonical-url";
 
 const TRANSLATED_RESULTS_LANGUAGES = [
   "en",
@@ -92,13 +93,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
 
   const productIsPreRelease = isPreRelease(product);
   const homeProps = productToHomeTemplate(product, posts);
-  const normalizedStoreUrl = (() => {
-    if (siteConfig?.site?.domain) {
-      const trimmed = siteConfig.site.domain.trim().replace(/\/$/, "");
-      return trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
-    }
-    return "https://apps.serp.co";
-  })();
+  const normalizedStoreUrl = canonicalizeStoreOrigin(siteConfig?.site?.domain);
   const productPath = product.slug?.replace(/^\/+/, "") ?? "";
   const productRelativeUrl = productPath ? `/${productPath}` : "/";
   const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;

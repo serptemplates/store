@@ -109,17 +109,17 @@ export function productToHomeTemplate(
     (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
   const checkoutHref = `/checkout?product=${product.slug}`;
   const allowedPrefixes = [
+    "https://apps.serp.co/",
     "https://store.serp.co/",
     "https://ghl.serp.co/",
-    "https://apps.serp.co/",
     "https://serp.ly/",
     "https://serp.co/",
   ];
   const candidateLinks = [
     product.buy_button_destination,
     product.pricing?.cta_href,
-    product.store_serp_co_product_page_url,
     product.apps_serp_co_product_page_url,
+    product.store_serp_co_product_page_url,
     product.serp_co_product_page_url,
     product.serply_link,
   ];
@@ -131,7 +131,7 @@ export function productToHomeTemplate(
         link.startsWith("/")
         || allowedPrefixes.some((prefix) => link.startsWith(prefix))
       ),
-  ) ?? `https://store.serp.co/product-details/product/${product.slug}`;
+  ) ?? `https://apps.serp.co/${product.slug}`;
   const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
   const ctaText = product.pricing?.cta_text ?? "Get It Now";
   const videoUrl = product.product_videos?.[0];

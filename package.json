@@ -3,7 +3,7 @@
   "packageManager": "pnpm@9.11.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run validate:products && pnpm --filter @apps/store dev",
+    "dev": "pnpm --filter @apps/store dev",
     "build": "pnpm -r --parallel build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r --if-present typecheck",

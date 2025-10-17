@@ -2,8 +2,10 @@ platform: Redgifs
 name: Redgifs Downloader
 tagline: Save Redgifs content instantly to your device.
 slug: redgifs-downloader
-description: Download videos, images, and content from redgifs with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Redgifs Downloader gives creators and teams a dependable way to save Redgifs content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Redgifs with consistent quality and predictable results.
+  
+  It supports High-quality GIFs and short videos, Batch processing for tag-based content collections, and Various media formats and qualities, so you can move quickly from download to delivery without tedious rework. Use it to archive Redgifs assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Redgifs Content | Redgifs Downloader
 seo_description: Download Redgifs content easily for offline use. Fast and reliable
   Redgifs downloader.
@@ -14,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/redgifs-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9abf613b1bca79ce7b58
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=redgifs-downloader
-status: draft
+status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redgifs-downloader/main/images/redgifs-downloader.gif
 screenshots:
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Redgifs downloader?
   answer: Install the browser extension, navigate to Redgifs, find the content you
@@ -135,5 +140,4 @@ stripe:
 ghl:
   tag_ids:
   - purchase-redgifs-downloader
-new_release: true
 permission_justifications: []

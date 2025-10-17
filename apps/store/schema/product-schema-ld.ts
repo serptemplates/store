@@ -1,4 +1,5 @@
 import type { ProductData } from '@/lib/products/product-schema';
+import { canonicalizeStoreOrigin, canonicalizeStoreHref, getDefaultStoreUrl } from '@/lib/canonical-url';
 
 const DEFAULT_IMAGE_LICENSE_URL = 'https://github.com/serpapps/legal/blob/main/terms-conditions.md';
 const DEFAULT_IMAGE_ACQUIRE_LICENSE_URL = 'https://serp.co/contact';
@@ -380,19 +381,22 @@ export function generateBreadcrumbSchema({
   storeUrl,
 }: {
   items: Array<{ name: string; url?: string }>;
-  storeUrl: string;
+  storeUrl?: string;
 }) {
+  const baseStoreUrl = canonicalizeStoreOrigin(storeUrl ?? getDefaultStoreUrl());
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      ...(item.url && {
-        item: `${storeUrl}${item.url}`,
-      }),
-    })),
+    itemListElement: items.map((item, index) => {
+      const itemUrl = canonicalizeStoreHref(item.url, baseStoreUrl);
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        ...(itemUrl && { item: itemUrl }),
+      };
+    }),
   };
 }
 

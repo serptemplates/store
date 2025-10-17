@@ -76,7 +76,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
 
     // Adjust URLs for localhost
     const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-    const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://store.serp.co";
+    const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://apps.serp.co";
     const baseUrl = configuredSiteUrl ?? defaultBaseUrl;
 
     const rawSuccessUrl = isTest
@@ -96,7 +96,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       metadata: {
         productSlug: product.slug,
         productName: product.name,
-        productPageUrl: product.store_serp_co_product_page_url ?? product.apps_serp_co_product_page_url,
+        productPageUrl: product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url,
         store_serp_co_product_page_url: product.store_serp_co_product_page_url,
         apps_serp_co_product_page_url: product.apps_serp_co_product_page_url,
         purchaseUrl: product.serply_link,

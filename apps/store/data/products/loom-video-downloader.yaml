@@ -2,10 +2,10 @@ platform: Loom
 name: Loom Video Downloader
 tagline: Save Loom videos instantly for offline viewing.
 slug: loom-video-downloader
-description: "The Loom Video Downloader browser extension adds a reliable download\
-  \ workflow for any Loom video\u2014whether it lives inside your account or is embedded\
-  \ on another site. Enjoy fast, high-quality MP4 exports without subscriptions or\
-  \ complex tooling."
+description: |
+  Loom Video Downloader gives creators and teams a dependable way to save Loom videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Loom with consistent quality and predictable results.
+  
+  It supports One-click download from any video page, 100% privacy-friendly – no tracking or data collection, and Auto-detect videos on the page, so you can move quickly from download to delivery without tedious rework. Use it to archive Loom assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Loom Videos | Loom Video Downloader
 seo_description: Download Loom videos easily for offline viewing. Fast, reliable Loom
   video downloader with high-quality downloads.
@@ -13,7 +13,7 @@ serply_link: https://serp.ly/loom-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/loom-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/loom-video-downloader
 serp_co_product_page_url: https://serp.co/products/loom-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02c70613b1bd3c1ce7f87
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=loom-video-downloader
 status: live
@@ -69,6 +69,7 @@ pricing:
   price: $17.00
   currency: USD
   availability: InStock
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I download Loom videos?
   answer: To download Loom videos, you can use specialized software or browser extensions

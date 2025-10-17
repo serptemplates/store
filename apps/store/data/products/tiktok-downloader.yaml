@@ -2,7 +2,10 @@ platform: Tiktok
 name: Tiktok Downloader
 tagline: Save Tiktok videos instantly for offline viewing.
 slug: tiktok-downloader
-description: Get quick access to Tiktok Downloader content for offline use.
+description: |
+  Tiktok Downloader gives creators and teams a dependable way to save Tiktok videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Tiktok with consistent quality and predictable results.
+  
+  It supports Batch downloads for series/collections, Audio extraction support, and Various containers/codecs, so you can move quickly from download to delivery without tedious rework. Use it to archive Tiktok assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Tiktok Videos | Tiktok Downloader
 seo_description: Download Tiktok videos easily for offline viewing. Fast, reliable
   Tiktok video downloader with high-quality downloads.
@@ -13,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/tiktok-downloader/
 buy_button_destination:
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=tiktok-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg

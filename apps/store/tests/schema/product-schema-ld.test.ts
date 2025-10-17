@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { generateProductSchemaLD, type SchemaProduct } from "@/schema/product-schema-ld";
+import { generateBreadcrumbSchema, generateProductSchemaLD, type SchemaProduct } from "@/schema/product-schema-ld";
 
 describe("generateProductSchemaLD", () => {
   it("includes the supplied @id attribute and normalizes image URLs", () => {
@@ -95,5 +95,45 @@ describe("generateProductSchemaLD", () => {
     });
     expect(Array.isArray(schema.availableLanguage)).toBe(true);
     expect(schema.availableLanguage).toContain("en");
+  });
+});
+
+describe("generateBreadcrumbSchema", () => {
+  it("normalizes breadcrumb items to the apps.serp.co domain", () => {
+    const schema = generateBreadcrumbSchema({
+      items: [
+        { name: "Home", url: "/" },
+        { name: "Product", url: "https://store.serp.co/product/test" },
+      ],
+      storeUrl: "https://store.serp.co",
+    });
+
+    expect(schema.itemListElement).toEqual([
+      expect.objectContaining({
+        position: 1,
+        name: "Home",
+        item: "https://apps.serp.co/",
+      }),
+      expect.objectContaining({
+        position: 2,
+        name: "Product",
+        item: "https://apps.serp.co/product/test",
+      }),
+    ]);
+  });
+
+  it("builds absolute URLs when provided relative breadcrumb paths", () => {
+    const schema = generateBreadcrumbSchema({
+      items: [
+        { name: "Home", url: "/" },
+        { name: "Section", url: "/section" },
+      ],
+      storeUrl: "https://example.com",
+    });
+
+    expect(schema.itemListElement).toEqual([
+      expect.objectContaining({ item: "https://example.com/" }),
+      expect.objectContaining({ item: "https://example.com/section" }),
+    ]);
   });
 });

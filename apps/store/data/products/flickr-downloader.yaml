@@ -2,8 +2,10 @@ platform: Flickr
 name: Flickr Downloader
 tagline: Save Flickr images and content instantly to your device.
 slug: flickr-downloader
-description: Download videos, images, and content from flickr with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  Flickr Downloader gives creators and teams a dependable way to save Flickr images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Flickr with consistent quality and predictable results.
+  
+  It supports High-res Flickr downloads and albums, Batch photographer portfolios/collections downloads, and Creative Commons and rights-managed content, so you can move quickly from download to delivery without tedious rework. Use it to archive Flickr assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Flickr Images | Flickr Downloader
 seo_description: Download Flickr images and graphics for offline use. Fast and reliable
   Flickr content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Flickr downloader?
   answer: Install the browser extension, navigate to Flickr, find the content you

@@ -65,7 +65,7 @@ const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-      <div className="container relative py-16 md:py-24 lg:py-28">
+      <div className="container relative py-12 md:py-16 lg:py-18">
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col items-center gap-6">

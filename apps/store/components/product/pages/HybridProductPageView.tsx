@@ -29,6 +29,7 @@ import { getReleaseBadgeText, isPreRelease } from "@/lib/products/release-status
 import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
+import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -105,7 +106,9 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
 
   const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
-  const productUrl = typeof window !== "undefined" ? `${window.location.origin}/${product.slug}` : `https://store.com/${product.slug}`
+  const canonicalBaseUrl = canonicalizeStoreOrigin(typeof window !== "undefined" ? window.location.origin : undefined)
+  const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? ""
+  const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl
 
   return (
     <>

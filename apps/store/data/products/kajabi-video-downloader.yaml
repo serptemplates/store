@@ -2,8 +2,10 @@ platform: Kajabi
 name: Kajabi Video Downloader
 tagline: Save Kajabi videos instantly for offline viewing.
 slug: kajabi-video-downloader
-description: Download videos, images, and content from kajabi video with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Kajabi Video Downloader gives creators and teams a dependable way to save Kajabi videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Kajabi with consistent quality and predictable results.
+  
+  It supports Complete Kajabi courses and coaching content, Video lessons, PDFs, and course materials, and Maintain program structure and module organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Kajabi assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Kajabi Videos | Kajabi Video Downloader
 seo_description: Download Kajabi videos easily for offline viewing. Fast, reliable
   Kajabi video downloader with high-quality downloads.
@@ -11,7 +13,7 @@ serply_link: https://serp.ly/kajabi-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/kajabi-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/kajabi-video-downloader
 serp_co_product_page_url: https://serp.co/products/kajabi-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02c5b219709c8dde26735
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=kajabi-video-downloader
 status: pre_release
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Kajabi downloader?
   answer: Install the browser extension, navigate to Kajabi, find the content you

@@ -2,8 +2,10 @@ platform: Whop
 name: Whop Video Downloader
 tagline: Save Whop videos instantly for offline viewing.
 slug: whop-video-downloader
-description: Download videos, images, and content from whop video with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Whop Video Downloader gives creators and teams a dependable way to save Whop videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Whop with consistent quality and predictable results.
+  
+  It supports Whop marketplace videos and digital products, Premium and subscription-based content, and Batch product libraries/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Whop assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Whop Videos | Whop Video Downloader
 seo_description: Download Whop videos easily for offline viewing. Fast, reliable Whop
   video downloader with high-quality downloads.
@@ -14,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/whop-video-downloader/
 buy_button_destination: 
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=whop-video-downloader
-status: draft
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.gif
 screenshots:
@@ -59,6 +61,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Whop downloader?
   answer: Install the browser extension, navigate to Whop, find the content you want

@@ -2,8 +2,10 @@ platform: Internet
 name: Internet Archive Downloader
 tagline: Save Internet Archive documents instantly for offline reading.
 slug: internet-archive-downloader
-description: Download videos, images, and content from internet archive with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Internet Archive Downloader gives creators and teams a dependable way to save Internet Archive documents instantly for offline reading. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Internet with consistent quality and predictable results.
+  
+  It supports Content from Internet Archive collections, Books, videos, audio, and software, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Internet assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Internet Archive Documents | Internet Archive Downloader
 seo_description: Download Internet Archive documents for offline reading. Fast and
   reliable document downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Internet downloader?
   answer: Install the browser extension, navigate to Internet, find the content you

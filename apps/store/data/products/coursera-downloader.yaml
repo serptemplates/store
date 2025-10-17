@@ -2,8 +2,10 @@ platform: Coursera
 name: Coursera Downloader
 tagline: Download Coursera course content instantly for offline learning.
 slug: coursera-downloader
-description: Download videos, images, and content from coursera with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Coursera Downloader gives creators and teams a dependable way to download Coursera course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Coursera with consistent quality and predictable results.
+  
+  It supports Full course downloads, Lectures, readings & assignments, and Structured course organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Coursera assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Coursera Courses | Coursera Downloader
 seo_description: Download Coursera courses and videos for offline learning. Fast and
   reliable course content downloader.
@@ -14,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/coursera-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e02c3e613b1bafb4ce7f83
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=coursera-downloader
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/coursera-downloader/main/images/featured.gif
 screenshots:
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Coursera downloader?
   answer: Install the browser extension, navigate to Coursera, find the content you

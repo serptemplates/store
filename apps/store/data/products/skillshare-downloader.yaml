@@ -2,8 +2,10 @@ platform: Skillshare
 name: Skillshare Downloader
 tagline: Download Skillshare course content instantly for offline learning.
 slug: skillshare-downloader
-description: Download videos, images, and content from skillshare with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Skillshare Downloader gives creators and teams a dependable way to download Skillshare course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Skillshare with consistent quality and predictable results.
+  
+  It supports Complete complete Skillshare classes downloads, Class projects and community feedback, and Maintain class structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Skillshare assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Skillshare Courses | Skillshare Downloader
 seo_description: Download Skillshare courses and videos for offline learning. Fast
   and reliable course content downloader.
@@ -57,6 +59,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Skillshare downloader?
   answer: Install the browser extension, navigate to Skillshare, find the content

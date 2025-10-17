@@ -2,8 +2,10 @@ platform: Nicovideo
 name: Nicovideo Downloader
 tagline: Save Nicovideo videos instantly for offline viewing.
 slug: nicovideo-downloader
-description: Download videos, images, and content from nicovideo with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Nicovideo Downloader gives creators and teams a dependable way to save Nicovideo videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Nicovideo with consistent quality and predictable results.
+  
+  It supports Videos from NicoNico Douga platform, Comments overlay and subtitles, and Batch user uploads/playlists downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Nicovideo assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Nicovideo Videos | Nicovideo Downloader
 seo_description: Download Nicovideo videos easily for offline viewing. Fast, reliable
   Nicovideo video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Nicovideo downloader?
   answer: Install the browser extension, navigate to Nicovideo, find the content you

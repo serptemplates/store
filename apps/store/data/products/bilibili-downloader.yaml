@@ -2,8 +2,10 @@ platform: Bilibili
 name: Bilibili Downloader
 tagline: Save Bilibili videos instantly for offline viewing.
 slug: bilibili-downloader
-description: Download videos, images, and content from bilibili with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Bilibili Downloader gives creators and teams a dependable way to save Bilibili videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Bilibili with consistent quality and predictable results.
+  
+  It supports Bilibili videos and anime content, Danmaku comments and subtitles, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Bilibili assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Bilibili Videos | Bilibili Downloader
 seo_description: Download Bilibili videos easily for offline viewing. Fast, reliable
   Bilibili video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Bilibili downloader?
   answer: Install the browser extension, navigate to Bilibili, find the content you

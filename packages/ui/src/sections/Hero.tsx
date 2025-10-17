@@ -150,7 +150,7 @@ export function Hero({
   return (
     <section className="relative overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-      <div className="container relative py-16 md:py-24 lg:py-28">
+      <div className="container relative py-16 md:py-24 lg:py-20">
         <div
           className={`mx-auto grid max-w-6xl items-center gap-10 ${hasMedia ? "lg:grid-cols-2" : "lg:grid-cols-1"}`}
         >

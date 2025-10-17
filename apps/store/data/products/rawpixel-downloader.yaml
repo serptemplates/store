@@ -2,8 +2,10 @@ platform: Rawpixel
 name: Rawpixel Downloader
 tagline: Save Rawpixel images and content instantly to your device.
 slug: rawpixel-downloader
-description: Download videos, images, and content from rawpixel with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Rawpixel Downloader gives creators and teams a dependable way to save Rawpixel images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Rawpixel with consistent quality and predictable results.
+  
+  It supports Design resources from RawPixel, Free and premium design assets, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Rawpixel assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Rawpixel Images | Rawpixel Downloader
 seo_description: Download Rawpixel images and graphics for offline use. Fast and reliable
   Rawpixel content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Rawpixel downloader?
   answer: Install the browser extension, navigate to Rawpixel, find the content you

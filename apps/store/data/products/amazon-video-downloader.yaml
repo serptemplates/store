@@ -2,8 +2,10 @@ platform: Amazon
 name: Amazon Video Downloader
 tagline: Save Amazon videos instantly for offline viewing.
 slug: amazon-video-downloader
-description: Download videos, images, and content from amazon video with our reliable
-  downloader tool. Fast, secure, and easy to use.
+description: |
+  Amazon Video Downloader gives creators and teams a dependable way to save Amazon videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Amazon with consistent quality and predictable results.
+  
+  It supports Amazon Prime Video movies and series, Multiple audio tracks and subtitles, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Amazon assets, prep client deliverables, or keep your library accessible when connectivity is limited.
 seo_title: Download Amazon Videos | Amazon Video Downloader
 seo_description: Download Amazon videos easily for offline viewing. Fast, reliable
   Amazon video downloader with high-quality downloads.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the Amazon downloader?
   answer: Install the browser extension, navigate to Amazon, find the content you

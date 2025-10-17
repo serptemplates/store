@@ -2,12 +2,10 @@ platform: Vimeo
 name: Vimeo Video Downloader
 tagline: Save Vimeo videos instantly for offline viewing.
 slug: vimeo-video-downloader
-description: Vimeo Video Downloader is a powerful desktop application that allows
-  you to download any Vimeo video with just one click, including private videos, live
-  stream replays, and restricted content that normally can't be downloaded. Built
-  for content creators, educators, and professionals who need reliable video backup
-  and offline access, it preserves original 4K quality while offering bulk download
-  capabilities and seamless compatibility across Windows, macOS, and Linux.
+description: |
+  Vimeo Video Downloader provides a compact, reliable way to save Vimeo videos for offline editing, review, and archival. It preserves source quality (up to the original resolution), extracts captions and audio tracks when available, and supports batch downloads for playlists, albums, and channels.
+
+  The app supports authenticated downloads for files you can already access in your browser (owner, team, or shared links) and offers pause/resume, checksum verification, and configurable concurrency. It does not bypass DRM or paid subscription protections—only content accessible through normal Vimeo authentication can be downloaded.
 seo_title: Download Vimeo Videos | Vimeo Video Downloader
 seo_description: Download Vimeo videos easily for offline viewing. Fast, reliable
   Vimeo video downloader with high-quality downloads.
@@ -15,7 +13,7 @@ serply_link: https://serp.ly/vimeo-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/vimeo-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/vimeo-video-downloader
 serp_co_product_page_url: https://serp.co/products/vimeo-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
+buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
 status: live
@@ -114,6 +112,7 @@ pricing:
   - Supports private and password-protected videos
   - Unlimited downloads with no throttling
   - SERP Apps support when you need help
+order_bump: serp-downloaders-bundle
 faqs:
 - question: How does the Vimeo Video Downloader extension work?
   answer: Simply install our extension in your browser, navigate to any Vimeo video,

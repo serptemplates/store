@@ -2,8 +2,10 @@ platform: 123rf
 name: 123rf Downloader
 tagline: Save 123rf images and content instantly to your device.
 slug: 123rf-downloader
-description: Download videos, images, and content from 123rf with our reliable downloader
-  tool. Fast, secure, and easy to use.
+description: |
+  123rf Downloader helps designers and teams download and archive 123rf royalty‑free images, vectors and high‑resolution assets for offline use and editing. It supports batch exports for project collections, preserves metadata and keyword tags, and can export license and usage information to help with compliance tracking.
+
+  The tool offers resume-on-failure, an image viewer, and CLI integration for inclusion in design workflows. Use it to assemble project libraries, prepare client deliverables, or back up purchased/free assets while respecting 123rf licensing terms and usage restrictions.
 seo_title: Download 123rf Images | 123rf Downloader
 seo_description: Download 123rf images and graphics for offline use. Fast and reliable
   123rf content downloader.
@@ -59,6 +61,9 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
+order_bump:
+  enabled: false
+
 faqs:
 - question: How do I use the 123rf downloader?
   answer: Install the browser extension, navigate to 123rf, find the content you want
