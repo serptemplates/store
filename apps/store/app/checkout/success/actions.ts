@@ -528,12 +528,13 @@ export async function processPaypalOrder(params: ProcessPaypalOrderParams): Prom
         const { 
           findCheckoutSessionByStripeSessionId, 
           updateCheckoutSessionStatus, 
-          upsertOrder,
-          type CheckoutOrderUpsert 
+          upsertOrder
         } = await import("@/lib/checkout");
         const { syncOrderWithGhl } = await import("@/lib/ghl-client");
         const { getOfferConfig } = await import("@/lib/products/offer-config");
         const { createLicenseForOrder } = await import("@/lib/license-service");
+        
+        type CheckoutOrderUpsert = Parameters<typeof upsertOrder>[0];
 
         if (!isPayPalConfigured()) {
           logger.error("checkout.success.paypal_not_configured");
