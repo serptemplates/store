@@ -219,7 +219,9 @@ export function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const source = searchParams.get("source");
-  const paypalOrderId = searchParams.get("order_id");
+  // PayPal redirects back with 'token' parameter containing the order ID
+  // We also check 'order_id' for backward compatibility
+  const paypalOrderId = searchParams.get("order_id") ?? searchParams.get("token");
   const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
   const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
 

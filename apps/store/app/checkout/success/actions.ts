@@ -512,12 +512,58 @@ export async function processPaypalOrder(params: ProcessPaypalOrderParams): Prom
   }
 
   try {
-    const order = await findOrderByPaypalOrderId(trimmedOrderId);
+    // First, try to find an existing order
+    let order = await findOrderByPaypalOrderId(trimmedOrderId);
+
+    // If order doesn't exist, it may need to be captured first
+    // This happens when user is redirected to PayPal and returns after payment
+    if (!order) {
+      logger.info("checkout.success.paypal_order_not_found_attempting_capture", {
+        orderId: trimmedOrderId,
+      });
+
+      try {
+        // Attempt to capture the order via the API
+        const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ''}/api/paypal/capture-order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            orderId: trimmedOrderId,
+          }),
+        });
+
+        if (!captureResponse.ok) {
+          const errorData = await captureResponse.json().catch(() => ({}));
+          logger.error("checkout.success.paypal_capture_failed", {
+            orderId: trimmedOrderId,
+            status: captureResponse.status,
+            error: errorData,
+          });
+        } else {
+          logger.info("checkout.success.paypal_order_captured", {
+            orderId: trimmedOrderId,
+          });
+          
+          // Wait a moment for the database to be updated
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          // Try to fetch the order again
+          order = await findOrderByPaypalOrderId(trimmedOrderId);
+        }
+      } catch (captureError) {
+        logger.error("checkout.success.paypal_capture_error", {
+          orderId: trimmedOrderId,
+          error: captureError instanceof Error ? captureError.message : String(captureError),
+        });
+      }
+    }
 
     if (!order) {
       return {
         success: false,
-        message: "Unable to locate PayPal order information.",
+        message: "Unable to locate or process PayPal order information.",
       };
     }
 

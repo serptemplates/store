@@ -124,8 +124,10 @@ export async function createPayPalOrder(params: {
       brand_name: "SERP Apps Store",
       landing_page: "BILLING",
       user_action: "PAY_NOW",
+      // Note: PayPal will append 'token' and 'PayerID' parameters to the return URL
+      // The 'token' parameter will contain the order ID
       return_url: `${siteUrl}/checkout/success?source=paypal`,
-      cancel_url: `${siteUrl}/checkout/cancel`,
+      cancel_url: `${siteUrl}/checkout/cancel?source=paypal`,
     },
   });
 
