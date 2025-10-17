@@ -414,6 +414,20 @@ export async function createStripeCheckoutSession(
     sessionParams.payment_method_types = paymentMethodTypes;
   }
 
+  if (payload.uiMode !== "embedded") {
+    sessionParams.customer_creation = "if_required";
+    sessionParams.consent_collection = {
+      promotions: "auto",
+      terms_of_service: "required",
+    };
+    sessionParams.phone_number_collection = { enabled: true };
+    sessionParams.after_expiration = {
+      recovery: {
+        enabled: true,
+      },
+    };
+  }
+
   if (payload.uiMode === "embedded") {
     sessionParams.ui_mode = "embedded";
     sessionParams.return_url = offer.successUrl;

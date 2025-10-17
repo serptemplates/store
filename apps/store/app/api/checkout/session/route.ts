@@ -50,6 +50,24 @@ export async function POST(request: NextRequest) {
         return buildErrorResponse(`Offer ${body.offerId} is not recognized`, 404);
       }
 
+      if (
+        !body.orderBump &&
+        product.order_bump &&
+        product.order_bump.enabled !== false
+      ) {
+        const resolvedOrderBumpId =
+          product.order_bump.slug ??
+          product.order_bump.product_slug ??
+          product.slug;
+
+        if (resolvedOrderBumpId) {
+          body.orderBump = {
+            id: resolvedOrderBumpId,
+            selected: Boolean(product.order_bump.default_selected),
+          };
+        }
+      }
+
       if (!offer) {
         try {
           const { createSimpleCheckout } = await import("@/lib/checkout/simple-checkout");

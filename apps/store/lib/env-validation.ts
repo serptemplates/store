@@ -53,6 +53,18 @@ const ENV_CONFIGS: EnvConfig[] = [
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
   {
+    name: "NEXT_PUBLIC_CHECKOUT_UI",
+    required: false,
+    description: "Checkout UI mode: embedded or hosted",
+    validate: (value) => ["embedded", "hosted"].includes(value.trim().toLowerCase()),
+  },
+  {
+    name: "STRIPE_CHECKOUT_REQUIRE_TOS",
+    required: false,
+    description: "Set to true to require terms_of_service consent in hosted checkout",
+    validate: (value) => ["true", "false", "1", "0"].includes(value.trim().toLowerCase()),
+  },
+  {
     name: "NEXT_PUBLIC_CHECKOUT_URL",
     required: true,
     description: "Checkout API URL",

@@ -86,6 +86,12 @@ describe("POST /api/checkout/session", () => {
     isUsingTestKeysMock.mockReturnValue(false);
     getOrderBumpDefinitionMock.mockReturnValue(undefined);
     getProductDataMock.mockReturnValue(buildProduct() as ReturnType<typeof getProductData>);
+    resolvePriceForEnvironmentMock.mockImplementation(async ({ priceId, id }) => ({
+      id: priceId,
+      currency: "usd",
+      unit_amount: id.includes("__order_bump_") ? 4900 : 9900,
+      product: "prod_mock",
+    }) as unknown as Stripe.Price);
   });
 
   it("creates a Stripe checkout session when offer is configured", async () => {
@@ -149,11 +155,6 @@ describe("POST /api/checkout/session", () => {
 
     getOfferConfigMock.mockReturnValue(offer as ReturnType<typeof getOfferConfig>);
     getStripeClientMock.mockReturnValue(stripeClient);
-    resolvePriceForEnvironmentMock.mockResolvedValue({
-      id: offer.stripePriceId,
-      currency: "usd",
-      product: "prod_123",
-    } as unknown as Stripe.Price);
     markStaleCheckoutSessionsMock.mockResolvedValue(undefined);
     upsertCheckoutSessionMock.mockResolvedValue("session-db-id");
 
@@ -196,6 +197,16 @@ describe("POST /api/checkout/session", () => {
       landerId: offer.metadata.landerId,
       affiliateId: "AFF123",
       environment: "live",
+    });
+    expect(sessionPayload.customer_creation).toBe("if_required");
+    expect(sessionPayload.after_expiration).toEqual({
+      recovery: {
+        enabled: true,
+      },
+    });
+    expect(sessionPayload.consent_collection).toMatchObject({
+      promotions: "auto",
+      terms_of_service: "required",
     });
 
     await new Promise((resolve) => setImmediate(resolve));
@@ -394,6 +405,106 @@ describe("POST /api/checkout/session", () => {
     expect(sessionPayload.line_items).toEqual([
       {
         price: offer.stripePriceId,
+        quantity: 1,
+      },
+    ]);
+  });
+
+  it("auto-selects order bump when default is true and request omits selection", async () => {
+    const productWithSelectedUpsell = buildProduct({
+      order_bump: {
+        enabled: true,
+        slug: "priority-support",
+        title: "Priority Support",
+        price: "$29.00",
+        features: [],
+        default_selected: true,
+        stripe: {
+          price_id: "price_priority_support",
+          test_price_id: "price_priority_support_test",
+        },
+      },
+    }) as ReturnType<typeof getProductData>;
+
+    getProductDataMock.mockReturnValueOnce(productWithSelectedUpsell);
+
+    const offer = {
+      id: "demo-offer",
+      mode: "payment" as const,
+      stripePriceId: "price_789",
+      productName: "Demo Product",
+      productDescription: "Test description",
+      productImage: "https://example.com/product.png",
+      successUrl: "https://example.com/success",
+      cancelUrl: "https://example.com/cancel",
+    };
+
+    const stripeSessionResponse: StripeSessionWithResponse = {
+      id: "cs_test_orderbump_autoselect",
+      object: "checkout.session",
+      payment_intent: "pi_test_orderbump_autoselect",
+      payment_status: "unpaid",
+      status: "open",
+      mode: "payment",
+      amount_total: 12900,
+      amount_subtotal: 12900,
+      currency: "usd",
+      customer_email: null,
+      customer_details: null,
+      metadata: {},
+      url: "https://stripe.example.com/session",
+      lastResponse: {
+        headers: {},
+        requestId: "req_test_orderbump_autoselect",
+        statusCode: 200,
+        apiVersion: "2024-04-10",
+        idempotencyKey: undefined,
+        stripeAccount: undefined,
+      },
+    } as StripeSessionWithResponse;
+
+    const createStripeSession = vi.fn().mockResolvedValue(stripeSessionResponse);
+    const retrieveProductMock = vi.fn().mockResolvedValue({
+      id: "prod_789",
+      name: offer.productName,
+      description: offer.productDescription,
+      images: [offer.productImage],
+    });
+
+    const stripeClient = {
+      checkout: {
+        sessions: {
+          create: createStripeSession,
+        },
+      },
+      products: {
+        update: vi.fn().mockResolvedValue({}),
+        retrieve: retrieveProductMock,
+      },
+    } as unknown as ReturnType<typeof getStripeClient>;
+
+    getOfferConfigMock.mockReturnValue(offer as ReturnType<typeof getOfferConfig>);
+    getStripeClientMock.mockReturnValue(stripeClient);
+    markStaleCheckoutSessionsMock.mockResolvedValue(undefined);
+    upsertCheckoutSessionMock.mockResolvedValue("session-db-id");
+
+    const request = buildRequest({
+      offerId: offer.id,
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(200);
+
+    const sessionPayload = createStripeSession.mock.calls[0][0];
+    expect(sessionPayload.metadata.orderBumpId).toBe("priority-support");
+    expect(sessionPayload.metadata.orderBumpSelected).toBe("true");
+    expect(sessionPayload.line_items).toEqual([
+      {
+        price: offer.stripePriceId,
+        quantity: 1,
+      },
+      {
+        price: "price_priority_support",
         quantity: 1,
       },
     ]);

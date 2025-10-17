@@ -62,6 +62,7 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
         offerId,
         quantity: finalQuantity,
         metadata: mergedMetadata,
+        uiMode: "hosted",
       };
 
       if (finalAffiliateId) {

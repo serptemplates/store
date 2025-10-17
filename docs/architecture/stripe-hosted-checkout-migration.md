@@ -93,6 +93,23 @@
 3. Enhance the license service to reconcile Stripe entitlements with our provisioning pipeline.
 4. Add monitoring/alerts for entitlement mismatches or missing entitlements post-checkout.
 
+## Phase 0 Discovery Status
+- **Product inventory:** 95 product definitions under `apps/store/data/products`. 28 attach the `serp-downloaders-bundle` order bump; the rest either omit the field or leave it blank (treat as “no bump” today). Automated summary script lives in this spec’s history.
+- **Current destinations:** 49 products still point their `buy_button_destination` at `https://ghl.serp.co/...`; we’ll need to migrate those CTAs to `/checkout` once the hosted flow is ready.
+- **Stripe pricing coverage:** Every product declares a live `stripe.price_id`. None currently specify `stripe.test_price_id`; our existing Stripe helper clones live prices when the test key is present, so we must ensure `STRIPE_SECRET_KEY_TEST` is populated before QA can hit hosted Checkout in test mode.
+- **Env variables:** Key requirements gathered so far — `STRIPE_SECRET_KEY`, `STRIPE_SECRET_KEY_TEST`, `NEXT_PUBLIC_SITE_URL`, analytics keys (PostHog, GA). Need confirmation of staging/production parity and documentation of where each is sourced (.env, Vercel envs, etc.).
+- **Metrics baseline:** Pending stakeholder sync; current plan is to capture conversion (product page → checkout), completion, and recovery rates before flipping the flag.
+- **Compliance notes:** Stripe Forwarding and Entitlements remain optional; legal/compliance review still needed before we commit to those later phases.
+
+## Phase 1 Progress Notes
+- **Feature flag & flow switcher:** `CheckoutFlowSwitcher` reads `NEXT_PUBLIC_CHECKOUT_UI` (with query overrides) to choose between the new `HostedCheckoutRedirectView` and the legacy embedded iframe at runtime.
+- **Hosted redirect implementation:** The hosted view fetches product metadata, auto-selects default order bumps, calls `/api/checkout/session` with `uiMode: "hosted"`, and redirects users to Stripe. Fallback buttons let QA reopen the embedded experience via `?ui=embedded`.
+- **Server-side defaults:** `/api/checkout/session` now auto-populates order bump selection based on product defaults when callers omit the field, ensuring both flows stay in sync.
+- **Stripe session options:** Hosted sessions enable customer creation, consent collection, phone capture, and abandoned-cart recovery (`after_expiration.recovery`).
+- **Stripe session options:** Hosted sessions enable customer creation, promotion consent, phone capture, and abandoned-cart recovery (`after_expiration.recovery`). Set `STRIPE_CHECKOUT_REQUIRE_TOS=true` if we want Stripe to enforce Terms of Service consent after the Dashboard URL is configured.
+- **Test coverage:** Added a unit test confirming auto-selected order bumps and updated existing assertions for hosted-specific parameters. `pnpm lint`, `pnpm typecheck`, and `pnpm test:unit` execute cleanly.
+- **Outstanding for rollout:** document staging flag flip procedure, capture baseline metrics, and rehearse manual QA scenarios (hosted vs embedded) before toggling in production.
+
 ## Risks & Mitigations
 - **Loss of custom upsell logic:** Validate hosted line-item approach supports one-click order bump; fallback to `after_completion[redirect]` with upsell page if needed.
 - **Analytics disruption:** Coordinate GA/PostHog tag updates prior to rollout; maintain feature flag for quick revert.
