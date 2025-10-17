@@ -79,42 +79,21 @@ pricing:
 order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I download Skool videos?
-  answer: Use our Skool video downloader extension to easily download videos from
-    Skool communities. Simply install the extension, navigate to any Skool video,
-    and click the download button that appears. Choose your preferred quality and
-    format, and the video will be saved directly to your device.
+  answer: Use our Skool video downloader extension to easily download videos from Skool communities. Simply install the extension, navigate to any Skool video, and click the download button that appears. Choose your preferred quality and format, and the video will be saved directly to your device.
 - question: Is it legal to download from Skool?
-  answer: "We're not attorneys and can't provide legal advice, as we don't know your\
-    \ location or specific circumstances. However, our extension simply provides an\
-    \ easier way to do what you could already do manually without it. You can download\
-    \ anything manually on your own already\u2014we just make the process more convenient."
+  answer: "We're not attorneys and can't provide legal advice, as we don't know your\ \ location or specific circumstances. However, our extension simply provides an\ \ easier way to do what you could already do manually without it. You can download\ \ anything manually on your own already\u2014we just make the process more convenient."
 - question: What video formats are supported?
-  answer: Our downloader successfully supports every type of video and video format
-    we've encountered on the Skool platform. We've tested it extensively with various
-    video uploads, and it handles all formats reliably. If you encounter any format
-    that doesn't work, let us know and we'll add support for it.
+  answer: Our downloader successfully supports every type of video and video format we've encountered on the Skool platform. We've tested it extensively with various video uploads, and it handles all formats reliably. If you encounter any format that doesn't work, let us know and we'll add support for it.
 - question: Can I download Skool videos on mobile devices?
-  answer: We don't currently have a mobile version, but we're happy to develop one
-    if there's demand for it. Right now, our downloader works on desktop browsers.
-    If you'd like a mobile version, let us know by submitting a request to our project
-    repository.
+  answer: We don't currently have a mobile version, but we're happy to develop one if there's demand for it. Right now, our downloader works on desktop browsers. If you'd like a mobile version, let us know by submitting a request to our project repository.
 - question: What if I encounter an error or issue?
-  answer: Simply submit an issue to our project repository and our support team will
-    help you right away. We'll either troubleshoot any mistakes, fix bugs if they
-    exist, or add new features if you need them. We're committed to making sure the
-    downloader works perfectly for you.
+  answer: Simply submit an issue to our project repository and our support team will help you right away. We'll either troubleshoot any mistakes, fix bugs if they exist, or add new features if you need them. We're committed to making sure the downloader works perfectly for you.
 - question: Do I need to be logged into Skool to download videos?
-  answer: "Yes, you must be logged into your Skool account and have access to the\
-    \ community or course containing the video. Our downloader works within your existing\
-    \ permissions\u2014it cannot bypass Skool's access restrictions or download content\
-    \ from communities you're not a member of."
+  answer: "Yes, you must be logged into your Skool account and have access to the\ \ community or course containing the video. Our downloader works within your existing\ \ permissions\u2014it cannot bypass Skool's access restrictions or download content\ \ from communities you're not a member of."
 - question: Are there any risks in downloading from Skool?
-  answer: No, there are no risks when using our downloader. It's a safe, straightforward
-    tool that works within your browser.
+  answer: No, there are no risks when using our downloader. It's a safe, straightforward tool that works within your browser.
 - question: Can I download videos from private or premium Skool communities?
-  answer: Yes, you can download videos from paid, premium, or private classrooms as
-    long as you have access to them. If you're a member of the community and can watch
-    the video on Skool, you can download it with our tool.
+  answer: Yes, you can download videos from paid, premium, or private classrooms as long as you have access to them. If you're a member of the community and can watch the video on Skool, you can download it with our tool.
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Skool Video Downloader
