@@ -91,7 +91,7 @@ describe("processPaypalOrder", () => {
         price: "$17.00",
         currency: "USD",
       },
-    } as never);
+    } as ReturnType<typeof productMocks.getProductData>);
 
     const result = await processPaypalOrder({ orderId: "ORDER123" });
 
@@ -159,13 +159,13 @@ describe("processPaypalOrder", () => {
       source: "paypal",
       createdAt: new Date(),
       updatedAt: new Date(),
-    } as never);
+    } as Awaited<ReturnType<typeof checkoutMocks.findCheckoutSessionByStripeSessionId>>);
 
     // Mock offer config
     offerMocks.getOfferConfig.mockReturnValue({
       productName: "Instagram Downloader",
       metadata: {},
-    } as never);
+    } as ReturnType<typeof offerMocks.getOfferConfig>);
 
     // Mock license creation
     licenseMocks.createLicenseForOrder.mockResolvedValue({
@@ -221,7 +221,7 @@ describe("processPaypalOrder", () => {
         price: "$27.00",
         currency: "USD",
       },
-    } as never);
+    } as ReturnType<typeof productMocks.getProductData>);
 
     const result = await processPaypalOrder({ orderId: "ORDER456" });
 

@@ -501,6 +501,24 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
   }
 }
 
+// Type for order upsert - extracted for reuse
+type CheckoutOrderUpsertType = {
+  checkoutSessionId?: number | null;
+  stripeSessionId: string;
+  stripePaymentIntentId: string | null;
+  stripeChargeId?: string | null;
+  amountTotal: number;
+  currency: string;
+  offerId: string;
+  landerId: string;
+  customerEmail: string;
+  customerName?: string | null;
+  metadata?: Record<string, unknown>;
+  paymentStatus?: string | null;
+  paymentMethod?: string | null;
+  source: "stripe" | "paypal" | "ghl";
+};
+
 export async function processPaypalOrder(params: ProcessPaypalOrderParams): Promise<ProcessCheckoutResult> {
   const trimmedOrderId = params.orderId.trim();
 
@@ -533,8 +551,6 @@ export async function processPaypalOrder(params: ProcessPaypalOrderParams): Prom
         const { syncOrderWithGhl } = await import("@/lib/ghl-client");
         const { getOfferConfig } = await import("@/lib/products/offer-config");
         const { createLicenseForOrder } = await import("@/lib/license-service");
-        
-        type CheckoutOrderUpsert = Parameters<typeof upsertOrder>[0];
 
         if (!isPayPalConfigured()) {
           logger.error("checkout.success.paypal_not_configured");
@@ -566,7 +582,7 @@ export async function processPaypalOrder(params: ProcessPaypalOrderParams): Prom
           : 0;
 
         // Create order record
-        const orderData: CheckoutOrderUpsert = {
+        const orderData: CheckoutOrderUpsertType = {
           checkoutSessionId: checkoutSession?.id || null,
           stripeSessionId: sessionId,
           stripePaymentIntentId: `paypal_${capture?.id || trimmedOrderId}`,
