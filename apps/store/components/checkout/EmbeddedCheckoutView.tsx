@@ -419,7 +419,18 @@ export function EmbeddedCheckoutView() {
       }
 
       const origin = typeof event.origin === "string" ? event.origin : ""
-      if (!origin.includes("stripe.com")) {
+      if (!origin) {
+        return
+      }
+
+      let host: string
+      try {
+        host = new URL(origin).hostname
+      } catch {
+        return
+      }
+      const isTrustedStripeHost = host === "stripe.com" || host.endsWith(".stripe.com")
+      if (!isTrustedStripeHost) {
         return
       }
 
@@ -610,8 +621,9 @@ export function EmbeddedCheckoutView() {
     paypalMetadata.orderBumpPrice = product.orderBump.priceDisplay
   }
 
-  const canRenderEmbeddedCheckout =
-    Boolean(clientSecret && termsAccepted && !stripeUnavailable && stripePromise)
+  const canRenderEmbeddedCheckout = Boolean(
+    clientSecret && termsAccepted && !stripeUnavailable && stripePromise && !showStripeFallback,
+  )
 
   const fallbackMessage =
     fallbackReasonRef.current === "stripe_load_failed"
