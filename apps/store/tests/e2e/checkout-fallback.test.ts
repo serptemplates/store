@@ -1,6 +1,13 @@
 import { expect, test } from "@playwright/test"
 
-const CHECKOUT_PATH = "/checkout?product=skool-video-downloader"
+const baseCheckoutPath = "/checkout?product=skool-video-downloader"
+const checkoutMode = process.env.NEXT_PUBLIC_CHECKOUT_UI?.toLowerCase()
+const CHECKOUT_PATH =
+  checkoutMode === "hosted" ? `${baseCheckoutPath}&ui=embedded` : baseCheckoutPath
+
+function getFallbackButton(page: import("@playwright/test").Page) {
+  return page.getByRole("button", { name: /open (secure stripe|embedded) checkout/i })
+}
 
 const TRACKER_BLOCKLIST = [
   "**/*tawk.to/**",
@@ -52,7 +59,7 @@ test.describe("Embedded checkout fallback", () => {
 
     await page.goto(CHECKOUT_PATH, { waitUntil: "domcontentloaded" })
 
-    const fallbackButton = page.getByRole("button", { name: /open secure stripe checkout/i })
+    const fallbackButton = getFallbackButton(page)
     await expect(fallbackButton).toBeVisible()
     await expect(fallbackButton).toBeEnabled({ timeout: 15000 })
 
@@ -81,7 +88,7 @@ test.describe("Embedded checkout fallback", () => {
       )
     })
 
-    const fallbackButton = page.getByRole("button", { name: /open secure stripe checkout/i })
+    const fallbackButton = getFallbackButton(page)
     await expect(fallbackButton).toBeVisible()
     await expect(fallbackButton).toBeEnabled({ timeout: 15000 })
 
@@ -120,7 +127,7 @@ test.describe("Embedded checkout fallback", () => {
 
     await page.goto(CHECKOUT_PATH, { waitUntil: "domcontentloaded" })
 
-    const fallbackButton = page.getByRole("button", { name: /open secure stripe checkout/i })
+    const fallbackButton = getFallbackButton(page)
     await expect(fallbackButton).toBeVisible()
     await expect(fallbackButton).toBeEnabled({ timeout: 15000 })
 

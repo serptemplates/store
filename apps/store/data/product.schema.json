@@ -62,9 +62,14 @@
           "format": "uri"
         },
         {
+          "type": "string",
+          "pattern": "^/"
+        },
+        {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Checkout destination. Use full URL for external payment links or a leading slash for environment-relative paths."
     },
     "name": {
       "type": "string",
