@@ -277,7 +277,7 @@ export function HomeTemplate({
           <PricingCta
             heading={pricing?.heading ?? `Get ${platform} Downloader Today`}
             priceLabel={pricing?.priceLabel ?? "One-time purchase"}
-            price={pricing?.price ?? "$47"}
+            price={pricing?.price}
             originalPrice={pricing?.originalPrice}
             priceNote={pricing?.priceNote ?? ""}
             benefits={pricingBenefitList}

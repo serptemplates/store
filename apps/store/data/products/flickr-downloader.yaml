@@ -13,7 +13,12 @@ serply_link: https://serp.ly/flickr-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/flickr-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/flickr-downloader
 serp_co_product_page_url: https://serp.co/products/flickr-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=flickr-downloader
+    hosted: /checkout?product=flickr-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68dfe2c585cfa4753ad5c5aa
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=flickr-downloader
 status: pre_release
@@ -61,8 +66,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Flickr downloader?
@@ -129,3 +133,5 @@ ghl:
   tag_ids:
   - purchase-flickr-downloader
 permission_justifications: []
+
+

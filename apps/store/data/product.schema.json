@@ -55,21 +55,61 @@
       "format": "uri",
       "pattern": "^https://serp\\.ly/"
     },
-    "buy_button_destination": {
-      "anyOf": [
-        {
+    "checkout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "active": {
           "type": "string",
-          "format": "uri"
+          "enum": [
+            "embedded",
+            "hosted",
+            "ghl"
+          ]
         },
-        {
-          "type": "string",
-          "pattern": "^/"
-        },
-        {
-          "type": "null"
+        "destinations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "embedded": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^/"
+                }
+              ]
+            },
+            "hosted": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^/"
+                }
+              ]
+            },
+            "ghl": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^/"
+                }
+              ]
+            }
+          }
         }
-      ],
-      "description": "Checkout destination. Use full URL for external payment links or a leading slash for environment-relative paths."
+      }
     },
     "name": {
       "type": "string",

@@ -63,4 +63,21 @@ describe("stripe environment helpers", () => {
       fallbackMode: "live",
     });
   });
+
+  it("treats STRIPE_CHECKOUT_REQUIRE_TOS as true by default", async () => {
+    delete process.env.STRIPE_CHECKOUT_REQUIRE_TOS;
+
+    const { isHostedCheckoutTermsRequired } = await import("@/lib/payments/stripe-environment");
+    expect(isHostedCheckoutTermsRequired()).toBe(true);
+  });
+
+  it("parses STRIPE_CHECKOUT_REQUIRE_TOS overrides", async () => {
+    const { isHostedCheckoutTermsRequired } = await import("@/lib/payments/stripe-environment");
+
+    process.env.STRIPE_CHECKOUT_REQUIRE_TOS = "0";
+    expect(isHostedCheckoutTermsRequired()).toBe(false);
+
+    process.env.STRIPE_CHECKOUT_REQUIRE_TOS = "yes";
+    expect(isHostedCheckoutTermsRequired()).toBe(true);
+  });
 });

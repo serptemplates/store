@@ -13,7 +13,11 @@ serply_link: https://serp.ly/unsplash-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/unsplash-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/unsplash-downloader
 serp_co_product_page_url: https://serp.co/products/unsplash-downloader/
-buy_button_destination: null
+checkout:
+  active: embedded
+  destinations:
+    embedded: /checkout?product=unsplash-downloader
+    hosted: /checkout?product=unsplash-downloader&page=1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=unsplash-downloader
 status: pre_release
@@ -61,8 +65,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Unsplash downloader?
@@ -129,3 +132,5 @@ ghl:
   tag_ids:
   - purchase-unsplash-downloader
 permission_justifications: []
+
+

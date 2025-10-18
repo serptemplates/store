@@ -18,6 +18,67 @@ const defaultPricingBenefits = [
   "Works on macOS, Windows, and Linux"
 ];
 
+type CheckoutMode = "embedded" | "hosted" | "ghl";
+
+const CTA_ALLOWED_PREFIXES = [
+  "https://apps.serp.co/",
+  "https://store.serp.co/",
+  "https://ghl.serp.co/",
+  "https://serp.ly/",
+  "https://serp.co/",
+];
+
+function normalizeLink(value?: string | null): string | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+}
+
+function ensureHostedVariant(base: string): string {
+  try {
+    const url = new URL(base, "https://apps.serp.co");
+    url.searchParams.delete("ui");
+    url.searchParams.set("page", "1");
+    if (base.startsWith("http://") || base.startsWith("https://")) {
+      return url.toString();
+    }
+    return `${url.pathname}${url.search}${url.hash}`;
+  } catch {
+    if (base.includes("page=1")) {
+      return base;
+    }
+    const separator = base.includes("?") ? "&" : "?";
+    return `${base}${separator}page=1`;
+  }
+}
+
+function isGhlLink(link: string): boolean {
+  if (link.startsWith("/")) {
+    return false;
+  }
+  try {
+    const host = new URL(link).hostname.toLowerCase();
+    return host.includes("ghl") || host.includes("gohighlevel");
+  } catch {
+    return false;
+  }
+}
+
+function detectGhlLink(candidates: Array<string | undefined>): string | undefined {
+  for (const candidate of candidates) {
+    const normalized = normalizeLink(candidate);
+    if (!normalized) {
+      continue;
+    }
+    if (isGhlLink(normalized)) {
+      return normalized;
+    }
+  }
+  return undefined;
+}
+
 function derivePlatform(product: ProductData): string {
   if (product.platform) {
     return product.platform;
@@ -102,52 +163,88 @@ export function productToHomeTemplate(
   const badgeText = getReleaseBadgeText(product);
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
-  const hasExternalDestination =
-    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0;
-  const hasEmbeddedCheckout =
-    !hasExternalDestination &&
-    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
   const checkoutHref = `/checkout?product=${product.slug}`;
-  const allowedPrefixes = [
-    "https://apps.serp.co/",
-    "https://store.serp.co/",
-    "https://ghl.serp.co/",
-    "https://serp.ly/",
-    "https://serp.co/",
-  ];
-  const candidateLinks = [
-    product.buy_button_destination,
+  const candidateSources: Array<string | undefined> = [
+    product.checkout?.destinations?.embedded,
+    product.checkout?.destinations?.hosted,
+    product.checkout?.destinations?.ghl,
     product.pricing?.cta_href,
     product.apps_serp_co_product_page_url,
     product.store_serp_co_product_page_url,
     product.serp_co_product_page_url,
     product.serply_link,
   ];
-
-  const externalCtaHref = candidateLinks.find(
-    (link): link is string =>
-      typeof link === "string"
-      && (
+  const normalizedCandidates = candidateSources
+    .map((value) => normalizeLink(value))
+    .filter((value): value is string => Boolean(value));
+  const fallbackExternal =
+    normalizedCandidates.find(
+      (link) =>
         link.startsWith("/")
-        || allowedPrefixes.some((prefix) => link.startsWith(prefix))
-      ),
-  ) ?? `https://apps.serp.co/${product.slug}`;
-  const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
+        || CTA_ALLOWED_PREFIXES.some((prefix) => link.startsWith(prefix)),
+    )
+    ?? `https://apps.serp.co/${product.slug}`;
+
+  const hasStripeConfig = Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id);
+
+  const checkoutDestinations: Partial<Record<CheckoutMode, string>> = {
+    embedded:
+      normalizeLink(product.checkout?.destinations?.embedded)
+      ?? (hasStripeConfig ? checkoutHref : undefined),
+    hosted:
+      normalizeLink(product.checkout?.destinations?.hosted)
+      ?? (hasStripeConfig ? ensureHostedVariant(checkoutHref) : undefined),
+    ghl:
+      normalizeLink(product.checkout?.destinations?.ghl)
+      ?? detectGhlLink(candidateSources),
+  };
+
+  let activeMode: CheckoutMode = product.checkout?.active ?? "embedded";
+  if (!product.checkout?.active) {
+    if (!hasStripeConfig && checkoutDestinations.ghl) {
+      activeMode = "ghl";
+    } else if (!checkoutDestinations.embedded && checkoutDestinations.hosted) {
+      activeMode = "hosted";
+    }
+  }
+
+  const ctaHref =
+    [
+      checkoutDestinations[activeMode],
+      checkoutDestinations.hosted,
+      checkoutDestinations.embedded,
+      checkoutDestinations.ghl,
+      fallbackExternal,
+      hasStripeConfig ? checkoutHref : undefined,
+      `https://apps.serp.co/${product.slug}`,
+    ].find((link): link is string => typeof link === "string" && link.length > 0)!;
   const ctaText = product.pricing?.cta_text ?? "Get It Now";
   const videoUrl = product.product_videos?.[0];
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
   const priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
-  const currentPriceValue = priceManifestEntry
-    ? priceManifestEntry.unitAmount / 100
-    : parsePriceToNumber(product.pricing?.price);
-  const formattedPrice = priceManifestEntry
+  const manifestPrice = priceManifestEntry
     ? formatAmountFromCents(priceManifestEntry.unitAmount, priceManifestEntry.currency)
-    : product.pricing?.price ?? (currentPriceValue != null ? formatPrice(currentPriceValue) : undefined);
-  let derivedOriginalPrice = priceManifestEntry?.compareAtAmount != null
+    : undefined;
+  const manifestCompareAt = priceManifestEntry?.compareAtAmount != null
     ? formatAmountFromCents(priceManifestEntry.compareAtAmount, priceManifestEntry.currency)
-    : product.pricing?.original_price ?? undefined;
+    : undefined;
+  const currentPriceValue = manifestPrice
+    ? priceManifestEntry!.unitAmount / 100
+    : parsePriceToNumber(product.pricing?.price);
+  const formattedPrice =
+    manifestPrice ??
+    (typeof product.pricing?.price === "string" && product.pricing.price.trim().length > 0
+      ? product.pricing.price.trim()
+      : currentPriceValue != null
+        ? formatPrice(currentPriceValue)
+        : undefined);
+  const derivedOriginalPrice =
+    manifestCompareAt ??
+    (typeof product.pricing?.original_price === "string" && product.pricing.original_price.trim().length > 0
+      ? product.pricing.original_price.trim()
+      : undefined);
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -170,14 +267,6 @@ export function productToHomeTemplate(
         learn_more_url: entry.learn_more_url?.trim() || undefined,
       }))
       .filter((entry) => entry.permission.length > 0 && entry.justification.length > 0) ?? undefined;
-
-  if (!derivedOriginalPrice && currentPriceValue != null) {
-    if (Math.abs(currentPriceValue - 17) < 0.01) {
-      derivedOriginalPrice = formatPrice(37);
-    } else if (Math.abs(currentPriceValue - 27) < 0.01) {
-      derivedOriginalPrice = formatPrice(47);
-    }
-  }
 
   let pricingSubheading: string | undefined;
   if (product.pricing && Object.prototype.hasOwnProperty.call(product.pricing, "subheading")) {

@@ -27,7 +27,7 @@
 
 ## Proposed Architecture (Hosted-First)
 1. **Client flow**
-   - Add a hosted redirect surface that lives alongside the current embedded page. The product CTA uses `useCheckoutRedirect` (`apps/store/components/product/useCheckoutRedirect.ts:1`) to call `/api/checkout/session` requesting `uiMode: "hosted"` whenever the new env flag (for example, `NEXT_PUBLIC_CHECKOUT_UI=hosted`) is active; otherwise it stays on the embedded path.
+   - Add a hosted redirect surface that lives alongside the current embedded page. The product CTA uses `useCheckoutRedirect` (`apps/store/components/product/useCheckoutRedirect.ts:1`) to call `/api/checkout/session` requesting `uiMode: "hosted"` by default; setting the env flag (for example, `NEXT_PUBLIC_CHECKOUT_UI=embedded`) forces the legacy embedded path for QA or rollback.
    - The API returns the `url`; the client immediately navigates (`window.location.href` or 303 redirect for SSR scenarios).
    - No PayPal toggle is required in this mode—Stripe Checkout will present the enabled payment methods from the Dashboard configuration.
 
@@ -61,8 +61,8 @@
 
 ### Phase 1 – Baseline Hosted Checkout (Weeks 2–3)
 1. **Feature flag plumbing**
-   1. Add `NEXT_PUBLIC_CHECKOUT_UI` (and server-side twin if needed) defaulting to `embedded`.
-   2. Update `useCheckoutRedirect` and server handlers to branch on the flag and request hosted sessions when set to `hosted`.
+   1. Add `NEXT_PUBLIC_CHECKOUT_UI` (and server-side twin if needed) defaulting to hosted, with `"embedded"` as the opt-in override.
+   2. Update `useCheckoutRedirect` and server handlers to branch on the flag and request hosted sessions when not explicitly set to `embedded`.
 2. **Hosted entry point**
    1. Create a hosted redirect component/page that fetches the session URL and navigates immediately.
    2. Provide a manual fallback link/button to the embedded experience for QA.
@@ -95,7 +95,7 @@
 
 ## Phase 0 Discovery Status
 - [x] **Product inventory:** 95 product definitions under `apps/store/data/products`. 28 attach the `serp-downloaders-bundle` order bump; the rest either omit the field or leave it blank (treat as “no bump” today). Automated summary script lives in this spec’s history.
-- [x] **Current destinations audited:** 49 products still point their `buy_button_destination` at `https://ghl.serp.co/...`; we’ll need to migrate those CTAs to `/checkout` once the hosted flow is ready.
+- [x] **Current destinations audited:** Every product now declares `checkout.destinations` (embedded + hosted, with GHL links recorded where applicable) so we can toggle flows without editing content files.
 - [x] **Stripe pricing coverage review:** Every product declares a live `stripe.price_id`. None currently specify `stripe.test_price_id`; our existing Stripe helper clones live prices when the test key is present, so we must ensure `STRIPE_SECRET_KEY_TEST` is populated before QA can hit hosted Checkout in test mode.
 - [x] **Env variable parity confirmed:** Key requirements gathered (`STRIPE_SECRET_KEY`, `STRIPE_SECRET_KEY_TEST`, `NEXT_PUBLIC_SITE_URL`, analytics keys). All required entries live in the shared `.env`; run `pnpm --filter @apps/store validate:env` whenever the file changes and spot-check with `pnpm --filter @apps/store dev` to ensure runtime env matches expectations.
 - ~~**Metrics baseline captured:**~~ _Skip: baseline snapshot deemed unnecessary for this rollout; measure post-launch impact via live Stripe + internal dashboards instead._
@@ -103,33 +103,41 @@
 
 ## Phase 1 Progress Notes
 - [x] **Feature flag & flow switcher:** `CheckoutFlowSwitcher` reads `NEXT_PUBLIC_CHECKOUT_UI` (with query overrides) to choose between the new `HostedCheckoutRedirectView` and the legacy embedded iframe at runtime.
-- [x] **Hosted redirect implementation:** The hosted view fetches product metadata, auto-selects default order bumps, calls `/api/checkout/session` with `uiMode: "hosted"`, and redirects users to Stripe. Fallback buttons let QA reopen the embedded experience via `?ui=embedded`.
+- [x] **Hosted redirect implementation:** The hosted view fetches product metadata, auto-selects default order bumps, calls `/api/checkout/session` with `uiMode: "hosted"`, and redirects users to Stripe. Fallback buttons let QA reopen the embedded experience via `?page=2`.
 - [x] **Server-side defaults:** `/api/checkout/session` now auto-populates order bump selection based on product defaults when callers omit the field, ensuring both flows stay in sync.
-- [x] **Stripe session options:** Hosted sessions enable customer creation, promotion consent, phone capture, and abandoned-cart recovery (`after_expiration.recovery`). Leave `STRIPE_CHECKOUT_REQUIRE_TOS` unset/false until the Stripe Dashboard Terms of Service URL is configured, otherwise Stripe surfaces a consent error during redirect.
+- [x] **Stripe session options:** Hosted sessions enable customer creation, promotion consent, phone capture, and abandoned-cart recovery (`after_expiration.recovery`). `STRIPE_CHECKOUT_REQUIRE_TOS` now defaults to `true`, so the hosted flow always requires Terms of Service consent; set the variable to `false` only if the Dashboard URLs are unavailable and a deployment must temporarily relax the requirement.
 - [x] **Test coverage:** Added a unit test confirming auto-selected order bumps and updated existing assertions for hosted-specific parameters. `pnpm lint`, `pnpm typecheck`, and `pnpm test:unit` execute cleanly.
 - [x] **Metadata parity tests:** `tests/api/checkout-consent-metadata.test.ts` now covers hosted `uiMode`, ensuring `checkoutSource`, consent fields, affiliate/order-bump metadata, and DB persistence match the embedded flow.
-- [x] **Buy button paths:** Products can now use `/checkout?...` relative paths in `buy_button_destination`, and the client normalizes them to the current origin so preview/staging builds hit the right environment without edits.
+- [x] **CTA paths normalized:** `checkout.destinations.embedded` defaults to `/checkout?product=…`, and `ClientHomeView` normalizes it to the active origin so preview/staging builds hit the correct deployment without manual edits (see `apps/store/components/home/ClientHomeView.tsx:73`). Hosted is the global default; append `page=2` or set `NEXT_PUBLIC_CHECKOUT_UI=embedded` to exercise the legacy iframe.
+- [x] **Checkout destination registry:** Product YAML now stores `checkout.active` with `destinations.{embedded,hosted,ghl}` so we can flip between payment flows via config (`apps/store/data/products/podia-downloader.yaml`, `apps/store/data/products/youtube-downloader.yaml`).
+- [x] **Retired legacy CTA field:** All runtime consumers read from `checkout.destinations` / `productToHomeTemplate`. The deprecated `buy_button_destination` property has been removed from the schema and product files.
+- [x] **Dynamic pricing display:** Product landing templates read Stripe’s price manifest at runtime (rather than hard-coded strings) and fall back gracefully, so changing amounts in Stripe updates the CTAs automatically.
 - [x] **Playwright smoke coverage:** `tests/e2e/checkout-fallback.test.ts` and `tests/manual/checkout-flow.spec.ts` adapt automatically based on `NEXT_PUBLIC_CHECKOUT_UI`, so the suite validates both embedded and hosted modes (including redirect screen and embedded fallback path).
 - [x] **Outstanding for rollout:** Documented staging/production runbook; remaining work is executing the checklist (metrics capture, QA rehearsal) before toggling in production.
+- **Console/network observations (Preview, 2025‑10‑18):**
+  - `https://apps.serp.co/_vercel/insights/script.js` responds 404 with HTML (logged as failed script load + MIME error).
+  - Tawk widget repeatedly POSTs `https://va.tawk.to/v1/session/start` and receives `400` responses.
+  - Google Pay manifest/icon downloads fail (`https://pay.google.com/gp/p/web_manifest.json`, `https://www.google.com/pay`) producing manifest and icon decode errors.
+  - Stripe surfaced warnings about Apple Pay / Amazon Pay configuration being incomplete; determine whether to enable or suppress those handlers before launch.
 
 ## Phase 1 Runbook (Staging → Production)
 ### Pre-flight configuration
 1. Stripe Dashboard settings:
    - [x] Add the public Terms of Service and Privacy Policy URLs under [Settings → Branding → Public business information](https://dashboard.stripe.com/settings/public) to satisfy the hosted consent requirement.
-   - [ ] Only set `STRIPE_CHECKOUT_REQUIRE_TOS=true` after those URLs exist; otherwise Stripe blocks the session with `You cannot collect consent to your terms of service unless a URL is set`.
+   - [x] Keep `STRIPE_CHECKOUT_REQUIRE_TOS` enabled (defaults to `true`); set it to `false` only if a deploy must temporarily bypass the hosted consent gate while the Dashboard URLs are being repaired.
 2. Environment variables:
-   - [x] Run `pnpm --filter @apps/store validate:env` to confirm required keys (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CHECKOUT_URL`, Stripe secrets) are present; address any errors. _(Script hydrates from repo- and app-level `.env`; optional warnings for analytics/feature flags remain expected.)_
-   - [ ] Ensure `NEXT_PUBLIC_CHECKOUT_UI` (or `CHECKOUT_UI`) is `embedded` by default; stage overrides happen via deployment config.
-   - [ ] Verify `STRIPE_SECRET_KEY`/`STRIPE_SECRET_KEY_TEST` and analytics keys (PostHog, GA) are present in the target environment.
+   - [x] Run `pnpm --filter @apps/store validate:env` to confirm required keys (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CHECKOUT_URL`, Stripe secrets) are present; address any errors. _(Script hydrates from repo- and app-level `.env`; optional warnings for analytics/feature flags remain expected.)_ → Last run: 2025‑10‑18 (local + preview configs clean apart from optional warnings).
+   - [x] Ensure `NEXT_PUBLIC_CHECKOUT_UI` (or `CHECKOUT_UI`) is left unset/`hosted` by default; set it to `"embedded"` only when you need to pin the legacy iframe for QA or rollback. _(Preview/default env currently leaves the variable unset, which now resolves to hosted.)_
+   - [x] Verify `STRIPE_SECRET_KEY`/`STRIPE_SECRET_KEY_TEST` and analytics keys (PostHog, GA) are present in the target environment. _(Confirmed via `vercel env ls`; preview has test+live Stripe keys, staging/production carry live values.)_
 
 ### Staging verification checklist
-1. [ ] Deploy staging with `NEXT_PUBLIC_CHECKOUT_UI=hosted` and (optionally) a query-param override banner so QA can jump between modes.
+1. [ ] Deploy staging with the default hosted behaviour (no override) and, if helpful, add a query-param banner so QA can append `page=2` or set `NEXT_PUBLIC_CHECKOUT_UI=embedded` to exercise the legacy iframe.
 2. [ ] Run automation:
-   - [ ] `pnpm --filter @apps/store test:smoke` (Playwright MCP); when running hosted mode locally/staging, set `NEXT_PUBLIC_CHECKOUT_UI=hosted` so the suite exercises redirect + fallback paths.
-   - [ ] `pnpm test:unit` and `pnpm typecheck` as part of CI to confirm no regressions slipped in.
+   - [x] `pnpm --filter @apps/store test:smoke` (Playwright MCP); default runs now cover hosted redirect + embedded fallback by forcing `page` parameters. Set `NEXT_PUBLIC_CHECKOUT_UI=embedded` only if you need to pin the iframe for an entire run. _(Last run: 2025‑10‑18 with hosted defaults; 9 tests passed, report under `apps/store/playwright-report/`.)_
+   - [x] `pnpm test:unit` and `pnpm typecheck` as part of CI to confirm no regressions slipped in. _(Executed locally 2025‑10‑18; both suites green.)_
 3. [ ] Manual QA scenarios:
-   - [ ] Hit `/checkout?product=youtube-downloader&ui=hosted` to confirm redirect, order-bump defaults, and the hosted Stripe page render cleanly.
-   - [ ] Toggle the fallback button to `/checkout?...&ui=embedded` to verify the iframe still operates.
+  - [x] Hit `/checkout?product=youtube-downloader&page=1` to confirm redirect, order-bump defaults, and the hosted Stripe page render cleanly. _(Playwright MCP against the preview build on 2025‑10‑18 surfaced the hosted redirect screen; only console noise was the expected `/ _vercel/insights` 404 + Tawk 400.)_
+  - [x] Toggle the fallback button to `/checkout?...&page=2` to verify the iframe still operates. _(Preview logs an expected “Missing Stripe live publishable key” error because the preview env only carries test keys; embedded fallback screen still loads.)_
    - [ ] Exercise at least one product without a bump, and one legacy GHL URL after rewriting its CTA to `/checkout`.
    - [ ] Inspect the stored checkout session (database or recent Stripe session) to confirm metadata keys (`checkoutSource`, `affiliateId`, `orderBump*`, coupon fields) match the embedded flow expectations.
    - [ ] Optional: run `pnpm exec tsx --tsconfig apps/store/tsconfig.json apps/store/scripts/verify-hosted-session.ts` to print hosted session metadata locally for comparison.
@@ -139,7 +147,7 @@
 
 ### Production launch & rollback
 1. [ ] Freeze window: align stakeholders on launch window and communication to support/marketing.
-2. [ ] Flip `NEXT_PUBLIC_CHECKOUT_UI=hosted` (and any server-side twin) via config deploy; verify the build picks up `STRIPE_CHECKOUT_REQUIRE_TOS` only if the Dashboard URLs are live.
+2. [ ] Ensure `NEXT_PUBLIC_CHECKOUT_UI` remains unset/`hosted` in production and confirm the build still honours `STRIPE_CHECKOUT_REQUIRE_TOS=true`.
 3. [ ] Post-launch monitoring:
    - [ ] Track checkout initiation/completion deltas against the baseline metrics gathered above, segmenting by `provider`.
    - [ ] Review Stripe recovery email triggers and ensure they correspond with expected cart numbers; reconcile against internal order/licensing logs until broader analytics are in place.

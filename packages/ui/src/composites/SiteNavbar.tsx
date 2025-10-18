@@ -6,7 +6,7 @@ import { Navbar as BaseNavbar, type SiteMeta } from "./Navbar";
 export type SiteNavbarProps = {
   site: SiteMeta;
   Link: ComponentType<any>;
-  brandSrc?: string; // path to logo in /public (defaults to "/logo.png")
+  brandSrc?: string; // path to logo in /public (defaults to "/logo.svg")
   ctaText?: string;
   ctaHref?: string;
   onCtaClick?: () => void;
@@ -19,7 +19,7 @@ export type SiteNavbarProps = {
 export function SiteNavbar({
   site,
   Link,
-  brandSrc = "/logo.png",
+  brandSrc = "/logo.svg",
   ctaText,
   ctaHref,
   onCtaClick,

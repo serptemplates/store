@@ -13,7 +13,11 @@ serply_link: https://serp.ly/myfreecams-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/myfreecams-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/myfreecams-downloader
 serp_co_product_page_url: https://serp.co/products/myfreecams-downloader/
-buy_button_destination: null
+checkout:
+  active: embedded
+  destinations:
+    embedded: /checkout?product=myfreecams-downloader
+    hosted: /checkout?product=myfreecams-downloader&page=1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=myfreecams-downloader
 status: pre_release
@@ -60,8 +64,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Myfreecams downloader?
@@ -128,3 +131,5 @@ ghl:
   tag_ids:
   - purchase-myfreecams-downloader
 permission_justifications: []
+
+

@@ -13,7 +13,12 @@ serply_link: https://serp.ly/coursera-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/coursera-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/coursera-downloader
 serp_co_product_page_url: https://serp.co/products/coursera-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02c3e613b1bafb4ce7f83
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=coursera-downloader
+    hosted: /checkout?product=coursera-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68e02c3e613b1bafb4ce7f83
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=coursera-downloader
 status: live
@@ -61,8 +66,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Coursera downloader?
@@ -128,3 +132,5 @@ ghl:
   tag_ids:
   - purchase-coursera-downloader
 permission_justifications: []
+
+

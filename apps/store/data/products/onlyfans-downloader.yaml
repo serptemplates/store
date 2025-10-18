@@ -13,7 +13,12 @@ serply_link: https://serp.ly/onlyfans-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/onlyfans-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/onlyfans-downloader
 serp_co_product_page_url: https://serp.co/products/onlyfans-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e00e1521970942cae26614
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=onlyfans-downloader
+    hosted: /checkout?product=onlyfans-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68e00e1521970942cae26614
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=onlyfans-downloader
 status: pre_release
@@ -61,8 +66,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Onlyfans downloader?
@@ -129,3 +133,5 @@ ghl:
   tag_ids:
   - purchase-onlyfans-downloader
 permission_justifications: []
+
+

@@ -22,8 +22,8 @@ export function CheckoutFlowSwitcher() {
   const searchParams = useSearchParams()
 
   const override = useMemo(() => {
-    const uiOverride = searchParams.get("ui") ?? searchParams.get("checkout")
-    return resolveCheckoutUiModeOverride(uiOverride)
+    const raw = searchParams.get("page") ?? searchParams.get("ui") ?? searchParams.get("checkout")
+    return resolveCheckoutUiModeOverride(raw)
   }, [searchParams])
 
   const mode = override ?? DEFAULT_MODE

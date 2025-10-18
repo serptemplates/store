@@ -10,6 +10,21 @@
 - Dev server routing: `http://localhost:3000/` redirects to the first product slug. Hit `http://localhost:3000/<slug>` to preview a specific product. Adding a new YAML file makes its page available immediately at that path.
 - Optionally, run `pnpm --filter @apps/store typecheck` to ensure TypeScript stays happy after schema or template changes.
 
+## Checkout destinations
+
+- Each product manages payment links under a single `checkout` block:
+  ```yaml
+  checkout:
+    active: hosted # or embedded | ghl
+    destinations:
+      embedded: /checkout?product=my-product
+      hosted: /checkout?product=my-product&page=1
+      ghl: https://ghl.serp.co/payment-link/abc123
+  ```
+- The UI and APIs always use `checkout.destinations`; set `active` to switch flows without editing templates.
+- `embedded` should point at the embedded checkout route, `hosted` adds `page=1` for the hosted redirect, and `ghl` stores the legacy GoHighLevel link (omit it if not applicable). When you need to force the embedded experience from a hosted page, append `page=2` to the checkout URL.
+- `validate:products` enforces the block’s field order and presence when Stripe IDs are absent, ensuring every product has a valid hosted/embedded URL pair before deploys.
+
 ## Order bump / upsell configuration
 
 - Shared upsells live under `data/order-bumps/*.yaml`. Each file contains the canonical copy, talking points, and Stripe price metadata for that upsell.

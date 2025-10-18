@@ -15,7 +15,14 @@ const rawProduct = {
   store_serp_co_product_page_url: "https://store.serp.co/product-details/product/test-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/test-product",
   serp_co_product_page_url: "https://serp.co/products/test-product/",
-  buy_button_destination: "https://checkout.serp.co/test-product",
+  checkout: {
+    active: "embedded",
+    destinations: {
+      embedded: "/checkout?product=test-product",
+      hosted: "/checkout?product=test-product&page=1",
+      ghl: "https://ghl.serp.co/payment-link/example",
+    },
+  },
   success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=test-product",
   status: "live",

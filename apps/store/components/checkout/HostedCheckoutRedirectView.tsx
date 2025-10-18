@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
@@ -15,13 +15,10 @@ function buildMetadata(options: {
   orderBumpId?: string | null
   orderBumpSelected?: boolean
   orderBumpPriceDisplay?: string | null
-  termsAcceptedAt: string
 }) {
   const metadata: Record<string, string> = {
     landerId: options.productSlug,
     checkoutSource: options.checkoutSource,
-    termsAccepted: "true",
-    termsAcceptedAt: options.termsAcceptedAt,
   }
 
   if (options.affiliateId) {
@@ -75,7 +72,6 @@ export function HostedCheckoutRedirectView() {
 
   const productSlug = searchParams.get("product")
   const affiliateId = getAffiliateId(searchParams)
-  const termsAcceptedAt = useRef(new Date().toISOString())
   const releaseId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ?? null
 
   const [product, setProduct] = useState<CheckoutProduct | null>(null)
@@ -177,7 +173,6 @@ export function HostedCheckoutRedirectView() {
       orderBumpId: product.orderBump?.id ?? null,
       orderBumpSelected,
       orderBumpPriceDisplay: product.orderBump?.priceDisplay ?? null,
-      termsAcceptedAt: termsAcceptedAt.current,
     })
 
     const payload: Record<string, unknown> = {
@@ -283,13 +278,16 @@ export function HostedCheckoutRedirectView() {
 
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href)
-      url.searchParams.set("ui", "embedded")
+      url.searchParams.delete("ui")
+      url.searchParams.set("page", "2")
       window.location.href = url.toString()
       return
     }
 
-    router.push(`/checkout?product=${productSlug}&ui=embedded` as const)
+    router.push(`/checkout?product=${productSlug}&page=2` as const)
   }, [productSlug, router])
+
+  const isBusy = status === "redirecting" || isFetchingProduct
 
   if (!productSlug) {
     return (
@@ -345,10 +343,10 @@ export function HostedCheckoutRedirectView() {
         <div className="flex flex-col gap-3">
           <button
             onClick={createHostedSession}
-            disabled={status === "redirecting" || isFetchingProduct}
+            disabled={isBusy || !product}
             className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {status === "redirecting" ? "Contacting Stripe…" : "Retry Redirect"}
+            {isBusy ? "Contacting Stripe…" : "Continue to Stripe Checkout"}
           </button>
           <button
             onClick={handleOpenEmbedded}

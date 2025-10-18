@@ -212,6 +212,25 @@ const permissionJustificationSchema = z.object({
   learn_more_url: trimmedString().url().optional(),
 });
 
+export const CHECKOUT_DESTINATION_FIELD_ORDER = ["embedded", "hosted", "ghl"] as const;
+
+const checkoutDestinationsSchema = z
+  .object({
+    embedded: optionalExternalUrl,
+    hosted: optionalExternalUrl,
+    ghl: optionalExternalUrl,
+  })
+  .partial()
+  .optional();
+
+const checkoutSchemaShape = {
+  active: z.enum(["embedded", "hosted", "ghl"]).optional(),
+  destinations: checkoutDestinationsSchema,
+} satisfies Record<string, z.ZodTypeAny>;
+
+export const CHECKOUT_FIELD_ORDER = Object.keys(checkoutSchemaShape);
+const checkoutSchema = z.object(checkoutSchemaShape).optional();
+
 const orderBumpSchemaShape = {
   product_slug: optionalTrimmedString(),
   slug: optionalTrimmedString(),
@@ -299,7 +318,7 @@ const productSchemaShape = {
   store_serp_co_product_page_url: enforceHost(["store.serp.co"]),
   apps_serp_co_product_page_url: enforceHost(["apps.serp.co"]),
   serp_co_product_page_url: optionalHost(["serp.co", "www.serp.co"]),
-  buy_button_destination: optionalExternalUrl,
+  checkout: checkoutSchema,
   success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "pre_release", "live"]).default("draft"),
@@ -350,7 +369,7 @@ export const PRODUCT_FIELD_ORDER = [
   "store_serp_co_product_page_url",
   "apps_serp_co_product_page_url",
   "serp_co_product_page_url",
-  "buy_button_destination",
+  "checkout",
   "success_url",
   "cancel_url",
   "status",

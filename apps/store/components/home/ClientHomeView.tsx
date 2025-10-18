@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import NextLink from "next/link"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
 
 import { HomeTemplate } from "./HomeTemplate"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
@@ -21,7 +22,28 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
-import { canonicalizeStoreOrigin, canonicalizeStoreHref } from "@/lib/canonical-url"
+import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
+import { resolveCheckoutUiModeOverride, type CheckoutUiMode } from "@/lib/checkout/ui-mode"
+
+function resolveInternalCheckoutHref(href: string, baseOrigin: string): string {
+  if (href.startsWith("/")) {
+    return href
+  }
+
+  try {
+    const parsed = new URL(href, baseOrigin)
+    const base = new URL(baseOrigin)
+
+    if (parsed.hostname === base.hostname && parsed.port === base.port) {
+      const relative = `${parsed.pathname}${parsed.search}`
+      return relative.length > 0 ? relative : "/"
+    }
+
+    return parsed.toString()
+  } catch {
+    return href
+  }
+}
 
 export type ClientHomeProps = {
   product: ProductData
@@ -44,35 +66,128 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [posts, product.related_posts])
 
   const homeProps = productToHomeTemplate(product, resolvedPosts)
+  const displayPrice = homeProps.pricing?.price ?? product.pricing?.price ?? null
+  const displayOriginalPrice = homeProps.pricing?.originalPrice ?? product.pricing?.original_price ?? null
+  const displayPriceNote = homeProps.pricing?.priceNote ?? product.pricing?.note ?? null
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
-  const checkoutHrefBase = `/checkout?product=${product.slug}`
-  const checkoutHref = affiliateId ? `${checkoutHrefBase}&aff=${affiliateId}` : checkoutHrefBase
-  const hasExternalDestination =
-    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0
-  const hasEmbeddedCheckout =
-    !hasExternalDestination &&
-    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id))
-  const fallbackCtaCandidates = [
-    homeProps.ctaHref,
-    product.buy_button_destination,
-    product.serply_link,
-    product.store_serp_co_product_page_url,
-    product.apps_serp_co_product_page_url,
-  ].filter((value): value is string => Boolean(value && value.trim().length > 0))
-  const fallbackCtaHref = fallbackCtaCandidates[0]
-  const primaryCtaHref = hasEmbeddedCheckout ? checkoutHref : fallbackCtaHref
-  const resolvedCtaHref = primaryCtaHref ?? checkoutHref
-  const isInternalHref = resolvedCtaHref.startsWith("/") || resolvedCtaHref.startsWith("#")
-  const useExternalBuyDestination = !hasEmbeddedCheckout && !isInternalHref
-  const storeOrigin =
-    typeof window !== "undefined"
-      ? window.location.origin
-      : canonicalizeStoreOrigin(process.env.NEXT_PUBLIC_SITE_URL ?? "")
-  const finalCtaHref = useExternalBuyDestination
-    ? resolvedCtaHref
-    : canonicalizeStoreHref(resolvedCtaHref, storeOrigin) ?? resolvedCtaHref
+  const searchParams = useSearchParams()
+  const requestedMode = resolveCheckoutUiModeOverride(searchParams?.get("page"))
+  const checkoutDestinations = product.checkout?.destinations ?? {}
+  const checkoutActive = product.checkout?.active
+
+  type CheckoutCandidate = { href: string; mode?: CheckoutUiMode | "ghl" }
+  const candidates: CheckoutCandidate[] = []
+  const seen = new Set<string>()
+  const registerCandidate = (href: string | undefined, mode?: CheckoutUiMode | "ghl") => {
+    if (!href) return
+    const trimmed = href.trim()
+    if (!trimmed) return
+    const key = `${mode ?? "none"}|${trimmed}`
+    if (seen.has(key)) return
+    seen.add(key)
+    candidates.push({ href: trimmed, mode })
+  }
+
+  if (requestedMode) {
+    registerCandidate(checkoutDestinations[requestedMode], requestedMode)
+  }
+  if (checkoutActive && checkoutActive !== requestedMode) {
+    registerCandidate(checkoutDestinations[checkoutActive], checkoutActive as CheckoutUiMode | "ghl")
+  }
+  registerCandidate(checkoutDestinations.hosted, "hosted")
+  registerCandidate(checkoutDestinations.embedded, "embedded")
+  registerCandidate(checkoutDestinations.ghl, "ghl")
+
+  registerCandidate(homeProps.ctaHref)
+  registerCandidate(product.serply_link)
+  registerCandidate(product.store_serp_co_product_page_url)
+  registerCandidate(product.apps_serp_co_product_page_url)
+
+  const defaultCheckoutPath = `/checkout?product=${product.slug}`
+  const resolvedCandidate = candidates.find((candidate) => Boolean(candidate.href)) ?? { href: defaultCheckoutPath }
+
+  const canonicalStoreOrigin = canonicalizeStoreOrigin(process.env.NEXT_PUBLIC_SITE_URL ?? "")
+  const finalizeHref = (href: string, candidateMode?: CheckoutCandidate["mode"]) => {
+    const preferredMode: CheckoutUiMode | undefined =
+      (requestedMode as CheckoutUiMode | null) ?? (candidateMode === "ghl" ? undefined : (candidateMode as CheckoutUiMode | undefined))
+    try {
+      const url = new URL(href, canonicalStoreOrigin || "https://apps.serp.co")
+      const isCheckoutPath =
+        url.pathname.startsWith("/checkout") ||
+        (canonicalStoreOrigin && url.origin === canonicalStoreOrigin && url.pathname.startsWith("/checkout"))
+
+      if (preferredMode === "hosted" && isCheckoutPath) {
+        url.searchParams.delete("ui")
+        url.searchParams.set("page", "1")
+      } else if (preferredMode === "embedded" && isCheckoutPath) {
+        url.searchParams.delete("ui")
+        url.searchParams.set("page", "2")
+      } else if (!preferredMode && isCheckoutPath) {
+        const current = url.searchParams.get("page")
+        if (current && current !== "1" && current !== "2") {
+          url.searchParams.delete("page")
+        }
+      }
+
+      if (isCheckoutPath) {
+        url.searchParams.delete("ui")
+      }
+
+      if (affiliateId && isCheckoutPath) {
+        url.searchParams.set("aff", affiliateId)
+      }
+
+      if (url.origin === canonicalStoreOrigin || href.startsWith("/")) {
+        return `${url.pathname}${url.search}${url.hash}`
+      }
+      return url.toString()
+    } catch {
+      if (href.startsWith("/checkout")) {
+        const separator = href.includes("?") ? "&" : "?"
+        const params: string[] = []
+        if (preferredMode === "hosted") {
+          params.push("page=1")
+        } else if (preferredMode === "embedded") {
+          params.push("page=2")
+        }
+        if (affiliateId) {
+          params.push(`aff=${affiliateId}`)
+        }
+        if (params.length > 0) {
+          const existingHasQuery = href.includes("?")
+          const prefix = existingHasQuery ? "&" : "?"
+          href = `${href}${prefix}${params.join("&")}`
+        }
+      }
+      return href
+    }
+  }
+
+  const resolvedCtaHref = finalizeHref(resolvedCandidate.href, resolvedCandidate.mode)
+  const canonicalHref = resolveInternalCheckoutHref(resolvedCtaHref, canonicalStoreOrigin)
+  const isInternalHref = canonicalHref.startsWith("/") || canonicalHref.startsWith("#")
+  const useExternalBuyDestination =
+    !isInternalHref &&
+    !canonicalHref.startsWith("/checkout") &&
+    !resolvedCtaHref.startsWith("/checkout")
+  const initialFinalCtaHref = useExternalBuyDestination ? resolvedCtaHref : canonicalHref
+  const [finalCtaHref, setFinalCtaHref] = useState(initialFinalCtaHref)
+
+  useEffect(() => {
+    if (useExternalBuyDestination) {
+      setFinalCtaHref(resolvedCtaHref)
+      return
+    }
+
+    if (typeof window === "undefined") {
+      return
+    }
+
+    const normalizedHref = resolveInternalCheckoutHref(resolvedCtaHref, window.location.origin)
+    setFinalCtaHref(normalizedHref)
+  }, [resolvedCtaHref, useExternalBuyDestination])
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -274,7 +389,9 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
           homeProps.pricing
             ? {
                 ...homeProps.pricing,
-                originalPrice: homeProps.pricing.originalPrice || "$27.99",
+                price: homeProps.pricing.price ?? displayPrice ?? undefined,
+                originalPrice: homeProps.pricing.originalPrice ?? displayOriginalPrice ?? undefined,
+                priceNote: homeProps.pricing.priceNote ?? displayPriceNote ?? undefined,
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,

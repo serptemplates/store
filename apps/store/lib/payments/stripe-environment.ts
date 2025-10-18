@@ -39,6 +39,9 @@ const STRIPE_MODE_ALIASES: Record<string, StripeMode> = {
   dev: "test",
 };
 
+const TRUE_ENV_VALUES = new Set(["1", "true", "yes", "y", "on"]);
+const FALSE_ENV_VALUES = new Set(["0", "false", "no", "n", "off"]);
+
 function normalizeRuntimeEnv(value: string | undefined | null): RuntimeEnvironment | null {
   if (!value) {
     return null;
@@ -254,6 +257,29 @@ function selectWebhookSecretForMode(mode: StripeMode): string | undefined {
   return undefined;
 }
 
+function coerceBooleanEnv(value: string | undefined | null, defaultValue: boolean, context?: Record<string, unknown>): boolean {
+  if (!value) {
+    return defaultValue;
+  }
+
+  const normalized = value.trim().toLowerCase();
+  if (TRUE_ENV_VALUES.has(normalized)) {
+    return true;
+  }
+
+  if (FALSE_ENV_VALUES.has(normalized)) {
+    return false;
+  }
+
+  emitWarning("Unable to parse boolean environment variable; falling back to default.", {
+    value,
+    defaultValue,
+    ...(context ?? {}),
+  });
+
+  return defaultValue;
+}
+
 export function getOptionalStripeSecretKey(mode: StripeModeInput = "auto"): string | undefined {
   const resolved = resolveStripeMode(mode);
   return selectSecretKeyForMode(resolved);
@@ -318,4 +344,10 @@ function selectPaymentConfigIdForMode(mode: StripeMode): string | undefined {
 export function getOptionalStripePaymentConfigId(mode: StripeModeInput = "auto"): string | undefined {
   const resolved = resolveStripeMode(mode);
   return selectPaymentConfigIdForMode(resolved);
+}
+
+export function isHostedCheckoutTermsRequired(): boolean {
+  return coerceBooleanEnv(process.env.STRIPE_CHECKOUT_REQUIRE_TOS, true, {
+    variable: "STRIPE_CHECKOUT_REQUIRE_TOS",
+  });
 }

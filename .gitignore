@@ -72,3 +72,4 @@ serp-license-key-management
 google-creds.json
 merchant-feed.*
 external/
+env.vercel

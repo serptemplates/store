@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const checkoutUiMode = process.env.NEXT_PUBLIC_CHECKOUT_UI?.toLowerCase();
+const hostedByDefault = checkoutUiMode !== "embedded";
 
 test.describe("Checkout Flow Integration", () => {
   test("Product page should have single checkout button instead of dual payment buttons", async ({ page }) => {
@@ -38,10 +39,9 @@ test.describe("Checkout Flow Integration", () => {
 
   test('Checkout page should show both payment options', async ({ page, context }) => {
     // Go directly to checkout page
-    const checkoutPath =
-      checkoutUiMode === "hosted"
-        ? "/checkout?product=tiktok-downloader&ui=embedded"
-        : "/checkout?product=tiktok-downloader";
+    const checkoutPath = hostedByDefault
+      ? "/checkout?product=tiktok-downloader&page=2"
+      : "/checkout?product=tiktok-downloader";
 
     await page.goto(checkoutPath, { waitUntil: 'domcontentloaded' });
 
@@ -91,9 +91,9 @@ test.describe("Checkout Flow Integration", () => {
   });
 
   test('Hosted checkout redirect should render when feature flag enabled', async ({ page }) => {
-    test.skip(checkoutUiMode !== "hosted", "Hosted checkout flag is not enabled");
+    test.skip(!hostedByDefault, "Hosted checkout flag is not enabled");
 
-    await page.goto('/checkout?product=tiktok-downloader&ui=hosted', { waitUntil: 'domcontentloaded' });
+    await page.goto('/checkout?product=tiktok-downloader&page=1', { waitUntil: 'domcontentloaded' });
 
     const redirectHeading = page.getByRole('heading', { name: /redirecting to stripe/i });
     await expect(redirectHeading, "Redirect screen should be visible before navigation").toBeVisible();

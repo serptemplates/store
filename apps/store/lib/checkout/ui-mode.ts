@@ -2,15 +2,23 @@ export type CheckoutUiMode = "embedded" | "hosted";
 
 function normalizeMode(value: string | undefined | null): CheckoutUiMode {
   if (!value) {
-    return "embedded";
-  }
-
-  const normalized = value.trim().toLowerCase();
-  if (normalized === "hosted") {
     return "hosted";
   }
 
-  return "embedded";
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "embedded") {
+    return "embedded";
+  }
+
+  if (normalized === "hosted" || normalized === "1") {
+    return "hosted";
+  }
+
+  if (normalized === "2") {
+    return "embedded";
+  }
+
+  return "hosted";
 }
 
 const DEFAULT_CHECKOUT_MODE: CheckoutUiMode = normalizeMode(
@@ -31,9 +39,11 @@ export function resolveCheckoutUiModeOverride(raw: string | undefined | null): C
   }
 
   const normalized = raw.trim().toLowerCase();
-  if (normalized === "embedded" || normalized === "hosted") {
-    return normalized;
+  if (normalized === "1" || normalized === "hosted") {
+    return "hosted";
   }
-
+  if (normalized === "2" || normalized === "embedded") {
+    return "embedded";
+  }
   return null;
 }

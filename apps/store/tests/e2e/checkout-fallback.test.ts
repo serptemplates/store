@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test"
 
 const baseCheckoutPath = "/checkout?product=skool-video-downloader"
 const checkoutMode = process.env.NEXT_PUBLIC_CHECKOUT_UI?.toLowerCase()
-const CHECKOUT_PATH =
-  checkoutMode === "hosted" ? `${baseCheckoutPath}&ui=embedded` : baseCheckoutPath
+const hostedByDefault = checkoutMode !== "embedded"
+const CHECKOUT_PATH = hostedByDefault ? `${baseCheckoutPath}&page=2` : baseCheckoutPath
 
 function getFallbackButton(page: import("@playwright/test").Page) {
   return page.getByRole("button", { name: /open (secure stripe|embedded) checkout/i })

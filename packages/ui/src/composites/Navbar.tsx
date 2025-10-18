@@ -19,7 +19,7 @@ export type NavbarProps = {
   Link?: LinkComponent; // optional Link component (e.g., next/link)
   ctaHref?: string; // overrides site.buyUrl
   ctaText?: string; // defaults to "Get It Now"
-  logo?: string; // 
+  logo?: string; // path to logo asset (defaults to square icon)
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
   showLinks?: boolean; // whether to render blog/categories links
@@ -29,7 +29,7 @@ export type NavbarProps = {
 export function Navbar({
   site,
   blogHref = "/blog",
-  logo = "/logo.png",
+  logo = "/logo.svg",
   brand,
   Link,
   ctaHref,

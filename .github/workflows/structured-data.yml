@@ -1,0 +1,55 @@
+name: Structured Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * *" # daily at 08:00 UTC
+  pull_request:
+    paths:
+      - "apps/store/**"
+      - "packages/ui/**"
+      - "sites/apps.serp.co/**"
+      - ".github/workflows/structured-data.yml"
+
+jobs:
+  structured-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build store app
+        run: pnpm --filter @apps/store build
+
+      - name: Create output directory
+        run: mkdir -p apps/store/tmp
+
+      - name: Run structured data audit
+        env:
+          STRUCTURED_DATA_BASE_URL: "https://appsserpco-git-${{ github.head_ref || github.ref_name }}-serpcompany.vercel.app"
+          STRUCTURED_DATA_PATHS: "/,/videos,/blog,/loom-video-downloader,/youtube-downloader,/podia-downloader"
+        run: pnpm --filter @apps/store test:structured-data
+
+      - name: Upload structured data report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structured-data-report
+          path: apps/store/tmp/structured-data-report.json
+          if-no-files-found: warn

@@ -13,7 +13,12 @@ serply_link: https://serp.ly/gohighlevel-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/gohighlevel-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/gohighlevel-downloader
 serp_co_product_page_url: https://serp.co/products/gohighlevel-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68edb558613b1b35a5cec2df
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=gohighlevel-downloader
+    hosted: /checkout?product=gohighlevel-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68edb558613b1b35a5cec2df
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=gohighlevel-downloader
 status: pre_release
@@ -126,3 +131,5 @@ ghl:
   tag_ids:
   - purchase-gohighlevel-downloader
 permission_justifications: []
+
+

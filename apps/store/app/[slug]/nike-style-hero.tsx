@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { ProductData } from "@/lib/products/product-schema";
 import type { SiteConfig } from "@/lib/site-config";
 import { getBrandLogoPath } from "@/lib/products/brand-logos";
+import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 
 interface NikeStyleHeroProps {
   product: ProductData;
@@ -23,7 +24,16 @@ export default function NikeStyleHero({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
+  const manifestPriceEntry = product.stripe
+    ? findPriceEntry(product.stripe.price_id, product.stripe.test_price_id)
+    : undefined;
   const price = product.pricing;
+  const priceDisplay = manifestPriceEntry
+    ? formatAmountFromCents(manifestPriceEntry.unitAmount, manifestPriceEntry.currency)
+    : price?.price ?? undefined;
+  const originalPriceDisplay = manifestPriceEntry?.compareAtAmount != null
+    ? formatAmountFromCents(manifestPriceEntry.compareAtAmount, manifestPriceEntry.currency)
+    : price?.original_price ?? undefined;
   const handle = product.slug;
   const brandLogoPath = getBrandLogoPath(handle);
   const mainImageSource = brandLogoPath || product.featured_image;
@@ -144,24 +154,33 @@ export default function NikeStyleHero({
             <p className="text-gray-600 mb-6">{product.tagline}</p>
 
             {/* Price */}
-            {price && (
+            {(priceDisplay || originalPriceDisplay || price?.note) && (
               <div className="mb-8">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-3xl font-medium">{price.price}</span>
-                  {price.original_price && (
+                  {priceDisplay && <span className="text-3xl font-medium">{priceDisplay}</span>}
+                  {originalPriceDisplay && (
                     <span className="text-xl text-gray-500 line-through">
-                      {price.original_price}
+                      {originalPriceDisplay}
                     </span>
                   )}
-                  {price.original_price && (
-                    <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                      {Math.round(((parseFloat(price.original_price.replace('$', '')) -
-                        parseFloat((price.price || '$0').replace('$', ''))) /
-                        parseFloat(price.original_price.replace('$', ''))) * 100)}% OFF
-                    </span>
-                  )}
+                  {(() => {
+                    if (!priceDisplay || !originalPriceDisplay) {
+                      return null;
+                    }
+                    const current = Number.parseFloat(priceDisplay.replace(/[^0-9.\-]/g, ""));
+                    const original = Number.parseFloat(originalPriceDisplay.replace(/[^0-9.\-]/g, ""));
+                    if (!Number.isFinite(current) || !Number.isFinite(original) || original <= 0 || current >= original) {
+                      return null;
+                    }
+                    const discount = Math.round(((original - current) / original) * 100);
+                    return (
+                      <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
+                        {discount}% OFF
+                      </span>
+                    );
+                  })()}
                 </div>
-                {price.note && (
+                {price?.note && (
                   <p className="text-orange-600 text-sm mt-2 font-medium">
                     {price.note}
                   </p>
