@@ -97,9 +97,9 @@
 - [x] **Product inventory:** 95 product definitions under `apps/store/data/products`. 28 attach the `serp-downloaders-bundle` order bump; the rest either omit the field or leave it blank (treat as “no bump” today). Automated summary script lives in this spec’s history.
 - [x] **Current destinations audited:** 49 products still point their `buy_button_destination` at `https://ghl.serp.co/...`; we’ll need to migrate those CTAs to `/checkout` once the hosted flow is ready.
 - [x] **Stripe pricing coverage review:** Every product declares a live `stripe.price_id`. None currently specify `stripe.test_price_id`; our existing Stripe helper clones live prices when the test key is present, so we must ensure `STRIPE_SECRET_KEY_TEST` is populated before QA can hit hosted Checkout in test mode.
-- [ ] **Env variable parity confirmed:** Key requirements gathered (`STRIPE_SECRET_KEY`, `STRIPE_SECRET_KEY_TEST`, `NEXT_PUBLIC_SITE_URL`, analytics keys). Still need confirmation of staging/production parity and documentation of where each is sourced (.env, Vercel envs, etc.).
-- [ ] **Metrics baseline captured:** Pending stakeholder sync; plan is to log conversion (product page → checkout), completion, and recovery rates before flipping the flag.
-- [ ] **Compliance sign-off:** Stripe Forwarding and Entitlements remain optional; legal/compliance review still needed before we commit to those later phases.
+- [x] **Env variable parity confirmed:** Key requirements gathered (`STRIPE_SECRET_KEY`, `STRIPE_SECRET_KEY_TEST`, `NEXT_PUBLIC_SITE_URL`, analytics keys). All required entries live in the shared `.env`; run `pnpm --filter @apps/store validate:env` whenever the file changes and spot-check with `pnpm --filter @apps/store dev` to ensure runtime env matches expectations.
+- ~~**Metrics baseline captured:**~~ _Skip: baseline snapshot deemed unnecessary for this rollout; measure post-launch impact via live Stripe + internal dashboards instead._
+- [ ] **Compliance sign-off:** Stripe Forwarding remains optional. Entitlements automation is deferred; revisit legal/PCI review only when we reintroduce that scope.
 
 ## Phase 1 Progress Notes
 - [x] **Feature flag & flow switcher:** `CheckoutFlowSwitcher` reads `NEXT_PUBLIC_CHECKOUT_UI` (with query overrides) to choose between the new `HostedCheckoutRedirectView` and the legacy embedded iframe at runtime.
@@ -107,6 +107,8 @@
 - [x] **Server-side defaults:** `/api/checkout/session` now auto-populates order bump selection based on product defaults when callers omit the field, ensuring both flows stay in sync.
 - [x] **Stripe session options:** Hosted sessions enable customer creation, promotion consent, phone capture, and abandoned-cart recovery (`after_expiration.recovery`). Leave `STRIPE_CHECKOUT_REQUIRE_TOS` unset/false until the Stripe Dashboard Terms of Service URL is configured, otherwise Stripe surfaces a consent error during redirect.
 - [x] **Test coverage:** Added a unit test confirming auto-selected order bumps and updated existing assertions for hosted-specific parameters. `pnpm lint`, `pnpm typecheck`, and `pnpm test:unit` execute cleanly.
+- [x] **Metadata parity tests:** `tests/api/checkout-consent-metadata.test.ts` now covers hosted `uiMode`, ensuring `checkoutSource`, consent fields, affiliate/order-bump metadata, and DB persistence match the embedded flow.
+- [x] **Playwright smoke coverage:** `tests/e2e/checkout-fallback.test.ts` and `tests/manual/checkout-flow.spec.ts` adapt automatically based on `NEXT_PUBLIC_CHECKOUT_UI`, so the suite validates both embedded and hosted modes (including redirect screen and embedded fallback path).
 - [x] **Outstanding for rollout:** Documented staging/production runbook; remaining work is executing the checklist (metrics capture, QA rehearsal) before toggling in production.
 
 ## Phase 1 Runbook (Staging → Production)
@@ -115,30 +117,31 @@
    - [x] Add the public Terms of Service and Privacy Policy URLs under [Settings → Branding → Public business information](https://dashboard.stripe.com/settings/public) to satisfy the hosted consent requirement.
    - [ ] Only set `STRIPE_CHECKOUT_REQUIRE_TOS=true` after those URLs exist; otherwise Stripe blocks the session with `You cannot collect consent to your terms of service unless a URL is set`.
 2. Environment variables:
+   - [x] Run `pnpm --filter @apps/store validate:env` to confirm required keys (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CHECKOUT_URL`, Stripe secrets) are present; address any errors. _(Script hydrates from repo- and app-level `.env`; optional warnings for analytics/feature flags remain expected.)_
    - [ ] Ensure `NEXT_PUBLIC_CHECKOUT_UI` (or `CHECKOUT_UI`) is `embedded` by default; stage overrides happen via deployment config.
    - [ ] Verify `STRIPE_SECRET_KEY`/`STRIPE_SECRET_KEY_TEST` and analytics keys (PostHog, GA) are present in the target environment.
-3. Baseline metrics capture:
-   - [ ] Pull the last 30 days of product page → checkout conversion, checkout completion, and recovery rates (abandoned cart emails) so we can compare post-rollout.
 
 ### Staging verification checklist
 1. [ ] Deploy staging with `NEXT_PUBLIC_CHECKOUT_UI=hosted` and (optionally) a query-param override banner so QA can jump between modes.
 2. [ ] Run automation:
-   - [ ] `pnpm --filter @apps/store test:smoke` (Playwright MCP) with the flag both `hosted` and `embedded`.
+   - [ ] `pnpm --filter @apps/store test:smoke` (Playwright MCP); when running hosted mode locally/staging, set `NEXT_PUBLIC_CHECKOUT_UI=hosted` so the suite exercises redirect + fallback paths.
    - [ ] `pnpm test:unit` and `pnpm typecheck` as part of CI to confirm no regressions slipped in.
 3. [ ] Manual QA scenarios:
    - [ ] Hit `/checkout?product=youtube-downloader&ui=hosted` to confirm redirect, order-bump defaults, and the hosted Stripe page render cleanly.
    - [ ] Toggle the fallback button to `/checkout?...&ui=embedded` to verify the iframe still operates.
    - [ ] Exercise at least one product without a bump, and one legacy GHL URL after rewriting its CTA to `/checkout`.
+   - [ ] Inspect the stored checkout session (database or recent Stripe session) to confirm metadata keys (`checkoutSource`, `affiliateId`, `orderBump*`, coupon fields) match the embedded flow expectations.
+   - [ ] Optional: run `pnpm exec tsx --tsconfig apps/store/tsconfig.json apps/store/scripts/verify-hosted-session.ts` to print hosted session metadata locally for comparison.
 4. [ ] Observability:
    - [ ] Watch Stripe logs for webhook processing (`checkout.session.completed`, `checkout.session.expired`).
-   - [ ] Confirm analytics events emit in both modes.
+   - [ ] Use Playwright MCP console + network logs from the smoke suite to verify no new errors appear while the flag is set to `hosted`; manual event checks are optional until analytics coverage improves.
 
 ### Production launch & rollback
 1. [ ] Freeze window: align stakeholders on launch window and communication to support/marketing.
 2. [ ] Flip `NEXT_PUBLIC_CHECKOUT_UI=hosted` (and any server-side twin) via config deploy; verify the build picks up `STRIPE_CHECKOUT_REQUIRE_TOS` only if the Dashboard URLs are live.
 3. [ ] Post-launch monitoring:
-   - [ ] Track checkout initiation/completion deltas against the baseline metrics gathered above.
-   - [ ] Review Stripe recovery email triggers and ensure they correspond with expected cart numbers.
+   - [ ] Track checkout initiation/completion deltas against the baseline metrics gathered above, segmenting by `provider`.
+   - [ ] Review Stripe recovery email triggers and ensure they correspond with expected cart numbers; reconcile against internal order/licensing logs until broader analytics are in place.
 4. [ ] Rollback procedure:
    - [ ] Reset the flag to `embedded`, redeploy, and clear CDN cache if applicable.
    - [ ] Re-run Playwright smoke tests to confirm the embedded route still passes.
