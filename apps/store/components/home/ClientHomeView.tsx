@@ -21,7 +21,7 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
-import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
+import { canonicalizeStoreOrigin, canonicalizeStoreHref } from "@/lib/canonical-url"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -66,6 +66,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedCtaHref = primaryCtaHref ?? checkoutHref
   const isInternalHref = resolvedCtaHref.startsWith("/") || resolvedCtaHref.startsWith("#")
   const useExternalBuyDestination = !hasEmbeddedCheckout && !isInternalHref
+  const storeOrigin =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : canonicalizeStoreOrigin(process.env.NEXT_PUBLIC_SITE_URL ?? "")
+  const finalCtaHref = useExternalBuyDestination
+    ? resolvedCtaHref
+    : canonicalizeStoreHref(resolvedCtaHref, storeOrigin) ?? resolvedCtaHref
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -195,11 +202,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     if (useExternalBuyDestination) {
-      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
+      window.open(finalCtaHref, "_blank", "noopener,noreferrer")
     } else {
-      window.location.href = resolvedCtaHref
+      window.location.href = finalCtaHref
     }
-  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
+  }, [product, useExternalBuyDestination, finalCtaHref, affiliateId])
 
   const handleStickyCtaClick = useCallback(() => {
     trackProductCheckoutClick(product, {
@@ -209,11 +216,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     if (useExternalBuyDestination) {
-      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
+      window.open(finalCtaHref, "_blank", "noopener,noreferrer")
     } else {
-      window.location.href = resolvedCtaHref
+      window.location.href = finalCtaHref
     }
-  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
+  }, [product, useExternalBuyDestination, finalCtaHref, affiliateId])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -255,7 +262,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        ctaHref={resolvedCtaHref}
+        ctaHref={finalCtaHref}
         ctaText={homeProps.ctaText ?? "Get It Now"}
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -271,7 +278,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,
-                ctaHref: resolvedCtaHref,
+                ctaHref: finalCtaHref,
                 ctaText: homeProps.pricing?.ctaText ?? homeProps.ctaText ?? "GET IT NOW",
                 ctaExtra: null,
               }
@@ -283,7 +290,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         show={showStickyBar}
         productName={product.name}
         onCtaClick={handleStickyCtaClick}
-        ctaHref={resolvedCtaHref}
+        ctaHref={finalCtaHref}
         external={useExternalBuyDestination}
       />
     </>

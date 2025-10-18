@@ -108,6 +108,7 @@
 - [x] **Stripe session options:** Hosted sessions enable customer creation, promotion consent, phone capture, and abandoned-cart recovery (`after_expiration.recovery`). Leave `STRIPE_CHECKOUT_REQUIRE_TOS` unset/false until the Stripe Dashboard Terms of Service URL is configured, otherwise Stripe surfaces a consent error during redirect.
 - [x] **Test coverage:** Added a unit test confirming auto-selected order bumps and updated existing assertions for hosted-specific parameters. `pnpm lint`, `pnpm typecheck`, and `pnpm test:unit` execute cleanly.
 - [x] **Metadata parity tests:** `tests/api/checkout-consent-metadata.test.ts` now covers hosted `uiMode`, ensuring `checkoutSource`, consent fields, affiliate/order-bump metadata, and DB persistence match the embedded flow.
+- [x] **Buy button paths:** Products can now use `/checkout?...` relative paths in `buy_button_destination`, and the client normalizes them to the current origin so preview/staging builds hit the right environment without edits.
 - [x] **Playwright smoke coverage:** `tests/e2e/checkout-fallback.test.ts` and `tests/manual/checkout-flow.spec.ts` adapt automatically based on `NEXT_PUBLIC_CHECKOUT_UI`, so the suite validates both embedded and hosted modes (including redirect screen and embedded fallback path).
 - [x] **Outstanding for rollout:** Documented staging/production runbook; remaining work is executing the checklist (metrics capture, QA rehearsal) before toggling in production.
 

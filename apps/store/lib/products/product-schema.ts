@@ -64,7 +64,22 @@ const optionalExternalUrl = z.preprocess(
     const trimmed = value.trim();
     return trimmed.length === 0 ? undefined : trimmed;
   },
-  z.string().url().optional(),
+  z
+    .string()
+    .refine((val) => {
+      if (val.startsWith("/") || val.startsWith("#")) {
+        return true;
+      }
+
+      try {
+        // eslint-disable-next-line no-new
+        new URL(val);
+        return true;
+      } catch {
+        return false;
+      }
+    }, "Invalid URL or path")
+    .optional(),
 );
 
 const screenshotSchema = z.object({
