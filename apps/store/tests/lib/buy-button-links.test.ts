@@ -36,11 +36,9 @@ describe("buy button destinations", () => {
     const successViolations: Array<{ slug: string; successUrl?: string }> = [];
 
     products.forEach((product) => {
-      const buy = product.buy_button_destination;
-      const needsFallback =
-        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-      if (!needsFallback) {
+      const checkout = product.checkout;
+      const activeMode = checkout?.active ?? (checkout?.destinations?.ghl ? "ghl" : "embedded");
+      if (activeMode === "ghl") {
         return;
       }
 
@@ -60,11 +58,9 @@ describe("buy button destinations", () => {
     const cancelViolations: Array<{ slug: string; cancelUrl?: string; expected: string }> = [];
 
     products.forEach((product) => {
-      const buy = product.buy_button_destination;
-      const needsFallback =
-        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-      if (!needsFallback) {
+      const checkout = product.checkout;
+      const activeMode = checkout?.active ?? (checkout?.destinations?.ghl ? "ghl" : "embedded");
+      if (activeMode === "ghl") {
         return;
       }
 

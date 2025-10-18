@@ -132,9 +132,8 @@ export function PrimaryNavbar({
             <Image
               src={logoSrc}
               alt={siteName}
-              width={140}
-              height={36}
-              className="h-9 w-auto"
+              width={60}
+              height={60}
               priority
             />
           ) : (

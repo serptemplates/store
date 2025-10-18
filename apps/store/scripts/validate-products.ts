@@ -3,7 +3,15 @@ import path from "path"
 import Stripe from "stripe"
 import dotenv from "dotenv"
 import { parse, parseDocument, type YAMLMap } from "yaml"
-import { ORDER_BUMP_FIELD_ORDER, PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
+import {
+  CHECKOUT_DESTINATION_FIELD_ORDER,
+  CHECKOUT_FIELD_ORDER,
+  ORDER_BUMP_FIELD_ORDER,
+  PRICING_FIELD_ORDER,
+  PRODUCT_FIELD_ORDER,
+  RETURN_POLICY_FIELD_ORDER,
+  productSchema,
+} from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
 import { orderBumpDefinitionSchema } from "../lib/products/order-bump-definitions"
 
@@ -301,6 +309,30 @@ async function main() {
           `❌ ${file}: pricing."${pricingIssue.before}" must appear before "${pricingIssue.after}" to match canonical order.`,
         )
         continue
+      }
+    }
+
+    const checkoutNode = document.get("checkout", true) as YAMLMap<unknown, unknown> | undefined
+    if (checkoutNode) {
+      const checkoutKeys = extractKeys(checkoutNode)
+      const checkoutIssue = findOrderViolation(checkoutKeys, CHECKOUT_FIELD_ORDER)
+      if (checkoutIssue) {
+        errors.push(
+          `❌ ${file}: checkout."${checkoutIssue.before}" must appear before "${checkoutIssue.after}" to match canonical order.`,
+        )
+        continue
+      }
+
+      const destinationsNode = checkoutNode.get("destinations", true) as YAMLMap<unknown, unknown> | undefined
+      if (destinationsNode) {
+        const destinationKeys = extractKeys(destinationsNode)
+        const destinationIssue = findOrderViolation(destinationKeys, CHECKOUT_DESTINATION_FIELD_ORDER)
+        if (destinationIssue) {
+          errors.push(
+            `❌ ${file}: checkout.destinations."${destinationIssue.before}" must appear before "${destinationIssue.after}" to match canonical order.`,
+          )
+          continue
+        }
       }
     }
 

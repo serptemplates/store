@@ -13,7 +13,13 @@ const baseProduct: ProductData = {
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
-  buy_button_destination: undefined,
+  checkout: {
+    active: "embedded",
+    destinations: {
+      embedded: "/checkout?product=sample-product",
+      hosted: "/checkout?product=sample-product&page=1",
+    },
+  },
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
@@ -156,25 +162,49 @@ describe("productToHomeTemplate", () => {
     expect(templateWithBlank.pricing?.subheading).toBeUndefined();
   });
 
-  it("prefers buy_button_destination for CTA links when provided", () => {
-    const destination = "https://store.serp.co/external/landing";
+  it("prefers checkout active destination when defined", () => {
+    const hostedDestination = "https://store.serp.co/external/landing";
     const product: ProductData = {
       ...baseProduct,
-      buy_button_destination: destination,
+      checkout: {
+        active: "hosted",
+        destinations: {
+          embedded: "/checkout?product=sample-product",
+          hosted: hostedDestination,
+          ghl: "https://ghl.serp.co/legacy-offer",
+        },
+      },
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaHref).toBe(hostedDestination);
+    expect(template.pricing?.ctaHref).toBe(hostedDestination);
+  });
+
+  it("uses ghl destination when no stripe config is present", () => {
+    const ghlDestination = "https://ghl.serp.co/some-offer";
+    const product: ProductData = {
+      ...baseProduct,
+      checkout: {
+        destinations: {
+          ghl: ghlDestination,
+        },
+      },
       stripe: undefined,
     };
 
     const template = productToHomeTemplate(product, []);
 
-    expect(template.ctaHref).toBe(destination);
-    expect(template.pricing?.ctaHref).toBe(destination);
+    expect(template.ctaHref).toBe(ghlDestination);
+    expect(template.pricing?.ctaHref).toBe(ghlDestination);
   });
 
   it("falls back to apps product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
+      checkout: undefined,
       stripe: undefined,
-      buy_button_destination: undefined,
       pricing: {
         price: baseProduct.pricing?.price,
         benefits: baseProduct.pricing?.benefits ?? [],
@@ -195,6 +225,25 @@ describe("productToHomeTemplate", () => {
 
     expect(template.ctaHref).toBe("/checkout?product=sample-product");
     expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product");
+  });
+
+  it("honors checkout destinations active flag", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      checkout: {
+        active: "hosted",
+        destinations: {
+          embedded: "/checkout?product=sample-product",
+          hosted: "/checkout?product=sample-product&page=1",
+          ghl: "https://ghl.serp.co/legacy",
+        },
+      },
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaHref).toBe("/checkout?product=sample-product&page=1");
+    expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product&page=1");
   });
 
   it("selects posts based on related_posts ordering", () => {

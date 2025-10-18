@@ -13,7 +13,12 @@ serply_link: https://serp.ly/twitch-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/twitch-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/twitch-video-downloader
 serp_co_product_page_url: https://serp.co/products/twitch-video-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02ca721970920c4e2673b
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=twitch-video-downloader
+    hosted: /checkout?product=twitch-video-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68e02ca721970920c4e2673b
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=twitch-video-downloader
 status: pre_release
@@ -62,8 +67,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Twitch downloader?
@@ -130,3 +134,5 @@ ghl:
   tag_ids:
   - purchase-twitch-video-downloader
 permission_justifications: []
+
+

@@ -14,7 +14,11 @@ serply_link: https://serp.ly/ai-voice-cloner-app
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/ai-voice-cloner-app
 apps_serp_co_product_page_url: https://apps.serp.co/ai-voice-cloner-app
 serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
-buy_button_destination: null
+checkout:
+  active: embedded
+  destinations:
+    embedded: /checkout?product=ai-voice-cloner-app
+    hosted: /checkout?product=ai-voice-cloner-app&page=1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
 status: live
@@ -130,3 +134,5 @@ ghl:
   - purchase-ai-voice-cloner-app
 new_release: true
 permission_justifications: []
+
+

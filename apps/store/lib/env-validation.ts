@@ -19,6 +19,7 @@ interface EnvConfig {
   required: boolean;
   description: string;
   validate?: (value: string) => boolean;
+  suppressWarningWhenMissing?: boolean;
 }
 
 const ENV_CONFIGS: EnvConfig[] = [
@@ -51,6 +52,20 @@ const ENV_CONFIGS: EnvConfig[] = [
     required: true,
     description: "Full site URL (https://yourdomain.com)",
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
+  },
+  {
+    name: "NEXT_PUBLIC_CHECKOUT_UI",
+    required: false,
+    description: "Checkout UI override: embedded or hosted (defaults to hosted when unset)",
+    suppressWarningWhenMissing: true,
+    validate: (value) => ["embedded", "hosted"].includes(value.trim().toLowerCase()),
+  },
+  {
+    name: "STRIPE_CHECKOUT_REQUIRE_TOS",
+    required: false,
+    description: "Set to false to disable terms_of_service consent in hosted checkout (defaults to true)",
+    suppressWarningWhenMissing: true,
+    validate: (value) => ["true", "false", "1", "0"].includes(value.trim().toLowerCase()),
   },
   {
     name: "NEXT_PUBLIC_CHECKOUT_URL",
@@ -86,6 +101,7 @@ const ENV_CONFIGS: EnvConfig[] = [
     name: "POSTHOG_API_HOST",
     required: false,
     description: "Server-side PostHog API host (defaults to https://us.i.posthog.com)",
+    suppressWarningWhenMissing: true,
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
 ];
@@ -116,6 +132,9 @@ export function validateEnvironment(): ValidationResult {
 
     // Warn about optional missing variables
     if (!config.required && !value) {
+      if (config.suppressWarningWhenMissing) {
+        continue;
+      }
       warnings.push(
         `Optional environment variable not set: ${config.name} - ${config.description}`
       );

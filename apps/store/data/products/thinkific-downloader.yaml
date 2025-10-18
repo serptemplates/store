@@ -13,7 +13,12 @@ serply_link: https://serp.ly/thinkific-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/thinkific-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/thinkific-downloader
 serp_co_product_page_url: https://serp.co/products/thinkific-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68e02c9067ee3bf2b3699bdb
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=thinkific-downloader
+    hosted: /checkout?product=thinkific-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68e02c9067ee3bf2b3699bdb
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=thinkific-downloader
 status: pre_release
@@ -61,8 +66,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Thinkific downloader?
@@ -128,3 +132,5 @@ ghl:
   tag_ids:
   - purchase-thinkific-downloader
 permission_justifications: []
+
+

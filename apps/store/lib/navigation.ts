@@ -39,7 +39,7 @@ export function buildPrimaryNavProps(options: BuildNavOptions = {}): PrimaryNavb
   const ctaHref = options.ctaHref ?? siteConfig.cta?.href ?? null;
   const ctaText = options.ctaText ?? siteConfig.cta?.text ?? "Shop Tools";
   const showCta = options.showCta ?? Boolean(ctaHref);
-  const logoSrc = siteConfig.site?.logo ?? "/logo.png";
+  const logoSrc = siteConfig.site?.logo ?? "/logo.svg";
 
   return {
     siteName,

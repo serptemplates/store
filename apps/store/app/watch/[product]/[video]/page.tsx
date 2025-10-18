@@ -150,7 +150,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
       name: siteName,
       logo: {
         "@type": "ImageObject",
-        url: toAbsoluteUrl("/logo.png"),
+        url: toAbsoluteUrl("/logo.svg"),
       },
     },
     potentialAction: {

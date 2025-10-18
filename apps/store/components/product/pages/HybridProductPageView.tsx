@@ -27,8 +27,8 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
 import { getReleaseBadgeText, isPreRelease } from "@/lib/products/release-status"
 import type { SiteConfig } from "@/lib/site-config"
-import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
+import { ProductStructuredData } from "@/schema/structured-data-components"
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
 
 export interface HybridProductPageViewProps {
@@ -66,6 +66,34 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const selectedVideoEntry = resolvedVideos[selectedVideoIndex]
 
   const price = product.pricing
+  const resolvedPricing = homeProps.pricing
+  const priceDisplay = resolvedPricing?.price ?? price?.price
+  const originalPriceDisplay = resolvedPricing?.originalPrice ?? price?.original_price
+  const priceNote = resolvedPricing?.priceNote ?? price?.note
+  const calculateDiscountPercentage = (current?: string | null, original?: string | null): number | null => {
+    if (!current || !original) {
+      return null
+    }
+
+    const parseAmount = (value: string): number | null => {
+      const numeric = Number.parseFloat(value.replace(/[^0-9.\-]/g, ""))
+      return Number.isFinite(numeric) ? numeric : null
+    }
+
+    const currentValue = parseAmount(current)
+    const originalValue = parseAmount(original)
+
+    if (
+      currentValue === null ||
+      originalValue === null ||
+      originalValue <= 0 ||
+      currentValue >= originalValue
+    ) {
+      return null
+    }
+
+    return Math.round(((originalValue - currentValue) / originalValue) * 100)
+  }
   const handle = product.slug
   const brandLogoPath = getBrandLogoPath(handle)
   const mainImageSource = brandLogoPath || product.featured_image
@@ -109,7 +137,6 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const canonicalBaseUrl = canonicalizeStoreOrigin(typeof window !== "undefined" ? window.location.origin : undefined)
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? ""
   const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl
-
   return (
     <>
       <ProductStructuredDataScripts
@@ -124,8 +151,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
       <StickyPurchaseBar
         product={product}
         priceLabel={price?.label ?? null}
-        price={price?.price ?? null}
-        originalPrice={price?.original_price ?? null}
+        price={priceDisplay ?? null}
+        originalPrice={originalPriceDisplay ?? null}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}
@@ -161,32 +188,39 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
                 : product.description}
             </p>
 
-            {price && (
+            {(priceDisplay || originalPriceDisplay || priceNote || productIsPreRelease) && (
               <div className="mb-6">
                 {productIsPreRelease ? (
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                       {releaseBadgeText}
                     </span>
-                    {price.price && <span className="text-2xl text-gray-500">Expected: {price.price}</span>}
+                    {priceDisplay && <span className="text-2xl text-gray-500">Expected: {priceDisplay}</span>}
                   </div>
                 ) : (
                   <div className="flex items-baseline gap-3">
-                    <span className="text-4xl font-bold text-gray-900">{price.price}</span>
-                    {price.original_price && (
+                    {priceDisplay && <span className="text-4xl font-bold text-gray-900">{priceDisplay}</span>}
+                    {originalPriceDisplay && (
                       <>
-                        <span className="text-2xl text-gray-400 line-through">{price.original_price}</span>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                          {Math.round(
-                            ((parseFloat(price.original_price.replace("$", "")) -
-                              parseFloat((price.price || "$0").replace("$", ""))) /
-                              parseFloat(price.original_price.replace("$", ""))) *
-                              100,
-                          )}% OFF
-                        </span>
+                        <span className="text-2xl text-gray-400 line-through">{originalPriceDisplay}</span>
+                        {(() => {
+                          const discount = calculateDiscountPercentage(priceDisplay, originalPriceDisplay)
+                          if (discount == null) {
+                            return null
+                          }
+                          return (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                              {discount}% OFF
+                            </span>
+                          )
+                        })()}
                       </>
                     )}
                   </div>
+                )}
+
+                {priceNote && !productIsPreRelease && (
+                  <p className="text-orange-600 text-sm mt-2 font-medium">{priceNote}</p>
                 )}
               </div>
             )}

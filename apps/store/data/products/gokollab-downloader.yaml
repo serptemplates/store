@@ -13,7 +13,12 @@ serply_link: https://serp.ly/gokollab-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/gokollab-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/gokollab-downloader
 serp_co_product_page_url: https://serp.co/products/gokollab-downloader/
-buy_button_destination: https://ghl.serp.co/payment-link/68edb59a219709266ae2a9d6
+checkout:
+  active: ghl
+  destinations:
+    embedded: /checkout?product=gokollab-downloader
+    hosted: /checkout?product=gokollab-downloader&page=1
+    ghl: https://ghl.serp.co/payment-link/68edb59a219709266ae2a9d6
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=gokollab-downloader
 status: pre_release
@@ -126,3 +131,5 @@ ghl:
   tag_ids:
   - purchase-gokollab-downloader
 permission_justifications: []
+
+

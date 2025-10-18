@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 
+const checkoutUiMode = process.env.NEXT_PUBLIC_CHECKOUT_UI?.toLowerCase();
+const hostedByDefault = checkoutUiMode !== "embedded";
+
 test.describe("Checkout Flow Integration", () => {
   test("Product page should have single checkout button instead of dual payment buttons", async ({ page }) => {
     // Visit a product page
@@ -36,7 +39,11 @@ test.describe("Checkout Flow Integration", () => {
 
   test('Checkout page should show both payment options', async ({ page, context }) => {
     // Go directly to checkout page
-    await page.goto('/checkout?product=tiktok-downloader', { waitUntil: 'domcontentloaded' });
+    const checkoutPath = hostedByDefault
+      ? "/checkout?product=tiktok-downloader&page=2"
+      : "/checkout?product=tiktok-downloader";
+
+    await page.goto(checkoutPath, { waitUntil: 'domcontentloaded' });
 
     const currentUrl = page.url();
     const baseUrl = process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:3000';
@@ -81,5 +88,17 @@ test.describe("Checkout Flow Integration", () => {
     await stripeButton.click();
     const stripeIframeElement = page.locator('iframe[name="embedded-checkout"], iframe[src*="checkout"], iframe[src*="link"]').first();
     await expect(stripeIframeElement, "Expected embedded checkout frame after toggling back to Stripe").toHaveCount(1);
+  });
+
+  test('Hosted checkout redirect should render when feature flag enabled', async ({ page }) => {
+    test.skip(!hostedByDefault, "Hosted checkout flag is not enabled");
+
+    await page.goto('/checkout?product=tiktok-downloader&page=1', { waitUntil: 'domcontentloaded' });
+
+    const redirectHeading = page.getByRole('heading', { name: /redirecting to stripe/i });
+    await expect(redirectHeading, "Redirect screen should be visible before navigation").toBeVisible();
+
+    const fallbackButton = page.getByRole('button', { name: /open embedded checkout/i });
+    await expect(fallbackButton, "Hosted redirect should provide embedded fallback button").toBeVisible();
   });
 });

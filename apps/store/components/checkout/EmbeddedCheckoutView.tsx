@@ -14,6 +14,13 @@ import { requireStripePublishableKey } from "@/lib/payments/stripe-environment"
 import type { EcommerceItem } from "@/lib/analytics/gtm"
 import { Check, Loader2 } from "lucide-react"
 
+const logCheckoutError =
+  process.env.NODE_ENV === "test"
+    ? () => {}
+    : (...args: Parameters<typeof console.error>) => {
+        console.error(...args)
+      }
+
 export function EmbeddedCheckoutView() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -91,7 +98,7 @@ export function EmbeddedCheckoutView() {
         if (isCancelled || (err instanceof DOMException && err.name === "AbortError")) {
           return
         }
-        console.error("Error loading product:", err)
+        logCheckoutError("Error loading product:", err)
         setError("Unable to load product details. Please try again.")
       } finally {
         if (!isCancelled) {
@@ -232,7 +239,7 @@ export function EmbeddedCheckoutView() {
         if (!isMounted) {
           return
         }
-        console.error("Stripe failed to initialize:", err)
+        logCheckoutError("Stripe failed to initialize:", err)
         triggerFallback(
           "stripe_load_failed",
           err instanceof Error ? err : new Error(String(err)),
@@ -305,7 +312,7 @@ export function EmbeddedCheckoutView() {
         const hostedContentType = hostedResponse.headers.get("content-type") ?? ""
         if (!hostedContentType.includes("application/json")) {
           const hostedBody = await hostedResponse.text()
-          console.error("Hosted checkout returned non-JSON response:", hostedBody)
+          logCheckoutError("Hosted checkout returned non-JSON response:", hostedBody)
         trackCheckoutError(new Error("Hosted checkout non-JSON response"), {
           productSlug: productSlug ?? null,
           productName,
@@ -328,7 +335,7 @@ export function EmbeddedCheckoutView() {
           setStripeSessionId(hostedData.id)
         }
       } catch (hostedError) {
-        console.error("Error creating hosted fallback session:", hostedError)
+        logCheckoutError("Error creating hosted fallback session:", hostedError)
         trackCheckoutError(hostedError, {
           productSlug: productSlug ?? null,
           productName,
@@ -356,7 +363,7 @@ export function EmbeddedCheckoutView() {
 
       if (!contentType.includes("application/json")) {
         const rawBody = await response.text()
-        console.error("Checkout session returned non-JSON response:", rawBody)
+        logCheckoutError("Checkout session returned non-JSON response:", rawBody)
         trackCheckoutError(new Error("Checkout session non-JSON response"), {
           productSlug: productSlug ?? null,
           productName,
@@ -396,7 +403,7 @@ export function EmbeddedCheckoutView() {
       }
 
       if (!data?.client_secret) {
-        console.error("Checkout session missing client_secret:", data)
+        logCheckoutError("Checkout session missing client_secret:", data)
         trackCheckoutError(new Error("Missing client_secret"), {
           productSlug: productSlug ?? null,
           productName,
@@ -429,7 +436,7 @@ export function EmbeddedCheckoutView() {
 
       return data.client_secret
     } catch (err) {
-      console.error("Error creating checkout session:", err)
+      logCheckoutError("Error creating checkout session:", err)
       trackCheckoutError(err, {
         productSlug: productSlug ?? null,
         productName,

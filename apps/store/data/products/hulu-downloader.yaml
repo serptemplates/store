@@ -13,7 +13,11 @@ serply_link: https://serp.ly/hulu-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/hulu-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/hulu-downloader
 serp_co_product_page_url: https://serp.co/products/hulu-downloader/
-buy_button_destination: null
+checkout:
+  active: embedded
+  destinations:
+    embedded: /checkout?product=hulu-downloader
+    hosted: /checkout?product=hulu-downloader&page=1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=hulu-downloader
 status: pre_release
@@ -61,8 +65,7 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
+order_bump: serp-downloaders-bundle
 
 faqs:
 - question: How do I use the Hulu downloader?
@@ -128,3 +131,5 @@ ghl:
   tag_ids:
   - purchase-hulu-downloader
 permission_justifications: []
+
+

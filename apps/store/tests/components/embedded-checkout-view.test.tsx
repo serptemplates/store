@@ -102,6 +102,11 @@ if (typeof window !== "undefined") {
 }
 
 let EmbeddedCheckoutView: (typeof import("@/components/checkout/EmbeddedCheckoutView"))["EmbeddedCheckoutView"]
+const globalConsoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
+const windowConsoleErrorSpy =
+  typeof window !== "undefined"
+    ? vi.spyOn(window.console, "error").mockImplementation(() => {})
+    : null;
 
 beforeAll(async () => {
   ;({ EmbeddedCheckoutView } = await import("@/components/checkout/EmbeddedCheckoutView"))
@@ -117,6 +122,8 @@ afterAll(() => {
     window.open = originalWindowOpen
   }
   fetchMockImpl.mockReset()
+  globalConsoleErrorSpy.mockRestore()
+  windowConsoleErrorSpy?.mockRestore()
 })
 
 describe("EmbeddedCheckoutView fallback behaviour", () => {

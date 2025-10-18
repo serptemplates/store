@@ -128,6 +128,7 @@ beforeEach(() => {
   mocks.stripeCheckoutCreate.mockResolvedValue({
     id: "cs_test_123",
     client_secret: "secret_123",
+    url: "https://stripe.example.com/checkout",
     payment_intent: "pi_test_123",
     payment_status: "unpaid",
     mode: "payment",
@@ -207,6 +208,63 @@ describe("checkout consent metadata", () => {
     const dbMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>
     expect(dbMetadata).toMatchObject({
       checkoutSource: "custom_checkout_stripe",
+      termsAccepted: "true",
+      termsAcceptedAt: TEST_TIME.toISOString(),
+      termsAcceptedAtClient: "2024-04-30T09:15:00.000Z",
+      termsAcceptedIp: "203.0.113.10",
+      termsAcceptedUserAgent: "SERPTestAgent/1.0 (Checkout)",
+    })
+  })
+
+  it("persists consent evidence and metadata defaults for hosted Stripe checkout", async () => {
+    const requestBody = {
+      offerId: "tiktok-downloader",
+      quantity: 1,
+      uiMode: "hosted" as const,
+      metadata: {
+        landerId: "tiktok-downloader",
+        termsAccepted: "true",
+        termsAcceptedAt: "2024-04-30T09:15:00.000Z",
+      },
+    }
+
+    const response = await createStripeEmbeddedCheckout(
+      buildRequest("http://localhost/api/checkout/session", requestBody)
+    )
+
+    const payload = await response.json()
+    expect(response.status, JSON.stringify(payload)).toBe(200)
+    expect(payload.url).toBe("https://stripe.example.com/checkout")
+    expect(payload.mode).toBe("payment")
+
+    expect(mocks.stripeCheckoutCreate).toHaveBeenCalledTimes(1)
+    const stripeParams = mocks.stripeCheckoutCreate.mock.calls[0][0]
+    const metadata = stripeParams.metadata as Record<string, string>
+    const paymentIntentData = stripeParams.payment_intent_data as {
+      description?: string
+      metadata?: Record<string, string>
+    }
+
+    expect(metadata.checkoutSource).toBe("stripe_checkout")
+    expect(metadata.termsAccepted).toBe("true")
+    expect(metadata.termsAcceptedAtClient).toBe("2024-04-30T09:15:00.000Z")
+    expect(metadata.termsAcceptedAt).toBe(TEST_TIME.toISOString())
+    expect(metadata.termsAcceptedIp).toBe("203.0.113.10")
+    expect(metadata.termsAcceptedUserAgent).toBe("SERPTestAgent/1.0 (Checkout)")
+
+    expect(paymentIntentData?.metadata).toMatchObject({
+      checkoutSource: "stripe_checkout",
+      termsAccepted: "true",
+      termsAcceptedAt: TEST_TIME.toISOString(),
+      termsAcceptedAtClient: "2024-04-30T09:15:00.000Z",
+      termsAcceptedIp: "203.0.113.10",
+      termsAcceptedUserAgent: "SERPTestAgent/1.0 (Checkout)",
+    })
+
+    expect(mocks.upsertCheckoutSession).toHaveBeenCalledTimes(1)
+    const storedMetadata = mocks.upsertCheckoutSession.mock.calls[0][0]?.metadata as Record<string, string>
+    expect(storedMetadata).toMatchObject({
+      checkoutSource: "stripe_checkout",
       termsAccepted: "true",
       termsAcceptedAt: TEST_TIME.toISOString(),
       termsAcceptedAtClient: "2024-04-30T09:15:00.000Z",
