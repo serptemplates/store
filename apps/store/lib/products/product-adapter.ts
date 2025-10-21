@@ -2,11 +2,11 @@ import type { FAQ } from "@repo/ui/sections/FaqSection";
 import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
-import type { HomeTemplateProps } from "@/components/home/home-template.types";
+import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/home/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
-import type { ProductData } from "./product-schema";
+import type { ProductCtaMode, ProductData } from "./product-schema";
 import { getReleaseBadgeText } from "./release-status";
 import { resolveOrderBump } from "./order-bump";
 
@@ -17,6 +17,19 @@ const defaultPricingBenefits = [
   "Unlimited downloads included",
   "Works on macOS, Windows, and Linux"
 ];
+
+const WAITLIST_URL = "https://newsletter.serp.co/waitlist";
+const WAITLIST_LABEL = "Get Notified";
+const DEFAULT_CTA_LABEL = "Get It Now";
+const DEFAULT_CTA_LABEL_LOWER = DEFAULT_CTA_LABEL.toLowerCase();
+
+const CTA_ALLOWED_PREFIXES = [
+  "https://apps.serp.co/",
+  "https://store.serp.co/",
+  "https://ghl.serp.co/",
+  "https://serp.ly/",
+  "https://serp.co/",
+] as const;
 
 function derivePlatform(product: ProductData): string {
   if (product.platform) {
@@ -81,6 +94,94 @@ function formatPrice(value: number): string {
   return `$${Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2)}`;
 }
 
+type ResolvedProductCta = ResolvedHomeCta;
+
+function selectExternalDestination(product: ProductData): string {
+  const candidateLinks = [
+    product.buy_button_destination,
+    product.pricing?.cta_href,
+    product.apps_serp_co_product_page_url,
+    product.store_serp_co_product_page_url,
+    product.serp_co_product_page_url,
+    product.serply_link,
+  ];
+
+  const resolved = candidateLinks.find(
+    (link): link is string =>
+      typeof link === "string"
+      && link.trim().length > 0
+      && (
+        link.startsWith("/")
+        || CTA_ALLOWED_PREFIXES.some((prefix) => link.startsWith(prefix))
+      ),
+  );
+
+  return resolved ?? `https://apps.serp.co/${product.slug}`;
+}
+
+function resolveProductCta(product: ProductData): ResolvedProductCta {
+  const hasExternalDestination =
+    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0;
+  const hasEmbeddedCheckout =
+    !hasExternalDestination
+    && (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
+
+  const explicitMode = product.cta_mode;
+  const statusDerivedMode: ProductCtaMode | undefined =
+    product.status === "pre_release" ? "pre_release" : undefined;
+  const fallbackMode: ProductCtaMode = hasEmbeddedCheckout ? "checkout" : "external";
+
+  let mode: ProductCtaMode = explicitMode ?? statusDerivedMode ?? fallbackMode;
+
+  if (mode === "checkout" && !hasEmbeddedCheckout) {
+    mode = "external";
+  }
+
+  const trimmedCtaText =
+    typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
+  const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
+
+  if (mode === "pre_release") {
+    const isDefaultCta = normalizedCtaText
+      ? normalizedCtaText.toLowerCase() === DEFAULT_CTA_LABEL_LOWER
+      : false;
+    const waitlistDestination =
+      typeof product.waitlist_url === "string" && product.waitlist_url.trim().length > 0
+        ? product.waitlist_url.trim()
+        : WAITLIST_URL;
+    return {
+      mode,
+      href: waitlistDestination,
+      text: !normalizedCtaText || isDefaultCta ? WAITLIST_LABEL : normalizedCtaText,
+      opensInNewTab: true,
+      target: "_blank",
+      rel: "noopener noreferrer",
+    };
+  }
+
+  if (mode === "checkout") {
+    return {
+      mode,
+      href: `/checkout?product=${product.slug}`,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab: false,
+      target: "_self",
+    };
+  }
+
+  const externalHref = selectExternalDestination(product);
+  const opensInNewTab = !externalHref.startsWith("/") && !externalHref.startsWith("#");
+
+  return {
+    mode: "external",
+    href: externalHref,
+    text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+    opensInNewTab,
+    target: opensInNewTab ? "_blank" : "_self",
+    rel: opensInNewTab ? "noopener noreferrer" : undefined,
+  };
+}
+
 function resolvePosts(product: ProductData, posts: BlogPostMeta[]): BlogPostMeta[] {
   const desiredOrder = product.related_posts ?? [];
   if (!desiredOrder.length) {
@@ -102,38 +203,7 @@ export function productToHomeTemplate(
   const badgeText = getReleaseBadgeText(product);
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
-  const hasExternalDestination =
-    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0;
-  const hasEmbeddedCheckout =
-    !hasExternalDestination &&
-    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
-  const checkoutHref = `/checkout?product=${product.slug}`;
-  const allowedPrefixes = [
-    "https://apps.serp.co/",
-    "https://store.serp.co/",
-    "https://ghl.serp.co/",
-    "https://serp.ly/",
-    "https://serp.co/",
-  ];
-  const candidateLinks = [
-    product.buy_button_destination,
-    product.pricing?.cta_href,
-    product.apps_serp_co_product_page_url,
-    product.store_serp_co_product_page_url,
-    product.serp_co_product_page_url,
-    product.serply_link,
-  ];
-
-  const externalCtaHref = candidateLinks.find(
-    (link): link is string =>
-      typeof link === "string"
-      && (
-        link.startsWith("/")
-        || allowedPrefixes.some((prefix) => link.startsWith(prefix))
-      ),
-  ) ?? `https://apps.serp.co/${product.slug}`;
-  const ctaHref = hasEmbeddedCheckout ? checkoutHref : externalCtaHref;
-  const ctaText = product.pricing?.cta_text ?? "Get It Now";
+  const resolvedCta = resolveProductCta(product);
   const videoUrl = product.product_videos?.[0];
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
@@ -209,8 +279,8 @@ export function productToHomeTemplate(
     heroTitle,
     heroDescription,
     badgeText,
-    ctaHref,
-    ctaText,
+    ctaHref: resolvedCta.href,
+    ctaText: resolvedCta.text,
     ctaTitle: `Start using ${product.name}`,
     ctaDescription: product.seo_description,
     faqs,
@@ -236,10 +306,22 @@ export function productToHomeTemplate(
           : product.features && product.features.length > 0
           ? product.features.slice(0, 8) // Take first 8 features for the pricing section
           : defaultPricingBenefits,
-      ctaText,
-      ctaHref,
+      ctaText: resolvedCta.text,
+      ctaHref: resolvedCta.href,
       id: "pricing",
       orderBump,
     },
+    cta: {
+      mode: resolvedCta.mode,
+      href: resolvedCta.href,
+      text: resolvedCta.text,
+      target: resolvedCta.target,
+      rel: resolvedCta.rel,
+      opensInNewTab: resolvedCta.opensInNewTab,
+    },
+    ctaMode: resolvedCta.mode,
+    ctaTarget: resolvedCta.target,
+    ctaRel: resolvedCta.rel,
+    ctaOpensInNewTab: resolvedCta.opensInNewTab,
   } satisfies Omit<HomeTemplateProps, "ui">;
 }

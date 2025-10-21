@@ -6,6 +6,7 @@ import NextLink from "next/link"
 import Image from "next/image"
 
 import { HomeTemplate } from "./HomeTemplate"
+import type { ResolvedHomeCta } from "./home-template.types"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
@@ -49,23 +50,36 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
   const checkoutHrefBase = `/checkout?product=${product.slug}`
   const checkoutHref = affiliateId ? `${checkoutHrefBase}&aff=${affiliateId}` : checkoutHrefBase
-  const hasExternalDestination =
-    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0
-  const hasEmbeddedCheckout =
-    !hasExternalDestination &&
-    (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id))
-  const fallbackCtaCandidates = [
-    homeProps.ctaHref,
-    product.buy_button_destination,
-    product.serply_link,
-    product.store_serp_co_product_page_url,
-    product.apps_serp_co_product_page_url,
-  ].filter((value): value is string => Boolean(value && value.trim().length > 0))
-  const fallbackCtaHref = fallbackCtaCandidates[0]
-  const primaryCtaHref = hasEmbeddedCheckout ? checkoutHref : fallbackCtaHref
-  const resolvedCtaHref = primaryCtaHref ?? checkoutHref
-  const isInternalHref = resolvedCtaHref.startsWith("/") || resolvedCtaHref.startsWith("#")
-  const useExternalBuyDestination = !hasEmbeddedCheckout && !isInternalHref
+  const fallbackMode: ResolvedHomeCta["mode"] =
+    homeProps.ctaMode
+      ?? (typeof homeProps.ctaHref === "string" && homeProps.ctaHref.startsWith("/checkout")
+        ? "checkout"
+        : "external")
+
+  const baseCta: ResolvedHomeCta =
+    homeProps.cta ?? {
+      mode: fallbackMode,
+      href: homeProps.ctaHref ?? checkoutHrefBase,
+      text: homeProps.ctaText ?? "Get It Now",
+      target: homeProps.ctaTarget ?? (homeProps.ctaOpensInNewTab ? "_blank" : "_self"),
+      rel: homeProps.ctaRel,
+      opensInNewTab: homeProps.ctaOpensInNewTab ?? (homeProps.ctaTarget === "_blank"),
+    }
+  const resolvedCta: ResolvedHomeCta =
+    baseCta.mode === "checkout"
+      ? {
+          ...baseCta,
+          href: checkoutHref,
+          opensInNewTab: false,
+          target: "_self",
+          rel: baseCta.rel,
+        }
+      : baseCta
+  const isCheckoutMode = resolvedCta.mode === "checkout"
+  const shouldOpenInNewTab = !isCheckoutMode && resolvedCta.opensInNewTab
+  const resolvedCtaHref = resolvedCta.href
+  const resolvedCtaText = resolvedCta.text
+  const resolvedCtaRel = resolvedCta.rel
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -135,11 +149,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const productNavProps = useMemo(
     () => ({
       ...navProps,
-      ctaHref: null,
-      ctaText: null,
-      showCta: false,
+      ctaHref: resolvedCtaHref,
+      ctaText: resolvedCtaText,
+      showCta: true,
     }),
-    [navProps],
+    [navProps, resolvedCtaHref, resolvedCtaText],
   )
 
   const Navbar = useCallback(() => <PrimaryNavbar {...productNavProps} />, [productNavProps])
@@ -187,33 +201,41 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handlePrimaryCtaClick = useCallback(() => {
-    trackProductCheckoutClick(product, {
-      placement: "pricing",
-      destination: useExternalBuyDestination ? "external" : "checkout",
-      affiliateId,
-    })
+  const analyticsDestination: "checkout" | "external" | "waitlist" =
+    resolvedCta.mode === "pre_release" ? "waitlist" : isCheckoutMode ? "checkout" : "external"
 
-    if (useExternalBuyDestination) {
+  const navigateToCta = useCallback(() => {
+    if (isCheckoutMode) {
+      window.location.href = resolvedCtaHref
+      return
+    }
+
+    if (shouldOpenInNewTab) {
       window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
     } else {
       window.location.href = resolvedCtaHref
     }
-  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
+  }, [isCheckoutMode, resolvedCtaHref, shouldOpenInNewTab])
+
+  const handlePrimaryCtaClick = useCallback(() => {
+    trackProductCheckoutClick(product, {
+      placement: "pricing",
+      destination: analyticsDestination,
+      affiliateId,
+    })
+
+    navigateToCta()
+  }, [product, analyticsDestination, affiliateId, navigateToCta])
 
   const handleStickyCtaClick = useCallback(() => {
     trackProductCheckoutClick(product, {
       placement: "sticky_bar",
-      destination: useExternalBuyDestination ? "external" : "checkout",
+      destination: analyticsDestination,
       affiliateId,
     })
 
-    if (useExternalBuyDestination) {
-      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
-    } else {
-      window.location.href = resolvedCtaHref
-    }
-  }, [product, useExternalBuyDestination, resolvedCtaHref, affiliateId])
+    navigateToCta()
+  }, [product, analyticsDestination, affiliateId, navigateToCta])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -255,8 +277,14 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
+        cta={resolvedCta}
+        ctaMode={resolvedCta.mode}
         ctaHref={resolvedCtaHref}
-        ctaText={homeProps.ctaText ?? "Get It Now"}
+        ctaText={resolvedCtaText}
+        ctaTarget={resolvedCta.target}
+        ctaRel={resolvedCtaRel}
+        ctaOpensInNewTab={resolvedCta.opensInNewTab}
+        onPrimaryCtaClick={handlePrimaryCtaClick}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Products", href: "/#products" },
@@ -272,7 +300,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 ctaLoading: false,
                 ctaDisabled: false,
                 ctaHref: resolvedCtaHref,
-                ctaText: homeProps.pricing?.ctaText ?? homeProps.ctaText ?? "GET IT NOW",
+                ctaText: homeProps.pricing?.ctaText ?? resolvedCtaText,
                 ctaExtra: null,
               }
             : undefined
@@ -284,7 +312,9 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         productName={product.name}
         onCtaClick={handleStickyCtaClick}
         ctaHref={resolvedCtaHref}
-        external={useExternalBuyDestination}
+        label={resolvedCtaText}
+        openInNewTab={shouldOpenInNewTab}
+        rel={resolvedCtaRel}
       />
     </>
   )
@@ -297,11 +327,15 @@ type StickyProductCTAProps = {
   productName: string
   onCtaClick: () => void
   ctaHref: string
-  external: boolean
+  label: string
+  openInNewTab: boolean
+  rel?: string
 }
 
-function StickyProductCTA({ show, productName, onCtaClick, ctaHref, external }: StickyProductCTAProps) {
+function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel }: StickyProductCTAProps) {
   const ctaClasses = "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500";
+  const trimmedLabel = label.trim();
+  const displayLabel = trimmedLabel.length > 0 ? trimmedLabel.toUpperCase() : "GET IT NOW";
   return (
     <div
       className={cn(
@@ -312,11 +346,11 @@ function StickyProductCTA({ show, productName, onCtaClick, ctaHref, external }: 
       <div className="pointer-events-auto border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="container flex h-14 items-center justify-between gap-4">
           <span className="line-clamp-1 text-sm font-semibold text-foreground">{productName}</span>
-          {external ? (
+          {openInNewTab ? (
             <a
               href={ctaHref}
               target="_blank"
-              rel="noopener noreferrer"
+              rel={rel ?? "noopener noreferrer"}
               onClick={(event) => {
                 event.preventDefault();
                 onCtaClick();
@@ -324,12 +358,12 @@ function StickyProductCTA({ show, productName, onCtaClick, ctaHref, external }: 
               className={ctaClasses}
             >
               <span aria-hidden className="text-base">🚀</span>
-              <span>GET IT NOW</span>
+              <span>{displayLabel}</span>
             </a>
           ) : (
             <button type="button" onClick={onCtaClick} className={ctaClasses}>
               <span aria-hidden className="text-base">🚀</span>
-              <span>GET IT NOW</span>
+              <span>{displayLabel}</span>
             </button>
           )}
         </div>
