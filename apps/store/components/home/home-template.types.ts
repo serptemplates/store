@@ -13,6 +13,17 @@ export type PermissionJustificationItem = {
   learn_more_url?: string;
 };
 
+export type HomeCtaMode = "checkout" | "external" | "pre_release";
+
+export type ResolvedHomeCta = {
+  mode: HomeCtaMode;
+  href: string;
+  text: string;
+  target: "_self" | "_blank";
+  rel?: string;
+  opensInNewTab: boolean;
+};
+
 export type HomeTemplateUi = {
   Navbar: GenericComponent;
   Footer: GenericComponent;
@@ -41,6 +52,12 @@ export type HomeTemplateProps = {
   ctaDescription?: string;
   ctaHref?: string;
   ctaText?: string; // Used in hero as the main CTA label
+  ctaMode?: HomeCtaMode;
+  ctaTarget?: "_self" | "_blank";
+  ctaRel?: string;
+  ctaOpensInNewTab?: boolean;
+  cta?: ResolvedHomeCta;
+  onPrimaryCtaClick?: () => void;
   faqs?: FAQ[];
   screenshots?: Screenshot[];
   featureHighlights?: Array<{ title: string; description?: string } | string>;

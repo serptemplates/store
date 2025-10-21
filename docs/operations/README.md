@@ -11,6 +11,8 @@ Use this index to find the tooling and configuration docs that support the store
   - `MERCHANT-CENTER-SETUP.md` – Google Merchant Center configuration notes.
   - `EMAIL-NOTIFICATIONS.md` – Transactional email setup and incident playbook.
   - `account-license-sync.md` – How /account verification pulls licenses from GHL.
+- **Product Launch Modes**
+  - `pre-release-cta.md` – Configure waitlist CTAs and understand embedded checkout usage.
 - **Monitoring**
   - `store-post-launch-monitoring.md` – Post-launch observation checklist.
   - `MONITORING-SETUP.md` – Runtime metrics, alerts, and dashboards.

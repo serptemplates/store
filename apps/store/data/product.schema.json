@@ -296,6 +296,14 @@
       ],
       "default": "draft"
     },
+    "cta_mode": {
+      "type": "string",
+      "enum": [
+        "checkout",
+        "external",
+        "pre_release"
+      ]
+    },
     "categories": {
       "type": "array",
       "items": {

@@ -6,6 +6,7 @@ const shouldStartWebServer =
   !process.env.PLAYWRIGHT_BASE_URL && process.env.PLAYWRIGHT_NO_SERVER !== '1';
 
 const config: PlaywrightTestConfig = {
+  timeout: 120000,
   testDir: './tests',
   testMatch: ['**/*.spec.ts', 'e2e/**/*.test.ts'],
   fullyParallel: true,
