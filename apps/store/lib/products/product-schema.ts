@@ -272,6 +272,10 @@ const orderBumpSchema = z
   })
   .optional();
 
+export const CTA_MODE_OPTIONS = ["checkout", "external", "pre_release"] as const;
+const ctaModeSchema = z.enum(CTA_MODE_OPTIONS);
+export type ProductCtaMode = z.infer<typeof ctaModeSchema>;
+
 const productSchemaShape = {
   platform: z.string().trim().optional(),
   name: trimmedString(),
@@ -288,6 +292,7 @@ const productSchemaShape = {
   success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "pre_release", "live"]).default("draft"),
+  cta_mode: ctaModeSchema.optional(),
   featured_image: z.string().trim().nullable().optional(),
   featured_image_gif: z.string().trim().nullable().optional(),
   screenshots: z.array(screenshotSchema).optional().default([]),
@@ -339,6 +344,7 @@ export const PRODUCT_FIELD_ORDER = [
   "success_url",
   "cancel_url",
   "status",
+  "cta_mode",
   "featured_image",
   "featured_image_gif",
   "screenshots",

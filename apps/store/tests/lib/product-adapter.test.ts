@@ -116,6 +116,9 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, posts);
 
+    expect(template.ctaMode).toBe("checkout");
+    expect(template.ctaOpensInNewTab).toBe(false);
+    expect(template.cta?.mode).toBe("checkout");
     expect(template.ctaHref).toBe("/checkout?product=sample-product");
     expect(template.ctaText).toBe("Get Started");
     const pricing = template.pricing!;
@@ -166,6 +169,10 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, []);
 
+    expect(template.ctaMode).toBe("external");
+    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.cta?.mode).toBe("external");
+    expect(template.cta?.mode).toBe("external");
     expect(template.ctaHref).toBe(destination);
     expect(template.pricing?.ctaHref).toBe(destination);
   });
@@ -187,14 +194,66 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, []);
 
+    expect(template.ctaMode).toBe("external");
+    expect(template.ctaOpensInNewTab).toBe(true);
     expect(template.ctaHref).toBe("https://apps.serp.co/sample-product");
   });
 
   it("uses embedded checkout CTA when Stripe configuration is available", () => {
     const template = productToHomeTemplate(baseProduct, []);
 
+    expect(template.ctaMode).toBe("checkout");
+    expect(template.ctaOpensInNewTab).toBe(false);
+    expect(template.cta?.mode).toBe("checkout");
     expect(template.ctaHref).toBe("/checkout?product=sample-product");
     expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product");
+  });
+
+  it("routes pre-release products to the waitlist CTA by default", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      status: "pre_release",
+      stripe: undefined,
+      buy_button_destination: undefined,
+      pricing: {
+        price: baseProduct.pricing?.price,
+        benefits: baseProduct.pricing?.benefits ?? [],
+        cta_text: "Get it Now",
+      },
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaMode).toBe("pre_release");
+    expect(template.ctaHref).toBe("https://newsletter.serp.co/waitlist");
+    expect(template.ctaText).toBe("Get Notified");
+    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.ctaTarget).toBe("_blank");
+    expect(template.pricing?.ctaHref).toBe("https://newsletter.serp.co/waitlist");
+    expect(template.pricing?.ctaText).toBe("Get Notified");
+  });
+
+  it("honors explicit pre_release cta_mode overrides with custom waitlist configuration", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      status: "live",
+      cta_mode: "pre_release",
+      waitlist_url: "https://newsletter.serp.co/waitlist?product=sample-product",
+      stripe: undefined,
+      pricing: {
+        price: baseProduct.pricing?.price,
+        benefits: baseProduct.pricing?.benefits ?? [],
+        cta_text: "Notify Me",
+      },
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaMode).toBe("pre_release");
+    expect(template.ctaHref).toBe("https://newsletter.serp.co/waitlist?product=sample-product");
+    expect(template.ctaText).toBe("Notify Me");
+    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.cta?.mode).toBe("pre_release");
   });
 
   it("selects posts based on related_posts ordering", () => {

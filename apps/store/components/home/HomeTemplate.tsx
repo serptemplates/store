@@ -30,6 +30,7 @@ export function HomeTemplate({
   ctaDescription = `Join users who trust our ${platform} downloader`,
   ctaHref = "#download",
   ctaText = "Get It Now",
+  cta,
   faqs,
   screenshots,
   featureHighlights,
@@ -43,6 +44,7 @@ export function HomeTemplate({
   videoSection,
   permissionJustifications,
   about,
+  onPrimaryCtaClick,
 }: HomeTemplateProps) {
   const {
     Navbar,
@@ -148,11 +150,13 @@ export function HomeTemplate({
     pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
   const pricingSectionId = (pricing?.id ?? "pricing").replace(/^#/, "");
   const pricingSectionEnabled = pricing?.enabled ?? true;
+  const primaryCtaHref = cta?.href ?? ctaHref;
+  const primaryCtaText = cta?.text ?? ctaText ?? "Get It Now";
   const heroCtaHref =
-    ctaHref ??
+    primaryCtaHref ??
     (pricingSectionEnabled ? `#${pricingSectionId}` : undefined) ??
     "#pricing";
-  const heroCtaLabel = (ctaText ?? "Get It Now").toUpperCase();
+  const heroCtaLabel = primaryCtaText.toUpperCase();
   const heroVideoLinkLabel = "Watch demo";
   const heroVideoHref = videoUrl
     ? videoUrl
@@ -227,10 +231,15 @@ export function HomeTemplate({
                   },
                 ]
               : []),
-            {
-              label: heroCtaLabel,
-              url: heroCtaHref,
-            },
+            onPrimaryCtaClick
+              ? {
+                  label: heroCtaLabel,
+                  onClick: onPrimaryCtaClick,
+                }
+              : {
+                  label: heroCtaLabel,
+                  url: heroCtaHref,
+                },
           ]}
           media={heroMediaItems.map((item) => ({
             src: item.src,
@@ -281,8 +290,8 @@ export function HomeTemplate({
             originalPrice={pricing?.originalPrice}
             priceNote={pricing?.priceNote ?? ""}
             benefits={pricingBenefitList}
-            ctaText={pricing?.ctaText ?? ctaText}
-            ctaHref={pricing?.ctaHref ?? ctaHref}
+            ctaText={pricing?.ctaText ?? primaryCtaText}
+            ctaHref={pricing?.ctaHref ?? primaryCtaHref}
             onCtaClick={pricing?.onCtaClick}
             ctaLoading={pricing?.ctaLoading}
             ctaDisabled={pricing?.ctaDisabled}

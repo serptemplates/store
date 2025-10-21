@@ -16,7 +16,7 @@ When a product YAML marks a landing page as pre-release, every primary CTA (hero
 
 2. **Central CTA Resolution (ClientHomeView)**  
    - Compute a single `ctaDestination` and `ctaLabel` based on `cta_mode`.  
-   - For pre-release mode, set `ctaDestination` to `https://newsletter.serp.co/waitlist`, use “Join the Waitlist” (or YAML override), and render anchors with `target="_blank"`/`rel="noopener noreferrer"`.  
+   - For pre-release mode, set `ctaDestination` to `https://newsletter.serp.co/waitlist`, use “Get Notified” (or YAML override), and render anchors with `target="_blank"`/`rel="noopener noreferrer"`.  
    - For other modes, retain existing checkout/external logic.
 
 3. **Template Consumers**  
@@ -27,7 +27,7 @@ When a product YAML marks a landing page as pre-release, every primary CTA (hero
    - Pass the same resolved destination/label into `StickyProductCTA` and any nav CTA so that all touchpoints behave consistently (open waitlist URL when in pre-release mode).
 
 5. **Product Adapter Defaults**  
-   - In `productToHomeTemplate`, when the derived mode is pre-release, default `ctaText` to “Join the Waitlist” and set `ctaHref` to the waitlist URL.  
+   - In `productToHomeTemplate`, when the derived mode is pre-release, default `ctaText` to “Get Notified” and set `ctaHref` to the waitlist URL.  
    - Maintain existing checkout defaults for live products.
 
 6. **Analytics Considerations**  
@@ -49,11 +49,11 @@ When a product YAML marks a landing page as pre-release, every primary CTA (hero
 - Revisit analytics instrumentation once the MVP behaviour is in place.
 
 ## Implementation Checklist
-- [ ] Add optional `cta_mode` support to the product schema/types (defaulting to `status` when omitted).  
-- [ ] Update `productToHomeTemplate` to derive CTA label/destination, using the waitlist URL for pre-release.  
-- [ ] Refactor `ClientHomeView` to consume the new CTA data and set `target="_blank"` on pre-release links.  
-- [ ] Ensure `HomeTemplate` and `<PricingCta>` use the resolved CTA props without custom logic.  
-- [ ] Align `StickyProductCTA` (and any nav CTA) with the resolved destination.  
-- [ ] Adjust analytics tracking to label waitlist clicks appropriately.  
-- [ ] Add unit tests covering CTA mode switching and, if practical, integration coverage.  
-- [ ] Run `pnpm lint`, `pnpm run typecheck`, and `pnpm test` prior to submission.
+- [x] Add optional `cta_mode` support to the product schema/types (defaulting to `status` when omitted).  
+- [x] Update `productToHomeTemplate` to derive CTA label/destination, using the waitlist URL for pre-release.  
+- [x] Refactor `ClientHomeView` to consume the new CTA data and set `target="_blank"` on pre-release links.  
+- [x] Ensure `HomeTemplate` and `<PricingCta>` use the resolved CTA props without custom logic.  
+- [x] Align `StickyProductCTA` (and any nav CTA) with the resolved destination.  
+- [x] Adjust analytics tracking to label waitlist clicks appropriately.  
+- [x] Add unit tests covering CTA mode switching and, if practical, integration coverage.  
+- [x] Run `pnpm lint`, `pnpm run typecheck`, and `pnpm test` prior to submission.

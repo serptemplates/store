@@ -6,7 +6,7 @@ import { pushSelectItemEvent, pushViewItemEvent, type EcommerceItem } from "./gt
 
 type ProductEventContext = {
   placement?: "pricing" | "sticky" | "sticky_bar" | "hero" | "unknown";
-  destination?: "checkout" | "external";
+  destination?: "checkout" | "external" | "waitlist";
   affiliateId?: string | null;
 };
 
