@@ -16,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/gokollab-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68edb59a219709266ae2a9d6
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=gokollab-downloader
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gokollab-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/gokollab-downloader/main/images/gokollab-downloader.gif
 screenshots:
