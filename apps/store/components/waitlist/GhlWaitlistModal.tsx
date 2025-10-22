@@ -58,7 +58,7 @@ export function GhlWaitlistModal({ open, onClose }: GhlWaitlistModalProps) {
         aria-modal="true"
         aria-labelledby="waitlist-modal-title"
       >
-        <div className="relative w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="relative w-full max-w-xl overflow-hidden rounded-lg bg-white shadow-2xl">
           <button
             type="button"
             onClick={onClose}
@@ -79,15 +79,15 @@ export function GhlWaitlistModal({ open, onClose }: GhlWaitlistModalProps) {
 
           <div className="border-b border-slate-200 px-6 pb-3 pt-6">
             <h2 id="waitlist-modal-title" className="text-lg font-semibold text-slate-900">
-              Be the first to know
+              Launching SOON! 🧑‍🚀
             </h2>
             <p className="mt-1 text-sm text-slate-600">
-              Join the waitlist and we&apos;ll email you as soon as we launch.
+              Join the waitlist and get an email when it&apos;s live!
             </p>
           </div>
 
-          <div className="h-[520px] w-full bg-slate-50 px-6 pb-6 pt-4">
-            <div className="h-full w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-0 shadow-inner">
+          <div className="h-[300px] w-full bg-slate-50 px-6 pb-6 pt-4">
+            <div className="h-full w-full overflow-hidden rounded-sm border border-slate-200 bg-white p-0 shadow-inner">
               <iframe
                 key={WAITLIST_IFRAME_ID}
                 src={WAITLIST_FORM_SRC}
