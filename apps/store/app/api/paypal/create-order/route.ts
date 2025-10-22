@@ -4,7 +4,6 @@ import { createPayPalOrder, isPayPalConfigured } from "@/lib/payments/paypal";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
-import { resolveOrderBump } from "@/lib/products/order-bump";
 import { markStaleCheckoutSessions, upsertCheckoutSession } from "@/lib/checkout";
 import { validateCoupon as validateCouponCode } from "@/lib/payments/coupons";
 import { sanitizeInput } from "@/lib/validation/checkout";
@@ -22,12 +21,6 @@ const requestSchema = z.object({
     })
     .optional(),
   couponCode: z.string().optional(),
-  orderBump: z
-    .object({
-      id: z.string().min(1, "orderBump.id is required"),
-      selected: z.boolean(),
-    })
-    .optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -64,10 +57,6 @@ export async function POST(request: NextRequest) {
     parsedBody.customer.name = sanitizeInput(parsedBody.customer.name);
   }
 
-  if (parsedBody.orderBump?.id) {
-    parsedBody.orderBump.id = sanitizeInput(parsedBody.orderBump.id);
-  }
-
   const offer = getOfferConfig(parsedBody.offerId);
 
   if (!offer) {
@@ -81,45 +70,12 @@ export async function POST(request: NextRequest) {
     ...(parsedBody.metadata ?? {}),
   };
 
-  const forwardedForHeader = request.headers.get("x-forwarded-for");
-  const forwardedIp = forwardedForHeader?.split(",")[0]?.trim();
-  const realIpHeader = request.headers.get("x-real-ip");
-  const realIp = realIpHeader?.split(",")[0]?.trim();
-  const vercelForwardedFor = request.headers.get("x-vercel-forwarded-for");
-  const vercelIp = vercelForwardedFor?.split(",")[0]?.trim();
-  const clientIp = forwardedIp ?? realIp ?? vercelIp ?? undefined;
-
-  const userAgentRaw = request.headers.get("user-agent") ?? undefined;
-  const userAgent = userAgentRaw ? userAgentRaw.slice(0, 250) : undefined;
 
   const normalizedCheckoutSource = metadataFromRequest.checkoutSource?.trim();
   if (!normalizedCheckoutSource) {
-    metadataFromRequest.checkoutSource = "custom_checkout_paypal";
+    metadataFromRequest.checkoutSource = "hosted_checkout_paypal";
   } else {
     metadataFromRequest.checkoutSource = normalizedCheckoutSource;
-  }
-
-  if (metadataFromRequest.termsAccepted !== undefined) {
-    metadataFromRequest.termsAccepted = String(
-      metadataFromRequest.termsAccepted === "true" || metadataFromRequest.termsAccepted === "1"
-    );
-  }
-
-  if (metadataFromRequest.termsAccepted !== "true") {
-    metadataFromRequest.termsAccepted = "true";
-  }
-
-  if (metadataFromRequest.termsAcceptedAt && !metadataFromRequest.termsAcceptedAtClient) {
-    metadataFromRequest.termsAcceptedAtClient = metadataFromRequest.termsAcceptedAt;
-  }
-  metadataFromRequest.termsAcceptedAt = new Date().toISOString();
-
-  if (clientIp) {
-    metadataFromRequest.termsAcceptedIp = clientIp;
-  }
-
-  if (userAgent) {
-    metadataFromRequest.termsAcceptedUserAgent = userAgent;
   }
 
   let couponValidation: Awaited<ReturnType<typeof validateCouponCode>> | null = null;
@@ -159,7 +115,6 @@ export async function POST(request: NextRequest) {
 
   // Get product data for price
   const product = getProductData(parsedBody.offerId);
-  const resolvedOrderBump = resolveOrderBump(product);
   const quantity = parsedBody.quantity ?? 1;
 
   const priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
@@ -172,31 +127,6 @@ export async function POST(request: NextRequest) {
   const baseDisplayPrice = priceEntry
     ? formatAmountFromCents(priceEntry.unitAmount, currency)
     : product.pricing?.price ?? `$${fallbackPrice.toFixed(2)}`;
-
-  const orderBumpSelected = Boolean(
-    parsedBody.orderBump?.selected &&
-      resolvedOrderBump &&
-      parsedBody.orderBump.id === resolvedOrderBump.id,
-  );
-
-  const orderBumpPriceCents =
-    orderBumpSelected && resolvedOrderBump?.priceNumber != null
-      ? Math.round(resolvedOrderBump.priceNumber * 100)
-      : 0;
-
-  if (resolvedOrderBump) {
-    metadataFromRequest.orderBumpId = resolvedOrderBump.id;
-    metadataFromRequest.orderBumpSelected = orderBumpSelected ? "true" : "false";
-    metadataFromRequest.orderBumpTitle = resolvedOrderBump.title;
-    const displayPrice = resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price;
-    if (displayPrice) {
-      metadataFromRequest.orderBumpDisplayPrice = displayPrice;
-    }
-    metadataFromRequest.orderBumpUnitCents = String(orderBumpPriceCents);
-  } else if (!metadataFromRequest.orderBumpSelected) {
-    metadataFromRequest.orderBumpSelected = "false";
-    metadataFromRequest.orderBumpUnitCents = "0";
-  }
 
   let discountCents = 0;
   if (couponValidation?.discount) {
@@ -212,7 +142,7 @@ export async function POST(request: NextRequest) {
   }
 
   const discountedSubtotalCents = Math.max(0, baseSubtotalCents - discountCents);
-  const totalAmountCents = discountedSubtotalCents + orderBumpPriceCents;
+  const totalAmountCents = discountedSubtotalCents;
   const totalAmount = (totalAmountCents / 100).toFixed(2);
 
   if (normalizedCouponCode) {
@@ -224,14 +154,8 @@ export async function POST(request: NextRequest) {
   metadataFromRequest.checkoutBaseSubtotalCents = String(baseSubtotalCents);
   metadataFromRequest.checkoutSubtotalCents = String(discountedSubtotalCents);
   metadataFromRequest.checkoutTotalCents = String(totalAmountCents);
-  metadataFromRequest.checkoutTotalWithOrderBumpCents = String(totalAmountCents);
-  metadataFromRequest.checkoutTotalWithoutOrderBumpCents = String(discountedSubtotalCents);
   metadataFromRequest.checkoutCurrency = currency;
   metadataFromRequest.checkoutBasePriceDisplay = baseDisplayPrice;
-
-  if (!metadataFromRequest.orderBumpUnitCents) {
-    metadataFromRequest.orderBumpUnitCents = "0";
-  }
 
 
   parsedBody.metadata = metadataFromRequest;

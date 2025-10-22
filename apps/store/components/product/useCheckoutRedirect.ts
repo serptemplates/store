@@ -2,12 +2,20 @@
 
 import { useCallback, useState } from "react";
 
+export interface CheckoutRedirectSession {
+  id: string | null;
+  url: string;
+}
+
 export interface UseCheckoutRedirectOptions {
   offerId: string;
   endpoint?: string;
   affiliateId?: string;
   metadata?: Record<string, string>;
   fallbackUrl: string;
+  onSessionReady?: (session: CheckoutRedirectSession) => void;
+  onError?: (error: unknown, step: string) => void;
+  navigate?: (url: string) => void;
 }
 
 export interface BeginCheckoutOverrides {
@@ -31,7 +39,16 @@ export interface UseCheckoutRedirectResult {
  * and fallback behaviour used across the storefront experiences.
  */
 export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseCheckoutRedirectResult {
-  const { offerId, endpoint = "/api/checkout/session", affiliateId, metadata, fallbackUrl } = options;
+  const {
+    offerId,
+    endpoint = "/api/checkout/session",
+    affiliateId,
+    metadata,
+    fallbackUrl,
+    onSessionReady,
+    onError,
+    navigate,
+  } = options;
   const [isLoading, setIsLoading] = useState(false);
 
   const beginCheckout = useCallback(async (overrides?: BeginCheckoutOverrides) => {
@@ -40,7 +57,7 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
     }
 
     if (!endpoint) {
-      window.open(fallbackUrl, "_blank", "noopener,noreferrer");
+      onError?.(new Error("Checkout endpoint not configured"), "missing_endpoint");
       return;
     }
 
@@ -56,6 +73,10 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
 
       if (!mergedMetadata.landerId) {
         mergedMetadata.landerId = offerId;
+      }
+
+      if (!mergedMetadata.checkoutSource) {
+        mergedMetadata.checkoutSource = "hosted_checkout_stripe";
       }
 
       const requestPayload: Record<string, unknown> = {
@@ -85,25 +106,88 @@ export function useCheckoutRedirect(options: UseCheckoutRedirectOptions): UseChe
         body: JSON.stringify(requestPayload),
       });
 
+      const responseClone = response.clone();
+      let responseBody: { id?: string | null; url?: string | null; error?: string | null } | null = null;
+
+      try {
+        responseBody = (await response.json()) as {
+          id?: string | null;
+          url?: string | null;
+          error?: string | null;
+        } | null;
+      } catch (parseError) {
+        const responseText = await responseClone.text().catch(() => null);
+        if (parseError instanceof Error) {
+          const enriched = parseError as Error & { step?: string; responseText?: string | null };
+          enriched.step = "create_session_non_json";
+          enriched.responseText = responseText ?? null;
+          throw enriched;
+        }
+
+        const enriched = new Error("Checkout session returned non-JSON response") as Error & {
+          step: string;
+          responseText: string | null;
+        };
+        enriched.step = "create_session_non_json";
+        enriched.responseText = responseText ?? null;
+        throw enriched;
+      }
+
       if (!response.ok) {
-        throw new Error(`Failed to create checkout session (${response.status})`);
+        const fallbackMessage =
+          typeof responseBody?.error === "string" && responseBody.error.trim().length > 0
+            ? responseBody.error
+            : `Failed to create checkout session (${response.status})`;
+
+        const enriched = new Error(fallbackMessage) as Error & { step: string; status: number };
+        enriched.step = "create_session_response";
+        enriched.status = response.status;
+        throw enriched;
       }
 
-      const responseBody = (await response.json()) as { url?: string };
-
-      if (responseBody?.url) {
-        window.open(responseBody.url, "_blank", "noopener,noreferrer");
-        return;
+      if (typeof responseBody?.url !== "string" || responseBody.url.trim().length === 0) {
+        const enriched = new Error("Checkout session missing redirect URL") as Error & { step: string };
+        enriched.step = "missing_redirect_url";
+        throw enriched;
       }
 
-      throw new Error("Checkout session missing redirect URL");
-    } catch (error) {
+      const redirectUrl = responseBody.url;
+      const sessionId = typeof responseBody.id === "string" ? responseBody.id : null;
+
+      onSessionReady?.({
+        id: sessionId,
+        url: redirectUrl,
+      });
+
+      if (navigate) {
+        navigate(redirectUrl);
+      } else if (typeof window !== "undefined") {
+        window.location.assign(redirectUrl);
+      }
+    } catch (rawError) {
+      const error = rawError instanceof Error ? rawError : new Error(String(rawError));
+      const enrichedError = error as Error & { step?: string };
+      const step = typeof enrichedError.step === "string" ? enrichedError.step : "create_session_fetch";
+
+      onError?.(error, step);
       console.error("[checkout] redirect failed", error);
-      window.open(fallbackUrl, "_blank", "noopener,noreferrer");
+      if (!onError) {
+        const resolvedFallbackUrl =
+          (!fallbackUrl || fallbackUrl.trim().length === 0)
+            ? (typeof window !== "undefined" ? window.location.href : null)
+            : fallbackUrl;
+        if (resolvedFallbackUrl) {
+          if (navigate) {
+            navigate(resolvedFallbackUrl);
+          } else if (typeof window !== "undefined") {
+            window.location.assign(resolvedFallbackUrl);
+          }
+        }
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [affiliateId, endpoint, fallbackUrl, isLoading, metadata, offerId]);
+  }, [affiliateId, endpoint, fallbackUrl, isLoading, metadata, navigate, offerId, onError, onSessionReady]);
 
   return { isLoading, beginCheckout };
 }

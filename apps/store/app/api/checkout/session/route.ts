@@ -59,7 +59,6 @@ export async function POST(request: NextRequest) {
             metadata: body.metadata,
             customer: body.customer,
             affiliateId: body.affiliateId,
-            orderBump: body.orderBump,
           });
 
           void persistCheckoutSession({
@@ -98,27 +97,29 @@ export async function POST(request: NextRequest) {
           product,
         });
 
+        const persistedMetadata: Record<string, string> = {
+          ...pricingResult.metadata,
+          ...pricingResult.sessionMetadata,
+        };
+
         void persistCheckoutSession({
           stripeSessionId: pricingResult.session.id,
           offerId: offer.id,
           landerId: pricingResult.landerId,
           paymentIntentId: pricingResult.paymentIntentId,
           customerEmail: body.customer?.email ?? null,
-          metadata: metadataFromRequest,
+          metadata: persistedMetadata,
         });
 
-        if (body.uiMode === "embedded") {
-          return NextResponse.json({
-            id: pricingResult.session.id,
-            client_secret: pricingResult.session.client_secret,
-            status: pricingResult.session.payment_status,
-            mode: pricingResult.session.mode,
-          });
+        const redirectUrl = pricingResult.session.url;
+
+        if (!redirectUrl) {
+          return buildErrorResponse("Checkout session missing redirect URL", 502);
         }
 
         return NextResponse.json({
           id: pricingResult.session.id,
-          url: pricingResult.session.url,
+          url: redirectUrl,
           status: pricingResult.session.payment_status,
           mode: pricingResult.session.mode,
         });

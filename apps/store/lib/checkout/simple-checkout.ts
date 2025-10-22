@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
 import { getProductData } from '@/lib/products/product';
-import { resolveOrderBump } from '@/lib/products/order-bump';
 import { getStripeMode, requireStripeSecretKey } from '@/lib/payments/stripe-environment';
 import { ensureSuccessUrlHasSessionPlaceholder } from '@/lib/products/offer-config';
 
@@ -19,10 +18,6 @@ export async function createSimpleCheckout(params: {
   affiliateId?: string;
   successUrl?: string;
   cancelUrl?: string;
-  orderBump?: {
-    id: string;
-    selected: boolean;
-  };
 }) {
   const stripeMode = getStripeMode();
   const stripeKey = requireStripeSecretKey(stripeMode);
@@ -43,16 +38,6 @@ export async function createSimpleCheckout(params: {
   // Extract price from product
   const priceString = product.pricing?.price?.replace(/[^0-9.]/g, '') || '0';
   const priceInCents = Math.round(parseFloat(priceString) * 100);
-
-  const resolvedOrderBump = resolveOrderBump(product);
-  const orderBumpSelected = Boolean(
-    params.orderBump?.selected &&
-      resolvedOrderBump &&
-      params.orderBump.id === resolvedOrderBump.id,
-  );
-  const orderBumpPriceInCents = orderBumpSelected && resolvedOrderBump?.priceNumber != null
-    ? Math.round(resolvedOrderBump.priceNumber * 100)
-    : 0;
 
   if (priceInCents === 0) {
     throw new Error(`Invalid price for product: ${params.offerId}`);
@@ -111,23 +96,39 @@ export async function createSimpleCheckout(params: {
     console.log('[SimpleCheckout] Using price:', stripePrice.id);
     console.log('[SimpleCheckout] Customer email:', params.customer?.email);
 
-    const paymentMethodTypes = ['card'] as ['card'];
+    const externalMetadata: Record<string, string> = params.metadata ?? {};
+
+    if (!externalMetadata.checkoutSource) {
+      externalMetadata.checkoutSource = 'hosted_checkout_stripe';
+    }
+
+    if (!externalMetadata.offerId) {
+      externalMetadata.offerId = product.slug;
+    }
+    if (!externalMetadata.landerId) {
+      externalMetadata.landerId = product.slug;
+    }
+
+    if (!externalMetadata.ghlTagIds && product.ghl?.tag_ids && product.ghl.tag_ids.length > 0) {
+      externalMetadata.ghlTagIds = product.ghl.tag_ids.join(',');
+    }
 
     const sessionMetadata: Stripe.MetadataParam = {
       offerId: product.slug,
       landerId: product.slug,
       productName: product.name || '',
       environment: stripeMode,
+      ...externalMetadata,
     };
+
+    sessionMetadata.stripePriceId = stripePrice.id;
+    sessionMetadata.stripeProductId = stripeProduct.id;
+    externalMetadata.stripePriceId = stripePrice.id;
+    externalMetadata.stripeProductId = stripeProduct.id;
 
     if (params.affiliateId) {
       sessionMetadata.affiliateId = params.affiliateId;
-    }
-
-    if (params.metadata) {
-      for (const [key, value] of Object.entries(params.metadata)) {
-        sessionMetadata[key] = value;
-      }
+      externalMetadata.affiliateId = params.affiliateId;
     }
 
     const defaultBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
@@ -143,46 +144,7 @@ export async function createSimpleCheckout(params: {
         quantity: params.quantity ?? 1,
       },
     ];
-
-    if (orderBumpSelected && orderBumpPriceInCents > 0 && stripeProduct.id) {
-      const orderBumpPrice = await stripe.prices.create({
-        product: stripeProduct.id,
-        unit_amount: orderBumpPriceInCents,
-        currency: 'usd',
-        metadata: {
-          order_bump_id: resolvedOrderBump?.id ?? '',
-        },
-      });
-
-      lineItems.push({
-        price: orderBumpPrice.id,
-        quantity: 1,
-      });
-
-      sessionMetadata.orderBumpId = resolvedOrderBump?.id ?? '';
-      sessionMetadata.orderBumpSelected = 'true';
-      sessionMetadata.orderBumpUnitCents = String(orderBumpPriceInCents);
-      const displayPrice = resolvedOrderBump?.priceDisplay ?? resolvedOrderBump?.price;
-      if (displayPrice) {
-        sessionMetadata.orderBumpDisplayPrice = displayPrice;
-      }
-
-      if (params.metadata) {
-        params.metadata.orderBumpId = resolvedOrderBump?.id ?? '';
-        params.metadata.orderBumpSelected = 'true';
-        if (displayPrice) {
-          params.metadata.orderBumpDisplayPrice = displayPrice;
-        }
-      }
-    } else {
-      sessionMetadata.orderBumpSelected = sessionMetadata.orderBumpSelected ?? 'false';
-      if (params.metadata && !params.metadata.orderBumpSelected) {
-        params.metadata.orderBumpSelected = 'false';
-      }
-    }
-
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
-      payment_method_types: paymentMethodTypes,
       line_items: lineItems,
       mode: 'payment',
       success_url: successUrl,
@@ -192,13 +154,17 @@ export async function createSimpleCheckout(params: {
       client_reference_id: product.slug,
     };
 
-    const paymentIntentMetadata: Stripe.MetadataParam = { ...sessionMetadata };
+    const envPaymentMethods = process.env.STRIPE_CHECKOUT_PAYMENT_METHODS
+      ? process.env.STRIPE_CHECKOUT_PAYMENT_METHODS.split(',')
+          .map((method) => method.trim())
+          .filter((method): method is Stripe.Checkout.SessionCreateParams.PaymentMethodType => method.length > 0)
+      : null;
 
-    if (params.metadata) {
-      for (const [key, value] of Object.entries(params.metadata)) {
-        paymentIntentMetadata[key] = value;
-      }
+    if (envPaymentMethods?.length) {
+      sessionParams.payment_method_types = envPaymentMethods;
     }
+
+    const paymentIntentMetadata: Stripe.MetadataParam = { ...sessionMetadata };
 
     sessionParams.payment_intent_data = {
       description: product.name || product.slug,

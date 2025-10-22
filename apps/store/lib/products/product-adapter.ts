@@ -8,7 +8,6 @@ import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import type { ProductCtaMode, ProductData } from "./product-schema";
 import { getReleaseBadgeText } from "./release-status";
-import { resolveOrderBump } from "./order-bump";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -258,18 +257,6 @@ export function productToHomeTemplate(
     }
   }
 
-  const resolvedOrderBump = resolveOrderBump(product);
-  const orderBump = resolvedOrderBump
-    ? {
-        id: resolvedOrderBump.id,
-        title: resolvedOrderBump.title,
-        description: resolvedOrderBump.description,
-        price: resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price,
-        points: resolvedOrderBump.points,
-        defaultSelected: resolvedOrderBump.defaultSelected,
-      }
-    : undefined;
-
   return {
     platform,
     videoUrl,
@@ -309,7 +296,6 @@ export function productToHomeTemplate(
       ctaText: resolvedCta.text,
       ctaHref: resolvedCta.href,
       id: "pricing",
-      orderBump,
     },
     cta: {
       mode: resolvedCta.mode,

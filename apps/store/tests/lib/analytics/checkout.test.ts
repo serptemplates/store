@@ -13,41 +13,11 @@ vi.mock("@/lib/analytics/gtm", () => ({
 const { captureEvent } = await import("@/lib/analytics/posthog");
 const { pushAddPaymentInfoEvent, pushBeginCheckoutEvent } = await import("@/lib/analytics/gtm");
 
-import {
-  trackCheckoutOrderBumpToggled,
-  trackCheckoutPageViewed,
-  trackCheckoutSessionReady,
-} from "@/lib/analytics/checkout";
+import { trackCheckoutCouponApplied, trackCheckoutPageViewed, trackCheckoutSessionReady } from "@/lib/analytics/checkout";
 
 describe("analytics/checkout", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  it("emits a single event when an order bump is toggled", () => {
-    trackCheckoutOrderBumpToggled(true, {
-      productSlug: "example",
-      productName: "Example Product",
-      affiliateId: "aff-123",
-      currency: "USD",
-      value: 94,
-      ecommerceItem: {
-        item_id: "example",
-        item_name: "Example Product",
-        price: 94,
-        quantity: 1,
-      },
-      orderBumpId: "bundle",
-      orderBumpPrice: 47,
-    });
-
-    expect(captureEvent).toHaveBeenCalledTimes(1);
-    expect(captureEvent).toHaveBeenCalledWith("checkout_order_bump_toggled", expect.objectContaining({
-      selected: true,
-      orderBumpId: "bundle",
-      orderBumpPrice: 47,
-    }));
-    expect(pushAddPaymentInfoEvent).not.toHaveBeenCalled();
   });
 
   it("only forwards add_payment_info once when the initial checkout session resolves", () => {
@@ -97,5 +67,30 @@ describe("analytics/checkout", () => {
 
     expect(pushBeginCheckoutEvent).not.toHaveBeenCalled();
     expect(captureEvent).toHaveBeenCalledWith("checkout_viewed", expect.any(Object));
+  });
+
+  it("tracks coupon application events", () => {
+    trackCheckoutCouponApplied({
+      productSlug: "example",
+      productName: "Example Product",
+      affiliateId: null,
+      currency: "USD",
+      value: 57,
+      ecommerceItem: {
+        item_id: "example",
+        item_name: "Example Product",
+        price: 57,
+        quantity: 1,
+      },
+      couponCode: "SAVE10",
+    });
+
+    expect(captureEvent).toHaveBeenCalledWith(
+      "checkout_coupon_applied",
+      expect.objectContaining({ couponCode: "SAVE10", value: 57 }),
+    );
+    expect(pushBeginCheckoutEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ coupon: "SAVE10", value: 57 }),
+    );
   });
 });

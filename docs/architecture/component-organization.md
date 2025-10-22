@@ -5,19 +5,13 @@ The store app now leans on a clear separation between the design system packages
 ## Layers at a glance
 
 - **`packages/ui`** – Source of truth for shared UI. Primitives live at the package root (`src/button`, `src/card`, etc.) while higher-level sections live under `src/sections/**`. Everything in this package must stay framework-agnostic and avoid app-specific logic.
-- **`apps/store/components`** – Store-specific wiring that touches routing, data fetching, analytics, or checkout orchestration. Recent examples include the modular checkout view under `components/checkout/page/` and PayPal / Stripe entry points.
+- **`apps/store/components`** – Store-specific wiring that touches routing, data fetching, analytics, or checkout orchestration. Examples include the PayPal helpers and product CTA logic.
 - **`apps/store/app`** – Next.js routes that stitch the UI with server actions and fetchers. Route-level components should stay lean by delegating most markup to `components/`.
 - **`apps/store/lib`** – Domain logic split by capability (`checkout/`, `payments/`, `license-service/`, `ghl-client/`, etc.). UI components should only import the facades exposed by these folders (e.g., `@/lib/checkout`), never the private helpers.
 
 ## Checkout page conventions
 
-The checkout refactor introduced a pattern worth following elsewhere:
-
-- **Controller hook** (`components/checkout/page/useCheckoutPage.ts`) encapsulates all React Hook Form wiring, coupon application, and redirect flows.
-- **Section components** (`CheckoutHeader`, `CustomerInformationSection`, `OrderSummarySection`, `PaymentMethodSection`, `CheckoutActions`) stay presentational and only accept typed props.
-- **Shared types** live in `components/checkout/page/types.ts` so the section props mirror the controller state.
-
-When you break down new screens, mirror this structure—write a hook that prepares the state, pass data into presentational sections, and keep business logic in `@/lib/**` modules.
+The hosted Stripe rollout keeps `/checkout` as a minimal confirmation screen. The route loads product context, fires analytics, and waits for the shopper to click “Continue” before invoking `useCheckoutRedirect`. Avoid reintroducing bespoke forms or credit-card elements—let Stripe handle the payment surface entirely.
 
 ## Promotion checklist
 

@@ -22,9 +22,6 @@ const NAV_LINKS: PrimaryNavLink[] = [
 interface BuildNavOptions {
   products?: ProductData[];
   siteConfig?: SiteConfig;
-  showCta?: boolean;
-  ctaHref?: string | null;
-  ctaText?: string | null;
 }
 
 export function buildPrimaryNavProps(options: BuildNavOptions = {}): PrimaryNavbarProps {
@@ -36,18 +33,12 @@ export function buildPrimaryNavProps(options: BuildNavOptions = {}): PrimaryNavb
     .filter((item): item is PrimaryNavProductLink => Boolean(item.slug && item.name));
 
   const siteName = siteConfig.site?.name ?? "SERP Apps";
-  const ctaHref = options.ctaHref ?? siteConfig.cta?.href ?? null;
-  const ctaText = options.ctaText ?? siteConfig.cta?.text ?? "Shop Tools";
-  const showCta = options.showCta ?? Boolean(ctaHref);
   const logoSrc = siteConfig.site?.logo ?? "/logo.png";
 
   return {
     siteName,
     navLinks: NAV_LINKS,
     productLinks,
-    ctaHref,
-    ctaText,
-    showCta,
     logoSrc,
   };
 }

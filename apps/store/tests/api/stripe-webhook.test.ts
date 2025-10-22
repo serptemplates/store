@@ -122,6 +122,10 @@ const checkoutSessionFixture: CheckoutSessionRecord = {
     serply_link: "https://serp.ly/demo-offer",
     success_url: "https://apps.example.com/checkout/success?product=demo-offer",
     cancel_url: "https://apps.example.com/checkout?product=demo-offer",
+    stripePriceId: "price_123",
+    stripeProductId: "prod_demo",
+    ghlTagIds: "purchase-demo",
+    environment: "test",
   },
   status: "pending",
   source: "stripe",
@@ -178,11 +182,24 @@ function buildCheckoutSessionEvent() {
       serply_link: "https://serp.ly/demo-offer",
       success_url: "https://apps.example.com/checkout/success?product=demo-offer",
       cancel_url: "https://apps.example.com/checkout?product=demo-offer",
+      stripePriceId: "price_123",
+      stripeProductId: "prod_demo",
+      ghlTagIds: "purchase-demo",
+      environment: "test",
     },
     client_reference_id: null,
     payment_status: "paid",
     status: "complete",
     mode: "payment",
+    consent: {
+      terms_of_service: "accepted",
+      promotions: null,
+    },
+    consent_collection: {
+      terms_of_service: "required",
+      promotions: null,
+      payment_method_reuse_agreement: null,
+    },
   } satisfies Partial<Stripe.Checkout.Session>;
 
   return {
@@ -226,6 +243,10 @@ function buildPaymentIntentEvent(
       serply_link: "https://serp.ly/demo-offer",
       success_url: "https://apps.example.com/checkout/success?product=demo-offer",
       cancel_url: "https://apps.example.com/checkout?product=demo-offer",
+      stripePriceId: "price_123",
+      stripeProductId: "prod_demo",
+      ghlTagIds: "purchase-demo",
+      environment: "test",
     },
     latest_charge: "ch_test_123",
     receipt_email: "buyer@example.com",
@@ -322,6 +343,16 @@ describe("POST /api/stripe/webhook", () => {
         purchaseUrl: "https://store.example.com/checkout/demo-offer",
         licenseEntitlements: ["demo-offer"],
         licenseTier: "demo-offer",
+        metadata: expect.objectContaining({
+          stripePriceId: "price_123",
+          stripeProductId: "prod_demo",
+          stripeTermsOfService: "accepted",
+          stripeTermsOfServiceRequirement: "required",
+          ghlTagIds: "purchase-demo",
+          environment: "test",
+          tosAccepted: "true",
+        }),
+        tosAccepted: true,
       }),
     );
 

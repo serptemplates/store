@@ -1,5 +1,4 @@
 import type { ProductData } from "@/lib/products/product-schema";
-import type { ProductOrderBumpMetadata } from "@/lib/products/products-data";
 
 export type ExtendedProductMetadata = {
   price_label?: string | null;
@@ -10,7 +9,6 @@ export type ExtendedProductMetadata = {
   deliverables?: unknown[];
   bulk_tools?: unknown;
   automations?: unknown;
-  order_bump?: ProductOrderBumpMetadata;
 };
 
 export type ExtendedProductData = ProductData & {

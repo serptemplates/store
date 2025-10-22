@@ -52,6 +52,19 @@ function extractLicenseConfig(metadata: Record<string, unknown> | undefined, off
 export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, eventId?: string) {
   const metadata = normalizeMetadata(session.metadata);
 
+  const tosStatus = session.consent?.terms_of_service ?? null;
+  if (tosStatus) {
+    metadata.stripeTermsOfService = tosStatus;
+    if (tosStatus === "accepted") {
+      metadata.tosAccepted = "true";
+    }
+  }
+
+  const tosRequirement = session.consent_collection?.terms_of_service ?? null;
+  if (tosRequirement) {
+    metadata.stripeTermsOfServiceRequirement = tosRequirement;
+  }
+
   if (session.client_reference_id) {
     metadata.clientReferenceId = session.client_reference_id;
   }
@@ -363,6 +376,7 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       serplyLink,
       successUrl,
       cancelUrl,
+      tosAccepted: metadata.tosAccepted === "true" ? true : metadata.tosAccepted === "false" ? false : undefined,
       provider: "stripe",
       licenseKey: licenseResult?.licenseKey ?? undefined,
       licenseId: licenseResult?.licenseId ?? undefined,

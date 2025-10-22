@@ -5,7 +5,6 @@ import { getOptionalStripePaymentConfigId } from "@/lib/payments/stripe-environm
 import logger from "@/lib/logger";
 import type { OfferConfig } from "@/lib/products/offer-config";
 import type { ProductData } from "@/lib/products/product-schema";
-import { resolveOrderBump } from "@/lib/products/order-bump";
 
 import type { CouponSuccess } from "./coupons";
 import type { CheckoutSessionPayload } from "./validation";
@@ -63,8 +62,6 @@ export async function createStripeCheckoutSession(
   sessionMetadata.landerId = landerId;
   sessionMetadata.environment = isUsingTestKeys() ? "test" : "live";
   sessionMetadata.checkoutSource = metadata.checkoutSource;
-  sessionMetadata.termsAccepted = metadata.termsAccepted;
-  sessionMetadata.termsAcceptedAt = metadata.termsAcceptedAt;
 
   if (payload.clientReferenceId) {
     sessionMetadata.clientReferenceId = payload.clientReferenceId;
@@ -74,40 +71,6 @@ export async function createStripeCheckoutSession(
     sessionMetadata.affiliateId = payload.affiliateId;
   }
 
-  const resolvedOrderBump = resolveOrderBump(product);
-  const isOrderBumpSelected = Boolean(
-    payload.orderBump?.selected &&
-      resolvedOrderBump &&
-      payload.orderBump.id === resolvedOrderBump.id,
-  );
-
-  let orderBumpLineItem: Stripe.Checkout.SessionCreateParams.LineItem | null = null;
-  let orderBumpUnitAmount: number | null = null;
-
-  if (payload.orderBump?.selected && !resolvedOrderBump) {
-    logger.warn("checkout.order_bump_missing", {
-      offerId: offer.id,
-      requestedOrderBumpId: payload.orderBump.id,
-    });
-  }
-
-  if (resolvedOrderBump) {
-    metadata.orderBumpId = resolvedOrderBump.id;
-    sessionMetadata.orderBumpId = resolvedOrderBump.id;
-    metadata.orderBumpTitle = resolvedOrderBump.title;
-    sessionMetadata.orderBumpTitle = resolvedOrderBump.title;
-    const displayPrice = resolvedOrderBump.priceDisplay ?? resolvedOrderBump.price;
-    if (displayPrice) {
-      metadata.orderBumpDisplayPrice = displayPrice;
-      sessionMetadata.orderBumpDisplayPrice = displayPrice;
-    }
-    metadata.orderBumpSelected = isOrderBumpSelected ? "true" : "false";
-    sessionMetadata.orderBumpSelected = isOrderBumpSelected ? "true" : "false";
-  } else {
-    metadata.orderBumpSelected = metadata.orderBumpSelected ?? "false";
-    sessionMetadata.orderBumpSelected = sessionMetadata.orderBumpSelected ?? "false";
-  }
-
   const price = await resolvePriceForEnvironment({
     id: offer.id,
     priceId: offer.stripePriceId,
@@ -115,6 +78,12 @@ export async function createStripeCheckoutSession(
     productDescription: offer.productDescription,
     productImage: offer.productImage,
   });
+
+  const stripePriceId = price.id;
+  if (stripePriceId) {
+    metadata.stripePriceId = stripePriceId;
+    sessionMetadata.stripePriceId = stripePriceId;
+  }
 
   const quantity = payload.quantity;
   const unitAmount =
@@ -165,6 +134,24 @@ export async function createStripeCheckoutSession(
         await stripe.products.update(productId, updates);
       }
     }
+  }
+
+  if (productId) {
+    metadata.stripeProductId = productId;
+    sessionMetadata.stripeProductId = productId;
+  }
+
+  const ghlTagIds =
+    offer.ghl?.tagIds && offer.ghl.tagIds.length > 0
+      ? offer.ghl.tagIds
+      : product.ghl?.tag_ids && product.ghl.tag_ids.length > 0
+        ? product.ghl.tag_ids
+        : undefined;
+
+  if (ghlTagIds) {
+    const tagsValue = ghlTagIds.join(",");
+    metadata.ghlTagIds = tagsValue;
+    sessionMetadata.ghlTagIds = tagsValue;
   }
 
   if (coupon.couponValidation?.discount && unitAmount === null) {
@@ -305,65 +292,6 @@ export async function createStripeCheckoutSession(
     sessionMetadata.couponSource = metadata.couponSource;
   }
 
-  if (isOrderBumpSelected && resolvedOrderBump) {
-    let orderBumpPriceId = resolvedOrderBump.stripePriceId;
-    if (isUsingTestKeys() && resolvedOrderBump.stripeTestPriceId) {
-      orderBumpPriceId = resolvedOrderBump.stripeTestPriceId;
-    }
-
-    const orderBumpPrice = await resolvePriceForEnvironment({
-      id: `${offer.id}__order_bump_${resolvedOrderBump.id}`,
-      priceId: orderBumpPriceId,
-      productName: `${resolvedOrderBump.title} (Upgrade)`,
-      productDescription: resolvedOrderBump.description ?? undefined,
-      productImage: offer.productImage,
-    });
-
-    orderBumpUnitAmount =
-      typeof orderBumpPrice.unit_amount === "number"
-        ? orderBumpPrice.unit_amount
-        : typeof orderBumpPrice.unit_amount_decimal === "string"
-          ? Math.round(Number(orderBumpPrice.unit_amount_decimal))
-          : null;
-
-    if (orderBumpUnitAmount === null) {
-      throw new Error("Order bump price must include a fixed unit amount");
-    }
-
-    orderBumpLineItem = {
-      price: orderBumpPrice.id,
-      quantity: 1,
-    };
-
-    metadata.orderBumpUnitCents = String(orderBumpUnitAmount);
-    metadata.orderBumpPriceId = orderBumpPrice.id;
-    sessionMetadata.orderBumpUnitCents = String(orderBumpUnitAmount);
-    sessionMetadata.orderBumpPriceId = orderBumpPrice.id;
-
-    if (!metadata.orderBumpDisplayPrice) {
-      const fallbackDisplay =
-        resolvedOrderBump.priceDisplay ??
-        resolvedOrderBump.price ??
-        (typeof orderBumpPrice.unit_amount === "number"
-          ? `$${(orderBumpPrice.unit_amount / 100).toFixed(2)}`
-          : orderBumpPrice.unit_amount_decimal ?? undefined);
-      if (fallbackDisplay) {
-        metadata.orderBumpDisplayPrice = fallbackDisplay;
-        sessionMetadata.orderBumpDisplayPrice = fallbackDisplay;
-      }
-    }
-  } else {
-    metadata.orderBumpUnitCents = metadata.orderBumpUnitCents ?? "0";
-    sessionMetadata.orderBumpUnitCents = sessionMetadata.orderBumpUnitCents ?? "0";
-  }
-
-  if (orderBumpUnitAmount !== null && unitAmount !== null) {
-    const baseSubtotalCents = couponAdjustedTotalCents ?? unitAmount * quantity;
-    const combinedTotalCents = baseSubtotalCents + orderBumpUnitAmount;
-    metadata.checkoutTotalWithOrderBumpCents = String(combinedTotalCents);
-    sessionMetadata.checkoutTotalWithOrderBumpCents = String(combinedTotalCents);
-  }
-
   const paymentConfigId = getOptionalStripePaymentConfigId();
 
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = customLineItems
@@ -374,10 +302,6 @@ export async function createStripeCheckoutSession(
           quantity,
         },
       ];
-
-  if (orderBumpLineItem) {
-    lineItems.push(orderBumpLineItem);
-  }
 
   let sessionParams: Stripe.Checkout.SessionCreateParams = {
     mode,
@@ -405,22 +329,19 @@ export async function createStripeCheckoutSession(
   if (paymentConfigId) {
     logger.debug("checkout.payment_config_used", { paymentConfigId });
     sessionParams.payment_method_configuration = paymentConfigId;
-  } else {
-    const paymentMethodTypes: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = process.env.STRIPE_CHECKOUT_PAYMENT_METHODS
-      ? process.env.STRIPE_CHECKOUT_PAYMENT_METHODS.split(",").map((m) => m.trim()) as Stripe.Checkout.SessionCreateParams.PaymentMethodType[]
-      : ["card"];
+  } else if (process.env.STRIPE_CHECKOUT_PAYMENT_METHODS) {
+    const paymentMethodTypes = process.env.STRIPE_CHECKOUT_PAYMENT_METHODS.split(",")
+      .map((method) => method.trim())
+      .filter((method): method is Stripe.Checkout.SessionCreateParams.PaymentMethodType => method.length > 0);
 
-    logger.debug("checkout.payment_methods", { paymentMethodTypes: paymentMethodTypes.join(", ") });
-    sessionParams.payment_method_types = paymentMethodTypes;
+    if (paymentMethodTypes.length > 0) {
+      logger.debug("checkout.payment_methods", { paymentMethodTypes: paymentMethodTypes.join(", ") });
+      sessionParams.payment_method_types = paymentMethodTypes;
+    }
   }
 
-  if (payload.uiMode === "embedded") {
-    sessionParams.ui_mode = "embedded";
-    sessionParams.return_url = offer.successUrl;
-  } else {
-    sessionParams.success_url = offer.successUrl;
-    sessionParams.cancel_url = offer.cancelUrl;
-  }
+  sessionParams.success_url = offer.successUrl;
+  sessionParams.cancel_url = offer.cancelUrl;
 
   const paymentIntentDescription = offer.productName ?? product.name ?? offer.id;
   const paymentIntentMetadata: Stripe.MetadataParam = {};

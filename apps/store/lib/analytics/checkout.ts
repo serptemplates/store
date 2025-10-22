@@ -82,20 +82,27 @@ export function trackCheckoutSessionReady(context: CheckoutContext & { provider:
   }
 }
 
+export function trackCheckoutCouponApplied(context: CheckoutContext & { couponCode: string }) {
+  captureEvent("checkout_coupon_applied", {
+    ...context,
+    couponCode: context.couponCode,
+  });
+
+  const items = resolveItems(context.ecommerceItem);
+  if (items) {
+    pushBeginCheckoutEvent({
+      items,
+      currency: context.currency ?? DEFAULT_CURRENCY,
+      value: context.value ?? undefined,
+      coupon: context.couponCode,
+    });
+  }
+}
+
 export function trackCheckoutError(error: unknown, context: CheckoutContext & { step: string }) {
   captureFrontendError(error, {
     ...context,
     step: context.step,
     area: "checkout",
-  });
-}
-
-export function trackCheckoutOrderBumpToggled(
-  selected: boolean,
-  context: CheckoutContext & { orderBumpId: string; orderBumpPrice?: number | null },
-) {
-  captureEvent("checkout_order_bump_toggled", {
-    selected,
-    ...context,
   });
 }

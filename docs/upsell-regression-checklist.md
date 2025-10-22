@@ -9,19 +9,19 @@ Run these checks whenever we touch pricing CTA logic, schema files, or checkout 
 - Run `pnpm --filter @apps/store test:unit -- --run` to ensure `productToHomeTemplate` tests still pass (these guard the `pricing` subset for non-upsell cases).
 
 ## 2. Checkout Smoke Tests (Stripe & PayPal)
-- Stripe: hit `/checkout?product=youtube-downloader` and verify the embedded checkout loads instantly (no spinner). Complete a test card (`4242…`) and confirm metadata shows `orderBumpSelected = false`.
-- PayPal: toggle to PayPal in the embedded checkout, click through to the sandbox flow, make sure the amount equals the base price and metadata still carries `orderBumpSelected = "false"` and `orderBumpUnitCents = "0"`.
+- Stripe: hit `/checkout?product=youtube-downloader`, click “Continue to Stripe Checkout,” and confirm the hosted page loads in the same tab. Complete a test card (`4242…`) and ensure the resulting session metadata contains `checkoutSource = hosted_checkout_stripe` with no order-bump fields.
+- PayPal: (deprecated) Confirm no PayPal option appears in the new hosted Stripe flow.
 
 ## 3. Validation & Schema
 - `pnpm --filter @apps/store validate:products` → should succeed, ensuring new schema rules don’t break products without upsells.
 - `pnpm --filter @apps/store test:unit -- tests/lib/buy-button-links.test.ts` → confirms all backed URLs and buy buttons remain valid.
 
 ## 4. Analytics / Events
-- In PostHog/Segment (test mode), confirm events from the non-upsell product still fire with `orderBumpSelected = "false"` and no missing properties.
-- Toggle an upsell-enabled product and verify the `checkout_order_bump_toggled` event records both `selected` states, `orderBumpId`, and the updated `value` payload.
+- In PostHog/Segment (test mode), confirm `checkout_viewed`, `checkout_payment_method_selected`, and `checkout_session_ready` fire with the expected `productSlug`, `affiliateId`, and coupon metadata when present.
+- Ensure no analytics payloads include the deprecated order-bump properties (`orderBumpSelected`, `orderBumpId`, etc.).
 
 ## 5. Visual QA
 - Capture screenshots of the Pricing CTA for a no-upsell product at `sm`, `md`, and `lg` breakpoints to ensure the layout didn’t shift.
-- Check the embedded checkout toggle button states (Stripe vs PayPal) to confirm they aren’t impacted by the new spinner/disable logic.
+- On `/checkout`, confirm the payment-method radio buttons and submission states match the design system (no embedded checkout placeholders remain).
 
 Document pass/fail notes in release QA so we can spot regressions quickly and know which products were exercised.

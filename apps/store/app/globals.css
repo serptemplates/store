@@ -58,25 +58,6 @@
   }
 }
 
-/* Stripe embedded checkout overrides */
-#checkout,
-#checkout iframe,
-#checkout > div,
-#checkout > div > div,
-#checkout [class*="App"],
-.App-Container,
-.js-global-layout-multi-item {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 100% !important;
-}
-
-@media (max-width: 768px) {
-  #checkout {
-    width: 100%;
-  }
-}
-
 /* Highlight.js theme for syntax highlighting */
 .hljs {
   @apply text-gray-100;

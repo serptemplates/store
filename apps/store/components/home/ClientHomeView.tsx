@@ -12,12 +12,15 @@ import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
+import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { BlogPostMeta } from "@/lib/blog"
 import type { PrimaryNavProps } from "@/lib/navigation"
 import { trackCheckoutSuccessBanner, trackProductCheckoutClick, trackProductPageView } from "@/lib/analytics/product"
+import { trackCheckoutError, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
+import type { EcommerceItem } from "@/lib/analytics/gtm"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
@@ -48,6 +51,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedVideos = videoEntries
   const videosToDisplay = resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
+  const [couponCode, setCouponCode] = useState<string | undefined>(undefined)
+  const [redirectError, setRedirectError] = useState<string | null>(null)
   const checkoutHrefBase = `/checkout?product=${product.slug}`
   const checkoutHref = affiliateId ? `${checkoutHrefBase}&aff=${affiliateId}` : checkoutHrefBase
   const fallbackMode: ResolvedHomeCta["mode"] =
@@ -80,6 +85,26 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedCtaHref = resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
+  const checkoutCurrency = product.pricing?.currency ?? "USD"
+  const checkoutValue = useMemo(() => {
+    const priceString = product.pricing?.price ?? homeProps.pricing?.price ?? undefined
+    if (!priceString) {
+      return undefined
+    }
+    const numeric = Number.parseFloat(priceString.replace(/[^0-9.]/g, ""))
+    return Number.isFinite(numeric) ? Number(numeric.toFixed(2)) : undefined
+  }, [homeProps.pricing?.price, product.pricing?.price])
+  const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
+    if (checkoutValue === undefined) {
+      return undefined
+    }
+    return {
+      item_id: product.slug,
+      item_name: product.name,
+      price: checkoutValue,
+      quantity: 1,
+    }
+  }, [checkoutValue, product.name, product.slug])
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -146,17 +171,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const showPosts = siteConfig.blog?.enabled !== false
 
-  const productNavProps = useMemo(
-    () => ({
-      ...navProps,
-      ctaHref: resolvedCtaHref,
-      ctaText: resolvedCtaText,
-      showCta: true,
-    }),
-    [navProps, resolvedCtaHref, resolvedCtaText],
-  )
-
-  const Navbar = useCallback(() => <PrimaryNavbar {...productNavProps} />, [productNavProps])
+  const Navbar = useCallback(() => <PrimaryNavbar {...navProps} />, [navProps])
 
   const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
@@ -192,6 +207,60 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [checkoutSuccess, product, affiliateId])
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    const rawCoupon =
+      params.get("coupon") ??
+      params.get("couponCode") ??
+      params.get("discount") ??
+      params.get("promo") ??
+      undefined
+    const normalized = rawCoupon?.trim()
+    setCouponCode(normalized && normalized.length > 0 ? normalized.toUpperCase() : undefined)
+  }, [])
+
+  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
+    offerId: product.slug,
+    affiliateId,
+    metadata: {
+      landerId: product.slug,
+    },
+    endpoint: "/api/checkout/session",
+    fallbackUrl: product.store_serp_co_product_page_url ?? `/product-details/product/${product.slug}`,
+    onSessionReady: (session) => {
+      setRedirectError(null)
+      trackCheckoutSessionReady({
+        provider: "stripe",
+        productSlug: product.slug,
+        productName: product.name,
+        affiliateId: affiliateId ?? null,
+        currency: checkoutCurrency,
+        value: checkoutValue ?? undefined,
+        ecommerceItem,
+        isInitialSelection: true,
+      })
+      if (session?.id) {
+        console.debug("[checkout] session ready", session.id)
+      }
+    },
+    onError: (error, step) => {
+      setRedirectError(error instanceof Error ? error.message : "Unable to start checkout")
+      trackCheckoutError(error, {
+        step,
+        productSlug: product.slug,
+        productName: product.name,
+        affiliateId: affiliateId ?? null,
+        currency: checkoutCurrency,
+        value: checkoutValue ?? undefined,
+        ecommerceItem,
+      })
+    },
+  })
+
+  useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
     }
@@ -206,7 +275,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const navigateToCta = useCallback(() => {
     if (isCheckoutMode) {
-      window.location.href = resolvedCtaHref
+      if (isCheckoutLoading) {
+        return
+      }
+      setRedirectError(null)
+      void beginCheckout({
+        couponCode,
+      })
       return
     }
 
@@ -215,9 +290,12 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     } else {
       window.location.href = resolvedCtaHref
     }
-  }, [isCheckoutMode, resolvedCtaHref, shouldOpenInNewTab])
+  }, [beginCheckout, couponCode, isCheckoutLoading, isCheckoutMode, resolvedCtaHref, shouldOpenInNewTab])
 
   const handlePrimaryCtaClick = useCallback(() => {
+    if (isCheckoutMode && isCheckoutLoading) {
+      return
+    }
     trackProductCheckoutClick(product, {
       placement: "pricing",
       destination: analyticsDestination,
@@ -225,9 +303,12 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     navigateToCta()
-  }, [product, analyticsDestination, affiliateId, navigateToCta])
+  }, [affiliateId, analyticsDestination, isCheckoutLoading, isCheckoutMode, navigateToCta, product])
 
   const handleStickyCtaClick = useCallback(() => {
+    if (isCheckoutMode && isCheckoutLoading) {
+      return
+    }
     trackProductCheckoutClick(product, {
       placement: "sticky_bar",
       destination: analyticsDestination,
@@ -235,7 +316,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     })
 
     navigateToCta()
-  }, [product, analyticsDestination, affiliateId, navigateToCta])
+  }, [affiliateId, analyticsDestination, isCheckoutLoading, isCheckoutMode, navigateToCta, product])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -271,6 +352,15 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         </div>
       )}
 
+      {redirectError ? (
+        <div className="mx-auto mb-4 w-full max-w-4xl px-4">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800 shadow-sm">
+            <p className="text-sm font-medium">We couldn&apos;t start the checkout automatically.</p>
+            <p className="mt-1 text-xs text-red-700">{redirectError}</p>
+          </div>
+        </div>
+      ) : null}
+
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
@@ -297,14 +387,14 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 ...homeProps.pricing,
                 originalPrice: homeProps.pricing.originalPrice || "$27.99",
                 onCtaClick: handlePrimaryCtaClick,
-                ctaLoading: false,
-                ctaDisabled: false,
+                ctaLoading: isCheckoutMode ? isCheckoutLoading : false,
+                ctaDisabled: isCheckoutMode ? isCheckoutLoading : false,
                 ctaHref: resolvedCtaHref,
                 ctaText: homeProps.pricing?.ctaText ?? resolvedCtaText,
                 ctaExtra: null,
               }
             : undefined
-        }
+      }
       />
 
       <StickyProductCTA
@@ -315,6 +405,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         label={resolvedCtaText}
         openInNewTab={shouldOpenInNewTab}
         rel={resolvedCtaRel}
+        disabled={isCheckoutMode ? isCheckoutLoading : false}
       />
     </>
   )
@@ -330,10 +421,11 @@ type StickyProductCTAProps = {
   label: string
   openInNewTab: boolean
   rel?: string
+  disabled?: boolean
 }
 
-function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel }: StickyProductCTAProps) {
-  const ctaClasses = "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500";
+function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel, disabled = false }: StickyProductCTAProps) {
+  const ctaClasses = "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:opacity-60";
   const trimmedLabel = label.trim();
   const displayLabel = trimmedLabel.length > 0 ? trimmedLabel.toUpperCase() : "GET IT NOW";
   return (
@@ -361,7 +453,12 @@ function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openI
               <span>{displayLabel}</span>
             </a>
           ) : (
-            <button type="button" onClick={onCtaClick} className={ctaClasses}>
+            <button
+              type="button"
+              onClick={onCtaClick}
+              className={ctaClasses}
+              disabled={disabled}
+            >
               <span aria-hidden className="text-base">🚀</span>
               <span>{displayLabel}</span>
             </button>

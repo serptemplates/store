@@ -1,7 +1,8 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:3000';
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3110);
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://127.0.0.1:${port}`;
 const shouldStartWebServer =
   !process.env.PLAYWRIGHT_BASE_URL && process.env.PLAYWRIGHT_NO_SERVER !== '1';
 
@@ -28,8 +29,8 @@ const config: PlaywrightTestConfig = {
 
 if (shouldStartWebServer) {
   config.webServer = {
-    command: 'pnpm exec next dev --hostname 127.0.0.1 --port 3000',
-    url: 'http://127.0.0.1:3000',
+    command: `pnpm exec next dev --hostname 127.0.0.1 --port ${port}`,
+    url: baseURL,
     reuseExistingServer: true,
     env: {
       POSTHOG_API_HOST: 'https://us.i.posthog.com',

@@ -120,6 +120,12 @@ export function buildPurchaseMetadata(context: GhlSyncContext): string | undefin
       stripeSessionId: context.stripeSessionId ?? undefined,
       stripePaymentIntentId: context.stripePaymentIntentId ?? undefined,
     }),
+    consent:
+      context.tosAccepted === undefined
+        ? undefined
+        : {
+            termsOfServiceAccepted: context.tosAccepted,
+          },
     metadata: metadataPayload,
     license: licenseDetails,
   });

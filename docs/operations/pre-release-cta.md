@@ -18,18 +18,12 @@ This branch introduces a schema-level toggle so pre-release products can share a
 3. **Returning to checkout**
    - Remove the explicit `cta_mode` and change `status` to `live`, or set `cta_mode: checkout` for early access launches.
 
-## Embedded Checkout Usage
+## Hosted Checkout Usage
 
-Most live products link directly to GoHighLevel payment pages. As of this change, only the following products use the embedded Stripe checkout at `/checkout`:
-
-- `ai-voice-cloner-app`
-- `stocksy-downloader`
-
-Keep this in mind when validating checkout regression fixes—the embedded flow still exists but is limited to those SKUs.
+Any product whose CTA resolves to `checkout` now routes visitors to `/checkout?product=<slug>`, where they can click “Continue to Stripe Checkout.” Ensure the product YAML either sets `cta_mode: checkout` explicitly or leaves `buy_button_destination` empty so the adapter selects the hosted path.
 
 ## QA Checklist
 
 - Confirm all CTA variants on the product page display **Get Notified**, open in a new tab, and reach the correct waitlist URL.
 - Inspect DevTools → Network while clicking the CTA and verify `product_checkout_clicked` reports `destination: "waitlist"`.
 - Switch the product back to `live` (or `cta_mode: checkout`) and confirm the landing page reverts to the checkout CTA with in-tab navigation.
-

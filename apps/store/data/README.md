@@ -10,15 +10,11 @@
 - Dev server routing: `http://localhost:3000/` redirects to the first product slug. Hit `http://localhost:3000/<slug>` to preview a specific product. Adding a new YAML file makes its page available immediately at that path.
 - Optionally, run `pnpm --filter @apps/store typecheck` to ensure TypeScript stays happy after schema or template changes.
 
-## Order bump / upsell configuration
+## Cross-sell configuration
 
-- Shared upsells live under `data/order-bumps/*.yaml`. Each file contains the canonical copy, talking points, and Stripe price metadata for that upsell.
-- In a product YAML, reference a shared upsell with `order_bump: <slug>`. Provide an object with overrides (`description`, `features`, `default_selected`, etc.) when a lander needs tweaks.
-- Unique, service-style bumps can still be defined inline by supplying the same fields (`title`, `price`, `stripe.price_id`, …) directly in the product’s `order_bump` block.
-- Create matching Stripe Prices **before** a deploy. See `docs/upsell-payment-setup.md` for the full payment checklist.
-- PayPal totals piggyback on the upsell price string. Keep it formatted like `$29` or `$29.00`; the checkout route strips currency symbols automatically.
-- Validate changes with `pnpm --filter @apps/store validate:products`. The script now checks that referenced upsell slugs exist under `data/order-bumps/`.
-- If an upsell is **not** defined, checkout continues to function; the tests in `tests/api/checkout-session.test.ts` cover both “no upsell” and “upsell present but unselected” flows.
+- Stripe cross-sells are now configured directly in the Stripe Dashboard. The storefront no longer reads `order_bump` YAML blocks.
+- Remove legacy `order_bump` entries from product files as you touch them; they have no effect on the hosted checkout flow.
+- See `docs/checkout-cross-sell-setup.md` for the updated cross-sell playbook and cleanup checklist.
 
 ## Price manifest
 

@@ -71,7 +71,6 @@ describe('Checkout Validation', () => {
         offerId: 'tiktok-downloader',
         quantity: 1,
         mode: 'payment',
-        uiMode: 'embedded',
         affiliateId: 'AFF123',
         customer: {
           email: 'test@example.com',
@@ -129,16 +128,6 @@ describe('Checkout Validation', () => {
       };
 
       const result = checkoutSessionSchema.safeParse(invalidMode);
-      expect(result.success).toBe(false);
-    });
-
-    it('should reject invalid UI mode', () => {
-      const invalidUIMode = {
-        offerId: 'test-product',
-        uiMode: 'invalid',
-      };
-
-      const result = checkoutSessionSchema.safeParse(invalidUIMode);
       expect(result.success).toBe(false);
     });
 

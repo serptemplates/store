@@ -2,7 +2,7 @@
 
 ## Application overview
 
-The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the modular checkout, Stripe/PayPal integrations, GHL sync, and license-service orchestration.
+The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the hosted checkout redirect, Stripe/PayPal integrations, GHL sync, and license-service orchestration.
 
 Key directories:
 
@@ -10,7 +10,6 @@ Key directories:
 / (repo root)
 ├── apps/store/                # Store Next.js app
 │   ├── app/                   # Route handlers and pages
-│   ├── components/checkout/   # Modular checkout React components
 │   ├── lib/checkout/          # Checkout helpers (sessions, orders, validation)
 │   ├── lib/payments/stripe-webhook/  # Stripe webhook dispatcher + helpers
 │   ├── scripts/               # CLI utilities & manual test harnesses
