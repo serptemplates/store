@@ -198,7 +198,7 @@ const heroDescription = "Browse the full catalog of SERP products."
 export function HomePageView() {
   const products = getAllProducts()
   const siteConfig = getSiteConfig()
-  const navProps = buildPrimaryNavProps({ products, siteConfig, showCta: false })
+  const navProps = buildPrimaryNavProps({ products, siteConfig })
 
   const organizationSchema = {
     "@context": "https://schema.org",

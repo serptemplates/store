@@ -23,9 +23,6 @@ export interface PrimaryNavbarProps {
   siteName: string;
   navLinks: PrimaryNavLink[];
   productLinks: PrimaryNavProductLink[];
-  ctaHref?: string | null;
-  ctaText?: string | null;
-  showCta?: boolean;
   logoSrc?: string | null;
 }
 
@@ -33,13 +30,9 @@ export function PrimaryNavbar({
   siteName,
   navLinks,
   productLinks,
-  ctaHref,
-  ctaText,
-  showCta = false,
   logoSrc,
 }: PrimaryNavbarProps) {
   const toProductHref = useCallback((slug: string) => `/${slug}` as Route, []);
-  const ctaIsExternal = ctaHref ? /^https?:/i.test(ctaHref) : false;
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -307,25 +300,6 @@ export function PrimaryNavbar({
             );
           })}
 
-          {showCta && ctaHref && (
-            ctaIsExternal ? (
-              <a
-                href={ctaHref}
-                className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {ctaText ?? "Get Started"}
-              </a>
-            ) : (
-              <NextLink
-                href={ctaHref as Route}
-                className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-              >
-                {ctaText ?? "Get Started"}
-              </NextLink>
-            )
-          )}
         </div>
         <button
           type="button"
@@ -408,27 +382,6 @@ export function PrimaryNavbar({
                 </span>
               );
             })}
-            {showCta && ctaHref && (
-              ctaIsExternal ? (
-                <a
-                  href={ctaHref}
-                  className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={closeMobileMenu}
-                >
-                  {ctaText ?? "Get Started"}
-                </a>
-              ) : (
-                <NextLink
-                  href={ctaHref as Route}
-                  className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                  onClick={closeMobileMenu}
-                >
-                  {ctaText ?? "Get Started"}
-                </NextLink>
-              )
-            )}
           </div>
         </div>
       ) : null}

@@ -19,7 +19,7 @@ function SuccessFallback() {
 
 export default function SuccessPage() {
   const siteConfig = getSiteConfig();
-  const navProps = buildPrimaryNavProps({ siteConfig, showCta: false });
+  const navProps = buildPrimaryNavProps({ siteConfig });
   const footerSiteName = siteConfig.site?.name ?? "SERP";
   const footerSiteUrl =
     siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://serp.co";

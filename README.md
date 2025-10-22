@@ -5,8 +5,8 @@ This repository now focuses exclusively on the `@apps/store` Next.js commerce ap
 ## Directory Overview
 
 - `apps/store` – production storefront deployed to `https://apps.serp.co`
+- `apps/store/content/blog` – markdown content rendered by the blog routes
 - `packages/ui` – shared UI primitives and sections (`src/sections/**`) consumed by the store
-- `sites/apps.serp.co` – markdown blog content and store-level site metadata
 
 ## Local Development
 
@@ -19,9 +19,14 @@ The dev script runs `@apps/store` on port 3000. See `docs/store/README.md` for d
 
 ## Blog Content
 
-- Store blog posts live under `sites/apps.serp.co/content/blog`
+- Store blog posts live under `apps/store/content/blog`
 - Markdown/MDX files are loaded by `apps/store/lib/blog.ts`
 - Front matter supports `draft`, `tags`, `description`, and optional hero images
+
+## Site Configuration
+
+- `apps/store/data/site.config.json` defines the store name, domain, navigation links, and excluded product slugs.
+- The primary navigation renders only branding and links; CTA metadata is ignored to keep the header free of buttons.
 
 ## Stripe Price Sync
 
@@ -36,7 +41,7 @@ This updates each product YAML with formatted pricing pulled from Stripe.
 
 ## Stripe Checkout
 
-For the checkout to work properly, set these environment variables in `.env.local`:
+For the checkout to work properly, set these environment variables in `.env` (or your local override):
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
