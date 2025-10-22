@@ -11,6 +11,7 @@ import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSe
 import type { ProductBreadcrumbItem } from "@/components/product/ProductBreadcrumb"
 import type { ExtendedProductData } from "@/components/product/types"
 import { isPreRelease } from "@/lib/products/release-status"
+import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
 
 export interface EcommerceLayoutProps {
   product: ExtendedProductData
@@ -37,6 +38,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
 
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const waitlistEnabled = isPreRelease(product.status)
 
   useEffect(() => {
@@ -83,10 +85,8 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
   const githubUrl: string | undefined = product.github_repo_url || product.metadata?.github_repo_url
 
   const handleWaitlistClick = useCallback(() => {
-    if (product.waitlist_url) {
-      window.open(product.waitlist_url, "_blank", "noopener,noreferrer")
-    }
-  }, [product.waitlist_url])
+    setShowWaitlistModal(true)
+  }, [])
 
   const breadcrumbItems: ProductBreadcrumbItem[] = useMemo(() => (
     [
@@ -135,6 +135,8 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}
         affiliateId={affiliateId}
+        waitlistEnabled={waitlistEnabled}
+        onWaitlistClick={handleWaitlistClick}
       />
 
       <div className="container mx-auto px-4 py-8">
@@ -148,8 +150,11 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
           infoProps={infoSectionProps}
         />
       </div>
+
+      <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
     </>
   )
 }
+
 
 export default EcommerceLayout

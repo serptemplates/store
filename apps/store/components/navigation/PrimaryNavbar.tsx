@@ -182,6 +182,7 @@ export function PrimaryNavbar({
                           <NextLink
                             key={item.slug}
                             href={toProductHref(item.slug)}
+                            prefetch={false}
                             className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
                           >
                             {item.name}
