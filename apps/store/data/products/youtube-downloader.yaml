@@ -25,6 +25,16 @@ screenshots:
   alt: YouTube Downloader screenshot
 - url: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.gif
   alt: YouTube Downloader animation
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-1.jpg
+  alt: YouTube Downloader home screen showing the video URL input form
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-2.jpg
+  alt: YouTube Downloader format selection options for video and audio
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-3.jpg
+  alt: YouTube Downloader download queue with progress indicators
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-4.jpg
+  alt: YouTube Downloader list of completed downloads ready for export
+- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-5.jpg
+  alt: YouTube Downloader settings panel for configuring output options
 product_videos: []
 related_videos: []
 related_posts:
@@ -42,14 +52,13 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- 8K YouTube downloads
+- Multi-resolution YouTube downloads
 - Multiple audio format support
 - Various containers/codecs
 - Livestream recording
 - Format conversion & optimization
 - Thumbnail extraction
 - Custom folder organization
-- Proxy support
 - Bandwidth-efficient downloads
 - Cross-platform support
 - Metadata extraction
