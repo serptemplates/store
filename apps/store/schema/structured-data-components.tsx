@@ -124,7 +124,7 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const organizationSchema = generateOrganizationSchema({
     storeName: STORE_NAME,
     storeUrl,
-    logoUrl: `${storeUrl}/logo.png`,
+    logoUrl: `${storeUrl}/logo.svg`,
     description: "Browse the full catalog of SERP products.",
   })
 

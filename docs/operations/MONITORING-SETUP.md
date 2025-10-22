@@ -22,14 +22,10 @@ Comprehensive monitoring setup for the production store to ensure reliability, p
 
 ## 🛠 Monitoring Stack
 
-### 1. Application Monitoring (Vercel Analytics)
-```javascript
-// Already integrated if deployed on Vercel
-// Provides:
-// - Web Vitals
-// - Performance metrics
-// - Error tracking
-```
+### 1. Application Monitoring (PostHog + GTM)
+- **PostHog** drives product analytics and session recording. Enable it by setting `NEXT_PUBLIC_POSTHOG_KEY` (and optionally `NEXT_PUBLIC_POSTHOG_HOST`). The client hooks live in `components/analytics/PostHogAnalytics.tsx`.
+- **Google Tag Manager** stays optional for marketing pixels. Provide `NEXT_PUBLIC_GTM_ID` to load your container via `app/providers.tsx`.
+- Both run entirely on the client—no Vercel analytics scripts are bundled.
 
 ### 2. Error Tracking (Sentry)
 

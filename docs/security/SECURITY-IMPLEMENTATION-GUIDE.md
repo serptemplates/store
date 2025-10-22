@@ -386,9 +386,11 @@ export async function checkPaymentHealth() {
 
 ## 📊 Monitoring Setup
 
-### 1. Vercel Analytics
+### 1. Analytics Stack (PostHog + GTM)
 
-Already enabled with `@vercel/speed-insights`. No additional action needed.
+- **PostHog** powers behavioral analytics. Keep the client key in `NEXT_PUBLIC_POSTHOG_KEY` and rotate it via your secrets manager when necessary.
+- **GTM** stays optional; only load it by configuring `NEXT_PUBLIC_GTM_ID`. Remove unused containers to avoid unexpected third-party scripts.
+- No Vercel analytics scripts are bundled, so there is no additional opt-out surface to audit.
 
 ### 2. Real-Time Alerts
 
