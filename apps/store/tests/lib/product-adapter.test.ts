@@ -225,11 +225,11 @@ describe("productToHomeTemplate", () => {
     const template = productToHomeTemplate(product, []);
 
     expect(template.ctaMode).toBe("pre_release");
-    expect(template.ctaHref).toBe("https://newsletter.serp.co/waitlist");
+    expect(template.ctaHref).toBe("https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953");
     expect(template.ctaText).toBe("Get Notified");
-    expect(template.ctaOpensInNewTab).toBe(true);
-    expect(template.ctaTarget).toBe("_blank");
-    expect(template.pricing?.ctaHref).toBe("https://newsletter.serp.co/waitlist");
+    expect(template.ctaOpensInNewTab).toBe(false);
+    expect(template.ctaTarget).toBe("_self");
+    expect(template.pricing?.ctaHref).toBe("https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953");
     expect(template.pricing?.ctaText).toBe("Get Notified");
   });
 
@@ -252,7 +252,7 @@ describe("productToHomeTemplate", () => {
     expect(template.ctaMode).toBe("pre_release");
     expect(template.ctaHref).toBe("https://newsletter.serp.co/waitlist?product=sample-product");
     expect(template.ctaText).toBe("Notify Me");
-    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.ctaOpensInNewTab).toBe(false);
     expect(template.cta?.mode).toBe("pre_release");
   });
 

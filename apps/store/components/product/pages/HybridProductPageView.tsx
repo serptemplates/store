@@ -30,6 +30,7 @@ import type { SiteConfig } from "@/lib/site-config"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
+import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
 
 export interface HybridProductPageViewProps {
   product: ProductData
@@ -42,6 +43,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const router = useRouter()
   const productIsPreRelease = isPreRelease(product)
   const releaseBadgeText = getReleaseBadgeText(product).replace("-", " ")
@@ -88,6 +90,10 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
     router.push(checkoutUrl as Route)
   }, [product.slug, affiliateId, router])
 
+  const handleWaitlistClick = useCallback(() => {
+    setShowWaitlistModal(true)
+  }, [])
+
   useEffect(() => {
     const handleScroll = () => {
       const triggerHeight = 600
@@ -130,6 +136,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}
         affiliateId={affiliateId}
+        waitlistEnabled={productIsPreRelease}
+        onWaitlistClick={handleWaitlistClick}
       />
 
       <div className="container mx-auto px-4 py-8">
@@ -225,14 +233,11 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
             <div className="flex flex-col gap-4 mb-8">
               {productIsPreRelease ? (
                 <button
-                  onClick={() => {
-                    if (product.waitlist_url) {
-                      window.open(product.waitlist_url, "_blank", "noopener,noreferrer")
-                    }
-                  }}
-                  className="w-full bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+                  type="button"
+                  onClick={handleWaitlistClick}
+                  className="w-full bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
                 >
-                  Join Waitlist
+                  Get Notified
                 </button>
               ) : (
                 <Link
@@ -329,7 +334,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         {homeProps.pricing && (
           <PricingCta
             {...homeProps.pricing}
-            onCtaClick={handleCheckout}
+            onCtaClick={productIsPreRelease ? handleWaitlistClick : handleCheckout}
             ctaLoading={false}
             ctaDisabled={false}
           />
@@ -337,6 +342,8 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
 
         <Footer />
       </div>
+
+      <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
     </>
   )
 }
