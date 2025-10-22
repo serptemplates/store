@@ -39,7 +39,6 @@ features:
 - Auto grade book and progress extraction
 - Batch download multiple courses from institutions
 - Resume downloads
-- CLI tools
 - Cross-platform support
 - Content viewer
 - Integrates with student information systems

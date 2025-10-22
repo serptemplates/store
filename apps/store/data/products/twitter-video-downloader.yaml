@@ -39,7 +39,6 @@ features:
 - Auto thumbnail and preview image extraction
 - Resume downloads
 - Cross-platform support
-- CLI for automated collection
 - Organize by user or date
 - Media viewer
 - Integrates with social media analytics tools

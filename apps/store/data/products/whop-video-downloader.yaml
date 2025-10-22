@@ -20,38 +20,46 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
-  alt: Whop Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-1.jpg
+  alt: Whop Video Downloader extension overlay on Whop product page
+  caption: Capture Whop videos directly from marketplace listings in one click.
+- url: https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-2.jpg
+  alt: Whop Video Downloader download queue and progress indicators
+  caption: Monitor download progress across multiple Whop assets simultaneously.
+- url: https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-3.jpg
+  alt: Whop Video Downloader metadata panel showing organized files
+  caption: Auto-organize Whop downloads with extracted metadata and folder structure.
+- url: https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-4.jpg
+  alt: Whop Video Downloader settings modal with quality options
+  caption: Choose output quality, formats, and destinations right inside the app.
 product_videos: []
-related_videos: []
-related_posts: []
+related_videos:
+- https://www.youtube.com/watch?v=oWmu4MOS2HE
+related_posts:
+- how-to-download-whop-videos
 github_repo_url: https://github.com/serpapps/whop-video-downloader
 github_repo_tags: []
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/whop-video-downloader/obiiijgnmblffcopbdfpdlmbdkgmblgf
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Whop marketplace videos and digital products
-- Premium and subscription-based content
-- Batch product libraries/collections downloads
-- Auto metadata extraction and product organization
-- Organize by seller/product category
-- Resume downloads with recovery
+- Metadata extraction & display
 - Cross-platform support
-- Built-in player with marketplace controls
-- CLI for business automation
-- E-commerce integration
-- Export product data/sales analytics
-- Search product libraries
-- Privacy-focused design with secure storage
+- Privacy-focused
 - Regular compatibility updates
 - Various digital product formats
 - Bandwidth optimization
-- Backup & sync
-- Smart categorization
 - Offline access to purchased content
-- Advanced product management and tracking
+- Download full courses offline
+- Save videos, docs, and materials
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Regular updates
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

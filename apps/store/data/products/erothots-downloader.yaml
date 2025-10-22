@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Content from Erothots platform
-- Various media types and formats
-- Batch downloads for series/collections
-- Auto metadata extraction and organization
-- Custom folders by creator and content type
-- Resume downloads with recovery
-- Cross-platform support
-- Media viewer
-- CLI for automated collection
-- Integrates with content management systems
-- Export creator data/content analytics
-- Search content libraries
-- Privacy-focused design with encrypted storage
-- Regular compatibility updates
-- High-quality media downloads
-- Bandwidth management for large media files
-- Backup & restore capabilities
-- Smart content categorization and filtering
-- Secure local storage with no cloud dependency
-- Advanced privacy and security features
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

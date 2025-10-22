@@ -39,9 +39,7 @@ features:
 - Auto image resizing and format conversion
 - License information tracking and management
 - Search downloaded assets
-- Duplicate detection
 - Resume downloads
-- CLI tools
 - Cross-platform support
 - Image viewer
 - Cloud storage integration for team collaboration

@@ -7,8 +7,19 @@ import { ORDER_BUMP_FIELD_ORDER, PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETUR
 import { isPreRelease } from "../lib/products/release-status"
 import { orderBumpDefinitionSchema } from "../lib/products/order-bump-definitions"
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env.local") })
-dotenv.config({ path: path.resolve(process.cwd(), ".env") })
+// Load env files from the package directory and fallback to the repository root.
+const envFilenames = [".env.local", ".env"] as const
+const envSearchRoots = [
+  process.cwd(),
+  path.resolve(process.cwd(), ".."),
+  path.resolve(process.cwd(), "..", ".."),
+] as const
+
+for (const root of envSearchRoots) {
+  for (const filename of envFilenames) {
+    dotenv.config({ path: path.join(root, filename), override: false })
+  }
+}
 
 const STRIPE_API_VERSION = "2024-04-10"
 

@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Built-in audio player
-- CLI tools
 - Integrates with music management applications
 - Export track data/listening analytics
 - Search music libraries

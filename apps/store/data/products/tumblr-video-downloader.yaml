@@ -39,7 +39,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Media viewer
-- CLI for blog archiving automation
 - Custom organization by blog, tag, or content type
 - Duplicate detection and reblog management
 - Creative integration

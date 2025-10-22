@@ -61,7 +61,7 @@ github_repo_tags:
 - vimeo-video-downloader
 - download-vimeo-videos
 - download-private-vimeo-videos
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/vimeo-video-downloader/dhgiccbhamhpghhoaajjiikjlegbfhdj
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
@@ -76,13 +76,12 @@ features:
 - Pause and resume
 - Chrome, Firefox, Edge
 - Download embedded videos
-- Channel downloads
-- Optimized speeds
 - Zero data tracking
 - Regular updates
+- Ad-free experience
+- Optimized speeds
 - Livestream recordings
 - Download history
-- Ad-free experience
 - Malware-free
 - Seamless Vimeo integration
 - Bulk downloads

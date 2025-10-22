@@ -40,7 +40,6 @@ features:
 - Resume downloads with recovery
 - Cross-platform support
 - Built-in file manager with preview capabilities
-- CLI tools
 - Backup integration
 - Export file metadata/sharing information
 - Search downloaded files

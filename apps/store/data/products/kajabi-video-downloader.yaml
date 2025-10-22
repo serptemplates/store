@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Complete Kajabi courses and coaching content
-- Video lessons, PDFs, and course materials
-- Maintain program structure and module organization
-- Community posts and member interactions
-- Multi-language subtitle extraction
-- Batch download entire coaching programs
-- Resume downloads
-- CLI for bulk processing
-- Cross-platform support
-- Built-in player with coaching tools
-- Integrates with business coaching platforms
-- Export student progress/engagement data
-- Search program content
-- Secure local storage
-- Regular compatibility updates
-- Organize by program type
-- Backup & restore capabilities
-- Offline coaching with synchronized progress
-- Live session recordings
-- Smart content delivery and organization
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

@@ -37,7 +37,6 @@ features:
 - Auto transcript and subtitle extraction
 - Batch download classes by category or instructor
 - Resume downloads
-- CLI for automated learning workflows
 - Cross-platform support
 - Video player with controls
 - Creative software integration
