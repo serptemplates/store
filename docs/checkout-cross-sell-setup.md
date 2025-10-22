@@ -1,6 +1,6 @@
 # Checkout Cross-Sell Setup
 
-Stripe’s hosted Checkout now owns all post-purchase offers. We no longer maintain order-bump YAML or embedded UI logic in the storefront.
+Stripe Payment Links now own all post-purchase offers. We no longer maintain order-bump YAML or embedded UI logic in the storefront.
 
 ## What changed
 
@@ -16,9 +16,9 @@ Stripe’s hosted Checkout now owns all post-purchase offers. We no longer maint
 
 ## Storefront verification
 
-- Visit `/checkout?product=<slug>` and confirm the “Continue to Stripe Checkout” button launches the hosted page without a popup warning.
-- Ensure product YAML has `cta_mode: checkout` (or omits `buy_button_destination`) so the storefront directs to `/checkout`.
-- Confirm Stripe session metadata includes `checkoutSource = hosted_checkout_stripe` and does **not** include deprecated order-bump fields.
+- Visit the product page and click the primary CTA; confirm it opens the configured payment link (Stripe or GHL) without triggering popup blockers.
+- Ensure product YAML defines a `payment_link` so the storefront knows which checkout experience to launch.
+- Confirm Stripe session metadata still includes the expected fields for downstream fulfillment.
 
 ## PayPal parity
 

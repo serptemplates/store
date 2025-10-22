@@ -31,8 +31,8 @@
 
 **Affected Files:**
 - `lib/ghl-client.ts:71` - Logs request body which may contain customer email
-- `app/api/checkout/session/route.ts` - Contains console.log statements with payment data
 - `app/api/paypal/webhook/route.ts` - Logs webhook payloads with customer data
+- (Legacy) `app/api/checkout/session/route.ts` - Removed in favour of Stripe Payment Links but kept here for historical context.
 
 **Action Required:** Implement PII redaction in logger and remove debug console.log statements
 
@@ -98,9 +98,9 @@
 
 ### 11. Console.log Statements in Production Code
 **Files:**
-- `app/api/checkout/session/route.ts:101-102`
 - `app/api/paypal/webhook/route.ts:23,28`
 - `app/api/test/checkout/route.ts:*`
+- (Legacy) `app/api/checkout/session/route.ts` — already removed.
 
 **Action:** Replace with structured logging via `lib/logger.ts`
 

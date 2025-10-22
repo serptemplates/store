@@ -11,8 +11,8 @@ The store app now leans on a clear separation between the design system packages
 
 ## Checkout routing conventions
 
-- Product CTAs call `useCheckoutRedirect` directly, creating the hosted Stripe session on click.
-- The `/checkout` route remains as a server-side redirect for legacy deep links. It reads the query string, creates the session, and immediately redirects to Stripe—no UI should be rendered there.
+- Product CTAs call `useProductCheckoutCta`, which resolves the correct Payment Link (Stripe or GHL), records analytics, and opens the destination in a new tab.
+- The `/checkout` route now acts as a static redirect back to the product slug (or home) for legacy deep links. No session API calls occur there.
 - Avoid reintroducing bespoke forms or credit-card elements; Stripe handles the payment surface entirely.
 
 ## Promotion checklist

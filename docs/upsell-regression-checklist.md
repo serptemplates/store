@@ -9,8 +9,8 @@ Run these checks whenever we touch pricing CTA logic, schema files, or checkout 
 - Run `pnpm --filter @apps/store test:unit -- --run` to ensure `productToHomeTemplate` tests still pass (these guard the `pricing` subset for non-upsell cases).
 
 ## 2. Checkout Smoke Tests (Stripe & PayPal)
-- Stripe: hit `/checkout?product=youtube-downloader`, click “Continue to Stripe Checkout,” and confirm the hosted page loads in the same tab. Complete a test card (`4242…`) and ensure the resulting session metadata contains `checkoutSource = hosted_checkout_stripe` with no order-bump fields.
-- PayPal: (deprecated) Confirm no PayPal option appears in the new hosted Stripe flow.
+- Stripe Payment Link: open the product page, click the primary CTA, and confirm a new tab opens to the configured Stripe Payment Link. Complete a test card (`4242…`), then verify in the dashboard/webhook logs that metadata still includes the correct `offerId`, `landerId`, and `ghl_tag`.
+- PayPal: if the product exposes a PayPal CTA, exercise it via `/api/paypal/create-order` and confirm the approval link renders plus the checkout session persists in the database with `source = paypal`.
 
 ## 3. Validation & Schema
 - `pnpm --filter @apps/store validate:products` → should succeed, ensuring new schema rules don’t break products without upsells.
@@ -22,6 +22,6 @@ Run these checks whenever we touch pricing CTA logic, schema files, or checkout 
 
 ## 5. Visual QA
 - Capture screenshots of the Pricing CTA for a no-upsell product at `sm`, `md`, and `lg` breakpoints to ensure the layout didn’t shift.
-- On `/checkout`, confirm the payment-method radio buttons and submission states match the design system (no embedded checkout placeholders remain).
+- Confirm `/checkout` immediately redirects back to the product slug (for legacy links) and the cancel/success routes still render correctly styled fallback pages.
 
 Document pass/fail notes in release QA so we can spot regressions quickly and know which products were exercised.

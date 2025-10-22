@@ -18,6 +18,7 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 ## Persistence touchpoints
 
 - Stripe session and order updates funnel through the `@/lib/checkout` facade. Do not import private modules directly.
+- Because the storefront no longer creates sessions, the handler relies on metadata stored on Stripe products, prices, or Payment Links (e.g., `offerId`, `landerId`, `ghl_tag`). Keep the backfill script (`apps/store/scripts/update-stripe-product-tags.ts`) up to date so webhooks remain deterministic.
 - License creation goes through `@/lib/license-service`, which has its own modular breakdown (`request.ts`, `creation.ts`, etc.).
 - Analytics and alerting flow through `@/lib/analytics/checkout` and `@/lib/ops/alerts`.
 
@@ -25,7 +26,7 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 
 - API-level coverage lives in `tests/api/stripe-webhook.test.ts`.
 - Retry logic is unit-tested in `lib/payments/stripe-webhook/helpers/ghl-sync.test.ts`.
-- End-to-end coverage now relies on the hosted confirmation + success page flows; we no longer maintain the embedded checkout Playwright spec.
+- End-to-end coverage exercises Payment Link navigation and success handling (see `tests/e2e/stripe-checkout.test.ts` for CTA behaviour).
 
 When you add a new event type:
 

@@ -12,8 +12,8 @@
    - Check entitlement/licensing flows that depend on checkout session metadata (`stripe_checkout_session_id`, `landerId`, etc.) and design an alternative (e.g., webhook enrichment).
    - Validate success/cancel URL customisation, tax behaviour, payment method availability, and multi-currency support.
 2. **Operational questions**
-   - Decide who owns Payment Link creation/maintenance and how link IDs will be stored per product (likely in product YAML).
-   - Determine if PayPal remains in scope. If yes, Payment Links may require parallel PayPal handling or a composite landing experience.
+   - Decide who owns Payment Link creation/maintenance and how link references are stored per product.
+   - Determine if GoHighLevel payment links remain in scope alongside Stripe links.
    - Identify monitoring gaps once API-driven session creation disappears (update LHCI, alerts, dashboards).
 3. **Research tasks**
    - Review Stripe docs: Payment Links metadata, checkout custom fields, allowed query parameters.
@@ -52,36 +52,45 @@
 ## Implementation Roadmap
 
 ### Phase 0 – Validation & Alignment
-- Confirm Payment Links carry or expose the identifiers we need to apply the correct GHL tag post-purchase (link metadata or price mapping).
-- Document blockers or required Stripe feature flags; escalate if Payment Links cannot support a requirement.
-- Align stakeholders on PayPal support strategy and operational ownership of Payment Links.
+- [ ] Confirm Payment Links carry or expose identifiers needed to apply the correct GHL tag post-purchase (link metadata or price mapping).
+- [ ] Document any blockers or required Stripe feature flags and escalate decisions.
+- [ ] Align stakeholders on PayPal support strategy and operational ownership of Payment Links.
+- [ ] Capture assumptions about coupons, success URLs, and entitlement flow in the project brief.
 
 ### Phase 1 – Data Model & Configuration
-- Extend product schema to store Payment Link URLs/ids (including test vs live variants).
-- Build tooling or scripts to sync link references from Stripe into product YAML.
-- Define fallback behaviours (e.g., missing Payment Link = waitlist modal).
+ - [x] Extend the product schema to store Payment Link URLs/ids (including test vs live variants).
+ - [ ] Update validation logic to require a Payment Link (Stripe or GHL) for any sellable product.
+- [x] Add scripting to apply GHL tags to Stripe product metadata automatically.
+- [ ] Build tooling or scripts to sync link references from Stripe into product YAML.
+- [ ] Define and implement fallback behaviours (e.g., missing Payment Link -> waitlist modal).
+- [ ] Update developer documentation describing how to register new Payment Links.
 
 ### Phase 2 – Frontend Migration
-- Replace `useCheckoutRedirect` with a direct navigation helper that routes shoppers to the appropriate Payment Link (test vs live).
-- Remove `/checkout` route entirely; update any deep links to redirect straight to the Payment Link or to the product page when the link is missing.
-- Capture minimal CTA click events for parity, with a full analytics redesign tracked separately.
-- Update sticky bars, pricing components, and nav CTAs to use the Payment Link lookup.
+- [ ] Replace `useCheckoutRedirect` with a direct navigation helper targeting the correct Payment Link (test vs live).
+- [ ] Remove `/checkout` route and ensure legacy deep links redirect to product pricing or waitlist when necessary.
+- [ ] Update CTA components (pricing cards, sticky bar, nav) to consume the new helper.
+- [ ] Retain minimal CTA click tracking and note analytics redesign as follow-up work.
+- [ ] QA the waitlist modal and non-checkout CTAs to ensure no regressions.
 
 ### Phase 3 – Backend & Integrations
-- Decommission `apps/store/app/api/checkout/session/route.ts` and supporting libs/tests.
-- Update webhook handlers so `checkout.session.completed` events triggered by Payment Links map back to the product and apply the correct GHL tag (e.g., look up by link id or price id).
-- Ensure existing licence fulfilment and reporting code paths work when session metadata is limited to static Payment Link fields.
-- Adjust monitoring scripts and alerts to observe Payment Link performance instead of hosted sessions.
+- [ ] Decommission `apps/store/app/api/checkout/session/route.ts` and supporting libs/tests.
+- [ ] Update webhook handlers to map Payment Link or price identifiers to the correct GHL tag and fulfilment payload.
+- [ ] Verify licence fulfilment and reporting still receive the required data without per-session metadata.
+- [ ] Refresh monitoring scripts/alerts to observe Payment Link success/cancel metrics instead of hosted sessions.
+- [ ] Clean up any unused environment variables related to hosted checkout sessions.
 
 ### Phase 4 – Content & Documentation Cleanup
-- Update all docs/checklists to describe Payment Links.
-- Refresh marketing copy in product YAMLs and blog posts referencing embedded/hosted checkout.
-- Remove obsolete test fixtures and manual runbooks tied to the old flows.
+- [ ] Update docs/checklists (`docs/architecture/*`, `operations/*`, playbooks) to describe Payment Links.
+- [ ] Refresh marketing copy in product YAMLs/blog posts that reference embedded or hosted checkout.
+- [ ] Remove or rewrite manual QA scripts and test fixtures tied to the old flows.
+- [ ] Notify support/sales enablement teams of the new checkout experience.
 
 ### Phase 5 – QA & Rollout
-- Regression plan: run existing automated suites, plus manual validation clicking each Payment Link in staging (Stripe promotions, waitlist fallback).
-- Monitor Stripe dashboards/webhooks post-launch for anomalies.
-- Prepare a rollback plan (e.g., keep hosted session code in a feature flag until Payment Links validated).
+- [ ] Finalise regression plan: automated suites + manual validation of each Payment Link in staging (Stripe promotions, waitlist fallback).
+- [ ] Execute manual staging walkthrough and capture screenshots/notes.
+- [ ] Monitor Stripe dashboards/webhooks post-launch for anomalies and document alert thresholds.
+- [ ] Prepare and document the rollback plan (e.g., feature flag or branch with hosted checkout).
+- [ ] Schedule post-launch review to evaluate analytics rebuild requirements.
 
 ## Open Questions / Risks
 - **GHL tagging**: confirm whether Payment Link metadata can hold the tag outright or if we must map price/link ids to tags in code.
@@ -90,6 +99,6 @@
 - **Pricing sync**: Payment Links lock price IDs at creation time. Define process for keeping them aligned with catalog updates.
 
 ## Immediate Next Steps
-1. Prototype Payment Link creation via Stripe API/manual dashboard; document how to recover the correct GHL tag from webhook payloads.
-2. Draft schema changes for storing payment link references.
-3. Summarise findings for stakeholders and confirm go/no-go before deleting hosted checkout code.
+- [ ] Prototype Payment Link creation via Stripe API/manual dashboard; document how to recover the correct GHL tag from webhook payloads.
+- [x] Draft schema changes for storing payment link references and circulate for review.
+- [ ] Summarise findings for stakeholders and confirm go/no-go before deleting hosted checkout code.

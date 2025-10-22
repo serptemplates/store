@@ -40,7 +40,7 @@ A comprehensive security audit identified and fixed 7 critical/important securit
 ### Modified (5 files)
 - `next.config.mjs` - Security headers
 - `lib/logger.ts` - PII redaction (83 lines added)
-- `app/api/checkout/session/route.ts` - Structured logging
+- `app/api/checkout/session/route.ts` - Structured logging (legacy route removed after Payment Link migration)
 - `app/api/paypal/webhook/route.ts` - Structured logging
 
 ### Created (9 files)
@@ -102,13 +102,13 @@ curl -I https://your-domain.com/api/health
 # - X-XSS-Protection
 # - Referrer-Policy
 
-# Test rate limiting
-for i in {1..35}; do 
-  curl -X POST https://your-domain.com/api/checkout/session \
+# Test rate limiting / abuse protection on live API routes
+for i in {1..35}; do
+  curl -X POST https://your-domain.com/api/paypal/create-order \
     -H "Content-Type: application/json" \
-    -d '{"offerId":"test"}'; 
+    -d '{"offerId":"test-product"}';
 done
-# Should return 429 after 30 requests
+# Should respond with non-2xx once protections trigger (manually monitor logs/alerts)
 
 # Run security tests
 cd apps/store

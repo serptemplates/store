@@ -3,7 +3,7 @@
 ## Current Implementation Status ✅
 
 ### 1. **Payment Processing Integration** ✅
-- **Stripe Checkout**: Fully implemented at `/api/checkout/session`
+- **Stripe Payment Links**: Configured per product via `payment_link` entries; metadata comes from Stripe product tags.
 - **Stripe Webhook**: Handles events at `/api/stripe/webhook`
 - **Affiliate Tracking**: Captures `affiliateId` in checkout metadata
 - **Order Persistence**: Saves to PostgreSQL via `upsertOrder()`
@@ -56,10 +56,9 @@ STRIPE_SECRET_KEY_TEST=sk_test_xxx           # optional: explicit test key overr
 STRIPE_WEBHOOK_SECRET=whsec_xxx
 STRIPE_WEBHOOK_SECRET_TEST=whsec_xxx         # optional: explicit test webhook secret
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
-STRIPE_INTEGRATION_OFFER_ID=loom-video-downloader  # optional: product slug for integration spec
 ```
 
-> The automated Stripe->GHL integration spec reads the `_TEST` variables when present and falls back to the base keys. Set the optional entries above if you keep separate live/test credentials in the same environment file.
+> Use `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` to validate Payment Link metadata, PayPal persistence, and webhook health after changing these credentials.
 
 ## Verification Steps
 
@@ -82,32 +81,12 @@ curl -X GET "https://services.leadconnectorhq.com/locations/${GHL_LOCATION_ID}" 
 ```
 
 ### 3. Test Purchase Flow
-```bash
-# 1. Create test checkout session
-curl -X POST http://localhost:3000/api/checkout/session \
-  -H "Content-Type: application/json" \
-  -d '{
-    "offerId": "demo-ecommerce-product",
-    "customer": {
-      "email": "test@example.com",
-      "name": "Test User"
-    },
-    "affiliateId": "aff123",
-    "metadata": {
-      "utm_source": "test",
-      "utm_campaign": "verification"
-    }
-  }'
-
-# 2. Complete purchase in Stripe test mode
-# 3. Check webhook logs
-tail -f logs/webhook.log
-
-# 4. Verify in GHL
-# - Contact created with email
-# - Tags applied
-# - Custom fields populated
-```
+1. Launch the product page and click the primary CTA (or open the Stripe Payment Link directly).
+2. Complete a Stripe test purchase (`4242 4242 4242 4242`) and confirm the webhook fires in the local logs (`pnpm --filter @apps/store dev` outputs or `logs/webhook.log` if running via PM2).
+3. Verify in the Stripe Dashboard that the Payment Link metadata includes the expected `offerId`, `landerId`, `ghl_tag`, and affiliate data.
+4. Inspect the database/GHL:
+   - Checkout session row created with `source = stripe`.
+   - GHL contact tagged and custom fields populated.
 
 ### 4. Verify Affiliate Attribution
 ```sql
@@ -148,23 +127,7 @@ WHERE status = 'completed'
 ORDER BY created_at DESC;
 ```
 
-### 6. Run Automated Stripe -> GHL Integration Test
-
-```bash
-pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
-```
-
-**Prerequisites**
-- `STRIPE_SECRET_KEY_TEST` (or `STRIPE_SECRET_KEY`) and matching `STRIPE_WEBHOOK_SECRET_TEST`
-- `DATABASE_URL` pointing at a writable Postgres instance
-- `GHL_LOCATION_ID` and `GHL_PAT_LOCATION` with API access
-- Optional: `STRIPE_INTEGRATION_OFFER_ID` to target a non-default offer slug
-
-> The test automatically loads `.env.local` / `.env` from both the repo root and `apps/store`, so you can keep your secrets in those files rather than exporting them manually before each run.
-
-The spec provisions a checkout session via the public API, replays a signed `checkout.session.completed` webhook, and asserts that `checkout_sessions.metadata` picks up `ghlSyncedAt`/`ghlContactId` while the matching order persists in `orders`.
-
-### 7. Run Automated PayPal -> GHL Integration Test
+### 6. Run Automated PayPal -> GHL Integration Test
 
 ```bash
 pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
@@ -176,7 +139,7 @@ pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test
 - `GHL_LOCATION_ID` and `GHL_PAT_LOCATION` with API access
 - Optional: `STRIPE_INTEGRATION_OFFER_ID` to target a non-default offer slug
 
-> Like the Stripe spec, the PayPal test auto-loads `.env.local` / `.env` from the repo root and `apps/store` so you can keep secrets in those files.
+> The test auto-loads `.env.local` / `.env` from the repo root and `apps/store` so you can keep secrets in those files.
 
 The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api/paypal/capture-order`, and verifies that both the order record and `checkout_sessions` row mirror our Stripe flow (including `ghlSyncedAt`, `ghlContactId`, and PayPal metadata).
 
@@ -223,7 +186,7 @@ The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api
 - [ ] Email validation working
 
 ### Automated Checks
-- [ ] `tests/integration/stripe-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts`)
+- [ ] `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` runs without failures
 - [ ] `tests/integration/paypal-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts`)
 
 ## Monitoring & Alerts

@@ -79,17 +79,17 @@ The ad-hoc harnesses under `apps/store/scripts/manual-tests/` are still handy fo
 
 ## GHL integration checks
 
-Use the integration specs when validating metadata changes:
+Use the automation harnesses when validating metadata changes:
 
 ```bash
-# Stripe → GHL
-pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
+# Payment Links + PayPal health check
+pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts
 
-# PayPal → GHL
+# PayPal → GHL integration spec
 pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
 ```
 
-Both tests assert that:
+These checks assert that:
 
 - Orders persist with the correct source + metadata.
 - Checkout sessions record `ghlSyncedAt` / `ghlContactId`.

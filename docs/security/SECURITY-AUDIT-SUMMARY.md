@@ -69,7 +69,7 @@ curl -I https://your-domain.com/api/health
 - Proper log levels (debug, info, warn, error)
 
 **Files Modified:**
-- `apps/store/app/api/checkout/session/route.ts`
+- (Legacy) `apps/store/app/api/checkout/session/route.ts` — removed once Stripe Payment Links replaced the API.
 - `apps/store/app/api/paypal/webhook/route.ts`
 
 ### 4. No Environment Variable Validation (MEDIUM PRIORITY) ✅

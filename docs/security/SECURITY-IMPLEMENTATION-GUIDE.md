@@ -45,7 +45,7 @@ pnpm test tests/security/logger-redaction.test.ts
 
 ### 3. Structured Logging (DONE)
 **Modified Files:**
-- `apps/store/app/api/checkout/session/route.ts`
+- (Legacy) `apps/store/app/api/checkout/session/route.ts` — migrated away in favour of Payment Links.
 - `apps/store/app/api/paypal/webhook/route.ts`
 
 Replaced all `console.log` statements with structured logging:
@@ -162,7 +162,7 @@ This enables the startup validation in `instrumentation.ts`.
 
 **Recommended for these API routes:**
 
-**a) Checkout API** (`apps/store/app/api/checkout/session/route.ts`):
+**a) PayPal Checkout API** (`apps/store/app/api/paypal/create-order/route.ts`):
 ```typescript
 import { withRequestValidation } from '@/lib/checkout/request-validation';
 
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
       ],
     },
     async (req) => {
-      // Existing checkout logic
+      // Existing PayPal order logic
       return withRateLimit(req, checkoutRateLimit, async () => {
         // ... existing code
       });
