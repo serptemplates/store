@@ -7,12 +7,6 @@ If you want to save these videos locally as clean `.mp4` files, you can do it re
 👉 Or you can just get the [Whop Video Downloader](https://serp.ly/whop-video-downloader)
 
 
-# Click the image below to watch the video 👇
-
-<a href="https://www.youtube.com/watch?v=oWmu4MOS2HE" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-whop-videos-for-free-step-by-step-guide-to-downloading-videos-from-whopcom.jpg" width="700px">
-</a>
-
 ---
 
 ## 🔎 Step 1: Capture the `.m3u8?token=...` URL
