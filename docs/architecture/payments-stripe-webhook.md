@@ -25,7 +25,7 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 
 - API-level coverage lives in `tests/api/stripe-webhook.test.ts`.
 - Retry logic is unit-tested in `lib/payments/stripe-webhook/helpers/ghl-sync.test.ts`.
-- Playwright smoke tests (`tests/e2e/stripe-checkout.test.ts`, `tests/manual/checkout-flow.spec.ts`) ensure the end-to-end flow (checkout → webhook → thank-you) stays green.
+- End-to-end coverage now relies on the hosted confirmation + success page flows; we no longer maintain the embedded checkout Playwright spec.
 
 When you add a new event type:
 

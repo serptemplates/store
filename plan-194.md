@@ -82,9 +82,9 @@
   - [ ] [Entitlements / license upgrades](https://docs.stripe.com/api/entitlements/active-entitlement)
 
 ### Testing & QA
-- Update or remove legacy tests tied to embedded checkout.
-- Add/adjust unit or integration tests covering the hosted redirect payload and metadata persistence.
-- Run required commands before completion: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit` (plus higher-level suites if touched code demands).
+- Update or remove legacy tests tied to embedded checkout. ✅ (`apps/store/tests/manual/checkout-flow.spec.ts` removed; embedded page assertions no longer apply.)
+- Add/adjust unit or integration tests covering the hosted redirect payload and metadata persistence. ✅ (API + webhook suites assert Stripe product/price IDs, GHL tags, and consent data.)
+- Run required commands before completion: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit` (plus higher-level suites if touched code demands). ✅
 
 ## Out-of-Code Config (handled later)
 - Stripe Checkout appearance, abandoned-cart recovery emails, and cross-sell offers can stay at their dashboard defaults for the initial rollout; document any follow-up tasks separately.

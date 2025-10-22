@@ -42,5 +42,4 @@ Existing Vitest suites (`tests/api/checkout-session.test.ts`, `tests/checkout/**
 3. Extend the relevant tests:
    - Validation / coupon behavior → `tests/api/checkout-session.test.ts`.
    - Session persistence → `tests/checkout/validation.test.ts` or `tests/checkout/coupons.test.ts`.
-   - Full-stack behavior → Playwright `tests/manual/checkout-flow.spec.ts` (redirect assertions only; the embedded iframe path no longer exists).
 4. Run the acceptance stack: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm test:smoke`.
