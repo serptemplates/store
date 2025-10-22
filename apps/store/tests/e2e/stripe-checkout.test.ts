@@ -52,7 +52,9 @@ test.describe("Hosted Stripe checkout flow", () => {
       waitUntil: "domcontentloaded",
     })
 
-    await page.getByRole("button", { name: /get it now/i }).click()
+    const primaryCtaButton = page.getByRole("button", { name: /get it now/i }).first()
+    await expect(primaryCtaButton).toBeVisible()
+    await primaryCtaButton.click()
 
     await navigationPromise
 
