@@ -73,3 +73,4 @@ google-creds.json
 merchant-feed.*
 external/
 mcp-debug-tools
+**/.lighthouseci/
