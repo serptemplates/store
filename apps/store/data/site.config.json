@@ -1,5 +1,19 @@
 {
   "gtmId": "GTM-WS97TH45",
+  "site": {
+    "name": "SERP Apps",
+    "domain": "https://apps.serp.co",
+    "logo": "/logo.svg"
+  },
+  "navigation": {
+    "links": [
+      { "label": "Catalog", "href": "/" },
+      { "label": "Github", "href": "https://github.com/serpapps" },
+      { "label": "Support", "href": "https://serp.ly/@serp/support" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "Videos", "href": "/videos" }
+    ]
+  },
   "blog": {
     "enabled": true
   },
