@@ -11,10 +11,6 @@ export type SiteConfig = {
   navigation?: {
     links?: Array<{ label: string; href: string }>;
   };
-  cta?: {
-    text?: string;
-    href?: string;
-  };
   blog?: {
     enabled?: boolean;
   };

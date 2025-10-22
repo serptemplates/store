@@ -146,17 +146,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const showPosts = siteConfig.blog?.enabled !== false
 
-  const productNavProps = useMemo(
-    () => ({
-      ...navProps,
-      ctaHref: resolvedCtaHref,
-      ctaText: resolvedCtaText,
-      showCta: true,
-    }),
-    [navProps, resolvedCtaHref, resolvedCtaText],
-  )
-
-  const Navbar = useCallback(() => <PrimaryNavbar {...productNavProps} />, [productNavProps])
+  const Navbar = useCallback(() => <PrimaryNavbar {...navProps} />, [navProps])
 
   const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
