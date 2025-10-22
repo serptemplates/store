@@ -9,9 +9,11 @@ The store app now leans on a clear separation between the design system packages
 - **`apps/store/app`** – Next.js routes that stitch the UI with server actions and fetchers. Route-level components should stay lean by delegating most markup to `components/`.
 - **`apps/store/lib`** – Domain logic split by capability (`checkout/`, `payments/`, `license-service/`, `ghl-client/`, etc.). UI components should only import the facades exposed by these folders (e.g., `@/lib/checkout`), never the private helpers.
 
-## Checkout page conventions
+## Checkout routing conventions
 
-The hosted Stripe rollout keeps `/checkout` as a minimal confirmation screen. The route loads product context, fires analytics, and waits for the shopper to click “Continue” before invoking `useCheckoutRedirect`. Avoid reintroducing bespoke forms or credit-card elements—let Stripe handle the payment surface entirely.
+- Product CTAs call `useCheckoutRedirect` directly, creating the hosted Stripe session on click.
+- The `/checkout` route remains as a server-side redirect for legacy deep links. It reads the query string, creates the session, and immediately redirects to Stripe—no UI should be rendered there.
+- Avoid reintroducing bespoke forms or credit-card elements; Stripe handles the payment surface entirely.
 
 ## Promotion checklist
 

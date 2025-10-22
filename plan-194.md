@@ -9,7 +9,7 @@
 
 ## Scope & Code Changes
 - Remove the legacy embedded Stripe checkout implementation and all supporting components, tests, and fallbacks.
-- Replace `/checkout` with a lightweight confirmation screen that triggers Stripe Checkout only after the shopper clicks the button (see [Stripe Checkout Quickstart](https://docs.stripe.com/checkout/quickstart?client=react&lang=node) for the canonical flow).
+- Replace `/checkout` with a zero-UI redirect handler that immediately creates a hosted Stripe session and forwards the shopper (see [Stripe Checkout Quickstart](https://docs.stripe.com/checkout/quickstart?client=react&lang=node) for the canonical flow).
 - Delete custom order bump UI/logic. Stripe cross-sell configured in the dashboard will handle upsells going forward.
 - Drop the custom terms-of-service checkbox and metadata. Depend on Stripe Checkout’s built-in consent capture instead.
 - Keep all existing metadata fields (affiliate, coupon, GHL, etc.) intact so downstream processing continues to function.
@@ -22,7 +22,7 @@
 >
 > **Key implementation notes**
 > - Remove every embedded checkout React component (`CheckoutPageView`, customer info sections, payment toggle, etc.) and the supporting hook/validation/tests.
-> - Replace `/checkout` with a confirmation screen that launches Stripe only after the user clicks "Continue".
+> - Replace `/checkout` with a server redirect that launches Stripe automatically so the shopper never sits on an intermediate screen.
 > - Product CTAs call `useCheckoutRedirect` inside the click handler so the redirect is treated as a user gesture; no popup blockers should appear.
 > - Metadata/analytics: maintain existing metadata contract and fire “checkout_viewed” before redirect. Terms/order-bump metadata stays in Stripe.
 > - PayPal flow remains out of scope; the hosted experience is Stripe-only.
@@ -32,7 +32,7 @@
 ## Detailed Implementation Tasks
 
 ### Frontend
-- `apps/store/app/checkout/page.tsx`: ✅ renders a minimal confirmation view; the shopper clicks “Continue to Stripe Checkout” to create the session and redirect.
+- `apps/store/app/checkout/page.tsx`: ✅ server route that reads query params, creates the hosted session, and issues an immediate redirect.
 - ✅ Product CTAs use `useCheckoutRedirect` inside their click handlers so Stripe opens in the same tab without triggering popup blockers.
 - ✅ Removed all React components, hooks, schemas, and tests that powered the embedded form (`CheckoutPageView`, `page/*` subcomponents, `useCheckoutPage`, `checkoutSchema`, etc.).
 - ✅ Verified no checkout-specific CSS is required in `app/globals.css`; page now relies on utility classes only.
@@ -95,7 +95,7 @@
    - [x] Confirm product YAML activation rules (`cta_mode: checkout`, no `buy_button_destination`).
    - [x] Remove unused plan entries or references to embedded checkout from docs/notes (see updated docs under `docs/architecture/`, `docs/operations/`, `docs/upsell-*`, and `docs/checkout-cross-sell-setup.md`).
 2. **Frontend Migration**
-   - [x] Implement `/checkout` as a confirmation view with a manual “Continue to Stripe Checkout” button (no automatic redirect).
+   - [x] Replace `/checkout` with an immediate hosted-checkout redirect so legacy deep links survive without presenting inline UI.
    - [x] Remove embedded checkout UI components (`CheckoutPageView`, `page/*` sections, `CustomerInfoForm`, etc.) and delete the related tests/stories.
    - [x] Delete supporting hooks, schemas, and helpers (`useCheckoutPage`, checkout Zod schema, coupon form logic, order summary utilities).
    - [x] Clean up checkout-specific styling (no specialized CSS remains outside utility classes).

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test"
 test.use({ viewport: { width: 1280, height: 1600 } })
 
 test.describe("Hosted Stripe checkout flow", () => {
-  test("confirm screen posts metadata and navigates without PayPal", async ({ page, context }) => {
+  test("product CTA posts metadata and navigates without PayPal", async ({ page, context }) => {
     const ignoredRequestPatterns = [
       /tawk\.to/i,
       /googletagmanager/i,
@@ -25,6 +25,9 @@ test.describe("Hosted Stripe checkout flow", () => {
 
     const interceptedBodies: Array<Record<string, unknown>> = []
 
+    const sessionUrl = "/mock-stripe-checkout?session_id=cs_test_playwright"
+    const escapedSessionUrlPattern = new RegExp(sessionUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+
     await page.route("**/api/checkout/session", async (route, request) => {
       const json = request.postDataJSON() as Record<string, unknown>
       interceptedBodies.push(json)
@@ -34,26 +37,22 @@ test.describe("Hosted Stripe checkout flow", () => {
         contentType: "application/json",
         body: JSON.stringify({
           id: "cs_test_playwright",
-          url: "/mock-stripe-checkout?session_id=cs_test_playwright",
+          url: sessionUrl,
           status: "open",
           mode: "payment",
         }),
       })
     })
 
-    await page.goto("/checkout?product=rawpixel-downloader", { waitUntil: "domcontentloaded" })
+    await page.goto("/rawpixel-downloader", { waitUntil: "domcontentloaded" })
 
-    await expect(page.getByRole("heading", { name: /Continue to Stripe Checkout/i })).toBeVisible()
-    await expect(page.getByRole("button", { name: /Continue to Stripe Checkout/i })).toBeVisible()
+    await expect(page.locator("text=/PayPal/i")).toHaveCount(0)
 
-    const paypalMentions = page.locator("text=/paypal/i")
-    await expect(paypalMentions).toHaveCount(0)
-
-    const navigationPromise = page.waitForURL(/\/mock-stripe-checkout\?session_id=cs_test_playwright/, {
+    const navigationPromise = page.waitForURL(escapedSessionUrlPattern, {
       waitUntil: "domcontentloaded",
     })
 
-    await page.getByRole("button", { name: /Continue to Stripe Checkout/i }).click()
+    await page.getByRole("button", { name: /get it now/i }).click()
 
     await navigationPromise
 
@@ -64,12 +63,12 @@ test.describe("Hosted Stripe checkout flow", () => {
       offerId: "rawpixel-downloader",
       quantity: 1,
       metadata: {
-        landerId: "rawpixel-downloader",
         checkoutSource: "hosted_checkout_stripe",
+        landerId: "rawpixel-downloader",
       },
     })
 
-    await expect(page.url()).toContain("/mock-stripe-checkout?session_id=cs_test_playwright")
+    await expect(page.url()).toMatch(escapedSessionUrlPattern)
 
     // Reset to avoid bleeding state if other tests run in same worker
     await context.clearCookies()

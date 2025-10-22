@@ -35,10 +35,17 @@ Existing Vitest suites (`tests/api/checkout-session.test.ts`, `tests/checkout/**
   - `tosAccepted` is normalized to `"true"`/`"false"` and forwarded to the GHL sync context plus purchase metadata blob
 - PayPal flows reuse the same persistence shape but set `checkoutSource=hosted_checkout_paypal` and omit Stripe-specific identifiers.
 
+### Legacy `/checkout` dependencies
+
+- Product YAML files use `/checkout?product=…` for cancel URLs and `/checkout/success` for post-purchase redirects (see `apps/store/data/products/*.yaml`). Stripe session builders fall back to these URLs when explicit overrides are absent.
+- `apps/store/middleware.ts` rewrites `/ghl/checkout` to `/checkout`, keeping partner links and automations functional.
+- Historical docs, operations runbooks, and topic pages reference `/checkout` for troubleshooting or canned links; they now describe the auto-redirect behavior but still expect the path to exist.
+- Playwright smoke tests (`tests/e2e/stripe-checkout.test.ts`) and scripts exercise the route to verify metadata and redirect handling.
+
 ## Adding new checkout flows
 
 1. Add domain logic under `apps/store/lib/checkout/*` and re-export it through `index.ts`.
-2. Wire the `/checkout` confirmation screen (and product CTA handlers) to consume the new helper.
+2. Prefer wiring product CTAs directly to `useCheckoutRedirect`. The legacy `/checkout` route now exists only as a server-side redirect for old deep links; it immediately calls the session API and forwards to Stripe.
 3. Extend the relevant tests:
    - Validation / coupon behavior → `tests/api/checkout-session.test.ts`.
    - Session persistence → `tests/checkout/validation.test.ts` or `tests/checkout/coupons.test.ts`.
