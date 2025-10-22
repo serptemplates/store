@@ -1,138 +1,96 @@
-# Issue #194 – Hosted Stripe Checkout Migration Plan
+# Issue #194 – Stripe Checkout Decommission & Payment Link Rollout
 
-## Activation Rules
-- Show the hosted checkout flow only when the product YAML resolves to `cta_mode: checkout`.
-- Ensure `buy_button_destination` is absent or set to `null`; any non-empty value forces an external CTA and bypasses `/checkout`.
-- Stripe pricing (`stripe.price_id` or `stripe.test_price_id`) must remain configured so `cta_mode: checkout` can be inferred when not set explicitly.
-- Verified via `apps/store/lib/products/product-adapter.ts` that products with `cta_mode: checkout` (or no external destination plus Stripe prices) automatically point their CTAs to `/checkout?product=<slug>`.
-- Example configuration: `rawpixel-downloader` sets `status: live`, `cta_mode: checkout`, and `buy_button_destination: null` so the storefront routes directly into `/checkout`.
+## Goal Shift
+- Deprecate every custom Stripe checkout experience in the store (embedded React flow and hosted-session redirect).
+- Replace checkout CTAs with Stripe Payment Links while preserving affiliate attribution, coupons, analytics, and fulfilment hooks.
+- Document the migration path so operations can manage Payment Links from the Stripe dashboard without code deploys.
 
-## Scope & Code Changes
-- Remove the legacy embedded Stripe checkout implementation and all supporting components, tests, and fallbacks.
-- Replace `/checkout` with a zero-UI redirect handler that immediately creates a hosted Stripe session and forwards the shopper (see [Stripe Checkout Quickstart](https://docs.stripe.com/checkout/quickstart?client=react&lang=node) for the canonical flow).
-- Delete custom order bump UI/logic. Stripe cross-sell configured in the dashboard will handle upsells going forward.
-- Drop the custom terms-of-service checkbox and metadata. Depend on Stripe Checkout’s built-in consent capture instead.
-- Keep all existing metadata fields (affiliate, coupon, GHL, etc.) intact so downstream processing continues to function.
-- Ensure the hosted checkout redirect happens via user-initiated navigation (same tab by default) so browsers don’t block the flow.
-- Allow Stripe to determine available payment methods by default; keep support for the existing env overrides or payment method configuration IDs when present.
+## Discovery & Constraints
+1. **Feature parity requirements**
+   - Dynamic metadata today carries affiliate ids, coupon codes, source tracking, and GHL context. Confirm whether Payment Links can accept per-request metadata (likely via [Payment Link API creation parameters] – research needed).
+   - We currently apply coupon codes dynamically via query params. Determine if Payment Links allow promo codes on the landing page or require preconfigured promotion codes.
+   - Check entitlement/licensing flows that depend on checkout session metadata (`stripe_checkout_session_id`, `landerId`, etc.) and design an alternative (e.g., webhook enrichment).
+   - Validate success/cancel URL customisation, tax behaviour, payment method availability, and multi-currency support.
+2. **Operational questions**
+   - Decide who owns Payment Link creation/maintenance and how link IDs will be stored per product (likely in product YAML).
+   - Determine if PayPal remains in scope. If yes, Payment Links may require parallel PayPal handling or a composite landing experience.
+   - Identify monitoring gaps once API-driven session creation disappears (update LHCI, alerts, dashboards).
+3. **Research tasks**
+   - Review Stripe docs: Payment Links metadata, analytics hooks, discount application, checkout custom fields.
+   - Spike a prototype Payment Link and test affiliate/coupon behaviour in staging.
 
-## Issue Update Draft
+## Audit – Embedded Checkout References
+- **Code/tests**
+  - `apps/store/tests/lib/product-adapter.test.ts` (embedded CTA expectations).
+  - `scripts/monitoring/create-checkout-fallback-alert.ts` (refers to embedded fallback insight).
+  - `apps/store/__tests__/useCheckoutRedirect.test.tsx` still models hosted redirect but implicitly replaces embedded flow.
+- **Product content**
+  - Multiple YAMLs in `apps/store/data/products/*.yaml` contain marketing copy mentioning “embedded checkout” (e.g., `redgifs-downloader.yaml`, `stream-downloader.yaml`, `gohighlevel-downloader.yaml`). These need rewritten messaging once the flow changes.
+- **Docs**
+  - `docs/upsell-regression-checklist.md`
+  - `docs/architecture/checkout-overview.md`
+  - `docs/architecture/payments-stripe-webhook.md`
+  - `docs/checkout-cross-sell-setup.md`
+  - `docs/operations/pre-release-cta.md`
 
-> **TL;DR**: `/checkout` should no longer render our custom form. Products that resolve to checkout mode must send shoppers to the confirm screen, where a click launches Stripe’s hosted Checkout. Stripe is responsible for collecting terms, cross-sells, and payment options. We still need to send the existing metadata (affiliate, lander, coupon, etc.); PayPal is no longer part of this flow.
->
-> **Key implementation notes**
-> - Remove every embedded checkout React component (`CheckoutPageView`, customer info sections, payment toggle, etc.) and the supporting hook/validation/tests.
-> - Replace `/checkout` with a server redirect that launches Stripe automatically so the shopper never sits on an intermediate screen.
-> - Product CTAs call `useCheckoutRedirect` inside the click handler so the redirect is treated as a user gesture; no popup blockers should appear.
-> - Metadata/analytics: maintain existing metadata contract and fire “checkout_viewed” before redirect. Terms/order-bump metadata stays in Stripe.
-> - PayPal flow remains out of scope; the hosted experience is Stripe-only.
->
-> **Out of scope**: Stripe appearance, recovery email settings, and Dashboard cross-sell configuration remain dashboard tasks.
+## Audit – Hosted Checkout Dependencies
+- `apps/store/components/product/useCheckoutRedirect.ts`
+- `apps/store/app/api/checkout/session/route.ts` (creates hosted sessions).
+- `apps/store/app/checkout/page.tsx` (server redirect).
+- CTA wiring in UI views: `apps/store/components/home/ClientHomeView.tsx`, `apps/store/components/product/StickyPurchaseBar.tsx`, hybrid layouts, etc.
+- Tests relying on Stripe session creation: 
+  - `apps/store/tests/api/checkout-session.test.ts`
+  - `apps/store/tests/content/price-manifest.test.ts` (ensures price mapping)
+  - `apps/store/tests/api/paypal-*` (share metadata expectations)
+- Docs referencing hosted checkout: 
+  - `docs/architecture/checkout-overview.md`
+  - `docs/historical/store-cutover.md`
+  - `docs/operations/store-deployment.md`
+  - `docs/upsell-smoke-tests.md`
+- Monitoring/ops scripts expecting hosted checkout telemetry.
 
-## Detailed Implementation Tasks
+## Implementation Roadmap
 
-### Frontend
-- `apps/store/app/checkout/page.tsx`: ✅ server route that reads query params, creates the hosted session, and issues an immediate redirect.
-- ✅ Product CTAs use `useCheckoutRedirect` inside their click handlers so Stripe opens in the same tab without triggering popup blockers.
-- ✅ Removed all React components, hooks, schemas, and tests that powered the embedded form (`CheckoutPageView`, `page/*` subcomponents, `useCheckoutPage`, `checkoutSchema`, etc.).
-- ✅ Verified no checkout-specific CSS is required in `app/globals.css`; page now relies on utility classes only.
-- 🔄 PayPal checkout is no longer exposed in the Stripe-hosted path; confirm downstream expectations reflect Stripe-only checkout.
+### Phase 0 – Validation & Alignment
+- Confirm Payment Links satisfy metadata, coupon, affiliate, analytics, and fulfilment needs.
+- Document blockers or required Stripe feature flags; escalate if Payment Links cannot support a requirement.
+- Align stakeholders on PayPal support strategy and operational ownership of Payment Links.
 
-### Redirect Helper
-- `apps/store/components/product/useCheckoutRedirect.ts`:
-  - ✅ Always request hosted checkout sessions (no embedded option).
-  - ✅ Preserve metadata contract (affiliate, coupon, landerId) while defaulting `checkoutSource = hosted_checkout_stripe`.
-  - ✅ Redirect in the current tab with `window.location.assign`, keeping the flow user-initiated so browsers don’t block the popup.
-  - ✅ Improve error handling/logging to match the legacy flow and surface analytics callbacks.
+### Phase 1 – Data Model & Configuration
+- Extend product schema to store Payment Link URLs/ids (including test vs live variants).
+- Build tooling or scripts to sync link references from Stripe into product YAML.
+- Define fallback behaviours (e.g., missing Payment Link = waitlist modal).
 
-### API & Checkout Session Logic
-- `apps/store/app/api/checkout/session/route.ts` and `apps/store/lib/checkout/session/pricing.ts`:
-  - ✅ Remove the embedded `client_secret` branch; always respond with `id` and `url`.
-  - ✅ Stop injecting order-bump metadata and terms fields.
-  - ✅ Allow Stripe to serve dashboard-enabled payment methods (don’t hard-code `["card"]` unless env demands it).
-  - ✅ Keep payment configuration override logic working (`STRIPE_CHECKOUT_PAYMENT_METHODS`, payment config ID).
-  - ✅ Ensure metadata stored in DB matches prior expectations minus removed fields.
-  - ✅ Persist Stripe price/product identifiers and resolved GHL tags so downstream systems receive the hosted checkout context.
-- `apps/store/lib/checkout/simple-checkout.ts`: ✅ mirror the hosted defaults (no embedded UI fields, no order-bump metadata, no card-only constraint).
-- (PayPal routes remain for legacy flows but are not exposed via the Stripe hosted experience.)
+### Phase 2 – Frontend Migration
+- Replace `useCheckoutRedirect` usage with direct navigation to Payment Links (consider `target="_blank"` vs same-tab).
+- Remove `/checkout` route entirely; update any deep links to redirect to product pricing or waitlist.
+- Simplify CTA analytics: track clicks before leaving site, ensure metadata previously sent via API is now captured elsewhere (e.g., query params appended to payment link).
+- Update sticky bars, pricing components, and nav CTAs to use Payment Link strategy.
 
-### Validation & Types
-- Update Zod schemas in `apps/store/lib/validation/checkout.ts` / `lib/checkout/session/validation.ts` to remove order-bump & terms fields and adjust tests in `apps/store/tests/checkout/validation.test.ts`. ✅ (schemas + session validation updated; checkout + API tests now assert hosted-only metadata).
-- Update TypeScript interfaces that referenced the removed metadata. ✅ (product data adapters, validation helpers, and scripts strip legacy order-bump fields).
+### Phase 3 – Backend & Integrations
+- Decommission `apps/store/app/api/checkout/session/route.ts` and supporting libs/tests.
+- Remove Stripe session metadata persistence paths (`checkout-store-metadata-update` tests, license-service flows) or adapt them to Payment Link webhooks.
+- Review webhook handlers to ensure fulfilment works when sessions originate from Payment Links (webhook events differ slightly: `checkout.session.completed` still fires but metadata/source may change).
+- Adjust monitoring scripts and alerts to observe Payment Link performance instead of hosted sessions.
 
-### Success Flow & Webhooks
-- Review success handling (`apps/store/app/checkout/success/*` and `lib/payments/stripe-webhook/events/checkout-session-completed.ts`) to confirm nothing expects the removed metadata; adjust logging/copy if necessary. ✅ (webhook + success logic rely on normalized metadata only; no order-bump/terms fields referenced).
-- Ensure Stripe Checkout consent (TOS) status is captured from `session.consent` and forwarded (with enriched metadata) to GHL sync + purchase metadata payloads. ✅
+### Phase 4 – Content & Documentation Cleanup
+- Update all docs/checklists to describe Payment Links.
+- Refresh marketing copy in product YAMLs and blog posts referencing embedded/hosted checkout.
+- Remove obsolete test fixtures and manual runbooks tied to the old flows.
 
-### Product & CTA Handling
-- Document expectation that product YAML uses `cta_mode: checkout` with `buy_button_destination: null` (or absent) for hosted flow. No code changes required beyond ensuring `/checkout` path remains intact.
+### Phase 5 – QA & Rollout
+- Regression plan: run existing automated suites, plus manual validation clicking each Payment Link in staging (coupons, affiliates, waitlist fallback).
+- Monitor Stripe dashboards/webhooks post-launch for anomalies.
+- Prepare a rollback plan (e.g., keep hosted session code in a feature flag until Payment Links validated).
 
-### Documentation
-- Remove or rewrite any docs referencing the embedded flow; add rollout/rollback notes if needed (e.g., `docs/architecture/`). ✅ (updated architecture overview, operations runbooks, upsell checklists, and added `checkout-cross-sell-setup.md`).
-- Create follow-up documentation tasks referencing Stripe resources:
-  - [ ] [Customize appearance](https://docs.stripe.com/payments/checkout/customization/appearance)
-  - [ ] [Save customer data during payment](https://docs.stripe.com/payments/checkout/save-during-payment)
-  - [ ] [Metadata best practices](https://docs.stripe.com/api/metadata)
-  - [ ] [Post-purchase redirects & custom success pages](https://docs.stripe.com/payments/checkout/custom-success-page)
-  - [ ] [Recover abandoned carts](https://docs.stripe.com/payments/checkout/abandoned-carts)
-  - [ ] [Analyze conversion funnel](https://docs.stripe.com/payments/checkout/analyze-conversion-funnel)
-  - [ ] [Forward card details to third-party APIs](https://docs.stripe.com/payments/vault-and-forward)
-  - [ ] [Revenue recovery analytics](https://docs.stripe.com/billing/revenue-recovery/recovery-analytics)
-  - [ ] [Handling errors](https://docs.stripe.com/api/errors/handling)
-  - [ ] [Entitlements / license upgrades](https://docs.stripe.com/api/entitlements/active-entitlement)
+## Open Questions / Risks
+- **Metadata propagation**: can we safely append affiliate & campaign parameters to Payment Link URLs and retrieve them in webhooks, or do we need a middleware?
+- **Coupon strategy**: how will dynamic coupons work when we cannot call Stripe APIs per request?
+- **Success experience**: Payment Links redirect to configured URLs. Do we need to generate per-request success URLs to carry context?
+- **Analytics**: current flow emits events on session creation; identify new instrumentation points.
+- **Pricing sync**: Payment Links lock price IDs at creation time. Define process for keeping them aligned with catalog updates.
 
-### Testing & QA
-- Update or remove legacy tests tied to embedded checkout. ✅ (`apps/store/tests/manual/checkout-flow.spec.ts` removed; embedded page assertions no longer apply.)
-- Add/adjust unit or integration tests covering the hosted redirect payload and metadata persistence. ✅ (API + webhook suites assert Stripe product/price IDs, GHL tags, and consent data.)
-- Run required commands before completion: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit` (plus higher-level suites if touched code demands). ✅
-
-## Out-of-Code Config (handled later)
-- Stripe Checkout appearance, abandoned-cart recovery emails, and cross-sell offers can stay at their dashboard defaults for the initial rollout; document any follow-up tasks separately.
-
-## Step-by-Step Checklist
-
-1. **Planning & Cleanup**
-   - [x] Confirm product YAML activation rules (`cta_mode: checkout`, no `buy_button_destination`).
-   - [x] Remove unused plan entries or references to embedded checkout from docs/notes (see updated docs under `docs/architecture/`, `docs/operations/`, `docs/upsell-*`, and `docs/checkout-cross-sell-setup.md`).
-2. **Frontend Migration**
-   - [x] Replace `/checkout` with an immediate hosted-checkout redirect so legacy deep links survive without presenting inline UI.
-   - [x] Remove embedded checkout UI components (`CheckoutPageView`, `page/*` sections, `CustomerInfoForm`, etc.) and delete the related tests/stories.
-   - [x] Delete supporting hooks, schemas, and helpers (`useCheckoutPage`, checkout Zod schema, coupon form logic, order summary utilities).
-   - [x] Clean up checkout-specific styling (no specialized CSS remains outside utility classes).
-   - [x] Ensure analytics events fire before navigation and handle popup-blocker errors gracefully.
-3. **Redirect Helper**
-   - [x] Update `useCheckoutRedirect` to always request hosted sessions, keep metadata, and navigate in the current tab.
-   - [x] Improve error handling/logging as needed.
-4. **API & Session Logic**
-   - [x] Refactor checkout session API to only return hosted responses (no client secret).
-   - [x] Remove order bump + terms metadata from session creation and persistence.
-   - [x] Allow Stripe to choose payment methods unless env overrides are set.
-   - [x] Mirror changes in `simple-checkout`.
-5. **Validation & Types**
-   - [x] Update Zod schemas/types to reflect new payload.
-   - [x] Fix unit tests covering checkout validation and API metadata.
-6. **Success & Webhook Flow**
-   - [x] Verify success page/webhook processing with updated metadata.
-   - [x] Adjust copy/logging if needed.
-7. **Documentation**
-   - [x] Update/remove embedded checkout references in docs.
-   - [x] Note Stripe dashboard follow-up tasks separately if desired.
-   - [ ] Review Stripe documentation follow-ups:
-     - [ ] [Customize appearance](https://docs.stripe.com/payments/checkout/customization/appearance)
-     - [ ] [Save customer data during payment](https://docs.stripe.com/payments/checkout/save-during-payment)
-     - [ ] [Metadata best practices](https://docs.stripe.com/api/metadata)
-     - [ ] [Post-purchase redirects & custom success pages](https://docs.stripe.com/payments/checkout/custom-success-page)
-     - [ ] [Recover abandoned carts](https://docs.stripe.com/payments/checkout/abandoned-carts)
-     - [ ] [Analyze conversion funnel](https://docs.stripe.com/payments/checkout/analyze-conversion-funnel)
-     - [ ] [Forward card details to third-party APIs](https://docs.stripe.com/payments/vault-and-forward)
-     - [ ] [Revenue recovery analytics](https://docs.stripe.com/billing/revenue-recovery/recovery-analytics)
-     - [ ] [Handling errors](https://docs.stripe.com/api/errors/handling)
-     - [ ] [Entitlements / license upgrades](https://docs.stripe.com/api/entitlements/active-entitlement)
-8. **Testing & Verification**
-   - [x] Run `pnpm lint`.
-   - [x] Run `pnpm typecheck`.
-   - [x] Run required test suites (`pnpm test:unit`, others if touched).
-   - [ ] Manual spot-check: hosted redirect launches after the confirm button (no popup warning) and completes successfully.
-9. **Review & Wrap-up**
-   - [ ] Review diff for dead code removal and metadata coverage.
-   - [ ] Update plan status / issue comments as necessary.
+## Immediate Next Steps
+1. Prototype Payment Link creation via Stripe API/manual dashboard; document metadata/coupon behaviour.
+2. Draft schema changes for storing payment link references.
+3. Summarise findings for stakeholders and confirm go/no-go before deleting hosted checkout code.
