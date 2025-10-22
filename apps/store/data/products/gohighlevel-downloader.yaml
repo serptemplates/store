@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- GoHighLevel CRM data and marketing assets
-- Client funnels and automation content
-- Batch marketing campaigns/templates downloads
-- Auto organization by client and campaign
-- Custom folders for agency workflows
-- Resume downloads
-- Cross-platform support
-- Content viewer
-- CLI tools
-- Marketing integration
-- Export client data/campaign analytics
-- Search capabilities across marketing content
-- Enterprise-grade privacy and compliance features
-- Regular compatibility updates
-- Various marketing asset formats
-- Bandwidth management for large campaign files
-- Backup & restore options for client data
-- Smart organization
-- Secure client information handling
-- Advanced reporting and performance tracking
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

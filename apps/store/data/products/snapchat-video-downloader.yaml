@@ -43,7 +43,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Media viewer
-- CLI for automated collection
 - Organize by user and date
 - Duplicate detection
 - Media center integration

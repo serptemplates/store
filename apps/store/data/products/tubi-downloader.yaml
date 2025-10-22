@@ -42,7 +42,6 @@ features:
 - Built-in player with advanced controls
 - Organize by genre/release year
 - Duplicate detection
-- CLI tools
 - Home theater integration
 - Export movie schedules/availability data
 - Local-only storage for privacy

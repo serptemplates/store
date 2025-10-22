@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Thumbnail viewer
-- CLI tools
 - Video editing integration
 - Export thumbnail data/source information
 - Search capabilities across thumbnail libraries
