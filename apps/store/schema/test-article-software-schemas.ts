@@ -35,7 +35,7 @@ const articleSchema = generateBlogPostingSchema({
   articleSection: 'Technical Tutorials',
   publisher: {
     name: 'SERP Apps',
-    logo: 'https://apps.serp.co/logo.png',
+    logo: 'https://apps.serp.co/logo.svg',
   },
 });
 

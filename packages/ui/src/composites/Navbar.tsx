@@ -29,7 +29,7 @@ export type NavbarProps = {
 export function Navbar({
   site,
   blogHref = "/blog",
-  logo = "/logo.png",
+  logo = "/logo.svg",
   brand,
   Link,
   ctaHref,
