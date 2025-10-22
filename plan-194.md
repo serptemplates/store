@@ -2,13 +2,13 @@
 
 ## Goal Shift
 - Deprecate every custom Stripe checkout experience in the store (embedded React flow and hosted-session redirect).
-- Replace checkout CTAs with Stripe Payment Links while preserving affiliate attribution, coupons, analytics, and fulfilment hooks.
+- Replace checkout CTAs with Stripe Payment Links while preserving GHL tagging and fulfilment hooks; defer the analytics rebuild to a separate follow-up once the new checkout path is stable.
 - Document the migration path so operations can manage Payment Links from the Stripe dashboard without code deploys.
 
 ## Discovery & Constraints
 1. **Feature parity requirements**
-   - Dynamic metadata today carries affiliate ids, coupon codes, source tracking, and GHL context. Confirm whether Payment Links can accept per-request metadata (likely via [Payment Link API creation parameters] – research needed).
-   - We currently apply coupon codes dynamically via query params. Determine if Payment Links allow promo codes on the landing page or require preconfigured promotion codes.
+   - We only need to continue tagging customers in GoHighLevel with the product-specific tag. Confirm we can encode that tag via Payment Link metadata or map it from the product/price in our webhook.
+   - Stripe-native coupons will be configured in the dashboard; verify promotional codes remain available through the Payment Link UI (no custom coupon logic required).
    - Check entitlement/licensing flows that depend on checkout session metadata (`stripe_checkout_session_id`, `landerId`, etc.) and design an alternative (e.g., webhook enrichment).
    - Validate success/cancel URL customisation, tax behaviour, payment method availability, and multi-currency support.
 2. **Operational questions**
@@ -16,8 +16,8 @@
    - Determine if PayPal remains in scope. If yes, Payment Links may require parallel PayPal handling or a composite landing experience.
    - Identify monitoring gaps once API-driven session creation disappears (update LHCI, alerts, dashboards).
 3. **Research tasks**
-   - Review Stripe docs: Payment Links metadata, analytics hooks, discount application, checkout custom fields.
-   - Spike a prototype Payment Link and test affiliate/coupon behaviour in staging.
+   - Review Stripe docs: Payment Links metadata, checkout custom fields, allowed query parameters.
+   - Create a prototype Payment Link and verify the webhook delivers enough information (link id, price ids, metadata) to look up the correct GHL tag in staging.
 
 ## Audit – Embedded Checkout References
 - **Code/tests**
@@ -52,7 +52,7 @@
 ## Implementation Roadmap
 
 ### Phase 0 – Validation & Alignment
-- Confirm Payment Links satisfy metadata, coupon, affiliate, analytics, and fulfilment needs.
+- Confirm Payment Links carry or expose the identifiers we need to apply the correct GHL tag post-purchase (link metadata or price mapping).
 - Document blockers or required Stripe feature flags; escalate if Payment Links cannot support a requirement.
 - Align stakeholders on PayPal support strategy and operational ownership of Payment Links.
 
@@ -62,15 +62,15 @@
 - Define fallback behaviours (e.g., missing Payment Link = waitlist modal).
 
 ### Phase 2 – Frontend Migration
-- Replace `useCheckoutRedirect` usage with direct navigation to Payment Links (consider `target="_blank"` vs same-tab).
-- Remove `/checkout` route entirely; update any deep links to redirect to product pricing or waitlist.
-- Simplify CTA analytics: track clicks before leaving site, ensure metadata previously sent via API is now captured elsewhere (e.g., query params appended to payment link).
-- Update sticky bars, pricing components, and nav CTAs to use Payment Link strategy.
+- Replace `useCheckoutRedirect` with a direct navigation helper that routes shoppers to the appropriate Payment Link (test vs live).
+- Remove `/checkout` route entirely; update any deep links to redirect straight to the Payment Link or to the product page when the link is missing.
+- Capture minimal CTA click events for parity, with a full analytics redesign tracked separately.
+- Update sticky bars, pricing components, and nav CTAs to use the Payment Link lookup.
 
 ### Phase 3 – Backend & Integrations
 - Decommission `apps/store/app/api/checkout/session/route.ts` and supporting libs/tests.
-- Remove Stripe session metadata persistence paths (`checkout-store-metadata-update` tests, license-service flows) or adapt them to Payment Link webhooks.
-- Review webhook handlers to ensure fulfilment works when sessions originate from Payment Links (webhook events differ slightly: `checkout.session.completed` still fires but metadata/source may change).
+- Update webhook handlers so `checkout.session.completed` events triggered by Payment Links map back to the product and apply the correct GHL tag (e.g., look up by link id or price id).
+- Ensure existing licence fulfilment and reporting code paths work when session metadata is limited to static Payment Link fields.
 - Adjust monitoring scripts and alerts to observe Payment Link performance instead of hosted sessions.
 
 ### Phase 4 – Content & Documentation Cleanup
@@ -79,18 +79,17 @@
 - Remove obsolete test fixtures and manual runbooks tied to the old flows.
 
 ### Phase 5 – QA & Rollout
-- Regression plan: run existing automated suites, plus manual validation clicking each Payment Link in staging (coupons, affiliates, waitlist fallback).
+- Regression plan: run existing automated suites, plus manual validation clicking each Payment Link in staging (Stripe promotions, waitlist fallback).
 - Monitor Stripe dashboards/webhooks post-launch for anomalies.
 - Prepare a rollback plan (e.g., keep hosted session code in a feature flag until Payment Links validated).
 
 ## Open Questions / Risks
-- **Metadata propagation**: can we safely append affiliate & campaign parameters to Payment Link URLs and retrieve them in webhooks, or do we need a middleware?
-- **Coupon strategy**: how will dynamic coupons work when we cannot call Stripe APIs per request?
-- **Success experience**: Payment Links redirect to configured URLs. Do we need to generate per-request success URLs to carry context?
-- **Analytics**: current flow emits events on session creation; identify new instrumentation points.
+- **GHL tagging**: confirm whether Payment Link metadata can hold the tag outright or if we must map price/link ids to tags in code.
+- **Success experience**: Payment Links redirect to configured URLs. Do we need per-product success URLs or can the existing generic success page handle fulfilment?
+- **Analytics follow-up**: define scope for the post-migration analytics rebuild (event model, tooling) and ensure work is tracked separately.
 - **Pricing sync**: Payment Links lock price IDs at creation time. Define process for keeping them aligned with catalog updates.
 
 ## Immediate Next Steps
-1. Prototype Payment Link creation via Stripe API/manual dashboard; document metadata/coupon behaviour.
+1. Prototype Payment Link creation via Stripe API/manual dashboard; document how to recover the correct GHL tag from webhook payloads.
 2. Draft schema changes for storing payment link references.
 3. Summarise findings for stakeholders and confirm go/no-go before deleting hosted checkout code.
