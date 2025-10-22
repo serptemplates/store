@@ -8,9 +8,9 @@ This guide covers exactly what monitoring and alerting you need to track sales a
 
 ## 🎯 Essential Monitoring Setup
 
-### 1. Real-Time Sales Dashboard (Vercel Analytics + Custom)
+### 1. Real-Time Sales Dashboard (Custom API + PostHog)
 
-**What to Track:**
+**What to Track (surface in PostHog dashboards or a custom UI):**
 - Orders per hour
 - Revenue per hour
 - Current conversion rate
