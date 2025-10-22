@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Built-in player with streaming controls
-- CLI tools
 - Media center integration
 - Export movie data/viewing statistics
 - Search movie libraries

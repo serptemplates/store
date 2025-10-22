@@ -40,7 +40,6 @@ features:
 - Resume downloads with recovery
 - Cross-platform support
 - Built-in document reader with annotation support
-- CLI tools
 - Integrates with reference management systems
 - Export document metadata/citations
 - Search document libraries

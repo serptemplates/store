@@ -40,7 +40,6 @@ features:
 - Resume downloads with recovery
 - Cross-platform support
 - Built-in media browser with preview capabilities
-- CLI tools
 - Integrates with video editing software
 - Export asset data/usage analytics
 - Search media libraries

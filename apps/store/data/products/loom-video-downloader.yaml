@@ -45,13 +45,13 @@ github_repo_tags:
 - loom-downloader
 - loom-video-downloader
 - download-loom-videos
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/loom-video-downloader/oopljffmklejoikiemiedeangcchfmlf
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
 - One-click download from any video page
-- "100% privacy-friendly \u2013 no tracking or data collection"
+- 100% privacy-friendly
 - Auto-detect videos on the page
 - Smart Page Scan
 - Embedded Video Support
@@ -65,6 +65,10 @@ features:
 - Thumbnail Preview
 - Minimal Permissions
 - Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   price: $17.00
   currency: USD

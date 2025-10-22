@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Asset viewer
-- CLI tools
 - Integrates with graphic design applications
 - Export resource data/usage information
 - Search capabilities across design libraries

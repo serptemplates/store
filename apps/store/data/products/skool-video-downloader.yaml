@@ -55,25 +55,15 @@ features:
 - Download full courses offline
 - Save videos, docs, and materials
 - Preserve course structure
-- Auto-login for enrolled courses
-- Batch download multiple courses
-- Export posts and discussions
+- Download classrooms, posts, discussions
 - Download all attachments
-- Record live streams
-- Track download progress
-- Optimize file sizes
 - Resume interrupted downloads
-- Export to PDF and EPUB
-- Search and filter content
-- Backup course libraries
-- CLI for automation
-- Sync with note-taking apps
-- Offline media player
 - Works on all platforms
-- Always Skool-compatible
-- Local storage only
+- Local storage
+- Privacy-focused
+- Regular compatibility updates
 pricing:
-  price: $27.00
+  price: $37.00
   currency: USD
   availability: InStock
 order_bump: serp-downloaders-bundle
@@ -136,7 +126,7 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
-  price_id: price_1S9BFU06JrOmKRCmMYncsgKb
+  price_id: price_1SKxDw06JrOmKRCmxbxexLDR
   metadata:
 ghl:
   tag_ids:

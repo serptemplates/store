@@ -33,26 +33,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Live streams from various platforms
-- Multiple streaming protocols and formats
-- Batch recording from multiple sources simultaneously
-- Auto stream detection and quality selection
-- Organize by platform/streamer
-- Resume interrupted recordings with recovery
-- Cross-platform support
-- Built-in stream player with recording controls
-- CLI tools
-- Streaming integration
-- Export stream data/recording statistics
-- Search capabilities across recorded streams
-- Privacy protection
-- Regular compatibility updates
-- Various streaming formats and qualities
-- Bandwidth management for live recording
-- Backup & restore for stream archives
-- Smart categorization
-- Livestream monitoring and alerts
-- Advanced recording scheduling and automation
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

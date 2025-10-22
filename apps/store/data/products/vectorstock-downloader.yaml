@@ -40,7 +40,6 @@ features:
 - Resume downloads with recovery
 - Cross-platform support
 - Vector viewer
-- CLI tools
 - Integrates with vector graphics software
 - Export vector data/licensing information
 - Search capabilities across vector libraries
