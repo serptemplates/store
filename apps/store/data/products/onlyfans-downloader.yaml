@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Subscriber content and media files
-- Photos, videos, and story content
-- Batch creator profiles/posts downloads
-- Auto content organization by creator and date
-- Resume downloads with recovery
-- Cross-platform support
-- Media viewer
-- CLI for automated collection
-- Custom folders and naming schemes
-- Duplicate detection and content management
-- Integrates with content management systems
-- Export creator data/engagement metrics
-- Privacy-focused design with encrypted storage
-- Regular compatibility updates
-- Search content libraries
-- Bandwidth management for large media files
-- Live stream recordings
-- Smart content categorization and filtering
-- Backup & restore capabilities
-- Secure local storage with no cloud dependency
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

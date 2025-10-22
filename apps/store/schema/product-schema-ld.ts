@@ -419,7 +419,7 @@ export function generateOrganizationSchema({
     '@type': 'Organization',
     name: storeName,
     url: storeUrl,
-    logo: logoUrl || `${storeUrl}/logo.png`,
+    logo: logoUrl || `${storeUrl}/logo.svg`,
     description: description,
     sameAs: [
       'https://github.com/serpapps',

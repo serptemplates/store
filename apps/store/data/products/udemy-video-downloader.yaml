@@ -35,26 +35,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Complete Udemy course downloads
-- Course materials extraction
-- Structured course organization
-- DRM content support
-- Multi-language subtitles
-- Batch course downloads
-- Resume downloads
-- Multiple quality levels
-- CLI for archiving
-- LMS integration
-- Export course transcripts and notes
-- Offline certificates
-- Cross-platform support
-- Smart Bandwidth-efficient downloads
-- Auto update detection
-- Video player with controls
-- Course content search
-- Backup & restore
-- Secure local storage
-- Platform compatibility updates
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

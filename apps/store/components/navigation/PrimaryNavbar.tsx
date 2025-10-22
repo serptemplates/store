@@ -125,9 +125,9 @@ export function PrimaryNavbar({
             <Image
               src={logoSrc}
               alt={siteName}
-              width={140}
-              height={36}
-              className="h-9 w-auto"
+              width={50}
+              height={50}
+              className="h-[50px] w-[50px]"
               priority
             />
           ) : (
@@ -182,6 +182,7 @@ export function PrimaryNavbar({
                           <NextLink
                             key={item.slug}
                             href={toProductHref(item.slug)}
+                            prefetch={false}
                             className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
                           >
                             {item.name}

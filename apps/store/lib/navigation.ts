@@ -33,7 +33,7 @@ export function buildPrimaryNavProps(options: BuildNavOptions = {}): PrimaryNavb
     .filter((item): item is PrimaryNavProductLink => Boolean(item.slug && item.name));
 
   const siteName = siteConfig.site?.name ?? "SERP Apps";
-  const logoSrc = siteConfig.site?.logo ?? "/logo.png";
+  const logoSrc = siteConfig.site?.logo ?? "/logo.svg";
 
   return {
     siteName,

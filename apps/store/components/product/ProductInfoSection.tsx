@@ -66,7 +66,7 @@ export function ProductInfoSection({
             onClick={onWaitlistClick}
             className="block w-full bg-purple-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition"
           >
-            Join Waitlist
+            Get Notified
           </button>
         ) : (
           <Link

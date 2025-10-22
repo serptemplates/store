@@ -72,4 +72,6 @@ serp-license-key-management
 google-creds.json
 merchant-feed.*
 external/
-.mcp-debug-tools/
+mcp-debug-tools/
+**/.lighthouseci/
+.certs

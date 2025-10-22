@@ -99,7 +99,7 @@ export function GET(): NextResponse {
         ? video.thumbnailUrl.startsWith("http")
           ? video.thumbnailUrl
           : `${baseUrl}${video.thumbnailUrl}`
-        : `${baseUrl}/logo.png`;
+        : `${baseUrl}/logo.svg`;
       const description =
         video.description?.slice(0, 2048) ??
         `${product.name} video walkthrough`;

@@ -31,7 +31,7 @@ export function generateArticleSchema({
   datePublished,
   dateModified,
   author,
-  publisher = { name: 'SERP Apps', logo: 'https://apps.serp.co/logo.png' },
+  publisher = { name: 'SERP Apps', logo: 'https://apps.serp.co/logo.svg' },
   url,
   wordCount,
   keywords,

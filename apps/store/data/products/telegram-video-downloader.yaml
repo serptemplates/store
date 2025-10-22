@@ -39,7 +39,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Built-in player with telegram-style controls
-- CLI tools
 - Custom folders and naming schemes
 - Duplicate detection across multiple channels
 - Messaging integration

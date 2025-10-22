@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Complete Teachable courses downloads
-- Course materials
-- Maintain original course structure and lesson organization
-- Drip-fed content and timed releases
-- Auto subtitle and transcript extraction
-- Batch download multiple courses from instructors
-- Resume downloads
-- CLI for automated course collection
-- Cross-platform support
-- Built-in player with note-taking capabilities
-- LMS integration
-- Export completion certificates/progress reports
-- Search course content
-- Local-only storage for privacy
-- Regular compatibility updates
-- Organize by instructor or topic
-- Backup & restore options for educational libraries
-- Offline study mode with synchronized progress
-- Quiz data and assignment materials
-- Smart bandwidth management for large courses
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

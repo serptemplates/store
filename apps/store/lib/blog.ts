@@ -29,9 +29,8 @@ type Frontmatter = Record<string, unknown> & {
   excerpt?: string;
 };
 
-// Resolve relative to the app workspace so dev server + builds find the content directory
-// Update: Blog content is now in sites/apps.serp.co/content/blog
-const blogRoot = path.join(process.cwd(), "../../sites/apps.serp.co/content/blog");
+// Resolve relative to the app workspace so dev server + builds find the content directory.
+const blogRoot = path.join(process.cwd(), "content", "blog");
 
 function slugify(input: string): string {
   return input

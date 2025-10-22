@@ -18,7 +18,7 @@ success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_
 cancel_url: https://apps.serp.co/checkout?product=sprout-video-downloader
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader.gif
+featured_image_gif: 
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
   alt: Sprout Video Downloader website preview
@@ -26,7 +26,24 @@ screenshots:
   alt: Sprout Video Downloader screenshot
 - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
   alt: Sprout Video Downloader screenshot
-product_videos: []
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-1.jpg
+  alt: Sprout Video Downloader dashboard showing download controls
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-2.jpg
+  alt: Sprout Video Downloader queue with multiple Sprout videos ready to save
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-3.jpg
+  alt: Sprout Video Downloader video detail view with quality options
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-4.jpg
+  alt: Sprout Video Downloader showing batch download progress
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-5.jpg
+  alt: Sprout Video Downloader settings panel for customizing downloads
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-6.jpg
+  alt: Sprout Video Downloader integration view inside Sprout
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-7.jpg
+  alt: Sprout Video Downloader library of saved Sprout videos
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-8.jpg
+  alt: Sprout Video Downloader summary workflow for Sprout teams
+product_videos:
+- https://www.youtube.com/watch?v=We_IjAvPsBQ
 related_videos: []
 related_posts: []
 github_repo_url: https://github.com/serpapps/sprout-video-downloader
@@ -36,26 +53,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Sprout Video content and business videos
-- Secure and private video hosting
-- Batch video libraries/collections downloads
-- Auto metadata extraction and organization
-- Custom folders by project and campaign
-- Resume downloads
-- Cross-platform support
-- Built-in player with business-grade controls
-- CLI for enterprise workflows
-- Integrates with business video management systems
-- Export video performance data/analytics
-- Search business video libraries
-- Enterprise-grade privacy and security features
-- Regular updates to maintain Sprout Video compatibility
-- Various video formats and qualities
-- Bandwidth optimization
-- Backup & sync for team collaboration
-- Smart organization
-- Offline access with synchronized viewing progress
-- Advanced user management and access controls
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

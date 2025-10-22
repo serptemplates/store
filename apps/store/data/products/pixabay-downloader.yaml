@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Media viewer
-- CLI for automated asset collection
 - Design software integration
 - Search downloaded media libraries
 - Duplicate detection

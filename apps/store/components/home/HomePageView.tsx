@@ -205,7 +205,7 @@ export function HomePageView() {
     "@type": "Organization",
     name: "SERP Apps",
     url: "https://apps.serp.co",
-    logo: "https://apps.serp.co/logo.png",
+    logo: "https://apps.serp.co/logo.svg",
     description: "Browse the full catalog of SERP products.",
     sameAs: ["https://github.com/serpapps", "https://twitter.com/serpapps"],
     contactPoint: {

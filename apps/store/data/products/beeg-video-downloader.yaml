@@ -32,26 +32,25 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- High-resolution videos with quality selection
-- Batch processing capabilities for multiple videos
-- Auto thumbnail and preview extraction
-- Resume downloads
-- Cross-platform support
-- CLI for workflow automation
-- Built-in privacy features and secure downloading
-- Custom folder organization and file naming
-- Duplicate detection and content management
-- Bandwidth management and download optimization
-- Progress tracking with detailed analytics
-- Integrates with popular video players
-- Regular updates to maintain platform support
-- Local storage with no cloud dependencies
-- Multiple video formats and codecs
-- Intelligent retry mechanisms for failed downloads
-- User-friendly interface with theme customization
-- Secure file verification and integrity checks
-- Multi-threaded downloading for improved speeds
-- Comprehensive error logging and debugging
+- One-click download from any video page
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads (no re-encoding)
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00

@@ -26,6 +26,7 @@ import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
+import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -195,6 +196,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [product])
 
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
 
   useEffect(() => {
     trackProductPageView(product, { affiliateId })
@@ -274,6 +276,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     resolvedCta.mode === "pre_release" ? "waitlist" : isCheckoutMode ? "checkout" : "external"
 
   const navigateToCta = useCallback(() => {
+    if (resolvedCta.mode === "pre_release") {
+      setShowWaitlistModal(true)
+      return
+    }
+
     if (isCheckoutMode) {
       if (isCheckoutLoading) {
         return
@@ -290,7 +297,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     } else {
       window.location.href = resolvedCtaHref
     }
-  }, [beginCheckout, couponCode, isCheckoutLoading, isCheckoutMode, resolvedCtaHref, shouldOpenInNewTab])
+  }, [beginCheckout, couponCode, isCheckoutLoading, isCheckoutMode, resolvedCta.mode, resolvedCtaHref, shouldOpenInNewTab])
 
   const handlePrimaryCtaClick = useCallback(() => {
     if (isCheckoutMode && isCheckoutLoading) {
@@ -407,6 +414,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         rel={resolvedCtaRel}
         disabled={isCheckoutMode ? isCheckoutLoading : false}
       />
+
+      <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
     </>
   )
 }

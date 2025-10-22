@@ -13,7 +13,7 @@ interface WaitlistFormProps {
 export function WaitlistForm({
   productSlug,
   productName,
-  buttonText = "Join Waitlist",
+  buttonText = "Get Notified",
   className = "",
   expectedLaunchDate,
 }: WaitlistFormProps) {

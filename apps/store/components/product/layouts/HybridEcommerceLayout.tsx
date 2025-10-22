@@ -16,6 +16,7 @@ import { HybridComparisonSection, type ComparisonRow } from "@/components/produc
 import { HybridIncludedStackSection } from "@/components/product/hybrid/HybridIncludedStackSection"
 import type { ExtendedProductData } from "@/components/product/types"
 import { isPreRelease } from "@/lib/products/release-status"
+import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
 
 export interface HybridEcommerceLayoutProps {
   product: ExtendedProductData
@@ -41,6 +42,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const waitlistEnabled = isPreRelease(product.status)
 
   useEffect(() => {
@@ -115,10 +117,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
   ], [product.metadata?.bulk_tools, product.metadata?.automations])
 
   const handleWaitlistClick = useCallback(() => {
-    if (product.waitlist_url) {
-      window.open(product.waitlist_url, "_blank", "noopener,noreferrer")
-    }
-  }, [product.waitlist_url])
+    setShowWaitlistModal(true)
+  }, [])
 
   const breadcrumbItems: ProductBreadcrumbItem[] = useMemo(() => (
     [
@@ -169,6 +169,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
         brandLogoPath={brandLogoPath}
         mainImageSource={mainImageSource}
         affiliateId={affiliateId}
+        waitlistEnabled={waitlistEnabled}
+        onWaitlistClick={handleWaitlistClick}
       />
 
       <div className="container mx-auto px-4 py-10 space-y-12">
@@ -195,6 +197,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
 
         <HybridIncludedStackSection items={includedItems} />
       </div>
+
+      <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
     </>
   )
 }

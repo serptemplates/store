@@ -40,7 +40,6 @@ features:
 - Resume downloads
 - Cross-platform support
 - Image viewer
-- CLI tools
 - Design integration
 - Export board data and pin analytics
 - Search capabilities across image collections

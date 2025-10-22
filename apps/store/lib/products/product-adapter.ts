@@ -17,7 +17,7 @@ const defaultPricingBenefits = [
   "Works on macOS, Windows, and Linux"
 ];
 
-const WAITLIST_URL = "https://newsletter.serp.co/waitlist";
+const WAITLIST_EMBED_URL = "https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953";
 const WAITLIST_LABEL = "Get Notified";
 const DEFAULT_CTA_LABEL = "Get It Now";
 const DEFAULT_CTA_LABEL_LOWER = DEFAULT_CTA_LABEL.toLowerCase();
@@ -141,20 +141,19 @@ function resolveProductCta(product: ProductData): ResolvedProductCta {
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
 
   if (mode === "pre_release") {
-    const isDefaultCta = normalizedCtaText
+    const isGenericCta = normalizedCtaText
       ? normalizedCtaText.toLowerCase() === DEFAULT_CTA_LABEL_LOWER
       : false;
     const waitlistDestination =
       typeof product.waitlist_url === "string" && product.waitlist_url.trim().length > 0
         ? product.waitlist_url.trim()
-        : WAITLIST_URL;
+        : WAITLIST_EMBED_URL;
     return {
       mode,
       href: waitlistDestination,
-      text: !normalizedCtaText || isDefaultCta ? WAITLIST_LABEL : normalizedCtaText,
-      opensInNewTab: true,
-      target: "_blank",
-      rel: "noopener noreferrer",
+      text: !normalizedCtaText || isGenericCta ? WAITLIST_LABEL : normalizedCtaText,
+      opensInNewTab: false,
+      target: "_self",
     };
   }
 

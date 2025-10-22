@@ -39,7 +39,6 @@ features:
 - Multi-language subtitle extraction
 - Batch download by grade level or subject area
 - Resume downloads
-- CLI for educational automation
 - Cross-platform support
 - Built-in player with educational controls
 - Integrates with classroom management systems
