@@ -58,6 +58,7 @@
     "reading-time": "^1.5.0",
     "rehype-code-titles": "^1.2.0",
     "rehype-highlight": "^7.0.2",
+    "sanitize-html": "^2.17.0",
     "yaml": "^2.6.1",
     "zod": "^3.25.76"
   },
@@ -68,6 +69,7 @@
     "@playwright/test": "^1.55.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
+    "@types/sanitize-html": "^2.13.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22",
     "@types/nodemailer": "^6.4.15",
