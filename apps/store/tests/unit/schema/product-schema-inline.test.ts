@@ -37,6 +37,10 @@ const rawProduct = {
   ],
   supported_operating_systems: ["Chrome", "Firefox", "Edge"],
   supported_regions: ["Worldwide"],
+  payment_link: {
+    live_url: "https://buy.stripe.com/test_live",
+    test_url: "https://buy.stripe.com/test_test",
+  },
 } as const;
 
 const productData = productSchema.parse(rawProduct);

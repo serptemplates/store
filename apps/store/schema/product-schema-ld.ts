@@ -275,11 +275,6 @@ export function generateProductSchemaLD({
       returnMethod: 'https://schema.org/ReturnByMail',
       returnFees: 'https://schema.org/FreeReturn',
     },
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: resolvedPrice,
-      priceCurrency: currency,
-    },
     // Shipping details (required for physical products, optional for digital)
     shippingDetails: product.isDigital ? {
       '@type': 'OfferShippingDetails',

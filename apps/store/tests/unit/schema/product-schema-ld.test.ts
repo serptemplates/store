@@ -60,13 +60,7 @@ describe("generateProductSchemaLD", () => {
     if (schema.offers && !Array.isArray(schema.offers)) {
       expect(schema.offers['@type']).toBe('Offer');
       expect(schema.offers.price).toBe(49.99);
-      expect(schema.offers.priceSpecification).toEqual(
-        expect.objectContaining({
-          '@type': 'UnitPriceSpecification',
-          price: 49.99,
-          priceCurrency: 'USD',
-        }),
-      );
+      expect('priceSpecification' in schema.offers).toBe(false);
     }
     expect(Array.isArray(schema.image)).toBe(true);
     if (!Array.isArray(schema.image)) {

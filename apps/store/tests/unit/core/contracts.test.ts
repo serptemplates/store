@@ -12,14 +12,14 @@ import {
   validateOrder,
   hasGHLSyncData,
   extractGHLSyncMetadata,
-} from '../lib/contracts/checkout.contract';
+} from '@/lib/contracts/checkout.contract';
 
 import {
   validateStripeCheckoutSession,
   validateStripePaymentIntent,
   validateStripeWebhookEvent,
   isStripeWebhookEvent,
-} from '../lib/contracts/webhook.contract';
+} from '@/lib/contracts/webhook.contract';
 
 import {
   validateGHLConfig,
@@ -27,14 +27,14 @@ import {
   validateGHLSyncRequest,
   formatGHLCustomerName,
   buildOpportunityName,
-} from '../lib/contracts/ghl.contract';
+} from '@/lib/contracts/ghl.contract';
 
 import {
   validateDBInsertCheckoutSession,
   validateDBInsertOrder,
   dbToCamelCase,
   camelToSnakeCase,
-} from '../lib/contracts/database.contract';
+} from '@/lib/contracts/database.contract';
 import {
   buildOrderFixture,
   buildStripeCheckoutSessionFixture,
