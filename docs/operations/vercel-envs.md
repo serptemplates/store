@@ -9,7 +9,6 @@ Reference for configuring the Vercel project. Replace all placeholder values wit
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx_replace_me
 STRIPE_SECRET_KEY=sk_live_xxx_replace_me
 STRIPE_WEBHOOK_SECRET=whsec_live_xxx_replace_me
-STRIPE_CHECKOUT_PAYMENT_METHODS=card
 
 ########################################
 # Preview / Branch Deploys (test mode)
@@ -17,8 +16,6 @@ STRIPE_CHECKOUT_PAYMENT_METHODS=card
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx_replace_me
 STRIPE_SECRET_KEY_TEST=sk_test_xxx_replace_me
 STRIPE_WEBHOOK_SECRET_TEST=whsec_test_xxx_replace_me
-# Include paypal here only if the Stripe account has the feature enabled
-STRIPE_CHECKOUT_PAYMENT_METHODS=card
 # Optional secondary test webhook secret (only if you maintain it)
 # STRIPE_WEBHOOK_SECRET_STAGING=whsec_staging_xxx_replace_me
 
@@ -62,6 +59,5 @@ SHOPIFY_ADMIN_API_VERSION=2024-04
 - Keep live and test webhook endpoints separate in Stripe so signing secrets stay isolated.
 - After updating variables in Vercel, redeploy so both server and client bundles pick up the changes.
 - Product checkout destinations now come from Stripe or GHL Payment Links defined in `apps/store/data/products/*.yaml`; no client-side checkout endpoint URL is required.
-- Set `STRIPE_CHECKOUT_PAYMENT_METHODS` to `card` unless your Stripe account has PayPal enabled; add `paypal` only after Stripe confirms access.
 - When running preview/test deployments, also supplying `STRIPE_SECRET_KEY` allows the app to auto-clone live prices into test mode when needed; otherwise configure test prices manually.
 - Ensure every `stripe.price_id` in `apps/store/data/products/*.yaml` points at the correct mode (live vs test) before enabling real payments.

@@ -44,10 +44,8 @@ import {
 
 import {
   validateStripePayment,
-  validatePayPalPayment,
   validatePaymentTransition,
   formatMoney,
-  convertPaymentAmount,
   PaymentStatusContract,
 } from './payment.contract';
 
@@ -477,40 +475,6 @@ describe('Critical Path: Payment Processing', () => {
     expect(result.parsed?.id).toBe('ch_test_123');
   });
 
-  it('should validate PayPal payment data', () => {
-    const paypalOrder = {
-      id: 'PAYPAL123',
-      status: 'COMPLETED',
-      intent: 'CAPTURE',
-      purchase_units: [
-        {
-          reference_id: 'unit_1',
-          amount: {
-            currency_code: 'USD',
-            value: '79.00',
-          },
-        },
-      ],
-      payer: {
-        email_address: 'test@example.com',
-      },
-    };
-
-    const result = validatePayPalPayment(paypalOrder);
-    expect(result.isValid).toBe(true);
-    expect(result.parsed?.id).toBe('PAYPAL123');
-  });
-
-  it('should convert payment amounts correctly', () => {
-    // Stripe format (cents)
-    const stripeAmount = convertPaymentAmount(7900, 'stripe');
-    expect(stripeAmount.amount).toBe(7900);
-
-    // PayPal format (decimal string)
-    const paypalAmount = convertPaymentAmount('79.00', 'paypal');
-    expect(paypalAmount.amount).toBe(7900);
-  });
-
   it('should format money correctly', () => {
     const money = {
       amount: 7900,
@@ -583,7 +547,7 @@ describe('Regression Tests', () => {
     const invalidSource = {
       stripe_session_id: 'cs_123',
       offer_id: 'product',
-      source: 'bitcoin', // Not stripe or paypal
+      source: 'bitcoin', // Not stripe or ghl
     };
 
     expect(() => validateDBInsertCheckoutSession(invalidSource)).toThrow();

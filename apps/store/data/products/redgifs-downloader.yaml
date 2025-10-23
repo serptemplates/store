@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/redgifs-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9abf613b1bca79ce7b58
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=redgifs-downloader
+payment_link:
+  live_url: https://buy.stripe.com/6oUfZ98aAf8O1mH64H0VO0S
+  test_url: https://buy.stripe.com/test_dRm8wH76w4ua2qL9gT0VO0U
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redgifs-downloader/main/images/redgifs-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Redgifs downloader?
   answer: Install the browser extension, navigate to Redgifs, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -26,6 +26,6 @@ PayPal checkout is no longer exposed in the hosted flow. All storefront CTAs rou
 
 ## Clean-up checklist
 
-- [ ] Remove `order_bump` entries from any product YAML that still contain them.
-- [ ] Delete unused `data/order-bumps/*` definitions after confirming no references remain.
+- [x] Remove `order_bump` entries from any product YAML that still contain them.
+- [x] Delete unused `data/order-bumps/*` definitions after confirming no references remain.
 - [ ] Update internal playbooks or automations that assumed order-bump metadata existed in checkout payloads.

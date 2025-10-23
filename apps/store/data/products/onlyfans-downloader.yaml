@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/onlyfans-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e00e1521970942cae26614
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=onlyfans-downloader
+payment_link:
+  live_url: https://buy.stripe.com/dRm4grgH60dU9Td64H0VO0K
+  test_url: https://buy.stripe.com/test_dRm14f62s8Kqe9t78L0VO0L
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/onlyfans-downloader/main/images/onlyfans-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Onlyfans downloader?
   answer: Install the browser extension, navigate to Onlyfans, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

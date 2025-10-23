@@ -123,7 +123,6 @@ const nextConfig = {
       'lucide-react',
       '@stripe/stripe-js',
       '@stripe/react-stripe-js',
-      '@paypal/react-paypal-js',
       'react-hook-form',
       'date-fns',
       '@repo/ui',

@@ -41,7 +41,7 @@ A comprehensive security audit identified and fixed 7 critical/important securit
 - `next.config.mjs` - Security headers
 - `lib/logger.ts` - PII redaction (83 lines added)
 - `app/api/checkout/session/route.ts` - Structured logging (legacy route removed after Payment Link migration)
-- `app/api/paypal/webhook/route.ts` - Structured logging
+- *(Legacy)* `app/api/paypal/webhook/route.ts` – Structured logging prior to the Payment Link migration; retained here for audit trails.
 
 ### Created (9 files)
 - `lib/env-validation.ts` - Environment validation (195 lines)
@@ -103,12 +103,8 @@ curl -I https://your-domain.com/api/health
 # - Referrer-Policy
 
 # Test rate limiting / abuse protection on live API routes
-for i in {1..35}; do
-  curl -X POST https://your-domain.com/api/paypal/create-order \
-    -H "Content-Type: application/json" \
-    -d '{"offerId":"test-product"}';
-done
-# Should respond with non-2xx once protections trigger (manually monitor logs/alerts)
+# Legacy reference: PayPal endpoints were removed. Exercise the Stripe webhook or
+# other active routes instead (requires valid Stripe signatures).
 
 # Run security tests
 cd apps/store

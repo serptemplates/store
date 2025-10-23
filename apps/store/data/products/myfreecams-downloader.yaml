@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/myfreecams-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=myfreecams-downloader
+payment_link:
+  live_url: https://buy.stripe.com/aFa6oz0I83q6aXhfFh0VO0H
+  test_url: https://buy.stripe.com/test_9B6dR176we4K4yT1Or0VO0I
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/myfreecams-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/myfreecams-downloader/main/images/myfreecams-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Myfreecams downloader?
   answer: Install the browser extension, navigate to Myfreecams, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

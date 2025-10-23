@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/sprout-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e08bb367ee3b1d9c699e36
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=sprout-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/3cIdR1aiI4ua9Tdct50VO12
+  test_url: https://buy.stripe.com/test_aFa7sD1Mcd0Gc1lct50VO14
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
 featured_image_gif: 
@@ -81,7 +85,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Sprout downloader?
   answer: Install the browser extension, navigate to Sprout, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

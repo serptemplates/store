@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import yaml from 'yaml'
 import type { ReleaseStatus } from './release-status'
+import { normalizeProductAssetPath } from './asset-paths'
 
 export interface ProductMetadata {
   platform?: string;
@@ -64,17 +65,20 @@ export async function getProducts(): Promise<Product[]> {
     const releaseStatus: ReleaseStatus = data.status ?? 'draft'
     const isPreRelease = releaseStatus === 'pre_release'
 
+    const normalizedFeaturedImage = normalizeProductAssetPath(data.featured_image) ?? undefined
+    const normalizedFeaturedGif = normalizeProductAssetPath(data.featured_image_gif) ?? undefined
+
     const product: Product = {
       id: data.slug,
       title: data.name,
       handle: data.slug,
       description: data.tagline,
-      thumbnail: data.featured_image,
-      images: data.featured_image_gif ? [
-        { url: data.featured_image },
-        { url: data.featured_image_gif }
-      ] : data.featured_image ? [
-        { url: data.featured_image }
+      thumbnail: normalizedFeaturedImage,
+      images: normalizedFeaturedGif ? [
+        { url: normalizedFeaturedImage ?? normalizedFeaturedGif },
+        { url: normalizedFeaturedGif }
+      ] : normalizedFeaturedImage ? [
+        { url: normalizedFeaturedImage }
       ] : [],
       collection,
       status: releaseStatus,

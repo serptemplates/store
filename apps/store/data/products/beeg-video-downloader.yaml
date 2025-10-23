@@ -16,12 +16,30 @@ serp_co_product_page_url: https://serp.co/products/beeg-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df98b52197090089e262f1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=beeg-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/5kQdR176w0dU5CX3Wz0VO1u
+  test_url: https://buy.stripe.com/test_00w3cnaiId0GghB64H0VO07
+
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/beeg-video-downloader/main/images/featured.gif
+featured_image: /media/products/beeg-video-downloader/beeg-video-downloader-1.webp
+featured_image_gif: null
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/beeg-video-downloader.jpg
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-1.webp
   alt: Beeg Video Downloader website preview
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-2.webp
+  alt: Beeg Video Downloader app interface showing download options
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-3.webp
+  alt: Beeg Video Downloader queue with multiple videos ready to save
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-4.webp
+  alt: Beeg Video Downloader quality selection controls
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-5.webp
+  alt: Beeg Video Downloader embedded video detection prompt
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-6.webp
+  alt: Beeg Video Downloader download progress indicators
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-7.webp
+  alt: Beeg Video Downloader browser extension popup
+- url: /media/products/beeg-video-downloader/beeg-video-downloader-8.webp
+  alt: Beeg Video Downloader settings panel overview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -60,7 +78,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Beeg downloader?
   answer: Install the browser extension, navigate to Beeg, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

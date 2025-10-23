@@ -18,9 +18,9 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 ## Persistence touchpoints
 
 - Stripe session and order updates funnel through the `@/lib/checkout` facade. Do not import private modules directly.
-- Because the storefront no longer creates sessions, the handler relies on metadata stored on Stripe products, prices, or Payment Links (e.g., `offerId`, `landerId`, `ghl_tag`). Keep the backfill script (`apps/store/scripts/update-stripe-product-tags.ts`) up to date so webhooks remain deterministic.
+- Because the storefront no longer creates sessions, the handler relies on metadata stored on Stripe products, prices, or Payment Links (e.g., `offerId`, `landerId`, `ghl_tag`, `product_slug`, `payment_link_id`). Keep the backfill script (`apps/store/scripts/update-stripe-product-tags.ts`) and the Payment Link sync script up to date so webhooks remain deterministic.
 - License creation goes through `@/lib/license-service`, which has its own modular breakdown (`request.ts`, `creation.ts`, etc.).
-- Analytics and alerting flow through `@/lib/analytics/checkout` and `@/lib/ops/alerts`.
+- Analytics and alerting flow through `@/lib/analytics/checkout-server` and `@/lib/ops/alerts`.
 
 ## Testing strategy
 

@@ -1,6 +1,6 @@
 # Checkout Module Overview
 
-The storefront no longer brokers custom Stripe sessions. Product CTAs resolve to Stripe or GoHighLevel Payment Links, and the only server-managed checkout surface is PayPal. The `@/lib/checkout` facade still owns persistence, webhook handling, and reporting so downstream systems retain a single integration surface.
+The storefront no longer brokers custom Stripe sessions. Product CTAs resolve to Stripe or GoHighLevel Payment Links, and the `@/lib/checkout` facade still owns persistence, webhook handling, and reporting so downstream systems retain a single integration surface (legacy PayPal records are treated as `legacy_paypal` sources).
 
 ## Public facade
 
@@ -18,18 +18,15 @@ Import everything through `@/lib/checkout`. The facade re-exports the canonical 
 - Product YAMLs now declare `payment_link` fields (Stripe live/test URLs or a GoHighLevel payment URL).
 - `resolveProductPaymentLink` chooses the correct link based on environment (test vs. live) and feeds the CTA helpers.
 - `useProductCheckoutCta` opens the Payment Link in a new tab, tracks analytics, and triggers the waitlist modal for pre-release products.
+- CTA selection no longer relies on `cta_mode` flags in product content; the helpers derive behaviour strictly from the product `status` (e.g., `pre_release`) and the configured `payment_link`.
 - Metadata required for fulfilment (e.g., `offerId`, `ghl_tag`) must be stored on the Stripe product or price so webhooks can recover it—our sync scripts backfill these tags.
-
-### PayPal API route
-
-- `app/api/paypal/create-order/route.ts` remains the only server-side checkout creator. It validates payloads, applies coupons, persists a checkout session, and returns the PayPal approval link.
-- The route uses the same persistence helpers exported by `@/lib/checkout`, so webhook and reporting logic continue to work without bespoke plumbing.
+- Stripe Payment Links redirect to `/checkout/success` with `provider=stripe`, the product `slug`, `payment_link_id`, `mode`, and `session_id={CHECKOUT_SESSION_ID}` to keep analytics and fulfilment aligned; the success page reads these params and falls back to fetching the Checkout Session when needed.
 
 ## Post-purchase processing
 
 - `app/api/stripe/webhook/route.ts` handles `checkout.session.completed` events emitted by Payment Links. Because the storefront no longer writes session metadata, ensure Stripe product metadata (or the Payment Link itself) includes the GHL tag, lander/offer IDs, and any fulfilment hints.
 - The `/checkout/success` route still processes a session on demand for local/testing environments when webhooks are unavailable. It retrieves the Stripe session directly, persists orders, and provisions licenses as a fallback path.
-- PayPal webhooks and manual polling continue to share the checkout session persistence layer; metadata mirrors the Stripe shape with `source=paypal`.
+- Historical PayPal orders remain in the database as `legacy_paypal` sources; the checkout persistence layer normalizes them alongside Stripe sessions for reporting.
 
 ## Legacy `/checkout` behaviour
 

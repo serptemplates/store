@@ -5,7 +5,7 @@ The store app now leans on a clear separation between the design system packages
 ## Layers at a glance
 
 - **`packages/ui`** – Source of truth for shared UI. Primitives live at the package root (`src/button`, `src/card`, etc.) while higher-level sections live under `src/sections/**`. Everything in this package must stay framework-agnostic and avoid app-specific logic.
-- **`apps/store/components`** – Store-specific wiring that touches routing, data fetching, analytics, or checkout orchestration. Examples include the PayPal helpers and product CTA logic.
+- **`apps/store/components`** – Store-specific wiring that touches routing, data fetching, analytics, or checkout orchestration. Examples include the product CTA logic (legacy PayPal helpers have been removed).
 - **`apps/store/app`** – Next.js routes that stitch the UI with server actions and fetchers. Route-level components should stay lean by delegating most markup to `components/`.
 - **`apps/store/lib`** – Domain logic split by capability (`checkout/`, `payments/`, `license-service/`, `ghl-client/`, etc.). UI components should only import the facades exposed by these folders (e.g., `@/lib/checkout`), never the private helpers.
 

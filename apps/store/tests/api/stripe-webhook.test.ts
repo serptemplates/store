@@ -31,6 +31,7 @@ vi.mock("@/lib/checkout", () => ({
   upsertCheckoutSession: vi.fn(),
   upsertOrder: vi.fn(),
   updateCheckoutSessionStatus: vi.fn(),
+  updateOrderMetadata: vi.fn(),
 }));
 
 vi.mock("@/lib/ghl-client", () => {
@@ -69,6 +70,10 @@ vi.mock("@/lib/notifications/ops", () => ({
   sendOpsAlert: vi.fn(),
 }));
 
+vi.mock("@/lib/license-service", () => ({
+  createLicenseForOrder: vi.fn(),
+}));
+
 import { POST } from "@/app/api/stripe/webhook/route";
 import { getStripeClient } from "@/lib/payments/stripe";
 import { getOfferConfig } from "@/lib/products/offer-config";
@@ -79,10 +84,12 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   updateCheckoutSessionStatus,
+  updateOrderMetadata,
 } from "@/lib/checkout";
 import { syncOrderWithGhl, GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import { sendOpsAlert } from "@/lib/notifications/ops";
+import { createLicenseForOrder } from "@/lib/license-service";
 
 const getStripeClientMock = vi.mocked(getStripeClient);
 const getOfferConfigMock = vi.mocked(getOfferConfig);
@@ -92,9 +99,11 @@ const markStaleCheckoutSessionsMock = vi.mocked(markStaleCheckoutSessions);
 const upsertCheckoutSessionMock = vi.mocked(upsertCheckoutSession);
 const upsertOrderMock = vi.mocked(upsertOrder);
 const updateCheckoutSessionStatusMock = vi.mocked(updateCheckoutSessionStatus);
+const updateOrderMetadataMock = vi.mocked(updateOrderMetadata);
 const syncOrderWithGhlMock = vi.mocked(syncOrderWithGhl);
 const recordWebhookLogMock = vi.mocked(recordWebhookLog);
 const sendOpsAlertMock = vi.mocked(sendOpsAlert);
+const createLicenseForOrderMock = vi.mocked(createLicenseForOrder);
 
 function buildRequest(rawBody: string, signature = "test-signature") {
   return new NextRequest("http://localhost/api/stripe/webhook", {
@@ -152,6 +161,7 @@ const offerConfigFixture: OfferConfig = {
   ghl: {
     pipelineId: "pipeline_123",
     stageId: "stage_abc",
+    tagIds: ["purchase-demo"],
   },
 };
 
@@ -161,6 +171,7 @@ function buildCheckoutSessionEvent() {
     object: "checkout.session",
     amount_total: 9900,
     currency: "usd",
+    livemode: false,
     customer_email: "buyer@example.com",
     customer_details: {
       email: "buyer@example.com",
@@ -171,10 +182,12 @@ function buildCheckoutSessionEvent() {
       tax_ids: [],
     },
     payment_intent: "pi_test_123",
+    payment_link: "plink_123",
     metadata: {
       offerId: "demo-offer",
       landerId: "demo-offer",
       productName: "Demo Offer",
+      product_slug: "demo-offer",
       productPageUrl: "https://store.example.com/products/demo-offer",
       store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
       apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
@@ -184,6 +197,9 @@ function buildCheckoutSessionEvent() {
       cancel_url: "https://apps.example.com/checkout?product=demo-offer",
       stripePriceId: "price_123",
       stripeProductId: "prod_demo",
+      stripe_price_id: "price_123",
+      stripe_product_id: "prod_demo",
+      ghl_tag: "purchase-demo",
       ghlTagIds: "purchase-demo",
       environment: "test",
     },
@@ -285,6 +301,13 @@ describe("POST /api/stripe/webhook", () => {
     upsertCheckoutSessionMock.mockResolvedValue("checkout-session-id");
     upsertOrderMock.mockResolvedValue(undefined);
     updateCheckoutSessionStatusMock.mockResolvedValue(undefined);
+    updateOrderMetadataMock.mockResolvedValue(true);
+    createLicenseForOrderMock.mockResolvedValue({
+      action: "created",
+      licenseId: "lic_test",
+      licenseKey: "SERP-123",
+      raw: {},
+    });
   });
 
   it("processes checkout.session.completed events and syncs with GHL", async () => {
@@ -331,6 +354,21 @@ describe("POST /api/stripe/webhook", () => {
         customerEmail: "buyer@example.com",
         paymentStatus: "paid",
         stripePaymentIntentId: "pi_test_123",
+        metadata: expect.objectContaining({
+          stripePriceId: "price_123",
+          stripe_price_id: "price_123",
+          stripeProductId: "prod_demo",
+          stripe_product_id: "prod_demo",
+          productSlug: "demo-offer",
+          product_slug: "demo-offer",
+          paymentLinkId: "plink_123",
+          payment_link_id: "plink_123",
+          paymentLinkMode: "test",
+          payment_link_mode: "test",
+          ghlTag: "purchase-demo",
+          ghl_tag: "purchase-demo",
+          ghlTagIds: "purchase-demo",
+        }),
       }),
     );
 
@@ -345,14 +383,57 @@ describe("POST /api/stripe/webhook", () => {
         licenseTier: "demo-offer",
         metadata: expect.objectContaining({
           stripePriceId: "price_123",
+          stripe_price_id: "price_123",
           stripeProductId: "prod_demo",
+          stripe_product_id: "prod_demo",
           stripeTermsOfService: "accepted",
           stripeTermsOfServiceRequirement: "required",
+          productSlug: "demo-offer",
+          product_slug: "demo-offer",
+          paymentLinkId: "plink_123",
+          payment_link_id: "plink_123",
+          paymentLinkMode: "test",
+          payment_link_mode: "test",
+          ghlTag: "purchase-demo",
+          ghl_tag: "purchase-demo",
           ghlTagIds: "purchase-demo",
           environment: "test",
           tosAccepted: "true",
+          licenseKey: "SERP-123",
+          licenseId: "lic_test",
         }),
         tosAccepted: true,
+      }),
+    );
+
+    expect(createLicenseForOrderMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          offerId: "demo-offer",
+          productSlug: "demo-offer",
+          product_slug: "demo-offer",
+          paymentLinkId: "plink_123",
+          payment_link_id: "plink_123",
+          paymentLinkMode: "test",
+          payment_link_mode: "test",
+          stripeProductId: "prod_demo",
+          stripe_product_id: "prod_demo",
+          ghlTag: "purchase-demo",
+          ghl_tag: "purchase-demo",
+        }),
+      }),
+    );
+
+    expect(updateOrderMetadataMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        stripePaymentIntentId: "pi_test_123",
+        stripeSessionId: "cs_test_123",
+      }),
+      expect.objectContaining({
+        license: expect.objectContaining({
+          licenseKey: "SERP-123",
+          licenseId: "lic_test",
+        }),
       }),
     );
 
@@ -373,6 +454,94 @@ describe("POST /api/stripe/webhook", () => {
 
     await flushMicrotasks();
     expect(markStaleCheckoutSessionsMock).toHaveBeenCalled();
+  });
+
+  it("hydrates metadata from Payment Link when session metadata is missing", async () => {
+    const event = buildCheckoutSessionEvent();
+    const session = event.data.object as Stripe.Checkout.Session;
+    session.metadata = {};
+    session.payment_link = "plink_test_fallback";
+
+    const webhookClient = {
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>;
+
+    const paymentLinkRetrieve = vi.fn().mockResolvedValue({
+      id: "plink_test_fallback",
+      livemode: false,
+      metadata: {
+        product_slug: "demo-offer",
+        stripe_product_id: "prod_demo",
+        stripe_price_id: "price_123",
+        ghl_tag: "purchase-demo",
+      },
+      line_items: {
+        data: [
+          {
+            price: {
+              id: "price_123",
+              product: "prod_demo",
+            },
+          },
+        ],
+      },
+    });
+
+    getStripeClientMock.mockImplementation((mode?: unknown) => {
+      if (mode === "test" || mode === "live") {
+        return {
+          paymentLinks: {
+            retrieve: paymentLinkRetrieve,
+          },
+        } as unknown as ReturnType<typeof getStripeClient>;
+      }
+      return webhookClient;
+    });
+
+    getOfferConfigMock.mockReturnValue(offerConfigFixture);
+    findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    syncOrderWithGhlMock.mockResolvedValue({
+      contactId: "contact_456",
+      opportunityCreated: true,
+    });
+
+    recordWebhookLogMock.mockResolvedValueOnce(null);
+    recordWebhookLogMock.mockResolvedValueOnce({
+      status: "success",
+      attempts: 1,
+    });
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    const payload = (await response.json()) as { received: boolean };
+    expect(payload.received).toBe(true);
+
+    expect(paymentLinkRetrieve).toHaveBeenCalledWith("plink_test_fallback", {
+      expand: ["line_items.data.price.product"],
+    });
+
+    expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
+      offerConfigFixture.ghl,
+      expect.objectContaining({
+        offerId: "demo-offer",
+        metadata: expect.objectContaining({
+          productSlug: "demo-offer",
+          product_slug: "demo-offer",
+          stripeProductId: "prod_demo",
+          stripe_product_id: "prod_demo",
+          stripePriceId: "price_123",
+          stripe_price_id: "price_123",
+          paymentLinkId: "plink_test_fallback",
+          payment_link_id: "plink_test_fallback",
+          ghlTag: "purchase-demo",
+          ghl_tag: "purchase-demo",
+        }),
+      }),
+    );
   });
 
   it("sends an ops alert when GHL sync repeatedly fails", async () => {

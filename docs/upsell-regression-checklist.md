@@ -8,9 +8,8 @@ Run these checks whenever we touch pricing CTA logic, schema files, or checkout 
 - Confirm the Pricing CTA renders without any upsell panel, the hero CTA and button copy are unchanged, and the “Total” card shows only the base price.
 - Run `pnpm --filter @apps/store test:unit -- --run` to ensure `productToHomeTemplate` tests still pass (these guard the `pricing` subset for non-upsell cases).
 
-## 2. Checkout Smoke Tests (Stripe & PayPal)
+## 2. Checkout Smoke Tests
 - Stripe Payment Link: open the product page, click the primary CTA, and confirm a new tab opens to the configured Stripe Payment Link. Complete a test card (`4242…`), then verify in the dashboard/webhook logs that metadata still includes the correct `offerId`, `landerId`, and `ghl_tag`.
-- PayPal: if the product exposes a PayPal CTA, exercise it via `/api/paypal/create-order` and confirm the approval link renders plus the checkout session persists in the database with `source = paypal`.
 
 ## 3. Validation & Schema
 - `pnpm --filter @apps/store validate:products` → should succeed, ensuring new schema rules don’t break products without upsells.

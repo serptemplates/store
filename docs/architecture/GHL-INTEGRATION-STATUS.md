@@ -58,7 +58,7 @@ STRIPE_WEBHOOK_SECRET_TEST=whsec_xxx         # optional: explicit test webhook s
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 ```
 
-> Use `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` to validate Payment Link metadata, PayPal persistence, and webhook health after changing these credentials.
+> Use `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` to validate Payment Link metadata and webhook health after changing these credentials. PayPal automation references are legacy and only apply when auditing historical orders.
 
 ## Verification Steps
 
@@ -127,7 +127,7 @@ WHERE status = 'completed'
 ORDER BY created_at DESC;
 ```
 
-### 6. Run Automated PayPal -> GHL Integration Test
+### 6. Legacy PayPal -> GHL Integration Test (historical reference)
 
 ```bash
 pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
@@ -141,7 +141,7 @@ pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test
 
 > The test auto-loads `.env.local` / `.env` from the repo root and `apps/store` so you can keep secrets in those files.
 
-The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api/paypal/capture-order`, and verifies that both the order record and `checkout_sessions` row mirror our Stripe flow (including `ghlSyncedAt`, `ghlContactId`, and PayPal metadata).
+The spec previously pre-seeded a PayPal checkout session, stubbed the capture call, hit `/api/paypal/capture-order`, and verified that both the order record and `checkout_sessions` row mirrored our Stripe flow (including `ghlSyncedAt`, `ghlContactId`, and PayPal metadata). Keep this section for historical audits; new work should rely on Stripe Payment Links.
 
 ## Testing Checklist
 
@@ -163,9 +163,10 @@ The spec pre-seeds a PayPal checkout session, stubs the capture call, hits `/api
   - [ ] License keys payload (`contact.license_keys_v2`)
 
 **Purchase Metadata JSON**
-- Generated automatically for both Stripe and PayPal providers.
+- Generated automatically for Stripe providers (legacy PayPal data remains for archival reporting).
 - Includes provider, offer, product page URL, checkout URL (if applicable), customer info, payment totals, affiliate ID, and license snapshot.
 - Stored as pretty-printed JSON in `contact.purchase_metadata`.
+- Existing payloads are preserved: the most recent purchase stays at the top level and earlier purchases are appended under `previousPurchases[]`, so no historical metadata is overwritten when new orders sync.
 
 **License Keys Payload**
 - Contains the active license key, license ID, action (created/updated), entitlements array, and tier.

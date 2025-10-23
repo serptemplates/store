@@ -13,6 +13,7 @@ export interface ProductMediaGalleryProps {
 export function ProductMediaGallery({ images, selectedIndex, onSelect, productName, brandLogoPath }: ProductMediaGalleryProps) {
   const selectedImage = images[selectedIndex] ?? images[0];
   const isAnimated = (source?: string) => Boolean(source && /\.gif($|\?)/i.test(source));
+  const isLocalAsset = (source?: string) => Boolean(source && source.startsWith("/"));
 
   return (
     <div>
@@ -26,7 +27,7 @@ export function ProductMediaGallery({ images, selectedIndex, onSelect, productNa
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
             quality={90}
-            unoptimized={isAnimated(selectedImage)}
+            unoptimized={isAnimated(selectedImage) || isLocalAsset(selectedImage)}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -53,7 +54,7 @@ export function ProductMediaGallery({ images, selectedIndex, onSelect, productNa
                 className="object-cover"
                 sizes="150px"
                 quality={75}
-                unoptimized={isAnimated(image)}
+                unoptimized={isAnimated(image) || isLocalAsset(image)}
               />
             </button>
           ))}

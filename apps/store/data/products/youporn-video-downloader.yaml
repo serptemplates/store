@@ -16,12 +16,24 @@ serp_co_product_page_url: https://serp.co/products/youporn-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e021c467ee3b4be4699b6e
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=youporn-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/fZudR1fD23q6e9t8cP0VO1s
+  test_url: https://buy.stripe.com/test_8x29AL0I88Kq3uP8cP0VO1v
+
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/youporn-video-downloader/main/images/youporn-video-downloader.gif
+featured_image: /media/products/youporn-video-downloader/featured.webp
+featured_image_gif: null
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youporn-video-downloader.jpg
+- url: /media/products/youporn-video-downloader/youporn-downloader-screenshot1.webp
   alt: Youporn Video Downloader website preview
+- url: /media/products/youporn-video-downloader/youporn-downloader-screenshot2.webp
+  alt: Youporn Video Downloader workflow overview
+- url: /media/products/youporn-video-downloader/youporn-downloader-screenshot3.webp
+  alt: Queue of Youporn downloads ready for export
+- url: /media/products/youporn-video-downloader/youporn-downloader-screenshot4.webp
+  alt: Download quality selection controls for Youporn videos
+- url: /media/products/youporn-video-downloader/youporn-downloader-screenshot5.webp
+  alt: Youporn Video Downloader automation settings panel
 product_videos: []
 related_videos: []
 related_posts: []
@@ -61,7 +73,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Youporn downloader?
   answer: Install the browser extension, navigate to Youporn, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

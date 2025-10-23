@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/tiktok-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e022c6613b1b4c4ace7f2b
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=tiktok-downloader
+payment_link:
+  live_url: https://buy.stripe.com/00w9AL4Yo3q68P964H0VO1d
+  test_url: https://buy.stripe.com/test_00w8wHgH6e4Kfdx78L0VO1f
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
 screenshots:
@@ -55,7 +59,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: Can I download TikTok videos without the watermark?
   answer: Yes, this downloader can save TikTok videos without the TikTok watermark overlay. This gives you clean videos perfect for repurposing content, creating compilations, or archiving your favorite videos.

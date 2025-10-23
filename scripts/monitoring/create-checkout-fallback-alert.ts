@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Upserts a PostHog insight for monitoring embedded checkout fallbacks.
+ * Upserts a PostHog insight for monitoring Payment Link fallbacks.
  *
  * Usage:
  *   POSTHOG_API_KEY=phx_... POSTHOG_PROJECT_ID=12345 pnpm tsx scripts/monitoring/create-checkout-fallback-alert.ts
@@ -28,9 +28,10 @@ if (!PROJECT_ID) {
   process.exit(1)
 }
 
-const INSIGHT_NAME = process.env.POSTHOG_CHECKOUT_INSIGHT_NAME ?? "Checkout Fallback Monitor"
+const INSIGHT_NAME =
+  process.env.POSTHOG_CHECKOUT_INSIGHT_NAME ?? "Payment Link Fallback Monitor"
 const INSIGHT_DESCRIPTION =
-  "Tracks how often the embedded Stripe checkout fails and falls back to the hosted page."
+  "Tracks how often live products fall back to a non-Payment Link destination after a CTA click."
 
 type PostHogInsight = {
   id: number
@@ -80,18 +81,28 @@ async function findExistingInsight(): Promise<PostHogInsight | null> {
 }
 
 function buildInsightPayload() {
-  const events = [
+  const fallbackFilters = [
     {
-      id: "embedded_checkout_stripe_unavailable",
-      name: "Embedded checkout: Stripe unavailable",
-      type: "events",
-      math: "total",
+      key: "destination",
+      value: "payment_link",
+      operator: "is_not",
+      type: "event",
     },
     {
-      id: "embedded_checkout_iframe_error",
-      name: "Embedded checkout: iframe error",
+      key: "productStatus",
+      value: "live",
+      operator: "exact",
+      type: "event",
+    },
+  ]
+
+  const events = [
+    {
+      id: "product_checkout_clicked",
+      name: "Fallback CTA clicks (live products)",
       type: "events",
       math: "total",
+      properties: fallbackFilters,
     },
   ]
 
@@ -107,12 +118,15 @@ function buildInsightPayload() {
     kind: "InsightVizNode",
     source: {
       kind: "TrendsQuery",
-      series: events.map((event) => ({
-        kind: "EventsNode",
-        event: event.id,
-        name: event.name,
-        math: "total",
-      })),
+      series: [
+        {
+          kind: "EventsNode",
+          event: "product_checkout_clicked",
+          name: "Fallback CTA clicks (live products)",
+          math: "total",
+          properties: fallbackFilters,
+        },
+      ],
       interval: "minute" as const,
       properties: [],
       trendsFilter: {
@@ -193,16 +207,11 @@ async function main() {
       "ℹ️  Alert automation is currently blocked for personal API keys. Please create the alert in the PostHog UI:",
     )
   } else {
-    console.warn(
-      "ℹ️  Create a PostHog alert from this insight (UI → Save insight → Add alert) with threshold `> 2` events in 15 minutes. ",
-    )
+    console.warn("ℹ️  Create a PostHog alert from this insight (UI → Save insight → Add alert).")
   }
 
   console.warn(
-    `Recommended alert copy: Monitor ${[
-      "embedded_checkout_stripe_unavailable",
-      "embedded_checkout_iframe_error",
-    ].join(" & ")} > 2 hits / 15 min.`,
+    "Recommended alert copy: Monitor `product_checkout_clicked` events where destination ≠ payment_link for sustained spikes (> 2 hits / 15 min).",
   )
   if (process.env.POSTHOG_ALERT_DESTINATION) {
     console.warn(

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/gohighlevel-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68edb558613b1b35a5cec2df
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=gohighlevel-downloader
+payment_link:
+  live_url: https://buy.stripe.com/fZu8wHeyYd0Ge9t78L0VO0r
+  test_url: https://buy.stripe.com/test_4gM6oz0I8bWC1mHct50VO0s
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/gohighlevel-downloader/main/images/gohighlevel-downloader.gif
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Gohighlevel downloader?
   answer: Install the browser extension, navigate to Gohighlevel, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

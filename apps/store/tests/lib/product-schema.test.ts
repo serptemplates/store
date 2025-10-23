@@ -66,4 +66,32 @@ describe("productSchema", () => {
       expect(result.data).not.toHaveProperty("order_bump");
     }
   });
+
+  it("requires a payment link when status is live", () => {
+    const base = buildBaseProduct();
+    const result = productSchema.safeParse({
+      ...base,
+      status: "live",
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const paymentLinkIssue = result.error.issues.find((issue) => issue.path.join(".") === "payment_link");
+      expect(paymentLinkIssue?.message).toMatch(/must define a Stripe payment link/i);
+    }
+  });
+
+  it("accepts a live product when a Stripe payment link is defined", () => {
+    const base = buildBaseProduct();
+
+    const result = productSchema.safeParse({
+      ...base,
+      status: "live",
+      payment_link: {
+        live_url: "https://buy.stripe.com/test_123456789",
+      },
+    });
+
+    expect(result.success).toBe(true);
+  });
 });

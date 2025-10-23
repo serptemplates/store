@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/kajabi-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e02c5b219709c8dde26735
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=kajabi-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/00w7sDduUe4KghBfFh0VO0x
+  test_url: https://buy.stripe.com/test_9B6dR1cqQ5yefdx0Kn0VO0y
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/kajabi-video-downloader/main/images/kajabi-video-downloader.gif
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Kajabi downloader?
   answer: Install the browser extension, navigate to Kajabi, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

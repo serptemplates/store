@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/tubi-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=tubi-downloader
+payment_link:
+  live_url: https://buy.stripe.com/00w8wHgH6e4Kfdx78L0VO1f
+  test_url: https://buy.stripe.com/test_6oU7sDcqQ8Kq2qLct50VO1h
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tubi-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/tubi-downloader/main/images/tubi-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Tubi downloader?
   answer: Install the browser extension, navigate to Tubi, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

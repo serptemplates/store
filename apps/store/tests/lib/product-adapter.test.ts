@@ -51,6 +51,10 @@ const baseProduct: ProductData = {
     price_id: "price_123",
     metadata: {},
   },
+  payment_link: {
+    live_url: "https://buy.stripe.com/live-sample-product",
+    test_url: "https://buy.stripe.com/test-sample-product",
+  },
   layout_type: "landing",
   status: "live",
   featured: false,
@@ -86,7 +90,7 @@ describe("productToHomeTemplate", () => {
     expect(template.faqs).toEqual(baseProduct.faqs);
   });
 
-  it("merges pricing cta settings and posts", () => {
+  it("merges pricing CTA settings and posts", () => {
     const product: ProductData = {
       ...baseProduct,
       pricing: {
@@ -116,14 +120,21 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, posts);
 
-    expect(template.ctaMode).toBe("checkout");
-    expect(template.ctaOpensInNewTab).toBe(false);
-    expect(template.cta?.mode).toBe("checkout");
-    expect(template.ctaHref).toBe("/checkout?product=sample-product");
+    expect(template.ctaMode).toBe("external");
+    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.cta?.mode).toBe("external");
+    expect(template.ctaHref).toBe("https://buy.stripe.com/test-sample-product");
     expect(template.ctaText).toBe("Get Started");
+    expect(template.cta?.analytics?.destination).toBe("payment_link");
+    expect(template.cta?.analytics?.paymentLink).toEqual({
+      provider: "stripe",
+      variant: "test",
+      linkId: expect.any(String),
+      url: "https://buy.stripe.com/test-sample-product",
+    });
     const pricing = template.pricing!;
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
-    expect(pricing.ctaHref).toBe("/checkout?product=sample-product");
+    expect(pricing.ctaHref).toBe("https://buy.stripe.com/test-sample-product");
     expect(pricing.ctaText).toBe("Get Started");
     expect(pricing.subheading).toBeUndefined();
     expect(template.posts).toHaveLength(1);
@@ -165,6 +176,7 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       buy_button_destination: destination,
       stripe: undefined,
+      payment_link: undefined,
     };
 
     const template = productToHomeTemplate(product, []);
@@ -172,15 +184,30 @@ describe("productToHomeTemplate", () => {
     expect(template.ctaMode).toBe("external");
     expect(template.ctaOpensInNewTab).toBe(true);
     expect(template.cta?.mode).toBe("external");
-    expect(template.cta?.mode).toBe("external");
     expect(template.ctaHref).toBe(destination);
     expect(template.pricing?.ctaHref).toBe(destination);
+  });
+
+  it("falls back to GHL payment link when only ghl_url is provided", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      payment_link: {
+        ghl_url: "https://ghl.serp.co/payment-link/test",
+      },
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.ctaMode).toBe("external");
+    expect(template.ctaOpensInNewTab).toBe(true);
+    expect(template.ctaHref).toBe("https://ghl.serp.co/payment-link/test");
   });
 
   it("falls back to apps product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
       stripe: undefined,
+      payment_link: undefined,
       buy_button_destination: undefined,
       pricing: {
         price: baseProduct.pricing?.price,
@@ -199,61 +226,41 @@ describe("productToHomeTemplate", () => {
     expect(template.ctaHref).toBe("https://apps.serp.co/sample-product");
   });
 
-  it("uses embedded checkout CTA when Stripe configuration is available", () => {
-    const template = productToHomeTemplate(baseProduct, []);
-
-    expect(template.ctaMode).toBe("checkout");
-    expect(template.ctaOpensInNewTab).toBe(false);
-    expect(template.cta?.mode).toBe("checkout");
-    expect(template.ctaHref).toBe("/checkout?product=sample-product");
-    expect(template.pricing?.ctaHref).toBe("/checkout?product=sample-product");
-  });
-
   it("routes pre-release products to the waitlist CTA by default", () => {
     const product: ProductData = {
       ...baseProduct,
       status: "pre_release",
       stripe: undefined,
+      payment_link: undefined,
       buy_button_destination: undefined,
       pricing: {
         price: baseProduct.pricing?.price,
         benefits: baseProduct.pricing?.benefits ?? [],
         cta_text: "Get it Now",
       },
+      featured_image: "https://cdn.example.com/hero.jpg",
+      screenshots: [
+        {
+          url: "https://cdn.example.com/screenshot.png",
+          alt: "Screenshot",
+        },
+      ],
+      product_videos: ["https://cdn.example.com/demo.mp4"],
     };
 
     const template = productToHomeTemplate(product, []);
 
     expect(template.ctaMode).toBe("pre_release");
-    expect(template.ctaHref).toBe("https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953");
+    expect(template.ctaHref).toBe("#waitlist");
     expect(template.ctaText).toBe("Get Notified");
     expect(template.ctaOpensInNewTab).toBe(false);
     expect(template.ctaTarget).toBe("_self");
-    expect(template.pricing?.ctaHref).toBe("https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953");
+    expect(template.pricing?.ctaHref).toBe("#waitlist");
     expect(template.pricing?.ctaText).toBe("Get Notified");
-  });
-
-  it("honors explicit pre_release cta_mode overrides with custom waitlist configuration", () => {
-    const product: ProductData = {
-      ...baseProduct,
-      status: "live",
-      cta_mode: "pre_release",
-      waitlist_url: "https://newsletter.serp.co/waitlist?product=sample-product",
-      stripe: undefined,
-      pricing: {
-        price: baseProduct.pricing?.price,
-        benefits: baseProduct.pricing?.benefits ?? [],
-        cta_text: "Notify Me",
-      },
-    };
-
-    const template = productToHomeTemplate(product, []);
-
-    expect(template.ctaMode).toBe("pre_release");
-    expect(template.ctaHref).toBe("https://newsletter.serp.co/waitlist?product=sample-product");
-    expect(template.ctaText).toBe("Notify Me");
-    expect(template.ctaOpensInNewTab).toBe(false);
-    expect(template.cta?.mode).toBe("pre_release");
+    expect(template.heroLightThumbnailSrc).toBeUndefined();
+    expect(template.heroDarkThumbnailSrc).toBeUndefined();
+    expect(template.videoUrl).toBeUndefined();
+    expect(template.screenshots).toBeUndefined();
   });
 
   it("selects posts based on related_posts ordering", () => {

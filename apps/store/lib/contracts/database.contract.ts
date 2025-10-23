@@ -20,7 +20,7 @@ export const DBCheckoutSessionContract = z.object({
   customer_email: z.string().email().nullable(),
   metadata: z.record(z.unknown()).default({}),
   status: z.enum(['pending', 'completed', 'failed', 'abandoned']),
-  source: z.enum(['stripe', 'paypal']),
+  source: z.enum(['stripe', 'paypal', 'ghl', 'legacy_paypal']),
   created_at: z.date(),
   updated_at: z.date(),
 });
@@ -43,7 +43,7 @@ export const DBOrderContract = z.object({
   metadata: z.record(z.unknown()).default({}),
   payment_status: z.string().nullable(),
   payment_method: z.string().nullable(),
-  source: z.enum(['stripe', 'paypal']),
+  source: z.enum(['stripe', 'paypal', 'ghl', 'legacy_paypal']),
   created_at: z.date(),
   updated_at: z.date(),
 });
@@ -80,7 +80,7 @@ export const DBInsertCheckoutSessionContract = z.object({
   customer_email: z.string().email().nullable().optional(),
   metadata: z.record(z.unknown()).optional(),
   status: z.enum(['pending', 'completed', 'failed', 'abandoned']).optional(),
-  source: z.enum(['stripe', 'paypal']).optional(),
+  source: z.enum(['stripe', 'paypal', 'ghl', 'legacy_paypal']).optional(),
 });
 
 export type DBInsertCheckoutSession = z.infer<typeof DBInsertCheckoutSessionContract>;
@@ -112,7 +112,7 @@ export const DBInsertOrderContract = z.object({
   metadata: z.record(z.unknown()).optional(),
   payment_status: z.string().nullable().optional(),
   payment_method: z.string().nullable().optional(),
-  source: z.enum(['stripe', 'paypal']).optional(),
+  source: z.enum(['stripe', 'paypal', 'ghl', 'legacy_paypal']).optional(),
 });
 
 export type DBInsertOrder = z.infer<typeof DBInsertOrderContract>;

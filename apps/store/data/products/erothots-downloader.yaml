@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/erothots-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=erothots-downloader
+payment_link:
+  live_url: https://buy.stripe.com/14A3cn1Mc7Gm3uPgJl0VO0l
+  test_url: https://buy.stripe.com/test_4gM00b1Mcd0Gc1lbp10VO0m
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erothots-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/erothots-downloader/main/images/erothots-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Erothots downloader?
   answer: Install the browser extension, navigate to Erothots, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -2,7 +2,7 @@
 
 ## Application overview
 
-The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the hosted checkout redirect, Stripe/PayPal integrations, GHL sync, and license-service orchestration.
+The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the hosted checkout redirect, Stripe Payment Link integration, GHL sync, and license-service orchestration (legacy PayPal orders remain in the database for historical reporting).
 
 Key directories:
 
@@ -82,10 +82,14 @@ The ad-hoc harnesses under `apps/store/scripts/manual-tests/` are still handy fo
 Use the automation harnesses when validating metadata changes:
 
 ```bash
-# Payment Links + PayPal health check
+# Payment Link health check
+
+> Legacy note: PayPal checks were removed in Q4 2024; the steps below focus exclusively on the Stripe Payment Link path.
 pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts
 
-# PayPal → GHL integration spec
+# Legacy PayPal → GHL integration spec
+
+> Historical reference only. No new PayPal orders are created, but past integrations remain documented here for archival purposes.
 pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
 ```
 
@@ -94,6 +98,7 @@ These checks assert that:
 - Orders persist with the correct source + metadata.
 - Checkout sessions record `ghlSyncedAt` / `ghlContactId`.
 - GoHighLevel contacts receive the JSON payloads in `contact.purchase_metadata` and `contact.license_keys_v2`.
+- The webhook no longer overwrites prior purchase metadata; new orders are inserted as the top-level JSON object and previous purchases remain available under `previousPurchases[]` on the same field for audit trails.
 
 Override the default field keys with `GHL_CUSTOM_FIELD_PURCHASE_METADATA` / `GHL_CUSTOM_FIELD_LICENSE_KEYS_V2` when a location deviates from the default schema.
 
@@ -129,7 +134,7 @@ Review Stripe (test mode), your inbox, Postgres, and GoHighLevel afterward to in
 
 For deeper troubleshooting you can run the ad-hoc harnesses under `apps/store/scripts/manual-tests/` (all of them load env vars from the project root):
 
-- `acceptance-test.ts` & `automated-payment-test.ts` – full end-to-end flows with Stripe/PayPal, Postgres, and GHL (`npx tsx scripts/manual-tests/acceptance-test.ts`, `npx tsx scripts/manual-tests/automated-payment-test.ts`).
+- `acceptance-test.ts` & `automated-payment-test.ts` – full end-to-end flows with Stripe Payment Links, Postgres, and GHL (`npx tsx scripts/manual-tests/acceptance-test.ts`, `npx tsx scripts/manual-tests/automated-payment-test.ts`).
 - `test-payment-flow.ts` – quick environment/database sanity check (`npx tsx scripts/manual-tests/test-payment-flow.ts`).
 - `test-purchase-flow.ts` – replays a synthetic `checkout.session.completed` event against the webhook (`npx tsx scripts/manual-tests/test-purchase-flow.ts`).
 - `test-ghl-direct.ts`, `test-ghl-api-direct.ts`, `test-exact-request.ts` – focused GHL connectivity probes (`npx tsx scripts/manual-tests/<script>.ts`).
@@ -145,7 +150,9 @@ Use the focused integration specs to validate that GHL receives the new metadata
 # Stripe → GHL
 pnpm --filter @apps/store exec vitest run tests/integration/stripe-ghl-flow.test.ts
 
-# PayPal → GHL
+# Legacy PayPal → GHL
+
+> Historical reference only. Use the Stripe Payment Link flow for all new work.
 pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts
 ```
 

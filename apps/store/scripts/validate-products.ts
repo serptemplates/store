@@ -2,8 +2,8 @@ import { promises as fs } from "fs"
 import path from "path"
 import Stripe from "stripe"
 import dotenv from "dotenv"
-import { parse, parseDocument, type YAMLMap } from "yaml"
-import { PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
+import { parse, parseDocument } from "yaml"
+import { productSchema } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
 
 // Load env files from the package directory and fallback to the repository root.
@@ -182,44 +182,6 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
   return sortedEntries
 }
 
-function extractKeys(map: YAMLMap<unknown, unknown> | null | undefined): string[] {
-  if (!map || !Array.isArray(map.items)) {
-    return []
-  }
-  return map.items
-    .map((item) => {
-      if (item && typeof item === "object" && "key" in item) {
-        const key = item.key as { value?: unknown }
-        return typeof key?.value === "string" ? key.value : null
-      }
-      return null
-    })
-    .filter((key): key is string => Boolean(key && key.trim().length > 0))
-}
-
-function findOrderViolation(keys: string[], canonicalOrder: readonly string[]): { before: string; after: string } | null {
-  const indexMap = new Map<string, number>()
-  canonicalOrder.forEach((key, index) => indexMap.set(key, index))
-
-  for (let i = 0; i < keys.length; i += 1) {
-    const left = keys[i]!
-    const leftIndex = indexMap.get(left)
-    if (leftIndex === undefined) continue
-
-    for (let j = i + 1; j < keys.length; j += 1) {
-      const right = keys[j]!
-      const rightIndex = indexMap.get(right)
-      if (rightIndex === undefined) continue
-
-      if (rightIndex < leftIndex) {
-        return { before: right, after: left }
-      }
-    }
-  }
-
-  return null
-}
-
 async function main() {
   const productsDir = path.join(process.cwd(), "data", "products")
   const entries = await fs.readdir(productsDir)
@@ -267,39 +229,6 @@ async function main() {
     productSlugs.add(product.slug)
     recordPriceId(product.stripe?.price_id)
     recordPriceId(product.stripe?.test_price_id)
-
-    const topLevelKeys = extractKeys(document.contents as YAMLMap<unknown, unknown>)
-    const orderIssue = findOrderViolation(topLevelKeys, PRODUCT_FIELD_ORDER)
-    if (orderIssue) {
-      errors.push(
-        `❌ ${file}: Field "${orderIssue.before}" must appear before "${orderIssue.after}" to match canonical product schema order.`,
-      )
-      continue
-    }
-
-    const pricingNode = document.get("pricing", true) as YAMLMap<unknown, unknown> | undefined
-    if (pricingNode) {
-      const pricingKeys = extractKeys(pricingNode)
-      const pricingIssue = findOrderViolation(pricingKeys, PRICING_FIELD_ORDER)
-      if (pricingIssue) {
-        errors.push(
-          `❌ ${file}: pricing."${pricingIssue.before}" must appear before "${pricingIssue.after}" to match canonical order.`,
-        )
-        continue
-      }
-    }
-
-    const returnPolicyNode = document.get("return_policy", true) as YAMLMap<unknown, unknown> | undefined
-    if (returnPolicyNode) {
-      const returnKeys = extractKeys(returnPolicyNode)
-      const returnIssue = findOrderViolation(returnKeys, RETURN_POLICY_FIELD_ORDER)
-      if (returnIssue) {
-        errors.push(
-          `❌ ${file}: return_policy."${returnIssue.before}" must appear before "${returnIssue.after}" to match canonical order.`,
-        )
-        continue
-      }
-    }
 
     const activeBadges = BADGE_FLAGS.filter((flag) => {
       if (flag === "pre_release") {

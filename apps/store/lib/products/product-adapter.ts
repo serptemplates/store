@@ -6,8 +6,10 @@ import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/home/home-
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
-import type { ProductCtaMode, ProductData } from "./product-schema";
+import { resolveProductPaymentLink } from "@/lib/products/payment-link";
+import type { ProductData } from "./product-schema";
 import { getReleaseBadgeText } from "./release-status";
+import { normalizeProductAssetPath } from "./asset-paths";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -28,6 +30,7 @@ const CTA_ALLOWED_PREFIXES = [
   "https://ghl.serp.co/",
   "https://serp.ly/",
   "https://serp.co/",
+  "https://buy.stripe.com/",
 ] as const;
 
 function derivePlatform(product: ProductData): string {
@@ -43,25 +46,48 @@ function derivePlatform(product: ProductData): string {
 }
 
 function toScreenshots(screenshots: ProductData["screenshots"], product: ProductData): Screenshot[] | undefined {
-  // If we have actual screenshots, use them
   if (screenshots?.length) {
-    return screenshots.map((shot) => ({
-      src: shot.url,
-      alt: shot.alt,
-    }));
+    const normalized: Screenshot[] = [];
+
+    screenshots.forEach((shot) => {
+      if (!shot) {
+        return;
+      }
+
+      if (typeof shot === "string") {
+        const src = normalizeProductAssetPath(shot);
+        if (src) {
+          normalized.push({ src, alt: `${product.name} screenshot` });
+        }
+        return;
+      }
+
+      const src = normalizeProductAssetPath(shot.url as string | undefined);
+      if (!src) {
+        return;
+      }
+
+      normalized.push({
+        src,
+        alt: shot.alt ?? `${product.name} screenshot`,
+      });
+    });
+
+    return normalized.length > 0 ? normalized : undefined;
   }
 
-  // Otherwise, fall back to featured images if available
-  const fallbackImages = [];
-  if (product.featured_image) {
+  const fallbackImages: Screenshot[] = [];
+  const featured = normalizeProductAssetPath(product.featured_image);
+  if (featured) {
     fallbackImages.push({
-      src: product.featured_image,
+      src: featured,
       alt: `${product.name} screenshot`,
     });
   }
-  if (product.featured_image_gif && product.featured_image_gif !== product.featured_image) {
+  const featuredGif = normalizeProductAssetPath(product.featured_image_gif);
+  if (featuredGif && featuredGif !== featured) {
     fallbackImages.push({
-      src: product.featured_image_gif,
+      src: featuredGif,
       alt: `${product.name} animation`,
     });
   }
@@ -119,51 +145,55 @@ function selectExternalDestination(product: ProductData): string {
 }
 
 function resolveProductCta(product: ProductData): ResolvedProductCta {
-  const hasExternalDestination =
-    typeof product.buy_button_destination === "string" && product.buy_button_destination.trim().length > 0;
-  const hasEmbeddedCheckout =
-    !hasExternalDestination
-    && (Boolean(product.stripe?.price_id) || Boolean(product.stripe?.test_price_id));
-
-  const explicitMode = product.cta_mode;
-  const statusDerivedMode: ProductCtaMode | undefined =
-    product.status === "pre_release" ? "pre_release" : undefined;
-  const fallbackMode: ProductCtaMode = hasEmbeddedCheckout ? "checkout" : "external";
-
-  let mode: ProductCtaMode = explicitMode ?? statusDerivedMode ?? fallbackMode;
-
-  if (mode === "checkout" && !hasEmbeddedCheckout) {
-    mode = "external";
-  }
+  const paymentLink = resolveProductPaymentLink(product);
+  const paymentLinkHref = paymentLink?.url;
 
   const trimmedCtaText =
     typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
 
-  if (mode === "pre_release") {
-    const isGenericCta = normalizedCtaText
-      ? normalizedCtaText.toLowerCase() === DEFAULT_CTA_LABEL_LOWER
-      : false;
-    const waitlistDestination =
-      typeof product.waitlist_url === "string" && product.waitlist_url.trim().length > 0
-        ? product.waitlist_url.trim()
-        : WAITLIST_EMBED_URL;
+  if (paymentLinkHref && product.status !== "pre_release") {
+    const opensInNewTab = true;
     return {
-      mode,
-      href: waitlistDestination,
-      text: !normalizedCtaText || isGenericCta ? WAITLIST_LABEL : normalizedCtaText,
-      opensInNewTab: false,
-      target: "_self",
+      mode: "external",
+      href: paymentLinkHref,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      analytics: {
+        destination: "payment_link",
+        paymentLink: paymentLink
+          ? {
+              provider: paymentLink.provider,
+              variant: paymentLink.variant,
+              linkId: paymentLink.linkId,
+              url: paymentLink.url,
+            }
+          : undefined,
+      },
     };
   }
 
-  if (mode === "checkout") {
+  const isPreRelease = product.status === "pre_release";
+
+  if (isPreRelease) {
+    const defaultWaitlistHref = "#waitlist";
+    const waitlistDestination =
+      typeof product.waitlist_url === "string" && product.waitlist_url.trim().length > 0
+        ? product.waitlist_url.trim()
+        : defaultWaitlistHref;
     return {
-      mode,
-      href: `/checkout?product=${product.slug}`,
-      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      mode: "pre_release",
+      href: waitlistDestination,
+      text: normalizedCtaText && normalizedCtaText.toLowerCase() !== DEFAULT_CTA_LABEL_LOWER
+        ? normalizedCtaText
+        : WAITLIST_LABEL,
       opensInNewTab: false,
       target: "_self",
+      analytics: {
+        destination: "waitlist",
+      },
     };
   }
 
@@ -177,6 +207,9 @@ function resolveProductCta(product: ProductData): ResolvedProductCta {
     opensInNewTab,
     target: opensInNewTab ? "_blank" : "_self",
     rel: opensInNewTab ? "noopener noreferrer" : undefined,
+    analytics: {
+      destination: "external",
+    },
   };
 }
 
@@ -202,8 +235,12 @@ export function productToHomeTemplate(
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
   const resolvedCta = resolveProductCta(product);
-  const videoUrl = product.product_videos?.[0];
-  const screenshots = toScreenshots(product.screenshots, product);
+  const productIsPreRelease = product.status === "pre_release";
+  const rawVideoUrl = product.product_videos?.[0];
+  const videoUrl = productIsPreRelease ? undefined : rawVideoUrl;
+  const normalizedFeaturedImage = normalizeProductAssetPath(product.featured_image);
+  const normalizedFeaturedImageGif = normalizeProductAssetPath(product.featured_image_gif);
+  const screenshots = productIsPreRelease ? undefined : toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
   const priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
@@ -259,8 +296,10 @@ export function productToHomeTemplate(
   return {
     platform,
     videoUrl,
-    heroLightThumbnailSrc: product.featured_image || undefined,
-    heroDarkThumbnailSrc: (product.featured_image_gif ?? product.featured_image) || undefined,
+    heroLightThumbnailSrc: productIsPreRelease ? undefined : normalizedFeaturedImage ?? undefined,
+    heroDarkThumbnailSrc: productIsPreRelease
+      ? undefined
+      : normalizedFeaturedImageGif ?? normalizedFeaturedImage ?? undefined,
     heroVideoTitle: `${product.name} demo video`,
     heroTitle,
     heroDescription,
@@ -295,15 +334,16 @@ export function productToHomeTemplate(
       ctaText: resolvedCta.text,
       ctaHref: resolvedCta.href,
       id: "pricing",
-    },
-    cta: {
-      mode: resolvedCta.mode,
-      href: resolvedCta.href,
-      text: resolvedCta.text,
-      target: resolvedCta.target,
-      rel: resolvedCta.rel,
-      opensInNewTab: resolvedCta.opensInNewTab,
-    },
+  },
+  cta: {
+    mode: resolvedCta.mode,
+    href: resolvedCta.href,
+    text: resolvedCta.text,
+    target: resolvedCta.target,
+    rel: resolvedCta.rel,
+    opensInNewTab: resolvedCta.opensInNewTab,
+    analytics: resolvedCta.analytics,
+  },
     ctaMode: resolvedCta.mode,
     ctaTarget: resolvedCta.target,
     ctaRel: resolvedCta.rel,

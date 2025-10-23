@@ -6,27 +6,25 @@ import NextLink from "next/link"
 import Image from "next/image"
 
 import { HomeTemplate } from "./HomeTemplate"
-import type { ResolvedHomeCta } from "./home-template.types"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { cn } from "@repo/ui/lib/utils"
 
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-import { useCheckoutRedirect } from "@/components/product/useCheckoutRedirect"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { BlogPostMeta } from "@/lib/blog"
 import type { PrimaryNavProps } from "@/lib/navigation"
-import { trackCheckoutSuccessBanner, trackProductCheckoutClick, trackProductPageView } from "@/lib/analytics/product"
-import { trackCheckoutError, trackCheckoutSessionReady } from "@/lib/analytics/checkout"
-import type { EcommerceItem } from "@/lib/analytics/gtm"
+import { trackCheckoutSuccessBanner, trackProductPageView } from "@/lib/analytics/product"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
 import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
+import { normalizeProductAssetPath } from "@/lib/products/asset-paths"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -50,62 +48,32 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const homeProps = productToHomeTemplate(product, resolvedPosts)
   const resolvedVideos = videoEntries
-  const videosToDisplay = resolvedVideos.slice(0, 3)
+  const isPreRelease = product.status === "pre_release"
+  const videosToDisplay = isPreRelease ? [] : resolvedVideos.slice(0, 3)
   const { affiliateId, checkoutSuccess } = useAffiliateTracking()
-  const [couponCode, setCouponCode] = useState<string | undefined>(undefined)
-  const [redirectError, setRedirectError] = useState<string | null>(null)
-  const checkoutHrefBase = `/checkout?product=${product.slug}`
-  const checkoutHref = affiliateId ? `${checkoutHrefBase}&aff=${affiliateId}` : checkoutHrefBase
-  const fallbackMode: ResolvedHomeCta["mode"] =
-    homeProps.ctaMode
-      ?? (typeof homeProps.ctaHref === "string" && homeProps.ctaHref.startsWith("/checkout")
-        ? "checkout"
-        : "external")
 
-  const baseCta: ResolvedHomeCta =
-    homeProps.cta ?? {
-      mode: fallbackMode,
-      href: homeProps.ctaHref ?? checkoutHrefBase,
-      text: homeProps.ctaText ?? "Get It Now",
-      target: homeProps.ctaTarget ?? (homeProps.ctaOpensInNewTab ? "_blank" : "_self"),
-      rel: homeProps.ctaRel,
-      opensInNewTab: homeProps.ctaOpensInNewTab ?? (homeProps.ctaTarget === "_blank"),
-    }
-  const resolvedCta: ResolvedHomeCta =
-    baseCta.mode === "checkout"
-      ? {
-          ...baseCta,
-          href: checkoutHref,
-          opensInNewTab: false,
-          target: "_self",
-          rel: baseCta.rel,
-        }
-      : baseCta
-  const isCheckoutMode = resolvedCta.mode === "checkout"
-  const shouldOpenInNewTab = !isCheckoutMode && resolvedCta.opensInNewTab
+  const [showStickyBar, setShowStickyBar] = useState(false)
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
+
+  const { cta: resolvedCta, handleCtaClick } = useProductCheckoutCta({
+    product,
+    homeCta: {
+      cta: homeProps.cta,
+      ctaMode: homeProps.ctaMode,
+      ctaHref: homeProps.ctaHref,
+      ctaText: homeProps.ctaText,
+      ctaTarget: homeProps.ctaTarget,
+      ctaRel: homeProps.ctaRel,
+      ctaOpensInNewTab: homeProps.ctaOpensInNewTab,
+    },
+    affiliateId,
+    onShowWaitlist: () => setShowWaitlistModal(true),
+  })
+
+  const shouldOpenInNewTab = resolvedCta.opensInNewTab
   const resolvedCtaHref = resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
-  const checkoutCurrency = product.pricing?.currency ?? "USD"
-  const checkoutValue = useMemo(() => {
-    const priceString = product.pricing?.price ?? homeProps.pricing?.price ?? undefined
-    if (!priceString) {
-      return undefined
-    }
-    const numeric = Number.parseFloat(priceString.replace(/[^0-9.]/g, ""))
-    return Number.isFinite(numeric) ? Number(numeric.toFixed(2)) : undefined
-  }, [homeProps.pricing?.price, product.pricing?.price])
-  const ecommerceItem = useMemo<EcommerceItem | undefined>(() => {
-    if (checkoutValue === undefined) {
-      return undefined
-    }
-    return {
-      item_id: product.slug,
-      item_name: product.name,
-      price: checkoutValue,
-      quantity: 1,
-    }
-  }, [checkoutValue, product.name, product.slug])
   const videoSection =
     videosToDisplay.length > 0 ? (
       <section className="bg-gray-50 py-12">
@@ -178,6 +146,9 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
 
   const productImages = useMemo(() => {
+    if (isPreRelease) {
+      return [] as string[]
+    }
     const candidates = [
       product.featured_image,
       product.featured_image_gif,
@@ -190,14 +161,12 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
     return Array.from(
       new Set(
-        candidates.filter((value): value is string => Boolean(value && value.trim().length > 0)),
+        candidates
+          .map((value) => normalizeProductAssetPath(typeof value === "string" ? value : undefined))
+          .filter((value): value is string => Boolean(value)),
       ),
     )
-  }, [product])
-
-  const [showStickyBar, setShowStickyBar] = useState(false)
-  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
-
+  }, [isPreRelease, product])
   useEffect(() => {
     trackProductPageView(product, { affiliateId })
   }, [product, affiliateId])
@@ -209,60 +178,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [checkoutSuccess, product, affiliateId])
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return
-    }
-
-    const params = new URLSearchParams(window.location.search)
-    const rawCoupon =
-      params.get("coupon") ??
-      params.get("couponCode") ??
-      params.get("discount") ??
-      params.get("promo") ??
-      undefined
-    const normalized = rawCoupon?.trim()
-    setCouponCode(normalized && normalized.length > 0 ? normalized.toUpperCase() : undefined)
-  }, [])
-
-  const { isLoading: isCheckoutLoading, beginCheckout } = useCheckoutRedirect({
-    offerId: product.slug,
-    affiliateId,
-    metadata: {
-      landerId: product.slug,
-    },
-    endpoint: "/api/checkout/session",
-    fallbackUrl: product.store_serp_co_product_page_url ?? `/product-details/product/${product.slug}`,
-    onSessionReady: (session) => {
-      setRedirectError(null)
-      trackCheckoutSessionReady({
-        provider: "stripe",
-        productSlug: product.slug,
-        productName: product.name,
-        affiliateId: affiliateId ?? null,
-        currency: checkoutCurrency,
-        value: checkoutValue ?? undefined,
-        ecommerceItem,
-        isInitialSelection: true,
-      })
-      if (session?.id) {
-        console.debug("[checkout] session ready", session.id)
-      }
-    },
-    onError: (error, step) => {
-      setRedirectError(error instanceof Error ? error.message : "Unable to start checkout")
-      trackCheckoutError(error, {
-        step,
-        productSlug: product.slug,
-        productName: product.name,
-        affiliateId: affiliateId ?? null,
-        currency: checkoutCurrency,
-        value: checkoutValue ?? undefined,
-        ecommerceItem,
-      })
-    },
-  })
-
-  useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
     }
@@ -270,60 +185,15 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     handleScroll()
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const analyticsDestination: "checkout" | "external" | "waitlist" =
-    resolvedCta.mode === "pre_release" ? "waitlist" : isCheckoutMode ? "checkout" : "external"
-
-  const navigateToCta = useCallback(() => {
-    if (resolvedCta.mode === "pre_release") {
-      setShowWaitlistModal(true)
-      return
-    }
-
-    if (isCheckoutMode) {
-      if (isCheckoutLoading) {
-        return
-      }
-      setRedirectError(null)
-      void beginCheckout({
-        couponCode,
-      })
-      return
-    }
-
-    if (shouldOpenInNewTab) {
-      window.open(resolvedCtaHref, "_blank", "noopener,noreferrer")
-    } else {
-      window.location.href = resolvedCtaHref
-    }
-  }, [beginCheckout, couponCode, isCheckoutLoading, isCheckoutMode, resolvedCta.mode, resolvedCtaHref, shouldOpenInNewTab])
+  }, [setShowStickyBar])
 
   const handlePrimaryCtaClick = useCallback(() => {
-    if (isCheckoutMode && isCheckoutLoading) {
-      return
-    }
-    trackProductCheckoutClick(product, {
-      placement: "pricing",
-      destination: analyticsDestination,
-      affiliateId,
-    })
-
-    navigateToCta()
-  }, [affiliateId, analyticsDestination, isCheckoutLoading, isCheckoutMode, navigateToCta, product])
+    handleCtaClick("pricing")
+  }, [handleCtaClick])
 
   const handleStickyCtaClick = useCallback(() => {
-    if (isCheckoutMode && isCheckoutLoading) {
-      return
-    }
-    trackProductCheckoutClick(product, {
-      placement: "sticky_bar",
-      destination: analyticsDestination,
-      affiliateId,
-    })
-
-    navigateToCta()
-  }, [affiliateId, analyticsDestination, isCheckoutLoading, isCheckoutMode, navigateToCta, product])
+    handleCtaClick("sticky_bar")
+  }, [handleCtaClick])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -359,15 +229,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         </div>
       )}
 
-      {redirectError ? (
-        <div className="mx-auto mb-4 w-full max-w-4xl px-4">
-          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800 shadow-sm">
-            <p className="text-sm font-medium">We couldn&apos;t start the checkout automatically.</p>
-            <p className="mt-1 text-xs text-red-700">{redirectError}</p>
-          </div>
-        </div>
-      ) : null}
-
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
@@ -394,8 +255,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 ...homeProps.pricing,
                 originalPrice: homeProps.pricing.originalPrice || "$27.99",
                 onCtaClick: handlePrimaryCtaClick,
-                ctaLoading: isCheckoutMode ? isCheckoutLoading : false,
-                ctaDisabled: isCheckoutMode ? isCheckoutLoading : false,
+                ctaLoading: false,
+                ctaDisabled: false,
                 ctaHref: resolvedCtaHref,
                 ctaText: homeProps.pricing?.ctaText ?? resolvedCtaText,
                 ctaExtra: null,
@@ -412,7 +273,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         label={resolvedCtaText}
         openInNewTab={shouldOpenInNewTab}
         rel={resolvedCtaRel}
-        disabled={isCheckoutMode ? isCheckoutLoading : false}
       />
 
       <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
@@ -430,10 +290,9 @@ type StickyProductCTAProps = {
   label: string
   openInNewTab: boolean
   rel?: string
-  disabled?: boolean
 }
 
-function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel, disabled = false }: StickyProductCTAProps) {
+function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel }: StickyProductCTAProps) {
   const ctaClasses = "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:opacity-60";
   const trimmedLabel = label.trim();
   const displayLabel = trimmedLabel.length > 0 ? trimmedLabel.toUpperCase() : "GET IT NOW";
@@ -466,7 +325,6 @@ function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openI
               type="button"
               onClick={onCtaClick}
               className={ctaClasses}
-              disabled={disabled}
             >
               <span aria-hidden className="text-base">🚀</span>
               <span>{displayLabel}</span>

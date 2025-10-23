@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/soundgasm-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=soundgasm-downloader
+payment_link:
+  live_url: https://buy.stripe.com/dRm28j9eE1hYfdxct50VO10
+  test_url: https://buy.stripe.com/test_3cIdR1aiI4ua9Tdct50VO12
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundgasm-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/soundgasm-downloader/main/images/soundgasm-downloader.gif
@@ -61,9 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Soundgasm downloader?
   answer: Install the browser extension, navigate to Soundgasm, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/erome-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e0232567ee3b840f699b84
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=erome-downloader
+payment_link:
+  live_url: https://buy.stripe.com/cNi7sD0I84ua1mH3Wz0VO0k
+  test_url: https://buy.stripe.com/test_14A3cn1Mc7Gm3uPgJl0VO0l
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Erome downloader?
   answer: Install the browser extension, navigate to Erome, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -29,7 +29,7 @@ def inspect_checkout_flow():
         # Capture network activity
         network_logs = []
         def log_request(request):
-            if 'stripe.com' in request.url or 'paypal.com' in request.url or 'checkout' in request.url:
+            if 'stripe.com' in request.url or 'checkout' in request.url:
                 log_entry = f"[{request.method}] {request.url[:100]}"
                 network_logs.append(log_entry)
                 print(f"Network: {log_entry}")
@@ -56,60 +56,41 @@ def inspect_checkout_flow():
         # Analyze buttons
         print("\n2. Analyzing buttons on product page:")
 
-        # Check for PayPal buttons (should NOT exist)
-        paypal_count = page.locator("button:has-text('PayPal')").count()
-        print(f"   PayPal buttons: {paypal_count} {'❌ FOUND - Should be removed!' if paypal_count > 0 else '✓ None (correct)'}")
+        legacy_links = page.locator("a[href*='/checkout?product=']")
+        legacy_count = legacy_links.count()
+        print(f"   Legacy /checkout links: {legacy_count}")
 
-        # Check for old Stripe buttons
-        stripe_count = page.locator("button:has-text('Card'), button:has-text('Stripe')").count()
-        print(f"   Old payment buttons: {stripe_count}")
+        payment_link_buttons = page.locator("a[href^='https://buy.stripe.com']")
+        payment_link_count = payment_link_buttons.count()
+        print(f"   Stripe Payment Link CTAs: {payment_link_count}")
 
-        # Check for checkout links
-        checkout_links = page.locator("a[href*='/checkout?product=']").all()
-        print(f"   Checkout links: {len(checkout_links)} found")
+        if payment_link_count:
+            first_cta = payment_link_buttons.first
+            cta_text = first_cta.text_content().strip()
+            cta_href = first_cta.get_attribute("href")
+            print(f"   Primary CTA: '{cta_text}' → {cta_href}")
 
-        for i, link in enumerate(checkout_links[:3]):
-            href = link.get_attribute("href")
-            text = link.text_content().strip()
-            print(f"     Link {i+1}: '{text}' → {href}")
+            print("\n3. Clicking Payment Link CTA (expecting new tab)...")
+            with context.expect_page() as checkout_page_info:
+                first_cta.click()
+            checkout_page = checkout_page_info.value
+            checkout_page.wait_for_load_state("domcontentloaded")
+            time.sleep(2)
 
-        # Click the checkout button
-        if len(checkout_links) > 0:
-            print("\n3. Clicking first checkout button...")
-            checkout_links[0].click()
-            page.wait_for_load_state("networkidle")
-            time.sleep(3)
+            checkout_url = checkout_page.url
+            print(f"   ✓ Checkout tab URL: {checkout_url}")
+            checkout_page.screenshot(path="2-stripe-payment-link.png", full_page=True)
+            print("   ✓ Screenshot saved: 2-stripe-payment-link.png")
 
-            print(f"   ✓ Navigated to: {page.url}")
-            page.screenshot(path="2-checkout-page.png")
-            print("   ✓ Screenshot saved: 2-checkout-page.png")
+            if "buy.stripe.com" in checkout_url:
+                print("   ✓ Confirmed Stripe Payment Link opened in new tab")
+            else:
+                print("   ❌ Unexpected checkout URL (expected buy.stripe.com)")
 
-            # Analyze checkout page
-            print("\n4. Analyzing checkout page:")
+            checkout_page.close()
+        else:
+            print("\n❌ No Stripe Payment Link CTA detected – verify product configuration.")
 
-            # Check for payment method toggles
-            stripe_toggle = page.locator("button:has-text('Pay with Stripe')").count()
-            paypal_toggle = page.locator("button:has-text('Pay with PayPal')").count()
-
-            print(f"   Stripe toggle: {'✓ Found' if stripe_toggle else '❌ Missing'}")
-            print(f"   PayPal toggle: {'✓ Found' if paypal_toggle else '❌ Missing'}")
-
-            # Check for Stripe iframe
-            time.sleep(2)  # Wait for iframe to load
-            iframe_count = page.locator("#checkout iframe").count()
-            print(f"   Stripe checkout iframe: {'✓ Found' if iframe_count else '❌ Missing'}")
-
-            # Click PayPal toggle
-            if paypal_toggle > 0:
-                print("\n5. Testing PayPal toggle...")
-                page.locator("button:has-text('Pay with PayPal')").click()
-                time.sleep(2)
-                page.screenshot(path="3-checkout-paypal.png")
-                print("   ✓ Screenshot saved: 3-checkout-paypal.png")
-
-                # Check for PayPal button
-                paypal_button = page.locator("button:has-text('Pay'), div:has-text('PayPal')").count()
-                print(f"   PayPal checkout button: {'✓ Found' if paypal_button else '❌ Missing'}")
 
         print("\n" + "="*60)
         print("TESTING MOBILE VIEW")
@@ -123,19 +104,23 @@ def inspect_checkout_flow():
         page.screenshot(path="4-product-page-mobile.png", full_page=True)
         print("\n✓ Mobile screenshot saved: 4-product-page-mobile.png")
 
-        # Check mobile buttons
-        mobile_checkout = page.locator("a[href*='/checkout']").first
-        if mobile_checkout:
-            text = mobile_checkout.text_content().strip()
-            print(f"Mobile checkout button: '{text}'")
+        # Check mobile Payment Link button
+        mobile_cta_locator = page.locator("a[href^='https://buy.stripe.com']")
+        if mobile_cta_locator.count():
+            mobile_text = mobile_cta_locator.first.text_content().strip()
+            print(f"Mobile CTA: '{mobile_text}'")
 
-            # Click to checkout
-            mobile_checkout.click()
-            page.wait_for_load_state("networkidle")
+            with context.expect_page() as mobile_checkout_info:
+                mobile_cta_locator.first.click()
+            mobile_checkout = mobile_checkout_info.value
+            mobile_checkout.wait_for_load_state("domcontentloaded")
             time.sleep(2)
 
-            page.screenshot(path="5-checkout-page-mobile.png", full_page=True)
-            print("✓ Mobile checkout screenshot saved: 5-checkout-page-mobile.png")
+            mobile_checkout.screenshot(path="5-stripe-payment-link-mobile.png", full_page=True)
+            print("✓ Mobile checkout screenshot saved: 5-stripe-payment-link-mobile.png")
+            mobile_checkout.close()
+        else:
+            print("❌ No Stripe Payment Link CTA visible on mobile layout")
 
         print("\n" + "="*60)
         print("NETWORK & CONSOLE SUMMARY")
@@ -158,10 +143,9 @@ def inspect_checkout_flow():
         print("="*60)
         print("\nScreenshots saved:")
         print("  1-product-page-desktop.png")
-        print("  2-checkout-page.png")
-        print("  3-checkout-paypal.png")
+        print("  2-stripe-payment-link.png")
         print("  4-product-page-mobile.png")
-        print("  5-checkout-page-mobile.png")
+        print("  5-stripe-payment-link-mobile.png")
 
         input("\nPress Enter to close browser...")
         browser.close()

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/whop-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9818613b1b77b5ce7b48
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=whop-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/3cI8wH8aA8Kq6H164H0VO1o
+  test_url: https://buy.stripe.com/test_5kQ6ozfD27Gmfdx2Sv0VO1q
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.gif
@@ -69,7 +73,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Whop downloader?
   answer: Install the browser extension, navigate to Whop, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

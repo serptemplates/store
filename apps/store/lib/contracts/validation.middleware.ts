@@ -91,16 +91,13 @@ export function createValidationMiddleware<T>(
 /**
  * Validates webhook signatures and payloads
  */
-export function createWebhookValidator(
-  provider: 'stripe' | 'paypal',
-  secretKey: string
-) {
+export function createWebhookValidator(secretKey: string) {
   return async function validateWebhook(
     req: NextRequest
   ): Promise<ValidationResult<unknown>> {
     try {
       const body = await req.text();
-      const signature = req.headers.get(`${provider}-signature`) || '';
+      const signature = req.headers.get('stripe-signature') || '';
 
       if (!signature) {
         return {
@@ -108,53 +105,37 @@ export function createWebhookValidator(
           errors: [
             {
               path: 'headers',
-              message: `Missing ${provider} signature`,
+              message: 'Missing stripe signature',
               code: 'missing_signature',
             },
           ],
         };
       }
 
-      // Provider-specific signature validation
-      let isValid = false;
+      const stripe = require('stripe');
+      const stripeClient = new stripe(secretKey);
+
       let parsedBody: unknown;
+      let isValid = false;
 
-      switch (provider) {
-        case 'stripe':
-          const stripe = require('stripe');
-          const stripeClient = new stripe(secretKey);
-          try {
-            const webhookSecret = getOptionalStripeWebhookSecret();
-            if (!webhookSecret) {
-              throw new Error('Stripe webhook secret is not configured.');
-            }
+      try {
+        const webhookSecret = getOptionalStripeWebhookSecret();
+        if (!webhookSecret) {
+          throw new Error('Stripe webhook secret is not configured.');
+        }
 
-            parsedBody = stripeClient.webhooks.constructEvent(
-              body,
-              signature,
-              webhookSecret
-            );
-            isValid = true;
-          } catch {
-            isValid = false;
-          }
-          break;
-
-        case 'paypal':
-          // PayPal webhook validation
-          const crypto = require('crypto');
-          const hash = crypto
-            .createHmac('sha256', secretKey)
-            .update(body)
-            .digest('base64');
-          isValid = hash === signature;
-          parsedBody = JSON.parse(body);
-          break;
+        parsedBody = stripeClient.webhooks.constructEvent(
+          body,
+          signature,
+          webhookSecret
+        );
+        isValid = true;
+      } catch {
+        isValid = false;
       }
 
       if (!isValid) {
         logger.error('webhook.invalid_signature', {
-          provider,
           path: req.nextUrl.pathname,
         });
 
@@ -176,7 +157,6 @@ export function createWebhookValidator(
       };
     } catch (error) {
       logger.error('webhook.validation_error', {
-        provider,
         error: error instanceof Error ? error.message : 'Unknown error',
       });
 

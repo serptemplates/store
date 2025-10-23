@@ -16,8 +16,10 @@ describe("price manifest", () => {
   const productsDir = path.resolve(process.cwd(), "data", "products");
   const productFiles = readdirSync(productsDir).filter((file) => /\.ya?ml$/i.test(file));
 
-  it("keeps manifest amounts in sync with product copy", () => {
+  it("keeps manifest amounts and payment link metadata in sync with product copy", () => {
     const mismatches: string[] = [];
+    const missingPaymentLinks: string[] = [];
+    const missingStripeProducts: string[] = [];
 
     for (const file of productFiles) {
       const absolutePath = path.join(productsDir, file);
@@ -25,7 +27,10 @@ describe("price manifest", () => {
       const product = parse(raw) as Record<string, unknown> | null;
       if (!product) continue;
 
-      const stripe = product?.stripe as { price_id?: string } | undefined;
+      const stripe = product?.stripe as {
+        price_id?: string;
+        metadata?: Record<string, unknown> | null;
+      } | undefined;
       if (!stripe?.price_id) continue;
 
       const manifestEntry = findPriceEntry(stripe.price_id, undefined);
@@ -41,8 +46,22 @@ describe("price manifest", () => {
           `${file}: Stripe price ${formatAmountFromCents(manifestEntry.unitAmount, manifestEntry.currency)} does not match YAML price ${pricing?.price ?? declaredPrice}`,
         );
       }
+
+      const paymentLink = product?.payment_link as { live_url?: unknown } | undefined;
+      const liveUrl =
+        typeof paymentLink?.live_url === "string" ? paymentLink.live_url.trim() : "";
+      if (!liveUrl.startsWith("https://buy.stripe.com/")) {
+        missingPaymentLinks.push(`${file}: missing Stripe Payment Link live_url`);
+      }
+
+      const stripeProductId = stripe.metadata?.stripe_product_id;
+      if (typeof stripeProductId !== "string" || stripeProductId.trim().length === 0) {
+        missingStripeProducts.push(`${file}: missing stripe.metadata.stripe_product_id`);
+      }
     }
 
     expect(mismatches).toEqual([]);
+    expect(missingPaymentLinks).toEqual([]);
+    expect(missingStripeProducts).toEqual([]);
   });
 });

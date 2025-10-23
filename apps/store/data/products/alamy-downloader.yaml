@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/alamy-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68dfb1032197097607e2638e
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=alamy-downloader
+payment_link:
+  live_url: https://buy.stripe.com/9B6cMXfD20dU6H18cP0VO05
+  test_url: https://buy.stripe.com/test_14AaEPcqQf8O0iD78L0VO04
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alamy-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/alamy-downloader/main/images/featured.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Alamy downloader?
   answer: Install the browser extension, navigate to Alamy, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/xhamster-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df98cf67ee3b35f669979b
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=xhamster-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/5kQ6ozfD27Gmfdx2Sv0VO1q
+  test_url: https://buy.stripe.com/test_fZudR1fD23q6e9t8cP0VO1s
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xhamster-video-downloader/main/images/xhamster-video-downloader.gif
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Xhamster downloader?
   answer: Install the browser extension, navigate to Xhamster, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
