@@ -75,3 +75,6 @@ external/
 mcp-debug-tools/
 **/.lighthouseci/
 .certs
+.env.vercel
+.env.vercel.preview
+.env.vercel.prod
