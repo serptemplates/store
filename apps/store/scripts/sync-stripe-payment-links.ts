@@ -107,8 +107,8 @@ import process from "node:process";
 
   const consentWarnings = new Set<string>();
 
-  function loadPaymentLinks(): PaymentLinkTarget[] {
-    if (!fs.exists(PRODUCTS_DIR)) {
+function loadPaymentLinks(): PaymentLinkTarget[] {
+  if (!fs.existsSync(PRODUCTS_DIR)) {
       throw new Error(`Products directory not found at ${PRODUCTS_DIR}`);
     }
 
