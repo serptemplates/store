@@ -25,7 +25,7 @@ describe("payment-link config helpers", () => {
     expect(url.endsWith("session_id={CHECKOUT_SESSION_ID}")).toBe(true);
   });
 
-  it("buildPaymentLinkUpdatePayload mirrors metadata to payment_intent_data", () => {
+   it("buildPaymentLinkUpdatePayload mirrors metadata to payment_intent_data", () => {
     const payload = buildPaymentLinkUpdatePayload({
       slug: "rawpixel-downloader",
       ghlTag: "purchase-rawpixel-downloader",
