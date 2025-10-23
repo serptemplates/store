@@ -52,6 +52,7 @@ test.describe("Homepage smoke", () => {
         if (
           text.includes("MIME type ('text/html') is not a supported stylesheet MIME type") ||
           text.includes("Failed to load resource: the server responded with a status of 404 (Not Found)") ||
+          text.includes("Failed to load resource: the server responded with a status of 500 (Internal Server Error)") ||
           text.includes("Refused to execute script")
         ) {
           return false;

@@ -25,6 +25,7 @@ const config: PlaywrightTestConfig = {
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  globalSetup: "./tests/global-setup.ts",
 };
 
 if (shouldStartWebServer) {
