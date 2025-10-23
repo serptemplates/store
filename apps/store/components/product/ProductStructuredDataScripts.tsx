@@ -8,6 +8,7 @@ import type { ProductData } from "@/lib/products/product-schema";
 import { isPreRelease } from "@/lib/products/release-status";
 import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
+import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
 import type { BlogPostMeta } from "@/lib/blog";
 import type { ProductVideoEntry } from "@/lib/products/video";
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url";
@@ -59,20 +60,6 @@ const resolveOperatingSystems = (supported: string[] = []): string[] => {
   return Array.from(new Set(canonical));
 };
 
-const toAbsoluteUrl = (value: string, base: string): string => {
-  if (!value) {
-    return value;
-  }
-
-  if (/^https?:\/\//i.test(value)) {
-    return value;
-  }
-
-  const normalizedBase = base.replace(/\/$/, "");
-  const normalizedPath = value.startsWith("/") ? value : `/${value}`;
-  return `${normalizedBase}${normalizedPath}`;
-};
-
 export interface ProductStructuredDataScriptsProps {
   product: ProductData;
   posts?: BlogPostMeta[];
@@ -105,8 +92,10 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       (images.length
         ? images
         : [product.featured_image, product.featured_image_gif].flat())
-        .filter((value): value is string => Boolean(value && value.trim().length > 0))
-        .map((value) => value.trim()),
+        .map((value) => normalizeProductAssetPath(typeof value === "string" ? value : undefined))
+        .filter((value): value is string => Boolean(value))
+        .map((value) => toAbsoluteProductAssetUrl(value, normalizedStoreUrl))
+        .filter((value): value is string => Boolean(value)),
     ),
   );
   const supportedRegions = (product.supported_regions ?? [])
@@ -125,8 +114,10 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       (product.screenshots?.map((screenshot) =>
         typeof screenshot === "string" ? screenshot : screenshot.url,
       ) ?? normalizedImages)
-        .filter((value): value is string => Boolean(value && value.trim().length > 0))
-        .map((value) => toAbsoluteUrl(value, normalizedStoreUrl)),
+        .map((value) => normalizeProductAssetPath(typeof value === "string" ? value : undefined))
+        .filter((value): value is string => Boolean(value))
+        .map((value) => toAbsoluteProductAssetUrl(value, normalizedStoreUrl))
+        .filter((value): value is string => Boolean(value)),
     ),
   );
 
@@ -226,7 +217,8 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
 
   const videoScripts = videoObjects.map((entry) => {
     const watchUrl = `${baseUrl}${entry.watchPath}`;
-    const thumbnail = entry.thumbnailUrl ? toAbsoluteUrl(entry.thumbnailUrl, normalizedStoreUrl) : undefined;
+    const thumbnailPath = normalizeProductAssetPath(entry.thumbnailUrl ?? undefined);
+    const thumbnail = thumbnailPath ? toAbsoluteProductAssetUrl(thumbnailPath, normalizedStoreUrl) : undefined;
     const thumbnailUrl = thumbnail
       ? [thumbnail]
       : screenshotImages.length > 0

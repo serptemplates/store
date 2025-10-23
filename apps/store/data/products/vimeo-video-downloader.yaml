@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/vimeo-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/5kQ14ffD20dUe9takX0VO1m
+  test_url: https://buy.stripe.com/test_3cI8wH8aA8Kq6H164H0VO1o
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.gif
@@ -111,7 +115,6 @@ pricing:
   - Supports private and password-protected videos
   - Unlimited downloads with no throttling
   - SERP Apps support when you need help
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How does the Vimeo Video Downloader extension work?
   answer: Simply install our extension in your browser, navigate to any Vimeo video, and click the download button that appears. Our extension integrates seamlessly with your browser, allowing you to download videos in just one click without leaving the page.
@@ -205,6 +208,7 @@ return_policy:
 stripe:
   price_id: price_1S2fcZ06JrOmKRCmTwbmGNxm
   metadata:
+    stripe_product_id: prod_SgReFRh1TixiX4
 ghl:
   tag_ids:
   - purchase-vimeo-video-downloader

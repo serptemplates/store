@@ -13,8 +13,6 @@ config({ path: "../../../.env.local" });
 config({ path: "../../../.env" });
 
 const WEBHOOK_SECRET = getOptionalStripeWebhookSecret("test") || getOptionalStripeWebhookSecret();
-const API_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL || "http://localhost:3000";
-
 if (!WEBHOOK_SECRET) {
   console.error("❌ Stripe webhook secret for test mode is not configured (set STRIPE_WEBHOOK_SECRET_TEST)");
   process.exit(1);
@@ -24,6 +22,7 @@ if (!WEBHOOK_SECRET) {
 function createMockCheckoutSession(): Stripe.Checkout.Session {
   const sessionId = `cs_test_${crypto.randomBytes(16).toString("hex")}`;
   const paymentIntentId = `pi_test_${crypto.randomBytes(16).toString("hex")}`;
+  const paymentLinkId = `plink_test_${crypto.randomBytes(12).toString("hex")}`;
 
   return {
     id: sessionId,
@@ -32,7 +31,7 @@ function createMockCheckoutSession(): Stripe.Checkout.Session {
     payment_status: "paid",
     status: "complete",
     mode: "payment",
-    success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+    success_url: `https://apps.serp.co/checkout/success?provider=stripe&slug=linkedin-learning-downloader&payment_link_id=${paymentLinkId}&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: "https://apps.serp.co/checkout?product=test-product",
     amount_total: 9900, // $99.00
     amount_subtotal: 9900,
@@ -56,7 +55,11 @@ function createMockCheckoutSession(): Stripe.Checkout.Session {
       apps_serp_co_product_page_url: "https://apps.serp.co/linkedin-learning-downloader",
       purchaseUrl: "https://serp.ly/linkedin-learning-downloader",
       serply_link: "https://serp.ly/linkedin-learning-downloader",
-      success_url: "https://apps.serp.co/checkout/success?product=linkedin-learning-downloader&session_id={CHECKOUT_SESSION_ID}",
+      success_url: `https://apps.serp.co/checkout/success?provider=stripe&slug=linkedin-learning-downloader&payment_link_id=${paymentLinkId}&session_id={CHECKOUT_SESSION_ID}`,
+      provider: "stripe",
+      payment_link_id: paymentLinkId,
+      payment_link_mode: "test",
+      product_slug: "linkedin-learning-downloader",
       cancel_url: "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
       affiliateId: "test-affiliate-123",
       source: "test-script"

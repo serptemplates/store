@@ -66,6 +66,7 @@ export type GhlSyncContext = {
   licenseEntitlements?: string[] | null | undefined;
   licenseTier?: string | null | undefined;
   licenseFeatures?: Record<string, unknown> | null | undefined;
+  tosAccepted?: boolean | null | undefined;
 };
 
 export type SyncOutcome = {

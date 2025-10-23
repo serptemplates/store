@@ -10,16 +10,10 @@ Quick checklist to confirm the “Unlock Every Downloader” upsell (and future 
   - Coupon metadata (`couponAdjustedTotalCents`, etc.) when applicable.
 - Ensure the Payment Intent or Charge includes the upsell amount in its breakdown.
 
-## 2. PayPal Dashboard
-- Locate the order (test sandbox or live).
-- Verify the order total equals product + upsell.
-- Check PayPal’s “Custom ID” or notes for `orderBumpId` (we pass the slug in `custom_id`).
-- Make sure PayPal metadata (available via webhooks) includes the same fields we emit.
-
-## 3. Checkout Session Store (internal)
-- Look up the `checkout_sessions` record (Stripe session ID or `paypal_<orderId>`).
+## 2. Checkout Session Store (internal)
+- Look up the `checkout_sessions` record (Stripe session ID or legacy PayPal session ID prefixed with `paypal_`).
 - Confirm metadata mirrors the dashboard fields above.
-- Ensure `source` is `stripe` or `paypal` so downstream jobs can branch accordingly.
+- Ensure `source` is `stripe` (or `legacy_paypal` for historical orders) so downstream jobs can branch accordingly.
 
 ## 4. GoHighLevel (if used)
 - In both live and test mode, open the product/offer:
@@ -34,7 +28,7 @@ Quick checklist to confirm the “Unlock Every Downloader” upsell (and future 
 ## 6. Email & Receipts
 - Review the order confirmation email and any GHL automations:
   - The upsell should be listed as a line item or at least noted in the body.
-  - Ensure dollar amounts line up with Stripe/PayPal totals.
+  - Ensure dollar amounts line up with Stripe totals.
 
 ## 7. Analytics & Reporting
 - In PostHog/Segment, confirm events include `orderBumpSelected` and price fields.
@@ -42,6 +36,5 @@ Quick checklist to confirm the “Unlock Every Downloader” upsell (and future 
 
 ## Smoke Test Template
 1. Run Stripe test checkout with upsell off + on.
-2. Run PayPal sandbox checkout with upsell off + on.
-3. Inspect metadata + fulfilment artefacts per steps above.
-4. Document results in release notes or QA sheet.
+2. Inspect metadata + fulfilment artefacts per steps above.
+3. Document results in release notes or QA sheet.

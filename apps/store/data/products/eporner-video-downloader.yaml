@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/eporner-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df98e767ee3b7d3f69979d
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=eporner-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/6oU7sD1Mc5ye8P950D0VO0j
+  test_url: https://buy.stripe.com/test_cNi7sD0I84ua1mH3Wz0VO0k
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/eporner-downloader/main/images/eporner-downloader.gif
@@ -61,7 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Eporner downloader?
   answer: Install the browser extension, navigate to Eporner, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

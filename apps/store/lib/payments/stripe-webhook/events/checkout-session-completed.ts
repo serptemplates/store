@@ -8,6 +8,7 @@ import {
   upsertOrder,
 } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
+import { getProductData } from "@/lib/products/product";
 import { createLicenseForOrder } from "@/lib/license-service";
 import { GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
@@ -15,6 +16,7 @@ import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/notifications/ops";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { syncOrderWithGhlWithRetry } from "@/lib/payments/stripe-webhook/helpers/ghl-sync";
+import { getStripeClient } from "@/lib/payments/stripe";
 
 const OPS_ALERT_THRESHOLD = 3;
 
@@ -52,11 +54,141 @@ function extractLicenseConfig(metadata: Record<string, unknown> | undefined, off
 export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, eventId?: string) {
   const metadata = normalizeMetadata(session.metadata);
 
+  const paymentLinkId =
+    typeof session.payment_link === "string"
+      ? session.payment_link
+      : session.payment_link?.id ?? null;
+
+  const canonicalPaymentLinkId =
+    paymentLinkId ?? metadata.payment_link_id ?? metadata.paymentLinkId ?? null;
+  if (canonicalPaymentLinkId) {
+    metadata.payment_link_id = canonicalPaymentLinkId;
+    metadata.paymentLinkId = canonicalPaymentLinkId;
+  }
+
+  const paymentLinkMode =
+    typeof session.livemode === "boolean"
+      ? session.livemode ? "live" : "test"
+      : metadata.payment_link_mode ?? metadata.paymentLinkMode ?? null;
+  if (paymentLinkMode) {
+    metadata.payment_link_mode = paymentLinkMode;
+    metadata.paymentLinkMode = paymentLinkMode;
+  }
+
+  let productSlugValue = metadata.product_slug ?? metadata.productSlug ?? null;
+  if (productSlugValue) {
+    metadata.product_slug = productSlugValue;
+    metadata.productSlug = productSlugValue;
+  }
+
+  let stripeProductIdValue =
+    metadata.stripe_product_id ?? metadata.stripeProductId ?? null;
+  if (stripeProductIdValue) {
+    metadata.stripe_product_id = stripeProductIdValue;
+    metadata.stripeProductId = stripeProductIdValue;
+  }
+
+  let ghlTagValue = metadata.ghl_tag ?? metadata.ghlTag ?? null;
+  if (ghlTagValue) {
+    metadata.ghl_tag = ghlTagValue;
+    metadata.ghlTag = ghlTagValue;
+  }
+
+  if (
+    canonicalPaymentLinkId
+    && (!productSlugValue || !stripeProductIdValue || !ghlTagValue)
+  ) {
+    try {
+      const stripeClient = getStripeClient(
+        paymentLinkMode === "test"
+          ? "test"
+          : paymentLinkMode === "live"
+          ? "live"
+          : "auto",
+      );
+      const link = await stripeClient.paymentLinks.retrieve(canonicalPaymentLinkId, {
+        expand: ["line_items.data.price.product"],
+      });
+      const linkMetadata = normalizeMetadata(link.metadata);
+
+      if (!productSlugValue) {
+        const fallbackSlug = linkMetadata.product_slug ?? linkMetadata.productSlug ?? null;
+        if (fallbackSlug) {
+          metadata.product_slug = fallbackSlug;
+          metadata.productSlug = fallbackSlug;
+          productSlugValue = fallbackSlug;
+        }
+      }
+
+      if (!stripeProductIdValue) {
+        const fallbackProductId =
+          linkMetadata.stripe_product_id
+            ?? linkMetadata.stripeProductId
+            ?? (typeof link.line_items?.data?.[0]?.price?.product === "string"
+              ? (link.line_items?.data?.[0]?.price?.product as string)
+              : (
+                link.line_items?.data?.[0]?.price?.product
+                && typeof link.line_items.data[0].price?.product === "object"
+              )
+              ? (link.line_items?.data?.[0]?.price?.product as Stripe.Product | Stripe.DeletedProduct | null)?.id ?? null
+              : null);
+
+        if (fallbackProductId) {
+          metadata.stripe_product_id = fallbackProductId;
+          metadata.stripeProductId = fallbackProductId;
+          stripeProductIdValue = fallbackProductId;
+        }
+      }
+
+      if (!metadata.stripe_price_id && !metadata.stripePriceId) {
+        const fallbackPriceId = linkMetadata.stripe_price_id ?? linkMetadata.stripePriceId ?? link.line_items?.data?.[0]?.price?.id ?? null;
+        if (fallbackPriceId) {
+          metadata.stripe_price_id = fallbackPriceId;
+          metadata.stripePriceId = fallbackPriceId;
+        }
+      }
+
+      if (!ghlTagValue) {
+        const fallbackTag = linkMetadata.ghl_tag ?? linkMetadata.ghlTag ?? null;
+        if (fallbackTag) {
+          metadata.ghl_tag = fallbackTag;
+          metadata.ghlTag = fallbackTag;
+          ghlTagValue = fallbackTag;
+        }
+      }
+
+      if (!paymentLinkMode && typeof link.livemode === "boolean") {
+        const inferredMode = link.livemode ? "live" : "test";
+        metadata.payment_link_mode = inferredMode;
+        metadata.paymentLinkMode = inferredMode;
+      }
+    } catch (error) {
+      logger.warn("stripe.payment_link_metadata_lookup_failed", {
+        paymentLinkId: canonicalPaymentLinkId,
+        error: error instanceof Error ? { message: error.message, name: error.name } : error,
+      });
+    }
+  }
+
+  const tosStatus = session.consent?.terms_of_service ?? null;
+  if (tosStatus) {
+    metadata.stripeTermsOfService = tosStatus;
+    if (tosStatus === "accepted") {
+      metadata.tosAccepted = "true";
+    }
+  }
+
+  const tosRequirement = session.consent_collection?.terms_of_service ?? null;
+  if (tosRequirement) {
+    metadata.stripeTermsOfServiceRequirement = tosRequirement;
+  }
+
   if (session.client_reference_id) {
     metadata.clientReferenceId = session.client_reference_id;
   }
 
   const offerId = metadata.offerId
+    ?? metadata.product_slug
     ?? metadata.productSlug
     ?? session.client_reference_id
     ?? (process.env.NODE_ENV === "development" ? "loom-video-downloader" : null);
@@ -70,7 +202,7 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     return;
   }
 
-  const landerId = metadata.landerId ?? metadata.productSlug ?? offerId;
+  const landerId = metadata.landerId ?? metadata.productSlug ?? metadata.product_slug ?? offerId;
 
   const paymentIntentId =
     typeof session.payment_intent === "string"
@@ -80,6 +212,31 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
   const customerEmail = session.customer_details?.email ?? session.customer_email ?? null;
   const customerPhone = session.customer_details?.phone ?? null;
   const offerConfig = getOfferConfig(offerId);
+
+  if (!metadata.product_slug || !metadata.productSlug) {
+    metadata.product_slug = offerId;
+    metadata.productSlug = offerId;
+  }
+
+  if (!metadata.ghl_tag && !metadata.ghlTag) {
+    const fallbackTag =
+      offerConfig?.ghl?.tagIds && offerConfig.ghl.tagIds.length > 0
+        ? offerConfig.ghl.tagIds[0]
+        : (() => {
+            try {
+              const product = getProductData(offerId);
+              return product.ghl?.tag_ids?.[0] ?? null;
+            } catch {
+              return null;
+            }
+          })();
+
+    if (fallbackTag) {
+      metadata.ghl_tag = fallbackTag;
+      metadata.ghlTag = fallbackTag;
+      ghlTagValue = fallbackTag;
+    }
+  }
 
   if (paymentIntentId) {
     await recordWebhookLog({
@@ -151,6 +308,54 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       amount: amountMajorUnits,
       currency: currencyCode,
     };
+
+    if (metadata.productSlug) {
+      licenseMetadata.productSlug = metadata.productSlug;
+      licenseMetadata.product_slug = metadata.productSlug;
+    }
+
+    if (metadata.ghlTag) {
+      licenseMetadata.ghlTag = metadata.ghlTag;
+    }
+
+    if (metadata.ghl_tag) {
+      licenseMetadata.ghl_tag = metadata.ghl_tag;
+    }
+
+    if (metadata.paymentLinkId) {
+      licenseMetadata.paymentLinkId = metadata.paymentLinkId;
+      licenseMetadata.payment_link_id = metadata.paymentLinkId;
+    }
+
+    if (metadata.payment_link_id) {
+      licenseMetadata.payment_link_id = metadata.payment_link_id;
+    }
+
+    if (metadata.paymentLinkMode) {
+      licenseMetadata.paymentLinkMode = metadata.paymentLinkMode;
+      licenseMetadata.payment_link_mode = metadata.paymentLinkMode;
+    }
+
+    if (metadata.payment_link_mode) {
+      licenseMetadata.payment_link_mode = metadata.payment_link_mode;
+    }
+
+    if (metadata.stripeProductId) {
+      licenseMetadata.stripeProductId = metadata.stripeProductId;
+      licenseMetadata.stripe_product_id = metadata.stripeProductId;
+    }
+
+    if (metadata.stripe_product_id) {
+      licenseMetadata.stripe_product_id = metadata.stripe_product_id;
+    }
+
+    if (metadata.stripePriceId) {
+      licenseMetadata.stripePriceId = metadata.stripePriceId;
+    }
+
+    if (metadata.stripe_price_id) {
+      licenseMetadata.stripe_price_id = metadata.stripe_price_id;
+    }
 
     if (session.customer_details?.name) {
       licenseMetadata.customerName = session.customer_details.name;
@@ -363,6 +568,7 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       serplyLink,
       successUrl,
       cancelUrl,
+      tosAccepted: metadata.tosAccepted === "true" ? true : metadata.tosAccepted === "false" ? false : undefined,
       provider: "stripe",
       licenseKey: licenseResult?.licenseKey ?? undefined,
       licenseId: licenseResult?.licenseId ?? undefined,

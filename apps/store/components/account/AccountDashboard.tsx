@@ -24,7 +24,7 @@ export interface PurchaseSummary {
   offerId: string | null;
   purchasedAt: string | null;
   amountFormatted: string | null;
-  source: "stripe" | "paypal" | "ghl" | "unknown";
+  source: "stripe" | "ghl" | "legacy_paypal" | "unknown";
   licenseKey?: string | null;
   licenseStatus?: string | null;
   licenseUrl?: string | null;

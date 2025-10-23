@@ -9,19 +9,24 @@
 - Dev server routing: `http://localhost:3000/` redirects to the first product slug. Hit `http://localhost:3000/<slug>` to preview a specific product. Adding a new YAML file makes its page available immediately at that path.
 - Optionally, run `pnpm --filter @apps/store typecheck` to ensure TypeScript stays happy after schema or template changes.
 
-## Order bump / upsell configuration
+## Cross-sell configuration
 
-- Shared upsells live under `data/order-bumps/*.yaml`. Each file contains the canonical copy, talking points, and Stripe price metadata for that upsell.
-- In a product YAML, reference a shared upsell with `order_bump: <slug>`. Provide an object with overrides (`description`, `features`, `default_selected`, etc.) when a lander needs tweaks.
-- Unique, service-style bumps can still be defined inline by supplying the same fields (`title`, `price`, `stripe.price_id`, …) directly in the product’s `order_bump` block.
-- Create matching Stripe Prices **before** a deploy. See `docs/upsell-payment-setup.md` for the full payment checklist.
-- PayPal totals piggyback on the upsell price string. Keep it formatted like `$29` or `$29.00`; the checkout route strips currency symbols automatically.
-- Validate changes with `pnpm --filter @apps/store validate:products`. The script now checks that referenced upsell slugs exist under `data/order-bumps/`.
-- If an upsell is **not** defined, checkout continues to function; the tests in `tests/api/checkout-session.test.ts` cover both “no upsell” and “upsell present but unselected” flows.
+- Stripe cross-sells are now configured directly in the Stripe Dashboard. The storefront no longer reads `order_bump` YAML blocks.
+- Remove legacy `order_bump` entries from product files as you touch them; they have no effect on the hosted checkout flow.
+- See `docs/checkout-cross-sell-setup.md` for the updated cross-sell playbook and cleanup checklist.
+
+## Product media assets
+
+- Product screenshots, featured images, and hero thumbnails can now be served from the repo instead of hot-linking to GitHub.
+- Store shared assets under `apps/store/public/media/products/<slug>/`. Any file in `public` is exposed at runtime, so `/media/products/beeg-video-downloader/featured.svg` becomes `https://apps.serp.co/media/products/beeg-video-downloader/featured.svg` in production.
+- In the YAML, set `featured_image`, `featured_image_gif`, and `screenshots[].url` to either an absolute URL or a root-relative path. The build pipeline normalises relative paths, adds the site origin when needed (e.g. Google Merchant feeds, JSON-LD), and keeps remote URLs untouched.
+- Local assets are rendered with `next/image` but marked `unoptimized`, so Next.js will serve them exactly as committed. Optimise and compress images before adding them (JPEG/WebP recommended, max width ~1600px) to avoid regressions in build size or CLS.
+- Prefer WebP for new uploads when possible. You can convert existing JPEGs with `cwebp -q 70 -m 6 input.jpg -o output.webp` to keep quality high while shrinking payload size.
+- Avoid using `../` in asset paths—stick to absolute `/media/...` references so the same value works locally, in staging, and on production.
 
 ## Price manifest
 
 - Canonical Stripe amounts live in `data/prices/manifest.json`. Each entry maps a Stripe price ID (and optional compare-at amount) to a currency + unit amount in cents.
-- The manifest is consumed by the landers, checkout APIs, PayPal flow, and Google Merchant feed; all display pricing now resolves from this file instead of the YAML copy.
+- The manifest is consumed by the landers, checkout helpers, and Google Merchant feed; all display pricing now resolves from this file instead of the YAML copy.
 - Regenerate the manifest with `pnpm --filter @apps/store validate:products`. When `STRIPE_SECRET_KEY` is configured the script will fetch fresh amounts before validation.
-- If a price ID is missing from the manifest, the app falls back to the legacy YAML strings—useful while we backfill entries—but add the mapping to keep Stripe, PayPal, and the landers in sync.
+- If a price ID is missing from the manifest, the app falls back to the legacy YAML strings—useful while we backfill entries—but add the mapping to keep Stripe and the landers in sync.

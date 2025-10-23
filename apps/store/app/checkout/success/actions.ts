@@ -6,7 +6,6 @@ import {
   upsertCheckoutSession,
   upsertOrder,
   findOrderByPaymentIntentId,
-  findOrderByPaypalOrderId,
   findLatestGhlOrder,
 } from "@/lib/checkout";
 import { createLicenseForOrder } from "@/lib/license-service";
@@ -23,6 +22,9 @@ type ProcessedOrderDetails = {
   items: Array<{ id: string; name: string; price: number; quantity: number }>;
   coupon?: string | null;
   affiliateId?: string | null;
+  paymentLinkId?: string | null;
+  productSlug?: string | null;
+  paymentLinkMode?: "live" | "test" | null;
 };
 
 type ProcessCheckoutResult = {
@@ -63,6 +65,14 @@ function extractLicenseConfig(metadata: Record<string, unknown> | undefined, off
   };
 }
 
+function coerceMetadataString(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
 /**
  * Process a checkout session after successful payment.
  * This is a fallback for development environments where webhooks may not be configured.
@@ -88,11 +98,24 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     const existingSession = await findCheckoutSessionByStripeSessionId(sessionId);
     const alreadyProcessed = existingSession?.metadata?.processedAt;
 
-    const metadata = session.metadata ?? {};
+    const metadata = (session.metadata ?? {}) as Record<string, unknown>;
+    const paymentLinkId =
+      typeof session.payment_link === "string"
+        ? session.payment_link
+        : session.payment_link?.id ?? null;
+    const paymentLinkMode: "live" | "test" | null =
+      typeof session.livemode === "boolean"
+        ? (session.livemode ? "live" : "test")
+        : null;
+
+    const metadataOfferId = coerceMetadataString(metadata.offerId);
+    const metadataProductSlugCamel = coerceMetadataString(metadata.productSlug);
+    const metadataProductSlugSnake = coerceMetadataString(metadata.product_slug);
+    const productSlug = metadataProductSlugSnake ?? metadataProductSlugCamel ?? null;
     const offerId =
-      metadata.offerId ??
-      metadata.productSlug ??
-      session.client_reference_id ??
+      metadataOfferId ??
+      productSlug ??
+      coerceMetadataString(session.client_reference_id) ??
       null;
 
     if (!offerId) {
@@ -107,7 +130,10 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       };
     }
 
-    const landerId = metadata.landerId ?? metadata.productSlug ?? offerId;
+    const landerId =
+      coerceMetadataString(metadata.landerId) ??
+      productSlug ??
+      offerId;
     const customerEmail = session.customer_details?.email ?? session.customer_email ?? null;
     const paymentIntentId =
       typeof session.payment_intent === "string"
@@ -128,6 +154,38 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       offerId,
     });
 
+    const augmentedMetadata: Record<string, unknown> = {
+      ...metadata,
+    };
+
+    const tosStatus = session.consent?.terms_of_service ?? null;
+    if (tosStatus) {
+      augmentedMetadata.stripeTermsOfService = tosStatus;
+      if (tosStatus === "accepted") {
+        augmentedMetadata.tosAccepted = "true";
+      } else if (tosStatus === "declined") {
+        augmentedMetadata.tosAccepted = "false";
+      }
+    }
+
+    const tosRequirement = session.consent_collection?.terms_of_service ?? null;
+    if (tosRequirement) {
+      augmentedMetadata.stripeTermsOfServiceRequirement = tosRequirement;
+    }
+
+    if (paymentLinkId) {
+      augmentedMetadata.payment_link_id = paymentLinkId;
+    }
+
+    if (productSlug) {
+      if (!augmentedMetadata.product_slug) {
+        augmentedMetadata.product_slug = productSlug;
+      }
+      if (!augmentedMetadata.productSlug) {
+        augmentedMetadata.productSlug = productSlug;
+      }
+    }
+
     // Store the order
     const checkoutSessionId = await upsertCheckoutSession({
       stripeSessionId: sessionId,
@@ -135,7 +193,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       landerId,
       paymentIntentId,
       customerEmail,
-      metadata: { ...metadata, processedAt: new Date().toISOString() },
+      metadata: { ...augmentedMetadata, processedAt: new Date().toISOString() },
       status: "completed",
       source: "stripe",
     });
@@ -150,7 +208,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       customerName: session.customer_details?.name ?? null,
       amountTotal: session.amount_total ?? null,
       currency: session.currency ?? null,
-      metadata,
+      metadata: augmentedMetadata,
       paymentStatus: session.payment_status ?? null,
       paymentMethod: session.payment_method_types?.[0] ?? null,
       source: "stripe",
@@ -175,6 +233,18 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         amount: amountMajorUnits,
         currency: currencyCode,
       };
+
+      if (paymentLinkId) {
+        licenseMetadata.paymentLinkId = paymentLinkId;
+      }
+
+      if (productSlug) {
+        licenseMetadata.productSlug = productSlug;
+      }
+
+      if (paymentLinkMode) {
+        licenseMetadata.paymentLinkMode = paymentLinkMode;
+      }
 
       if (session.customer_details?.name) {
         licenseMetadata.customerName = session.customer_details.name;
@@ -269,19 +339,25 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         const resolvedLineTotal =
           lineTotal ?? (resolvedUnitAmount !== null ? Number((resolvedUnitAmount * quantity).toFixed(2)) : null);
 
-        const lineName =
-          line.description ??
-          (typeof line.price?.product === "string" ? line.price.product : undefined) ??
-          metadata.productName ??
-          metadata.offerName ??
+        const fallbackProductName =
+          coerceMetadataString(augmentedMetadata.productName) ??
+          coerceMetadataString(augmentedMetadata.offerName) ??
           offerId ??
           "Product";
 
-        const lineId =
-          (typeof line.price?.product === "string" ? line.price.product : undefined) ??
-          metadata.productSlug ??
+        const lineName =
+          line.description ??
+          (typeof line.price?.product === "string" ? line.price.product : null) ??
+          fallbackProductName;
+
+        const fallbackProductSlug =
+          coerceMetadataString(augmentedMetadata.productSlug) ??
           offerId ??
           sessionId;
+
+        const lineId =
+          (typeof line.price?.product === "string" ? line.price.product : null) ??
+          fallbackProductSlug;
 
         return {
           id: lineId,
@@ -291,17 +367,22 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         };
       }) ?? [
         {
-          id: offerId ?? sessionId,
-          name: metadata.productName ?? offerId ?? "Product",
+          id: coerceMetadataString(augmentedMetadata.productSlug) ?? offerId ?? sessionId,
+          name: coerceMetadataString(augmentedMetadata.productName) ?? offerId ?? "Product",
           price: orderAmount ?? 0,
           quantity: 1,
         },
       ];
 
-    const couponCode = typeof metadata.couponCode === "string" ? metadata.couponCode : undefined;
+    const couponCode =
+      typeof augmentedMetadata.couponCode === "string"
+        ? (augmentedMetadata.couponCode as string)
+        : undefined;
 
     const affiliateIdValue =
-      typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined;
+      typeof augmentedMetadata.affiliateId === "string"
+        ? (augmentedMetadata.affiliateId as string)
+        : undefined;
 
     return {
       success: true,
@@ -313,6 +394,9 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         items: orderItems,
         coupon: couponCode,
         affiliateId: affiliateIdValue,
+        paymentLinkId,
+        productSlug: productSlug ?? offerId ?? null,
+        paymentLinkMode,
       },
     };
   } catch (error) {
@@ -330,10 +414,6 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
 type ProcessGhlPaymentParams = {
   paymentId?: string | null;
   productSlug?: string | null;
-};
-
-type ProcessPaypalOrderParams = {
-  orderId: string;
 };
 
 function normalizeGhlPaymentId(rawId: string | null | undefined): string | null {
@@ -497,105 +577,6 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
     return {
       success: false,
       message: error instanceof Error ? error.message : "Failed to process GHL order",
-    };
-  }
-}
-
-export async function processPaypalOrder(params: ProcessPaypalOrderParams): Promise<ProcessCheckoutResult> {
-  const trimmedOrderId = params.orderId.trim();
-
-  if (!trimmedOrderId) {
-    return {
-      success: false,
-      message: "Missing PayPal order identifier",
-    };
-  }
-
-  try {
-    const order = await findOrderByPaypalOrderId(trimmedOrderId);
-
-    if (!order) {
-      return {
-        success: false,
-        message: "Unable to locate PayPal order information.",
-      };
-    }
-
-    const metadata = (order.metadata ?? {}) as Record<string, unknown>;
-
-    const offerId =
-      order.offerId ??
-      (typeof metadata.offerId === "string" ? (metadata.offerId as string) : undefined) ??
-      (typeof metadata.productSlug === "string" ? (metadata.productSlug as string) : undefined) ??
-      null;
-
-    let product: ReturnType<typeof getProductData> | null = null;
-    if (offerId) {
-      try {
-        product = getProductData(offerId);
-      } catch {
-        product = null;
-      }
-    }
-
-    const amountMajorUnits =
-      typeof order.amountTotal === "number" ? Number((order.amountTotal / 100).toFixed(2)) : null;
-
-    const resolvedCurrency =
-      coerceCurrency(order.currency) ??
-      coerceCurrency(product?.pricing?.currency ?? null);
-
-    const couponCode =
-      (typeof metadata.couponCode === "string" ? (metadata.couponCode as string) : undefined) ??
-      (typeof metadata.coupon === "string" ? (metadata.coupon as string) : undefined);
-
-    const affiliateId =
-      (typeof metadata.affiliateId === "string" ? (metadata.affiliateId as string) : undefined) ??
-      (typeof metadata.affiliate_id === "string" ? (metadata.affiliate_id as string) : undefined) ??
-      null;
-
-    const displayPrice = parseDisplayPrice(product?.pricing?.price ?? null);
-    const resolvedPrice = amountMajorUnits ?? displayPrice ?? 0;
-
-    const itemId = product?.slug ?? offerId ?? trimmedOrderId;
-    const itemName =
-      product?.name ??
-      (typeof metadata.productName === "string" ? (metadata.productName as string) : undefined) ??
-      "SERP Purchase";
-
-    const sessionId =
-      order.stripeSessionId ??
-      order.stripePaymentIntentId ??
-      `paypal_${trimmedOrderId}`;
-
-    return {
-      success: true,
-      message: "PayPal order processed",
-      order: {
-        sessionId,
-        amount: amountMajorUnits ?? resolvedPrice ?? null,
-        currency: resolvedCurrency ?? null,
-        items: [
-          {
-            id: itemId,
-            name: itemName,
-            price: resolvedPrice,
-            quantity: 1,
-          },
-        ],
-        coupon: couponCode ?? null,
-        affiliateId,
-      },
-    };
-  } catch (error) {
-    logger.error("checkout.success.paypal_process_error", {
-      orderId: trimmedOrderId,
-      error: error instanceof Error ? error.message : String(error),
-    });
-
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : "Failed to process PayPal order",
     };
   }
 }

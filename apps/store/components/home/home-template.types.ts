@@ -15,6 +15,16 @@ export type PermissionJustificationItem = {
 
 export type HomeCtaMode = "checkout" | "external" | "pre_release";
 
+export type CtaAnalyticsContext = {
+  destination: "checkout" | "external" | "waitlist" | "payment_link";
+  paymentLink?: {
+    provider: "stripe" | "ghl";
+    variant: "live" | "test";
+    linkId: string | null;
+    url: string;
+  };
+};
+
 export type ResolvedHomeCta = {
   mode: HomeCtaMode;
   href: string;
@@ -22,6 +32,7 @@ export type ResolvedHomeCta = {
   target: "_self" | "_blank";
   rel?: string;
   opensInNewTab: boolean;
+  analytics?: CtaAnalyticsContext;
 };
 
 export type HomeTemplateUi = {

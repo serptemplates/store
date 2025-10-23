@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
-import { productSchema } from "@/lib/products/product-schema";
+import { productSchema, productSchemaShape } from "@/lib/products/product-schema";
 
 const schemaPath = path.resolve(__dirname, "../../data/product.schema.json");
 const jsonSchema = JSON.parse(fs.readFileSync(schemaPath, "utf8")) as {
@@ -11,7 +11,7 @@ const jsonSchema = JSON.parse(fs.readFileSync(schemaPath, "utf8")) as {
   required?: string[];
 };
 
-const zodShape = productSchema.shape as Record<string, z.ZodTypeAny>;
+const zodShape = productSchemaShape as Record<string, z.ZodTypeAny>;
 
 function unwrap(schema: z.ZodTypeAny): z.ZodTypeAny {
   if (!schema) return schema;

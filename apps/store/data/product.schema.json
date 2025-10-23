@@ -296,14 +296,6 @@
       ],
       "default": "draft"
     },
-    "cta_mode": {
-      "type": "string",
-      "enum": [
-        "checkout",
-        "external",
-        "pre_release"
-      ]
-    },
     "categories": {
       "type": "array",
       "items": {
@@ -423,82 +415,11 @@
       }
     },
     "order_bump": {
+      "description": "Deprecated. Hosted checkout ignores this field.",
       "anyOf": [
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "default": true
-            },
-            "product_slug": {
-              "type": ["string", "null"],
-              "minLength": 1
-            },
-            "slug": {
-              "type": ["string", "null"],
-              "minLength": 1
-            },
-            "title": {
-              "type": ["string", "null"],
-              "minLength": 1
-            },
-            "description": {
-              "type": ["string", "null"]
-            },
-            "price": {
-              "type": ["string", "null"],
-              "minLength": 1
-            },
-            "features": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "minLength": 1
-              },
-              "default": []
-            },
-            "image": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "uri"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "default_selected": {
-              "type": "boolean",
-              "default": false
-            },
-            "stripe": {
-              "anyOf": [
-                {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "price_id": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "test_price_id": {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  }
-                },
-                { "type": "null" }
-              ]
-            }
-          }
-        },
-        {
-          "type": "string",
-          "minLength": 1
-        }
+        { "type": "object" },
+        { "type": "string" },
+        { "type": "null" }
       ]
     },
     "return_policy": {
@@ -545,6 +466,39 @@
           ]
         }
       }
+    },
+    "payment_link": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["live_url"],
+          "properties": {
+            "live_url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://buy\\.stripe\\.com/"
+            },
+            "test_url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://buy\\.stripe\\.com/"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ghl_url"],
+          "properties": {
+            "ghl_url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https://ghl\\.serp\\.co/"
+            }
+          }
+        }
+      ]
     },
     "stripe": {
       "type": "object",

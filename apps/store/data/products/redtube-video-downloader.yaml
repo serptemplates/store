@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/redtube-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e6c46a613b1b64e9cea03c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=redtube-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/dRmeV5bmM2m2fdx2Sv0VO0T
+  test_url: https://buy.stripe.com/test_00w9ALaiIe4Kd5pbp10VO0V
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redtube-video-downloader/main/images/redtube-video-downloader.gif
@@ -61,7 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Redtube downloader?
   answer: Install the browser extension, navigate to Redtube, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

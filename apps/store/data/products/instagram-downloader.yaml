@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/instagram-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=instagram-downloader
+payment_link:
+  live_url: https://buy.stripe.com/dRmdR176wf8Oe9t50D0VO0u
+  test_url: https://buy.stripe.com/test_00w00b1Mce4K2qL3Wz0VO0v
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/instagram-downloader/main/images/instagram-downloader.gif
@@ -61,9 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: Can I download Instagram Stories before they disappear?
   answer: Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles.

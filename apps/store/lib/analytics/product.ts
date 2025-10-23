@@ -6,8 +6,12 @@ import { pushSelectItemEvent, pushViewItemEvent, type EcommerceItem } from "./gt
 
 type ProductEventContext = {
   placement?: "pricing" | "sticky" | "sticky_bar" | "hero" | "unknown";
-  destination?: "checkout" | "external" | "waitlist";
+  destination?: "checkout" | "external" | "waitlist" | "payment_link";
   affiliateId?: string | null;
+  paymentLinkProvider?: "stripe" | "ghl" | null;
+  paymentLinkVariant?: "live" | "test" | null;
+  paymentLinkId?: string | null;
+  paymentLinkUrl?: string | null;
 };
 
 const DEFAULT_CURRENCY = process.env.NEXT_PUBLIC_GA_CURRENCY ?? "USD";
@@ -74,8 +78,12 @@ export function trackProductCheckoutClick(
   captureEvent("product_checkout_clicked", {
     ...productProps,
     placement: context.placement ?? "unknown",
-    destination: context.destination ?? "checkout",
+    destination: context.destination ?? "external",
     affiliateId: context.affiliateId ?? null,
+    paymentLinkProvider: context.paymentLinkProvider ?? null,
+    paymentLinkVariant: context.paymentLinkVariant ?? null,
+    paymentLinkId: context.paymentLinkId ?? null,
+    paymentLinkUrl: context.paymentLinkUrl ?? null,
   });
 
   pushSelectItemEvent({

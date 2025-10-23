@@ -1,3 +1,5 @@
+import React from "react";
+
 import type { ProductInfoSectionProps } from "@/components/product/ProductInfoSection";
 import { ProductBreadcrumb, type ProductBreadcrumbItem } from "@/components/product/ProductBreadcrumb";
 import { ProductMediaGallery } from "@/components/product/ProductMediaGallery";
@@ -11,6 +13,7 @@ export interface HybridProductOverviewProps {
   onSelectImage: (index: number) => void;
   brandLogoPath?: string | null;
   infoProps: ProductInfoSectionProps;
+  hideMedia?: boolean;
 }
 
 export function HybridProductOverview({
@@ -21,19 +24,26 @@ export function HybridProductOverview({
   onSelectImage,
   brandLogoPath,
   infoProps,
+  hideMedia = false,
 }: HybridProductOverviewProps) {
+  const layoutClassName = hideMedia
+    ? "grid gap-10 xl:gap-16"
+    : "grid lg:grid-cols-[1.2fr_1fr] gap-10 xl:gap-16";
+
   return (
     <div className="space-y-10">
       <ProductBreadcrumb items={breadcrumbItems} />
 
-      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 xl:gap-16">
-        <ProductMediaGallery
-          images={images}
-          selectedIndex={selectedImageIndex}
-          onSelect={onSelectImage}
-          productName={productName}
-          brandLogoPath={brandLogoPath}
-        />
+      <div className={layoutClassName}>
+        {!hideMedia && (
+          <ProductMediaGallery
+            images={images}
+            selectedIndex={selectedImageIndex}
+            onSelect={onSelectImage}
+            productName={productName}
+            brandLogoPath={brandLogoPath}
+          />
+        )}
 
         <ProductInfoSection {...infoProps} />
       </div>

@@ -18,73 +18,53 @@ async def test_checkout_flow():
         await page.goto('http://localhost:3000/loom-video-downloader')
         await page.wait_for_load_state('networkidle')
 
-        # Test 2: Check for old dual-button setup (should NOT exist)
-        print("\n2. Checking for old payment buttons...")
+        # Test 2: Ensure legacy checkout links are gone
+        print("\n2. Checking for legacy checkout links...")
+        legacy_links = await page.locator('a[href*="/checkout?product="]').count()
+        print(f"   Legacy links found: {legacy_links}")
 
-        # Check if old PayPal button exists (it shouldn't)
-        paypal_buttons = await page.locator('button:has-text("Pay with PayPal")').count()
-        print(f"   PayPal buttons on product page: {paypal_buttons}")
+        # Test 3: Verify Stripe Payment Link CTA
+        print("\n3. Verifying Stripe Payment Link CTA...")
+        payment_links = page.locator("a[href^='https://buy.stripe.com']")
+        payment_link_count = await payment_links.count()
+        print(f"   Stripe Payment Link anchors: {payment_link_count}")
 
-        # Check for old Stripe button
-        stripe_buttons = await page.locator('button:has-text("Get Instant Access with Card")').count()
-        print(f"   Old Stripe buttons: {stripe_buttons}")
+        if payment_link_count > 0:
+            primary_cta = payment_links.first
+            href = await primary_cta.get_attribute('href')
+            text = (await primary_cta.text_content() or "").strip()
+            print(f"   Primary CTA: '{text}' → {href}")
 
-        # Test 3: Check for new checkout link
-        print("\n3. Looking for new checkout button/link...")
-        checkout_links = await page.locator('a[href*="/checkout?product="]').count()
-        print(f"   Checkout links found: {checkout_links}")
+            # Click and capture new tab
+            print("\n4. Opening Stripe Payment Link...")
+            async with page.context.expect_page() as checkout_page_info:
+                await primary_cta.click()
+            checkout_page = await checkout_page_info.value
+            await checkout_page.wait_for_load_state('domcontentloaded')
 
-        if checkout_links > 0:
-            # Get the first checkout link
-            checkout_link = page.locator('a[href*="/checkout?product="]').first
-            href = await checkout_link.get_attribute('href')
-            print(f"   Link href: {href}")
+            checkout_url = checkout_page.url
+            print(f"   Checkout tab URL: {checkout_url}")
 
-            # Get button text
-            button_text = await checkout_link.text_content()
-            print(f"   Button text: '{button_text.strip()}'")
-
-            # Test 4: Click checkout button
-            print("\n4. Clicking checkout button...")
-            await checkout_link.click()
-            await page.wait_for_load_state('networkidle')
-
-            # Test 5: Verify we're on checkout page
-            current_url = page.url
-            print(f"   Current URL: {current_url}")
-
-            if '/checkout' in current_url:
-                print("   ✅ Successfully navigated to checkout page")
-
-                # Test 6: Check for payment toggles on checkout page
-                print("\n5. Verifying checkout page elements...")
-
-                # Wait a bit for page to fully load
-                await page.wait_for_timeout(2000)
-
-                stripe_toggle = await page.locator('button:has-text("Pay with Stripe")').count()
-                paypal_toggle = await page.locator('button:has-text("Pay with PayPal")').count()
-
-                print(f"   Stripe toggle button: {'Found' if stripe_toggle > 0 else 'Not found'}")
-                print(f"   PayPal toggle button: {'Found' if paypal_toggle > 0 else 'Not found'}")
-
-                # Check for Stripe iframe
-                iframe = await page.locator('#checkout iframe').count()
-                print(f"   Stripe checkout iframe: {'Found' if iframe > 0 else 'Not found'}")
+            if "buy.stripe.com" in checkout_url:
+                print("   ✅ Stripe Payment Link opened in new tab")
             else:
-                print("   ❌ Not on checkout page")
+                print("   ❌ Unexpected checkout destination")
+
+            await checkout_page.close()
+        else:
+            print("   ❌ No Stripe Payment Link CTA found – verify product YAML configuration.")
 
         # Test Summary
         print("\n=== Test Summary ===")
-        if paypal_buttons == 0 and stripe_buttons == 0:
-            print("✅ Old dual-button setup removed from product page")
+        if legacy_links == 0:
+            print("✅ Legacy /checkout links removed from product page")
         else:
-            print("❌ Old payment buttons still exist on product page")
+            print("❌ Legacy checkout links still present on product page")
 
-        if checkout_links > 0:
-            print("✅ New checkout button/link implemented")
+        if payment_link_count > 0:
+            print("✅ Stripe Payment Link CTA detected and functional")
         else:
-            print("❌ No checkout button/link found")
+            print("❌ Stripe Payment Link CTA missing")
 
         await browser.close()
 

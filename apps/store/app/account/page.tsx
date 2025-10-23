@@ -189,7 +189,7 @@ function getDevPreviewData(
       offerId: "instagram-saver",
       purchasedAt: new Date(now - 4 * 24 * 60 * 60 * 1000).toISOString(),
       amountFormatted: "$29.00",
-      source: "paypal",
+      source: "legacy_paypal",
       licenseKey: null,
       licenseStatus: "pending",
       licenseUrl: null,

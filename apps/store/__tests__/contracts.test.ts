@@ -378,7 +378,7 @@ describe('Contract Regression Tests', () => {
       const invalidSource = {
         stripe_session_id: 'cs_123',
         offer_id: 'product',
-        source: 'bitcoin', // Not stripe or paypal
+        source: 'bitcoin', // Not stripe or ghl
       };
 
       expect(() => validateDBInsertCheckoutSession(invalidSource)).toThrow();

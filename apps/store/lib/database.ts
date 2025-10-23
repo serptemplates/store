@@ -160,6 +160,7 @@ async function runMigrations() {
       customer_email TEXT,
       metadata JSONB DEFAULT '{}'::jsonb,
       status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'abandoned')),
+      -- 'paypal' is retained for historical records; new inserts rely on Stripe links and GHL.
       source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -187,6 +188,7 @@ async function runMigrations() {
       metadata JSONB DEFAULT '{}'::jsonb,
       payment_status TEXT,
       payment_method TEXT,
+      -- 'paypal' is retained for historical records; new inserts rely on Stripe links and GHL.
       source TEXT NOT NULL DEFAULT 'stripe' CHECK (source IN ('stripe', 'paypal', 'ghl')),
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()

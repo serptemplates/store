@@ -19,9 +19,21 @@ interface CheckoutSessionRow {
   customer_email: string | null;
   metadata: unknown;
   status: CheckoutSessionStatus;
-  source: CheckoutSource;
+  source: string | null;
   created_at: string;
   updated_at: string;
+}
+
+function normalizeSource(value: string | null | undefined): CheckoutSource {
+  if (value === "ghl") {
+    return "ghl";
+  }
+
+  if (value === "paypal" || value === "legacy_paypal") {
+    return "legacy_paypal";
+  }
+
+  return "stripe";
 }
 
 function mapCheckoutSessionRow(row?: CheckoutSessionRow | null): CheckoutSessionRecord | null {
@@ -50,7 +62,7 @@ function mapCheckoutSessionRow(row?: CheckoutSessionRow | null): CheckoutSession
     customerEmail: row.customer_email,
     metadata,
     status: row.status,
-    source: row.source,
+    source: normalizeSource(row.source),
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
   };
@@ -65,7 +77,10 @@ export async function upsertCheckoutSession(input: CheckoutSessionUpsert): Promi
 
   const metadataJson = toJsonbLiteral(input.metadata);
   const status = input.status ?? "pending";
-  const source = input.source ?? "stripe";
+  const source =
+    input.source === "legacy_paypal"
+      ? "paypal"
+      : input.source ?? "stripe";
 
   const result = await query<{ id: string }>`
     INSERT INTO checkout_sessions (

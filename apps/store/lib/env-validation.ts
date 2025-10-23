@@ -52,12 +52,6 @@ const ENV_CONFIGS: EnvConfig[] = [
     description: "Full site URL (https://yourdomain.com)",
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
-  {
-    name: "NEXT_PUBLIC_CHECKOUT_URL",
-    required: true,
-    description: "Checkout API URL",
-    validate: (value) => value.includes("/api/checkout/session"),
-  },
   
   // Monitoring (optional)
   {
@@ -219,9 +213,6 @@ export function getEnvironmentInfo(): Record<string, string | boolean> {
     databaseConfigured: !!process.env.DATABASE_URL,
     ghlConfigured: !!(
       process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID
-    ),
-    paypalConfigured: !!(
-      process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET
     ),
     monitoringConfigured: !!process.env.SLACK_ALERT_WEBHOOK_URL,
   };

@@ -7,7 +7,6 @@ export async function GET() {
     api: 'healthy',
     database: 'unknown',
     stripe: 'unknown',
-    paypal: 'unknown',
     ghl: 'unknown',
     timestamp: new Date().toISOString(),
   };
@@ -27,13 +26,6 @@ export async function GET() {
   // Check Stripe
   const activeStripeMode = getStripeMode();
   checks.stripe = getOptionalStripeSecretKey(activeStripeMode) ? 'configured' : 'not_configured';
-
-  // Check PayPal
-  if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
-    checks.paypal = 'configured';
-  } else {
-    checks.paypal = 'not_configured';
-  }
 
   // Check GHL
   if (process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID) {

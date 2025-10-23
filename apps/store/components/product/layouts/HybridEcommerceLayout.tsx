@@ -17,6 +17,8 @@ import { HybridIncludedStackSection } from "@/components/product/hybrid/HybridIn
 import type { ExtendedProductData } from "@/components/product/types"
 import { isPreRelease } from "@/lib/products/release-status"
 import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
+import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta"
 
 export interface HybridEcommerceLayoutProps {
   product: ExtendedProductData
@@ -37,6 +39,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     return Array.from(new Set(gallery.filter(Boolean))) as string[]
   }, [mainImageSource, product.screenshots])
 
+  const homeProps = useMemo(() => productToHomeTemplate(product, []), [product])
+
   const { affiliateId } = useAffiliateTracking()
 
   const [showStickyBar, setShowStickyBar] = useState(false)
@@ -44,6 +48,32 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0)
   const [showWaitlistModal, setShowWaitlistModal] = useState(false)
   const waitlistEnabled = isPreRelease(product.status)
+  const stickyImageSource = waitlistEnabled ? null : mainImageSource
+
+  const { cta: resolvedCta, handleCtaClick } = useProductCheckoutCta({
+    product,
+    homeCta: {
+      cta: homeProps.cta,
+      ctaMode: homeProps.ctaMode,
+      ctaHref: homeProps.ctaHref,
+      ctaText: homeProps.ctaText,
+      ctaTarget: homeProps.ctaTarget,
+      ctaRel: homeProps.ctaRel,
+      ctaOpensInNewTab: homeProps.ctaOpensInNewTab,
+    },
+    affiliateId,
+    onShowWaitlist: () => setShowWaitlistModal(true),
+  })
+
+  const checkoutCta = waitlistEnabled ? null : resolvedCta
+
+  const handleHeroCheckoutClick = useCallback(() => {
+    handleCtaClick("hero")
+  }, [handleCtaClick])
+
+  const handleStickyBarCheckoutClick = useCallback(() => {
+    handleCtaClick("sticky_bar")
+  }, [handleCtaClick])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,6 +170,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     benefits,
     features: featureList,
     githubUrl,
+    checkoutCta,
+    onCheckoutClick: handleHeroCheckoutClick,
   }), [
     product.title,
     product.name,
@@ -154,6 +186,8 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
     benefits,
     featureList,
     githubUrl,
+    checkoutCta,
+    handleHeroCheckoutClick,
   ])
 
   return (
@@ -167,10 +201,14 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
         originalPrice={originalPrice}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
-        mainImageSource={mainImageSource}
-        affiliateId={affiliateId}
+        mainImageSource={stickyImageSource}
         waitlistEnabled={waitlistEnabled}
         onWaitlistClick={handleWaitlistClick}
+        checkoutCta={checkoutCta}
+        onCheckoutClick={(event) => {
+          event.preventDefault()
+          handleStickyBarCheckoutClick()
+        }}
       />
 
       <div className="container mx-auto px-4 py-10 space-y-12">
@@ -182,6 +220,7 @@ export function HybridEcommerceLayout({ product }: HybridEcommerceLayoutProps) {
           onSelectImage={setSelectedImageIndex}
           brandLogoPath={brandLogoPath}
           infoProps={infoSectionProps}
+          hideMedia={waitlistEnabled}
         />
 
         <HybridVideoShowcaseSection

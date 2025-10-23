@@ -26,10 +26,13 @@ export type ConversionData = {
   items?: ConversionItem[];
   coupon?: string | null;
   affiliateId?: string | null;
+  paymentLinkId?: string | null;
+  productSlug?: string | null;
 };
 
 type ConversionTrackingProps = {
   sessionId?: string | null;
+  paymentLinkId?: string | null;
   order?: ConversionData | null;
   provider?: string | null;
 };
@@ -47,21 +50,26 @@ function toEcommerceItems(items?: ConversionItem[]): EcommerceItem[] {
   }));
 }
 
-export function ConversionTracking({ sessionId, order, provider }: ConversionTrackingProps) {
+export function ConversionTracking({ sessionId, paymentLinkId, order, provider }: ConversionTrackingProps) {
   useEffect(() => {
-    if (!sessionId || !order) {
+    const trackingKey =
+      sessionId ?? paymentLinkId ?? order?.paymentLinkId ?? null;
+
+    if (!trackingKey || !order) {
       return;
     }
 
-    const alreadyTracked = sessionStorage.getItem(`tracked_${sessionId}`);
+    const storageKey = `tracked_${trackingKey}`;
+    const alreadyTracked = sessionStorage.getItem(storageKey);
     if (alreadyTracked === "true") {
       return;
     }
 
     const ecommerceItems = toEcommerceItems(order.items);
+    const transactionId = sessionId ?? trackingKey;
 
     pushPurchaseEvent({
-      transactionId: sessionId,
+      transactionId,
       value: order.value ?? undefined,
       currency: order.currency ?? undefined,
       coupon: order.coupon ?? undefined,
@@ -71,7 +79,7 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
 
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "purchase", {
-        transaction_id: sessionId,
+        transaction_id: transactionId,
         value: order.value ?? undefined,
         currency: order.currency ?? undefined,
         coupon: order.coupon ?? undefined,
@@ -113,7 +121,7 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
       window.twq("event", "tw-purchase", {
         value: order.value ?? undefined,
         currency: order.currency ?? undefined,
-        conversion_id: sessionId,
+        conversion_id: transactionId,
       });
     }
 
@@ -132,16 +140,16 @@ export function ConversionTracking({ sessionId, order, provider }: ConversionTra
     }
 
     if (typeof window !== "undefined") {
-      window.__SERP_LAST_SESSION_ID = sessionId;
+      window.__SERP_LAST_SESSION_ID = transactionId;
       try {
-        sessionStorage.setItem("tracked_session_id_debug", sessionId);
+        sessionStorage.setItem("tracked_session_id_debug", transactionId);
       } catch {
         // ignore quota errors
       }
     }
 
-    sessionStorage.setItem(`tracked_${sessionId}`, "true");
-  }, [sessionId, order, provider]);
+    sessionStorage.setItem(storageKey, "true");
+  }, [sessionId, paymentLinkId, order, provider]);
 
   return null;
 }

@@ -96,6 +96,19 @@ export function getRuntimeEnvironment(): RuntimeEnvironment {
     ) {
       return "development";
     }
+
+    const previewHostPatterns = [
+      /\.vercel\.app$/i,
+      /\.vercel\.dev$/i,
+    ];
+    if (previewHostPatterns.some((pattern) => pattern.test(hostname))) {
+      return "preview";
+    }
+
+    const previewKeywords = ["-git-", "preview.", "staging."];
+    if (previewKeywords.some((keyword) => hostname.includes(keyword))) {
+      return "preview";
+    }
   }
 
   const nodeEnv = normalizeRuntimeEnv(process.env.NODE_ENV);

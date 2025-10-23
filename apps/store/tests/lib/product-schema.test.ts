@@ -50,54 +50,45 @@ describe("productSchema", () => {
     }
   });
 
-  it("accepts an inline order bump without Stripe data", () => {
+  it("ignores legacy order_bump fields without failing validation", () => {
     const base = buildBaseProduct();
 
     const result = productSchema.safeParse({
       ...base,
       order_bump: {
-        slug: "priority-support",
-        title: "Priority Support",
+        slug: "legacy-bump",
         price: "$29.00",
       },
     });
 
     expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).not.toHaveProperty("order_bump");
+    }
   });
 
-  it("accepts a well-formed order bump definition", () => {
+  it("requires a payment link when status is live", () => {
     const base = buildBaseProduct();
-
     const result = productSchema.safeParse({
       ...base,
-      order_bump: {
-        slug: "priority-support",
-        title: "Priority Support",
-        description: "Live onboarding call and fast-track support.",
-        price: "$29.00",
-        features: [
-          "Kickoff call with a product specialist",
-          "Priority support channel for 30 days",
-        ],
-        stripe: {
-          price_id: "price_orderbump_live",
-          test_price_id: "price_orderbump_test",
-        },
-      },
+      status: "live",
     });
 
-    expect(result.success).toBe(true);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const paymentLinkIssue = result.error.issues.find((issue) => issue.path.join(".") === "payment_link");
+      expect(paymentLinkIssue?.message).toMatch(/must define a Stripe payment link/i);
+    }
   });
 
-  it("allows referencing another product for order bump details", () => {
+  it("accepts a live product when a Stripe payment link is defined", () => {
     const base = buildBaseProduct();
 
     const result = productSchema.safeParse({
       ...base,
-      order_bump: {
-        slug: "serp-downloaders-bundle",
-        product_slug: "serp-downloaders-bundle",
-        description: "Upgrade to the full downloader bundle.",
+      status: "live",
+      payment_link: {
+        live_url: "https://buy.stripe.com/test_123456789",
       },
     });
 

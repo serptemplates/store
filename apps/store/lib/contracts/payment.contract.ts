@@ -1,14 +1,14 @@
 /**
  * Payment Processing Contracts
  *
- * Ensures payment data integrity across Stripe, PayPal, and internal systems
+ * Ensures payment data integrity across Stripe and internal systems
  */
 
 import { z } from 'zod';
 
 // ============= Payment Method Contracts =============
 
-export const PaymentMethodContract = z.enum(['card', 'paypal', 'bank_transfer', 'crypto']);
+export const PaymentMethodContract = z.enum(['card', 'bank_transfer', 'crypto']);
 export type PaymentMethod = z.infer<typeof PaymentMethodContract>;
 
 // ============= Money Contracts =============
@@ -58,41 +58,10 @@ export const StripeChargeContract = z.object({
   status: z.enum(['succeeded', 'pending', 'failed']),
 });
 
-// ============= PayPal-specific Contracts =============
-
-export const PayPalOrderContract = z.object({
-  id: z.string(),
-  status: z.enum(['CREATED', 'SAVED', 'APPROVED', 'VOIDED', 'COMPLETED']),
-  intent: z.enum(['CAPTURE', 'AUTHORIZE']),
-  purchase_units: z.array(z.object({
-    reference_id: z.string(),
-    amount: z.object({
-      currency_code: z.string().length(3),
-      value: z.string(), // "79.99"
-    }),
-  })),
-  payer: z.object({
-    email_address: z.string().email(),
-    name: z.object({
-      given_name: z.string().optional(),
-      surname: z.string().optional(),
-    }).optional(),
-  }).optional(),
-});
-
-export const PayPalCaptureContract = z.object({
-  id: z.string(),
-  status: z.enum(['COMPLETED', 'DECLINED', 'PARTIALLY_REFUNDED', 'PENDING', 'REFUNDED']),
-  amount: z.object({
-    currency_code: z.string().length(3),
-    value: z.string(),
-  }),
-});
-
 // ============= Unified Payment Contracts =============
 
 export const UnifiedPaymentEventContract = z.object({
-  provider: z.enum(['stripe', 'paypal']),
+  provider: z.enum(['stripe', 'ghl']),
   eventType: z.enum(['payment.created', 'payment.succeeded', 'payment.failed', 'payment.refunded']),
   paymentId: z.string(),
   customerId: z.string().nullable(),
@@ -152,28 +121,6 @@ export function validateStripePayment(data: unknown): {
 }
 
 /**
- * Validates PayPal webhook payload
- */
-export function validatePayPalPayment(data: unknown): {
-  isValid: boolean;
-  errors?: string[];
-  parsed?: z.infer<typeof PayPalOrderContract>;
-} {
-  try {
-    const result = PayPalOrderContract.parse(data);
-    return { isValid: true, parsed: result };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return {
-        isValid: false,
-        errors: error.errors.map(e => `${e.path.join('.')}: ${e.message}`),
-      };
-    }
-    return { isValid: false, errors: ['Unknown validation error'] };
-  }
-}
-
-/**
  * Validates payment state transitions
  */
 export function validatePaymentTransition(
@@ -201,26 +148,4 @@ export function formatMoney(amount: MoneyAmount): string {
     style: 'currency',
     currency: amount.currency.toUpperCase(),
   }).format(amount.amount / 100);
-}
-
-/**
- * Converts between Stripe and PayPal amount formats
- */
-export function convertPaymentAmount(
-  amount: number | string,
-  from: 'stripe' | 'paypal'
-): MoneyAmount {
-  if (from === 'stripe') {
-    return {
-      amount: typeof amount === 'number' ? amount : parseInt(amount, 10),
-      currency: 'usd', // Default, should be passed separately
-    };
-  } else {
-    // PayPal uses decimal strings like "79.99"
-    const cents = Math.round(parseFloat(amount.toString()) * 100);
-    return {
-      amount: cents,
-      currency: 'usd',
-    };
-  }
 }

@@ -2,10 +2,9 @@ import { promises as fs } from "fs"
 import path from "path"
 import Stripe from "stripe"
 import dotenv from "dotenv"
-import { parse, parseDocument, type YAMLMap } from "yaml"
-import { ORDER_BUMP_FIELD_ORDER, PRICING_FIELD_ORDER, PRODUCT_FIELD_ORDER, RETURN_POLICY_FIELD_ORDER, productSchema } from "../lib/products/product-schema"
+import { parse, parseDocument } from "yaml"
+import { productSchema } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
-import { orderBumpDefinitionSchema } from "../lib/products/order-bump-definitions"
 
 // Load env files from the package directory and fallback to the repository root.
 const envFilenames = [".env.local", ".env"] as const
@@ -183,44 +182,6 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
   return sortedEntries
 }
 
-function extractKeys(map: YAMLMap<unknown, unknown> | null | undefined): string[] {
-  if (!map || !Array.isArray(map.items)) {
-    return []
-  }
-  return map.items
-    .map((item) => {
-      if (item && typeof item === "object" && "key" in item) {
-        const key = item.key as { value?: unknown }
-        return typeof key?.value === "string" ? key.value : null
-      }
-      return null
-    })
-    .filter((key): key is string => Boolean(key && key.trim().length > 0))
-}
-
-function findOrderViolation(keys: string[], canonicalOrder: readonly string[]): { before: string; after: string } | null {
-  const indexMap = new Map<string, number>()
-  canonicalOrder.forEach((key, index) => indexMap.set(key, index))
-
-  for (let i = 0; i < keys.length; i += 1) {
-    const left = keys[i]!
-    const leftIndex = indexMap.get(left)
-    if (leftIndex === undefined) continue
-
-    for (let j = i + 1; j < keys.length; j += 1) {
-      const right = keys[j]!
-      const rightIndex = indexMap.get(right)
-      if (rightIndex === undefined) continue
-
-      if (rightIndex < leftIndex) {
-        return { before: right, after: left }
-      }
-    }
-  }
-
-  return null
-}
-
 async function main() {
   const productsDir = path.join(process.cwd(), "data", "products")
   const entries = await fs.readdir(productsDir)
@@ -228,20 +189,6 @@ async function main() {
 
   const errors: string[] = []
   const warnings: string[] = []
-  const orderBumpsDir = path.join(process.cwd(), "data", "order-bumps")
-  const orderBumpFiles = await fs.readdir(orderBumpsDir).catch(() => [])
-  const orderBumpDefinitions = orderBumpFiles
-    .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-    .map(async (file) => {
-      const slug = file.replace(/\.ya?ml$/i, "")
-      const raw = await fs.readFile(path.join(orderBumpsDir, file), "utf8")
-      const parsed = orderBumpDefinitionSchema.parse(parse(raw))
-      return { slug, definition: parsed }
-    })
-  const resolvedOrderBumpDefinitions = await Promise.all(orderBumpDefinitions)
-  const orderBumpDefinitionMap = new Map(
-    resolvedOrderBumpDefinitions.map(({ slug, definition }) => [slug, { slug, ...definition }]),
-  )
   const productSlugs = new Set<string>()
   const referencedStripePriceIds = new Set<string>()
 
@@ -283,107 +230,6 @@ async function main() {
     recordPriceId(product.stripe?.price_id)
     recordPriceId(product.stripe?.test_price_id)
 
-    if (product.order_bump && typeof product.order_bump !== "string") {
-      recordPriceId(product.order_bump.stripe?.price_id)
-      recordPriceId(product.order_bump.stripe?.test_price_id)
-    }
-
-    const topLevelKeys = extractKeys(document.contents as YAMLMap<unknown, unknown>)
-    const orderIssue = findOrderViolation(topLevelKeys, PRODUCT_FIELD_ORDER)
-    if (orderIssue) {
-      errors.push(
-        `❌ ${file}: Field "${orderIssue.before}" must appear before "${orderIssue.after}" to match canonical product schema order.`,
-      )
-      continue
-    }
-
-    if (!topLevelKeys.includes("order_bump")) {
-      warnings.push(
-        `⚠️  ${file}: Missing order_bump configuration. Add an explicit order_bump block (set enabled: false if not in use).`,
-      )
-    }
-
-    const pricingNode = document.get("pricing", true) as YAMLMap<unknown, unknown> | undefined
-    if (pricingNode) {
-      const pricingKeys = extractKeys(pricingNode)
-      const pricingIssue = findOrderViolation(pricingKeys, PRICING_FIELD_ORDER)
-      if (pricingIssue) {
-        errors.push(
-          `❌ ${file}: pricing."${pricingIssue.before}" must appear before "${pricingIssue.after}" to match canonical order.`,
-        )
-        continue
-      }
-    }
-
-    const orderBumpNode = document.get("order_bump", true) as YAMLMap<unknown, unknown> | undefined
-    if (orderBumpNode) {
-      const orderBumpKeys = extractKeys(orderBumpNode)
-      const orderBumpIssue = findOrderViolation(orderBumpKeys, ORDER_BUMP_FIELD_ORDER)
-      if (orderBumpIssue) {
-        errors.push(
-          `❌ ${file}: order_bump."${orderBumpIssue.before}" must appear before "${orderBumpIssue.after}" to match canonical order.`,
-        )
-        continue
-      }
-    }
-
-    if (product.order_bump && product.order_bump.enabled !== false) {
-      const bump = product.order_bump
-      const bumpSlug = typeof bump.slug === "string" && bump.slug.trim().length > 0
-        ? bump.slug.trim()
-        : undefined
-      const hasInlineDetails =
-        Boolean(
-          bump.title ??
-            bump.description ??
-            bump.price ??
-            bump.product_slug ??
-            (Array.isArray(bump.features) && bump.features.length > 0),
-        ) ||
-        Boolean(bump.stripe?.price_id)
-
-      if (bumpSlug) {
-        const definition = orderBumpDefinitionMap.get(bumpSlug)
-        if (!definition && !hasInlineDetails) {
-          errors.push(
-            `❌ ${file}: order_bump references "${bumpSlug}" but no definition exists under data/order-bumps.`,
-          )
-          continue
-        }
-      } else if (!hasInlineDetails) {
-        errors.push(`❌ ${file}: order_bump must specify a slug or inline configuration details.`)
-        continue
-      }
-
-      if (hasInlineDetails && bump.price) {
-        const normalizedPrice = bump.price.trim()
-        if (normalizedPrice && !/^[\$£€]?\d+(?:\.\d{1,2})?$/.test(normalizedPrice)) {
-          warnings.push(
-            `⚠️  ${file}: order_bump "${bumpSlug ?? "(inline)"}" price "${bump.price}" is not in a typical currency format (e.g. $29 or $29.00).`,
-          )
-        }
-      }
-
-      if (hasInlineDetails && bump.stripe && !bump.stripe.price_id) {
-        errors.push(
-          `❌ ${file}: order_bump "${bumpSlug ?? "(inline)"}" is missing stripe.price_id.`,
-        )
-        continue
-      }
-    }
-
-    const returnPolicyNode = document.get("return_policy", true) as YAMLMap<unknown, unknown> | undefined
-    if (returnPolicyNode) {
-      const returnKeys = extractKeys(returnPolicyNode)
-      const returnIssue = findOrderViolation(returnKeys, RETURN_POLICY_FIELD_ORDER)
-      if (returnIssue) {
-        errors.push(
-          `❌ ${file}: return_policy."${returnIssue.before}" must appear before "${returnIssue.after}" to match canonical order.`,
-        )
-        continue
-      }
-    }
-
     const activeBadges = BADGE_FLAGS.filter((flag) => {
       if (flag === "pre_release") {
         return isPreRelease(product)
@@ -406,55 +252,7 @@ async function main() {
 
   warnings.forEach((message) => console.warn(message))
 
-  for (const { slug, definition } of resolvedOrderBumpDefinitions) {
-    recordPriceId(definition.stripe?.price_id)
-    recordPriceId(definition.stripe?.test_price_id)
-
-    if (definition.product_slug && !productSlugs.has(definition.product_slug)) {
-      errors.push(
-        `❌ order-bumps/${slug}.yaml references unknown product slug "${definition.product_slug}".`,
-      )
-    }
-  }
-
-  const priceManifestEntries = await writePriceManifest(referencedStripePriceIds)
-
-  const manifestPath = path.join(process.cwd(), "data", "order-bumps", "manifest.json")
-  const manifestPayload = Object.fromEntries(
-    resolvedOrderBumpDefinitions.map(({ slug, definition }) => {
-      const stripePriceId = definition.stripe?.price_id
-      const testStripePriceId = definition.stripe?.test_price_id
-
-      const priceEntry = stripePriceId && priceManifestEntries[stripePriceId]
-        ? priceManifestEntries[stripePriceId]
-        : testStripePriceId && priceManifestEntries[testStripePriceId]
-          ? priceManifestEntries[testStripePriceId]
-          : undefined
-
-      const normalizedDefinition = {
-        ...definition,
-        ...(definition.features ? { features: [...definition.features] } : {}),
-        ...(definition.stripe ? { stripe: { ...definition.stripe } } : {}),
-      }
-
-      if (priceEntry) {
-        normalizedDefinition.price = formatStripeAmount(priceEntry.unit_amount, priceEntry.currency)
-        const existingMode = definition.stripe?.mode
-        if (normalizedDefinition.stripe && existingMode) {
-          normalizedDefinition.stripe.mode = existingMode
-        }
-      }
-
-      if (!priceEntry && stripePriceId) {
-        warnings.push(
-          `⚠️  order-bumps/${slug}.yaml: Unable to resolve Stripe price "${stripePriceId}"; using configured price value.`,
-        )
-      }
-
-      return [slug, normalizedDefinition]
-    }),
-  )
-  await fs.writeFile(manifestPath, `${JSON.stringify(manifestPayload, null, 2)}\n`)
+  await writePriceManifest(referencedStripePriceIds)
 
   if (errors.length > 0) {
     errors.forEach((message) => console.error(message))

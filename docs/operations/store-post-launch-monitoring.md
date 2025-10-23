@@ -52,30 +52,33 @@ Detailed checklist for locking down observability and automated smoke-tests befo
    - Schedule the monitoring cron job (Section 3) to alert you on anomalies; combine it with Stripe dashboard email alerts for payment failures.
    - Consider wiring key failures (e.g., webhook errors) straight to Slack via `sendOpsAlert`—those already trigger without Log Drains if `SLACK_ALERT_WEBHOOK_URL` is set.
 
-## 5. run automated checkout smoke-tests (test mode)
+## 5. run checkout e2e verification (test mode)
 
-1. Ensure `.env` (local) contains both `STRIPE_SECRET_KEY_TEST` **and** `STRIPE_SECRET_KEY`. The script uses the live key to clone prices into test mode when needed, and the test key to create sessions. Also set `STRIPE_CHECKOUT_PAYMENT_METHODS`.
-2. From the repo root, run:
+1. Confirm `.env.local` contains `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY`, and `NEXT_PUBLIC_STRIPE_MODE=test`. The `test:e2e` runner uses the live key only to look up metadata; no live charges occur.
+2. Start a Stripe CLI listener so webhooks reach your local app:
    ```sh
-   pnpm test:checkout
+   stripe listen --forward-to http://localhost:3000/api/stripe/webhook --api-key $STRIPE_SECRET_KEY_TEST
    ```
-3. The script walks each product YAML in `apps/store/data/products`, creates a **test-mode** Checkout Session via Stripe, and prints either ✅ success or ❌ failure with the error message. No funds are captured.
-4. To target a subset of products, pass one or more `--slug` flags:
+   Copy the emitted `whsec_...` value into `STRIPE_WEBHOOK_SECRET_TEST` (the runner can inject it automatically when launching the dev server).
+3. Execute the end-to-end suite:
    ```sh
-   pnpm test:checkout -- --slug adobe-stock-downloader --slug canva-downloader
+   pnpm --filter @apps/store test:e2e
    ```
-5. Fix any reported failures (usually missing `stripe.price_id` or bad URLs) before re-running.
+   This script bootstraps the dev server (if not already running), drives a Playwright checkout, runs the automated payment/link validation scripts, and exercises the acceptance flow against Stripe test mode.
+4. After the run, review:
+   - Stripe Dashboard → Payments (test mode) for the synthetic order, ensuring the SERP Downloaders Bundle recommendation and TOS consent are present.
+   - `/checkout/success` console logs for the `checkout:completed` PostHog event.
+   - GoHighLevel test workspace for the appended metadata (confirm existing custom fields weren’t overwritten).
+5. Record the outcome in `plan-194.md` (Phase 5 analytics validation) so we have traceability before deploying.
 
-## 6. optional manual webhook test
+## 6. targeted manual webhook test (optional)
 
-1. Install Stripe CLI and log in (`stripe login`).
-2. Start listening locally (use test mode):
-   ```sh
-   stripe listen --forward-to localhost:4242/webhook
-   pnpm dev --filter @apps/store
-   ```
-3. Trigger a test checkout from the local site or by running `pnpm test:checkout -- --slug <slug>` while the CLI is running; Stripe will replay events to your local webhook handler.
-4. Confirm the terminal shows processed events and the app logs don’t contain errors.
+1. With the Stripe CLI listener active, open a product page locally (`pnpm --filter @apps/store dev`) and click the CTA:
+   - Standard product → Stripe Payment Link (`?prefilled_email=` optional).
+   - Pre-release slug → waitlist modal (confirm no Payment Link opens).
+2. Complete the Stripe checkout using test cards and apply the `TEST20` promo code to confirm discounts work.
+3. Watch the dev server logs for `checkout.session.completed` and GHL sync messages; ensure metadata is appended rather than overwritten.
+4. Refresh `/checkout/success` once to ensure analytics events do not duplicate (guard against double firing).
 
 ## 7. rollout checklist
 

@@ -31,8 +31,8 @@
 
 **Affected Files:**
 - `lib/ghl-client.ts:71` - Logs request body which may contain customer email
-- `app/api/checkout/session/route.ts` - Contains console.log statements with payment data
-- `app/api/paypal/webhook/route.ts` - Logs webhook payloads with customer data
+- *(Legacy)* `app/api/paypal/webhook/route.ts` – Route removed with the Stripe Payment Link migration; retain this note only for historical audits.
+- *(Legacy)* `app/api/checkout/session/route.ts` – Removed in favour of Stripe Payment Links.
 
 **Action Required:** Implement PII redaction in logger and remove debug console.log statements
 
@@ -40,9 +40,9 @@
 **Risk:** Rate limits reset on server restart, can be bypassed with distributed attacks  
 **Impact:** DDoS attacks could overwhelm checkout API, causing revenue loss  
 
-**Current State:** `lib/rate-limit.ts` uses Map() for storage  
+**Current State:** Legacy helper (`lib/rate-limit.ts`) was removed; no app-level limiter is in place.
 
-**Action Required:** Replace with Redis or Vercel KV for persistent rate limiting in production
+**Action Required:** Implement a Redis/Vercel KV–backed limiter and wire it into public endpoints before launch.
 
 ### 4. Missing CORS Configuration ⚠️ MEDIUM PRIORITY
 **Risk:** API endpoints accessible from any origin  
@@ -98,9 +98,9 @@
 
 ### 11. Console.log Statements in Production Code
 **Files:**
-- `app/api/checkout/session/route.ts:101-102`
 - `app/api/paypal/webhook/route.ts:23,28`
 - `app/api/test/checkout/route.ts:*`
+- (Legacy) `app/api/checkout/session/route.ts` — already removed.
 
 **Action:** Replace with structured logging via `lib/logger.ts`
 
@@ -133,7 +133,7 @@
 
 2. **Webhook Security** ✅
    - Stripe signature verification implemented
-   - PayPal signature verification in place
+   - PayPal signature verification (legacy) – no longer active, retained for historical audits
    - Replay attack protection via event IDs
 
 3. **Rate Limiting** ✅

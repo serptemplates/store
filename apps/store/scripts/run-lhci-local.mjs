@@ -73,11 +73,6 @@ async function main() {
     envForServer.NEXT_PUBLIC_SITE_URL = httpBase;
   }
 
-  const checkoutDefault = `${httpBase}/api/checkout/session`;
-  if (!envForServer.NEXT_PUBLIC_CHECKOUT_URL || !envForServer.NEXT_PUBLIC_CHECKOUT_URL.startsWith("http")) {
-    envForServer.NEXT_PUBLIC_CHECKOUT_URL = checkoutDefault;
-  }
-
   console.log(`🚀 Starting Next.js server on ${baseUrl}...`);
   const server = spawn(
     "pnpm",

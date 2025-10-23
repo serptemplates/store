@@ -16,16 +16,20 @@ serp_co_product_page_url: https://serp.co/products/clientclub-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e02c2c67ee3b7cb4699bd7
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=clientclub-downloader
+payment_link:
+  live_url: https://buy.stripe.com/bJe8wHduU1hY4yT8cP0VO0d
+  test_url: https://buy.stripe.com/test_6oU5kv1Mc7GmghB1Or0VO0e
+
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/clientclub-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/clientclub-downloader/main/images/featured.gif
+featured_image: https://raw.githubusercontent.com/serpdownloaders/.github/refs/heads/main/sites/clientclub-downloader.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpdownloaders/clientclub-downloader/main/images/featured.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/clientclub-downloader.jpg
+- url: https://raw.githubusercontent.com/serpdownloaders/.github/refs/heads/main/sites/clientclub-downloader.jpg
   alt: Clientclub Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
-github_repo_url: https://github.com/serpapps/clientclub-downloader
+github_repo_url: https://github.com/serpdownloaders/clientclub-downloader
 github_repo_tags: []
 chrome_webstore_link: null
 firefox_addon_store_link: null
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Clientclub downloader?
   answer: Install the browser extension, navigate to Clientclub, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
@@ -116,7 +119,7 @@ return_policy:
   fees: Non-refundable purchase
   method: No returns accepted
   policy_category: https://schema.org/MerchantReturnNotPermitted
-  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+  url: https://github.com/serpdownloaders/legal/blob/main/refund-policy.md
 stripe:
   price_id: price_1S99wm06JrOmKRCmaau6Xiqv
   metadata:

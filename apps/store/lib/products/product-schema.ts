@@ -67,8 +67,21 @@ const optionalExternalUrl = z.preprocess(
   z.string().url().optional(),
 );
 
+const assetPathSchema = trimmedString().superRefine((value, ctx) => {
+  if (/^https?:\/\//i.test(value)) {
+    return;
+  }
+  if (value.startsWith("/")) {
+    return;
+  }
+  ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    message: "Expected an absolute URL or root-relative path",
+  });
+});
+
 const screenshotSchema = z.object({
-  url: trimmedString().url(),
+  url: assetPathSchema,
   alt: trimmedString().optional(),
   caption: trimmedString().optional(),
 });
@@ -197,86 +210,23 @@ const permissionJustificationSchema = z.object({
   learn_more_url: trimmedString().url().optional(),
 });
 
-const orderBumpSchemaShape = {
-  product_slug: optionalTrimmedString(),
-  slug: optionalTrimmedString(),
-  title: optionalTrimmedString(),
-  description: optionalTrimmedString(),
-  price: optionalTrimmedString(),
-  features: z.array(z.string().trim()).optional(),
-  image: z.string().trim().url().optional(),
-  default_selected: z.boolean().optional(),
-  stripe: stripeSchema.optional(),
-} satisfies Record<string, z.ZodTypeAny>;
-
-export const ORDER_BUMP_FIELD_ORDER = [
-  "enabled",
-  "slug",
-  "product_slug",
-  ...Object.keys(orderBumpSchemaShape).filter((key) => key !== "slug" && key !== "product_slug"),
-] as const;
-
-export type ProductOrderBump = {
-  enabled: boolean;
-  slug?: string;
-  product_slug?: string;
-  title?: string;
-  description?: string;
-  price?: string;
-  features?: string[];
-  image?: string;
-  default_selected?: boolean;
-  stripe?: {
-    price_id?: string;
-    test_price_id?: string;
-    mode?: "payment" | "subscription";
-    metadata?: Record<string, unknown>;
-  };
-};
-
-const orderBumpObjectSchema = z.object({
-  enabled: z.boolean().optional(),
-  ...orderBumpSchemaShape,
-});
-
-const orderBumpStringSchema = z.string().trim().min(1).transform((id) => ({
-  enabled: true,
-  slug: id,
-}));
-
-const orderBumpSchema = z
-  .union([orderBumpObjectSchema, orderBumpStringSchema])
-  .transform<ProductOrderBump>((raw) => {
-    const partial = raw as Partial<ProductOrderBump>;
-
-    const enabled = partial.enabled ?? true;
-    const legacyId = typeof (partial as { id?: string }).id === "string" ? (partial as { id?: string }).id : undefined;
-    const trimmedSlugProp = typeof partial.slug === "string" && partial.slug.trim().length > 0 ? partial.slug.trim() : undefined;
-    const trimmedProductSlug = typeof partial.product_slug === "string" && partial.product_slug.trim().length > 0 ? partial.product_slug.trim() : undefined;
-    const defaultSelected = partial.default_selected ?? false;
-
-    const normalized: ProductOrderBump = {
-      enabled,
-      slug: trimmedSlugProp ?? trimmedProductSlug ?? (legacyId && legacyId.trim().length > 0 ? legacyId.trim() : undefined),
-      product_slug: trimmedProductSlug,
-      title: partial.title,
-      description: partial.description,
-      price: partial.price,
-      features: partial.features,
-      image: partial.image,
-      default_selected: defaultSelected,
-      stripe: partial.stripe,
-    };
-
-    return normalized;
-  })
+const paymentLinkSchema = z
+  .union([
+    z
+      .object({
+        live_url: enforceHost("buy.stripe.com"),
+        test_url: enforceHost("buy.stripe.com").optional(),
+      })
+      .strict(),
+    z
+      .object({
+        ghl_url: enforceHost("ghl.serp.co"),
+      })
+      .strict(),
+  ])
   .optional();
 
-export const CTA_MODE_OPTIONS = ["checkout", "external", "pre_release"] as const;
-const ctaModeSchema = z.enum(CTA_MODE_OPTIONS);
-export type ProductCtaMode = z.infer<typeof ctaModeSchema>;
-
-const productSchemaShape = {
+export const productSchemaShape = {
   platform: z.string().trim().optional(),
   name: trimmedString(),
   tagline: trimmedString(),
@@ -292,9 +242,8 @@ const productSchemaShape = {
   success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "pre_release", "live"]).default("draft"),
-  cta_mode: ctaModeSchema.optional(),
-  featured_image: z.string().trim().nullable().optional(),
-  featured_image_gif: z.string().trim().nullable().optional(),
+  featured_image: assetPathSchema.nullable().optional(),
+  featured_image_gif: assetPathSchema.nullable().optional(),
   screenshots: z.array(screenshotSchema).optional().default([]),
   product_videos: z.array(z.string().trim()).optional().default([]),
   related_videos: z.array(z.string().trim()).optional().default([]),
@@ -307,7 +256,7 @@ const productSchemaShape = {
   producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
   features: z.array(z.string().trim()).optional().default([]),
   pricing: pricingSchema,
-  order_bump: orderBumpSchema,
+  order_bump: z.any().optional().transform(() => undefined),
   faqs: z.array(faqSchema).optional().default([]),
   reviews: z.array(reviewSchema).optional().default([]),
   supported_operating_systems: z.array(z.string().trim()).optional().default([]),
@@ -315,6 +264,7 @@ const productSchemaShape = {
   categories: z.array(z.string().trim()).optional().default([]),
   keywords: z.array(z.string().trim()).optional().default([]),
   return_policy: returnPolicySchema,
+  payment_link: paymentLinkSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
   license: licenseSchema,
@@ -344,7 +294,6 @@ export const PRODUCT_FIELD_ORDER = [
   "success_url",
   "cancel_url",
   "status",
-  "cta_mode",
   "featured_image",
   "featured_image_gif",
   "screenshots",
@@ -359,7 +308,6 @@ export const PRODUCT_FIELD_ORDER = [
   "producthunt_link",
   "features",
   "pricing",
-  "order_bump",
   "faqs",
   "reviews",
   "supported_operating_systems",
@@ -367,6 +315,7 @@ export const PRODUCT_FIELD_ORDER = [
   "categories",
   "keywords",
   "return_policy",
+  "payment_link",
   "stripe",
   "ghl",
   "license",
@@ -380,6 +329,33 @@ export const PRODUCT_FIELD_ORDER = [
   "sku",
 ] as const;
 
-export const productSchema = z.object(productSchemaShape).strict();
+export const productSchema = z
+  .object(productSchemaShape)
+  .strict()
+  .superRefine((data, ctx) => {
+    if (data.status === "live") {
+      const link = data.payment_link;
+      const hasStripeLink =
+        link != null &&
+        "live_url" in link &&
+        typeof link.live_url === "string" &&
+        link.live_url.trim().length > 0;
+      const hasGhlLink =
+        link != null &&
+        "ghl_url" in link &&
+        typeof link.ghl_url === "string" &&
+        link.ghl_url.trim().length > 0;
+
+      if (!hasStripeLink && !hasGhlLink) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["payment_link"],
+          message:
+            "Products with status 'live' must define a Stripe payment link (live/test) or a GoHighLevel payment link.",
+        });
+      }
+    }
+  })
+  .transform(({ order_bump: _legacyOrderBump, ...rest }) => rest);
 
 export type ProductData = z.infer<typeof productSchema>;

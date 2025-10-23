@@ -9,7 +9,6 @@
 □ STRIPE_SECRET_KEY_LIVE - Production Stripe secret key (sk_live_...)
 □ STRIPE_WEBHOOK_SECRET_LIVE - Webhook endpoint secret from Stripe Dashboard
 □ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE - Production publishable key (pk_live_...)
-□ NEXT_PUBLIC_CHECKOUT_URL - Set to production domain /api/checkout/session
 □ GHL_API_BASE_URL - https://services.leadconnectorhq.com
 □ GHL_LOCATION_ID - Your GHL location ID
 □ GHL_PAT_LOCATION - Your GHL personal access token
@@ -64,8 +63,7 @@
 ### End-to-End Purchase Flow
 ```bash
 □ Product page loads correctly
-□ Add to cart functionality works
-□ Stripe checkout session creates successfully
+□ Primary CTA opens configured Payment Link (Stripe or GHL) in new tab
 □ Payment processes correctly
 □ Success page displays with order details
 □ Order saved to database

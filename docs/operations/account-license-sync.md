@@ -33,4 +33,4 @@ If you provide the configured `ACCOUNT_ADMIN_TOKEN`, loading `/account?impersona
 
 - **Idempotent:** running the sync multiple times overwrites matching license rows and keeps only the active keys reported by GHL.
 - **Logging:** look for `account.ghl_sync.*` logs if you need to troubleshoot.
-- **Fallback:** `/account` still merges `fetchLicenseForOrder` results, so Stripe/PayPal orders continue to populate even if GHL is unavailable.
+- **Fallback:** `/account` still merges `fetchLicenseForOrder` results, so Stripe orders continue to populate even if GHL is unavailable (legacy PayPal orders are surfaced through the same path as `legacy_paypal`).

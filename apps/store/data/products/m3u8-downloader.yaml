@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/m3u8-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e6c46a613b1b64e9cea03c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=m3u8-downloader
+payment_link:
+  live_url: https://buy.stripe.com/7sY6oz2Qgf8Oe9t0Kn0VO0F
+  test_url: https://buy.stripe.com/test_3cIbITaiI1hYghBct50VO0G
+
 status: live
 featured_image: null
 featured_image_gif: https://raw.githubusercontent.com/serpapps/m3u8-downloader/main/images/m3u8-downloader.gif
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the M3u8 downloader?
   answer: Install the browser extension, navigate to M3u8, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

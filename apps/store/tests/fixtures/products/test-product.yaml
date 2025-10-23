@@ -11,9 +11,11 @@ serply_link: https://serp.ly/test-product
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/test-product
 apps_serp_co_product_page_url: https://apps.serp.co/test-product
 serp_co_product_page_url: https://serp.co/products/test-product/
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+success_url: https://apps.serp.co/checkout/success?provider=stripe&slug=test-product&payment_link_id=plink_test_fixture&session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=test-product
 status: live
+payment_link:
+  live_url: https://buy.stripe.com/test_123456789
 screenshots: []
 product_videos: []
 related_videos: []

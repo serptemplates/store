@@ -20,11 +20,27 @@ interface OrderRow {
   metadata: unknown;
   payment_status: string | null;
   payment_method: string | null;
-  source: CheckoutSource | null;
+  source: string | null;
   checkout_session_status?: string | null;
   checkout_session_source?: string | null;
   created_at: string;
   updated_at: string;
+}
+
+function normalizeSource(value: string | null | undefined): CheckoutSource {
+  if (value === "ghl") {
+    return "ghl";
+  }
+
+  if (value === "paypal" || value === "legacy_paypal") {
+    return "legacy_paypal";
+  }
+
+  return "stripe";
+}
+
+function normalizeSourceOptional(value: string | null | undefined): CheckoutSource | null {
+  return value ? normalizeSource(value) : null;
 }
 
 function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
@@ -62,9 +78,9 @@ function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
     metadata,
     paymentStatus: row.payment_status,
     paymentMethod: row.payment_method,
-    source: (row.source ?? "stripe") as CheckoutSource,
+    source: normalizeSource(row.source),
     checkoutSessionStatus: checkoutSessionStatus as CheckoutSessionStatus | null,
-    checkoutSessionSource: checkoutSessionSource as CheckoutSource | null,
+    checkoutSessionSource: normalizeSourceOptional(checkoutSessionSource),
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
   };
@@ -78,7 +94,9 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
   }
 
   const metadataJson = toJsonbLiteral(input.metadata);
-  const source = input.source ?? "stripe";
+  const source = input.source === "legacy_paypal"
+    ? "paypal"
+    : input.source ?? "stripe";
 
   await query`
     INSERT INTO orders (
@@ -173,7 +191,7 @@ export async function findOrdersByEmailAndSource(
         OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
       )
     WHERE o.customer_email = ${normalizedEmail}
-      AND o.source = ${source}
+      AND o.source = ${source === "legacy_paypal" ? "paypal" : source}
   `;
 
   const rows = result?.rows ?? [];
@@ -274,59 +292,6 @@ export async function findOrderByPaymentIntentId(paymentIntentId: string): Promi
         OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
       )
     WHERE o.stripe_payment_intent_id = ${paymentIntentId}
-    LIMIT 1;
-  `;
-
-  return mapOrderRow(result?.rows?.[0] ?? null);
-}
-
-export async function findOrderByPaypalOrderId(paypalOrderId: string): Promise<OrderRecord | null> {
-  const schemaReady = await ensureDatabase();
-
-  if (!schemaReady) {
-    return null;
-  }
-
-  const trimmed = paypalOrderId.trim();
-  if (!trimmed) {
-    return null;
-  }
-
-  const result = await query<OrderRow>`
-    SELECT
-      o.id,
-      o.checkout_session_id,
-      o.stripe_session_id,
-      o.stripe_payment_intent_id,
-      o.stripe_charge_id,
-      o.amount_total,
-      o.currency,
-      o.offer_id,
-      o.lander_id,
-      o.customer_email,
-      o.customer_name,
-      o.metadata,
-      o.payment_status,
-      o.payment_method,
-      o.source,
-      o.created_at,
-      o.updated_at,
-      cs.status AS checkout_session_status,
-      cs.source AS checkout_session_source
-    FROM orders o
-    LEFT JOIN checkout_sessions cs
-      ON (
-        cs.id = o.checkout_session_id
-        OR cs.stripe_session_id IS NOT DISTINCT FROM o.stripe_session_id
-        OR cs.stripe_payment_intent_id IS NOT DISTINCT FROM o.stripe_payment_intent_id
-      )
-    WHERE o.source = 'paypal'
-      AND (
-        o.metadata ->> 'paypalOrderId' = ${trimmed}
-        OR o.metadata ->> 'paypal_order_id' = ${trimmed}
-        OR o.stripe_session_id = ${`paypal_${trimmed}`}
-      )
-    ORDER BY o.created_at DESC
     LIMIT 1;
   `;
 

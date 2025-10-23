@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/depositphotos-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=depositphotos-downloader
+payment_link:
+  live_url: https://buy.stripe.com/dRmeV50I8aSy9Td9gT0VO0g
+  test_url: https://buy.stripe.com/test_fZubITaiI7Gm0iD2Sv0VO0h
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/depositphotos-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/depositphotos-downloader/main/images/depositphotos-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Depositphotos downloader?
   answer: Install the browser extension, navigate to Depositphotos, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
