@@ -1,3 +1,17 @@
+---
+slug: how-to-download-mkv-videos
+title: How to Download MKV Matroska Videos
+seoTitle: How to Download MKV Matroska Videos
+description: 'File Extensions: .mkv, .mka, .mks MIME Types: video/x-matroska, audio/x-matroska
+  Container: Open-source multimedia container Codecs: Any codec (H.264, H.265, VP9,
+  AV1, AAC, Opus, etc.)'
+seoDescription: 'File Extensions: .mkv, .mka, .mks MIME Types: video/x-matroska, audio/x-matroska
+  Container: Open-source multimedia container Codecs: Any codec (H.264, H.265, VP9,
+  AV1, AAC, Opus, etc.)'
+date: '2025-10-22T18:59:36.627000Z'
+author: Devin Schumacher
+---
+
 # How to Download MKV Matroska Videos
 
 **File Extensions**: `.mkv`, `.mka`, `.mks`  

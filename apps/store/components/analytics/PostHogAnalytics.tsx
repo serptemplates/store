@@ -29,7 +29,11 @@ function initializePostHog() {
   posthog.init(POSTHOG_KEY!, {
     api_host: POSTHOG_HOST,
     capture_pageview: false,
-    autocapture: true,
+    autocapture: false,
+    disable_surveys: true,
+    disable_surveys_automatic_display: true,
+    advanced_disable_feature_flags: true,
+    advanced_disable_feature_flags_on_first_load: true,
     session_recording: {
       // Respect PostHog masking defaults while allowing overrides from the dashboard
       maskAllInputs: false,

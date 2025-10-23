@@ -1,3 +1,16 @@
+---
+slug: how-to-download-dash-streaming-videos
+title: How to Download DASH Streaming Videos
+seoTitle: How to Download DASH Streaming Videos
+description: 'File Extensions: .mpd (Media Presentation Description) MIME Types: application/dash+xml
+  Container: XML manifest format Streaming: Adaptive bitrate streaming protocol'
+seoDescription: 'File Extensions: .mpd (Media Presentation Description) MIME Types:
+  application/dash+xml Container: XML manifest format Streaming: Adaptive bitrate
+  streaming protocol'
+date: '2025-10-22T18:59:36.627000Z'
+author: Devin Schumacher
+---
+
 # How to Download DASH Streaming Videos
 
 **File Extensions**: `.mpd` (Media Presentation Description)  

@@ -1,3 +1,17 @@
+---
+slug: how-to-download-vimeo-videos
+title: How to Download Vimeo Videos
+seoTitle: How to Download Vimeo Videos
+description: 'Platform: Vimeo.com Primary Formats: HLS (M3U8), DASH (MPD), Progressive
+  MP4 Player: Vimeo Player (iframe embeds) Authentication: OAuth, password protection
+  support'
+seoDescription: 'Platform: Vimeo.com Primary Formats: HLS (M3U8), DASH (MPD), Progressive
+  MP4 Player: Vimeo Player (iframe embeds) Authentication: OAuth, password protection
+  support'
+date: '2025-10-22T18:59:36.628000Z'
+author: Devin Schumacher
+---
+
 # How to Download Vimeo Videos
 
 **Platform**: Vimeo.com  

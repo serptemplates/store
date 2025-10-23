@@ -1,3 +1,17 @@
+---
+slug: how-to-download-webm-videos
+title: How to Download WebM Videos
+seoTitle: How to Download WebM Videos
+description: 'File Extensions: .webm MIME Types: video/webm, audio/webm Container:
+  Matroska-based multimedia container Codecs: VP8, VP9, AV1 (video), Vorbis, Opus
+  (audio)'
+seoDescription: 'File Extensions: .webm MIME Types: video/webm, audio/webm Container:
+  Matroska-based multimedia container Codecs: VP8, VP9, AV1 (video), Vorbis, Opus
+  (audio)'
+date: '2025-10-22T18:59:36.628000Z'
+author: Devin Schumacher
+---
+
 # How to Download WebM Videos
 
 **File Extensions**: `.webm`  

@@ -1,13 +1,17 @@
 ---
-title: "Download Skool Videos from .m3u8 Token Streams (HLS Guide)"
-slug: "download-skool-videos-m3u8-token"
-seoTitle: "Download Skool Videos from .m3u8 Token HLS Streams"
-description: "Use your browser's network panel to capture Skool .m3u8?token URLs and download the video with yt-dlp."
-seoDescription: "Step-by-step guide for finding Skool HLS token URLs in developer tools and saving the stream with yt-dlp, including tips for faster downloads."
+slug: download-skool-videos-m3u8-token
+title: Download Skool Videos from .m3u8 Token Streams (HLS Guide)
+seoTitle: Download Skool Videos from .m3u8 Token HLS Streams
+description: Use your browser's network panel to capture Skool .m3u8?token URLs and
+  download the video with yt-dlp.
+seoDescription: Step-by-step guide for finding Skool HLS token URLs in developer tools
+  and saving the stream with yt-dlp, including tips for faster downloads.
+date: '2025-10-22T18:59:36.625000Z'
+author: Devin Schumacher
 tags:
-  - skool
-  - hls
-  - yt-dlp
+- skool
+- hls
+- yt-dlp
 ---
 
 # Download Skool Videos from .m3u8 Token Streams (HLS Guide)

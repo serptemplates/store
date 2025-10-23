@@ -1,3 +1,13 @@
+---
+slug: downloading-long-vimeo-videos-dash-streams-with-yt-dlp
+title: 📥 Downloading Long Vimeo Videos (DASH Streams) with yt-dlp
+seoTitle: 📥 Downloading Long Vimeo Videos (DASH Streams) with yt-dlp
+description: 'Vimeo streams video in two possible ways:'
+seoDescription: 'Vimeo streams video in two possible ways:'
+date: '2025-10-22T18:59:36.625000Z'
+author: Devin Schumacher
+---
+
 # 📥 Downloading Long Vimeo Videos (DASH Streams) with yt-dlp
 
 Vimeo streams video in two possible ways:
