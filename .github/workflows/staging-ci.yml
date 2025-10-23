@@ -30,14 +30,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        check: [unit, playwright, axe, structured-data, lighthouse]
+        check: [unit, playwright, axe, structured-data, schema, lighthouse]
         include:
           - check: unit
             title: Unit & schema checks
             command: pnpm run ci:unit
           - check: playwright
             title: Playwright staging suite
-            command: pnpm --filter @apps/store exec playwright test
+            command: RUN_STAGING_SMOKE=1 pnpm --filter @apps/store exec playwright test tests/e2e/staging
             requires-browsers: true
           - check: axe
             title: Axe accessibility checks
@@ -45,6 +45,9 @@ jobs:
           - check: structured-data
             title: Structured data checks
             command: pnpm --filter @apps/store run test:structured-data
+          - check: schema
+            title: Product schema validation
+            command: pnpm --filter @apps/store validate:products
           - check: lighthouse
             title: Lighthouse checks
             command: pnpm --filter @apps/store run test:lhci

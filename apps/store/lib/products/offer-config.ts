@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { getProductData } from "@/lib/products/product";
 import { isStripeTestMode } from "@/lib/payments/stripe-environment";
+import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "./asset-paths";
 
 const CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}";
 
@@ -87,6 +88,13 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       ? `${baseUrl}/checkout?canceled=true`
       : product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
 
+    const normalizedImage = normalizeProductAssetPath(product.featured_image);
+    const productImageUrl = normalizedImage
+      ? normalizedImage.startsWith("http")
+        ? normalizedImage
+        : toAbsoluteProductAssetUrl(normalizedImage, baseUrl)
+      : undefined;
+
     return offerConfigSchema.parse({
       id: product.slug,
       stripePriceId: priceId,
@@ -108,10 +116,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       },
       productName: product.name,
       productDescription: product.tagline ?? product.seo_description,
-      productImage:
-        typeof product.featured_image === "string" && product.featured_image.startsWith("http")
-          ? product.featured_image
-          : undefined,
+      productImage: productImageUrl,
       ghl: product.ghl
         ? {
             pipelineId: product.ghl.pipeline_id ?? undefined,

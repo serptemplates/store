@@ -32,9 +32,9 @@
 - [ ] `SLACK_ALERT_WEBHOOK_URL` configured for ops alerts
 
 ### Rate Limiting
-- [ ] Test checkout API: `ab -n 100 -c 10 https://your-domain.com/api/checkout/session`
-- [ ] Verify rate limiting kicks in after threshold
-- [ ] Verify 429 responses include retry headers
+- [ ] Exercise active payment APIs (e.g., `ab -n 100 -c 10 https://your-domain.com/api/paypal/create-order`)
+- [ ] Verify abuse protections respond gracefully once the threshold is exceeded
+- [ ] Confirm responses include retry headers when applicable
 - [ ] Consider upgrading to Redis-based rate limiting (recommended)
 
 ### Webhook Security
@@ -129,10 +129,10 @@ referrer-policy: strict-origin-when-cross-origin
 ### Test 2: Rate Limiting
 ```bash
 # Should succeed
-for i in {1..30}; do curl -X POST https://your-domain.com/api/checkout/session -H "Content-Type: application/json" -d '{"offerId":"test"}'; done
+for i in {1..30}; do curl -X POST https://your-domain.com/api/paypal/create-order -H "Content-Type: application/json" -d '{"offerId":"test-product"}'; done
 
 # Should return 429
-for i in {31..35}; do curl -X POST https://your-domain.com/api/checkout/session -H "Content-Type: application/json" -d '{"offerId":"test"}'; done
+for i in {31..35}; do curl -X POST https://your-domain.com/api/paypal/create-order -H "Content-Type: application/json" -d '{"offerId":"test-product"}'; done
 ```
 
 ### Test 3: PII Redaction

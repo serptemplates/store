@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/teachable-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e022e6613b1b34eece7f2f
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=teachable-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/3cIbITfD22m20iD2Sv0VO18
+  test_url: https://buy.stripe.com/test_6oU8wHfD22m24yTakX0VO1a
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/teachable-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/teachable-video-downloader/main/images/teachable-video-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Teachable downloader?
   answer: Install the browser extension, navigate to Teachable, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

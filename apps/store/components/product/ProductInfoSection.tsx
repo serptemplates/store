@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { ResolvedHomeCta } from "@/components/home/home-template.types";
 
 export interface ProductInfoSectionProps {
   title: string;
@@ -15,6 +16,8 @@ export interface ProductInfoSectionProps {
   benefits?: string[];
   features?: string[];
   githubUrl?: string;
+  checkoutCta?: ResolvedHomeCta | null;
+  onCheckoutClick?: () => void;
 }
 
 export function ProductInfoSection({
@@ -30,6 +33,8 @@ export function ProductInfoSection({
   benefits = [],
   features = [],
   githubUrl,
+  checkoutCta,
+  onCheckoutClick,
 }: ProductInfoSectionProps) {
   const checkoutQuery: Record<string, string> = {};
   if (productSlug) {
@@ -68,6 +73,37 @@ export function ProductInfoSection({
           >
             Get Notified
           </button>
+        ) : checkoutCta ? (
+          checkoutCta.opensInNewTab ? (
+            <a
+              href={checkoutCta.href}
+              target="_blank"
+              rel={checkoutCta.rel ?? "noopener noreferrer"}
+              className="block w-full bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
+              data-testid="product-primary-cta"
+              onClick={(event) => {
+                event.preventDefault();
+                onCheckoutClick?.();
+              }}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>{checkoutCta.text ?? "Get It Now"}</span>
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={onCheckoutClick}
+              className="block w-full bg-blue-600 text-white text-center py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
+              data-testid="product-primary-cta"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>{checkoutCta.text ?? "Get It Now"}</span>
+            </button>
+          )
         ) : (
           <Link
             href={checkoutHref}
@@ -82,13 +118,8 @@ export function ProductInfoSection({
 
         {/* Multiple payment options indicator */}
         {!showWaitlist && (
-          <div className="flex items-center justify-center gap-4 py-2">
-            <span className="text-xs text-gray-500">Secure payment via</span>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-600 font-medium">Cards</span>
-              <span className="text-xs text-gray-400">•</span>
-              <span className="text-xs text-gray-600 font-medium">PayPal</span>
-            </div>
+          <div className="flex items-center justify-center py-2">
+            <span className="text-xs text-gray-500">Secure checkout powered by Stripe</span>
           </div>
         )}
 

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/skool-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68978eb5f787d0c133b34880
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=skool-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/8x228jfD2aSyc1l50D0VO0X
+  test_url: https://buy.stripe.com/test_3cIaEP3Ukd0G1mH64H0VO0Z
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.gif
@@ -66,7 +70,6 @@ pricing:
   price: $37.00
   currency: USD
   availability: InStock
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I download Skool videos?
   answer: Use our Skool video downloader extension to easily download videos from Skool communities. Simply install the extension, navigate to any Skool video, and click the download button that appears. Choose your preferred quality and format, and the video will be saved directly to your device.
@@ -128,6 +131,7 @@ return_policy:
 stripe:
   price_id: price_1SKxDw06JrOmKRCmxbxexLDR
   metadata:
+    stripe_product_id: prod_SgRUYSKnhuiXX6
 ghl:
   tag_ids:
   - purchase-skool-video-downloader

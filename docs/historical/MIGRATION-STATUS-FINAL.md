@@ -8,7 +8,7 @@ The migration from GHL to the new Next.js store is **97% complete** and ready fo
 
 ### 1. **Core E-commerce Infrastructure**
 - ✅ Product pages with hybrid layouts (ecommerce/landing)
-- ✅ Shopping cart functionality via Stripe Checkout
+- ✅ Checkout via Stripe & GHL Payment Links
 - ✅ Payment processing (Stripe + PayPal)
 - ✅ Dual payment method support for increased conversion
 - ✅ Order management and database persistence
@@ -83,7 +83,6 @@ DATABASE_URL=postgresql://...
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-NEXT_PUBLIC_CHECKOUT_URL=https://yourdomain.com/api/checkout/session
 
 # GHL
 GHL_API_BASE_URL=https://services.leadconnectorhq.com
@@ -151,7 +150,7 @@ NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 
 ## 🎯 Success Criteria Met
 
-✅ **Payment Processing**: Stripe checkout fully functional
+✅ **Payment Processing**: Stripe Payment Links fully functional
 ✅ **Data Persistence**: Orders saved to PostgreSQL
 ✅ **GHL Integration**: Contacts and events syncing
 ✅ **SEO Ready**: Schema markup implemented

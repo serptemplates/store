@@ -1,5 +1,7 @@
 # PayPal Integration Setup Guide
 
+> Legacy reference only: PayPal checkout was decommissioned in favour of Stripe Payment Links. Retain this document for historical audits or when interpreting `legacy_paypal` orders.
+
 ## ✅ Implementation Status: COMPLETE
 
 PayPal checkout has been fully integrated alongside Stripe as an alternative payment method.

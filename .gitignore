@@ -72,5 +72,13 @@ serp-license-key-management
 google-creds.json
 merchant-feed.*
 external/
-mcp-debug-tools
+mcp-debug-tools/
 **/.lighthouseci/
+.certs
+.env.vercel
+.env.vercel.preview
+.env.vercel.prod
+.env.vercel.prod
+.env.preview
+.env.production
+.env.vercel.prod

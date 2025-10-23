@@ -17,6 +17,10 @@ serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
 buy_button_destination: https://ghl.serp.co/payment-link/68f88f7d67ee3b70fd6a1b24
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
+payment_link:
+  live_url: https://buy.stripe.com/14AaEPcqQf8O0iD78L0VO04
+  test_url: https://buy.stripe.com/test_4gM8wH76w6Ci7L5fFh0VO03
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
 featured_image_gif: null
@@ -63,9 +67,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I install AI Voice Cloner?
   answer: Install Docker Desktop on your computer, download the AI Voice Cloner package from the website, extract it to your Desktop, and run 'docker compose up' from the terminal. The app will start a local web server at http://localhost:80 that you can access in your browser.

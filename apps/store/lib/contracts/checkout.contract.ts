@@ -21,7 +21,7 @@ export const CheckoutSessionContract = z.object({
   customerEmail: z.string().email().nullable(),
   metadata: z.record(z.unknown()),
   status: z.enum(['pending', 'completed', 'failed', 'abandoned']),
-  source: z.enum(['stripe', 'paypal']),
+  source: z.enum(['stripe', 'ghl', 'legacy_paypal']),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
@@ -61,7 +61,7 @@ export const OrderContract = z.object({
   metadata: z.record(z.unknown()),
   paymentStatus: z.string().nullable(),
   paymentMethod: z.string().nullable(),
-  source: z.enum(['stripe', 'paypal']),
+  source: z.enum(['stripe', 'ghl', 'legacy_paypal']),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

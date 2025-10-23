@@ -13,6 +13,7 @@ export type BlogPostMeta = {
   seoDescription: string;
   date: string;
   author: string;
+  authorUrl?: string;
   tags: string[];
   image?: string;
   readingTime: string;
@@ -27,6 +28,8 @@ type Frontmatter = Record<string, unknown> & {
   seoTitle?: string;
   seoDescription?: string;
   excerpt?: string;
+  author?: string;
+  authorUrl?: string;
 };
 
 // Resolve relative to the app workspace so dev server + builds find the content directory.
@@ -161,6 +164,7 @@ export function getAllPosts(): BlogPostMeta[] {
         seoDescription,
         date: typeof frontmatter?.date === "string" ? frontmatter.date : new Date().toISOString(),
         author: typeof frontmatter?.author === "string" ? frontmatter.author : "Devin Schumacher",
+        authorUrl: typeof frontmatter?.authorUrl === "string" ? frontmatter.authorUrl : undefined,
         tags: Array.isArray(frontmatter?.tags) ? (frontmatter.tags as string[]) : [],
         image: typeof frontmatter?.image === "string" ? frontmatter.image : undefined,
         readingTime: stats.text,
@@ -224,6 +228,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
         seoDescription,
         date: typeof frontmatter?.date === "string" ? frontmatter.date : new Date().toISOString(),
         author: typeof frontmatter?.author === "string" ? frontmatter.author : "Devin Schumacher",
+        authorUrl: typeof frontmatter?.authorUrl === "string" ? frontmatter.authorUrl : undefined,
         tags: Array.isArray(frontmatter?.tags) ? (frontmatter.tags as string[]) : [],
         image: typeof frontmatter?.image === "string" ? frontmatter.image : undefined,
         readingTime: stats.text,
@@ -236,3 +241,4 @@ export function getPostBySlug(slug: string): BlogPost | null {
 
   return null;
 }
+const DEFAULT_AUTHOR_URL = "https://apps.serp.co/team/devin-schumacher";

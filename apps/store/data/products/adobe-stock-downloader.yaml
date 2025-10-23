@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/adobe-stock-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68dfb0ed613b1bf637ce7be1
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=adobe-stock-downloader
+payment_link:
+  live_url: https://buy.stripe.com/4gM8wH76w6Ci7L5fFh0VO03
+  test_url: https://buy.stripe.com/test_8x29ALaiId0Ge9t9gT0VO02
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/adobe-stock-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/adobe-stock-downloader/main/images/featured.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Adobe downloader?
   answer: Install the browser extension, navigate to Adobe, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

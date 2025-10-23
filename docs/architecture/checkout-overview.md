@@ -1,6 +1,6 @@
 # Checkout Module Overview
 
-The checkout refactor split the legacy `lib/checkout/store.ts` monolith into focused modules. This keeps the API surface stable (`@/lib/checkout`) while clarifying responsibilities and making it easier to extend Stripe or PayPal flows.
+The storefront no longer brokers custom Stripe sessions. Product CTAs resolve to Stripe or GoHighLevel Payment Links, and the `@/lib/checkout` facade still owns persistence, webhook handling, and reporting so downstream systems retain a single integration surface (legacy PayPal records are treated as `legacy_paypal` sources).
 
 ## Public facade
 
@@ -9,25 +9,34 @@ Import everything through `@/lib/checkout`. The facade re-exports the canonical 
 - `sessions.ts` – CRUD helpers for checkout sessions (insert/update/status transitions, stale session pruning).
 - `orders.ts` – Order upsert helpers, metadata updates, and reporting hooks that operate on orders.
 - `queries.ts` – Read-only reporting helpers (`findRecentOrdersByEmail`, `countPendingCheckoutSessionsOlderThan`, etc.).
-- `session/` – Higher-level helpers used by the API route (`parseCheckoutRequest`, `applyCouponIfPresent`, `createStripeCheckoutSession`, `persistCheckoutSession`).
 - `types.ts` – Shared enums and record shapes to keep inter-module imports stable.
 
-## API route flow (`app/api/checkout/session/route.ts`)
+## Checkout entry points
 
-1. `parseCheckoutRequest` (validation module) normalizes JSON, applies Zod validation, and builds metadata scaffolding.
-2. `applyCouponIfPresent` (coupons module) handles promotion-code lookups and discount math.
-3. `createStripeCheckoutSession` (pricing module) prepares Stripe payloads, reconciles product metadata drift, and returns the resolved line items.
-4. `persistCheckoutSession` (persistence module) records the session asynchronously and updates existing records via `@/lib/checkout`.
-5. The response builder branches on `uiMode` to support hosted redirect and embedded checkout.
+### Stripe Payment Links
 
-Existing Vitest suites (`tests/api/checkout-session.test.ts`, `tests/checkout/**`) cover the controller flow. When you add new helpers keep them behind the facade so API routes and tests only need to update import paths.
+- Product YAMLs now declare `payment_link` fields (Stripe live/test URLs or a GoHighLevel payment URL).
+- `resolveProductPaymentLink` chooses the correct link based on environment (test vs. live) and feeds the CTA helpers.
+- `useProductCheckoutCta` opens the Payment Link in a new tab, tracks analytics, and triggers the waitlist modal for pre-release products.
+- CTA selection no longer relies on `cta_mode` flags in product content; the helpers derive behaviour strictly from the product `status` (e.g., `pre_release`) and the configured `payment_link`.
+- Metadata required for fulfilment (e.g., `offerId`, `ghl_tag`) must be stored on the Stripe product or price so webhooks can recover it—our sync scripts backfill these tags.
+- Stripe Payment Links redirect to `/checkout/success` with `provider=stripe`, the product `slug`, `payment_link_id`, `mode`, and `session_id={CHECKOUT_SESSION_ID}` to keep analytics and fulfilment aligned; the success page reads these params and falls back to fetching the Checkout Session when needed.
+
+## Post-purchase processing
+
+- `app/api/stripe/webhook/route.ts` handles `checkout.session.completed` events emitted by Payment Links. Because the storefront no longer writes session metadata, ensure Stripe product metadata (or the Payment Link itself) includes the GHL tag, lander/offer IDs, and any fulfilment hints.
+- The `/checkout/success` route still processes a session on demand for local/testing environments when webhooks are unavailable. It retrieves the Stripe session directly, persists orders, and provisions licenses as a fallback path.
+- Historical PayPal orders remain in the database as `legacy_paypal` sources; the checkout persistence layer normalizes them alongside Stripe sessions for reporting.
+
+## Legacy `/checkout` behaviour
+
+- `/checkout` now performs a static redirect back to the product slug (or home) so old deep links do not 404. There is no server action or session creation there.
+- `/checkout/cancel` and `/checkout/success` remain available because third-party cancel/success URLs still point at them. Cancel simply links back to the product page, while success renders order status using the shared components.
+- Middleware rewrites like `/ghl/checkout` → `/checkout` remain for backwards compatibility but no longer create sessions.
 
 ## Adding new checkout flows
 
-1. Add domain logic under `apps/store/lib/checkout/*` and re-export it through `index.ts`.
-2. Update the controller hook (`components/checkout/page/useCheckoutPage.ts`) or related server actions to consume the new helper.
-3. Extend the relevant tests:
-   - Validation / coupon behavior → `tests/api/checkout-session.test.ts`.
-   - Session persistence → `tests/checkout/validation.test.ts` or `tests/checkout/coupons.test.ts`.
-   - Full-stack behavior → Playwright `tests/manual/checkout-flow.spec.ts`.
-4. Run the acceptance stack: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm test:smoke`.
+1. Prefer Payment Links for any future Stripe surface. Configure new links in the Stripe dashboard and store the URLs + metadata in product YAML.
+2. If you must add a server-driven checkout (e.g., another PSP), place the route under `app/api/<provider>` and reuse the `@/lib/checkout` persistence helpers for consistency.
+3. Extend Vitest coverage for any new helpers under `apps/store/tests/**`, and keep E2E coverage in Playwright focused on CTA navigation rather than session payloads.
+4. Run the acceptance stack when shipping changes: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm test:smoke`.

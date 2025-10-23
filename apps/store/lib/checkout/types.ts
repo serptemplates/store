@@ -1,4 +1,4 @@
-export type CheckoutSource = "stripe" | "paypal" | "ghl";
+export type CheckoutSource = "stripe" | "ghl" | "legacy_paypal";
 
 export type CheckoutSessionStatus = "pending" | "completed" | "failed" | "abandoned";
 

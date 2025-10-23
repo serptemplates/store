@@ -40,13 +40,10 @@ export function CheckoutCancelContent({ product }: CheckoutCancelContentProps) {
 
           <div className="space-y-4">
             <Link
-              href={{
-                pathname: "/checkout",
-                query: product ? { product } : undefined,
-              }}
+              href={product ? `/${product}` : "/"}
               className="block w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              Return to Checkout
+              Return to Product
             </Link>
 
             <Link

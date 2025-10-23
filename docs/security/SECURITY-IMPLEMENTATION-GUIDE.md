@@ -45,7 +45,7 @@ pnpm test tests/security/logger-redaction.test.ts
 
 ### 3. Structured Logging (DONE)
 **Modified Files:**
-- `apps/store/app/api/checkout/session/route.ts`
+- (Legacy) `apps/store/app/api/checkout/session/route.ts` — migrated away in favour of Payment Links.
 - `apps/store/app/api/paypal/webhook/route.ts`
 
 Replaced all `console.log` statements with structured logging:
@@ -162,7 +162,9 @@ This enables the startup validation in `instrumentation.ts`.
 
 **Recommended for these API routes:**
 
-**a) Checkout API** (`apps/store/app/api/checkout/session/route.ts`):
+> Legacy note: The PayPal checkout API was removed when Stripe Payment Links became the sole payment surface. The snippet below remains for auditors reviewing historical commits.
+
+**a) Legacy PayPal Checkout API** (`apps/store/app/api/paypal/create-order/route.ts`, removed):
 ```typescript
 import { withRequestValidation } from '@/lib/checkout/request-validation';
 
@@ -178,7 +180,7 @@ export async function POST(request: NextRequest) {
       ],
     },
     async (req) => {
-      // Existing checkout logic
+      // Legacy PayPal order logic (no longer active)
       return withRateLimit(req, checkoutRateLimit, async () => {
         // ... existing code
       });
@@ -240,19 +242,7 @@ export async function rateLimitRedis(
 }
 ```
 
-**Update:** `apps/store/lib/rate-limit.ts`:
-```typescript
-import { rateLimitRedis } from './rate-limit-redis';
-
-export function rateLimit(config: RateLimitConfig) {
-  // Use Redis in production
-  if (process.env.KV_REST_API_URL) {
-    return rateLimitRedis;
-  }
-  // Fall back to in-memory in development
-  return checkRateLimitInMemory;
-}
-```
+**Integrate:** Replace the deleted `apps/store/lib/rate-limit.ts` helper with a Redis-backed implementation and wire it into any new API routes that accept untrusted traffic.
 
 ### 2. Add CORS Configuration
 

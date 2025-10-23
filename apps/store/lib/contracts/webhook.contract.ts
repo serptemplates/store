@@ -3,7 +3,6 @@
  *
  * Validates and types webhook payloads from:
  * - Stripe webhooks
- * - PayPal webhooks
  * - GHL webhooks (if any)
  */
 
@@ -123,66 +122,6 @@ export const StripeWebhookEventContract = z.object({
 
 export type StripeWebhookEvent = z.infer<typeof StripeWebhookEventContract>;
 
-// ============= PayPal Webhook Contracts =============
-
-export const PayPalOrderContract = z.object({
-  id: z.string(),
-  status: z.enum(['CREATED', 'SAVED', 'APPROVED', 'VOIDED', 'COMPLETED']),
-  intent: z.enum(['CAPTURE', 'AUTHORIZE']),
-  purchase_units: z.array(z.object({
-    reference_id: z.string().optional(),
-    amount: z.object({
-      currency_code: z.string(),
-      value: z.string(),
-    }),
-    payee: z.object({
-      email_address: z.string().email().optional(),
-      merchant_id: z.string().optional(),
-    }).optional(),
-    description: z.string().optional(),
-    custom_id: z.string().optional(),
-    invoice_id: z.string().optional(),
-  })),
-  payer: z.object({
-    name: z.object({
-      given_name: z.string().optional(),
-      surname: z.string().optional(),
-    }).optional(),
-    email_address: z.string().email().optional(),
-    payer_id: z.string().optional(),
-    address: z.object({
-      country_code: z.string(),
-    }).optional(),
-  }).optional(),
-  create_time: z.string(),
-  update_time: z.string(),
-  links: z.array(z.object({
-    href: z.string().url(),
-    rel: z.string(),
-    method: z.enum(['GET', 'POST', 'PATCH', 'DELETE']).optional(),
-  })),
-});
-
-export type PayPalOrder = z.infer<typeof PayPalOrderContract>;
-
-export const PayPalWebhookEventContract = z.object({
-  id: z.string(),
-  event_version: z.string(),
-  create_time: z.string(),
-  resource_type: z.string(),
-  resource_version: z.string().optional(),
-  event_type: z.string(),
-  summary: z.string().optional(),
-  resource: z.unknown(),
-  links: z.array(z.object({
-    href: z.string().url(),
-    rel: z.string(),
-    method: z.string().optional(),
-  })),
-});
-
-export type PayPalWebhookEvent = z.infer<typeof PayPalWebhookEventContract>;
-
 // ============= Webhook Log Contract =============
 
 export const WebhookLogContract = z.object({
@@ -239,37 +178,11 @@ export function validateStripeWebhookEvent(data: unknown): StripeWebhookEvent {
 }
 
 /**
- * Validates PayPal order
- */
-export function validatePayPalOrder(data: unknown): PayPalOrder {
-  return PayPalOrderContract.parse(data);
-}
-
-/**
- * Validates PayPal webhook event
- */
-export function validatePayPalWebhookEvent(data: unknown): PayPalWebhookEvent {
-  return PayPalWebhookEventContract.parse(data);
-}
-
-/**
  * Type guard for Stripe webhook events
  */
 export function isStripeWebhookEvent(event: unknown): event is StripeWebhookEvent {
   try {
     StripeWebhookEventContract.parse(event);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Type guard for PayPal webhook events
- */
-export function isPayPalWebhookEvent(event: unknown): event is PayPalWebhookEvent {
-  try {
-    PayPalWebhookEventContract.parse(event);
     return true;
   } catch {
     return false;

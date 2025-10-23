@@ -15,8 +15,8 @@ It normalises casing and guarantees the presence of all required fields:
 
 ```ts
 export interface LicenseProviderPurchase {
-  id: string;                     // event id (Stripe evt_ / PayPal order id)
-  provider: string;               // e.g. "stripe", "paypal"
+  id: string;                     // event id (Stripe evt_ / legacy PayPal order id)
+  provider: string;               // e.g. "stripe", "legacy_paypal"
   providerObjectId: string | null;// payment intent / subscription / capture id
   eventType: string;              // webhook event name
   status: "completed" | "refunded" | "cancelled" | "failed";

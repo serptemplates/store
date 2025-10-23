@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/wistia-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e0228867ee3b3db5699b76
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=wistia-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/3cI6ozaiIbWCfdx0Kn0VO1p
+  test_url: https://buy.stripe.com/test_aFa14ffD23q6aXh3Wz0VO1r
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/wistia-video-downloader/main/images/wistia-video-downloader.gif
@@ -61,7 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Wistia downloader?
   answer: Install the browser extension, navigate to Wistia, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

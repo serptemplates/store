@@ -10,7 +10,7 @@
  * 1. ✅ GHL gets purchase data
  * 2. ✅ PostgreSQL gets purchase data
  * 3. ✅ Google Analytics gets purchase data
- * 4. ✅ Stripe/PayPal gets purchase data
+ * 4. ✅ Stripe receives purchase data
  * 5. ✅ GHL automation is triggered
  */
 
@@ -502,7 +502,7 @@ async function runAcceptanceTest() {
       { name: 'GHL gets purchase data', result: acceptanceResults.ghlData },
       { name: 'PostgreSQL gets purchase data', result: acceptanceResults.postgresData },
       { name: 'Google Analytics gets purchase data', result: acceptanceResults.analyticsData },
-      { name: 'Stripe/PayPal gets purchase data', result: acceptanceResults.paymentData },
+      { name: 'Stripe receives purchase data', result: acceptanceResults.paymentData },
       { name: 'GHL automation is triggered', result: acceptanceResults.ghlAutomation },
     ];
 

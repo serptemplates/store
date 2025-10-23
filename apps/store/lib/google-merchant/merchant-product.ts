@@ -1,4 +1,5 @@
 import { findPriceEntry } from "@/lib/pricing/price-manifest";
+import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
 import type { ProductData } from "../products/product-schema";
 
 export type MerchantProduct = {
@@ -116,15 +117,16 @@ function buildAppsLink(product: ProductData, appsUrl: string): string | undefine
   return `${appsUrl.replace(/\/$/, "")}/${product.slug}`;
 }
 
-function collectAdditionalImages(product: ProductData): string[] {
+function collectAdditionalImages(product: ProductData, origin: string): string[] {
   return (product.screenshots ?? [])
     .map((shot) => {
       if (shot && typeof shot === "object" && "url" in shot) {
-        const candidate = (shot as { url?: unknown }).url;
-        return typeof candidate === "string" ? candidate : null;
+        return normalizeProductAssetPath((shot as { url?: unknown }).url as string | undefined);
       }
-      return typeof shot === "string" ? shot : null;
+      return normalizeProductAssetPath(typeof shot === "string" ? shot : undefined);
     })
+    .filter((value): value is string => Boolean(value))
+    .map((value) => toAbsoluteProductAssetUrl(value, origin))
     .filter((value): value is string => Boolean(value));
 }
 
@@ -157,7 +159,12 @@ export function buildMerchantProduct(product: ProductData, options: MerchantProd
   const salePrice = extractSalePrice(product);
   const descriptionSource = product.seo_description ?? product.description ?? product.tagline ?? product.name;
   const description = sanitizeDescription(descriptionSource);
-  const additionalImages = collectAdditionalImages(product);
+  const imageOrigin = options.appsUrl || options.siteUrl;
+  const normalizedFeaturedImage = normalizeProductAssetPath(product.featured_image);
+  const imageLink = normalizedFeaturedImage
+    ? toAbsoluteProductAssetUrl(normalizedFeaturedImage, imageOrigin)
+    : undefined;
+  const additionalImages = collectAdditionalImages(product, imageOrigin);
   const productTypes = collectProductTypes(product);
 
   return {
@@ -167,7 +174,7 @@ export function buildMerchantProduct(product: ProductData, options: MerchantProd
     description,
     link: primaryLink,
     mobileLink: storeLink && storeLink !== primaryLink ? storeLink : undefined,
-    imageLink: product.featured_image ?? undefined,
+    imageLink: imageLink ?? undefined,
     additionalImageLinks: additionalImages.length ? additionalImages : undefined,
     contentLanguage: options.language,
     targetCountry: options.country,

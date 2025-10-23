@@ -1,24 +1,33 @@
-import { Suspense } from "react"
+import { redirect } from "next/navigation";
 
-import { EmbeddedCheckoutView } from "@/components/checkout/EmbeddedCheckoutView"
-import { CheckoutErrorBoundary } from "@/components/checkout/CheckoutErrorBoundary"
+type CheckoutSearchParams = {
+  [key: string]: string | string[] | undefined;
+  product?: string | string[];
+};
 
-function CheckoutFallback() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <p className="text-gray-600">Loading checkout...</p>
-    </div>
-  )
+function normalizeProductParam(value: string | string[] | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const first = Array.isArray(value) ? value[0] : value;
+  if (!first) {
+    return null;
+  }
+
+  const trimmed = first.trim();
+  return trimmed.length > 0 ? trimmed : null;
 }
 
-export default function CheckoutPage() {
-  return (
-    <CheckoutErrorBoundary>
-      <Suspense fallback={<CheckoutFallback />}>
-        <EmbeddedCheckoutView />
-      </Suspense>
-    </CheckoutErrorBoundary>
-  )
-}
+export const dynamic = "force-static";
 
-export const dynamic = "force-dynamic"
+export default async function CheckoutRedirectPage({ searchParams }: { searchParams: Promise<CheckoutSearchParams> }) {
+  const params = await searchParams;
+  const productSlug = normalizeProductParam(params?.product);
+
+  if (productSlug) {
+    redirect(`/${productSlug}`);
+  }
+
+  redirect("/");
+}

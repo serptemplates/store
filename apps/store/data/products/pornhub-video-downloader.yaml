@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/pornhub-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df984e2197096081e262eb
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=pornhub-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/3cI3cn8aAf8O7L50Kn0VO0Q
+  test_url: https://buy.stripe.com/test_6oUfZ98aAf8O1mH64H0VO0S
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg
 screenshots:
@@ -60,7 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Pornhub downloader?
   answer: Install the browser extension, navigate to Pornhub, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

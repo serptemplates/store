@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/loom-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e02c70613b1bd3c1ce7f87
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=loom-video-downloader
+payment_link:
+  live_url: https://buy.stripe.com/bJe6oz1McgcSaXheBd0VO0E
+  test_url: https://buy.stripe.com/test_7sY6oz2Qgf8Oe9t0Kn0VO0F
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/loom-video-downloader/main/images/loom-video-downloader.gif
@@ -73,7 +77,6 @@ pricing:
   price: $17.00
   currency: USD
   availability: InStock
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I download Loom videos?
   answer: To download Loom videos, you can use specialized software or browser extensions designed for Loom. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.
@@ -134,6 +137,7 @@ return_policy:
 stripe:
   price_id: price_1S9BFJ06JrOmKRCmdpVOP8Em
   metadata:
+    stripe_product_id: prod_SgQFDAZHJBdiRX
 ghl:
   tag_ids:
   - purchase-loom-video-downloader

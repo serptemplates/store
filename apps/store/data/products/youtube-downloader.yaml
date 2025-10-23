@@ -15,6 +15,10 @@ serp_co_product_page_url: https://serp.co/products/youtube-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e021b667ee3b60a2699b6c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=youtube-downloader
+payment_link:
+  live_url: https://buy.stripe.com/eVq00b8aA6CiaXhbp10VO1t
+  test_url: https://buy.stripe.com/test_4gM5kv1Mc5yefdxfFh0VO1w
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youtube-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader.gif
@@ -73,7 +77,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: Can I download YouTube videos in 4K or 8K quality?
   answer: Yes, this downloader supports ultra-high-definition downloads including 4K and 8K videos when available. The actual resolution depends on what the original uploader provided. You can select your preferred quality during download.

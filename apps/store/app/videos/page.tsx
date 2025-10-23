@@ -13,6 +13,7 @@ import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
 
 import VideoLibraryShell from "./VideoLibraryShell";
 import type { VideoListingItem } from "./types";
+import { buildVideoListSchema } from "./schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   const siteConfig = getSiteConfig();
@@ -56,6 +57,7 @@ export default function VideosPage() {
       description: entry.description,
       source: entry.source,
       productName: product.name,
+      uploadDate: entry.uploadDate,
     }));
   });
 
@@ -70,33 +72,7 @@ export default function VideosPage() {
   const siteName = siteConfig.site?.name ?? "SERP Apps";
   const navProps = buildPrimaryNavProps({ products, siteConfig });
 
-  const listSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: `${siteName} Video Library`,
-    itemListElement: sortedItems.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: item.watchUrl,
-      item: {
-        '@type': 'VideoObject',
-        name: item.title,
-        description: item.description,
-        url: item.watchUrl,
-        embedUrl: item.embedUrl,
-        contentUrl: item.contentUrl,
-        thumbnailUrl: item.thumbnailUrl,
-        publisher: {
-          '@type': 'Organization',
-          name: siteName,
-          logo: {
-            '@type': 'ImageObject',
-            url: `${baseUrl}/logo.svg`,
-          },
-        },
-      },
-    })),
-  };
+  const listSchema = buildVideoListSchema(sortedItems, siteName, baseUrl);
 
   return (
     <>

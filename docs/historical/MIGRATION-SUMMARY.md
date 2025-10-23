@@ -3,7 +3,7 @@
 ## ✅ Completed Items
 
 ### 1. **Payment Processing** ✅
-- **Stripe Integration**: Fully functional checkout at `/api/checkout/session`
+- **Stripe Integration**: Product CTAs drive directly to Stripe Payment Links; metadata sourced from Stripe product tags.
 - **Webhook Processing**: Handles Stripe events at `/api/stripe/webhook`
 - **Database Persistence**: Orders saved to PostgreSQL via `upsertOrder()`
 - **Session Management**: Checkout sessions tracked with status updates
@@ -111,8 +111,8 @@ NEXT_PUBLIC_GTM_ID=GTM-...
 
 ### Purchase Flow
 - [x] Product page loads correctly
-- [x] Checkout session creates successfully
-- [x] Stripe payment processes
+- [x] Stripe Payment Link opens and processes successfully
+- [x] PayPal order creation works when enabled
 - [x] Success page displays
 - [x] Conversion tracking fires
 

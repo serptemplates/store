@@ -12,6 +12,8 @@ import type { ProductBreadcrumbItem } from "@/components/product/ProductBreadcru
 import type { ExtendedProductData } from "@/components/product/types"
 import { isPreRelease } from "@/lib/products/release-status"
 import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
+import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta"
 
 export interface EcommerceLayoutProps {
   product: ExtendedProductData
@@ -22,8 +24,9 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
   const handle: string = product.handle || product.slug
   const brandLogoPath = getBrandLogoPath(handle)
   const mainImageSource = brandLogoPath ?? product.thumbnail ?? product.featured_image ?? undefined
+  const waitlistEnabled = isPreRelease(product.status)
 
-  const images = useMemo(() => {
+  const rawImages = useMemo(() => {
     const gallery: Array<string | undefined> = [
       mainImageSource,
       ...(product.images ?? []).map((image) =>
@@ -34,12 +37,40 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     return Array.from(new Set(gallery.filter(Boolean))) as string[]
   }, [mainImageSource, product.images])
 
+  const images = useMemo(() => (waitlistEnabled ? [] : rawImages), [rawImages, waitlistEnabled])
+
+  const homeProps = useMemo(() => productToHomeTemplate(product, []), [product])
+
   const { affiliateId } = useAffiliateTracking()
 
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [showWaitlistModal, setShowWaitlistModal] = useState(false)
-  const waitlistEnabled = isPreRelease(product.status)
+  const { cta: resolvedCta, handleCtaClick } = useProductCheckoutCta({
+    product,
+    homeCta: {
+      cta: homeProps.cta,
+      ctaMode: homeProps.ctaMode,
+      ctaHref: homeProps.ctaHref,
+      ctaText: homeProps.ctaText,
+      ctaTarget: homeProps.ctaTarget,
+      ctaRel: homeProps.ctaRel,
+      ctaOpensInNewTab: homeProps.ctaOpensInNewTab,
+    },
+    affiliateId,
+    onShowWaitlist: () => setShowWaitlistModal(true),
+  })
+
+  const checkoutCta = waitlistEnabled ? null : resolvedCta
+  const stickyImageSource = waitlistEnabled ? null : mainImageSource
+
+  const handleHeroCheckoutClick = useCallback(() => {
+    handleCtaClick("hero")
+  }, [handleCtaClick])
+
+  const handleStickyBarCheckoutClick = useCallback(() => {
+    handleCtaClick("sticky_bar")
+  }, [handleCtaClick])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,6 +139,8 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     benefits,
     features: featureList,
     githubUrl,
+    checkoutCta,
+    onCheckoutClick: handleHeroCheckoutClick,
   }), [
     product.title,
     product.name,
@@ -122,6 +155,8 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
     benefits,
     featureList,
     githubUrl,
+    checkoutCta,
+    handleHeroCheckoutClick,
   ])
 
   return (
@@ -133,10 +168,14 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
         originalPrice={originalPrice}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
-        mainImageSource={mainImageSource}
-        affiliateId={affiliateId}
+        mainImageSource={stickyImageSource}
         waitlistEnabled={waitlistEnabled}
         onWaitlistClick={handleWaitlistClick}
+        checkoutCta={checkoutCta}
+        onCheckoutClick={(event) => {
+          event.preventDefault()
+          handleStickyBarCheckoutClick()
+        }}
       />
 
       <div className="container mx-auto px-4 py-8">
@@ -148,6 +187,7 @@ export function EcommerceLayout({ product }: EcommerceLayoutProps) {
           onSelectImage={setSelectedImageIndex}
           brandLogoPath={brandLogoPath}
           infoProps={infoSectionProps}
+          hideMedia={waitlistEnabled}
         />
       </div>
 

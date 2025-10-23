@@ -13,10 +13,10 @@ import {
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-import { processCheckoutSession, processGhlPayment, processPaypalOrder } from "./actions";
+import { processCheckoutSession, processGhlPayment } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
 
-type CheckoutVariant = "stripe" | "paypal" | "ghl" | "external";
+type CheckoutVariant = "stripe" | "ghl" | "external";
 
 type CtaDefinition = {
   label: string;
@@ -60,15 +60,6 @@ const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
     title: "Thank you for your purchase!",
     description:
       "Your order is confirmed. We’ve sent a receipt and verification email to the address you used at checkout. It should arrive shortly.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  paypal: {
-    title: "Thank you for your purchase!",
-    description:
-      "Your PayPal order is confirmed. We’ve sent the receipt and login instructions to the email connected to your PayPal account.",
     ctas: [
       { label: "Open Your Account", href: "/account" },
       { label: "Need Help?", href: "/support", variant: "outline" },
@@ -139,10 +130,22 @@ const WHITELIST_GUIDES: WhitelistGuide[] = [
   },
 ];
 
-function getVariant(sessionId: string | null, source: string | null, paypalOrderId: string | null): CheckoutVariant {
+function resolveVariant({
+  provider,
+  sessionId,
+  source,
+}: {
+  provider: string | null;
+  sessionId: string | null;
+  source: string | null;
+}): CheckoutVariant {
+  const normalizedProvider = provider?.toLowerCase().trim();
+
+  if (normalizedProvider === "stripe") return "stripe";
+  if (normalizedProvider === "ghl") return "ghl";
+
   if (sessionId) return "stripe";
-  if (!sessionId && source && source.startsWith("ghl")) return "ghl";
-  if (!sessionId && source === "paypal" && paypalOrderId) return "paypal";
+  if (source && source.startsWith("ghl")) return "ghl";
   return "external";
 }
 
@@ -219,18 +222,25 @@ export function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const source = searchParams.get("source");
-  const paypalOrderId = searchParams.get("order_id");
+  const providerParam = searchParams.get("provider");
+  const paymentLinkIdParam = searchParams.get("payment_link_id");
   const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
   const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
+  const slugParam = searchParams.get("slug");
 
-  const variant = useMemo<CheckoutVariant>(() => getVariant(sessionId, source, paypalOrderId), [sessionId, source, paypalOrderId]);
+  const variant = useMemo<CheckoutVariant>(
+    () =>
+      resolveVariant({
+        provider: providerParam,
+        sessionId,
+        source,
+      }),
+    [providerParam, sessionId, source],
+  );
 
   const [processing, setProcessing] = useState(() => {
     if (variant === "stripe") {
       return Boolean(sessionId);
-    }
-    if (variant === "paypal") {
-      return Boolean(paypalOrderId);
     }
     if (variant === "ghl") {
       return true;
@@ -240,6 +250,8 @@ export function SuccessContent() {
   const [error, setError] = useState<string | null>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
+  const [paymentLinkId, setPaymentLinkId] = useState<string | null>(paymentLinkIdParam);
+  const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
   useEffect(() => {
@@ -271,7 +283,17 @@ export function SuccessContent() {
           items: conversionItems,
           coupon: result.order.coupon ?? undefined,
           affiliateId: result.order.affiliateId ?? undefined,
+          paymentLinkId: result.order.paymentLinkId ?? null,
+          productSlug: result.order.productSlug ?? null,
         });
+
+        if (result.order.paymentLinkId) {
+          setPaymentLinkId(result.order.paymentLinkId);
+        }
+
+        if (result.order.productSlug) {
+          setProductSlug(result.order.productSlug);
+        }
       }
     };
 
@@ -315,30 +337,44 @@ export function SuccessContent() {
       };
     }
 
-    if (variant === "paypal" && paypalOrderId) {
-      setProcessing(true);
-      processPaypalOrder({ orderId: paypalOrderId })
-        .then(applyOrderResult)
-        .catch(handleError)
-        .finally(() => {
-          if (!cancelled) {
-            setProcessing(false);
-          }
-        });
-
-      return () => {
-        cancelled = true;
-      };
-    }
-
     setProcessing(false);
 
     return () => {
       cancelled = true;
     };
-  }, [variant, sessionId, paypalOrderId, ghlPaymentId, ghlProductSlug]);
+  }, [variant, sessionId, ghlPaymentId, ghlProductSlug]);
 
-  const orderReference = sessionId ?? paypalOrderId ?? ghlPaymentId ?? undefined;
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    let mutated = false;
+
+    if (paymentLinkId && url.searchParams.get("payment_link_id") !== paymentLinkId) {
+      url.searchParams.set("payment_link_id", paymentLinkId);
+      mutated = true;
+    }
+
+    if (productSlug && url.searchParams.get("slug") !== productSlug) {
+      url.searchParams.set("slug", productSlug);
+      mutated = true;
+    }
+
+    const providerValue = providerParam ?? variant;
+    if (providerValue && url.searchParams.get("provider") !== providerValue) {
+      url.searchParams.set("provider", providerValue);
+      mutated = true;
+    }
+
+    if (mutated) {
+      const search = url.searchParams.toString();
+      const nextUrl = search ? `${url.pathname}?${search}` : url.pathname;
+      window.history.replaceState({}, "", nextUrl);
+    }
+  }, [paymentLinkId, productSlug, providerParam, variant]);
+
   const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
@@ -355,7 +391,13 @@ export function SuccessContent() {
     return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
   }, []);
 
-  const resolvedSessionId = sessionId ?? orderDetails?.sessionId ?? paypalOrderId ?? null;
+  const resolvedSessionId =
+    orderDetails?.sessionId ??
+    sessionId ??
+    ghlPaymentId ??
+    paymentLinkId ??
+    null;
+  const analyticsProvider = providerParam ?? variant;
 
   useEffect(() => {
     if (successVideo.kind === "youtube") {
@@ -367,7 +409,12 @@ export function SuccessContent() {
 
   return (
     <div className="bg-background py-12">
-      <ConversionTracking sessionId={resolvedSessionId} order={orderDetails} provider={variant} />
+      <ConversionTracking
+        sessionId={resolvedSessionId}
+        paymentLinkId={paymentLinkId ?? orderDetails?.paymentLinkId ?? null}
+        order={orderDetails}
+        provider={analyticsProvider}
+      />
       <div className="container mx-auto flex max-w-4xl flex-col gap-10 px-4">
         <section className="space-y-6">
           {processing && (
@@ -390,14 +437,6 @@ export function SuccessContent() {
               <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{heroCopy.title}</h1>
               <p className="text-base text-muted-foreground">{heroCopy.description}</p>
             </div>
-
-            {orderReference && (
-              <div className="mx-auto w-full max-w-md rounded-lg border border-dashed border-border bg-muted/40 px-4 py-3 text-left">
-                <p className="text-xs uppercase tracking-wide text-muted-foreground">Order reference</p>
-                <p className="mt-1 break-all font-mono text-sm text-foreground">{orderReference}</p>
-              </div>
-            )}
-
             <div className="mx-auto w-full max-w-3xl">
               {successVideo.kind === "youtube" ? (
                 isVideoActive ? (

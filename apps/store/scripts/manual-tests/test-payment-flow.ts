@@ -20,13 +20,7 @@ const requiredEnvVars: Record<string, EnvCheck[]> = {
     ['STRIPE_WEBHOOK_SECRET_TEST', 'STRIPE_WEBHOOK_SECRET'],
     ['STRIPE_WEBHOOK_SECRET_LIVE', 'STRIPE_WEBHOOK_SECRET'],
     ['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY'],
-    ['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY'],
-    'NEXT_PUBLIC_CHECKOUT_URL'
-  ],
-  paypal: [
-    'PAYPAL_CLIENT_ID',
-    'PAYPAL_CLIENT_SECRET',
-    'NEXT_PUBLIC_PAYPAL_CLIENT_ID'
+    ['NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE', 'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY']
   ],
   ghl: [
     'GHL_PAT_LOCATION',
@@ -148,72 +142,6 @@ try {
   console.log('  ⚠️  Could not check GHL sync:', (error as Error).message);
 }
 
-// Test 6: Create Test Checkout Session
-console.log('\n6️⃣ Testing Stripe Checkout Creation...');
-try {
-  const response = await fetch('http://localhost:3000/api/checkout/session', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      offerId: 'loom-video-downloader',
-      quantity: 1,
-      metadata: {
-        test: 'true',
-        source: 'test-script'
-      }
-    })
-  });
-
-  if (response.ok) {
-    const data = (await response.json()) as { url?: string };
-    console.log('  ✅ Stripe checkout session created successfully');
-    if (typeof data.url === 'string') {
-      console.log(`  🔗 Checkout URL: ${data.url.substring(0, 50)}...`);
-    }
-  } else {
-    console.log(`  ❌ Failed to create checkout session: ${response.status}`);
-    const error = await response.text();
-    console.log(`     Error: ${error}`);
-  }
-} catch (error) {
-  const message = error instanceof Error ? error.message : String(error);
-  console.log('  ❌ Could not reach checkout API:', message);
-}
-
-// Test 7: Test PayPal Order Creation
-console.log('\n7️⃣ Testing PayPal Order Creation...');
-try {
-  const response = await fetch('http://localhost:3000/api/paypal/create-order', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      offerId: 'loom-video-downloader',
-      quantity: 1
-    })
-  });
-
-  if (response.ok) {
-    const data = (await response.json()) as { orderId: string; links?: Array<{ rel: string; href: string }> };
-    console.log('  ✅ PayPal order created successfully');
-    console.log(`  🆔 Order ID: ${data.orderId}`);
-    const approveLink = data.links?.find((link) => link.rel === 'approve');
-    if (approveLink) {
-      console.log(`  🔗 Approval URL: ${approveLink.href.substring(0, 50)}...`);
-    }
-  } else {
-    const errorText = await response.text();
-    if (errorText.includes('not configured')) {
-      console.log('  ⚠️  PayPal not configured (check credentials)');
-    } else {
-      console.log(`  ❌ Failed to create PayPal order: ${response.status}`);
-      console.log(`     Error: ${errorText}`);
-    }
-  }
-} catch (error) {
-  const message = error instanceof Error ? error.message : String(error);
-  console.log('  ❌ Could not reach PayPal API:', message);
-}
-
 // Summary
 console.log('\n' + '='.repeat(50));
 console.log('📊 TEST SUMMARY\n');
@@ -223,10 +151,9 @@ if (allConfigured) {
   console.log('✅ Ready for testing!\n');
   console.log('📝 Next Steps:');
   console.log('1. Make a test purchase with Stripe (use card 4242 4242 4242 4242)');
-  console.log('2. Make a test purchase with PayPal sandbox account');
-  console.log('3. Check the Stripe Dashboard for webhook events');
-  console.log('4. Verify GHL contact was created/updated');
-  console.log('5. Run this script again to see the orders in the database');
+  console.log('2. Check the Stripe Dashboard for webhook events');
+  console.log('3. Verify GHL contact was created/updated');
+  console.log('4. Run this script again to see the orders in the database');
 } else {
   console.log('❌ Some configuration is missing');
   console.log('Please check the missing environment variables above');
@@ -234,7 +161,6 @@ if (allConfigured) {
 
 console.log('\n🔗 Useful Links:');
 console.log('- Stripe Test Dashboard: https://dashboard.stripe.com/test/payments');
-console.log('- PayPal Sandbox: https://developer.paypal.com/dashboard/sandbox');
 console.log('- Product Page: http://localhost:3000/loom-video-downloader');
 
 process.exit(0);

@@ -69,7 +69,7 @@ curl -I https://your-domain.com/api/health
 - Proper log levels (debug, info, warn, error)
 
 **Files Modified:**
-- `apps/store/app/api/checkout/session/route.ts`
+- (Legacy) `apps/store/app/api/checkout/session/route.ts` — removed once Stripe Payment Links replaced the API.
 - `apps/store/app/api/paypal/webhook/route.ts`
 
 ### 4. No Environment Variable Validation (MEDIUM PRIORITY) ✅
@@ -89,14 +89,12 @@ curl -I https://your-domain.com/api/health
 ### 5. Rate Limiting Vulnerability (MEDIUM PRIORITY) ✅
 **Impact:** In-memory rate limiting resets on server restart and doesn't work across multiple instances in production.
 
-**Current State:** Working for single instance  
-**Recommendation:** Upgrade to Redis-based rate limiting (documented)
+**Current State:** Legacy in-memory helper removed during Payment Link migration; no application-level limiter is active today.  
+**Recommendation:** Reintroduce a Redis-backed limiter (see implementation guide) before exposing new write endpoints.
 
-**Files Reviewed:**
-- `apps/store/lib/rate-limit.ts`
+**Files Reviewed:** _n/a – legacy module deleted (`apps/store/lib/rate-limit.ts`)._
 
-**Tests Added:**
-- `apps/store/tests/security/rate-limiting.test.ts` (8 tests, all passing)
+**Tests Added:** _Legacy rate-limiting suite was removed in the same cleanup; add new coverage alongside the Redis implementation._
 
 ### 6. Missing Request Validation (MEDIUM PRIORITY) ✅
 **Impact:** No payload size limits could allow memory exhaustion attacks.

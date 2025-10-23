@@ -8,7 +8,7 @@ This documents how to launch the new Stripe-powered store alongside the existing
    - Add a CNAME record pointing the subdomain at the hosting provider (Vercel/Netlify/Render).
 
 2. **Deploy the lander template** (the dynamic version, not the static export) to the staging host.
-   - Ensure the project has the API routes `/api/checkout/session` and `/api/stripe/webhook` enabled.
+   - Ensure the project exposes `/api/stripe/webhook` (for Stripe Payment Links) and `/api/paypal/*` routes if PayPal is enabled.
    - Use Stripe **test** keys (`STRIPE_SECRET_KEY_TEST`, `STRIPE_PUBLISHABLE_KEY_TEST`) and dedicated `STRIPE_WEBHOOK_SECRET_TEST`.
    - Set GHL env vars to a staging location or a low-risk production location with test tags.
    - Configure `OPS_ALERT_WEBHOOK_URL` so Slack alerts fire during testing.
@@ -51,7 +51,7 @@ This documents how to launch the new Stripe-powered store alongside the existing
 
 ## Supporting scripts
 
-- **Main store** – deploy `@apps/store` (without `STATIC_EXPORT`) to the staging/promotion host. The HERO CTA now scrolls to `#pricing` and the pricing CTA hits the hosted checkout API.
+- **Main store** – deploy `@apps/store` (without `STATIC_EXPORT`) to the staging/promotion host. The HERO CTA now scrolls to `#pricing` and the pricing CTA opens the configured Stripe or GHL Payment Link in a new tab.
 
 ## Rollback plan
 

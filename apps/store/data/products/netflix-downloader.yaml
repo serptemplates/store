@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/netflix-downloader/
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=netflix-downloader
+payment_link:
+  live_url: https://buy.stripe.com/9B6dR176we4K4yT1Or0VO0I
+  test_url: https://buy.stripe.com/test_28EcMXgH61hYaXhgJl0VO0J
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/netflix-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/netflix-downloader/main/images/netflix-downloader.gif
@@ -61,9 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Netflix downloader?
   answer: Install the browser extension, navigate to Netflix, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useMemo } from "react"
-import type { Route } from "next"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 import { AboutSection } from "@repo/ui/sections/AboutSection"
 import { FeaturesSection } from "@repo/ui/sections/FeaturesSection"
@@ -13,17 +11,15 @@ import { SocialProofScreenshots } from "@repo/ui/sections/SocialProofScreenshots
 import { teamMembers } from "@/data/team"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
-
-// Removed: PayPalCheckoutButton - now using unified checkout page
 import { ProductMediaGallery } from "@/components/product/ProductMediaGallery"
 import { FaqSection } from "@repo/ui/sections/FaqSection"
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
-// Removed: useCheckoutRedirect - now using direct link to unified checkout page
 import { getBrandLogoPath } from "@/lib/products/brand-logos"
 import type { BlogPostMeta } from "@/lib/blog"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
+import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta"
 import type { ProductData } from "@/lib/products/product-schema"
 import { getReleaseBadgeText, isPreRelease } from "@/lib/products/release-status"
 import type { SiteConfig } from "@/lib/site-config"
@@ -44,7 +40,6 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [showWaitlistModal, setShowWaitlistModal] = useState(false)
-  const router = useRouter()
   const productIsPreRelease = isPreRelease(product)
   const releaseBadgeText = getReleaseBadgeText(product).replace("-", " ")
 
@@ -71,6 +66,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
   const handle = product.slug
   const brandLogoPath = getBrandLogoPath(handle)
   const mainImageSource = brandLogoPath || product.featured_image
+  const stickyImageSource = productIsPreRelease ? null : mainImageSource
 
   const allImages = useMemo(
     () =>
@@ -83,12 +79,43 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
     [mainImageSource, product.screenshots],
   )
 
+  const showMediaGallery = !productIsPreRelease && allImages.length > 0
+
   const { affiliateId } = useAffiliateTracking()
 
-  const handleCheckout = useCallback(() => {
-    const checkoutUrl = `/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`
-    router.push(checkoutUrl as Route)
-  }, [product.slug, affiliateId, router])
+  const {
+    cta: resolvedCta,
+    handleCtaClick: triggerCtaClick,
+  } = useProductCheckoutCta({
+    product,
+    homeCta: {
+      cta: homeProps.cta,
+      ctaMode: homeProps.ctaMode,
+      ctaHref: homeProps.ctaHref,
+      ctaText: homeProps.ctaText,
+      ctaTarget: homeProps.ctaTarget,
+      ctaRel: homeProps.ctaRel,
+      ctaOpensInNewTab: homeProps.ctaOpensInNewTab,
+    },
+    affiliateId,
+    onShowWaitlist: () => setShowWaitlistModal(true),
+  })
+
+  const shouldOpenInNewTab = resolvedCta.opensInNewTab
+  const resolvedCtaHref = resolvedCta.href
+  const resolvedCtaRel = resolvedCta.rel
+
+  const handleHeroCtaClick = useCallback(() => {
+    triggerCtaClick("hero")
+  }, [triggerCtaClick])
+
+  const handlePricingCtaClick = useCallback(() => {
+    triggerCtaClick("pricing")
+  }, [triggerCtaClick])
+
+  const handleStickyBarCheckoutClick = useCallback(() => {
+    triggerCtaClick("sticky_bar")
+  }, [triggerCtaClick])
 
   const handleWaitlistClick = useCallback(() => {
     setShowWaitlistModal(true)
@@ -134,23 +161,29 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         originalPrice={price?.original_price ?? null}
         show={showStickyBar}
         brandLogoPath={brandLogoPath}
-        mainImageSource={mainImageSource}
-        affiliateId={affiliateId}
+        mainImageSource={stickyImageSource}
         waitlistEnabled={productIsPreRelease}
         onWaitlistClick={handleWaitlistClick}
+        checkoutCta={productIsPreRelease ? null : resolvedCta}
+        onCheckoutClick={(event) => {
+          event.preventDefault()
+          handleStickyBarCheckoutClick()
+        }}
       />
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div>
-            <ProductMediaGallery
-              images={allImages}
-              selectedIndex={selectedImageIndex}
-              onSelect={setSelectedImageIndex}
-              productName={product.name}
-              brandLogoPath={brandLogoPath}
-            />
-          </div>
+        <div className={`grid gap-8 ${showMediaGallery ? "lg:grid-cols-2" : ""}`}>
+          {showMediaGallery && (
+            <div>
+              <ProductMediaGallery
+                images={allImages}
+                selectedIndex={selectedImageIndex}
+                onSelect={setSelectedImageIndex}
+                productName={product.name}
+                brandLogoPath={brandLogoPath}
+              />
+            </div>
+          )}
 
           <div>
             <nav className="text-sm mb-4">
@@ -240,12 +273,22 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
                   Get Notified
                 </button>
               ) : (
-                <Link
-                  href={`/checkout?product=${product.slug}${affiliateId ? `&aff=${affiliateId}` : ''}`}
-                  className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition inline-block text-center"
+                <a
+                  href={resolvedCtaHref}
+                  target={shouldOpenInNewTab ? "_blank" : "_self"}
+                  rel={
+                    shouldOpenInNewTab
+                      ? resolvedCtaRel ?? "noopener noreferrer"
+                      : resolvedCtaRel ?? undefined
+                  }
+                  className="inline-block w-full rounded-lg bg-blue-600 px-8 py-3 text-center font-semibold text-white transition hover:bg-blue-700"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    handleHeroCtaClick()
+                  }}
                 >
                   {price?.cta_text || "Proceed to Checkout"}
-                </Link>
+                </a>
               )}
               <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition w-full">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,7 +377,7 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         {homeProps.pricing && (
           <PricingCta
             {...homeProps.pricing}
-            onCtaClick={productIsPreRelease ? handleWaitlistClick : handleCheckout}
+            onCtaClick={handlePricingCtaClick}
             ctaLoading={false}
             ctaDisabled={false}
           />

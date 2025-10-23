@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/xvideos-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9862613b1b6817ce7b4c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=xvideos-downloader
+payment_link:
+  live_url: https://buy.stripe.com/aFa14ffD23q6aXh3Wz0VO1r
+  test_url: https://buy.stripe.com/test_5kQdR176w0dU5CX3Wz0VO1u
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif
@@ -61,7 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the XVideos downloader?
   answer: Install the browser extension, navigate to XVideos, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

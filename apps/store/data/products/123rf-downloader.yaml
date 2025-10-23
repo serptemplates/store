@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/123rf-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68dfb074219709c521e2638c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=123rf-downloader
+payment_link:
+  live_url: https://buy.stripe.com/8x29ALaiId0Ge9t9gT0VO02
+  test_url: https://buy.stripe.com/test_28EbITfD22m23uPbp10VO01
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123rf-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/123rf-downloader/main/images/featured.gif
@@ -61,9 +65,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the 123rf downloader?
   answer: Install the browser extension, navigate to 123rf, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

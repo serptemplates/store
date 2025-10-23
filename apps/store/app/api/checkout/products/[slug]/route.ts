@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getProductData } from "@/lib/products/product";
-import { resolveOrderBump } from "@/lib/products/order-bump";
 
 function parsePrice(value?: string | null): number | undefined {
   if (!value) return undefined;
@@ -23,22 +22,6 @@ function formatPriceDisplay(value?: string | null, fallback?: number): string {
     return `$${fallback.toFixed(2)}`;
   }
   return "$0.00";
-}
-
-function normalizePoints(list?: unknown): string[] {
-  if (!Array.isArray(list)) {
-    return [];
-  }
-
-  return list
-    .map((entry) => {
-      if (typeof entry === "string") {
-        const trimmed = entry.trim();
-        return trimmed.length > 0 ? trimmed : null;
-      }
-      return null;
-    })
-    .filter((entry): entry is string => Boolean(entry));
 }
 
 export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
@@ -71,29 +54,6 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     : undefined;
   const currency = priceEntry?.currency ?? product.pricing?.currency ?? "USD";
 
-  const resolvedOrderBump = resolveOrderBump(product);
-  const orderBump = resolvedOrderBump
-    ? (() => {
-        const bumpPriceNumber =
-          typeof resolvedOrderBump.priceNumber === "number"
-            ? resolvedOrderBump.priceNumber
-            : parsePrice(resolvedOrderBump.price) ?? 0;
-
-        return {
-          id: resolvedOrderBump.id,
-          title: resolvedOrderBump.title,
-          description: resolvedOrderBump.description ?? undefined,
-          price: bumpPriceNumber,
-          priceDisplay: formatPriceDisplay(resolvedOrderBump.price, bumpPriceNumber),
-          defaultSelected: resolvedOrderBump.defaultSelected,
-          points: normalizePoints(resolvedOrderBump.points),
-          stripePriceId: resolvedOrderBump.stripePriceId,
-          stripeTestPriceId: resolvedOrderBump.stripeTestPriceId ?? undefined,
-          terms: resolvedOrderBump.terms ?? undefined,
-        };
-      })()
-    : undefined;
-
   return NextResponse.json({
     slug: product.slug,
     name: product.name,
@@ -104,6 +64,5 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     originalPriceDisplay,
     currency,
     note: product.pricing?.note ?? undefined,
-    orderBump,
   });
 }

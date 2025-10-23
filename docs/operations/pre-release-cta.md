@@ -11,24 +11,19 @@ This branch introduces a schema-level toggle so pre-release products can share a
 ## Editing Product YAML
 
 1. **Mark the product pre-release**
-   - Set `status: pre_release`, or set `cta_mode: pre_release` if you need to preserve a different status badge.
+   - Set the product `status: pre_release` so the storefront routes visitors to the waitlist modal instead of a payment link.
 2. **Optional overrides**
    - `waitlist_url`: provide a custom fallback URL (used if the modal cannot render). Most products can omit this.
    - `pricing.cta_text`: provide custom button copy (use sparingly; “Get Notified” is the standard).
 3. **Returning to checkout**
-   - Remove the explicit `cta_mode` and change `status` to `live`, or set `cta_mode: checkout` for early access launches.
+   - Change the product `status` back to `live` when you are ready to sell, and configure the appropriate `payment_link`.
 
-## Embedded Checkout Usage
+## Hosted Checkout Usage
 
-Most live products link directly to GoHighLevel payment pages. As of this change, only the following products use the embedded Stripe checkout at `/checkout`:
-
-- `ai-voice-cloner-app`
-- `stocksy-downloader`
-
-Keep this in mind when validating checkout regression fixes—the embedded flow still exists but is limited to those SKUs.
+Any product with `status: pre_release` automatically routes visitors to the waitlist CTA. Production launches must provide a `payment_link` (Stripe or GHL) so the storefront directs the shopper straight to the correct checkout destination.
 
 ## QA Checklist
 
 - Confirm all CTA variants on the product page display **Get Notified**, open the GoHighLevel modal, and successfully load the embedded form.
 - Inspect DevTools → Network while triggering the modal and verify `product_checkout_clicked` reports `destination: "waitlist"`.
-- Switch the product back to `live` (or `cta_mode: checkout`) and confirm the landing page reverts to the checkout CTA with in-tab navigation.
+- Switch the product back to `live` and confirm the landing page routes to the configured payment link with in-tab navigation.

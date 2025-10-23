@@ -3,7 +3,7 @@ import { captureServerEvent } from "./posthog-server";
 type Primitive = string | number | boolean | null;
 
 type CheckoutCompletedEvent = {
-  provider: "stripe" | "paypal";
+  provider: "stripe";
   amountTotalCents?: number | null;
   currency?: string | null;
   offerId?: string | null;
@@ -12,7 +12,6 @@ type CheckoutCompletedEvent = {
   checkoutSessionId?: string | null;
   stripeSessionId?: string | null;
   stripePaymentIntentId?: string | null;
-  paypalOrderId?: string | null;
   paymentMethod?: string | null;
   customerEmail?: string | null;
   customerName?: string | null;
@@ -60,7 +59,6 @@ export function trackCheckoutCompleted(event: CheckoutCompletedEvent): void {
     checkoutSessionId,
     stripeSessionId,
     stripePaymentIntentId,
-    paypalOrderId,
     paymentMethod,
     customerEmail,
     customerName,
@@ -71,7 +69,6 @@ export function trackCheckoutCompleted(event: CheckoutCompletedEvent): void {
   const distinctId =
     customerEmail ??
     stripeSessionId ??
-    paypalOrderId ??
     checkoutSessionId ??
     `anonymous-${provider}`;
 
@@ -92,7 +89,6 @@ export function trackCheckoutCompleted(event: CheckoutCompletedEvent): void {
       checkout_session_id: checkoutSessionId ?? null,
       stripe_session_id: stripeSessionId ?? null,
       stripe_payment_intent_id: stripePaymentIntentId ?? null,
-      paypal_order_id: paypalOrderId ?? null,
       payment_method: paymentMethod ?? null,
       customer_email: customerEmail ?? null,
       customer_name: customerName ?? null,

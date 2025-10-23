@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/circle-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68dfb14367ee3b6953699836
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=circle-downloader
+payment_link:
+  live_url: https://buy.stripe.com/28EaEPcqQ5ye3uP3Wz0VO0c
+  test_url: https://buy.stripe.com/test_bJe8wHduU1hY4yT8cP0VO0d
+
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/circle-downloader/main/images/featured.gif
@@ -53,7 +57,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump: serp-downloaders-bundle
 faqs:
 - question: How do I use the Circle downloader?
   answer: Install the browser extension, navigate to Circle, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 
 import { format } from "date-fns";
 import { ArrowRight, Calendar, Clock, FileText, User } from "lucide-react";
@@ -7,23 +8,32 @@ import { ArrowRight, Calendar, Clock, FileText, User } from "lucide-react";
 import { getAllPosts } from "@/lib/blog";
 import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
+import { getSiteBaseUrl } from "@/lib/urls";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
+import { buildBlogListSchema } from "./schema";
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();
   const siteConfig = getSiteConfig();
   const products = getAllProducts();
+  const baseUrl = getSiteBaseUrl();
 
   const siteName = siteConfig.site?.name ?? "SERP Downloaders";
   const navProps = buildPrimaryNavProps({ products, siteConfig });
+  const listSchema = buildBlogListSchema(posts, siteName, baseUrl);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <Script
+        id="blog-index-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }}
+      />
       <PrimaryNavbar {...navProps} />
 
       <main className="flex-1 bg-background">

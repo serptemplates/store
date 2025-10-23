@@ -8,7 +8,17 @@ import { getOptionalStripeWebhookSecret } from "@/lib/payments/stripe-environmen
 import logger from "@/lib/logger";
 import { handleStripeEvent } from "@/lib/payments/stripe-webhook";
 
-const webhookSecret = getOptionalStripeWebhookSecret();
+const primarySecret = getOptionalStripeWebhookSecret();
+const liveSecret = getOptionalStripeWebhookSecret("live");
+const testSecret = getOptionalStripeWebhookSecret("test");
+
+const webhookSecrets = Array.from(
+  new Set(
+    [primarySecret, liveSecret, testSecret].filter(
+      (value): value is string => Boolean(value),
+    ),
+  ),
+);
 
 function jsonResponse(body: Record<string, unknown>, status = 200) {
   return NextResponse.json(body, { status });
@@ -17,7 +27,7 @@ function jsonResponse(body: Record<string, unknown>, status = 200) {
 export async function POST(req: NextRequest) {
   const stripe = getStripeClient();
 
-  if (!webhookSecret) {
+  if (webhookSecrets.length === 0) {
     return jsonResponse({ error: "Stripe webhook secret not configured" }, 500);
   }
 
@@ -29,24 +39,35 @@ export async function POST(req: NextRequest) {
 
   const rawBody = await req.text();
 
-  let event: Stripe.Event;
+  let event: Stripe.Event | null = null;
 
-  try {
-    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-  } catch (error) {
+  let lastError: unknown;
+
+  for (const secret of webhookSecrets) {
+    try {
+      event = stripe.webhooks.constructEvent(rawBody, signature, secret);
+      break;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  if (!event) {
     const message =
-      error && typeof error === "object" && "message" in error
-        ? String(error.message)
+      lastError && typeof lastError === "object" && "message" in lastError
+        ? String(lastError.message)
         : "Unable to construct Stripe event";
     return jsonResponse({ error: message }, 400);
   }
 
+  const resolvedEvent = event;
+
   try {
-    await handleStripeEvent(event);
+    await handleStripeEvent(resolvedEvent);
   } catch (error) {
     logger.error("webhook.event_processing_failed", {
-      eventId: event.id,
-      type: event.type,
+      eventId: resolvedEvent.id,
+      type: resolvedEvent.type,
       error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
     });
     return jsonResponse({ error: "Failed to process event" }, 500);

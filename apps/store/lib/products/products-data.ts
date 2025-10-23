@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import yaml from 'yaml'
 import type { ReleaseStatus } from './release-status'
+import { normalizeProductAssetPath } from './asset-paths'
 
 export interface ProductMetadata {
   platform?: string;
@@ -12,21 +13,7 @@ export interface ProductMetadata {
   original_price?: string;
   benefits?: string[];
   features?: string[];
-  order_bump?: ProductOrderBumpMetadata;
   [key: string]: unknown;
-}
-
-export interface ProductOrderBumpMetadata {
-  slug: string;
-  product_slug?: string;
-  title?: string;
-  description?: string;
-  price?: string;
-  features?: string[];
-  image?: string;
-  default_selected?: boolean;
-  stripe_price_id?: string;
-  stripe_test_price_id?: string;
 }
 
 export interface Product {
@@ -50,7 +37,6 @@ export interface Product {
   }>
   metadata?: ProductMetadata
   collection?: string
-  order_bump?: ProductOrderBumpMetadata
 }
 
 // Load products from YAML files
@@ -79,42 +65,20 @@ export async function getProducts(): Promise<Product[]> {
     const releaseStatus: ReleaseStatus = data.status ?? 'draft'
     const isPreRelease = releaseStatus === 'pre_release'
 
-    const rawOrderBump = data.order_bump;
-    const orderBump = rawOrderBump
-      ? typeof rawOrderBump === "string"
-        ? {
-            slug: rawOrderBump,
-          }
-        : {
-            slug:
-              typeof rawOrderBump.slug === "string" && rawOrderBump.slug.trim().length > 0
-                ? rawOrderBump.slug.trim()
-                : typeof rawOrderBump.product_slug === "string" && rawOrderBump.product_slug.trim().length > 0
-                ? rawOrderBump.product_slug.trim()
-                : data.slug,
-            product_slug: rawOrderBump.product_slug,
-            title: rawOrderBump.title,
-            description: rawOrderBump.description,
-            price: rawOrderBump.price,
-            features: Array.isArray(rawOrderBump.features) ? rawOrderBump.features : undefined,
-            image: rawOrderBump.image,
-            default_selected: Boolean(rawOrderBump.default_selected),
-            stripe_price_id: rawOrderBump.stripe?.price_id,
-            stripe_test_price_id: rawOrderBump.stripe?.test_price_id,
-          }
-      : undefined;
+    const normalizedFeaturedImage = normalizeProductAssetPath(data.featured_image) ?? undefined
+    const normalizedFeaturedGif = normalizeProductAssetPath(data.featured_image_gif) ?? undefined
 
     const product: Product = {
       id: data.slug,
       title: data.name,
       handle: data.slug,
       description: data.tagline,
-      thumbnail: data.featured_image,
-      images: data.featured_image_gif ? [
-        { url: data.featured_image },
-        { url: data.featured_image_gif }
-      ] : data.featured_image ? [
-        { url: data.featured_image }
+      thumbnail: normalizedFeaturedImage,
+      images: normalizedFeaturedGif ? [
+        { url: normalizedFeaturedImage ?? normalizedFeaturedGif },
+        { url: normalizedFeaturedGif }
+      ] : normalizedFeaturedImage ? [
+        { url: normalizedFeaturedImage }
       ] : [],
       collection,
       status: releaseStatus,
@@ -138,9 +102,7 @@ export async function getProducts(): Promise<Product[]> {
         original_price: data.pricing?.original_price,
         benefits: data.pricing?.benefits,
         features: data.features,
-        order_bump: orderBump,
       },
-      order_bump: orderBump,
     }
 
     const activeBadges = [

@@ -16,6 +16,10 @@ serp_co_product_page_url: https://serp.co/products/podia-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e01294613b1b74e9ce7e7a
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=podia-downloader
+payment_link:
+  live_url: https://buy.stripe.com/4gMeV5eyYd0Ge9t1Or0VO00
+  test_url: https://buy.stripe.com/test_dRmfZ93Ukf8O2qL50D0VO0R
+
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/podia-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/podia-downloader/main/images/podia-downloader.gif
@@ -60,9 +64,6 @@ pricing:
   currency: USD
   availability: InStock
   benefits: []
-order_bump:
-  enabled: false
-
 faqs:
 - question: How do I use the Podia downloader?
   answer: Install the browser extension, navigate to Podia, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
