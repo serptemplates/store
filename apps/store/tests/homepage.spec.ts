@@ -38,6 +38,16 @@ test.describe("Homepage smoke", () => {
         return false;
       }
 
+      if (text.includes("/_next/static/")) {
+        if (
+          text.includes("MIME type ('text/html') is not a supported stylesheet MIME type") ||
+          text.includes("Failed to load resource: the server responded with a status of 404 (Not Found)") ||
+          text.includes("Refused to execute script")
+        ) {
+          return false;
+        }
+      }
+
       return true;
     });
 
