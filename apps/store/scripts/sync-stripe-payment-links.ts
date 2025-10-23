@@ -1,9 +1,7 @@
- #!/usr/bin/env tsx
-  /* eslint-disable no-console */
-
-  import fs from "node:fs";
-  import path from "node:path";
-  import process from "node:process";
+/* eslint-disable no-console */
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 
   import Stripe from "stripe";
   import dotenv from "dotenv";
