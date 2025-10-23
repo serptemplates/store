@@ -16,7 +16,7 @@ serp_co_product_page_url: https://serp.co/products/spankbang-video-downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df9a9567ee3be2e66997a7
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=spankbang-video-downloader
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
@@ -31,26 +31,24 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- High-quality videos in multiple resolutions
-- Batch processing for efficient bulk downloads
-- Auto thumbnail and preview image extraction
-- Resume downloads
-- Cross-platform support
-
-- Built-in privacy protection and secure downloading
-- Custom folder organization and naming schemes
-- Duplicate detection
-- Bandwidth-efficient downloads
-- Progress tracking
-- Integrates with popular media players
-- Regular compatibility updates
-- Local-only storage for privacy
-- Various video formats and codecs
-- Intelligent error handling and retry mechanisms
-- User-friendly interface with dark mode support
-- Secure download verification and file integrity
-- Multi-threaded downloading for optimal speeds
-- Comprehensive logging and debugging features
+- 100% privacy-friendly
+- Auto-detect videos on the page
+- Smart Page Scan
+- Embedded Video Support
+- Full HD Downloads
+- Lightning fast downloads
+- Original quality preserved (up to 4K)
+- No registration or personal data required
+- No watermarks or branding added
+- Zero Ads
+- Regular Updates
+- Thumbnail Preview
+- Minimal Permissions
+- Download Progress Bar
+- Chrome, Firefox, Edge
+- Download embedded videos
+- Zero data tracking
+- Ad-free experience
 pricing:
   label: One-time payment
   price: $17.00
@@ -67,7 +65,7 @@ faqs:
 - question: What quality options are available?
   answer: The downloader supports all available quality levels from SpankBang, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
 - question: Does this work with all SpankBang content?
-  answer: The downloader works with most publicly accessible content on SpankBang. Some restricted or DRM-protected content may not be downloadable.
+  answer: The downloader works with most publicly accessible content on SpankBang.
 - question: Will downloads continue if my internet connection drops?
   answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
 - question: Is there a download limit?
