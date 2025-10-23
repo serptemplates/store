@@ -4,6 +4,8 @@ Run with: python scripts/manual-tests/test_checkout_with_playwright.py
 """
 
 import asyncio
+from urllib.parse import urlparse
+
 from playwright.async_api import async_playwright
 
 async def test_checkout_flow():
@@ -45,7 +47,8 @@ async def test_checkout_flow():
             checkout_url = checkout_page.url
             print(f"   Checkout tab URL: {checkout_url}")
 
-            if "buy.stripe.com" in checkout_url:
+            parsed_url = urlparse(checkout_url)
+            if parsed_url.hostname == "buy.stripe.com":
                 print("   ✅ Stripe Payment Link opened in new tab")
             else:
                 print("   ❌ Unexpected checkout destination")

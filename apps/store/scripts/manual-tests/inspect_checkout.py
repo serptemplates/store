@@ -3,6 +3,8 @@
 Run with: python scripts/manual-tests/inspect_checkout.py
 """
 
+from urllib.parse import urlparse
+
 from playwright.sync_api import sync_playwright
 import time
 
@@ -29,7 +31,10 @@ def inspect_checkout_flow():
         # Capture network activity
         network_logs = []
         def log_request(request):
-            if 'stripe.com' in request.url or 'checkout' in request.url:
+            parsed = urlparse(request.url)
+            host = parsed.hostname or ""
+            is_stripe = host == "stripe.com" or host.endswith(".stripe.com")
+            if is_stripe or 'checkout' in request.url:
                 log_entry = f"[{request.method}] {request.url[:100]}"
                 network_logs.append(log_entry)
                 print(f"Network: {log_entry}")
@@ -82,7 +87,7 @@ def inspect_checkout_flow():
             checkout_page.screenshot(path="2-stripe-payment-link.png", full_page=True)
             print("   ✓ Screenshot saved: 2-stripe-payment-link.png")
 
-            if "buy.stripe.com" in checkout_url:
+            if urlparse(checkout_url).hostname == "buy.stripe.com":
                 print("   ✓ Confirmed Stripe Payment Link opened in new tab")
             else:
                 print("   ❌ Unexpected checkout URL (expected buy.stripe.com)")

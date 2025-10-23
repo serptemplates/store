@@ -33,6 +33,7 @@ describe("payment-link config helpers", () => {
       paymentLinkId: "plink_123",
       mode: "live",
       baseUrl: "https://apps.serp.co/checkout/success",
+      productName: "Rawpixel Downloader",
     });
 
     expect(payload.allow_promotion_codes).toBe(true);
@@ -49,6 +50,7 @@ describe("payment-link config helpers", () => {
       payment_link_mode: "live",
     });
     expect(payload.payment_intent_data?.metadata).toEqual(payload.metadata);
+    expect(payload.payment_intent_data?.description).toBe("SERP Apps - Rawpixel Downloader");
   });
 
   it("ensureTermsOfServiceRequired skips update when already enabled", async () => {

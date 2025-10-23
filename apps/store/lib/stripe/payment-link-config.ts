@@ -20,6 +20,7 @@ export interface PaymentLinkUpdateOptions extends MetadataOptions {
   paymentLinkId: string;
   mode: StripeMode;
   baseUrl: string;
+  productName?: string | null;
 }
 
 export interface TermsOfServiceResult {
@@ -77,6 +78,7 @@ export function buildPaymentLinkUpdatePayload({
   mode,
   baseUrl,
   source = DEFAULT_METADATA_SOURCE,
+  productName,
 }: PaymentLinkUpdateOptions): Stripe.PaymentLinkUpdateParams {
   const metadata = buildMetadata({ slug, ghlTag, stripeProductId, source });
   metadata.payment_link_mode = mode;
@@ -105,6 +107,9 @@ export function buildPaymentLinkUpdatePayload({
     metadata,
     payment_intent_data: {
       metadata,
+      description: productName
+        ? `SERP Apps - ${productName}`
+        : undefined,
     },
   };
 

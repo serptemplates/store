@@ -42,6 +42,7 @@ type PaymentLinkTarget = {
   normalizedUrl: string;
   ghlTag: string;
   stripeProductId: string | null;
+  productName: string | null;
 };
 
 function loadEnvFiles() {
@@ -131,6 +132,7 @@ function loadPaymentLinks(): PaymentLinkTarget[] {
       continue;
     }
     const stripeProductId = coerceString(data.stripe?.metadata?.stripe_product_id);
+    const productName = coerceString((data as Record<string, unknown>)?.name);
 
     const linkData = data.payment_link;
     if (!linkData || isNonEmptyString(linkData.ghl_url)) {
@@ -157,6 +159,7 @@ function loadPaymentLinks(): PaymentLinkTarget[] {
       normalizedUrl,
       ghlTag,
       stripeProductId,
+      productName: productName ?? slug,
     });
   }
 
@@ -213,6 +216,7 @@ async function syncPaymentLinks() {
         paymentLinkId: paymentLink.id,
         mode,
         baseUrl: SUCCESS_REDIRECT_BASE,
+        productName: link.productName,
       });
 
       await stripe.paymentLinks.update(paymentLink.id, updatePayload);

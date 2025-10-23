@@ -20,7 +20,7 @@ payment_link:
   live_url: https://buy.stripe.com/6oU9AL8aAbWC0iD50D0VO11
   test_url: https://buy.stripe.com/test_cNi7sD3Uk6Cic1l50D0VO13
 
-status: pre_release
+status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
