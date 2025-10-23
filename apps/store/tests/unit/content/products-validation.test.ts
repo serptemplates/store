@@ -2,12 +2,11 @@ import { describe, expect, it } from "vitest";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 
-const appRoot = path.resolve(__dirname, "..", "..");
-const scriptPath = path.join(appRoot, "scripts", "validate-product.mjs");
+const appRoot = path.resolve(__dirname, "../../..");
 
 describe("Content integrity", () => {
   it("matches product schema", () => {
-    const result = spawnSync("node", [scriptPath], {
+    const result = spawnSync("pnpm", ["exec", "tsx", "scripts/validate-products.ts"], {
       cwd: appRoot,
       encoding: "utf8",
       stdio: "pipe",

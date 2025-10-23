@@ -4,12 +4,14 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     include: [
-      "__tests__/**/*.test.ts?(x)",
-      "lib/**/*.test.ts?(x)",
-      "tests/**/*.test.ts?(x)",
+      "tests/unit/**/*.test.ts?(x)",
+      "tests/component/**/*.test.ts?(x)",
+      "tests/integration/**/*.test.ts?(x)",
+      "tests/manual/**/*.test.ts?(x)",
     ],
     exclude: [
       "tests/e2e/**",
+      "tests/**/staging/**",
     ],
     environment: "jsdom",
     reporters: "default",

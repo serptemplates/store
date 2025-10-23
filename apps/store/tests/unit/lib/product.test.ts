@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import path from "node:path";
 
-const fixturesRoot = path.resolve(__dirname, "..", "fixtures");
+const fixturesRoot = path.resolve(__dirname, "../../fixtures");
 
 async function loadProductModule() {
   return import("@/lib/products/product");

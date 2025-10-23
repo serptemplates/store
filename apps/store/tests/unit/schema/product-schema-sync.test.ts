@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { productSchema, productSchemaShape } from "@/lib/products/product-schema";
 
-const schemaPath = path.resolve(__dirname, "../../data/product.schema.json");
+const schemaPath = path.resolve(process.cwd(), "data/product.schema.json");
 const jsonSchema = JSON.parse(fs.readFileSync(schemaPath, "utf8")) as {
   properties: Record<string, unknown>;
   required?: string[];

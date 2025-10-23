@@ -17,15 +17,15 @@ import {
   extractGHLSyncMetadata,
   CheckoutSessionContract,
   OrderContract,
-} from './checkout.contract';
+} from "@/lib/contracts/checkout.contract";
 
 import {
   validateStripeCheckoutSession,
   validateStripePaymentIntent,
   validateStripeWebhookEvent,
   isStripeWebhookEvent,
-} from './webhook.contract';
-import type { StripeCheckoutSessionCompleted } from './webhook.contract';
+} from "@/lib/contracts/webhook.contract";
+import type { StripeCheckoutSessionCompleted } from "@/lib/contracts/webhook.contract";
 
 import {
   validateGHLConfig,
@@ -33,27 +33,27 @@ import {
   validateGHLSyncRequest,
   formatGHLCustomerName,
   buildOpportunityName,
-} from './ghl.contract';
+} from "@/lib/contracts/ghl.contract";
 
 import {
   validateDBInsertCheckoutSession,
   validateDBInsertOrder,
   dbToCamelCase,
   camelToSnakeCase,
-} from './database.contract';
+} from "@/lib/contracts/database.contract";
 
 import {
   validateStripePayment,
   validatePaymentTransition,
   formatMoney,
   PaymentStatusContract,
-} from './payment.contract';
+} from "@/lib/contracts/payment.contract";
 
 import {
   validateGA4Purchase,
   buildGA4PurchaseEvent,
   buildGTMPurchaseEvent,
-} from './analytics.contract';
+} from "@/lib/contracts/analytics.contract";
 
 import {
   PricingInvariantContract,
@@ -62,13 +62,13 @@ import {
   TimestampInvariantContract,
   validateRefundRequest,
   validateDiscountCode,
-} from './business-rules.contract';
+} from "@/lib/contracts/business-rules.contract";
 import {
   buildOrderFixture,
   buildStripeCheckoutSessionFixture,
   buildStripePaymentIntentFixture,
   buildStripeWebhookEventFixture,
-} from './test-fixtures';
+} from "@/lib/contracts/test-fixtures";
 
 describe('Critical Path: Checkout to Payment', () => {
   it('should validate complete checkout flow', () => {

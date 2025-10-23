@@ -12,4 +12,5 @@ export interface VideoListingItem {
   description: string;
   source: VideoSourceType;
   productName: string;
+  uploadDate?: string;
 }

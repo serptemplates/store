@@ -88,6 +88,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     dateModified: post.meta.dateModified ?? post.meta.date,
     author: {
       name: post.meta.author,
+      url: post.meta.authorUrl ?? undefined,
     },
     url: `https://apps.serp.co/blog/${slug}`,
     wordCount: post.content.split(' ').length,
