@@ -20,7 +20,17 @@ test.describe("Homepage smoke", () => {
       });
     });
 
+    // First navigation warms Next.js dev build (may emit transient 404s)
     await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(500);
+
+    // Reset collected console messages so we only evaluate the steady-state render
+    consoleMessages.length = 0;
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle");
+
     await expect(page.getByRole("link", { name: "SERP Apps" })).toBeVisible();
 
     // Filter out known third-party errors (Tawk.to, etc.)
