@@ -1,5 +1,15 @@
 ---
 slug: how-to-download-tiktok-videos-guide
+title: How to Download TikTok Videos
+seoTitle: How to Download TikTok Videos
+description: "**Platform**: TikTok (ByteDance)   **Primary Formats**: MP4
+  (H.264), WebM   **Content Types**: Short videos, live streams,
+  stories   **Video Specs**: Vertical (9:16), mobile-optimized"
+seoDescription: "**Platform**: TikTok (ByteDance)   **Primary Formats**: MP4
+  (H.264), WebM   **Content Types**: Short videos, live streams,
+  stories   **Video Specs**: Vertical (9:16), mobile-optimized"
+date: 2025-10-22T18:59:36.628Z
+author: Devin Schumacher
 ---
 
 # How to Download TikTok Videos

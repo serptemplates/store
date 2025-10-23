@@ -1,5 +1,15 @@
 ---
 slug: how-to-download-mp4-videos
+title: How to Download MP4 Videos
+seoTitle: How to Download MP4 Videos
+description: "**File Extensions**: `.mp4`, `.m4v`, `.m4a`   **MIME Types**:
+  `video/mp4`, `audio/mp4`   **Container**: Multimedia container   **Codecs**:
+  H.264, H.265, AAC, and many others"
+seoDescription: "**File Extensions**: `.mp4`, `.m4v`, `.m4a`   **MIME Types**:
+  `video/mp4`, `audio/mp4`   **Container**: Multimedia container   **Codecs**:
+  H.264, H.265, AAC, and many others"
+date: 2025-10-22T18:59:36.628Z
+author: Devin Schumacher
 ---
 
 # How to Download MP4 Videos

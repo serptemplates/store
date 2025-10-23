@@ -1,5 +1,11 @@
 ---
 slug: how-to-download-vimeo-videos-streaming-via-hls-streamlink
+title: How to download Vimeo Videos (streaming via HLS / streamlink)
+seoTitle: How to download Vimeo Videos (streaming via HLS / streamlink)
+description: Vimeo embeds on Skool are streaming via HLS.
+seoDescription: Vimeo embeds on Skool are streaming via HLS.
+date: 2025-10-22T18:59:36.626Z
+author: Devin Schumacher
 ---
 
 ```

@@ -1,5 +1,15 @@
 ---
 slug: how-to-download-webrtc-video-streams
+title: How to Download WebRTC Video Streams
+seoTitle: How to Download WebRTC Video Streams
+description: "**Protocol**: WebRTC   **Transport**: RTP/RTCP over
+  UDP/TCP   **Signaling**: WebSocket, SIP, custom protocols   **Applications**:
+  Video calls, live streaming, peer-to-peer communication"
+seoDescription: "**Protocol**: WebRTC   **Transport**: RTP/RTCP over
+  UDP/TCP   **Signaling**: WebSocket, SIP, custom protocols   **Applications**:
+  Video calls, live streaming, peer-to-peer communication"
+date: 2025-10-22T18:59:36.629Z
+author: Devin Schumacher
 ---
 
 # How to Download WebRTC Video Streams
