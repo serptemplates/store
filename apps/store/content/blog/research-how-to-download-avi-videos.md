@@ -1,3 +1,7 @@
+---
+slug: how-to-download-avi-videos
+---
+
 # How to Download AVI Video Files
 
 **File Extensions**: `.avi`  

@@ -1,3 +1,7 @@
+---
+slug: how-to-download-tiktok-audio-music-audio-etc-from-videos
+---
+
 # How to Download TikTok Audio (Music, Audio, etc.) from Videos
 
 TikTok videos always contain both **audio and video** in a single MP4 file, but sometimes you just want the **audio track** — to save music, quotes, or background sounds.

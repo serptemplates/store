@@ -1,3 +1,7 @@
+---
+slug: how-to-download-h264-videos
+---
+
 # How to Download H.264 Encoded Videos
 
 **Standard**: ITU-T H.264 / ISO/IEC MPEG-4 Part 10  

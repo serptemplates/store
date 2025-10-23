@@ -1,3 +1,7 @@
+---
+slug: how-to-download-vimeo-videos
+---
+
 # How to Download Vimeo Videos
 
 **Platform**: Vimeo.com  

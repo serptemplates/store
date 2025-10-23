@@ -1,3 +1,7 @@
+---
+slug: how-to-download-rtmp-live-streams
+---
+
 # How to Download RTMP Live Streams
 
 **Protocol**: RTMP, RTMPS, RTMPE  

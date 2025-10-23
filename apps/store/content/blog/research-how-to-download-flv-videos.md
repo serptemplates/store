@@ -1,3 +1,7 @@
+---
+slug: how-to-download-flv-videos
+---
+
 # How to Download FLV Flash Videos
 
 **File Extensions**: `.flv`, `.f4v`  

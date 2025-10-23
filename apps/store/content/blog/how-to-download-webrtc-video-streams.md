@@ -1,3 +1,7 @@
+---
+slug: how-to-download-webrtc-video-streams
+---
+
 # How to Download WebRTC Video Streams
 
 **Protocol**: WebRTC  

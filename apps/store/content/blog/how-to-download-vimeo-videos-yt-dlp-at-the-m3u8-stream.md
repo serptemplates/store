@@ -1,3 +1,7 @@
+---
+slug: how-to-download-vimeo-videos-method-2-yt-dlp-at-the-m3u8-stream
+---
+
 # Method 2: `yt-dlp` at the m3u8 stream
 
 ## 1. Open DevTools & Play the Video

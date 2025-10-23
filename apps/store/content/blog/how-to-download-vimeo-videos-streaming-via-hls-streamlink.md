@@ -1,3 +1,7 @@
+---
+slug: how-to-download-vimeo-videos-streaming-via-hls-streamlink
+---
+
 ```
 tags: ['streamlink', 'ffmpeg', 'vimeo']
 ```

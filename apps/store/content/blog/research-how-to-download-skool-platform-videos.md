@@ -1,3 +1,7 @@
+---
+slug: how-to-download-skool-platform-videos
+---
+
 # How to Download Skool Platform Videos
 
 **Platform**: Skool.com  

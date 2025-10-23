@@ -1,3 +1,7 @@
+---
+slug: how-to-download-mov-videos
+---
+
 # How to Download MOV QuickTime Videos
 
 **File Extensions**: `.mov`, `.qt`  

@@ -1,3 +1,7 @@
+---
+slug: how-to-download-twitch-streams-and-vods
+---
+
 # How to Download Twitch Streams and VODs
 
 **Platform**: Twitch.tv (Amazon)  

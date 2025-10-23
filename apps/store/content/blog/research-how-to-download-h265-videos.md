@@ -1,3 +1,7 @@
+---
+slug: how-to-download-h265-videos
+---
+
 # How to Download H.265 HEVC Videos
 
 **Standard**: ITU-T H.265 / ISO/IEC HEVC  

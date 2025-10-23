@@ -1,3 +1,7 @@
+---
+slug: how-to-download-mp4-videos
+---
+
 # How to Download MP4 Videos
 
 **File Extensions**: `.mp4`, `.m4v`, `.m4a`  

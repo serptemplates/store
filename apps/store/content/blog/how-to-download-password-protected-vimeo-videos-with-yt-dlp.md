@@ -1,3 +1,7 @@
+---
+slug: downloading-password-protected-vimeo-videos-with-yt-dlp
+---
+
 # 📥 Downloading Password-Protected Vimeo Videos with yt-dlp
 
 Vimeo can serve video in a few different ways:

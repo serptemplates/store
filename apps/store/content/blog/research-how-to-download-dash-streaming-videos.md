@@ -1,3 +1,7 @@
+---
+slug: how-to-download-dash-streaming-videos
+---
+
 # How to Download DASH Streaming Videos
 
 **File Extensions**: `.mpd` (Media Presentation Description)  

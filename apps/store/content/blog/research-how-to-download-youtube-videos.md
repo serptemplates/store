@@ -1,3 +1,7 @@
+---
+slug: how-to-download-youtube-videos
+---
+
 # How to Download YouTube Videos
 
 **Platform**: YouTube.com (Google)  

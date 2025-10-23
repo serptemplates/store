@@ -1,3 +1,7 @@
+---
+slug: how-to-download-hls-m3u8-streaming-videos
+---
+
 # How to Download HLS/M3U8 Streaming Videos
 
 **File Extensions**: `.m3u8`, `.m3u`  
