@@ -241,3 +241,4 @@ export function getPostBySlug(slug: string): BlogPost | null {
 
   return null;
 }
+const DEFAULT_AUTHOR_URL = "https://apps.serp.co/team/devin-schumacher";
