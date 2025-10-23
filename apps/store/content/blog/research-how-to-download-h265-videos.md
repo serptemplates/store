@@ -2,15 +2,13 @@
 slug: how-to-download-h265-videos
 title: How to Download H.265 HEVC Videos
 seoTitle: How to Download H.265 HEVC Videos
-description: "**Standard**: ITU-T H.265 / ISO/IEC HEVC   **Also Known As**: HEVC
-  (High Efficiency Video Coding)   **File Extensions**: `.h265`, `.265`,
-  `.hevc`   **Containers**: MP4, MKV, MOV, TS   **MIME Types**: `video/h265`,
-  `video/hevc`"
-seoDescription: "**Standard**: ITU-T H.265 / ISO/IEC HEVC   **Also Known As**:
-  HEVC (High Efficiency Video Coding)   **File Extensions**: `.h265`, `.265`,
-  `.hevc`   **Containers**: MP4, MKV, MOV, TS   **MIME Types**: `video/h265`,
-  `video/hevc`"
-date: 2025-10-22T18:59:36.627Z
+description: 'Standard: ITU-T H.265 / ISO/IEC HEVC Also Known As: HEVC (High Efficiency
+  Video Coding) File Extensions: .h265, .265, .hevc Containers: MP4, MKV, MOV, TS
+  MIME Types: video/h265, video/hevc'
+seoDescription: 'Standard: ITU-T H.265 / ISO/IEC HEVC Also Known As: HEVC (High Efficiency
+  Video Coding) File Extensions: .h265, .265, .hevc Containers: MP4, MKV, MOV, TS
+  MIME Types: video/h265, video/hevc'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 

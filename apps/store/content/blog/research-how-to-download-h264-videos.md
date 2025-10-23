@@ -2,15 +2,13 @@
 slug: how-to-download-h264-videos
 title: How to Download H.264 Encoded Videos
 seoTitle: How to Download H.264 Encoded Videos
-description: "**Standard**: ITU-T H.264 / ISO/IEC MPEG-4 Part 10   **Also Known
-  As**: AVC (Advanced Video Coding), MPEG-4 AVC   **File Extensions**: `.h264`,
-  `.264`, `.avc`   **Containers**: MP4, MKV, MOV, TS, WebM (rare), AVI   **MIME
-  Types**: `video/h264`, `video/avc`"
-seoDescription: "**Standard**: ITU-T H.264 / ISO/IEC MPEG-4 Part 10   **Also
-  Known As**: AVC (Advanced Video Coding), MPEG-4 AVC   **File Extensions**:
-  `.h264`, `.264`, `.avc`   **Containers**: MP4, MKV, MOV, TS, WebM (rare),
-  AVI   **MIME Types**: `video/h264`, `video/avc`"
-date: 2025-10-22T18:59:36.627Z
+description: 'Standard: ITU-T H.264 / ISO/IEC MPEG-4 Part 10 Also Known As: AVC (Advanced
+  Video Coding), MPEG-4 AVC File Extensions: .h264, .264, .avc Containers: MP4, MKV,
+  MOV, TS, WebM (rare), AVI MIME Types: video/h264, video/avc'
+seoDescription: 'Standard: ITU-T H.264 / ISO/IEC MPEG-4 Part 10 Also Known As: AVC
+  (Advanced Video Coding), MPEG-4 AVC File Extensions: .h264, .264, .avc Containers:
+  MP4, MKV, MOV, TS, WebM (rare), AVI MIME Types: video/h264, video/avc'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 

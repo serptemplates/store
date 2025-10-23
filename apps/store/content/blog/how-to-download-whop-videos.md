@@ -2,11 +2,11 @@
 slug: how-to-download-whop-videos
 title: 🎥 How to Download Videos from Whop (Mux Streams) with yt-dlp
 seoTitle: 🎥 How to Download Videos from Whop (Mux Streams) with yt-dlp
-description: Whop.com hosts its videos using **Mux**, which serves them over
-  **HLS streaming** (`.m3u8` playlists with short-lived tokens).
-seoDescription: Whop.com hosts its videos using **Mux**, which serves them over
-  **HLS streaming** (`.m3u8` playlists with short-lived tokens).
-date: 2025-10-22T18:59:36.629Z
+description: Whop.com hosts its videos using Mux, which serves them over HLS streaming
+  (.m3u8 playlists with short-lived tokens).
+seoDescription: Whop.com hosts its videos using Mux, which serves them over HLS streaming
+  (.m3u8 playlists with short-lived tokens).
+date: '2025-10-22T18:59:36.629000Z'
 author: Devin Schumacher
 ---
 

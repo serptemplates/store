@@ -2,9 +2,9 @@
 slug: downloading-password-protected-vimeo-videos-with-yt-dlp
 title: 📥 Downloading Password-Protected Vimeo Videos with yt-dlp
 seoTitle: 📥 Downloading Password-Protected Vimeo Videos with yt-dlp
-description: "Vimeo can serve video in a few different ways:"
-seoDescription: "Vimeo can serve video in a few different ways:"
-date: 2025-10-22T18:59:36.625Z
+description: 'Vimeo can serve video in a few different ways:'
+seoDescription: 'Vimeo can serve video in a few different ways:'
+date: '2025-10-22T18:59:36.625000Z'
 author: Devin Schumacher
 ---
 

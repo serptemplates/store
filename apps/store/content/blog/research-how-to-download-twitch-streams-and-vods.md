@@ -2,13 +2,13 @@
 slug: how-to-download-twitch-streams-and-vods
 title: How to Download Twitch Streams and VODs
 seoTitle: How to Download Twitch Streams and VODs
-description: "**Platform**: Twitch.tv (Amazon)   **Primary Formats**: HLS
-  (M3U8), MP4 (VODs)   **Stream Types**: Live streams, VODs,
-  Clips   **Authentication**: OAuth, subscriber-only content support"
-seoDescription: "**Platform**: Twitch.tv (Amazon)   **Primary Formats**: HLS
-  (M3U8), MP4 (VODs)   **Stream Types**: Live streams, VODs,
-  Clips   **Authentication**: OAuth, subscriber-only content support"
-date: 2025-10-22T18:59:36.628Z
+description: 'Platform: Twitch.tv (Amazon) Primary Formats: HLS (M3U8), MP4 (VODs)
+  Stream Types: Live streams, VODs, Clips Authentication: OAuth, subscriber-only content
+  support'
+seoDescription: 'Platform: Twitch.tv (Amazon) Primary Formats: HLS (M3U8), MP4 (VODs)
+  Stream Types: Live streams, VODs, Clips Authentication: OAuth, subscriber-only content
+  support'
+date: '2025-10-22T18:59:36.628000Z'
 author: Devin Schumacher
 ---
 

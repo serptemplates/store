@@ -2,13 +2,11 @@
 slug: how-to-download-skool-platform-videos
 title: How to Download Skool Platform Videos
 seoTitle: How to Download Skool Platform Videos
-description: "**Platform**: Skool.com   **Primary Format**: HLS (M3U8
-  playlists)   **CDNs**: Fastly, BunnyCDN, native Skool domains   **Player**:
-  Mux Player embedded"
-seoDescription: "**Platform**: Skool.com   **Primary Format**: HLS (M3U8
-  playlists)   **CDNs**: Fastly, BunnyCDN, native Skool domains   **Player**:
-  Mux Player embedded"
-date: 2025-10-22T18:59:36.628Z
+description: 'Platform: Skool.com Primary Format: HLS (M3U8 playlists) CDNs: Fastly,
+  BunnyCDN, native Skool domains Player: Mux Player embedded'
+seoDescription: 'Platform: Skool.com Primary Format: HLS (M3U8 playlists) CDNs: Fastly,
+  BunnyCDN, native Skool domains Player: Mux Player embedded'
+date: '2025-10-22T18:59:36.628000Z'
 author: Devin Schumacher
 ---
 

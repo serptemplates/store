@@ -1,16 +1,14 @@
 ---
 slug: how-to-download-vimeo-videos-method-2-yt-dlp-at-the-m3u8-stream
-title: "Method 2: `yt-dlp` at the m3u8 stream"
-seoTitle: "Method 2: `yt-dlp` at the m3u8 stream"
-description: "* Open the page with the Vimeo embed (or
-  `player.vimeo.com/video/...`). * Open **Chrome DevTools → Network tab**. *
-  Click **Media** filter (optional but helpful). * **Play the video** so the
-  actual streaming requests fire."
-seoDescription: "* Open the page with the Vimeo embed (or
-  `player.vimeo.com/video/...`). * Open **Chrome DevTools → Network tab**. *
-  Click **Media** filter (optional but helpful). * **Play the video** so the
-  actual streaming requests fire."
-date: 2025-10-22T18:59:36.626Z
+title: 'Method 2: yt-dlp at the m3u8 stream'
+seoTitle: 'Method 2: yt-dlp at the m3u8 stream'
+description: '* Open the page with the Vimeo embed (or player.vimeo.com/video/...).
+  * Open Chrome DevTools → Network tab. * Click Media filter (optional but helpful).
+  * Play the video so the actual streaming requests fire.'
+seoDescription: '* Open the page with the Vimeo embed (or player.vimeo.com/video/...).
+  * Open Chrome DevTools → Network tab. * Click Media filter (optional but helpful).
+  * Play the video so the actual streaming requests fire.'
+date: '2025-10-22T18:59:36.626000Z'
 author: Devin Schumacher
 ---
 

@@ -2,13 +2,11 @@
 slug: how-to-download-rtmp-live-streams
 title: How to Download RTMP Live Streams
 seoTitle: How to Download RTMP Live Streams
-description: "**Protocol**: RTMP, RTMPS, RTMPE   **Ports**: 1935 (default), 443
-  (RTMPS)   **Container**: FLV (Flash Video)   **Usage**: Live streaming,
-  broadcast ingestion"
-seoDescription: "**Protocol**: RTMP, RTMPS, RTMPE   **Ports**: 1935 (default),
-  443 (RTMPS)   **Container**: FLV (Flash Video)   **Usage**: Live streaming,
-  broadcast ingestion"
-date: 2025-10-22T18:59:36.628Z
+description: 'Protocol: RTMP, RTMPS, RTMPE Ports: 1935 (default), 443 (RTMPS) Container:
+  FLV (Flash Video) Usage: Live streaming, broadcast ingestion'
+seoDescription: 'Protocol: RTMP, RTMPS, RTMPE Ports: 1935 (default), 443 (RTMPS) Container:
+  FLV (Flash Video) Usage: Live streaming, broadcast ingestion'
+date: '2025-10-22T18:59:36.628000Z'
 author: Devin Schumacher
 ---
 

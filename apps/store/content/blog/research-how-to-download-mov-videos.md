@@ -2,13 +2,13 @@
 slug: how-to-download-mov-videos
 title: How to Download MOV QuickTime Videos
 seoTitle: How to Download MOV QuickTime Videos
-description: "**File Extensions**: `.mov`, `.qt`   **MIME Types**:
-  `video/quicktime`, `video/x-quicktime`   **Container**: Apple QuickTime
-  multimedia container   **Codecs**: H.264, HEVC, ProRes, various legacy codecs"
-seoDescription: "**File Extensions**: `.mov`, `.qt`   **MIME Types**:
-  `video/quicktime`, `video/x-quicktime`   **Container**: Apple QuickTime
-  multimedia container   **Codecs**: H.264, HEVC, ProRes, various legacy codecs"
-date: 2025-10-22T18:59:36.627Z
+description: 'File Extensions: .mov, .qt MIME Types: video/quicktime, video/x-quicktime
+  Container: Apple QuickTime multimedia container Codecs: H.264, HEVC, ProRes, various
+  legacy codecs'
+seoDescription: 'File Extensions: .mov, .qt MIME Types: video/quicktime, video/x-quicktime
+  Container: Apple QuickTime multimedia container Codecs: H.264, HEVC, ProRes, various
+  legacy codecs'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 

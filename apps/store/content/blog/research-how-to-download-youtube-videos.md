@@ -2,13 +2,11 @@
 slug: how-to-download-youtube-videos
 title: How to Download YouTube Videos
 seoTitle: How to Download YouTube Videos
-description: "**Platform**: YouTube.com (Google)   **Primary Formats**: DASH
-  (MPD), HLS (M3U8), Progressive MP4   **Codecs**: H.264, VP9, AV1, AAC,
-  Opus   **Player**: YouTube HTML5 Player"
-seoDescription: "**Platform**: YouTube.com (Google)   **Primary Formats**: DASH
-  (MPD), HLS (M3U8), Progressive MP4   **Codecs**: H.264, VP9, AV1, AAC,
-  Opus   **Player**: YouTube HTML5 Player"
-date: 2025-10-22T18:59:36.629Z
+description: 'Platform: YouTube.com (Google) Primary Formats: DASH (MPD), HLS (M3U8),
+  Progressive MP4 Codecs: H.264, VP9, AV1, AAC, Opus Player: YouTube HTML5 Player'
+seoDescription: 'Platform: YouTube.com (Google) Primary Formats: DASH (MPD), HLS (M3U8),
+  Progressive MP4 Codecs: H.264, VP9, AV1, AAC, Opus Player: YouTube HTML5 Player'
+date: '2025-10-22T18:59:36.629000Z'
 author: Devin Schumacher
 ---
 

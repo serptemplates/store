@@ -2,11 +2,11 @@
 slug: how-to-download-tiktok-videos
 title: How to Download TikTok Videos
 seoTitle: How to Download TikTok Videos
-description: TikTok stores videos on short-lived CDN links — those long URLs
-  with v16-webapp-prime.us.tiktok.com and ?expire= tokens.
-seoDescription: TikTok stores videos on short-lived CDN links — those long URLs
-  with v16-webapp-prime.us.tiktok.com and ?expire= tokens.
-date: 2025-10-22T18:59:36.626Z
+description: TikTok stores videos on short-lived CDN links — those long URLs with
+  v16-webapp-prime.us.tiktok.com and ?expire= tokens.
+seoDescription: TikTok stores videos on short-lived CDN links — those long URLs with
+  v16-webapp-prime.us.tiktok.com and ?expire= tokens.
+date: '2025-10-22T18:59:36.626000Z'
 author: Devin Schumacher
 ---
 

@@ -2,13 +2,11 @@
 slug: how-to-download-vp9-videos
 title: How to Download VP9 Encoded Videos
 seoTitle: How to Download VP9 Encoded Videos
-description: '**Developer**: Google   **Standard**: VP9 (WebM Project)   **File
-  Extensions**: `.vp9`, `.webm`   **Containers**: WebM, MKV   **MIME Types**:
-  `video/webm; codecs="vp9"`'
-seoDescription: '**Developer**: Google   **Standard**: VP9 (WebM
-  Project)   **File Extensions**: `.vp9`, `.webm`   **Containers**: WebM,
-  MKV   **MIME Types**: `video/webm; codecs="vp9"`'
-date: 2025-10-22T18:59:36.628Z
+description: 'Developer: Google Standard: VP9 (WebM Project) File Extensions: .vp9,
+  .webm Containers: WebM, MKV MIME Types: video/webm; codecs="vp9"'
+seoDescription: 'Developer: Google Standard: VP9 (WebM Project) File Extensions: .vp9,
+  .webm Containers: WebM, MKV MIME Types: video/webm; codecs="vp9"'
+date: '2025-10-22T18:59:36.628000Z'
 author: Devin Schumacher
 ---
 

@@ -2,18 +2,17 @@
 slug: how-to-download-youtube-videos-for-free-with-yt-dlp
 title: Download YouTube Videos for Free with yt-dlp
 seoTitle: How to Download YouTube Videos for Free with yt-dlp
-description: Step-by-step guide for grabbing any YouTube video without fees
-  using yt-dlp, including the best commands to avoid 403 errors and handle
-  subtitles.
-seoDescription: Learn how to download YouTube videos for free with yt-dlp. We
-  cover the essential commands, how to fix 403 errors, grab subtitles, and
-  optimize video downloads without software costs.
-date: 2025-10-22T18:59:36.626Z
+description: Step-by-step guide for grabbing any YouTube video without fees using
+  yt-dlp, including the best commands to avoid 403 errors and handle subtitles.
+seoDescription: Learn how to download YouTube videos for free with yt-dlp. We cover
+  the essential commands, how to fix 403 errors, grab subtitles, and optimize video
+  downloads without software costs.
+date: '2025-10-22T18:59:36.626000Z'
 author: Devin Schumacher
 tags:
-  - youtube
-  - yt-dlp
-  - video-download
+- youtube
+- yt-dlp
+- video-download
 ---
 
 # How to Download YouTube Videos for Free with yt-dlp

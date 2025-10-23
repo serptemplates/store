@@ -2,13 +2,11 @@
 slug: how-to-download-avi-videos
 title: How to Download AVI Video Files
 seoTitle: How to Download AVI Video Files
-description: "**File Extensions**: `.avi`   **MIME Types**: `video/avi`,
-  `video/x-msvideo`   **Container**: Microsoft multimedia
-  container   **Codecs**: Various (DivX, XviD, H.264, MP3, AC-3)"
-seoDescription: "**File Extensions**: `.avi`   **MIME Types**: `video/avi`,
-  `video/x-msvideo`   **Container**: Microsoft multimedia
-  container   **Codecs**: Various (DivX, XviD, H.264, MP3, AC-3)"
-date: 2025-10-22T18:59:36.627Z
+description: 'File Extensions: .avi MIME Types: video/avi, video/x-msvideo Container:
+  Microsoft multimedia container Codecs: Various (DivX, XviD, H.264, MP3, AC-3)'
+seoDescription: 'File Extensions: .avi MIME Types: video/avi, video/x-msvideo Container:
+  Microsoft multimedia container Codecs: Various (DivX, XviD, H.264, MP3, AC-3)'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 

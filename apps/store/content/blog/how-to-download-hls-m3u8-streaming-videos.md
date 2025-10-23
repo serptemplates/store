@@ -2,15 +2,13 @@
 slug: how-to-download-hls-m3u8-streaming-videos
 title: How to Download HLS/M3U8 Streaming Videos
 seoTitle: How to Download HLS/M3U8 Streaming Videos
-description: "**File Extensions**: `.m3u8`, `.m3u`   **MIME Types**:
-  `application/x-mpegURL`, `application/vnd.apple.mpegurl`,
-  `audio/x-mpegurl`   **Container**: Playlist format (references video/audio
-  segments)   **Streaming**: Adaptive bitrate streaming protocol"
-seoDescription: "**File Extensions**: `.m3u8`, `.m3u`   **MIME Types**:
-  `application/x-mpegURL`, `application/vnd.apple.mpegurl`,
-  `audio/x-mpegurl`   **Container**: Playlist format (references video/audio
-  segments)   **Streaming**: Adaptive bitrate streaming protocol"
-date: 2025-10-22T18:59:36.627Z
+description: 'File Extensions: .m3u8, .m3u MIME Types: application/x-mpegURL, application/vnd.apple.mpegurl,
+  audio/x-mpegurl Container: Playlist format (references video/audio segments) Streaming:
+  Adaptive bitrate streaming protocol'
+seoDescription: 'File Extensions: .m3u8, .m3u MIME Types: application/x-mpegURL, application/vnd.apple.mpegurl,
+  audio/x-mpegurl Container: Playlist format (references video/audio segments) Streaming:
+  Adaptive bitrate streaming protocol'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 

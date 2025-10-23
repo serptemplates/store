@@ -2,11 +2,11 @@
 slug: how-to-download-udemy-videos
 title: 📥 How to Download Udemy Videos
 seoTitle: 📥 How to Download Udemy Videos
-description: Udemy hosts its lectures behind login-protected APIs, so you can’t
-  just grab a `.m3u8` or `.mpd` URL from the Network tab.
-seoDescription: Udemy hosts its lectures behind login-protected APIs, so you
-  can’t just grab a `.m3u8` or `.mpd` URL from the Network tab.
-date: 2025-10-22T18:59:36.626Z
+description: Udemy hosts its lectures behind login-protected APIs, so you can’t just
+  grab a .m3u8 or .mpd URL from the Network tab.
+seoDescription: Udemy hosts its lectures behind login-protected APIs, so you can’t
+  just grab a .m3u8 or .mpd URL from the Network tab.
+date: '2025-10-22T18:59:36.626000Z'
 author: Devin Schumacher
 ---
 

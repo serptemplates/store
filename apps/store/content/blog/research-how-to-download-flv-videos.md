@@ -2,13 +2,11 @@
 slug: how-to-download-flv-videos
 title: How to Download FLV Flash Videos
 seoTitle: How to Download FLV Flash Videos
-description: "**File Extensions**: `.flv`, `.f4v`   **MIME Types**:
-  `video/x-flv`, `video/flv`   **Container**: Adobe Flash Video
-  container   **Codecs**: H.264, VP6, Sorenson Spark, AAC, MP3"
-seoDescription: "**File Extensions**: `.flv`, `.f4v`   **MIME Types**:
-  `video/x-flv`, `video/flv`   **Container**: Adobe Flash Video
-  container   **Codecs**: H.264, VP6, Sorenson Spark, AAC, MP3"
-date: 2025-10-22T18:59:36.627Z
+description: 'File Extensions: .flv, .f4v MIME Types: video/x-flv, video/flv Container:
+  Adobe Flash Video container Codecs: H.264, VP6, Sorenson Spark, AAC, MP3'
+seoDescription: 'File Extensions: .flv, .f4v MIME Types: video/x-flv, video/flv Container:
+  Adobe Flash Video container Codecs: H.264, VP6, Sorenson Spark, AAC, MP3'
+date: '2025-10-22T18:59:36.627000Z'
 author: Devin Schumacher
 ---
 
