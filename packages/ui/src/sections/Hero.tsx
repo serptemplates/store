@@ -150,7 +150,7 @@ export function Hero({
   return (
     <section className="relative overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-      <div className="container relative py-16 md:py-24 lg:py-20">
+      <div className="container relative py-12 md:py-16 lg:py-16">
         <div
           className={`mx-auto grid max-w-6xl items-center gap-10 ${hasMedia ? "lg:grid-cols-2" : "lg:grid-cols-1"}`}
         >
@@ -183,7 +183,7 @@ export function Hero({
           </div>
 
           {hasMedia && (
-            <div className="relative mx-auto w-full max-w-xl lg:max-w-[640px]">
+            <div className="relative mx-auto w-full">
               <HeroMediaCarousel items={carouselItems} />
             </div>
           )}
@@ -281,7 +281,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
 
   return (
     <div className="group relative">
-      <div ref={emblaRef} className="overflow-hidden rounded-2xl">
+      <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">
           {validItems.map((item, index) => (
             <div key={index} className="min-w-0 shrink-0 grow-0 basis-full">
@@ -306,7 +306,7 @@ function HeroMediaCarousel({ items }: { items: HeroMediaItem[] }) {
                 <button
                   type="button"
                   onClick={() => setLightboxIndex(index)}
-                  className="relative aspect-video w-full overflow-hidden rounded-2xl border bg-muted/40"
+                  className="relative aspect-video w-full overflow-hidden"
                 >
                   <Image
                     src={item.src}

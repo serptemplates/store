@@ -8,6 +8,11 @@ This repository now focuses exclusively on the `@apps/store` Next.js commerce ap
 - `apps/store/content/blog` – markdown content rendered by the blog routes
 - `packages/ui` – shared UI primitives and sections (`src/sections/**`) consumed by the store
 
+## Docs
+
+- See `docs/` for architecture, operations, and security notes.
+- Marketplace product lander – enabling and content sources: `docs/architecture/marketplace-lander.md`
+
 ## Local Development
 
 ```bash

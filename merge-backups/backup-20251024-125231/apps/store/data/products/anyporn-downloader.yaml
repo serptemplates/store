@@ -1,0 +1,188 @@
+platform: AnyPorn
+name: AnyPorn Downloader
+tagline: Download AnyPorn videos instantly.
+slug: anyporn-downloader
+<<<<<<< HEAD
+description: >
+  AnyPorn Downloader gives creators and teams a dependable way to save AnyPorn
+  videos for offline access. Instead of juggling manual captures or risky
+  browser extensions, it pulls publicly accessible files directly from AnyPorn
+  with consistent quality.
+
+
+  Use it to archive research material, prep client deliverables, or keep your
+  personal library available when you're traveling or working with limited
+  connectivity.
+=======
+description: |
+  AnyPorn Downloader gives creators and teams a dependable way to save AnyPorn videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from AnyPorn with consistent quality.
+  
+  Use it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.
+>>>>>>> origin/staging
+seo_title: Download AnyPorn Videos | AnyPorn Downloader
+seo_description: Download AnyPorn videos for offline use. Fast, private AnyPorn downloader.
+serply_link: https://serp.ly/anyporn-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/anyporn-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/anyporn-downloader
+serp_co_product_page_url: https://serp.co/products/anyporn-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=anyporn-downloader
+status: pre_release
+<<<<<<< HEAD
+featured_image: /media/products/anyporn-downloader/featured.webp
+featured_image_gif: null
+screenshots:
+  - url: /media/products/anyporn-downloader/anyporn-homepage.webp
+    alt: AnyPorn Downloader website homepage
+=======
+featured_image: null
+featured_image_gif: null
+screenshots: []
+>>>>>>> origin/staging
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url: null
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+<<<<<<< HEAD
+  - One-click downloads from AnyPorn
+  - Preserves original quality and metadata
+  - Batch queue with automatic retries
+  - Local-first workflows with no tracking
+  - Works on Windows, macOS, and Linux
+pricing:
+  label: One-time payment
+  price: $17
+  original_price: ""
+=======
+- One-click downloads from AnyPorn
+- Preserves original quality and metadata
+- Batch queue with automatic retries
+- Local-first workflows with no tracking
+- Works on Windows, macOS, and Linux
+pricing:
+  label: One-time payment
+  price: $17
+  original_price: ''
+>>>>>>> origin/staging
+  note: Contact us for current licensing options.
+  cta_text: Get Notified
+  currency: USD
+  availability: InStock
+  benefits: []
+faqs:
+<<<<<<< HEAD
+  - question: How do I use AnyPorn Downloader?
+    answer: Open AnyPorn, choose the videos you need, and start the download
+      directly from the app. Files save to your designated folder immediately.
+  - question: What quality options are available?
+    answer: AnyPorn Downloader keeps the highest quality available from AnyPorn,
+      preserving resolution, bitrate, and metadata whenever possible.
+  - question: Does this work with private or DRM content?
+    answer: It's designed for publicly accessible material that you have rights to
+      download. It doesn't bypass DRM, logins, or paywalls.
+  - question: Can I run bulk downloads?
+    answer: Yes. Queue multiple links and the downloader processes them sequentially
+      with automatic retries if the connection drops.
+  - question: Is my data tracked?
+    answer: No. Downloads stay on your device and we don't capture usage analytics
+      or content copies.
+reviews:
+  - name: Jordan Ellis
+    title: Keeps AnyPorn projects moving
+    rating: 5
+    date: 2025-03-01
+    review: I download AnyPorn videos for my projects and AnyPorn Downloader keeps
+      everything organized without hiccups.
+  - name: Sofia Carter
+    title: Ideal for building AnyPorn archives
+    rating: 4.9
+    date: 2025-02-02
+    review: The quality from AnyPorn stays perfect, and batch downloads mean I can
+      collect hours of material in minutes.
+  - name: Malik Nguyen
+    title: Smooth AnyPorn capture every time
+    rating: 4.8
+    date: 2025-03-03
+    review: Privacy-friendly workflows were the missing piece for us-AnyPorn
+      Downloader never sends AnyPorn data anywhere else.
+supported_operating_systems:
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
+supported_regions:
+  - Worldwide
+categories:
+  - Downloader
+  - Adult
+keywords:
+  - anyporn downloader
+  - anyporn download
+=======
+- question: How do I use AnyPorn Downloader?
+  answer: Open AnyPorn, choose the videos you need, and start the download directly from the app. Files save to your designated folder immediately.
+- question: What quality options are available?
+  answer: AnyPorn Downloader keeps the highest quality available from AnyPorn, preserving resolution, bitrate, and metadata whenever possible.
+- question: Does this work with private or DRM content?
+  answer: It's designed for publicly accessible material that you have rights to download. It doesn't bypass DRM, logins, or paywalls.
+- question: Can I run bulk downloads?
+  answer: Yes. Queue multiple links and the downloader processes them sequentially with automatic retries if the connection drops.
+- question: Is my data tracked?
+  answer: No. Downloads stay on your device and we don't capture usage analytics or content copies.
+reviews:
+- name: Jordan Ellis
+  title: Keeps AnyPorn projects moving
+  rating: 5
+  date: 2025-03-01
+  review: I download AnyPorn videos for my projects and AnyPorn Downloader keeps everything organized without hiccups.
+- name: Sofia Carter
+  title: Ideal for building AnyPorn archives
+  rating: 4.9
+  date: 2025-02-02
+  review: The quality from AnyPorn stays perfect, and batch downloads mean I can collect hours of material in minutes.
+- name: Malik Nguyen
+  title: Smooth AnyPorn capture every time
+  rating: 4.8
+  date: 2025-03-03
+  review: Privacy-friendly workflows were the missing piece for us-AnyPorn Downloader never sends AnyPorn data anywhere else.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Adult
+keywords:
+- anyporn downloader
+- anyporn download
+>>>>>>> origin/staging
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+<<<<<<< HEAD
+    - purchase-anyporn-downloader
+=======
+  - purchase-anyporn-downloader
+>>>>>>> origin/staging
+permission_justifications: []
