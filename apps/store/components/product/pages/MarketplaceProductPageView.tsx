@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Fragment, useMemo, useState, useCallback, useEffect, type ReactNode } from "react";
 
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
@@ -24,32 +23,11 @@ import { FaqAccordion, type FaqItem } from "@/components/product/marketplace/Faq
 import { ReviewsList, type ReviewListItem } from "@/components/product/marketplace/ReviewsList";
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar";
 import { ExternalLink } from "lucide-react";
-import type { BlogPostMeta } from "@/lib/blog";
-import type { ProductVideoEntry } from "@/lib/products/video";
-import type { PostItem } from "@repo/ui/sections/PostsSection";
-import { Badge, Card, CardHeader, CardTitle, CardContent } from "@repo/ui";
 import { getBrandLogoPath } from "@/lib/products/brand-logos";
-
-export type VideoCardItem = {
-  url: string;
-  title: string;
-  thumbnail?: string | null;
-};
-
-export type RelatedAppItem = {
-  slug: string;
-  name: string;
-  primaryCategory?: string;
-};
 
 export type MarketplaceProductPageViewProps = {
   product: ProductData;
   siteConfig: SiteConfig;
-  videoEntries?: VideoCardItem[];
-  relatedApps?: RelatedAppItem[];
-  relatedPosts?: PostItem[];
-  schemaPosts?: BlogPostMeta[];
-  schemaVideoEntries?: ProductVideoEntry[];
 };
 
 type MetadataRow = {
@@ -57,9 +35,9 @@ type MetadataRow = {
   value: ReactNode;
 };
 
-const SECTION_LABEL_CLASS = "hidden lg:block text-[36px] font-black uppercase tracking-[0.08em] text-[#fffff]";
+const SECTION_LABEL_CLASS = "hidden lg:block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]";
 
-export function MarketplaceProductPageView({ product, siteConfig, videoEntries, relatedApps, relatedPosts = [], schemaPosts = [], schemaVideoEntries = [] }: MarketplaceProductPageViewProps) {
+export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const { affiliateId } = useAffiliateTracking();
@@ -99,33 +77,11 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
   const faqItems = buildFaqItems(product);
   const reviewItems = buildReviewItems(product);
   const featuredImage = product.featured_image ?? product.screenshots?.[0]?.url ?? null;
-  const screenshots = (product.screenshots ?? []).filter((shot) => Boolean(shot?.url?.trim()));
-  const featureCaption = screenshots[0]?.caption ?? product.tagline ?? product.name ?? "";
-  const carouselImages = screenshots.map((shot) => ({
-    src: shot.url!,
-    alt: shot.alt ?? product.name ?? undefined,
-  }));
-  const featureList = (product.features ?? [])
-    .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
-    .filter((entry) => entry.length > 0);
-  const fallbackVideoItems = useMemo(
-    () => buildFallbackVideoItems(product, featuredImage ?? undefined),
-    [product, featuredImage],
-  );
-  const relatedVideos = useMemo<VideoCardItem[]>(() => {
-    if (videoEntries && videoEntries.length > 0) {
-      return videoEntries.map((entry) => ({
-        url: entry.url,
-        title: entry.title,
-        thumbnail: entry.thumbnail ?? featuredImage ?? null,
-      }));
-    }
-    return fallbackVideoItems;
-  }, [videoEntries, featuredImage, fallbackVideoItems]);
-  const relatedArticles = buildRelatedArticles(product);
-  const videoRow = useMemo(() => relatedVideos.slice(0, 3), [relatedVideos]);
-  const screenshotRow = useMemo(() => screenshots, [screenshots]);
-  const [lightboxImageUrl, setLightboxImageUrl] = useState<string | null>(null);
+  const featureCaption =
+    product.screenshots?.[0]?.caption ??
+    product.tagline ??
+    product.name ??
+    "";
   const primaryButtonLabel = (() => {
     const fromPricing = product.pricing?.cta_text?.trim();
     if (fromPricing && fromPricing.length > 0) return fromPricing;
@@ -150,16 +106,9 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Structured data inputs: images + videos
-  const structuredImages: string[] = [
-    ...(featuredImage ? [featuredImage] : []),
-    ...screenshots.map((s) => s.url!).filter(Boolean),
-  ];
-  const structuredVideos: ProductVideoEntry[] = schemaVideoEntries;
-
   return (
     <>
-      <ProductStructuredDataScripts product={product} posts={schemaPosts} siteConfig={siteConfig} images={structuredImages} videoEntries={structuredVideos} />
+      <ProductStructuredDataScripts product={product} posts={[]} siteConfig={siteConfig} images={[]} videoEntries={[]} />
       <ProductStructuredData product={product} url={productUrl} />
       <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
 
@@ -169,7 +118,7 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
             name={product.name ?? product.platform ?? "Marketplace app"}
             subtitle={copy.subtitle}
             category={product.categories?.find((category) => category.trim().length > 0)}
-            iconUrl={brandLogoPath ?? product.featured_image}
+            iconUrl={product.featured_image}
             iconInitials={getInitials(product.platform ?? product.name)}
             onPrimaryAction={handleHeroClick}
             primaryLabel={primaryButtonLabel}
@@ -195,68 +144,17 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
         />
 
         <div className="mt-12 grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
-          <div className="lg:col-span-12">
-            <nav className="mb-2 text-sm">
-              <a href="/" className="text-gray-500 hover:text-gray-700">Home</a>
-              <span className="mx-2 text-gray-400">/</span>
-              <span className="text-gray-900">{product.name}</span>
-            </nav>
-          </div>
-          <aside className="hidden space-y-6 text-[16px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
+          <aside className="hidden space-y-8 text-[14px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
             <MetadataList items={metadataRows} legalLinks={[]} />
           </aside>
-          {/* Overview with main video (no carousel) */}
           <section className="lg:col-span-8 space-y-12">
             <FeaturesBanner
-              // Prefer video over image; only use image when no video
-              imageUrl={relatedVideos.length > 0 ? undefined : (featuredImage || undefined)}
-              images={[]}
-              videos={relatedVideos.length > 0 ? [relatedVideos[0].url] : []}
-              fallbackThumbnail={featuredImage}
-              label="Overview"
+              imageUrl={featuredImage}
               caption={featureCaption}
               title={copy.featuresTitle}
               description={copy.featuresDescription}
             />
           </section>
-
-
-
-
-          {screenshotRow.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-                              <span className={SECTION_LABEL_CLASS}>Screenshots</span>
-              <section className="lg:col-span-12 space-y-6">
-                <div
-                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-1"
-                  aria-label="Product screenshots"
-                >
-                  {screenshotRow.map((shot) => (
-                    <button
-                      key={shot.url}
-                      type="button"
-                      onClick={() => setLightboxImageUrl(shot.url)}
-                      className="snap-start shrink-0 basis-full sm:basis-1/2 xl:basis-1/3 group flex h-full flex-col overflow-hidden  border border-[#e6e8eb] bg-white text-left transition hover:border-[#bfd0ff] hover:shadow-md"
-                    >
-                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0a2540]">
-                        <Image
-                          src={shot.url}
-                          alt={shot.alt ?? product.name ?? 'Screenshot'}
-                          fill
-                          className="object-cover transition duration-200 group-hover:scale-[1.02]"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1440px) 40vw, 30vw"
-                        />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </section>
-            </>
-          ) : null}
-
 
           {hasAboutContent ? (
             <>
@@ -268,110 +166,6 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
               </aside>
               <section className="lg:col-span-8 space-y-12">
                 <AboutBlock body={copy.aboutParagraphs} />
-              </section>
-            </>
-          ) : null}
-          
-          {videoRow.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <section className="lg:col-span-12 space-y-6">
-                <span className={SECTION_LABEL_CLASS}>Videos</span>
-                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                  {videoRow.map((video) => (
-                    <a
-                      key={video.url}
-                      href={video.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group flex h-full flex-col overflow-hidden  bg-white transition hover:border-[#bfd0ff] hover:shadow-md"
-                    >
-                      {video.thumbnail ? (
-                        <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0a2540]">
-                          <Image
-                            src={video.thumbnail}
-                            alt={video.title}
-                            fill
-                            className="object-cover transition duration-200 group-hover:scale-[1.02]"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1440px) 40vw, 30vw"
-                          />
-                        </div>
-                      ) : null}
-                      <div className="flex flex-1 flex-col gap-2 px-4 py-4">
-                        <span className="text-[16px] font-semibold text-[#0a2540]">{video.title}</span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </section>
-            </>
-          ) : null}
-
-          {lightboxImageUrl ? (
-            <div
-              className="lg:col-span-12"
-            >
-              <div
-                className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4"
-                role="dialog"
-                aria-modal
-                onClick={() => setLightboxImageUrl(null)}
-              >
-                <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    type="button"
-                    aria-label="Close"
-                    onClick={() => setLightboxImageUrl(null)}
-                    className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/70"
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </button>
-                  <div className="relative h-[80vh] w-full">
-                    <Image src={lightboxImageUrl} alt="Screenshot" fill className="rounded-2xl object-contain" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : null}
-
-          {featureList.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>Features</span>
-              </aside>
-              <section className="lg:col-span-8">
-                <div className="grid gap-4 md:grid-cols-2">
-                  {featureList.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3 text-[16px] leading-[1.6] text-[#334155]">
-                      <span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#0a2540]" aria-hidden="true" />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </>
-          ) : null}
-
-          
-
-          {faqItems.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>FAQs</span>
-              </aside>
-              <section className="lg:col-span-8">
-                <FaqAccordion items={faqItems} />
               </section>
             </>
           ) : null}
@@ -390,6 +184,20 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
             </>
           ) : null}
 
+          {faqItems.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>FAQs</span>
+              </aside>
+              <section className="lg:col-span-8">
+                <FaqAccordion items={faqItems} />
+              </section>
+            </>
+          ) : null}
+
           {reviewItems.length > 0 ? (
             <>
               <div className="lg:col-span-12">
@@ -403,90 +211,6 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
               </section>
             </>
           ) : null}
-
-          {Array.isArray(relatedApps) && relatedApps.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <section className="lg:col-span-12">
-                      <h2 className="text-[20px] font-semibold leading-tight text-[#0a2540] sm:text-[22px] pb-8">Related Apps</h2>
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                  {relatedApps.map((app) => (
-                    <a
-                      key={app.slug}
-                      href={`/${app.slug}`}
-                      className="group flex h-full flex-col justify-between rounded-[12px] border border-[#e6e8eb] bg-white p-4 transition hover:border-[#bfd0ff] hover:shadow-md"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="text-[15px] font-semibold text-[#0a2540] group-hover:underline">
-                          {app.name}
-                        </span>
-                        {app.primaryCategory ? (
-                          <span className="rounded-full bg-[#f6f9fc] px-3 py-1 text-[11px] font-medium text-[#425466]">
-                            {app.primaryCategory}
-                          </span>
-                        ) : null}
-                      </div>
-                      <span className="mt-3 text-[13px] font-medium text-[#635bff]">View →</span>
-                    </a>
-                  ))}
-                </div>
-              </section>
-            </>
-          ) : null}
-
-
-          {Array.isArray(relatedPosts) && relatedPosts.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <section className="lg:col-span-12 space-y-6">
-                <div className="space-y-3">
-                  <h2 className="text-[20px] font-semibold leading-tight text-[#0a2540] sm:text-[22px]">
-                    Related Articles
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
-                  {relatedPosts.slice(0, 3).map((post, index) => (
-                    <a key={`${post.slug}-${index}`} href={`/blog/${post.slug}`} className="block">
-                      <Card className="h-full overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
-                        <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
-                          <div className="p-6 text-center">
-                            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                              {/* icon placeholder for parity with other lander */}
-                            </div>
-                          </div>
-                        </div>
-                        <CardHeader>
-                          {(post.tags ?? []).length > 0 && (
-                            <div className="mb-2 flex flex-wrap gap-2">
-                              {(post.tags ?? []).slice(0, 3).map((tag) => (
-                                <Badge key={`${post.slug}-header-${tag}`} variant="secondary" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-                          <CardTitle className="line-clamp-2 text-lg font-semibold">{post.title}</CardTitle>
-                          <p className="line-clamp-3 text-sm text-muted-foreground">{post.description}</p>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-                            {post.author && <span>{post.author}</span>}
-                            {post.date && <time dateTime={post.date}>{post.date.slice(0, 10)}</time>}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </a>
-                  ))}
-                </div>
-              </section>
-            </>
-          ) : null}
-
-          
         </div>
       </MarketplaceLayout>
     </>
@@ -500,6 +224,12 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
 
   const metadata: MetadataRow[] = [];
 
+  if (product.brand && product.brand.trim().length > 0) {
+    metadata.push({
+      label: "Built by",
+      value: product.brand.trim(),
+    });
+  }
 
   if (product.categories && product.categories.length > 0) {
     const categories = product.categories.filter((category) => category.trim().length > 0);
@@ -528,16 +258,16 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   if (product.supported_operating_systems && product.supported_operating_systems.length > 0) {
     const systems = product.supported_operating_systems.filter((system) => system.trim().length > 0);
     if (systems.length > 0) {
-      const grouped = chunkArray(systems, 2)
-        .map((group) => group.join(", "))
-        .join("\n");
-
       metadata.push({
         label: "Supported platforms",
         value: (
-          <span className="whitespace-pre-line text-[16px] leading-[1.6] text-[#334155]">
-            {grouped}
-          </span>
+          <ul className="list-none space-y-1 pl-0">
+            {systems.map((system) => (
+              <li key={system} className="text-[14px] leading-[1.6] text-[#334155]">
+                {system}
+              </li>
+            ))}
+          </ul>
         ),
       });
     }
@@ -553,6 +283,12 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
     }
   }
 
+  if (testModeUrl) {
+    metadata.push({
+      label: "Sandbox compatible",
+      value: "Available",
+    });
+  }
 
   if (product.return_policy?.method || product.return_policy?.url) {
     const pieces = [
@@ -576,18 +312,6 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   if (product.serp_co_product_page_url) {
     resourceLinks.push({ label: "serp.co", href: product.serp_co_product_page_url });
   }
-  if (product.chrome_webstore_link) {
-    resourceLinks.push({ label: "Chrome Store", href: product.chrome_webstore_link });
-  }
-  if (product.firefox_addon_store_link) {
-    resourceLinks.push({ label: "Firefox Addons", href: product.firefox_addon_store_link });
-  }
-  if (product.edge_addons_store_link) {
-    resourceLinks.push({ label: "Microsoft Addons", href: product.edge_addons_store_link });
-  }
-  if (product.opera_addons_store_link) {
-    resourceLinks.push({ label: "Opera Addons", href: product.opera_addons_store_link });
-  }
 
   if (resourceLinks.length > 0) {
     metadata.push({
@@ -610,7 +334,7 @@ function buildPricingDisplay(product: ProductData) {
   const price = product.pricing?.price?.trim();
 
   if (label && price) {
-    return `${label}`;
+    return `${label} • ${price}`;
   }
 
   if (price) {
@@ -687,140 +411,6 @@ function buildReviewItems(product: ProductData): ReviewListItem[] {
   );
 }
 
-function chunkArray<T>(items: T[], chunkSize: number): T[][] {
-  if (chunkSize <= 0) return [items];
-  const result: T[][] = [];
-  for (let index = 0; index < items.length; index += chunkSize) {
-    result.push(items.slice(index, index + chunkSize));
-  }
-  return result;
-}
-
-function buildFallbackVideoItems(product: ProductData, fallbackThumbnail?: string): VideoCardItem[] {
-  const videos: string[] = [];
-  if (Array.isArray(product.product_videos)) {
-    videos.push(...product.product_videos);
-  }
-  if (Array.isArray(product.related_videos)) {
-    videos.push(...product.related_videos);
-  }
-
-  const seen = new Set<string>();
-  const results: VideoCardItem[] = [];
-
-  videos.forEach((rawUrl, index) => {
-    if (typeof rawUrl !== "string") {
-      return;
-    }
-    const url = rawUrl.trim();
-    if (!url || seen.has(url)) {
-      return;
-    }
-    seen.add(url);
-
-    const thumbnail = deriveFallbackVideoThumbnail(url) ?? fallbackThumbnail ?? undefined;
-
-    results.push({
-      url,
-      title: deriveFallbackVideoTitle(url, product.name ?? product.platform ?? "Video", index + 1),
-      thumbnail,
-    });
-  });
-
-  return results;
-}
-
-type RelatedArticleItem = {
-  url: string;
-  label: string;
-};
-
-function buildRelatedArticles(product: ProductData): RelatedArticleItem[] {
-  return (
-    product.related_posts ?? []
-  )
-    .map((value, index) => {
-      const url = typeof value === "string" ? value.trim() : "";
-      if (!url) return null;
-      return {
-        url,
-        label: deriveArticleLabel(url, product.name ?? product.platform ?? "Article", index + 1),
-      } satisfies RelatedArticleItem;
-    })
-    .filter((item): item is RelatedArticleItem => Boolean(item));
-}
-
-function deriveArticleLabel(url: string, fallbackBase: string, ordinal: number): string {
-  try {
-    const parsed = new URL(url);
-    const host = parsed.hostname.replace(/^www\./, "");
-    const pathSegments = parsed.pathname.split("/").filter(Boolean);
-    if (pathSegments.length > 0) {
-      const lastSegment = decodeURIComponent(pathSegments[pathSegments.length - 1]);
-      const cleaned = lastSegment.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
-      if (cleaned.length > 0) {
-        return `${host} • ${capitalize(cleaned)}`;
-      }
-    }
-    return host || fallbackBase;
-  } catch {
-    return `${fallbackBase} resource ${ordinal}`;
-  }
-}
-
-function capitalize(value: string): string {
-  if (!value) return value;
-  return value
-    .split(" ")
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ");
-}
-
-function deriveFallbackVideoTitle(url: string, fallbackBase: string, ordinal: number): string {
-  try {
-    const parsed = new URL(url);
-    const host = parsed.hostname.replace(/^www\./, "");
-    if (host.includes("youtube")) {
-      return `YouTube • ${fallbackBase}`;
-    }
-    if (host.includes("vimeo")) {
-      return `Vimeo • ${fallbackBase}`;
-    }
-    const pathSegments = parsed.pathname.split("/").filter(Boolean);
-    if (pathSegments.length > 0) {
-      const lastSegment = decodeURIComponent(pathSegments[pathSegments.length - 1]);
-      const cleaned = lastSegment.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
-      if (cleaned.length > 0) {
-        return `${host} • ${capitalize(cleaned)}`;
-      }
-    }
-    return host || `${fallbackBase} video ${ordinal}`;
-  } catch {
-    return `${fallbackBase} video ${ordinal}`;
-  }
-}
-
-function deriveFallbackVideoThumbnail(url: string): string | null {
-  try {
-    const parsed = new URL(url);
-    if (parsed.hostname.includes("youtube.com")) {
-      const id = parsed.searchParams.get("v");
-      if (id) {
-        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-      }
-    }
-    if (parsed.hostname === "youtu.be") {
-      const id = parsed.pathname.replace("/", "");
-      if (id) {
-        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-      }
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 function getInitials(value: string | undefined) {
   if (!value) return "A";
   const words = value.trim().split(/\s+/);
@@ -851,7 +441,7 @@ function MetadataList({ items, legalLinks }: MetadataListProps) {
           {items.map((item) => (
             <div key={item.label} className="flex flex-col gap-2">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#6b7a90]">{item.label}</dt>
-              <dd className="text-[16px] leading-[1.6] text-[#334155]">{item.value}</dd>
+              <dd className="text-[14px] leading-[1.6] text-[#334155]">{item.value}</dd>
             </div>
           ))}
         </dl>
@@ -914,5 +504,5 @@ function RailLink({ href, label }: RailLinkProps) {
   );
 }
 function Divider() {
-  return <div className="border-b border-[#e6e8eb]" />;
+  return <div className="h-12 border-b border-[#e6e8eb]" />;
 }
