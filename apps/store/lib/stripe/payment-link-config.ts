@@ -103,7 +103,7 @@ export function buildPaymentLinkUpdatePayload({
       metadata,
       payment_intent_data: {
         metadata,
-        description: productName ? `SERP Apps - ${productName}` : undefined,
+        description: productName ? productName : undefined,
       },
     };
 

@@ -355,6 +355,10 @@ describe("POST /api/stripe/webhook", () => {
         paymentStatus: "paid",
         stripePaymentIntentId: "pi_test_123",
         metadata: expect.objectContaining({
+          // Mirrors plus payment description fields
+          paymentDescription: "Demo Offer",
+          payment_description: "Demo Offer",
+          description: "Demo Offer",
           stripePriceId: "price_123",
           stripe_price_id: "price_123",
           stripeProductId: "prod_demo",
@@ -382,6 +386,9 @@ describe("POST /api/stripe/webhook", () => {
         licenseEntitlements: ["demo-offer"],
         licenseTier: "demo-offer",
         metadata: expect.objectContaining({
+          paymentDescription: "Demo Offer",
+          payment_description: "Demo Offer",
+          description: "Demo Offer",
           stripePriceId: "price_123",
           stripe_price_id: "price_123",
           stripeProductId: "prod_demo",
