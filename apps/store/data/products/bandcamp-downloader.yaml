@@ -1,0 +1,78 @@
+platform: Bandcamp
+name: Bandcamp Downloader
+tagline: Save Bandcamp tracks and albums for personal offline use.
+slug: bandcamp-downloader
+description: |
+  Bandcamp empowers artists to sell and share music directly with fans. Many listeners want personal offline access to tracks and albums they follow or have purchased.
+
+  The upcoming Bandcamp Downloader will focus on saving publicly accessible audio for personal, fair-use cases like offline listening and reference. It is not affiliated with Bandcamp.
+seo_title: Download Bandcamp Music | Bandcamp Downloader
+seo_description: Save Bandcamp tracks and albums for offline listening. Join the waitlist to get notified at launch.
+serply_link: https://serp.ly/bandcamp-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/bandcamp-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/bandcamp-downloader
+serp_co_product_page_url: https://serp.co/products/bandcamp-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=bandcamp-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Join the waitlist for early access
+  - Planned support for public track/album pages
+  - Simple browser-based workflow
+  - Privacy-first, no tracking
+  - Fair-use only; not affiliated with Bandcamp
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Will this work for albums?
+    answer: We intend to prioritize reliable single-track saving and expand based on demand.
+  - question: Is this official?
+    answer: No. This project is independent and not affiliated with Bandcamp.
+  - question: When will it be available?
+    answer: Join the waitlist and we’ll notify you as soon as beta is open.
+  - question: Is it legal?
+    answer: Download only content you have rights to access. Personal, fair-use cases only.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Music]
+keywords:
+  - bandcamp downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-bandcamp-downloader
+permission_justifications: []

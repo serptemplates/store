@@ -1,0 +1,78 @@
+platform: VideoHive
+name: VideoHive Downloader
+tagline: Save VideoHive previews for comping and offline review.
+slug: videohive-downloader
+description: |
+  VideoHive offers motion graphics templates and stock footage. Editors often need local preview comps for offline review and client approval before licensing.
+
+  The upcoming VideoHive Downloader will focus on saving previews for personal layout and edit testing where permitted. License final assets from VideoHive. Not affiliated with VideoHive.
+seo_title: Download VideoHive Previews | VideoHive Downloader
+seo_description: Save VideoHive preview comps for offline review. Join the waitlist to get notified at launch.
+serply_link: https://serp.ly/videohive-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/videohive-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/videohive-downloader
+serp_co_product_page_url: https://serp.co/products/videohive-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=videohive-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Waitlist notifications
+  - Planned support for preview comps
+  - Browser-based workflow
+  - Privacy-first, no tracking
+  - Not affiliated with VideoHive; license final assets properly
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Can I use previews commercially?
+    answer: No. Use previews only for internal mockups or edit tests. License from VideoHive for production use.
+  - question: Collections?
+    answer: We’ll evaluate bulk features after initial validation.
+  - question: When is beta?
+    answer: Join the waitlist for updates.
+  - question: Affiliation?
+    answer: Independent; not affiliated with VideoHive.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Stock]
+keywords:
+  - videohive downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-videohive-downloader
+permission_justifications: []

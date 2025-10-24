@@ -1,0 +1,78 @@
+platform: ArtStation
+name: ArtStation Downloader
+tagline: Save ArtStation images and project assets for offline reference.
+slug: artstation-downloader
+description: |
+  ArtStation hosts portfolios, concept art, and project breakdowns from artists worldwide. Many creators and studios browse ArtStation for reference boards and mood collections, but staying organized offline can be difficult.
+
+  The upcoming ArtStation Downloader will help you save publicly accessible images and project assets for personal reference and offline study. It’s designed for researchers, students, and creatives who want to build local reference libraries while respecting artists’ rights.
+seo_title: Download ArtStation Images | ArtStation Downloader
+seo_description: Save ArtStation images and project assets for offline reference. Join the waitlist to get notified at launch.
+serply_link: https://serp.ly/artstation-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/artstation-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/artstation-downloader
+serp_co_product_page_url: https://serp.co/products/artstation-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=artstation-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Join the waitlist for early access
+  - Planned support for saving public images and project covers
+  - Simple browser-based workflow
+  - Privacy-first, no tracking
+  - Fair-use only; not affiliated with ArtStation
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: When will the ArtStation Downloader be available?
+    answer: We’re targeting an early beta after we validate interest. Join the waitlist to be notified first.
+  - question: Is this free to use?
+    answer: We plan a free tier for light personal use and a paid option for power features.
+  - question: Is it legal to download from ArtStation?
+    answer: Only download content you have rights to access and use. This tool is intended for personal, educational, or fair-use purposes.
+  - question: How can I get early access?
+    answer: Submit your email on the waitlist form. We’ll invite interested users as beta builds are ready.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Images]
+keywords:
+  - artstation downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-artstation-downloader
+permission_justifications: []

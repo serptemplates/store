@@ -1,0 +1,78 @@
+platform: Pond5
+name: Pond5 Downloader
+tagline: Save Pond5 previews for comping and offline review.
+slug: pond5-downloader
+description: |
+  Pond5 offers stock footage, music, and sound effects. Editors often need local preview comps for offline review and client approvals before licensing.
+
+  The upcoming Pond5 Downloader will focus on saving preview comps for personal layout and edit testing where permitted. License final assets from Pond5. Not affiliated with Pond5.
+seo_title: Download Pond5 Previews | Pond5 Downloader
+seo_description: Save Pond5 preview comps for offline review. Join the waitlist to get notified at launch.
+serply_link: https://serp.ly/pond5-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/pond5-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/pond5-downloader
+serp_co_product_page_url: https://serp.co/products/pond5-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=pond5-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Waitlist notifications
+  - Planned support for preview comps
+  - Browser-based workflow
+  - Privacy-first, no tracking
+  - Not affiliated with Pond5; license final assets properly
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Can I use previews in final edits?
+    answer: No. Use previews only for comping and review. License the asset from Pond5 for production use.
+  - question: Bulk boards or collections?
+    answer: We’ll evaluate bulk features after initial validation.
+  - question: When is beta?
+    answer: Join the waitlist for updates.
+  - question: Affiliation?
+    answer: Independent; not affiliated with Pond5.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Stock]
+keywords:
+  - pond5 downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-pond5-downloader
+permission_justifications: []

@@ -1,0 +1,78 @@
+platform: FutureLearn
+name: FutureLearn Downloader
+tagline: Save FutureLearn course videos for offline study.
+slug: futurelearn-downloader
+description: |
+  FutureLearn delivers short courses and programs with video lessons and resources. Learners sometimes need offline copies for review and limited-connectivity environments.
+
+  The upcoming FutureLearn Downloader aims to save publicly accessible or course-allowed media for personal, educational use only. Not affiliated with FutureLearn.
+seo_title: Download FutureLearn Videos | FutureLearn Downloader
+seo_description: Save FutureLearn course videos for offline study. Join the waitlist for updates.
+serply_link: https://serp.ly/futurelearn-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/futurelearn-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/futurelearn-downloader
+serp_co_product_page_url: https://serp.co/products/futurelearn-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=futurelearn-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Waitlist and beta invites
+  - Planned support for public/course-allowed videos
+  - Browser-based workflow
+  - Privacy-first, no tracking
+  - Fair-use only; not affiliated with FutureLearn
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Will it work across all courses?
+    answer: Only where downloading is permitted or content is publicly accessible. Respect course policies.
+  - question: Subtitles?
+    answer: We’ll consider subtitle support post-validation.
+  - question: When is beta?
+    answer: Join the waitlist; we’ll email you when it’s ready.
+  - question: Is it official?
+    answer: No. Independent and not affiliated with FutureLearn.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Course Platforms]
+keywords:
+  - futurelearn downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-futurelearn-downloader
+permission_justifications: []

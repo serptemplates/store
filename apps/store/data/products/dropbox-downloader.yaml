@@ -1,0 +1,78 @@
+platform: Dropbox
+name: Dropbox Downloader
+tagline: Save shared Dropbox files via direct links.
+slug: dropbox-downloader
+description: |
+  Dropbox links are widely used to share files and folders. Users sometimes need a simple way to fetch shared assets and keep local copies organized.
+
+  The upcoming Dropbox Downloader focuses on streamlining direct downloads from publicly accessible share links for personal use. Not affiliated with Dropbox.
+seo_title: Download from Dropbox Links | Dropbox Downloader
+seo_description: Fetch shared Dropbox files quickly via direct links. Join the waitlist for Dropbox Downloader.
+serply_link: https://serp.ly/dropbox-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/dropbox-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/dropbox-downloader
+serp_co_product_page_url: https://serp.co/products/dropbox-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=dropbox-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Join the waitlist for beta access
+  - Planned support for public share links
+  - Simple, browser-based workflow
+  - Privacy-first, no tracking
+  - Not affiliated with Dropbox
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Does it require login?
+    answer: We intend to focus on publicly accessible share links first. Private access may be evaluated later.
+  - question: Folder support?
+    answer: We’ll assess based on demand; initial focus is single-file reliability.
+  - question: Legal?
+    answer: Only download files you have rights to access and use.
+  - question: How do I get updates?
+    answer: Add your email to the waitlist for notifications.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Files]
+keywords:
+  - dropbox downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-dropbox-downloader
+permission_justifications: []

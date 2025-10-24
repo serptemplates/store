@@ -1,0 +1,78 @@
+platform: Mixcloud
+name: Mixcloud Downloader
+tagline: Save Mixcloud shows and mixes for personal offline listening.
+slug: mixcloud-downloader
+description: |
+  Mixcloud hosts DJ mixes, radio shows, and long-form audio. Listeners may want offline access for commutes or practice sessions.
+
+  The upcoming Mixcloud Downloader is intended for saving publicly accessible audio for personal, fair-use listening. Not affiliated with Mixcloud.
+seo_title: Download Mixcloud Shows | Mixcloud Downloader
+seo_description: Save Mixcloud audio for offline listening. Join the waitlist for early access.
+serply_link: https://serp.ly/mixcloud-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/mixcloud-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/mixcloud-downloader
+serp_co_product_page_url: https://serp.co/products/mixcloud-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=mixcloud-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Waitlist and beta invitations
+  - Planned support for public show/mix pages
+  - Browser-first workflow
+  - Privacy-first, no tracking
+  - Fair-use only; not affiliated with Mixcloud
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Does it split tracks?
+    answer: We’ll evaluate advanced features like cue/track splitting after initial validation.
+  - question: When is beta?
+    answer: As soon as we confirm demand. Join the waitlist for updates.
+  - question: Is it legal?
+    answer: Download only content you have rights to access. Personal, educational, or fair-use cases only.
+  - question: Affiliation?
+    answer: Independent; not affiliated with Mixcloud.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Audio]
+keywords:
+  - mixcloud downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-mixcloud-downloader
+permission_justifications: []

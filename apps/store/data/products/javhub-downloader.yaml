@@ -1,0 +1,76 @@
+platform: JAVHub
+name: JAVHub Downloader
+tagline: Get launch updates for the JAVHub downloader.
+slug: javhub-downloader
+description: |
+  JAVHub Downloader is in planning. We're interviewing people who need a safer, more reliable way to capture javhub media for offline access.
+  
+  Sign up to receive prototype announcements, beta invitations, and opportunities to shape the roadmap before launch.
+seo_title: JAVHub Downloader Coming Soon
+seo_description: Subscribe for launch updates on the upcoming javhub downloader and help prioritize features.
+serply_link: https://serp.ly/javhub-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/javhub-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/javhub-downloader
+serp_co_product_page_url: https://serp.co/products/javhub-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=javhub-downloader
+status: pre_release
+featured_image: null
+featured_image_gif: null
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url: null
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- Planned high-quality media downloads
+- Privacy-focused workflows with local controls
+- Roadmap shaped by early subscribers
+pricing:
+  label: Early access signup
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Launch Updates
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+- question: What stage is JAVHub Downloader in?
+  answer: JAVHub Downloader is currently in research and validation. Subscribe for updates to receive build news.
+- question: How will my feedback be used?
+  answer: Input from early subscribers helps us prioritize features, workflow support, and integrations before development.
+- question: Will it support batch downloads?
+  answer: Batch downloading is on the roadmap, and we'll confirm the details with early testers from the subscriber list.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Adult
+keywords:
+- javhub downloader
+- javhub download
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-javhub-downloader
+permission_justifications: []
+

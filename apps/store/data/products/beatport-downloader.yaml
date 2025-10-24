@@ -1,0 +1,78 @@
+platform: Beatport
+name: Beatport Downloader
+tagline: Save Beatport previews for personal reference and crate prep.
+slug: beatport-downloader
+description: |
+  Beatport offers an extensive electronic music catalog and DJ-focused storefront. DJs and producers often want offline references of track previews to evaluate purchases or prep sets.
+
+  The upcoming Beatport Downloader is aimed at saving publicly accessible previews for personal reference and educational use. It does not replace purchasing music and is not affiliated with Beatport.
+seo_title: Download Beatport Previews | Beatport Downloader
+seo_description: Save Beatport audio previews for personal reference. Join the waitlist for early access.
+serply_link: https://serp.ly/beatport-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/beatport-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/beatport-downloader
+serp_co_product_page_url: https://serp.co/products/beatport-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=beatport-downloader
+status: pre_release
+featured_image:
+featured_image_gif:
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url:
+github_repo_tags: []
+chrome_webstore_link:
+firefox_addon_store_link:
+edge_addons_store_link:
+producthunt_link:
+features:
+  - Waitlist notifications
+  - Planned support for public track preview pages
+  - Lightweight browser-based workflow
+  - Privacy-first, no tracking
+  - Fair-use only; not affiliated with Beatport
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Launch pricing will be announced to subscribers first.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits: []
+faqs:
+  - question: Does this replace buying tracks?
+    answer: No. This is intended only for personal reference of public previews. Please support artists by purchasing music you use.
+  - question: When is it launching?
+    answer: After demand validation, we will invite the waitlist to beta.
+  - question: Is it legal?
+    answer: Only download content you have rights to access. Personal and fair-use cases only.
+  - question: How do I sign up?
+    answer: Use the waitlist form and we’ll email you when it’s ready.
+reviews: []
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories: [Downloader, Music]
+keywords:
+  - beatport downloader
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-beatport-downloader
+permission_justifications: []
