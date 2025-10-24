@@ -9,6 +9,11 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import { isMap, parse, parseDocument, YAMLMap } from "yaml";
 
+import {
+  createStripePaymentLinkMetadata,
+  type StripePaymentLinkMetadata,
+} from "@/lib/stripe/payment-link-metadata";
+
 const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
 const REPO_ROOT = path.resolve(__dirname, "../../..");
 const PRODUCTS_DIR = path.join(REPO_ROOT, "apps/store/data/products");
@@ -412,25 +417,20 @@ function buildMetadata({
   slug,
   ghlTag,
   stripeProductId,
+  productName,
 }: {
   slug: string;
   ghlTag: string | null;
   stripeProductId: string | null;
-}): Record<string, string> {
-  const metadata: Record<string, string> = {
-    product_slug: slug,
+  productName: string | null;
+}): StripePaymentLinkMetadata {
+  return createStripePaymentLinkMetadata({
+    slug,
     source: "store-scripts/create-stripe-payment-links",
-  };
-
-  if (ghlTag) {
-    metadata.ghl_tag = ghlTag;
-  }
-
-  if (stripeProductId) {
-    metadata.stripe_product_id = stripeProductId;
-  }
-
-  return metadata;
+    ghlTag,
+    stripeProductId,
+    productName,
+  });
 }
 
 function buildSuccessRedirectUrl({
@@ -460,14 +460,16 @@ function buildPaymentLinkUpdatePayload({
   stripeProductId,
   paymentLinkId,
   mode,
+  productName,
 }: {
   slug: string;
   ghlTag: string | null;
   stripeProductId: string | null;
   paymentLinkId: string;
   mode: StripeMode;
+  productName: string | null;
 }): Stripe.PaymentLinkUpdateParams {
-  const metadata = buildMetadata({ slug, ghlTag, stripeProductId });
+  const metadata = buildMetadata({ slug, ghlTag, stripeProductId, productName });
   const successUrl = buildSuccessRedirectUrl({
     slug,
     paymentLinkId,
@@ -493,6 +495,7 @@ function buildPaymentLinkUpdatePayload({
     metadata,
     payment_intent_data: {
       metadata,
+      description: productName ? `SERP Apps - ${productName}` : undefined,
     },
   };
 
@@ -706,7 +709,9 @@ async function main() {
           MODE === "live"
             ? product.stripeProductId
             : product.stripeTestProductId,
+        productName: product.name,
       });
+      metadata.payment_link_mode = MODE;
 
       const params: Stripe.PaymentLinkCreateParams = {
         line_items: [{ price: resolvedPriceId, quantity: 1 }],
@@ -714,6 +719,7 @@ async function main() {
         metadata,
         payment_intent_data: {
           metadata,
+          description: product.name ? `SERP Apps - ${product.name}` : undefined,
         },
         billing_address_collection: "auto",
         automatic_tax: { enabled: false },
@@ -763,6 +769,7 @@ async function main() {
               : product.stripeTestProductId,
           paymentLinkId: createdLink.id,
           mode: MODE,
+          productName: product.name,
         });
 
         await stripe.paymentLinks.update(createdLink.id, updatePayload);

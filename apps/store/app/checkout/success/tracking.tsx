@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import posthog from "posthog-js";
 import {
   pushPurchaseEvent,
   type EcommerceItem,
@@ -76,6 +77,31 @@ export function ConversionTracking({ sessionId, paymentLinkId, order, provider }
       affiliation: provider ?? undefined,
       items: ecommerceItems,
     });
+
+    const amountValue = typeof order.value === "number" ? order.value : null;
+    const amountInCents = typeof amountValue === "number" ? Math.round(amountValue * 100) : null;
+
+    try {
+      posthog.capture("checkout_completed", {
+        source: "client",
+        transaction_id: transactionId,
+        payment_link_id: order.paymentLinkId ?? null,
+        product_slug: order.productSlug ?? null,
+        currency: order.currency ?? null,
+        amount_total: amountValue,
+        amount_total_cents: amountInCents,
+        coupon: order.coupon ?? null,
+        affiliation: provider ?? null,
+        items: ecommerceItems.map((item) => ({
+          id: item.item_id,
+          name: item.item_name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      });
+    } catch (error) {
+      console.warn("posthog.capture checkout_completed failed", error);
+    }
 
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "purchase", {
