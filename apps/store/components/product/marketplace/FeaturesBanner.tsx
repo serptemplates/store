@@ -13,8 +13,6 @@ export function FeaturesBanner({ imageUrl, caption, title, description }: Featur
   return (
     <section className="space-y-8">
       <div className="space-y-4">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">Features</span>
-        <h2 className="text-[24px] font-semibold tracking-[-0.01em] text-[#0a2540]">{title}</h2>
         <p className="max-w-3xl text-[14px] leading-[1.6] text-[#334155]">{description}</p>
       </div>
 

@@ -21,7 +21,7 @@ export function MarketplaceLayout({
       style={{ fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}
     >
       <div className="bg-[#f6f9fc]">
-        <main className="mx-auto w-full max-w-[1200px] px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+        <main className="mx-auto w-full max-w-[1200px] px-4 py-6 sm:px-6 lg:px-10 lg:py-10">
           <div className="px-6 py-6 sm:px-8 sm:py-8">{header}</div>
         </main>
       </div>

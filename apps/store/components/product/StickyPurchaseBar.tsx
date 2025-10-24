@@ -38,7 +38,13 @@ export function StickyPurchaseBar({
     return null;
   }
 
-  const checkoutLabel = checkoutCta?.text?.trim().length ? checkoutCta.text : "Checkout";
+  const checkoutLabel = (() => {
+    const fromPricing = product.pricing?.cta_text?.trim();
+    if (fromPricing && fromPricing.length > 0) return fromPricing;
+    const fromCta = checkoutCta?.text?.trim();
+    if (fromCta && fromCta.length > 0) return fromCta;
+    return "Checkout";
+  })();
   const opensInNewTab = checkoutCta?.opensInNewTab ?? false;
   const checkoutRel = checkoutCta?.rel ?? "noopener noreferrer";
 
@@ -76,7 +82,7 @@ export function StickyPurchaseBar({
             <button
               type="button"
               onClick={onWaitlistClick}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-purple-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 sm:w-auto sm:text-base whitespace-nowrap"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#635bff] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#635bff] sm:w-auto sm:text-base whitespace-nowrap"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -94,7 +100,7 @@ export function StickyPurchaseBar({
                     event.preventDefault();
                     onCheckoutClick?.(event);
                   }}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 sm:w-auto sm:text-base whitespace-nowrap"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#5752ff] sm:w-auto sm:text-base whitespace-nowrap"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0z" />
@@ -105,7 +111,7 @@ export function StickyPurchaseBar({
                 <button
                   type="button"
                   onClick={onCheckoutClick}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 sm:w-auto sm:text-base whitespace-nowrap"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#5752ff] sm:w-auto sm:text-base whitespace-nowrap"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0z" />

@@ -25,23 +25,25 @@ export function AppHeader({
   primaryLabel,
 }: AppHeaderProps) {
   return (
-    <section className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr),240px]">
+    <section className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr),200px] lg:grid-cols-[minmax(0,1fr),240px]">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-4">
           <AppIcon iconUrl={iconUrl} initials={iconInitials} name={name} />
-          <div className="flex flex-1 flex-col gap-3">
-            <h1 className="text-[28px] font-semibold leading-[1.2] tracking-[-0.01em] text-[#0a2540] sm:text-[32px]">
+          <div className="flex flex-1 flex-col gap-2">
+            <h1 className="text-[24px] font-semibold leading-[1.2] tracking-[-0.01em] text-[#0a2540] md:text-[28px] lg:text-[32px]">
               {name}
             </h1>
-            <p className="text-[14px] leading-[1.6] text-[#425466]">{subtitle}</p>
-            <span className="inline-flex w-fit items-center rounded-full border border-[#eef2f7] bg-[#f6f9fc] px-3 py-1 text-[13px] font-medium text-[#425466]">
+            <p className="text-[14px] leading-[1.6] text-[#425466] md:text-[15px]">
+              {subtitle}
+            </p>
+            <span className="inline-flex w-fit items-center rounded-md border border-[#eef2f7] bg-[#f6f9fc] px-3 py-1 text-[12px] font-medium text-[#425466] md:text-[13px]">
               {category}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start lg:flex-col lg:items-end">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start md:flex-col md:items-end">
         <Button
           size="sm"
           className="h-10 w-full rounded-lg bg-[#635bff] px-4 text-[14px] font-medium text-white transition hover:bg-[#5752ff] sm:w-auto"

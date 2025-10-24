@@ -10,7 +10,6 @@ export function AboutBlock({ title = "ABOUT", body }: AboutBlockProps) {
 
   return (
     <section className="space-y-6">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">{title}</span>
       <div className="space-y-4">
         {paragraphs.map((text, index) => (
           <p key={index} className="max-w-3xl text-[14px] leading-[1.6] text-[#334155]">

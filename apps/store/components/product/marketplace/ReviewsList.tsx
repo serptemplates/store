@@ -20,7 +20,6 @@ export function ReviewsList({ reviews }: ReviewsListProps) {
 
   return (
     <section className="space-y-6">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">Reviews</span>
       <div className="space-y-6">
         {reviews.map((review) => (
           <article key={review.id} className="border-b border-[#e6e8eb] pb-6 last:border-b-0 last:pb-0">

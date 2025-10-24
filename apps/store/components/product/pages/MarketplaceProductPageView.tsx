@@ -35,6 +35,8 @@ type MetadataRow = {
   value: ReactNode;
 };
 
+const SECTION_LABEL_CLASS = "hidden lg:block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]";
+
 export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
@@ -80,10 +82,29 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
     product.tagline ??
     product.name ??
     "";
-  const primaryButtonLabel = resolvedCta.text;
-  const testModeUrl = getPaymentLinkTestUrl(product);
+  const primaryButtonLabel = (() => {
+    const fromPricing = product.pricing?.cta_text?.trim();
+    if (fromPricing && fromPricing.length > 0) return fromPricing;
+    const fromResolved = resolvedCta.text?.trim();
+    if (fromResolved && fromResolved.length > 0) return fromResolved;
+    return "Install app";
+  })();
   const handleHeroClick = useCallback(() => handleCtaClick("hero"), [handleCtaClick]);
+  const handleStickyBarCheckoutClick = useCallback(() => handleCtaClick("sticky_bar"), [handleCtaClick]);
   const hasAboutContent = copy.aboutParagraphs.some((paragraph) => paragraph.trim().length > 0);
+  const waitlistEnabled = product.status === "pre_release";
+  const brandLogoPath = getBrandLogoPath(product.slug ?? "");
+  const stickyImageSource = brandLogoPath || product.featured_image || undefined;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const triggerHeight = 600;
+      setShowStickyBar(window.scrollY > triggerHeight);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -105,8 +126,25 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
         }
         footer={<FooterComposite site={footerSite} />}
       >
-        <div className="mt-12 grid gap-y-16 lg:grid-cols-12 lg:gap-x-10">
-          <aside className="lg:col-span-4 space-y-8 text-[14px] leading-[1.6] text-[#334155]">
+        <StickyPurchaseBar
+          product={product}
+          priceLabel={product.pricing?.label ?? null}
+          price={product.pricing?.price ?? null}
+          originalPrice={product.pricing?.original_price ?? null}
+          show={showStickyBar}
+          brandLogoPath={brandLogoPath ?? undefined}
+          mainImageSource={stickyImageSource}
+          waitlistEnabled={waitlistEnabled}
+          onWaitlistClick={() => setShowWaitlistModal(true)}
+          checkoutCta={waitlistEnabled ? null : resolvedCta}
+          onCheckoutClick={(event) => {
+            event.preventDefault();
+            handleStickyBarCheckoutClick();
+          }}
+        />
+
+        <div className="mt-12 grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+          <aside className="hidden space-y-8 text-[14px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
             <MetadataList items={metadataRows} legalLinks={[]} />
           </aside>
           <section className="lg:col-span-8 space-y-12">
@@ -123,7 +161,9 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               <div className="lg:col-span-12">
                 <Divider />
               </div>
-              <aside className="lg:col-span-4" />
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>About</span>
+              </aside>
               <section className="lg:col-span-8 space-y-12">
                 <AboutBlock body={copy.aboutParagraphs} />
               </section>
@@ -135,7 +175,9 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               <div className="lg:col-span-12">
                 <Divider />
               </div>
-              <aside className="lg:col-span-4" />
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Permissions</span>
+              </aside>
               <section className="lg:col-span-8 space-y-12">
                 <PermissionsAccordion items={permissions} />
               </section>
@@ -147,7 +189,9 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               <div className="lg:col-span-12">
                 <Divider />
               </div>
-              <aside className="lg:col-span-4" />
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>FAQs</span>
+              </aside>
               <section className="lg:col-span-8">
                 <FaqAccordion items={faqItems} />
               </section>
@@ -159,7 +203,9 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               <div className="lg:col-span-12">
                 <Divider />
               </div>
-              <aside className="lg:col-span-4" />
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Reviews</span>
+              </aside>
               <section className="lg:col-span-8">
                 <ReviewsList reviews={reviewItems} />
               </section>

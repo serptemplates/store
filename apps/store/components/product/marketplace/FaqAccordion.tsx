@@ -29,7 +29,6 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
 
   return (
     <section className="space-y-6">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">FAQs</span>
       <div className="bg-white">
         {items.map((item, index) => {
           const isOpen = item.id === openId;

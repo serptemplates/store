@@ -34,7 +34,6 @@ export function PermissionsAccordion({ items }: PermissionsAccordionProps) {
 
   return (
     <section className="space-y-6">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">PERMISSIONS</span>
       <div className="overflow-hidden border border-[#e6e8eb] bg-white">
         {items.map((item, index) => {
           const isOpen = item.id === openId;
