@@ -6,6 +6,12 @@ description: |
   Loom Video Downloader gives creators and teams a dependable way to save Loom videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Loom with consistent quality and predictable results.
   
   It supports One-click download from any video page, 100% privacy-friendly – no tracking or data collection, and Auto-detect videos on the page, so you can move quickly from download to delivery without tedious rework. Use it to archive Loom assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+  Loom Video Downloader gives creators, teams, and educators a reliable way to save Loom videos instantly in full quality for offline viewing, archiving, or repurposing. Whether you’re backing up team recordings, sharing client updates, or preparing deliverables, this lightweight tool makes downloading from Loom effortless and dependable.
+
+  Most people who rely on Loom for communication face the same problem — once videos are uploaded, they live exclusively on Loom’s servers. Access depends on stable internet, login status, and account permissions. Loom Video Downloader removes that limitation by letting you securely download your Loom recordings and store them locally, with no compression or re-encoding.
+
+  With a clean interface and automatic video detection, the extension finds playable Loom videos on the page and surfaces a “Download” button instantly. No manual URL copying, no sketchy third-party sites, and no data tracking. It’s a privacy-friendly way to take control of your Loom content.
+  
 seo_title: Download Loom Videos | Loom Video Downloader
 seo_description: Download Loom videos easily for offline viewing. Fast, reliable Loom
   video downloader with high-quality downloads.
@@ -50,9 +56,9 @@ github_repo_tags:
 - loom-video-downloader
 - download-loom-videos
 chrome_webstore_link: https://chromewebstore.google.com/detail/loom-video-downloader/oopljffmklejoikiemiedeangcchfmlf
-firefox_addon_store_link: https://addons.mozilla.org/en-US/firefox/addon/loom-video-downloader/
-edge_addons_store_link: https://microsoftedge.microsoft.com/addons/detail/loom-video-downloader/EXAMPLE
-opera_addons_store_link: https://addons.opera.com/en/extensions/details/loom-video-downloader/
+firefox_addon_store_link: null
+edge_addons_store_link: null
+opera_addons_store_link: null
 producthunt_link: null
 features:
 - One-click download from any video page

@@ -80,19 +80,13 @@ export function FeaturesBanner({
   return (
     <section className="space-y-8">
       <div className="space-y-3">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]">{label}</span>
         {title ? (
           <h2 className="text-[20px] font-semibold leading-tight text-[#0a2540] sm:text-[22px]">{title}</h2>
         ) : null}
         <p className="max-w-3xl text-[16px] leading-[1.6] text-[#334155]">{description}</p>
       </div>
 
-      {hasMedia ? (
-        <div className="rounded-[12px] border border-[#e6e8eb] bg-white px-2 py-6 sm:px-4">
-          <HeroMedia items={mediaItems} className="w-full" />
-          {caption ? <p className="mt-4 px-2 text-[13px] text-[#6b7a90] sm:px-4">{caption}</p> : null}
-        </div>
-      ) : null}
+      {hasMedia ? <HeroMedia items={mediaItems} className="w-full" /> : null}
     </section>
   );
 }

@@ -153,7 +153,7 @@ export default function HeroVideoDialog({
         aria-label="Play video"
         onClick={() => setOpen(true)}
         className={cn(
-          "group relative block w-full overflow-hidden rounded-2xl border bg-muted/40",
+          "group relative block w-full overflow-hidden",
           effectiveThumbnailSrc ? "aspect-video" : "p-10",
         )}
       >
@@ -202,7 +202,7 @@ export default function HeroVideoDialog({
           <div
             data-open={open}
             className={cn(
-              "relative w-full max-w-4xl rounded-2xl border bg-background  shadow-2xl transition-all duration-200",
+              "relative w-full max-w-4xl rounded-2xl bg-background shadow-2xl transition-all duration-200",
               anim,
             )}
             onClick={(e) => e.stopPropagation()}

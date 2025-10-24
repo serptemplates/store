@@ -35,9 +35,7 @@ export function AppHeader({
             <p className="max-w-xl text-[15px] leading-[1.6] text-[#425466] md:max-w-none">
               {subtitle}
             </p>
-            <span className="inline-flex items-center rounded-md border border-[#eef2f7] bg-[#f6f9fc] px-3 py-1 text-[12px] font-medium text-[#425466] md:text-[13px]">
-              {category}
-            </span>
+            
           </div>
         </div>
       </div>

@@ -32,6 +32,7 @@ export function StickyPurchaseBar({
   onWaitlistClick,
   checkoutCta,
   onCheckoutClick,
+  checkoutSupportLabel,
 }: StickyPurchaseBarProps) {
   if (!show) {
     return null;

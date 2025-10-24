@@ -24,6 +24,10 @@ import { FaqAccordion, type FaqItem } from "@/components/product/marketplace/Faq
 import { ReviewsList, type ReviewListItem } from "@/components/product/marketplace/ReviewsList";
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar";
 import { ExternalLink } from "lucide-react";
+import type { BlogPostMeta } from "@/lib/blog";
+import type { ProductVideoEntry } from "@/lib/products/video";
+import type { PostItem } from "@repo/ui/sections/PostsSection";
+import { Badge, Card, CardHeader, CardTitle, CardContent } from "@repo/ui";
 import { getBrandLogoPath } from "@/lib/products/brand-logos";
 
 export type VideoCardItem = {
@@ -32,10 +36,20 @@ export type VideoCardItem = {
   thumbnail?: string | null;
 };
 
+export type RelatedAppItem = {
+  slug: string;
+  name: string;
+  primaryCategory?: string;
+};
+
 export type MarketplaceProductPageViewProps = {
   product: ProductData;
   siteConfig: SiteConfig;
   videoEntries?: VideoCardItem[];
+  relatedApps?: RelatedAppItem[];
+  relatedPosts?: PostItem[];
+  schemaPosts?: BlogPostMeta[];
+  schemaVideoEntries?: ProductVideoEntry[];
 };
 
 type MetadataRow = {
@@ -45,7 +59,7 @@ type MetadataRow = {
 
 const SECTION_LABEL_CLASS = "hidden lg:block text-[36px] font-black uppercase tracking-[0.08em] text-[#fffff]";
 
-export function MarketplaceProductPageView({ product, siteConfig, videoEntries }: MarketplaceProductPageViewProps) {
+export function MarketplaceProductPageView({ product, siteConfig, videoEntries, relatedApps, relatedPosts = [], schemaPosts = [], schemaVideoEntries = [] }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const { affiliateId } = useAffiliateTracking();
@@ -109,6 +123,9 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
     return fallbackVideoItems;
   }, [videoEntries, featuredImage, fallbackVideoItems]);
   const relatedArticles = buildRelatedArticles(product);
+  const videoRow = useMemo(() => relatedVideos.slice(0, 3), [relatedVideos]);
+  const screenshotRow = useMemo(() => screenshots, [screenshots]);
+  const [lightboxImageUrl, setLightboxImageUrl] = useState<string | null>(null);
   const primaryButtonLabel = (() => {
     const fromPricing = product.pricing?.cta_text?.trim();
     if (fromPricing && fromPricing.length > 0) return fromPricing;
@@ -133,9 +150,16 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Structured data inputs: images + videos
+  const structuredImages: string[] = [
+    ...(featuredImage ? [featuredImage] : []),
+    ...screenshots.map((s) => s.url!).filter(Boolean),
+  ];
+  const structuredVideos: ProductVideoEntry[] = schemaVideoEntries;
+
   return (
     <>
-      <ProductStructuredDataScripts product={product} posts={[]} siteConfig={siteConfig} images={[]} videoEntries={[]} />
+      <ProductStructuredDataScripts product={product} posts={schemaPosts} siteConfig={siteConfig} images={structuredImages} videoEntries={structuredVideos} />
       <ProductStructuredData product={product} url={productUrl} />
       <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
 
@@ -171,14 +195,22 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
         />
 
         <div className="mt-12 grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+          <div className="lg:col-span-12">
+            <nav className="mb-2 text-sm">
+              <a href="/" className="text-gray-500 hover:text-gray-700">Home</a>
+              <span className="mx-2 text-gray-400">/</span>
+              <span className="text-gray-900">{product.name}</span>
+            </nav>
+          </div>
           <aside className="hidden space-y-6 text-[16px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
             <MetadataList items={metadataRows} legalLinks={[]} />
           </aside>
+          {/* Overview with main video (no carousel) */}
           <section className="lg:col-span-8 space-y-12">
             <FeaturesBanner
-              imageUrl={featuredImage}
-              images={carouselImages}
-              videos={relatedVideos.map((entry) => entry.url)}
+              imageUrl={undefined}
+              images={[]}
+              videos={relatedVideos.length > 0 ? [relatedVideos[0].url] : []}
               fallbackThumbnail={featuredImage}
               label="Overview"
               caption={featureCaption}
@@ -187,20 +219,73 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
             />
           </section>
 
-          {relatedVideos.length > 0 ? (
+
+
+
+          {screenshotRow.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+                              <span className={SECTION_LABEL_CLASS}>Screenshots</span>
+              <section className="lg:col-span-12 space-y-6">
+                <div
+                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-1"
+                  aria-label="Product screenshots"
+                >
+                  {screenshotRow.map((shot) => (
+                    <button
+                      key={shot.url}
+                      type="button"
+                      onClick={() => setLightboxImageUrl(shot.url)}
+                      className="snap-start shrink-0 basis-full sm:basis-1/2 xl:basis-1/3 group flex h-full flex-col overflow-hidden  border border-[#e6e8eb] bg-white text-left transition hover:border-[#bfd0ff] hover:shadow-md"
+                    >
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0a2540]">
+                        <Image
+                          src={shot.url}
+                          alt={shot.alt ?? product.name ?? 'Screenshot'}
+                          fill
+                          className="object-cover transition duration-200 group-hover:scale-[1.02]"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1440px) 40vw, 30vw"
+                        />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+
+          {hasAboutContent ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>About</span>
+              </aside>
+              <section className="lg:col-span-8 space-y-12">
+                <AboutBlock body={copy.aboutParagraphs} />
+              </section>
+            </>
+          ) : null}
+          
+          {videoRow.length > 0 ? (
             <>
               <div className="lg:col-span-12">
                 <Divider />
               </div>
               <section className="lg:col-span-12 space-y-6">
+                <span className={SECTION_LABEL_CLASS}>Videos</span>
                 <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                  {relatedVideos.map((video) => (
+                  {videoRow.map((video) => (
                     <a
                       key={video.url}
                       href={video.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-[#e6e8eb] bg-white transition hover:border-[#bfd0ff] hover:shadow-md"
+                      className="group flex h-full flex-col overflow-hidden  bg-white transition hover:border-[#bfd0ff] hover:shadow-md"
                     >
                       {video.thumbnail ? (
                         <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0a2540]">
@@ -221,6 +306,36 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
                 </div>
               </section>
             </>
+          ) : null}
+
+          {lightboxImageUrl ? (
+            <div
+              className="lg:col-span-12"
+            >
+              <div
+                className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4"
+                role="dialog"
+                aria-modal
+                onClick={() => setLightboxImageUrl(null)}
+              >
+                <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    type="button"
+                    aria-label="Close"
+                    onClick={() => setLightboxImageUrl(null)}
+                    className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/70"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                  <div className="relative h-[80vh] w-full">
+                    <Image src={lightboxImageUrl} alt="Screenshot" fill className="rounded-2xl object-contain" />
+                  </div>
+                </div>
+              </div>
+            </div>
           ) : null}
 
           {featureList.length > 0 ? (
@@ -244,39 +359,7 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
             </>
           ) : null}
 
-          {relatedArticles.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>Related Articles</span>
-              </aside>
-              <section className="lg:col-span-8">
-                <ul className="space-y-3">
-                  {relatedArticles.map((article) => (
-                    <li key={article.url}>
-                      <RailLink href={article.url} label={article.label} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </>
-          ) : null}
-
-          {hasAboutContent ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>About</span>
-              </aside>
-              <section className="lg:col-span-8 space-y-12">
-                <AboutBlock body={copy.aboutParagraphs} />
-              </section>
-            </>
-          ) : null}
+          
 
           {faqItems.length > 0 ? (
             <>
@@ -319,6 +402,90 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries }
               </section>
             </>
           ) : null}
+
+          {Array.isArray(relatedApps) && relatedApps.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <section className="lg:col-span-12">
+                      <h2 className="text-[20px] font-semibold leading-tight text-[#0a2540] sm:text-[22px] pb-8">Related Apps</h2>
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {relatedApps.map((app) => (
+                    <a
+                      key={app.slug}
+                      href={`/${app.slug}`}
+                      className="group flex h-full flex-col justify-between rounded-[12px] border border-[#e6e8eb] bg-white p-4 transition hover:border-[#bfd0ff] hover:shadow-md"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-[15px] font-semibold text-[#0a2540] group-hover:underline">
+                          {app.name}
+                        </span>
+                        {app.primaryCategory ? (
+                          <span className="rounded-full bg-[#f6f9fc] px-3 py-1 text-[11px] font-medium text-[#425466]">
+                            {app.primaryCategory}
+                          </span>
+                        ) : null}
+                      </div>
+                      <span className="mt-3 text-[13px] font-medium text-[#635bff]">View →</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+
+          {Array.isArray(relatedPosts) && relatedPosts.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <section className="lg:col-span-12 space-y-6">
+                <div className="space-y-3">
+                  <h2 className="text-[20px] font-semibold leading-tight text-[#0a2540] sm:text-[22px]">
+                    Related Articles
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3">
+                  {relatedPosts.slice(0, 3).map((post, index) => (
+                    <a key={`${post.slug}-${index}`} href={`/blog/${post.slug}`} className="block">
+                      <Card className="h-full overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
+                        <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
+                          <div className="p-6 text-center">
+                            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                              {/* icon placeholder for parity with other lander */}
+                            </div>
+                          </div>
+                        </div>
+                        <CardHeader>
+                          {(post.tags ?? []).length > 0 && (
+                            <div className="mb-2 flex flex-wrap gap-2">
+                              {(post.tags ?? []).slice(0, 3).map((tag) => (
+                                <Badge key={`${post.slug}-header-${tag}`} variant="secondary" className="text-xs">
+                                  {tag}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
+                          <CardTitle className="line-clamp-2 text-lg font-semibold">{post.title}</CardTitle>
+                          <p className="line-clamp-3 text-sm text-muted-foreground">{post.description}</p>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                            {post.author && <span>{post.author}</span>}
+                            {post.date && <time dateTime={post.date}>{post.date.slice(0, 10)}</time>}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+          
         </div>
       </MarketplaceLayout>
     </>
@@ -332,12 +499,6 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
 
   const metadata: MetadataRow[] = [];
 
-  if (product.brand && product.brand.trim().length > 0) {
-    metadata.push({
-      label: "Built by",
-      value: product.brand.trim(),
-    });
-  }
 
   if (product.categories && product.categories.length > 0) {
     const categories = product.categories.filter((category) => category.trim().length > 0);
@@ -448,7 +609,7 @@ function buildPricingDisplay(product: ProductData) {
   const price = product.pricing?.price?.trim();
 
   if (label && price) {
-    return `${label} • ${price}`;
+    return `${label}`;
   }
 
   if (price) {
@@ -752,5 +913,5 @@ function RailLink({ href, label }: RailLinkProps) {
   );
 }
 function Divider() {
-  return <div className="h-12 border-b border-[#e6e8eb]" />;
+  return <div className="border-b border-[#e6e8eb]" />;
 }
