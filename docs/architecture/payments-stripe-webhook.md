@@ -22,6 +22,22 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 - License creation goes through `@/lib/license-service`, which has its own modular breakdown (`request.ts`, `creation.ts`, etc.).
 - Analytics and alerting flow through `@/lib/analytics/checkout-server` and `@/lib/ops/alerts`.
 
+## Stripe Payment Link metadata contract
+
+Every Payment Link we generate or update goes through `@/lib/stripe/payment-link-metadata`. The helper centralises the metadata contract so the webhook and downstream syncs can trust a consistent shape.
+
+| Key | Description |
+| --- | --- |
+| `product_slug` | Canonical product slug used by the storefront and analytics. |
+| `source` | Identifies which script/automation authored the metadata (e.g. `store-scripts/create-stripe-payment-links`). |
+| `ghl_tag` | Optional GoHighLevel tag applied when syncing the order. |
+| `stripe_product_id` | Stripe product backing the Payment Link. |
+| `productName`, `product_name` | Human-friendly product name (trimmed). |
+| `paymentDescription`, `payment_description`, `description` | Aliases for the payment intent description Stripe displays to customers. |
+| `payment_link_mode` | Injected at update time (`live`/`test`) so webhooks know which Stripe environment produced the event. |
+
+When you need to add fields, extend the type and helper in `apps/store/lib/stripe/payment-link-metadata.ts` first, then adapt callers. This keeps the contract documented and type-checked.
+
 ## Testing strategy
 
 - API-level coverage lives in `tests/api/stripe-webhook.test.ts`.

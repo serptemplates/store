@@ -1,5 +1,6 @@
 import { promises as fs } from "fs"
 import path from "path"
+import { pathToFileURL } from "url"
 import Stripe from "stripe"
 import dotenv from "dotenv"
 import { parse, parseDocument } from "yaml"
@@ -182,7 +183,20 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
   return sortedEntries
 }
 
-async function main() {
+export type ValidateProductsOptions = {
+  skipPriceManifest?: boolean
+}
+
+export type ValidateProductsResult = {
+  warnings: string[]
+  errors: string[]
+  validatedCount: number
+  priceManifest: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>
+}
+
+export async function validateProducts(options: ValidateProductsOptions = {}): Promise<ValidateProductsResult> {
+  const { skipPriceManifest = false } = options
+
   const productsDir = path.join(process.cwd(), "data", "products")
   const entries = await fs.readdir(productsDir)
   const yamlFiles = entries.filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
@@ -250,20 +264,40 @@ async function main() {
     }
   }
 
-  warnings.forEach((message) => console.warn(message))
+  const priceManifest = skipPriceManifest ? {} : await writePriceManifest(referencedStripePriceIds)
 
-  await writePriceManifest(referencedStripePriceIds)
-
-  if (errors.length > 0) {
-    errors.forEach((message) => console.error(message))
-    console.error(`\nProduct validation failed with ${errors.length} error(s).`)
-    process.exit(1)
+  return {
+    warnings,
+    errors,
+    validatedCount: yamlFiles.length,
+    priceManifest,
   }
-
-  console.log(`✅ Validated ${yamlFiles.length} product definitions. No badge conflicts detected.`)
 }
 
-main().catch((error) => {
-  console.error("Unexpected error during product validation:", error)
-  process.exit(1)
-})
+async function runCli() {
+  try {
+    const result = await validateProducts()
+
+    result.warnings.forEach((message) => console.warn(message))
+
+    if (result.errors.length > 0) {
+      result.errors.forEach((message) => console.error(message))
+      console.error(`\nProduct validation failed with ${result.errors.length} error(s).`)
+      process.exit(1)
+    }
+
+    console.log(`✅ Validated ${result.validatedCount} product definitions. No badge conflicts detected.`)
+  } catch (error) {
+    console.error("Unexpected error during product validation:", error)
+    process.exit(1)
+  }
+}
+
+const invokedDirectly =
+  typeof process.argv[1] === "string"
+    ? import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+    : false
+
+if (invokedDirectly) {
+  runCli()
+}

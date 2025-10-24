@@ -1,87 +1,83 @@
 import Stripe from "stripe";
 
-  export type StripeMode = "live" | "test";
+import {
+  createStripePaymentLinkMetadata,
+  type StripePaymentLinkMetadata,
+  type StripePaymentLinkMetadataInput,
+} from "./payment-link-metadata";
 
-  export interface MetadataOptions {
-    slug: string;
-    ghlTag?: string | null;
-    stripeProductId?: string | null;
-    source?: string;
-  }
+export type StripeMode = "live" | "test";
 
-  export interface SuccessRedirectOptions {
-    baseUrl: string;
-    slug: string;
-    paymentLinkId: string;
-    mode: StripeMode;
-  }
+export interface MetadataOptions extends Omit<StripePaymentLinkMetadataInput, "source"> {
+  source?: string;
+}
 
-  export interface PaymentLinkUpdateOptions extends MetadataOptions {
-    paymentLinkId: string;
-    mode: StripeMode;
-    baseUrl: string;
-    productName?: string | null;
-  }
+export interface SuccessRedirectOptions {
+  baseUrl: string;
+  slug: string;
+  paymentLinkId: string;
+  mode: StripeMode;
+}
 
-  export interface TermsOfServiceResult {
-    status: "already_required" | "updated" | "manual_required";
-    reason?: string;
-  }
+export interface PaymentLinkUpdateOptions extends MetadataOptions {
+  paymentLinkId: string;
+  mode: StripeMode;
+  baseUrl: string;
+}
 
-  const DEFAULT_METADATA_SOURCE = "store-scripts/sync-stripe-payment-links";
+export interface TermsOfServiceResult {
+  status: "already_required" | "updated" | "manual_required";
+  reason?: string;
+}
 
-  export function buildMetadata({
+const DEFAULT_METADATA_SOURCE = "store-scripts/sync-stripe-payment-links";
+
+export function buildMetadata({
+  slug,
+  ghlTag,
+  stripeProductId,
+  source = DEFAULT_METADATA_SOURCE,
+  productName,
+}: MetadataOptions): StripePaymentLinkMetadata {
+  return createStripePaymentLinkMetadata({
     slug,
-    ghlTag,
-    stripeProductId,
-    source = DEFAULT_METADATA_SOURCE,
-  }: MetadataOptions): Record<string, string> {
-    const metadata: Record<string, string> = {
-      product_slug: slug,
-      source,
-    };
+    source,
+    ghlTag: ghlTag ?? null,
+    stripeProductId: stripeProductId ?? null,
+    productName: productName ?? null,
+  });
+}
 
-    if (ghlTag) {
-      metadata.ghl_tag = ghlTag;
-    }
+export function buildSuccessRedirectUrl({
+  baseUrl,
+  slug,
+  paymentLinkId,
+  mode,
+}: SuccessRedirectOptions): string {
+  const trimmedBase = baseUrl.replace(/\/$/, "");
+  const url = new URL(trimmedBase);
+  url.searchParams.set("provider", "stripe");
+  url.searchParams.set("slug", slug);
+  url.searchParams.set("payment_link_id", paymentLinkId);
+  url.searchParams.set("mode", mode);
 
-    if (stripeProductId) {
-      metadata.stripe_product_id = stripeProductId;
-    }
+  const serialized = url.toString();
+  const separator = serialized.includes("?") ? "&" : "?";
+  return `${serialized}${separator}session_id={CHECKOUT_SESSION_ID}`;
+}
 
-    return metadata;
-  }
-
-  export function buildSuccessRedirectUrl({
-    baseUrl,
-    slug,
-    paymentLinkId,
-    mode,
-  }: SuccessRedirectOptions): string {
-    const trimmedBase = baseUrl.replace(/\/$/, "");
-    const url = new URL(trimmedBase);
-    url.searchParams.set("provider", "stripe");
-    url.searchParams.set("slug", slug);
-    url.searchParams.set("payment_link_id", paymentLinkId);
-    url.searchParams.set("mode", mode);
-
-    const serialized = url.toString();
-    const separator = serialized.includes("?") ? "&" : "?";
-    return `${serialized}${separator}session_id={CHECKOUT_SESSION_ID}`;
-  }
-
-  export function buildPaymentLinkUpdatePayload({
-    slug,
-    ghlTag,
-    stripeProductId,
-    paymentLinkId,
-    mode,
-    baseUrl,
-    source = DEFAULT_METADATA_SOURCE,
-    productName,
-  }: PaymentLinkUpdateOptions): Stripe.PaymentLinkUpdateParams {
-    const metadata = buildMetadata({ slug, ghlTag, stripeProductId, source });
-    metadata.payment_link_mode = mode;
+export function buildPaymentLinkUpdatePayload({
+  slug,
+  ghlTag,
+  stripeProductId,
+  paymentLinkId,
+  mode,
+  baseUrl,
+  source = DEFAULT_METADATA_SOURCE,
+  productName,
+}: PaymentLinkUpdateOptions): Stripe.PaymentLinkUpdateParams {
+  const metadata = buildMetadata({ slug, ghlTag, stripeProductId, source, productName });
+  metadata.payment_link_mode = mode;
 
     const successUrl = buildSuccessRedirectUrl({
       baseUrl,
