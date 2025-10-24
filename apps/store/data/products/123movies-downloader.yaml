@@ -38,23 +38,14 @@ producthunt_link: null
 features:
 - Movies and TV shows from streaming sites
 - Multiple quality/format options
-- Batch movie collections/series downloads
-- Auto subtitle and audio track extraction
-- Organize by genre/release year
 - Resume downloads
 - Cross-platform support
-- Built-in player with streaming controls
 - Media center integration
-- Export movie data/viewing statistics
-- Search movie libraries
 - Privacy protection
 - Regular compatibility updates
 - Various video containers and codecs
 - Bandwidth optimization
-- Backup & restore options for movie collections
 - Smart categorization
-- Offline viewing with progress synchronization
-- Advanced filtering by actors and directors
 pricing:
   label: One-time payment
   price: $17.00
@@ -107,6 +98,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- opera
 supported_regions:
 - Worldwide
 categories:
