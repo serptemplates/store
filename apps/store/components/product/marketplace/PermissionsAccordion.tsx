@@ -42,7 +42,7 @@ export function PermissionsAccordion({ items }: PermissionsAccordionProps) {
               <button
                 type="button"
                 onClick={() => handleToggle(item.id)}
-                className="flex w-full items-center gap-3 px-3.5 py-3 text-left text-[14px] font-semibold text-[#0a2540] transition hover:bg-[#f8fafc] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#635bff] sm:gap-4 sm:px-4 sm:py-3.5"
+                className="flex w-full items-center gap-3 px-3.5 py-3 text-left text-[16px] font-semibold text-[#0a2540] transition hover:bg-[#f8fafc] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#635bff] sm:gap-4 sm:px-4 sm:py-3.5"
                 aria-expanded={isOpen}
                 aria-controls={`${item.id}-content`}
                 id={`${item.id}-trigger`}
@@ -63,7 +63,7 @@ export function PermissionsAccordion({ items }: PermissionsAccordionProps) {
                 id={`${item.id}-content`}
                 role="region"
                 aria-labelledby={`${item.id}-trigger`}
-                className={cn("pl-6 pr-4 text-[14px] leading-[1.6] text-[#334155] sm:pl-8", isOpen ? "pb-4 pt-0" : "hidden")}
+                className={cn("pl-6 pr-4 text-[16px] leading-[1.6] text-[#334155] sm:pl-8", isOpen ? "pb-4 pt-0" : "hidden")}
               >
                 <div className="border-t border-[#e6e8eb] pt-4">
                   {item.description ?? ""}

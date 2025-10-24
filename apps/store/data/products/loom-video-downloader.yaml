@@ -50,8 +50,9 @@ github_repo_tags:
 - loom-video-downloader
 - download-loom-videos
 chrome_webstore_link: https://chromewebstore.google.com/detail/loom-video-downloader/oopljffmklejoikiemiedeangcchfmlf
-firefox_addon_store_link: null
-edge_addons_store_link: null
+firefox_addon_store_link: https://addons.mozilla.org/en-US/firefox/addon/loom-video-downloader/
+edge_addons_store_link: https://microsoftedge.microsoft.com/addons/detail/loom-video-downloader/EXAMPLE
+opera_addons_store_link: https://addons.opera.com/en/extensions/details/loom-video-downloader/
 producthunt_link: null
 features:
 - One-click download from any video page
@@ -74,9 +75,14 @@ features:
 - Zero data tracking
 - Ad-free experience
 pricing:
+  label: One-time payment
   price: $17.00
+  original_price: ''
+  note: ''
+  cta_text: Download Now
   currency: USD
   availability: InStock
+  benefits: []
 faqs:
 - question: How do I download Loom videos?
   answer: To download Loom videos, you can use specialized software or browser extensions designed for Loom. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.
@@ -142,5 +148,32 @@ stripe:
 ghl:
   tag_ids:
   - purchase-loom-video-downloader
+layout_type: marketplace
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: The "downloads" permission is required to save Loom videos directly to the user's computer; without it, files could not be written to local storage.
+- permission: activeTab
+  justification: The "activeTab" permission allows the extension to interact only with the Loom tab the user has activated, ensuring downloads run on the correct page.
+- permission: storage
+  justification: Local storage keeps user preferences and configuration so the downloader behaves consistently between sessions.
+- permission: notifications
+  justification: Notifications alert users when a download starts, finishes, or encounters an error, providing status feedback without leaving the page.
+- permission: contextMenus
+  justification: Context menu entries let users trigger Loom downloads directly from the right-click menu for faster workflows.
+- permission: clipboardRead
+  justification: Clipboard access lets users paste Loom video URLs straight into the extension, streamlining the download process.
+- permission: tabs
+  justification: Tabs access is needed to confirm the current page is a Loom video before enabling download actions.
+- permission: scripting
+  justification: The scripting permission injects lightweight scripts to detect Loom video elements and coordinate downloads.
+- permission: offscreen
+  justification: Offscreen contexts process video transfers in the background so downloads run smoothly without blocking the UI.
+- permission: cookies
+  justification: Cookie access respects existing Loom authentication, enabling downloads of videos that require the user to be signed in.
+- permission: webNavigation
+  justification: Navigation events help the extension detect when users arrive on Loom video pages so it can present download options at the right moment.
+- permission: host_permissions
+  justification: Host permissions limited to loom.com and its subdomains enable the extension to detect and download Loom videos directly from Loom properties, without touching other hosts.
+- permission: remote_code
+  justification: No remote code is executed; every script ships with the extension bundle, so nothing external runs at runtime.

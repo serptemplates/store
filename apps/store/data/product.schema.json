@@ -128,6 +128,18 @@
         }
       ]
     },
+    "opera_addons_store_link": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://addons\\.opera\\.com/"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "producthunt_link": {
       "anyOf": [
         {
@@ -316,7 +328,8 @@
       "type": "string",
       "enum": [
         "landing",
-        "ecommerce"
+        "ecommerce",
+        "marketplace"
       ],
       "default": "landing"
     },

@@ -1,0 +1,98 @@
+platform: Kompoz
+name: Kompoz Downloader
+tagline: Archive Kompoz stems and mixes for offline production.
+slug: kompoz-downloader
+description: |
+  Kompoz Downloader keeps collaboration sessions moving by saving Kompoz stems, mixes, and discussions directly to your local workspace. Pull reference takes without manually exporting each track one-by-one.
+  
+  Use it to back up sessions, prep offline mixing environments, or share approved stems with clients while keeping everything organized by project.
+seo_title: Download Kompoz Stems | Kompoz Downloader
+seo_description: Download Kompoz stems and mixes for offline production. Reliable Kompoz downloader for music collaborators.
+serply_link: https://serp.ly/kompoz-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/kompoz-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/kompoz-downloader
+serp_co_product_page_url: https://serp.co/products/kompoz-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=kompoz-downloader
+status: pre_release
+featured_image: null
+featured_image_gif: null
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url: null
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- Download stems, mixes, and attachments directly from Kompoz projects
+- Preserve track naming and folder structure automatically
+- Batch grab new revisions to keep collaborators in sync
+- Local-first design keeps creative work private and secure
+- Works across Windows, macOS, Linux, and modern browsers
+pricing:
+  label: One-time payment
+  price: $17
+  original_price: ''
+  note: Contact us for current licensing options.
+  cta_text: Download Now
+  currency: USD
+  availability: InStock
+  benefits: []
+faqs:
+- question: Does Kompoz Downloader support private projects?
+  answer: Yes. Download stems from projects you have permission to access using your Kompoz account.
+- question: Can I sync multiple revisions?
+  answer: Queue revisions across several projects and the downloader will fetch them sequentially with clear version naming.
+- question: Does it keep metadata?
+  answer: Track names, notes, and mix versions stay intact in the exported folders.
+- question: Is anything uploaded back to Kompoz?
+  answer: No. The downloader only saves files locally; it does not publish changes or upload data.
+- question: Does it work with large WAV files?
+  answer: Yes. It handles large-format files and automatically resumes if your connection blips.
+reviews:
+- name: Tasha Millen
+  title: Faster handoffs for collaborators
+  rating: 5
+  date: '2025-02-13'
+  review: Kompoz Downloader keeps our remote band in sync. I can grab new stems right away and keep mixing without delays.
+- name: Hugo Barrett
+  title: Great for offline mixing rigs
+  rating: 4.9
+  date: '2025-03-03'
+  review: I travel with a laptop and need sessions offline. This tool keeps everything structured like the original project.
+- name: Priyanka Das
+  title: Saves hours of busywork
+  rating: 4.8
+  date: '2025-01-25'
+  review: Exporting stems manually was painful. Now I pull entire project folders in minutes.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Audio
+keywords:
+- kompoz downloader
+- kompoz download tool
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-kompoz-downloader
+permission_justifications: []

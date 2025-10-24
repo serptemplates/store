@@ -23,6 +23,7 @@ const brandLogoMap: Record<string, string> = {
   'niconico-downloader': '/brand-logos/niconico.png',
   'wistia-downloader': '/brand-logos/wistia.png',
   'loom-downloader': '/brand-logos/loom.png',
+  'loom-video-downloader': '/brand-logos/loom.png',
   'kick-downloader': '/brand-logos/kick.png',
   'adobe-stock-downloader': '/brand-logos/adobe-stock.png',
   'shutterstock-downloader': '/brand-logos/shutterstock.png',

@@ -41,8 +41,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const videoEntries = getProductVideoEntries(product);
 
   // Check for layout_type in product
-  const layoutType = product.layout_type || 'landing';
-  const shouldUseMarketplaceLayout = product.status === "pre_release";
+  const layoutType = product.layout_type || "landing";
+  const shouldUseMarketplaceLayout = product.status === "pre_release" || layoutType === "marketplace";
 
   if (shouldUseMarketplaceLayout) {
     return (

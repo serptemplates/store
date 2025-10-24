@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Fragment, useMemo, useState, useCallback, useEffect, type ReactNode } from "react";
 
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
@@ -25,9 +26,16 @@ import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar";
 import { ExternalLink } from "lucide-react";
 import { getBrandLogoPath } from "@/lib/products/brand-logos";
 
+export type VideoCardItem = {
+  url: string;
+  title: string;
+  thumbnail?: string | null;
+};
+
 export type MarketplaceProductPageViewProps = {
   product: ProductData;
   siteConfig: SiteConfig;
+  videoEntries?: VideoCardItem[];
 };
 
 type MetadataRow = {
@@ -35,9 +43,9 @@ type MetadataRow = {
   value: ReactNode;
 };
 
-const SECTION_LABEL_CLASS = "hidden lg:block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]";
+const SECTION_LABEL_CLASS = "hidden lg:block text-[36px] font-black uppercase tracking-[0.08em] text-[#fffff]";
 
-export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
+export function MarketplaceProductPageView({ product, siteConfig, videoEntries }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const { affiliateId } = useAffiliateTracking();
@@ -77,11 +85,30 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
   const faqItems = buildFaqItems(product);
   const reviewItems = buildReviewItems(product);
   const featuredImage = product.featured_image ?? product.screenshots?.[0]?.url ?? null;
-  const featureCaption =
-    product.screenshots?.[0]?.caption ??
-    product.tagline ??
-    product.name ??
-    "";
+  const screenshots = (product.screenshots ?? []).filter((shot) => Boolean(shot?.url?.trim()));
+  const featureCaption = screenshots[0]?.caption ?? product.tagline ?? product.name ?? "";
+  const carouselImages = screenshots.map((shot) => ({
+    src: shot.url!,
+    alt: shot.alt ?? product.name ?? undefined,
+  }));
+  const featureList = (product.features ?? [])
+    .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
+    .filter((entry) => entry.length > 0);
+  const fallbackVideoItems = useMemo(
+    () => buildFallbackVideoItems(product, featuredImage ?? undefined),
+    [product, featuredImage],
+  );
+  const relatedVideos = useMemo<VideoCardItem[]>(() => {
+    if (videoEntries && videoEntries.length > 0) {
+      return videoEntries.map((entry) => ({
+        url: entry.url,
+        title: entry.title,
+        thumbnail: entry.thumbnail ?? featuredImage ?? null,
+      }));
+    }
+    return fallbackVideoItems;
+  }, [videoEntries, featuredImage, fallbackVideoItems]);
+  const relatedArticles = buildRelatedArticles(product);
   const primaryButtonLabel = (() => {
     const fromPricing = product.pricing?.cta_text?.trim();
     if (fromPricing && fromPricing.length > 0) return fromPricing;
@@ -118,7 +145,7 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
             name={product.name ?? product.platform ?? "Marketplace app"}
             subtitle={copy.subtitle}
             category={product.categories?.find((category) => category.trim().length > 0)}
-            iconUrl={product.featured_image}
+            iconUrl={brandLogoPath ?? product.featured_image}
             iconInitials={getInitials(product.platform ?? product.name)}
             onPrimaryAction={handleHeroClick}
             primaryLabel={primaryButtonLabel}
@@ -144,17 +171,98 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
         />
 
         <div className="mt-12 grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
-          <aside className="hidden space-y-8 text-[14px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
+          <aside className="hidden space-y-6 text-[16px] leading-[1.6] text-[#334155] md:flex md:flex-col lg:col-span-4">
             <MetadataList items={metadataRows} legalLinks={[]} />
           </aside>
           <section className="lg:col-span-8 space-y-12">
             <FeaturesBanner
               imageUrl={featuredImage}
+              images={carouselImages}
+              videos={relatedVideos.map((entry) => entry.url)}
+              fallbackThumbnail={featuredImage}
+              label="Overview"
               caption={featureCaption}
               title={copy.featuresTitle}
               description={copy.featuresDescription}
             />
           </section>
+
+          {relatedVideos.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <section className="lg:col-span-12 space-y-6">
+                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                  {relatedVideos.map((video) => (
+                    <a
+                      key={video.url}
+                      href={video.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-[#e6e8eb] bg-white transition hover:border-[#bfd0ff] hover:shadow-md"
+                    >
+                      {video.thumbnail ? (
+                        <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#0a2540]">
+                          <Image
+                            src={video.thumbnail}
+                            alt={video.title}
+                            fill
+                            className="object-cover transition duration-200 group-hover:scale-[1.02]"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1440px) 40vw, 30vw"
+                          />
+                        </div>
+                      ) : null}
+                      <div className="flex flex-1 flex-col gap-2 px-4 py-4">
+                        <span className="text-[16px] font-semibold text-[#0a2540]">{video.title}</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+          {featureList.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Features</span>
+              </aside>
+              <section className="lg:col-span-8">
+                <div className="grid gap-4 md:grid-cols-2">
+                  {featureList.map((feature) => (
+                    <div key={feature} className="flex items-start gap-3 text-[16px] leading-[1.6] text-[#334155]">
+                      <span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#0a2540]" aria-hidden="true" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : null}
+
+          {relatedArticles.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Related Articles</span>
+              </aside>
+              <section className="lg:col-span-8">
+                <ul className="space-y-3">
+                  {relatedArticles.map((article) => (
+                    <li key={article.url}>
+                      <RailLink href={article.url} label={article.label} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </>
+          ) : null}
 
           {hasAboutContent ? (
             <>
@@ -170,20 +278,6 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
             </>
           ) : null}
 
-          {permissions.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>Permissions</span>
-              </aside>
-              <section className="lg:col-span-8 space-y-12">
-                <PermissionsAccordion items={permissions} />
-              </section>
-            </>
-          ) : null}
-
           {faqItems.length > 0 ? (
             <>
               <div className="lg:col-span-12">
@@ -194,6 +288,20 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               </aside>
               <section className="lg:col-span-8">
                 <FaqAccordion items={faqItems} />
+              </section>
+            </>
+          ) : null}
+
+          {permissions.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Permissions</span>
+              </aside>
+              <section className="lg:col-span-8 space-y-12">
+                <PermissionsAccordion items={permissions} />
               </section>
             </>
           ) : null}
@@ -258,16 +366,16 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   if (product.supported_operating_systems && product.supported_operating_systems.length > 0) {
     const systems = product.supported_operating_systems.filter((system) => system.trim().length > 0);
     if (systems.length > 0) {
+      const grouped = chunkArray(systems, 2)
+        .map((group) => group.join(", "))
+        .join("\n");
+
       metadata.push({
         label: "Supported platforms",
         value: (
-          <ul className="list-none space-y-1 pl-0">
-            {systems.map((system) => (
-              <li key={system} className="text-[14px] leading-[1.6] text-[#334155]">
-                {system}
-              </li>
-            ))}
-          </ul>
+          <span className="whitespace-pre-line text-[16px] leading-[1.6] text-[#334155]">
+            {grouped}
+          </span>
         ),
       });
     }
@@ -283,12 +391,6 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
     }
   }
 
-  if (testModeUrl) {
-    metadata.push({
-      label: "Sandbox compatible",
-      value: "Available",
-    });
-  }
 
   if (product.return_policy?.method || product.return_policy?.url) {
     const pieces = [
@@ -311,6 +413,18 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   const resourceLinks: Array<{ label: string; href: string }> = [];
   if (product.serp_co_product_page_url) {
     resourceLinks.push({ label: "serp.co", href: product.serp_co_product_page_url });
+  }
+  if (product.chrome_webstore_link) {
+    resourceLinks.push({ label: "Chrome Store", href: product.chrome_webstore_link });
+  }
+  if (product.firefox_addon_store_link) {
+    resourceLinks.push({ label: "Firefox Addons", href: product.firefox_addon_store_link });
+  }
+  if (product.edge_addons_store_link) {
+    resourceLinks.push({ label: "Microsoft Addons", href: product.edge_addons_store_link });
+  }
+  if (product.opera_addons_store_link) {
+    resourceLinks.push({ label: "Opera Addons", href: product.opera_addons_store_link });
   }
 
   if (resourceLinks.length > 0) {
@@ -411,6 +525,140 @@ function buildReviewItems(product: ProductData): ReviewListItem[] {
   );
 }
 
+function chunkArray<T>(items: T[], chunkSize: number): T[][] {
+  if (chunkSize <= 0) return [items];
+  const result: T[][] = [];
+  for (let index = 0; index < items.length; index += chunkSize) {
+    result.push(items.slice(index, index + chunkSize));
+  }
+  return result;
+}
+
+function buildFallbackVideoItems(product: ProductData, fallbackThumbnail?: string): VideoCardItem[] {
+  const videos: string[] = [];
+  if (Array.isArray(product.product_videos)) {
+    videos.push(...product.product_videos);
+  }
+  if (Array.isArray(product.related_videos)) {
+    videos.push(...product.related_videos);
+  }
+
+  const seen = new Set<string>();
+  const results: VideoCardItem[] = [];
+
+  videos.forEach((rawUrl, index) => {
+    if (typeof rawUrl !== "string") {
+      return;
+    }
+    const url = rawUrl.trim();
+    if (!url || seen.has(url)) {
+      return;
+    }
+    seen.add(url);
+
+    const thumbnail = deriveFallbackVideoThumbnail(url) ?? fallbackThumbnail ?? undefined;
+
+    results.push({
+      url,
+      title: deriveFallbackVideoTitle(url, product.name ?? product.platform ?? "Video", index + 1),
+      thumbnail,
+    });
+  });
+
+  return results;
+}
+
+type RelatedArticleItem = {
+  url: string;
+  label: string;
+};
+
+function buildRelatedArticles(product: ProductData): RelatedArticleItem[] {
+  return (
+    product.related_posts ?? []
+  )
+    .map((value, index) => {
+      const url = typeof value === "string" ? value.trim() : "";
+      if (!url) return null;
+      return {
+        url,
+        label: deriveArticleLabel(url, product.name ?? product.platform ?? "Article", index + 1),
+      } satisfies RelatedArticleItem;
+    })
+    .filter((item): item is RelatedArticleItem => Boolean(item));
+}
+
+function deriveArticleLabel(url: string, fallbackBase: string, ordinal: number): string {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    const pathSegments = parsed.pathname.split("/").filter(Boolean);
+    if (pathSegments.length > 0) {
+      const lastSegment = decodeURIComponent(pathSegments[pathSegments.length - 1]);
+      const cleaned = lastSegment.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+      if (cleaned.length > 0) {
+        return `${host} • ${capitalize(cleaned)}`;
+      }
+    }
+    return host || fallbackBase;
+  } catch {
+    return `${fallbackBase} resource ${ordinal}`;
+  }
+}
+
+function capitalize(value: string): string {
+  if (!value) return value;
+  return value
+    .split(" ")
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
+}
+
+function deriveFallbackVideoTitle(url: string, fallbackBase: string, ordinal: number): string {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    if (host.includes("youtube")) {
+      return `YouTube • ${fallbackBase}`;
+    }
+    if (host.includes("vimeo")) {
+      return `Vimeo • ${fallbackBase}`;
+    }
+    const pathSegments = parsed.pathname.split("/").filter(Boolean);
+    if (pathSegments.length > 0) {
+      const lastSegment = decodeURIComponent(pathSegments[pathSegments.length - 1]);
+      const cleaned = lastSegment.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+      if (cleaned.length > 0) {
+        return `${host} • ${capitalize(cleaned)}`;
+      }
+    }
+    return host || `${fallbackBase} video ${ordinal}`;
+  } catch {
+    return `${fallbackBase} video ${ordinal}`;
+  }
+}
+
+function deriveFallbackVideoThumbnail(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      if (id) {
+        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      }
+    }
+    if (parsed.hostname === "youtu.be") {
+      const id = parsed.pathname.replace("/", "");
+      if (id) {
+        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 function getInitials(value: string | undefined) {
   if (!value) return "A";
   const words = value.trim().split(/\s+/);
@@ -441,7 +689,7 @@ function MetadataList({ items, legalLinks }: MetadataListProps) {
           {items.map((item) => (
             <div key={item.label} className="flex flex-col gap-2">
               <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#6b7a90]">{item.label}</dt>
-              <dd className="text-[14px] leading-[1.6] text-[#334155]">{item.value}</dd>
+              <dd className="text-[16px] leading-[1.6] text-[#334155]">{item.value}</dd>
             </div>
           ))}
         </dl>

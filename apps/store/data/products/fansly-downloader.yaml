@@ -1,0 +1,99 @@
+platform: Fansly
+name: Fansly Downloader
+tagline: Save approved Fansly media for private libraries.
+slug: fansly-downloader
+description: |
+  Fansly Downloader helps creators and authorized viewers archive Fansly photos and videos they have permission to access. Instead of juggling unstable browser extensions, it keeps downloads fast, consistent, and organized.
+  
+  Use it to backup subscriber content, deliver media to clients, or keep personal archives available when you're working offline while respecting creator rights.
+seo_title: Download Fansly Media | Fansly Downloader
+seo_description: Download approved Fansly photos and videos for personal archiving. Fast, private Fansly downloader for authorized users.
+serply_link: https://serp.ly/fansly-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/fansly-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/fansly-downloader
+serp_co_product_page_url: https://serp.co/products/fansly-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=fansly-downloader
+status: pre_release
+featured_image: null
+featured_image_gif: null
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url: null
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
+features:
+- Download media you are authorized to view in original quality
+- Preserve file naming and folder organization for each creator
+- Batch queue large drops without throttling or duplicate downloads
+- Local-first workflows ensure sensitive content stays on your device
+- Works on Windows, macOS, Linux, and major browsers
+pricing:
+  label: One-time payment
+  price: $17
+  original_price: ''
+  note: Contact us for current licensing options.
+  cta_text: Secure Your Copy
+  currency: USD
+  availability: InStock
+  benefits: []
+faqs:
+- question: Does Fansly Downloader require my account login?
+  answer: You authenticate directly with Fansly in your browser. The downloader only saves media you already have permission to view.
+- question: Can I share the files I download?
+  answer: No. Content must remain for personal or client-approved use according to creator and platform policies.
+- question: How does it handle large drops?
+  answer: Queue entire creator drops and Fansly Downloader will process them sequentially with automatic retries.
+- question: Is download history stored anywhere?
+  answer: Activity stays on your device; we do not collect analytics or usage logs.
+- question: Does it support videos and photos?
+  answer: Yes. Video, photo, and gallery media download in their original resolutions.
+reviews:
+- name: Carmen Blake
+  title: Keeps creator backups tidy
+  rating: 5
+  date: '2025-02-11'
+  review: I manage media for a small Fansly team and this downloader keeps everything organized with original filenames. Huge time saver.
+- name: Renzo Miles
+  title: Reliable Fansly archiving
+  rating: 4.9
+  date: '2025-03-05'
+  review: Fansly Downloader batches entire drops without stalls. Perfect for staying on schedule when creators send bulk uploads.
+- name: Avery Sloan
+  title: Great for personal archives
+  rating: 4.8
+  date: '2025-01-24'
+  review: I like keeping offline access when I travel. Downloads stay local and the quality matches the originals every time.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Adult
+- Social
+keywords:
+- fansly downloader
+- fansly download tool
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-fansly-downloader
+permission_justifications: []
