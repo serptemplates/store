@@ -81,8 +81,7 @@ supported_operating_systems:
 supported_regions:
 - Worldwide
 categories:
-- Downloader
-- Video
+  - Downloader
 keywords:
 - hls downloader
 - hls download

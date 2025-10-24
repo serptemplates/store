@@ -82,3 +82,4 @@ mcp-debug-tools/
 .env.preview
 .env.production
 .env.vercel.prod
+screenshots/

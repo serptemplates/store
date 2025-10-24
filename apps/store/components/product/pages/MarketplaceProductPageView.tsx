@@ -208,7 +208,8 @@ export function MarketplaceProductPageView({ product, siteConfig, videoEntries, 
           {/* Overview with main video (no carousel) */}
           <section className="lg:col-span-8 space-y-12">
             <FeaturesBanner
-              imageUrl={undefined}
+              // Prefer video over image; only use image when no video
+              imageUrl={relatedVideos.length > 0 ? undefined : (featuredImage || undefined)}
               images={[]}
               videos={relatedVideos.length > 0 ? [relatedVideos[0].url] : []}
               fallbackThumbnail={featuredImage}
