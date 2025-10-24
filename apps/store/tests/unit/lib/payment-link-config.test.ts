@@ -55,7 +55,7 @@ describe("payment-link config helpers", () => {
       description: "Rawpixel Downloader",
     });
     expect(payload.payment_intent_data?.metadata).toEqual(payload.metadata);
-    expect(payload.payment_intent_data?.description).toBe("SERP Apps - Rawpixel Downloader");
+    expect(payload.payment_intent_data?.description).toBe("Rawpixel Downloader");
   });
 
   it("ensureTermsOfServiceRequired skips update when already enabled", async () => {
