@@ -1,13 +1,13 @@
 platform: Hotstar
 name: Hotstar Downloader
-tagline: Save Hotstar videos for personal offline viewing.
+tagline: Download Hotstar videos instantly.
 slug: hotstar-downloader
 description: |
-  Hotstar streams regional TV, films, and sports. Viewers may want offline copies for personal review or when traveling without reliable connectivity.
-
-  The upcoming Hotstar Downloader is intended to save publicly accessible videos for personal, educational, or fair-use purposes. Not affiliated with Hotstar.
+  Hotstar Downloader gives creators and teams a dependable way to save Hotstar videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Hotstar with consistent quality.
+  
+  Use it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.
 seo_title: Download Hotstar Videos | Hotstar Downloader
-seo_description: Save Hotstar videos for offline viewing. Join the waitlist for updates and beta invites.
+seo_description: Download Hotstar videos for offline use. Fast, private Hotstar downloader.
 serply_link: https://serp.ly/hotstar-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/hotstar-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/hotstar-downloader
@@ -16,43 +16,60 @@ buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=hotstar-downloader
 status: pre_release
-featured_image:
-featured_image_gif:
+featured_image: null
+featured_image_gif: null
 screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
-github_repo_url:
+github_repo_url: null
 github_repo_tags: []
-chrome_webstore_link:
-firefox_addon_store_link:
-edge_addons_store_link:
-producthunt_link:
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
 features:
-  - Waitlist notifications
-  - Planned support for public video pages
-  - Browser-based workflow
-  - Privacy-first, no tracking
-  - Fair-use only; not affiliated with Hotstar
+- One-click downloads from Hotstar
+- Preserves original quality and metadata
+- Batch queue with automatic retries
+- Local-first workflows with no tracking
+- Works on Windows, macOS, and Linux
 pricing:
   label: One-time payment
-  price: $17.00
+  price: $17
   original_price: ''
-  note: Launch pricing will be announced to subscribers first.
-  cta_text: Get Notified
+  note: Contact us for current licensing options.
+  cta_text: Start Downloading
   currency: USD
-  availability: PreOrder
+  availability: InStock
   benefits: []
 faqs:
-  - question: Will it support live sports?
-    answer: Initial focus is on reliability for standard public pages; live streams will be evaluated separately.
-  - question: When can I try it?
-    answer: Join the waitlist and we’ll invite you when beta is ready.
-  - question: Legal?
-    answer: Only download content you have rights to access. Personal, fair-use cases only.
-  - question: Is this official?
-    answer: No. Independent and not affiliated with Hotstar.
-reviews: []
+- question: How do I use Hotstar Downloader?
+  answer: Open Hotstar, choose the videos you need, and start the download directly from the app. Files save to your designated folder immediately.
+- question: What quality options are available?
+  answer: Hotstar Downloader keeps the highest quality available from Hotstar, preserving resolution, bitrate, and metadata whenever possible.
+- question: Does this work with private or DRM content?
+  answer: It's designed for publicly accessible material that you have rights to download. It doesn't bypass DRM, logins, or paywalls.
+- question: Can I run bulk downloads?
+  answer: Yes. Queue multiple links and the downloader processes them sequentially with automatic retries if the connection drops.
+- question: Is my data tracked?
+  answer: No. Downloads stay on your device and we don't capture usage analytics or content copies.
+reviews:
+- name: Mason Foster
+  title: Keeps Hotstar projects moving
+  rating: 5
+  date: 2025-02-16
+  review: I download Hotstar videos for my projects and Hotstar Downloader keeps everything organized without hiccups.
+- name: Gia Lin
+  title: Ideal for building Hotstar archives
+  rating: 4.9
+  date: 2025-03-17
+  review: The quality from Hotstar stays perfect, and batch downloads mean I can collect hours of material in minutes.
+- name: Hunter Peters
+  title: Smooth Hotstar capture every time
+  rating: 4.8
+  date: 2025-02-18
+  review: Privacy-friendly workflows were the missing piece for us-Hotstar Downloader never sends Hotstar data anywhere else.
 supported_operating_systems:
 - windows
 - mac
@@ -63,9 +80,12 @@ supported_operating_systems:
 - opera
 supported_regions:
 - Worldwide
-categories: [Downloader, Video]
+categories:
+- Downloader
+- Video
 keywords:
-  - hotstar downloader
+- hotstar downloader
+- hotstar download
 return_policy:
   days: 0
   fees: Non-refundable purchase

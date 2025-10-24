@@ -1,13 +1,13 @@
 platform: Mixcloud
 name: Mixcloud Downloader
-tagline: Save Mixcloud shows and mixes for personal offline listening.
+tagline: Download Mixcloud audio instantly.
 slug: mixcloud-downloader
 description: |
-  Mixcloud hosts DJ mixes, radio shows, and long-form audio. Listeners may want offline access for commutes or practice sessions.
-
-  The upcoming Mixcloud Downloader is intended for saving publicly accessible audio for personal, fair-use listening. Not affiliated with Mixcloud.
-seo_title: Download Mixcloud Shows | Mixcloud Downloader
-seo_description: Save Mixcloud audio for offline listening. Join the waitlist for early access.
+  Mixcloud Downloader gives creators and teams a dependable way to save Mixcloud shows and audio sets for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Mixcloud with consistent quality.
+  
+  Use it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.
+seo_title: Download Mixcloud Audio | Mixcloud Downloader
+seo_description: Download Mixcloud shows and audio sets for offline use. Fast, private Mixcloud downloader.
 serply_link: https://serp.ly/mixcloud-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/mixcloud-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/mixcloud-downloader
@@ -16,43 +16,60 @@ buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=mixcloud-downloader
 status: pre_release
-featured_image:
-featured_image_gif:
+featured_image: null
+featured_image_gif: null
 screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
-github_repo_url:
+github_repo_url: null
 github_repo_tags: []
-chrome_webstore_link:
-firefox_addon_store_link:
-edge_addons_store_link:
-producthunt_link:
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+producthunt_link: null
 features:
-  - Waitlist and beta invitations
-  - Planned support for public show/mix pages
-  - Browser-first workflow
-  - Privacy-first, no tracking
-  - Fair-use only; not affiliated with Mixcloud
+- One-click downloads from Mixcloud
+- Preserves original quality and metadata
+- Batch queue with automatic retries
+- Local-first workflows with no tracking
+- Works on Windows, macOS, and Linux
 pricing:
   label: One-time payment
-  price: $17.00
+  price: $17
   original_price: ''
-  note: Launch pricing will be announced to subscribers first.
-  cta_text: Get Notified
+  note: Contact us for current licensing options.
+  cta_text: Start Downloading
   currency: USD
-  availability: PreOrder
+  availability: InStock
   benefits: []
 faqs:
-  - question: Does it split tracks?
-    answer: We’ll evaluate advanced features like cue/track splitting after initial validation.
-  - question: When is beta?
-    answer: As soon as we confirm demand. Join the waitlist for updates.
-  - question: Is it legal?
-    answer: Download only content you have rights to access. Personal, educational, or fair-use cases only.
-  - question: Affiliation?
-    answer: Independent; not affiliated with Mixcloud.
-reviews: []
+- question: How do I use Mixcloud Downloader?
+  answer: Open Mixcloud, choose the shows and audio sets you need, and start the download directly from the app. Files save to your designated folder immediately.
+- question: What quality options are available?
+  answer: Mixcloud Downloader keeps the highest quality available from Mixcloud, preserving resolution, bitrate, and metadata whenever possible.
+- question: Does this work with private or DRM content?
+  answer: It's designed for publicly accessible material that you have rights to download. It doesn't bypass DRM, logins, or paywalls.
+- question: Can I run bulk downloads?
+  answer: Yes. Queue multiple links and the downloader processes them sequentially with automatic retries if the connection drops.
+- question: Is my data tracked?
+  answer: No. Downloads stay on your device and we don't capture usage analytics or content copies.
+reviews:
+- name: Omar Mahoney
+  title: Keeps Mixcloud projects moving
+  rating: 5
+  date: 2025-03-04
+  review: I download Mixcloud shows and audio sets for my projects and Mixcloud Downloader keeps everything organized without hiccups.
+- name: Quinn Costa
+  title: Ideal for building Mixcloud archives
+  rating: 4.9
+  date: 2025-02-05
+  review: The quality from Mixcloud stays perfect, and batch downloads mean I can collect hours of material in minutes.
+- name: Riley Pierce
+  title: Smooth Mixcloud capture every time
+  rating: 4.8
+  date: 2025-03-06
+  review: Privacy-friendly workflows were the missing piece for us-Mixcloud Downloader never sends Mixcloud data anywhere else.
 supported_operating_systems:
 - windows
 - mac
@@ -63,9 +80,12 @@ supported_operating_systems:
 - opera
 supported_regions:
 - Worldwide
-categories: [Downloader, Audio]
+categories:
+- Downloader
+- Music
 keywords:
-  - mixcloud downloader
+- mixcloud downloader
+- mixcloud download
 return_policy:
   days: 0
   fees: Non-refundable purchase

@@ -20,6 +20,11 @@ const HybridPage = dynamic(() => import("./hybrid-page"), {
   ssr: true, // Keep SSR for SEO
 });
 
+const MarketplacePage = dynamic(() => import("./marketplace-page"), {
+  loading: () => <div className="min-h-screen" />,
+  ssr: true,
+});
+
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const available = new Set(getProductSlugs());
@@ -37,6 +42,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   // Check for layout_type in product
   const layoutType = product.layout_type || 'landing';
+  const shouldUseMarketplaceLayout = product.status === "pre_release";
+
+  if (shouldUseMarketplaceLayout) {
+    return (
+      <>
+        <PrimaryNavbar {...navProps} />
+        <MarketplacePage product={product} siteConfig={siteConfig} />
+      </>
+    );
+  }
 
   if (layoutType === 'ecommerce') {
     return (

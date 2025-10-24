@@ -43,7 +43,7 @@ features:
 - Auto transcription and subtitle downloading
 - Batch processing for multiple course collections
 - Resume interrupted transfers with smart recovery
-- Educational CLI tools
+- Course Platformsal CLI tools
 - Cross-platform support
 - Built-in player with bookmarking features
 - Integrates with student information systems
@@ -108,6 +108,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- opera
 supported_regions:
 - Worldwide
 categories:

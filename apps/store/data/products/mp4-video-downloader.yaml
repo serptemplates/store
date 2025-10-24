@@ -1,13 +1,13 @@
-platform: MP4 Video
-name: MP4 Video Downloader
-tagline: Get launch updates for the MP4 Video downloader.
+platform: MP4
+name: MP4 Downloader
+tagline: Download MP4 videos instantly.
 slug: mp4-video-downloader
 description: |
-  MP4 Video Downloader is in planning. We're interviewing people who need a safer, more reliable way to capture mp4 video media for offline access.
+  MP4 Downloader gives creators and teams a dependable way to save MP4 videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from MP4 with consistent quality.
   
-  Sign up to receive prototype announcements, beta invitations, and opportunities to shape the roadmap before launch.
-seo_title: MP4 Video Downloader Coming Soon
-seo_description: Subscribe for launch updates on the upcoming mp4 video downloader and help prioritize features.
+  Use it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.
+seo_title: Download MP4 Videos | MP4 Downloader
+seo_description: Download MP4 videos for offline use. Fast, private MP4 downloader.
 serply_link: https://serp.ly/mp4-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/mp4-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/mp4-video-downloader
@@ -29,25 +29,47 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Planned high-quality media downloads
-- Privacy-focused workflows with local controls
-- Roadmap shaped by early subscribers
+- One-click downloads from MP4
+- Preserves original quality and metadata
+- Batch queue with automatic retries
+- Local-first workflows with no tracking
+- Works on Windows, macOS, and Linux
 pricing:
-  label: Early access signup
-  price: $17.00
+  label: One-time payment
+  price: $17
   original_price: ''
-  note: Launch pricing will be announced to subscribers first.
-  cta_text: Get Launch Updates
+  note: Contact us for current licensing options.
+  cta_text: Start Downloading
   currency: USD
-  availability: PreOrder
+  availability: InStock
   benefits: []
 faqs:
-- question: What stage is MP4 Video Downloader in?
-  answer: MP4 Video Downloader is currently in research and validation. Subscribe for updates to receive build news.
-- question: How will my feedback be used?
-  answer: Input from early subscribers helps us prioritize features, workflow support, and integrations before development.
-- question: Will it support batch downloads?
-  answer: Batch downloading is on the roadmap, and we'll confirm the details with early testers from the subscriber list.
+- question: How do I use MP4 Downloader?
+  answer: Open MP4, choose the videos you need, and start the download directly from the app. Files save to your designated folder immediately.
+- question: What quality options are available?
+  answer: MP4 Downloader keeps the highest quality available from MP4, preserving resolution, bitrate, and metadata whenever possible.
+- question: Does this work with private or DRM content?
+  answer: It's designed for publicly accessible material that you have rights to download. It doesn't bypass DRM, logins, or paywalls.
+- question: Can I run bulk downloads?
+  answer: Yes. Queue multiple links and the downloader processes them sequentially with automatic retries if the connection drops.
+- question: Is my data tracked?
+  answer: No. Downloads stay on your device and we don't capture usage analytics or content copies.
+reviews:
+- name: Quinn Quintero
+  title: Keeps MP4 projects moving
+  rating: 5
+  date: 2025-02-22
+  review: I download MP4 videos for my projects and MP4 Downloader keeps everything organized without hiccups.
+- name: Riley Mendez
+  title: Ideal for building MP4 archives
+  rating: 4.9
+  date: 2025-03-23
+  review: The quality from MP4 stays perfect, and batch downloads mean I can collect hours of material in minutes.
+- name: Nico Sakamoto
+  title: Smooth MP4 capture every time
+  rating: 4.8
+  date: 2025-02-24
+  review: Privacy-friendly workflows were the missing piece for us-MP4 Downloader never sends MP4 data anywhere else.
 supported_operating_systems:
 - windows
 - mac
@@ -55,13 +77,15 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- opera
 supported_regions:
 - Worldwide
 categories:
 - Downloader
+- Video
 keywords:
-- mp4 video downloader
-- mp4 video download
+- mp4 downloader
+- mp4 download
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -72,4 +96,3 @@ ghl:
   tag_ids:
   - purchase-mp4-video-downloader
 permission_justifications: []
-

@@ -102,6 +102,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- opera
 supported_regions:
 - Worldwide
 categories:
