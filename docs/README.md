@@ -12,6 +12,7 @@ This directory collects the docs that support the refactored checkout, payment, 
 ## Quick Start
 
 1. **Read the architecture docs** (`architecture/checkout-overview.md`, `architecture/payments-stripe-webhook.md`) to understand how the new checkout helpers, Stripe webhook dispatcher, and GHL sync helpers are composed.
+2. Marketplace lander details and how to enable it per product: `architecture/marketplace-lander.md`.
 2. **Follow the deployment workflow** (`operations/store-deployment.md`, `operations/DEPLOYMENT-WORKFLOW.md`) before promoting changes. The acceptance criteria require `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, and `pnpm test:smoke`.
 3. **Review security posture** via `security/SECURITY-README.md` and the accompanying audit reports when hardening or extending payment flows.
 

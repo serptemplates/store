@@ -131,27 +131,22 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
 
     return (
       <>
-        <div
-          className={cn(
-            className,
-            "relative mx-auto w-full max-w-5xl px-3 sm:px-6",
-          )}
-        >
+        <div className={cn(className, "relative w-full") }>
           <Carousel
             className="group"
             opts={carouselOptions}
             setApi={setCarouselApi}
           >
-            <CarouselContent className="ml-0 flex items-stretch gap-4 sm:gap-6">
+            <CarouselContent className="ml-0 flex items-stretch gap-0">
               {items.map((item, index) => (
                 <CarouselItem
                   key={index}
                   className={cn(
-                    "basis-full pl-0 sm:pl-0",
+                    "basis-full pl-0",
                     hasMultipleItems ? "md:basis-full" : "basis-full",
                   )}
                 >
-                  <div className="mx-auto w-full max-w-3xl">
+                  <div className="w-full">
                     <Item
                       item={item}
                       onClick={() => setDialogItem(item)}
@@ -165,8 +160,8 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
             {!isOnlyOneItem && (
               <>
                 <Button
-                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:left-4 md:-left-10"
-                  variant="outline"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition hover:bg-black/50 sm:left-4 md:-left-10"
+                  variant="ghost"
                   onClick={() => handleControl("prev")}
                   aria-label="Previous media item"
                 >
@@ -175,8 +170,8 @@ const HeroMedia = forwardRef<HeroMediaHandle, HeroMediaProps>(
                 </Button>
 
                 <Button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow transition hover:bg-background sm:right-4 md:-right-10"
-                  variant="outline"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition hover:bg-black/50 sm:right-4 md:-right-10"
+                  variant="ghost"
                   onClick={() => handleControl("next")}
                   aria-label="Next media item"
                 >
@@ -261,10 +256,8 @@ const Item = ({
   return (
     <button
       className={cn(
-        "relative aspect-video w-full overflow-hidden rounded-2xl border-2 bg-muted/40 transition duration-300 ease-out",
-        isActive
-          ? "scale-[1.01] border-primary shadow-2xl shadow-primary/20"
-          : "border-gray-300 opacity-80 hover:scale-[1.01] hover:border-primary/60 hover:opacity-100",
+        "relative aspect-video w-full overflow-hidden transition duration-300 ease-out",
+        isActive ? "scale-[1.005]" : "opacity-90 hover:opacity-100 hover:scale-[1.005]",
       )}
       onClick={onClick}
     >

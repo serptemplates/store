@@ -345,6 +345,9 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
       )}
 
       <div className="mt-20">
+        {/* About Section (moved above Features) */}
+        <AboutSection team={teamMembers} />
+
         {product.features && product.features.length > 0 && (
           <FeaturesSection
             features={product.features.map((feature) => ({
@@ -359,9 +362,6 @@ export function HybridProductPageView({ product, posts, siteConfig, videoEntries
         <SocialProofScreenshots />
 
         {homeProps.faqs && homeProps.faqs.length > 0 && <FaqSection faqs={homeProps.faqs} />}
-
-        {/* About Section */}
-        <AboutSection team={teamMembers} />
 
         {resolvedPosts && resolvedPosts.length > 0 && (
           <PostsSection
