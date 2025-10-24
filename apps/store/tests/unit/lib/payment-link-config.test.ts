@@ -48,6 +48,11 @@ describe("payment-link config helpers", () => {
       ghl_tag: "purchase-rawpixel-downloader",
       stripe_product_id: "prod_123",
       payment_link_mode: "live",
+      productName: "Rawpixel Downloader",
+      product_name: "Rawpixel Downloader",
+      paymentDescription: "Rawpixel Downloader",
+      payment_description: "Rawpixel Downloader",
+      description: "Rawpixel Downloader",
     });
     expect(payload.payment_intent_data?.metadata).toEqual(payload.metadata);
     expect(payload.payment_intent_data?.description).toBe("SERP Apps - Rawpixel Downloader");
