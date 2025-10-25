@@ -283,6 +283,26 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     metadata.description = productNameValue;
   }
 
+  // Ensure Payment Intent has a human-friendly description in Stripe
+  try {
+    if (paymentIntentId && productNameValue) {
+      const stripe = getStripeClient();
+      const description = productNameValue;
+      await stripe.paymentIntents.update(paymentIntentId, {
+        description,
+      });
+      logger.info("stripe.payment_intent_description_updated", {
+        paymentIntentId,
+        description,
+      });
+    }
+  } catch (error) {
+    logger.warn("stripe.payment_intent_description_update_failed", {
+      paymentIntentId,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+  }
+
   if (!metadata.product_slug || !metadata.productSlug) {
     metadata.product_slug = offerId;
     metadata.productSlug = offerId;

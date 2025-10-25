@@ -1,5 +1,7 @@
 "use server";
 
+import type Stripe from "stripe";
+
 import { getStripeClient } from "@/lib/payments/stripe";
 import {
   findCheckoutSessionByStripeSessionId,
@@ -157,6 +159,49 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     const augmentedMetadata: Record<string, unknown> = {
       ...metadata,
     };
+
+    // Populate payment description fields similar to webhook path
+    const coerce = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+    let productNameValue = coerce((metadata as Record<string, unknown>)["productName"]) ||
+      coerce((metadata as Record<string, unknown>)["product_name"]);
+
+    if (!productNameValue) {
+      const lineItem = (session.line_items as Stripe.ApiList<Stripe.LineItem> | null | undefined)?.data?.[0];
+      const priceProduct = lineItem?.price?.product;
+      if (priceProduct && typeof priceProduct === "object" && "deleted" in priceProduct) {
+        // ignore deleted product objects
+      } else if (priceProduct && typeof priceProduct === "object" && "name" in priceProduct) {
+        const candidate = coerce((priceProduct as Stripe.Product).name);
+        if (candidate) productNameValue = candidate;
+      } else if (typeof priceProduct === "string") {
+        // no-op
+      } else if (lineItem?.description) {
+        const candidate = coerce(lineItem.description);
+        if (candidate) productNameValue = candidate;
+      }
+    }
+
+    if (!productNameValue) {
+      try {
+        const offerConfig = getOfferConfig(offerId);
+        const candidate = coerce(offerConfig?.productName);
+        if (candidate) productNameValue = candidate;
+      } catch {
+        // ignore offer config fallback failure
+      }
+    }
+
+    if (productNameValue) {
+      if (!coerce(augmentedMetadata["paymentDescription"])) {
+        augmentedMetadata.paymentDescription = productNameValue;
+      }
+      if (!coerce(augmentedMetadata["payment_description"])) {
+        augmentedMetadata.payment_description = productNameValue;
+      }
+      if (!coerce(augmentedMetadata["description"])) {
+        augmentedMetadata.description = productNameValue;
+      }
+    }
 
     const tosStatus = session.consent?.terms_of_service ?? null;
     if (tosStatus) {

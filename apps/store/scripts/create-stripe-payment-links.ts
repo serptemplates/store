@@ -495,7 +495,7 @@ function buildPaymentLinkUpdatePayload({
     metadata,
     payment_intent_data: {
       metadata,
-      description: productName ? `SERP Apps - ${productName}` : undefined,
+      description: productName ? productName : undefined,
     },
   };
 
@@ -719,7 +719,7 @@ async function main() {
         metadata,
         payment_intent_data: {
           metadata,
-          description: product.name ? `SERP Apps - ${product.name}` : undefined,
+          description: product.name ? product.name : undefined,
         },
         billing_address_collection: "auto",
         automatic_tax: { enabled: false },
