@@ -22,7 +22,11 @@ If you’re looking for a simpler solution or have any questions about this proc
 ## Watch the video
 
 <a href="https://www.youtube.com/watch?v=tgDmBdReTqA" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-2025-update-step-by-step-tutorial.jpg" width="700px">
+    <img
+        src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-2025-update-step-by-step-tutorial.jpg"
+        width="700px"
+        alt="How to Download Videos from Skool.com tutorial thumbnail"
+    />
 </a>
 
 ## Prereqs
@@ -244,10 +248,6 @@ At this point you basically have a copy of what school has on their servers but 
 > Here's the easier version, as request by all ye youtubers!
 
 
-
-<a href="https://www.youtube.com/watch?v=YH-oF2cWoDI" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-part-2-the-easy-method.jpg" width="700px">
-</a>
 
 ## Step 1: Visit the page on skool.com where the video is
 
@@ -431,7 +431,11 @@ If you’re looking for a simpler solution or have any questions about this proc
 ## Watch the video
 
 <a href="https://www.youtube.com/watch?v=tgDmBdReTqA" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-2025-update-step-by-step-tutorial.jpg" width="700px">
+    <img
+        src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-2025-update-step-by-step-tutorial.jpg"
+        width="700px"
+        alt="How to Download Videos from Skool.com tutorial thumbnail"
+    />
 </a>
 
 ## Prereqs
@@ -654,9 +658,6 @@ At this point you basically have a copy of what school has on their servers but 
 
 
 
-<a href="https://www.youtube.com/watch?v=YH-oF2cWoDI" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-videos-from-skoolcom-part-2-the-easy-method.jpg" width="700px">
-</a>
 
 ## Step 1: Visit the page on skool.com where the video is
 

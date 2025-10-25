@@ -18,15 +18,11 @@ That’s frustrating, but it’s fixable. In this article, I’ll walk you throu
 
 We’ll cover several different real-world scenarios you’ll encounter — from normal share links, to embeds, to videos with separate audio and video streams.  
 
-<a href="https://www.youtube.com/watch?v=4MnyU0kPxlE" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-loom-videos-for-free-dl-without-subscription-10-examples-mp4-hls-m3u8-1757463216973.jpg" width="700px">
-</a>
-
-<br><br>
+<br /><br />
 👉 Want the easy way? 
 
 Skip the terminal and use the [Loom Video Downloader](https://serp.ly/loom-video-downloader) — a browser-based tool that lets you grab your Loom videos in just a couple of clicks.  
-<br>
+<br />
 
 Or check out the official repository: https://github.com/serpapps/loom-video-downlaoder
 
@@ -230,7 +226,11 @@ Here’s the full article again, now with a **compact command cheat sheet sectio
 # Click the image below to watch the video 👇
 
 <a href="https://www.youtube.com/watch?v=4MnyU0kPxlE" target="_blank">
-<img src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-loom-videos-for-free-dl-without-subscription-10-examples-mp4-hls-m3u8-1757463216973.jpg" width="700px">
+    <img
+        src="https://raw.githubusercontent.com/devinschumacher/uploads/refs/heads/main/images/how-to-download-loom-videos-for-free-dl-without-subscription-10-examples-mp4-hls-m3u8-1757463216973.jpg"
+        width="700px"
+        alt="How to Download Loom Videos tutorial thumbnail"
+    />
 </a>
 
 # How to Download Loom Videos: A Complete Step-by-Step Guide (With Real Examples)
