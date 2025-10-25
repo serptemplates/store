@@ -24,7 +24,7 @@ We’ll cover several different real-world scenarios you’ll encounter — from
 Skip the terminal and use the [Loom Video Downloader](https://serp.ly/loom-video-downloader) — a browser-based tool that lets you grab your Loom videos in just a couple of clicks.  
 <br />
 
-Or check out the official repository: https://github.com/serpapps/loom-video-downlaoder
+Or check out the official repository: https://github.com/serpapps/loom-video-downloader
 
 ---
 
