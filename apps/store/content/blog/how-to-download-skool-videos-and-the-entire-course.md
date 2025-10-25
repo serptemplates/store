@@ -417,8 +417,9 @@ So if that helped, and you're feelin generous - feel free to sponsor me so I can
 
 
 
-> [Click here to sponsor devin's baths](https://serp.ly/@devin/sponsor)# How to download skool.com videos (and the entire course)
+> [Click here to sponsor devin's baths](https://serp.ly/@devin/sponsor)
 
+# How to download skool.com videos (and the entire course)
 ## Version 1 - Comprehensive, More Difficult
 
 > You can download the entire classroom with this, but its not beginner friendly.
