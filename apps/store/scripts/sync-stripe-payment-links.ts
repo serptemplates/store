@@ -7,9 +7,8 @@ import process from "node:process";
   import dotenv from "dotenv";
   import { parse } from "yaml";
 
-  import {
+import {
     buildPaymentLinkUpdatePayload,
-    ensureTermsOfServiceRequired,
   } from "../lib/stripe/payment-link-config";
 
   const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
@@ -104,8 +103,6 @@ import process from "node:process";
   function normalizeUrl(url: string): string {
     return url.replace(/\/$/, "");
   }
-
-  const consentWarnings = new Set<string>();
 
 function loadPaymentLinks(): PaymentLinkTarget[] {
   if (!fs.existsSync(PRODUCTS_DIR)) {
@@ -218,18 +215,6 @@ function loadPaymentLinks(): PaymentLinkTarget[] {
         });
 
         await stripe.paymentLinks.update(paymentLink.id, updatePayload);
-        const tosResult = await ensureTermsOfServiceRequired(stripe, paymentLink.id);
-
-        if (tosResult.status === "updated") {
-          console.log("   ↳ Enabled Terms of Service consent requirement.");
-        } else if (tosResult.status === "manual_required" && !consentWarnings.has(paymentLink.id)) {
-          const reason = tosResult.reason ? ` Reason: ${tosResult.reason}` : "";
-          console.warn(
-            `   ↳ Stripe rejected the Terms of Service update for ${link.slug} (${paymentLink.id}); toggle “Terms of service → Required”
-  manually in the dashboard.${reason}`,
-          );
-          consentWarnings.add(paymentLink.id);
-        }
 
         updated += 1;
         console.log(`✅ Updated payment link ${paymentLink.id} (${link.slug})`);
