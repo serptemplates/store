@@ -49,7 +49,8 @@ product_videos:
 related_videos:
 - https://www.youtube.com/watch?v=EY8549tG34c
 - https://www.youtube.com/watch?v=4MnyU0kPxlE
-related_posts: []
+related_posts:
+- how-to-download-loom-videos
 github_repo_url: https://github.com/serpapps/loom-video-downloader
 github_repo_tags:
 - loom-downloader
