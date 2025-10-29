@@ -463,6 +463,124 @@ describe("POST /api/stripe/webhook", () => {
     expect(markStaleCheckoutSessionsMock).toHaveBeenCalled();
   });
 
+  it("aggregates all GHL tags from checkout line items", async () => {
+    const event = buildCheckoutSessionEvent();
+    const session = event.data.object as Stripe.Checkout.Session;
+    session.metadata = {
+      offerId: "demo-offer",
+      landerId: "demo-offer",
+      productName: "Demo Offer",
+      product_slug: "demo-offer",
+      stripePriceId: "price_primary",
+      stripe_price_id: "price_primary",
+      stripeProductId: "prod_primary",
+      stripe_product_id: "prod_primary",
+      ghl_tag: "purchase-demo",
+      environment: "test",
+    };
+
+    const listLineItemsMock = vi.fn().mockResolvedValue({
+      data: [
+        {
+          price: {
+            id: "price_primary",
+            metadata: {
+              ghl_tag: "purchase-demo",
+              product_slug: "demo-offer",
+            },
+            product: {
+              id: "prod_primary",
+              metadata: {
+                ghl_tag: "purchase-demo",
+                product_slug: "demo-offer",
+              },
+            },
+          },
+        },
+        {
+          price: {
+            id: "price_bundle",
+            metadata: {
+              ghl_tag: "purchase-cross-sell",
+              product_slug: "bundle-offer",
+            },
+            product: {
+              id: "prod_bundle",
+              metadata: {
+                ghl_tag: "purchase-cross-sell",
+                product_slug: "bundle-offer",
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    const webhookClient = {
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+      paymentIntents: {
+        update: vi.fn().mockResolvedValue(undefined),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>;
+
+    getStripeClientMock.mockImplementation((mode?: unknown) => {
+      if (mode === "test" || mode === "live") {
+        return {
+          checkout: {
+            sessions: {
+              listLineItems: listLineItemsMock,
+            },
+          },
+          paymentLinks: {
+            retrieve: vi.fn(),
+          },
+        } as unknown as ReturnType<typeof getStripeClient>;
+      }
+
+      return webhookClient;
+    });
+
+    getOfferConfigMock.mockReturnValue(offerConfigFixture);
+    findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    syncOrderWithGhlMock.mockResolvedValue({
+      contactId: "contact_multi",
+      opportunityCreated: true,
+    });
+
+    recordWebhookLogMock.mockResolvedValueOnce(null);
+    recordWebhookLogMock.mockResolvedValueOnce({
+      status: "success",
+      attempts: 1,
+    });
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    expect(listLineItemsMock).toHaveBeenCalledWith(
+      "cs_test_123",
+      expect.objectContaining({
+        expand: ["data.price.product"],
+        limit: 100,
+      }),
+    );
+
+    expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        tagIds: ["purchase-demo", "purchase-cross-sell"],
+      }),
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          ghl_tag: "purchase-demo",
+          ghlTag: "purchase-demo",
+          ghlTagIds: "purchase-demo,purchase-cross-sell",
+        }),
+      }),
+    );
+  });
+
   it("hydrates metadata from Payment Link when session metadata is missing", async () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
