@@ -20,6 +20,148 @@ import { getStripeClient } from "@/lib/payments/stripe";
 
 const OPS_ALERT_THRESHOLD = 3;
 
+type StripeModeInput = "auto" | "live" | "test";
+
+function appendUniqueString(target: string[], value: unknown) {
+  if (typeof value !== "string") {
+    return;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return;
+  }
+
+  if (!target.includes(trimmed)) {
+    target.push(trimmed);
+  }
+}
+
+function parseSerializedStringList(value: unknown): string[] {
+  if (typeof value !== "string") {
+    return [];
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return [];
+  }
+
+  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        const results: string[] = [];
+        for (const entry of parsed) {
+          if (typeof entry === "string") {
+            const normalized = entry.trim();
+            if (normalized) {
+              results.push(normalized);
+            }
+          }
+        }
+        if (results.length > 0) {
+          return results;
+        }
+      }
+    } catch {
+      // Fall through to delimiter parsing
+    }
+  }
+
+  return trimmed
+    .split(/[,\s]+/)
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.length > 0);
+}
+
+function collectTagCandidatesFromMetadata(metadata: Record<string, unknown> | null | undefined): string[] {
+  if (!metadata) {
+    return [];
+  }
+
+  const candidates: string[] = [];
+  appendUniqueString(candidates, metadata["ghl_tag"]);
+  appendUniqueString(candidates, metadata["ghlTag"]);
+
+  for (const entry of parseSerializedStringList(metadata["ghl_tag_ids"])) {
+    appendUniqueString(candidates, entry);
+  }
+
+  for (const entry of parseSerializedStringList(metadata["ghlTagIds"])) {
+    appendUniqueString(candidates, entry);
+  }
+
+  return candidates;
+}
+
+function collectSlugCandidatesFromMetadata(metadata: Record<string, unknown> | null | undefined): string[] {
+  if (!metadata) {
+    return [];
+  }
+
+  const candidates: string[] = [];
+  appendUniqueString(candidates, metadata["product_slug"]);
+  appendUniqueString(candidates, metadata["productSlug"]);
+  appendUniqueString(candidates, metadata["slug"]);
+  appendUniqueString(candidates, metadata["product_slug_id"]);
+  return candidates;
+}
+
+async function collectLineItemTagData(
+  session: Stripe.Checkout.Session,
+  stripeMode: StripeModeInput,
+): Promise<{ tagIds: string[]; productSlugs: string[] }> {
+  const tagIds: string[] = [];
+  const productSlugs: string[] = [];
+
+  if (!session.id) {
+    return { tagIds, productSlugs };
+  }
+
+  try {
+    const stripe = getStripeClient(stripeMode);
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+      expand: ["data.price.product"],
+      limit: 100,
+    });
+
+    for (const item of lineItems.data ?? []) {
+      const price = item.price ?? null;
+      if (price?.metadata) {
+        for (const tag of collectTagCandidatesFromMetadata(price.metadata)) {
+          appendUniqueString(tagIds, tag);
+        }
+
+        for (const slug of collectSlugCandidatesFromMetadata(price.metadata)) {
+          appendUniqueString(productSlugs, slug);
+        }
+      }
+
+      const priceProduct = price?.product ?? null;
+      if (priceProduct && typeof priceProduct === "object" && !("deleted" in priceProduct && priceProduct.deleted)) {
+        const product = priceProduct as Stripe.Product;
+        if (product.metadata) {
+          for (const tag of collectTagCandidatesFromMetadata(product.metadata)) {
+            appendUniqueString(tagIds, tag);
+          }
+
+          for (const slug of collectSlugCandidatesFromMetadata(product.metadata)) {
+            appendUniqueString(productSlugs, slug);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    logger.warn("stripe.checkout_line_items_fetch_failed", {
+      sessionId: session.id,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+  }
+
+  return { tagIds, productSlugs };
+}
+
 function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {
   const tierValue = typeof metadata?.licenseTier === "string" ? metadata?.licenseTier : offerId;
   const entitlementsRaw = metadata?.licenseEntitlements;
@@ -102,6 +244,13 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     metadata.payment_link_mode = paymentLinkMode;
     metadata.paymentLinkMode = paymentLinkMode;
   }
+
+  const stripeModeForLineItems: StripeModeInput =
+    paymentLinkMode === "test"
+      ? "test"
+      : paymentLinkMode === "live"
+      ? "live"
+      : "auto";
 
   let productSlugValue = metadata.product_slug ?? metadata.productSlug ?? null;
   if (productSlugValue) {
@@ -328,6 +477,69 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     }
   }
 
+  const lineItemTagData = await collectLineItemTagData(session, stripeModeForLineItems);
+  const resolvedGhlTagIds: string[] = [];
+  const appendTagId = (value: unknown) => appendUniqueString(resolvedGhlTagIds, value);
+
+  appendTagId(ghlTagValue);
+  appendTagId(metadata.ghl_tag);
+  appendTagId(metadata.ghlTag);
+
+  for (const entry of parseSerializedStringList(metadata.ghl_tag_ids)) {
+    appendTagId(entry);
+  }
+
+  for (const entry of parseSerializedStringList(metadata.ghlTagIds)) {
+    appendTagId(entry);
+  }
+
+  for (const entry of lineItemTagData.tagIds) {
+    appendTagId(entry);
+  }
+
+  if (offerConfig?.ghl?.tagIds) {
+    for (const entry of offerConfig.ghl.tagIds) {
+      appendTagId(entry);
+    }
+  }
+
+  const productSlugCandidates: string[] = [];
+  const appendProductSlug = (value: unknown) => appendUniqueString(productSlugCandidates, value);
+
+  appendProductSlug(productSlugValue);
+  appendProductSlug(metadata.product_slug);
+  appendProductSlug(metadata.productSlug);
+  appendProductSlug(offerId);
+
+  for (const slug of lineItemTagData.productSlugs) {
+    appendProductSlug(slug);
+  }
+
+  for (const slug of productSlugCandidates) {
+    if (!slug) continue;
+    try {
+      const product = getProductData(slug);
+      const productTags = Array.isArray(product?.ghl?.tag_ids) ? product.ghl.tag_ids : [];
+      for (const tag of productTags) {
+        appendTagId(tag);
+      }
+    } catch (error) {
+      logger.debug("product.lookup_failed_for_ghl_tags", {
+        slug,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+
+  if (resolvedGhlTagIds.length > 0) {
+    const serializedTagIds = resolvedGhlTagIds.join(",");
+    metadata.ghlTagIds = serializedTagIds;
+    metadata.ghl_tag_ids = serializedTagIds;
+    metadata.ghl_tag = resolvedGhlTagIds[0];
+    metadata.ghlTag = resolvedGhlTagIds[0];
+    ghlTagValue = resolvedGhlTagIds[0];
+  }
+
   if (paymentIntentId) {
     await recordWebhookLog({
       paymentIntentId,
@@ -410,6 +622,14 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
 
     if (metadata.ghl_tag) {
       licenseMetadata.ghl_tag = metadata.ghl_tag;
+    }
+
+    if (metadata.ghlTagIds) {
+      licenseMetadata.ghlTagIds = metadata.ghlTagIds;
+    }
+
+    if (metadata.ghl_tag_ids) {
+      licenseMetadata.ghl_tag_ids = metadata.ghl_tag_ids;
     }
 
     if (metadata.paymentLinkId) {
@@ -638,7 +858,14 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       return;
     }
 
-    const syncResult = await syncOrderWithGhlWithRetry(offerConfig?.ghl, {
+    const ghlConfigForSync = offerConfig?.ghl
+      ? {
+          ...offerConfig.ghl,
+          ...(resolvedGhlTagIds.length > 0 ? { tagIds: resolvedGhlTagIds } : {}),
+        }
+      : offerConfig?.ghl;
+
+    const syncResult = await syncOrderWithGhlWithRetry(ghlConfigForSync, {
       offerId,
       offerName: offerConfig?.productName ?? metadata.productName ?? offerId,
       customerEmail,
