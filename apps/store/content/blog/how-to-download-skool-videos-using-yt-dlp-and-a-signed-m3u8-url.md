@@ -52,7 +52,7 @@ yt-dlp \
 
 💡 Make sure to paste the full signed URL from DevTools. If the token is expired (expires=...), refresh the page and grab a new one.
 
-⸻
+---
 
 📄 What’s Happening Behind the Scenes?
 
@@ -67,7 +67,7 @@ yt-dlp can:
 	•	Download all .ts segments
 	•	Merge them automatically into .mp4
 
-⸻
+---
 
 🧪 Optional Bash Script
 
@@ -91,7 +91,7 @@ Then run:
 ./skool-dl.sh "https://manifest-gcp-us-east1-...rendition.m3u8?...&signature=..."
 
 
-⸻
+---
 
 🛑 Common Errors
 
@@ -101,7 +101,7 @@ Error	Reason	Fix
 Unable to download webpage	Wrong URL	Only use signed Fastly .m3u8, not stream.video.skool.com
 
 
-⸻
+---
 
 📦 Example Output
 
@@ -111,7 +111,7 @@ Unable to download webpage	Wrong URL	Only use signed Fastly .m3u8, not stream.vi
 
 Your video should now be saved as ~/Desktop/skool-video.mp4.
 
-⸻
+---
 
 ⚠️ Legal Disclaimer
 
