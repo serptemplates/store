@@ -22,17 +22,14 @@ payment_link:
   test_url: https://buy.stripe.com/test_6oU5kv1Mc7GmghB1Or0VO0e
 
 status: live
-featured_image: https://raw.githubusercontent.com/serpdownloaders/.github/refs/heads/main/sites/clientclub-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpdownloaders/clientclub-downloader/main/images/featured.gif
-screenshots:
-- url: https://raw.githubusercontent.com/serpdownloaders/.github/refs/heads/main/sites/clientclub-downloader.jpg
-  alt: Clientclub Downloader website preview
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
 github_repo_url: https://github.com/serpdownloaders/clientclub-downloader
 github_repo_tags: []
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null

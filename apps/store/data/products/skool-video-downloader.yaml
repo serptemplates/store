@@ -54,10 +54,10 @@ github_repo_tags:
 - skool-downloader
 - skool-video-downloader
 - download-skool-videos
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/skool-video-downloader-by/adjbknblejbhfmcefnhgkdboanoboimj
 firefox_addon_store_link: null
 edge_addons_store_link: null
-producthunt_link: null
+producthunt_link: https://www.producthunt.com/products/skool-com-downloader
 features:
 - Detects Skool course lessons, community posts, and live session recordings
 - Uses your logged-in session to download member-only content securely

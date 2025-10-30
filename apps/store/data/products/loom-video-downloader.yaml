@@ -56,7 +56,7 @@ chrome_webstore_link: https://chromewebstore.google.com/detail/loom-video-downlo
 firefox_addon_store_link: null
 edge_addons_store_link: null
 opera_addons_store_link: null
-producthunt_link: null
+producthunt_link: https://www.producthunt.com/products/loom-video-downloader
 features:
 - Detects Loom share links, embedded players, and workspace libraries automatically
 - Prompts for passwords on restricted recordings without storing credentials

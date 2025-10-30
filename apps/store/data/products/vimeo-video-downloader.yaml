@@ -67,7 +67,7 @@ github_repo_tags:
 chrome_webstore_link: https://chromewebstore.google.com/detail/vimeo-video-downloader/dhgiccbhamhpghhoaajjiikjlegbfhdj
 firefox_addon_store_link: null
 edge_addons_store_link: null
-producthunt_link: null
+producthunt_link: https://www.producthunt.com/products/vimeo-video-downloader
 features:
 - Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites
 - Prompts for video passwords and respects your logged-in Vimeo session

@@ -53,9 +53,9 @@ related_posts: []
 github_repo_url: https://github.com/serpapps/sprout-video-downloader
 github_repo_tags: []
 chrome_webstore_link: null
-firefox_addon_store_link: null
+firefox_addon_store_link: https://addons.mozilla.org/en-US/firefox/addon/sprout-video-downloader/
 edge_addons_store_link: null
-producthunt_link: null
+producthunt_link: https://www.producthunt.com/products/sprout-video-downloader
 features:
 - Detects SproutVideo players on sproutvideo.com and embedded on third-party sites
 - Uses your active session to access gated or private videos securely
@@ -157,10 +157,6 @@ permission_justifications:
   justification: |
     Saves the merged MP4 to your downloads folder and keeps the progress tracker
     in sync for each recording.
-- permission: storage
-  justification: |
-    Stores licence activation and preferred quality locally so the downloader stays
-    ready between sessions.
 - permission: activeTab
   justification: |
     Detects SproutVideo players on the current tab—whether on sproutvideo.com or
@@ -173,19 +169,8 @@ permission_justifications:
   justification: |
     Extracts stream manifests, variant data, and authentication headers from the
     player so the downloader can fetch the correct segments.
-- permission: notifications
-  justification: |
-    Sends completion and error alerts so you know when a download finishes without
-    watching the popup.
-- permission: contextMenus
-  justification: |
-    Adds a right-click “Download with Sprout Video Downloader” shortcut for quick
-    saves directly from embedded players.
 - permission: offscreen
   justification: |
     Merges HLS segments into MP4 files in the background, preventing the browser
     UI from freezing during long downloads.
-- permission: host_permissions
-  justification: |
-    Grants access to sproutvideo.com and hosted CDN domains so the extension only
-    activates on supported content.
+

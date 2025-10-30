@@ -42,9 +42,9 @@ related_posts:
 github_repo_url: https://github.com/serpapps/whop-video-downloader
 github_repo_tags: []
 chrome_webstore_link: https://chromewebstore.google.com/detail/whop-video-downloader/obiiijgnmblffcopbdfpdlmbdkgmblgf
-firefox_addon_store_link: null
+firefox_addon_store_link: https://addons.mozilla.org/en-US/firefox/addon/whop-video-downloader/
 edge_addons_store_link: null
-producthunt_link: null
+producthunt_link: https://www.producthunt.com/products/whop-video-downloader
 features:
 - Detects Whop video players inside products, member areas, and course modules
 - Uses your Whop session to access subscriber-only content securely

@@ -19,11 +19,8 @@ payment_link:
   test_url: https://buy.stripe.com/test_eVq00b8aA6CiaXhbp10VO1t
 
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xnxx-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.gif
-screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xnxx-video-downloader.jpg
-  alt: XNXX Video Downloader website preview
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
