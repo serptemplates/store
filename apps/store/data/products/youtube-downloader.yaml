@@ -61,7 +61,7 @@ features:
 - Queues up to three downloads at once with live progress, speed, and ETA tracking
 - Keeps downloads running in the background while you browse other tabs
 - Generates ready-to-run yt-dlp commands for advanced workflows
-- Stores licence activation and preferences locally with zero analytics
+- Stores license activation and preferences locally with zero analytics
 pricing:
   label: One-time payment
   price: $17.00
