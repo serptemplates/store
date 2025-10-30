@@ -2,14 +2,28 @@ platform: Alpha Porno
 name: Alpha Porno Video Downloader
 tagline: Save Alpha Porno videos instantly for offline viewing.
 slug: alpha-porno-video-downloader
-description: |
-  Alpha Porno Video Downloader zeroes in on alphaporno.com video players so you can save clips for offline viewing in a couple clicks. It scans each page for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide exactly what lands in your downloads folder.
+description: 'Alpha Porno Video Downloader zeroes in on alphaporno.com video players
+  so you can save clips for offline viewing in a couple clicks. It scans each page
+  for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide
+  exactly what lands in your downloads folder.
 
-  Concurrent downloads mean you can queue multiple clips at once, watch progress bars inline, and keep browsing while the extension finishes its work. A right-click shortcut and compact popup deliver quality selection, speed indicators, and discreet desktop notifications when each file wraps.
 
-  Licence activation takes seconds and settings stay local, so nothing leaves your browser beyond a quick licence check. The extension only runs on AlphaPorno domains, keeping the rest of your browsing untouched and your saved copies private.
+  Concurrent downloads mean you can queue multiple clips at once, watch progress bars
+  inline, and keep browsing while the extension finishes its work. A right-click shortcut
+  and compact popup deliver quality selection, speed indicators, and discreet desktop
+  notifications when each file wraps.
 
-  Keep the source tab open until the merge completes, remember it cannot grab DRM-protected streams, and consider splitting long sessions into batches so your hardware can stitch complex HLS videos without slowing down.
+
+  Licence activation takes seconds and settings stay local, so nothing leaves your
+  browser beyond a quick licence check. The extension only runs on AlphaPorno domains,
+  keeping the rest of your browsing untouched and your saved copies private.
+
+
+  Keep the source tab open until the merge completes, remember it cannot grab DRM-protected
+  streams, and consider splitting long sessions into batches so your hardware can
+  stitch complex HLS videos without slowing down.
+
+  '
 seo_title: Alpha Porno Video Downloader | Concurrent downloads for alphaporno.com
 seo_description: Capture AlphaPorno videos with multi-quality selection, concurrent
   downloads, and fully local processing for private offline viewing.
@@ -21,9 +35,8 @@ buy_button_destination: https://ghl.serp.co/payment-link/68e07e19613b1b580fce818
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=alpha-porno-video-downloader
 payment_link:
-  live_url: https://buy.stripe.com/7sYbITduU0dU7L52Sv0VO06
-  test_url: https://buy.stripe.com/test_9B6cMXfD20dU6H18cP0VO05
-
+  live_url: https://buy.stripe.com/eVq00b2QggcSfdxgJl0VO1y
+  test_url: https://buy.stripe.com/test_8x228jduUd0G1mH3Wz0VO1x
 status: live
 screenshots: []
 product_videos: []
@@ -48,8 +61,8 @@ features:
 - Site-scoped permissions limit the extension to alphaporno.com domains only
 pricing:
   label: One-time payment
-  price: $17.00
-  original_price: ''
+  price: $9.00
+  original_price: $17.00
   note: Lifetime licence with unlimited downloads on alphaporno.com. No trial and
     no refunds.
   cta_text: Get it Now
@@ -77,7 +90,7 @@ faqs:
     the HLS merger to run without freezing your tab, and context menu access powers
     the right-click download shortcut. Each permission directly supports a core feature.
 - question: Is there a free version or refund policy?
-  answer: The tool requires a one-time $17 purchase with no free trial and no refunds.
+  answer: The tool requires a one-time $9 purchase with no free trial and no refunds.
     Updates for future site changes are included for licence holders.
 - question: Which browsers are supported?
   answer: The extension runs on Google Chrome, Microsoft Edge, Mozilla Firefox, Brave,
@@ -128,9 +141,9 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
-  price_id: price_1SELi806JrOmKRCmYjc9McRN
+  price_id: price_1SO0Sc06JrOmKRCmh41epOht
   metadata:
-    stripe_product_id: prod_SrAlphaPorno123
+    stripe_product_id: prod_TAg09llcKpydjr
 ghl:
   tag_ids:
   - purchase-alpha-porno-downloader
@@ -138,38 +151,65 @@ ghl:
 new_release: true
 permission_justifications:
 - permission: downloads
-  justification: |
-    Saves the MP4 files you select and tracks progress so the popup and inline bars
+  justification: 'Saves the MP4 files you select and tracks progress so the popup
+    and inline bars
+
     stay accurate while each download completes.
+
+    '
 - permission: storage
-  justification: |
-    Retains the lifetime licence key, activation email, and your preferred quality
+  justification: 'Retains the lifetime licence key, activation email, and your preferred
+    quality
+
     defaults directly inside the browser.
+
+    '
 - permission: activeTab
-  justification: |
-    Lets the extension inspect the current AlphaPorno tab to detect embedded video
+  justification: 'Lets the extension inspect the current AlphaPorno tab to detect
+    embedded video
+
     players and inject the download overlay button.
+
+    '
 - permission: tabs
-  justification: |
-    Required to keep downloads running if you switch tabs or windows and to restore
+  justification: 'Required to keep downloads running if you switch tabs or windows
+    and to restore
+
     progress indicators when you come back.
+
+    '
 - permission: scripting
-  justification: |
-    Injects lightweight scripts that enumerate available video qualities and trigger
+  justification: 'Injects lightweight scripts that enumerate available video qualities
+    and trigger
+
     downloads without manual URL copying.
+
+    '
 - permission: notifications
-  justification: |
-    Shows discreet desktop alerts when each download completes or if an error needs
+  justification: 'Shows discreet desktop alerts when each download completes or if
+    an error needs
+
     your attention.
+
+    '
 - permission: contextMenus
-  justification: |
-    Powers the right-click Download with Alpha Porno Downloader action for instant
+  justification: 'Powers the right-click Download with Alpha Porno Downloader action
+    for instant
+
     saves.
+
+    '
 - permission: offscreen
-  justification: |
-    Handles HLS chunk merging in a hidden context so your main tab stays responsive
+  justification: 'Handles HLS chunk merging in a hidden context so your main tab stays
+    responsive
+
     during complex downloads.
+
+    '
 - permission: host_permissions
-  justification: |
-    Limits access to alphaporno.com and its video CDNs, ensuring the extension only
+  justification: 'Limits access to alphaporno.com and its video CDNs, ensuring the
+    extension only
+
     activates on supported domains.
+
+    '

@@ -2,13 +2,17 @@ platform: Brightcove
 name: Brightcove Video Downloader
 tagline: Save Brightcove-hosted training and marketing videos in seconds.
 slug: brightcove-video-downloader
-description: |
-  Brightcove Video Downloader helps teams archive enterprise video portals, training libraries, and campaign landing pages powered by Brightcove. The extension recognises players served from players.brightcove.net and embedded marketing sites, then captures the underlying media streams with the access you already have.
-
-  Whether you are preparing compliance backups, reviewing customer onboarding flows, or keeping stakeholders aligned during launches, Brightcove Video Downloader automates the process—no devtools spelunking, header tracing, or external CLI utilities required.
+description: "Brightcove Video Downloader helps teams archive enterprise video portals,\
+  \ training libraries, and campaign landing pages powered by Brightcove. The extension\
+  \ recognises players served from players.brightcove.net and embedded marketing sites,\
+  \ then captures the underlying media streams with the access you already have.\n\
+  \nWhether you are preparing compliance backups, reviewing customer onboarding flows,\
+  \ or keeping stakeholders aligned during launches, Brightcove Video Downloader automates\
+  \ the process\u2014no devtools spelunking, header tracing, or external CLI utilities\
+  \ required.\n"
 seo_title: Brightcove Video Downloader | Download Brightcove Videos
-seo_description: Download Brightcove-hosted videos, gated trainings, and
-  embedded marketing assets with the Brightcove Video Downloader extension.
+seo_description: Download Brightcove-hosted videos, gated trainings, and embedded
+  marketing assets with the Brightcove Video Downloader extension.
 serply_link: https://serp.ly/brightcove-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/brightcove-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/brightcove-video-downloader
@@ -31,94 +35,88 @@ edge_addons_store_link: null
 opera_addons_store_link: null
 producthunt_link: null
 features:
-  - Detects Brightcove players across players.brightcove.net, bcbolt.com, and
-    embedded marketing pages
-  - Authenticates using your existing SSO or token-based Brightcove session to
-    respect access controls
-  - Supports DRM-free progressive and adaptive HLS/DASH renditions with
-    automatic MP4 merging
-  - Provides bitrate, resolution, and file size details so stakeholders can
-    choose the right asset for handoffs
-  - Logs chapter markers, cue points, and metadata in a companion JSON file for
-    internal documentation
-  - Batch downloads playlists or course modules with resumable transfers and
-    retry logic
-  - Built for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and
-    Linux
+- Detects Brightcove players across players.brightcove.net, bcbolt.com, and embedded
+  marketing pages
+- Authenticates using your existing SSO or token-based Brightcove session to respect
+  access controls
+- Supports DRM-free progressive and adaptive HLS/DASH renditions with automatic MP4
+  merging
+- Provides bitrate, resolution, and file size details so stakeholders can choose the
+  right asset for handoffs
+- Logs chapter markers, cue points, and metadata in a companion JSON file for internal
+  documentation
+- Batch downloads playlists or course modules with resumable transfers and retry logic
+- Built for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux
 pricing:
   label: One-time payment
   price: $27.00
-  original_price: ''
-  note: Join the private beta to lock in early pricing and get migration support
-    for existing Brightcove archives.
+  original_price: $47.00
+  note: Join the private beta to lock in early pricing and get migration support for
+    existing Brightcove archives.
   cta_text: Join the Waitlist
   currency: USD
   availability: PreOrder
   benefits:
-    - Preserve Brightcove trainings and stakeholder videos for compliance and
-      offline review
-    - Deliver high-quality MP4 handoffs without hiring engineering to pull
-      manifests
-    - Standardise downloads for marketing, enablement, and customer success teams
+  - Preserve Brightcove trainings and stakeholder videos for compliance and offline
+    review
+  - Deliver high-quality MP4 handoffs without hiring engineering to pull manifests
+  - Standardise downloads for marketing, enablement, and customer success teams
 faqs:
-  - question: Can Brightcove Video Downloader access SSO-protected portals?
-    answer: Yes. If you can view the video after authenticating with SSO, the
-      downloader reuses that browser session to pull the stream. It never
-      bypasses permissions you do not already have.
-  - question: Does it work with the latest Brightcove player embeds?
-    answer: The extension recognises both classic and modern Brightcove player
-      deployments, including inline and modal embeds on marketing sites.
-  - question: Are DRM-protected videos supported?
-    answer: Brightcove implementations that layer DRM (Widevine, PlayReady,
-      FairPlay) are not supported. Non-DRM HLS and DASH streams download
-      normally.
-  - question: Will captions or cue points be saved?
-    answer: Video and audio export in MP4 format. Cue points and chapter metadata
-      are written to a companion JSON for reference. Subtitle packaging is on
-      the roadmap.
-  - question: Can I queue an entire playlist?
-    answer: Yes. Add multiple assets to the queue and the downloader will process
-      them sequentially, keeping progress, retries, and final filenames
-      organised.
+- question: Can Brightcove Video Downloader access SSO-protected portals?
+  answer: Yes. If you can view the video after authenticating with SSO, the downloader
+    reuses that browser session to pull the stream. It never bypasses permissions
+    you do not already have.
+- question: Does it work with the latest Brightcove player embeds?
+  answer: The extension recognises both classic and modern Brightcove player deployments,
+    including inline and modal embeds on marketing sites.
+- question: Are DRM-protected videos supported?
+  answer: Brightcove implementations that layer DRM (Widevine, PlayReady, FairPlay)
+    are not supported. Non-DRM HLS and DASH streams download normally.
+- question: Will captions or cue points be saved?
+  answer: Video and audio export in MP4 format. Cue points and chapter metadata are
+    written to a companion JSON for reference. Subtitle packaging is on the roadmap.
+- question: Can I queue an entire playlist?
+  answer: Yes. Add multiple assets to the queue and the downloader will process them
+    sequentially, keeping progress, retries, and final filenames organised.
 reviews:
-  - name: Devika Raman
-    title: Makes compliance archiving painless
-    rating: 5
-    date: 2025-02-24
-    review: We archive quarterly trainings for regulators. The downloader respects
-      SSO and delivers perfect MP4 copies without IT tickets.
-  - name: Jordan Silvers
-    title: Marketing handoffs are seamless
-    rating: 4.9
-    date: 2025-03-06
-    review: Captures every campaign video we launch on Brightcove and shares them
-      with agencies in minutes.
-  - name: Carlo Mendes
-    title: Reliable even on long libraries
-    rating: 4.8
-    date: 2025-01-31
-    review: 30+ item playlists finish overnight, and the metadata export keeps the
-      team aligned on what each file contains.
+- name: Devika Raman
+  title: Makes compliance archiving painless
+  rating: 5
+  date: 2025-02-24
+  review: We archive quarterly trainings for regulators. The downloader respects SSO
+    and delivers perfect MP4 copies without IT tickets.
+- name: Jordan Silvers
+  title: Marketing handoffs are seamless
+  rating: 4.9
+  date: 2025-03-06
+  review: Captures every campaign video we launch on Brightcove and shares them with
+    agencies in minutes.
+- name: Carlo Mendes
+  title: Reliable even on long libraries
+  rating: 4.8
+  date: 2025-01-31
+  review: 30+ item playlists finish overnight, and the metadata export keeps the team
+    aligned on what each file contains.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Video
-  - Enterprise
+- Downloader
+- Video
+- Enterprise
 keywords:
-  - brightcove downloader
-  - download brightcove video
-  - save brightcove training
-  - brightcove mp4 export
-  - brightcove offline archive
+- brightcove downloader
+- download brightcove video
+- save brightcove training
+- brightcove mp4 export
+- brightcove offline archive
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -127,17 +125,17 @@ return_policy:
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 ghl:
   tag_ids:
-    - purchase-brightcove-video-downloader
+  - purchase-brightcove-video-downloader
 permission_justifications:
-  - permission: downloads
-    justification: Stores the completed MP4 and metadata bundle in your downloads
-      folder once processing finishes.
-  - permission: activeTab
-    justification: Injects the downloader UI only on pages with Brightcove players
-      to avoid touching unrelated sites.
-  - permission: tabs
-    justification: Keeps long playlist downloads alive if you navigate between
-      modules or refresh the page.
-  - permission: scripting
-    justification: Reads manifest URLs, rendition lists, and cue point data from the
-      Brightcove player so the correct assets can be saved.
+- permission: downloads
+  justification: Stores the completed MP4 and metadata bundle in your downloads folder
+    once processing finishes.
+- permission: activeTab
+  justification: Injects the downloader UI only on pages with Brightcove players to
+    avoid touching unrelated sites.
+- permission: tabs
+  justification: Keeps long playlist downloads alive if you navigate between modules
+    or refresh the page.
+- permission: scripting
+  justification: Reads manifest URLs, rendition lists, and cue point data from the
+    Brightcove player so the correct assets can be saved.

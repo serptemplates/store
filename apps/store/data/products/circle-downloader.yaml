@@ -2,12 +2,25 @@ platform: Circle
 name: Circle Downloader
 tagline: Save Circle content instantly to your device.
 slug: circle-downloader
-description: |
-  Circle Downloader keeps community lessons and cohort recordings alive long after the posts disappear. It recognises both native Circle uploads and embedded players from YouTube, Vimeo, Wistia, and Loom, then lets you save them as clean MP4 files without juggling separate tools.
+description: 'Circle Downloader keeps community lessons and cohort recordings alive
+  long after the posts disappear. It recognises both native Circle uploads and embedded
+  players from YouTube, Vimeo, Wistia, and Loom, then lets you save them as clean
+  MP4 files without juggling separate tools.
 
-  The extension lists every quality rendition, labels the stream type, and remembers your preferred resolution for the next download. You can run up to three downloads at the same time, keep the global progress manager pinned while you browse, and queue additional videos that start automatically when a slot opens up.
 
-  Everything happens with your existing Circle login inside the browser. Adaptive streams download chunk by chunk with retries and merge in the background, while direct MP4 uploads land instantly in the folder you choose. Notifications confirm when files are ready so you can archive resources, flight-proof course material, or revisit cohort calls offline.
+  The extension lists every quality rendition, labels the stream type, and remembers
+  your preferred resolution for the next download. You can run up to three downloads
+  at the same time, keep the global progress manager pinned while you browse, and
+  queue additional videos that start automatically when a slot opens up.
+
+
+  Everything happens with your existing Circle login inside the browser. Adaptive
+  streams download chunk by chunk with retries and merge in the background, while
+  direct MP4 uploads land instantly in the folder you choose. Notifications confirm
+  when files are ready so you can archive resources, flight-proof course material,
+  or revisit cohort calls offline.
+
+  '
 seo_title: Circle Downloader | Save Circle community and embed videos offline
 seo_description: Capture Circle community uploads plus YouTube, Vimeo, Wistia, and
   Loom embeds as MP4 files with queues, quality controls, and on-device processing.
@@ -21,7 +34,6 @@ cancel_url: https://apps.serp.co/checkout?product=circle-downloader
 payment_link:
   live_url: https://buy.stripe.com/28EaEPcqQ5ye3uP3Wz0VO0c
   test_url: https://buy.stripe.com/test_bJe8wHduU1hY4yT8cP0VO0d
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/circle-downloader/main/images/featured.gif
@@ -51,7 +63,7 @@ features:
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
+  original_price: $37.00
   note: Lifetime licence with updates for new Circle player changes. No trial and
     no refunds.
   cta_text: Get it Now
@@ -67,12 +79,12 @@ faqs:
     Wistia, and Loom. Everything it detects appears in the popup with labels so you
     always know which source you are saving.
 - question: Can I download several lessons at the same time?
-  answer: Yes. Up to three downloads run concurrently. Additional videos wait in
-    a queue and start automatically when a slot opens, so you can line up a batch
-    of lessons and let the downloader work through them.
+  answer: Yes. Up to three downloads run concurrently. Additional videos wait in a
+    queue and start automatically when a slot opens, so you can line up a batch of
+    lessons and let the downloader work through them.
 - question: Does it keep the original quality of adaptive streams?
-  answer: Absolutely. You can pick any rendition the community provides. HLS and
-    DASH sources download segment by segment and merge into an MP4 without re-encoding,
+  answer: Absolutely. You can pick any rendition the community provides. HLS and DASH
+    sources download segment by segment and merge into an MP4 without re-encoding,
     preserving the original bitrate.
 - question: Will it download member-only or private community content?
   answer: If you can view the post in Circle, the extension can download it. It uses
@@ -88,9 +100,9 @@ reviews:
   title: Essential for cohort replays
   rating: 5
   date: 2025-02-19
-  review: I download every coaching call before the community archives it. Mixed
-    embeds and native uploads all save to one folder and the queue keeps three running
-    at a time.
+  review: I download every coaching call before the community archives it. Mixed embeds
+    and native uploads all save to one folder and the queue keeps three running at
+    a time.
 - name: Andre Castillo
   title: Keeps our training library intact
   rating: 4.9
@@ -139,38 +151,65 @@ ghl:
 new_release: true
 permission_justifications:
 - permission: downloads
-  justification: |
-    Saves the MP4 files you export and tracks status so the global manager can show
+  justification: 'Saves the MP4 files you export and tracks status so the global manager
+    can show
+
     progress for each Circle lesson.
+
+    '
 - permission: storage
-  justification: |
-    Keeps the lifetime licence details and your preferred quality selections inside
+  justification: 'Keeps the lifetime licence details and your preferred quality selections
+    inside
+
     the browser for the next session.
+
+    '
 - permission: activeTab
-  justification: |
-    Detects when a Circle post contains a native upload or embed and injects the
+  justification: 'Detects when a Circle post contains a native upload or embed and
+    injects the
+
     inline download button on that specific tab.
+
+    '
 - permission: tabs
-  justification: |
-    Powers the multi-download queue, allowing jobs to continue even if you navigate
+  justification: 'Powers the multi-download queue, allowing jobs to continue even
+    if you navigate
+
     away while keeping the status panel accessible from other tabs.
+
+    '
 - permission: scripting
-  justification: |
-    Enumerates native, YouTube, Vimeo, Wistia, and Loom players, extracts their available
+  justification: 'Enumerates native, YouTube, Vimeo, Wistia, and Loom players, extracts
+    their available
+
     renditions, and hands them to the downloader.
+
+    '
 - permission: notifications
-  justification: |
-    Sends completion, error, and queue status alerts so you know when a video is
+  justification: 'Sends completion, error, and queue status alerts so you know when
+    a video is
+
     ready without re-opening the popup.
+
+    '
 - permission: contextMenus
-  justification: |
-    Adds quick download options to the page so you can save from the post itself
+  justification: 'Adds quick download options to the page so you can save from the
+    post itself
+
     without opening the popup every time.
+
+    '
 - permission: offscreen
-  justification: |
-    Merges HLS and DASH segments into MP4 files in a hidden worker so adaptive streams
+  justification: 'Merges HLS and DASH segments into MP4 files in a hidden worker so
+    adaptive streams
+
     complete without freezing the Circle tab.
+
+    '
 - permission: host_permissions
-  justification: |
-    Grants controlled access to circle.so/circle.com domains and media CDNs, ensuring
+  justification: 'Grants controlled access to circle.so/circle.com domains and media
+    CDNs, ensuring
+
     the extension only activates inside Circle communities.
+
+    '

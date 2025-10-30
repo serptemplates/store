@@ -2,17 +2,18 @@ platform: NHentai
 name: NHentai Downloader
 tagline: Archive NHentai doujinshi for private offline reading.
 slug: nhentai-downloader
-description: >
-  NHentai Downloader lets collectors save doujinshi they are permitted to view,
-  complete with page order and metadata. Skip page-by-page saving and keep your
-  library ready for offline reading.
+description: 'NHentai Downloader lets collectors save doujinshi they are permitted
+  to view, complete with page order and metadata. Skip page-by-page saving and keep
+  your library ready for offline reading.
 
 
-  Use it to organize research references, preserve favorite works on your
-  tablet, or keep backups when traveling without stable internet.
+  Use it to organize research references, preserve favorite works on your tablet,
+  or keep backups when traveling without stable internet.
+
+  '
 seo_title: NHentai Downloader | Download NHentai Doujinshi
-seo_description: Download NHentai doujinshi for private offline reading. Fast,
-  secure NHentai downloader with full gallery support.
+seo_description: Download NHentai doujinshi for private offline reading. Fast, secure
+  NHentai downloader with full gallery support.
 serply_link: https://serp.ly/nhentai-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/nhentai-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/nhentai-downloader
@@ -24,8 +25,8 @@ status: pre_release
 featured_image: /media/products/nhentai-downloader/featured.webp
 featured_image_gif: null
 screenshots:
-  - url: /media/products/nhentai-downloader/nhentai-homepage.webp
-    alt: NHentai Downloader website homepage
+- url: /media/products/nhentai-downloader/nhentai-homepage.webp
+  alt: NHentai Downloader website homepage
 product_videos: []
 related_videos: []
 related_posts: []
@@ -36,70 +37,70 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Download authorized NHentai galleries in the original page order
-  - Capture metadata, tags, and titles for quick cataloging
-  - Batch queue multiple codes with automatic retries
-  - Local-first workflow keeps collections private
-  - Works across Windows, macOS, Linux, and major browsers
+- Download authorized NHentai galleries in the original page order
+- Capture metadata, tags, and titles for quick cataloging
+- Batch queue multiple codes with automatic retries
+- Local-first workflow keeps collections private
+- Works across Windows, macOS, Linux, and major browsers
 pricing:
   label: One-time payment
-  price: $17
-  original_price: ""
+  price: $9
+  original_price: $17.00
   note: Contact us for current licensing options.
   cta_text: Get Notified
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-  - question: How do I download a doujinshi?
-    answer: Enter the NHentai code or open the gallery, then start the download to
-      save all pages in order.
-  - question: Does it bypass restricted content?
-    answer: No. You must already have permission to view the gallery according to
-      NHentai policies.
-  - question: Can I export tags?
-    answer: Yes. Metadata such as artists, characters, and tags are included in a
-      companion JSON file for cataloging.
-  - question: Are downloads compressed?
-    answer: Files are stored in their original resolution and packaged into a folder
-      so you can open them in any reader.
-  - question: Is usage tracked?
-    answer: No. The app runs locally; we do not monitor which galleries you download.
+- question: How do I download a doujinshi?
+  answer: Enter the NHentai code or open the gallery, then start the download to save
+    all pages in order.
+- question: Does it bypass restricted content?
+  answer: No. You must already have permission to view the gallery according to NHentai
+    policies.
+- question: Can I export tags?
+  answer: Yes. Metadata such as artists, characters, and tags are included in a companion
+    JSON file for cataloging.
+- question: Are downloads compressed?
+  answer: Files are stored in their original resolution and packaged into a folder
+    so you can open them in any reader.
+- question: Is usage tracked?
+  answer: No. The app runs locally; we do not monitor which galleries you download.
 reviews:
-  - name: Airi Kobayashi
-    title: Great for organized reading
-    rating: 5
-    date: 2025-02-07
-    review: NHentai Downloader lets me catalog collections quickly and everything
-      stays tagged for later.
-  - name: Lucas Meyer
-    title: Perfect travel companion
-    rating: 4.9
-    date: 2025-03-08
-    review: I keep my favorite series on a tablet. Downloads are fast and keep the
-      correct page order.
-  - name: Mei Park
-    title: Metadata is a lifesaver
-    rating: 4.8
-    date: 2025-01-23
-    review: The included tags and JSON exports make organizing my library effortless.
+- name: Airi Kobayashi
+  title: Great for organized reading
+  rating: 5
+  date: 2025-02-07
+  review: NHentai Downloader lets me catalog collections quickly and everything stays
+    tagged for later.
+- name: Lucas Meyer
+  title: Perfect travel companion
+  rating: 4.9
+  date: 2025-03-08
+  review: I keep my favorite series on a tablet. Downloads are fast and keep the correct
+    page order.
+- name: Mei Park
+  title: Metadata is a lifesaver
+  rating: 4.8
+  date: 2025-01-23
+  review: The included tags and JSON exports make organizing my library effortless.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Adult
-  - Comics
+- Downloader
+- Adult
+- Comics
 keywords:
-  - nhentai downloader
-  - nhentai download tool
+- nhentai downloader
+- nhentai download tool
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -108,5 +109,5 @@ return_policy:
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 ghl:
   tag_ids:
-    - purchase-nhentai-downloader
+  - purchase-nhentai-downloader
 permission_justifications: []

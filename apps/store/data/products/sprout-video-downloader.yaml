@@ -2,13 +2,20 @@ platform: Sprout
 name: Sprout Video Downloader
 tagline: Save Sprout videos instantly for offline viewing.
 slug: sprout-video-downloader
-description: |
-  Sprout Video Downloader captures videos hosted on sproutvideo.com as well as embedded players inside private portals, courses, and documentation. It detects the player, lists every available quality, and converts hosted streams into MP4 files you can store offline without juggling ffmpeg or manual URL scraping.
+description: 'Sprout Video Downloader captures videos hosted on sproutvideo.com as
+  well as embedded players inside private portals, courses, and documentation. It
+  detects the player, lists every available quality, and converts hosted streams into
+  MP4 files you can store offline without juggling ffmpeg or manual URL scraping.
 
-  Stay logged in to your SproutVideo account, choose the resolution you need, and the extension forwards authentication headers, downloads each segment, and merges them quietly in the background while you continue working.
+
+  Stay logged in to your SproutVideo account, choose the resolution you need, and
+  the extension forwards authentication headers, downloads each segment, and merges
+  them quietly in the background while you continue working.
+
+  '
 seo_title: Sprout Video Downloader | Download Sprout Videos
-seo_description: Download Sprout videos easily for offline viewing. Fast,
-  reliable Sprout video downloader with high-quality downloads.
+seo_description: Download Sprout videos easily for offline viewing. Fast, reliable
+  Sprout video downloader with high-quality downloads.
 serply_link: https://serp.ly/sprout-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/sprout-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/sprout-video-downloader
@@ -19,35 +26,34 @@ cancel_url: https://apps.serp.co/checkout?product=sprout-video-downloader
 payment_link:
   live_url: https://buy.stripe.com/3cIdR1aiI4ua9Tdct50VO12
   test_url: https://buy.stripe.com/test_aFa7sD1Mcd0Gc1lct50VO14
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
-featured_image_gif:
+featured_image_gif: null
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
-    alt: Sprout Video Downloader website preview
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
-    alt: Sprout Video Downloader screenshot
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
-    alt: Sprout Video Downloader screenshot
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-1.jpg
-    alt: Sprout Video Downloader dashboard showing download controls
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-2.jpg
-    alt: Sprout Video Downloader queue with multiple Sprout videos ready to save
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-3.jpg
-    alt: Sprout Video Downloader video detail view with quality options
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-4.jpg
-    alt: Sprout Video Downloader showing batch download progress
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-5.jpg
-    alt: Sprout Video Downloader settings panel for customizing downloads
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-6.jpg
-    alt: Sprout Video Downloader integration view inside Sprout
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-7.jpg
-    alt: Sprout Video Downloader library of saved Sprout videos
-  - url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-8.jpg
-    alt: Sprout Video Downloader summary workflow for Sprout teams
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg
+  alt: Sprout Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.jpg
+  alt: Sprout Video Downloader screenshot
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/main/images/sprout-video-downloader-downloader.gif
+  alt: Sprout Video Downloader screenshot
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-1.jpg
+  alt: Sprout Video Downloader dashboard showing download controls
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-2.jpg
+  alt: Sprout Video Downloader queue with multiple Sprout videos ready to save
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-3.jpg
+  alt: Sprout Video Downloader video detail view with quality options
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-4.jpg
+  alt: Sprout Video Downloader showing batch download progress
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-5.jpg
+  alt: Sprout Video Downloader settings panel for customizing downloads
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-6.jpg
+  alt: Sprout Video Downloader integration view inside Sprout
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-7.jpg
+  alt: Sprout Video Downloader library of saved Sprout videos
+- url: https://raw.githubusercontent.com/serpapps/sprout-video-downloader/refs/heads/main/screenshots/sprout-video-downloader-8.jpg
+  alt: Sprout Video Downloader summary workflow for Sprout teams
 product_videos:
-  - https://www.youtube.com/watch?v=We_IjAvPsBQ
+- https://www.youtube.com/watch?v=We_IjAvPsBQ
 related_videos: []
 related_posts: []
 github_repo_url: https://github.com/serpapps/sprout-video-downloader
@@ -57,91 +63,87 @@ firefox_addon_store_link: https://addons.mozilla.org/en-US/firefox/addon/sprout-
 edge_addons_store_link: null
 producthunt_link: https://www.producthunt.com/products/sprout-video-downloader
 features:
-  - Detects SproutVideo players on sproutvideo.com and embedded on third-party
-    sites
-  - Uses your active session to access gated or private videos securely
-  - Converts HLS playlists into MP4 files while preserving source quality
-  - Lists all available resolutions with estimated file sizes and remembers your
-    choice
-  - Displays segment counts, progress, and speed so you know exactly what’s
-    happening
-  - Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
-  - Stores licence data locally with no analytics or remote tracking
+- Detects SproutVideo players on sproutvideo.com and embedded on third-party sites
+- Uses your active session to access gated or private videos securely
+- Converts HLS playlists into MP4 files while preserving source quality
+- Lists all available resolutions with estimated file sizes and remembers your choice
+- "Displays segment counts, progress, and speed so you know exactly what\u2019s happening"
+- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Stores licence data locally with no analytics or remote tracking
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
+  original_price: $37.00
   note: Lifetime licence covering embed detection, authentication forwarding, and
     stream conversion. Sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-    - Archive SproutVideo lessons and client assets before access changes
-    - Keep offline copies for travel, compliance, or editing without buffering
-    - Maintain privacy with all processing performed locally on your device
+  - Archive SproutVideo lessons and client assets before access changes
+  - Keep offline copies for travel, compliance, or editing without buffering
+  - Maintain privacy with all processing performed locally on your device
 faqs:
-  - question: How do I download a SproutVideo recording with this extension?
-    answer: Open the page containing the SproutVideo player, click the downloader
-      icon, pick your desired resolution, and keep the tab open while the
-      segment counter completes. The MP4 will save automatically.
-  - question: Does it work with embedded players on course or membership sites?
-    answer: Yes. The extension detects embedded SproutVideo players anywhere on the
-      web and handles them exactly like the main site.
-  - question: Will it download private or password-protected videos?
-    answer: If you can watch the video while logged into SproutVideo or the host
-      site, the downloader uses that session to access and save the stream. It
-      does not bypass access you do not already have.
-  - question: Which browsers are supported?
-    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
-      Windows, macOS, and Linux desktops.
-  - question: Are captions or transcripts included?
-    answer: The downloader focuses on video and audio. Captions, transcripts, or
-      attachments should be saved separately from within SproutVideo.
-  - question: What happens if I refresh the page mid-download?
-    answer: Progress persists. As long as the original tab remains open, the
-      downloader resumes from the last segment and finishes the MP4.
-  - question: Is my data private?
-    answer: All detection and conversion happen locally on your computer. Only
-      licence verification touches remote servers, and no viewing history is
-      collected.
+- question: How do I download a SproutVideo recording with this extension?
+  answer: Open the page containing the SproutVideo player, click the downloader icon,
+    pick your desired resolution, and keep the tab open while the segment counter
+    completes. The MP4 will save automatically.
+- question: Does it work with embedded players on course or membership sites?
+  answer: Yes. The extension detects embedded SproutVideo players anywhere on the
+    web and handles them exactly like the main site.
+- question: Will it download private or password-protected videos?
+  answer: If you can watch the video while logged into SproutVideo or the host site,
+    the downloader uses that session to access and save the stream. It does not bypass
+    access you do not already have.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops.
+- question: Are captions or transcripts included?
+  answer: The downloader focuses on video and audio. Captions, transcripts, or attachments
+    should be saved separately from within SproutVideo.
+- question: What happens if I refresh the page mid-download?
+  answer: Progress persists. As long as the original tab remains open, the downloader
+    resumes from the last segment and finishes the MP4.
+- question: Is my data private?
+  answer: All detection and conversion happen locally on your computer. Only licence
+    verification touches remote servers, and no viewing history is collected.
 reviews:
-  - name: Avery McLean
-    title: Embedded course videos now portable
-    rating: 5
-    date: 2025-02-18
-    review: Our training portal uses SproutVideo embeds. This extension detects them
-      instantly and delivers perfect MP4s for offline study.
-  - name: Simone Laurent
-    title: Handles protected content smoothly
-    rating: 4.9
-    date: 2025-03-04
-    review: Logged in with my client account and every private video downloaded
-      without extra setup. Segment progress kept me informed the whole time.
-  - name: Trent Howard
-    title: Reliable conversions
-    rating: 4.8
-    date: 2025-01-30
-    review: Even long webinars merge cleanly. I can queue the next lesson as soon as
-      the bar hits 100%.
+- name: Avery McLean
+  title: Embedded course videos now portable
+  rating: 5
+  date: 2025-02-18
+  review: Our training portal uses SproutVideo embeds. This extension detects them
+    instantly and delivers perfect MP4s for offline study.
+- name: Simone Laurent
+  title: Handles protected content smoothly
+  rating: 4.9
+  date: 2025-03-04
+  review: Logged in with my client account and every private video downloaded without
+    extra setup. Segment progress kept me informed the whole time.
+- name: Trent Howard
+  title: Reliable conversions
+  rating: 4.8
+  date: 2025-01-30
+  review: Even long webinars merge cleanly. I can queue the next lesson as soon as
+    the bar hits 100%.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
+- Downloader
 keywords:
-  - sprout video downloader
-  - download sproutvideo embeds
-  - sproutvideo mp4 converter
-  - archive sproutvideo lessons
-  - offline sproutvideo access
+- sprout video downloader
+- download sproutvideo embeds
+- sproutvideo mp4 converter
+- archive sproutvideo lessons
+- offline sproutvideo access
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -154,26 +156,37 @@ stripe:
     stripe_product_id: prod_SqnfWNeyP5TUdt
 ghl:
   tag_ids:
-    - purchase-sprout-video-downloader
+  - purchase-sprout-video-downloader
 new_release: true
 permission_justifications:
-  - permission: downloads
-    justification: |
-      Saves the merged MP4 to your downloads folder and keeps the progress tracker
-      in sync for each recording.
-  - permission: activeTab
-    justification: |
-      Detects SproutVideo players on the current tab—whether on sproutvideo.com or
-      embedded elsewhere—and injects the download controls.
-  - permission: tabs
-    justification: |
-      Allows downloads to continue if you refresh or open another lesson and restores
-      the status window when you return.
-  - permission: scripting
-    justification: |
-      Extracts stream manifests, variant data, and authentication headers from the
-      player so the downloader can fetch the correct segments.
-  - permission: offscreen
-    justification: |
-      Merges HLS segments into MP4 files in the background, preventing the browser
-      UI from freezing during long downloads.
+- permission: downloads
+  justification: 'Saves the merged MP4 to your downloads folder and keeps the progress
+    tracker
+
+    in sync for each recording.
+
+    '
+- permission: activeTab
+  justification: "Detects SproutVideo players on the current tab\u2014whether on sproutvideo.com\
+    \ or\nembedded elsewhere\u2014and injects the download controls.\n"
+- permission: tabs
+  justification: 'Allows downloads to continue if you refresh or open another lesson
+    and restores
+
+    the status window when you return.
+
+    '
+- permission: scripting
+  justification: 'Extracts stream manifests, variant data, and authentication headers
+    from the
+
+    player so the downloader can fetch the correct segments.
+
+    '
+- permission: offscreen
+  justification: 'Merges HLS segments into MP4 files in the background, preventing
+    the browser
+
+    UI from freezing during long downloads.
+
+    '

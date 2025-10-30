@@ -2,13 +2,21 @@ platform: Soundgasm
 name: Soundgasm Downloader
 tagline: Save Soundgasm audio tracks instantly for offline listening.
 slug: soundgasm-downloader
-description: |
-  Soundgasm Downloader gives creators and teams a dependable way to save Soundgasm audio tracks instantly for offline listening. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Soundgasm with consistent quality and predictable results.
+description: 'Soundgasm Downloader gives creators and teams a dependable way to save
+  Soundgasm audio tracks instantly for offline listening. Instead of juggling manual
+  captures or questionable browser extensions, it pulls content directly from Soundgasm
+  with consistent quality and predictable results.
 
-  It supports Audio content and voice recordings, Various audio formats and qualities, and Batch user libraries/series downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Soundgasm assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+
+  It supports Audio content and voice recordings, Various audio formats and qualities,
+  and Batch user libraries/series downloads, so you can move quickly from download
+  to delivery without tedious rework. Use it to archive Soundgasm assets, prep client
+  deliverables, or keep your library accessible when connectivity is limited.
+
+  '
 seo_title: Soundgasm Downloader | Download Soundgasm Audio
-seo_description: Download Soundgasm audio tracks for offline listening. Fast and
-  reliable Soundgasm audio downloader.
+seo_description: Download Soundgasm audio tracks for offline listening. Fast and reliable
+  Soundgasm audio downloader.
 serply_link: https://serp.ly/soundgasm-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/soundgasm-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/soundgasm-downloader
@@ -17,15 +25,14 @@ buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=soundgasm-downloader
 payment_link:
-  live_url: https://buy.stripe.com/dRm28j9eE1hYfdxct50VO10
-  test_url: https://buy.stripe.com/test_3cIdR1aiI4ua9Tdct50VO12
-
+  live_url: https://buy.stripe.com/aFacMX4YoaSy1mH0Kn0VO1M
+  test_url: https://buy.stripe.com/test_7sY9AL76w6Ci2qLdx90VO1L
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundgasm-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/soundgasm-downloader/main/images/soundgasm-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundgasm-downloader.jpg
-    alt: Soundgasm Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/soundgasm-downloader.jpg
+  alt: Soundgasm Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -36,101 +43,98 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Audio content and voice recordings
-  - Various audio formats and qualities
-  - Batch user libraries/series downloads
-  - Auto metadata extraction and organization
-  - Custom folders by creator and series
-  - Resume downloads with recovery
-  - Cross-platform support
-  - Built-in audio player with playlist features
-  - CLI for automated collection
-  - Integrates with audio management tools
-  - Export audio data/listening statistics
-  - Search capabilities across audio libraries
-  - Privacy-focused design with secure storage
-  - Regular compatibility updates
-  - High-quality audio downloads
-  - Bandwidth optimization
-  - Backup & sync
-  - Smart categorization
-  - Audio discovery and recommendation system
-  - Creator following and update notifications
+- Audio content and voice recordings
+- Various audio formats and qualities
+- Batch user libraries/series downloads
+- Auto metadata extraction and organization
+- Custom folders by creator and series
+- Resume downloads with recovery
+- Cross-platform support
+- Built-in audio player with playlist features
+- CLI for automated collection
+- Integrates with audio management tools
+- Export audio data/listening statistics
+- Search capabilities across audio libraries
+- Privacy-focused design with secure storage
+- Regular compatibility updates
+- High-quality audio downloads
+- Bandwidth optimization
+- Backup & sync
+- Smart categorization
+- Audio discovery and recommendation system
+- Creator following and update notifications
 pricing:
   label: One-time payment
-  price: $17.00
-  original_price: ''
+  price: $9.00
+  original_price: $17.00
   note: ''
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-  - question: How do I use the Soundgasm downloader?
-    answer: Install the browser extension, navigate to Soundgasm, find the content
-      you want to download, and click the download button that appears. The
-      content will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Soundgasm,
-      ranging from standard definition up to 4K or higher where available. You
-      can select your preferred quality before downloading.
-  - question: Does this work with all Soundgasm content?
-    answer: The downloader works with most publicly accessible content on Soundgasm.
-      Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download.
-      However, for most content, downloads complete quickly enough that
-      interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You
-      can download as much content as your storage space allows, one item at a
-      time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize
-      them manually using your computer's file system, creating folders by date,
-      topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox,
-      and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download
-      history or personal data is sent to external servers, ensuring complete
-      privacy.
+- question: How do I use the Soundgasm downloader?
+  answer: Install the browser extension, navigate to Soundgasm, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Soundgasm, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Soundgasm content?
+  answer: The downloader works with most publicly accessible content on Soundgasm.
+    Some restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Soundgasm Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Soundgasm Downloader lets me pull
-      everything from Soundgasm in minutes. The speeds are great and files stay
-      organized.
-  - name: Jamie Nguyen
-    title: Rock solid Soundgasm downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Soundgasm used to be hit or miss. This downloader is
-      stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Soundgasm content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Soundgasm assets for clients and the download in Soundgasm
-      Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with Soundgasm Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Soundgasm Downloader lets me pull everything
+    from Soundgasm in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Soundgasm downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Soundgasm used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Soundgasm content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Soundgasm assets for clients and the download in Soundgasm Downloader
+    keep our workflows smooth. Totally worth the price.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Adult
+- Downloader
+- Adult
 keywords:
-  - soundgasm downloader
+- soundgasm downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -138,10 +142,10 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
-  price_id: price_1S99g806JrOmKRCmB103AZJL
+  price_id: price_1SO0en06JrOmKRCmaPpkqn2H
   metadata:
     stripe_product_id: prod_Sv6Hx0pjXdNwM2
 ghl:
   tag_ids:
-    - purchase-soundgasm-downloader
+  - purchase-soundgasm-downloader
 permission_justifications: []

@@ -2,15 +2,20 @@ platform: Gokollab
 name: Gokollab Downloader
 tagline: Save Gokollab content instantly to your device.
 slug: gokollab-downloader
-description: |
-  GoKollab Downloader is a workspace-aware tool that lets teams save training videos, workshop replays, and shared resources before they disappear. It detects native GoKollab uploads alongside embedded players from YouTube, Vimeo, Wistia, and Loom, lining up every available stream so you can capture it as an MP4.
-
-  Choose the quality tier you need and the extension handles both direct MP4s and adaptive HLS/DASH streams—collecting segments in the background, merging them into a single file, and reporting progress, speed, and estimated time remaining the whole way. Right-click shortcuts keep captures quick while you stay inside your workspace.
-
-  Because it runs within your authenticated GoKollab session, the downloader automatically honours workspace permissions, works across multiple teams, and keeps your captured assets private on your own device.
+description: "GoKollab Downloader is a workspace-aware tool that lets teams save training\
+  \ videos, workshop replays, and shared resources before they disappear. It detects\
+  \ native GoKollab uploads alongside embedded players from YouTube, Vimeo, Wistia,\
+  \ and Loom, lining up every available stream so you can capture it as an MP4.\n\n\
+  Choose the quality tier you need and the extension handles both direct MP4s and\
+  \ adaptive HLS/DASH streams\u2014collecting segments in the background, merging\
+  \ them into a single file, and reporting progress, speed, and estimated time remaining\
+  \ the whole way. Right-click shortcuts keep captures quick while you stay inside\
+  \ your workspace.\n\nBecause it runs within your authenticated GoKollab session,\
+  \ the downloader automatically honours workspace permissions, works across multiple\
+  \ teams, and keeps your captured assets private on your own device.\n"
 seo_title: Gokollab Downloader | Download Gokollab Content
-seo_description: Download Gokollab content easily for offline use. Fast and
-  reliable Gokollab downloader.
+seo_description: Download Gokollab content easily for offline use. Fast and reliable
+  Gokollab downloader.
 serply_link: https://serp.ly/gokollab-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/gokollab-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/gokollab-downloader
@@ -21,13 +26,12 @@ cancel_url: https://apps.serp.co/checkout?product=gokollab-downloader
 payment_link:
   live_url: https://buy.stripe.com/4gM6oz0I8bWC1mHct50VO0s
   test_url: https://buy.stripe.com/test_3cI28j62s5ye6H1ct50VO0t
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gokollab-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/gokollab-downloader/main/images/gokollab-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gokollab-downloader.jpg
-    alt: Gokollab Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gokollab-downloader.jpg
+  alt: Gokollab Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -38,98 +42,92 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Detects GoKollab native videos plus YouTube, Vimeo, Wistia, and Loom embeds
-  - Works across workspaces, teams, and knowledge bases using your existing
-    access
-  - Quality picker surfaces every available resolution with format labels and
-    sizes
-  - Converts HLS and DASH streams into standard MP4 without losing quality
-  - Progress window tracks stage, speed, ETA, and offers pause/cancel controls
-  - Right-click “Capture with GoKollab Downloader” for fast saves inside
-    workspaces
-  - Stores licence details and preferences locally with no analytics or tracking
-  - Desktop notifications signal completion so you can multitask
-  - Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop
-  - Built on Manifest V3 with permissions limited to GoKollab and supported hosts
+- Detects GoKollab native videos plus YouTube, Vimeo, Wistia, and Loom embeds
+- Works across workspaces, teams, and knowledge bases using your existing access
+- Quality picker surfaces every available resolution with format labels and sizes
+- Converts HLS and DASH streams into standard MP4 without losing quality
+- Progress window tracks stage, speed, ETA, and offers pause/cancel controls
+- "Right-click \u201CCapture with GoKollab Downloader\u201D for fast saves inside\
+  \ workspaces"
+- Stores licence details and preferences locally with no analytics or tracking
+- Desktop notifications signal completion so you can multitask
+- Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Built on Manifest V3 with permissions limited to GoKollab and supported hosts
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: Lifetime licence covering GoKollab workspaces and supported embed
-    providers. No free trial; sales are final.
+  original_price: $37.00
+  note: Lifetime licence covering GoKollab workspaces and supported embed providers.
+    No free trial; sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-    - Preserve workspace trainings and replays before memberships or permissions
-      change
-    - Consolidate native and embedded content into organised MP4 libraries for
-      teams
-    - Capture privately with all processing handled on your own computer
+  - Preserve workspace trainings and replays before memberships or permissions change
+  - Consolidate native and embedded content into organised MP4 libraries for teams
+  - Capture privately with all processing handled on your own computer
 faqs:
-  - question: How do I capture a GoKollab video?
-    answer: Open the workspace post or module, click the GoKollab Downloader icon,
-      choose your preferred resolution, and keep the tab open while the progress
-      bar completes. The MP4 will save using the workspace and item name.
-  - question: Does it support multiple workspaces and teams?
-    answer: Yes. The extension uses your active GoKollab session and respects
-      project and team permissions, so any video you can watch can be captured.
-  - question: Can I queue entire workspaces?
-    answer: Captures are launched one video at a time. You can line up several
-      clips, but there is no full-workspace export or automatic bundling.
-  - question: Are captions or transcripts included?
-    answer: The downloader focuses on video and audio. Captions, transcripts, and
-      attached docs remain in GoKollab, so download those separately if you need
-      them.
-  - question: Which browsers are supported?
-    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
-      Windows, macOS, and Linux. Safari and mobile browsers aren’t supported.
-  - question: Why does it need host permissions for embed providers?
-    answer: Workspaces frequently embed third-party players. Host permissions let
-      the extension detect those streams so you can download everything you’re
-      authorised to view.
-  - question: Is my workspace data secure?
-    answer: Absolutely. All detection and conversion occurs locally, only licence
-      checks touch external servers, and no viewing history or credentials are
-      stored.
+- question: How do I capture a GoKollab video?
+  answer: Open the workspace post or module, click the GoKollab Downloader icon, choose
+    your preferred resolution, and keep the tab open while the progress bar completes.
+    The MP4 will save using the workspace and item name.
+- question: Does it support multiple workspaces and teams?
+  answer: Yes. The extension uses your active GoKollab session and respects project
+    and team permissions, so any video you can watch can be captured.
+- question: Can I queue entire workspaces?
+  answer: Captures are launched one video at a time. You can line up several clips,
+    but there is no full-workspace export or automatic bundling.
+- question: Are captions or transcripts included?
+  answer: The downloader focuses on video and audio. Captions, transcripts, and attached
+    docs remain in GoKollab, so download those separately if you need them.
+- question: Which browsers are supported?
+  answer: "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,\
+    \ macOS, and Linux. Safari and mobile browsers aren\u2019t supported."
+- question: Why does it need host permissions for embed providers?
+  answer: "Workspaces frequently embed third-party players. Host permissions let the\
+    \ extension detect those streams so you can download everything you\u2019re authorised\
+    \ to view."
+- question: Is my workspace data secure?
+  answer: Absolutely. All detection and conversion occurs locally, only licence checks
+    touch external servers, and no viewing history or credentials are stored.
 reviews:
-  - name: Damon Avery
-    title: Keeps our workspace trainings safe
-    rating: 5
-    date: 2025-02-23
-    review: We archive onboarding videos for every project team. The downloader
-      recognises our private channels and the quality labels make filing simple.
-  - name: Priyanka Shah
-    title: Handles every embed perfectly
-    rating: 4.9
-    date: 2025-03-05
-    review: Our workspace mixes Loom, Vimeo, and native uploads. This finds them all
-      and the progress window keeps my batch captures organised.
-  - name: Mateo Collins
-    title: Perfect for knowledge bases
-    rating: 4.8
-    date: 2025-01-29
-    review: I build offline libraries for field teams. The tool respects workspace
-      permissions and never leaks data outside our account.
+- name: Damon Avery
+  title: Keeps our workspace trainings safe
+  rating: 5
+  date: 2025-02-23
+  review: We archive onboarding videos for every project team. The downloader recognises
+    our private channels and the quality labels make filing simple.
+- name: Priyanka Shah
+  title: Handles every embed perfectly
+  rating: 4.9
+  date: 2025-03-05
+  review: Our workspace mixes Loom, Vimeo, and native uploads. This finds them all
+    and the progress window keeps my batch captures organised.
+- name: Mateo Collins
+  title: Perfect for knowledge bases
+  rating: 4.8
+  date: 2025-01-29
+  review: I build offline libraries for field teams. The tool respects workspace permissions
+    and never leaks data outside our account.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Course Platforms
+- Downloader
+- Course Platforms
 keywords:
-  - gokollab downloader
-  - gokollab video downloader
-  - download gokollab workspace videos
-  - gokollab training backup
-  - team knowledge archive
+- gokollab downloader
+- gokollab video downloader
+- download gokollab workspace videos
+- gokollab training backup
+- team knowledge archive
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -142,41 +140,64 @@ stripe:
     stripe_product_id: prod_Sv6H8u0mXBxVHl
 ghl:
   tag_ids:
-    - purchase-gokollab-downloader
+  - purchase-gokollab-downloader
 permission_justifications:
-  - permission: downloads
-    justification: |
-      Writes captured MP4 files to your device and updates the progress interface so
-      team members know when a capture has finished.
-  - permission: storage
-    justification: |
-      Saves the licence key, preferred quality settings, and retry options locally
-      so the extension remains activated between sessions.
-  - permission: activeTab
-    justification: |
-      Detects GoKollab videos and embedded players on the current workspace page, enabling
-      inline buttons and right-click capture actions.
-  - permission: tabs
-    justification: |
-      Keeps captures running if you switch between workspace tabs and restores the
-      progress manager when you return.
-  - permission: scripting
-    justification: |
-      Scans HTML, metadata, and embedded player scripts to enumerate available streams
-      and gather context like workspace names.
-  - permission: notifications
-    justification: |
-      Sends completion and error alerts so you can continue collaborating while captures
-      finish in the background.
-  - permission: contextMenus
-    justification: |
-      Adds a “Capture with GoKollab Downloader” option to the right-click menu for
-      faster video saves inside workspaces.
-  - permission: offscreen
-    justification: |
-      Processes HLS and DASH segments in a hidden context to keep workspace tabs responsive
-      during conversion.
-  - permission: host_permissions
-    justification: |
-      Grants access to gokollab.com, team subdomains, and embed providers so any authorised
-      video you can view can be captured.
+- permission: downloads
+  justification: 'Writes captured MP4 files to your device and updates the progress
+    interface so
+
+    team members know when a capture has finished.
+
+    '
+- permission: storage
+  justification: 'Saves the licence key, preferred quality settings, and retry options
+    locally
+
+    so the extension remains activated between sessions.
+
+    '
+- permission: activeTab
+  justification: 'Detects GoKollab videos and embedded players on the current workspace
+    page, enabling
+
+    inline buttons and right-click capture actions.
+
+    '
+- permission: tabs
+  justification: 'Keeps captures running if you switch between workspace tabs and
+    restores the
+
+    progress manager when you return.
+
+    '
+- permission: scripting
+  justification: 'Scans HTML, metadata, and embedded player scripts to enumerate available
+    streams
+
+    and gather context like workspace names.
+
+    '
+- permission: notifications
+  justification: 'Sends completion and error alerts so you can continue collaborating
+    while captures
+
+    finish in the background.
+
+    '
+- permission: contextMenus
+  justification: "Adds a \u201CCapture with GoKollab Downloader\u201D option to the\
+    \ right-click menu for\nfaster video saves inside workspaces.\n"
+- permission: offscreen
+  justification: 'Processes HLS and DASH segments in a hidden context to keep workspace
+    tabs responsive
+
+    during conversion.
+
+    '
+- permission: host_permissions
+  justification: 'Grants access to gokollab.com, team subdomains, and embed providers
+    so any authorised
+
+    video you can view can be captured.
+
+    '

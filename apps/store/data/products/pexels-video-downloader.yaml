@@ -2,13 +2,21 @@ platform: Pexels
 name: Pexels Video Downloader
 tagline: Save Pexels videos instantly for offline viewing.
 slug: pexels-video-downloader
-description: |
-  Pexels Video Downloader gives creators and teams a dependable way to save Pexels videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pexels with consistent quality and predictable results.
+description: 'Pexels Video Downloader gives creators and teams a dependable way to
+  save Pexels videos instantly for offline viewing. Instead of juggling manual captures
+  or questionable browser extensions, it pulls content directly from Pexels with consistent
+  quality and predictable results.
 
-  It supports High-quality stock videos and footage, Batch processing, and Various video formats and resolutions, so you can move quickly from download to delivery without tedious rework. Use it to archive Pexels assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+
+  It supports High-quality stock videos and footage, Batch processing, and Various
+  video formats and resolutions, so you can move quickly from download to delivery
+  without tedious rework. Use it to archive Pexels assets, prep client deliverables,
+  or keep your library accessible when connectivity is limited.
+
+  '
 seo_title: Pexels Video Downloader | Download Pexels Videos
-seo_description: Download Pexels videos easily for offline viewing. Fast,
-  reliable Pexels video downloader with high-quality downloads.
+seo_description: Download Pexels videos easily for offline viewing. Fast, reliable
+  Pexels video downloader with high-quality downloads.
 serply_link: https://serp.ly/pexels-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/pexels-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/pexels-video-downloader
@@ -19,13 +27,12 @@ cancel_url: https://apps.serp.co/checkout?product=pexels-video-downloader
 payment_link:
   live_url: https://buy.stripe.com/aFa8wH2Qg1hYfdxct50VO0N
   test_url: https://buy.stripe.com/test_14A28jeyYgcS2qL8cP0VO0O
-
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/pexels-video-downloader/main/images/pexels-video-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
-    alt: Pexels Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pexels-video-downloader.jpg
+  alt: Pexels Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -36,102 +43,98 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - High-quality stock videos and footage
-  - Batch processing
-  - Various video formats and resolutions
-  - Auto metadata extraction and organization
-  - Custom folders by category and usage
-  - Resume interrupted video downloads with recovery
-  - Cross-platform support
-  - Built-in player with preview capabilities
-
-  - Video editing integration
-  - Search video libraries
-  - Duplicate detection
-  - Secure local storage
-  - Regular compatibility updates
-  - Export capabilities for media asset management
-  - Bandwidth management for large video files
-  - HD, 4K, and various aspect ratios
-  - Smart content categorization and tagging
-  - Backup & sync
-  - Free usage compliance and attribution tracking
+- High-quality stock videos and footage
+- Batch processing
+- Various video formats and resolutions
+- Auto metadata extraction and organization
+- Custom folders by category and usage
+- Resume interrupted video downloads with recovery
+- Cross-platform support
+- Built-in player with preview capabilities
+- Video editing integration
+- Search video libraries
+- Duplicate detection
+- Secure local storage
+- Regular compatibility updates
+- Export capabilities for media asset management
+- Bandwidth management for large video files
+- HD, 4K, and various aspect ratios
+- Smart content categorization and tagging
+- Backup & sync
+- Free usage compliance and attribution tracking
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
+  original_price: $37.00
   note: ''
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-  - question: How do I use the Pexels downloader?
-    answer: Install the browser extension, navigate to Pexels, find the content you
-      want to download, and click the download button that appears. The content
-      will be saved to your chosen location.
-  - question: What quality options are available?
-    answer: The downloader supports all available quality levels from Pexels,
-      ranging from standard definition up to 4K or higher where available. You
-      can select your preferred quality before downloading.
-  - question: Does this work with all Pexels content?
-    answer: The downloader works with most publicly accessible content on Pexels.
-      Some restricted or DRM-protected content may not be downloadable.
-  - question: Will downloads continue if my internet connection drops?
-    answer: If your connection is interrupted, you may need to restart the download.
-      However, for most content, downloads complete quickly enough that
-      interruptions are rare.
-  - question: Is there a download limit?
-    answer: There are no artificial download limits imposed by the extension. You
-      can download as much content as your storage space allows, one item at a
-      time.
-  - question: How do I organize my downloaded content?
-    answer: Downloaded files are saved to your selected folder. You can organize
-      them manually using your computer's file system, creating folders by date,
-      topic, or any system that works for you.
-  - question: Does this work on all browsers?
-    answer: The extension works on major desktop browsers including Chrome, Firefox,
-      and Edge. Make sure your browser is up to date for the best compatibility.
-  - question: Is my data kept private?
-    answer: Yes, the extension operates entirely on your local device. No download
-      history or personal data is sent to external servers, ensuring complete
-      privacy.
+- question: How do I use the Pexels downloader?
+  answer: Install the browser extension, navigate to Pexels, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
+- question: What quality options are available?
+  answer: The downloader supports all available quality levels from Pexels, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
+- question: Does this work with all Pexels content?
+  answer: The downloader works with most publicly accessible content on Pexels. Some
+    restricted or DRM-protected content may not be downloadable.
+- question: Will downloads continue if my internet connection drops?
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
+- question: Is there a download limit?
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
+- question: How do I organize my downloaded content?
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
+- question: Does this work on all browsers?
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
+- question: Is my data kept private?
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
 reviews:
-  - name: Alex Martinez
-    title: Saves hours every week with Pexels Video Downloader
-    rating: 5
-    date: 2025-02-12
-    review: I manage content libraries and Pexels Video Downloader lets me pull
-      everything from Pexels in minutes. The speeds are great and files stay
-      organized.
-  - name: Jamie Nguyen
-    title: Rock solid Pexels downloads
-    rating: 4.9
-    date: 2025-03-03
-    review: Downloading from Pexels used to be hit or miss. This downloader is
-      stable, fast, and the quality is always on point.
-  - name: Priya Patel
-    title: Ideal for organizing Pexels content
-    rating: 4.8
-    date: 2025-01-28
-    review: We archive Pexels assets for clients and the download in Pexels Video
-      Downloader keep our workflows smooth. Totally worth the price.
+- name: Alex Martinez
+  title: Saves hours every week with Pexels Video Downloader
+  rating: 5
+  date: 2025-02-12
+  review: I manage content libraries and Pexels Video Downloader lets me pull everything
+    from Pexels in minutes. The speeds are great and files stay organized.
+- name: Jamie Nguyen
+  title: Rock solid Pexels downloads
+  rating: 4.9
+  date: 2025-03-03
+  review: Downloading from Pexels used to be hit or miss. This downloader is stable,
+    fast, and the quality is always on point.
+- name: Priya Patel
+  title: Ideal for organizing Pexels content
+  rating: 4.8
+  date: 2025-01-28
+  review: We archive Pexels assets for clients and the download in Pexels Video Downloader
+    keep our workflows smooth. Totally worth the price.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Creative Assets
-  - Image Hosting
+- Downloader
+- Creative Assets
+- Image Hosting
 keywords:
-  - pexels video downloader
+- pexels video downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -144,5 +147,5 @@ stripe:
     stripe_product_id: prod_Sv6HyGUyULY4PF
 ghl:
   tag_ids:
-    - purchase-pexels-video-downloader
+  - purchase-pexels-video-downloader
 permission_justifications: []

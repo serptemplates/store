@@ -2,19 +2,19 @@ platform: HDsex
 name: HDsex Downloader
 tagline: Download HDsex videos for high-quality offline viewing.
 slug: hdsex-downloader
-description: >
-  HDsex Downloader makes it easy to save HDsex videos you are authorized to
-  watch, so you can keep projects and personal libraries synchronized across
-  devices. It pulls files directly from the source, preserving the high bitrate
-  HDsex is known for.
+description: 'HDsex Downloader makes it easy to save HDsex videos you are authorized
+  to watch, so you can keep projects and personal libraries synchronized across devices.
+  It pulls files directly from the source, preserving the high bitrate HDsex is known
+  for.
 
 
-  Use it to maintain content references, review clips without buffering, or prep
-  offline collections for travel while keeping everything private on your own
-  drives.
+  Use it to maintain content references, review clips without buffering, or prep offline
+  collections for travel while keeping everything private on your own drives.
+
+  '
 seo_title: HDsex Downloader | Download HDsex Videos
-seo_description: Download HDsex videos in original quality for private offline
-  viewing. Reliable HDsex downloader with batch support.
+seo_description: Download HDsex videos in original quality for private offline viewing.
+  Reliable HDsex downloader with batch support.
 serply_link: https://serp.ly/hdsex-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/hdsex-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/hdsex-downloader
@@ -26,8 +26,8 @@ status: pre_release
 featured_image: /media/products/hdsex-downloader/featured.webp
 featured_image_gif: null
 screenshots:
-  - url: /media/products/hdsex-downloader/hdsex-homepage.webp
-    alt: HDsex Downloader website homepage
+- url: /media/products/hdsex-downloader/hdsex-homepage.webp
+  alt: HDsex Downloader website homepage
 product_videos: []
 related_videos: []
 related_posts: []
@@ -38,71 +38,71 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Save HDsex videos you are permitted to view without quality loss
-  - Maintain original file metadata and timestamps
-  - Batch queue multiple videos with automatic retry handling
-  - Local-first architecture keeps private collections off the cloud
-  - Works across Windows, macOS, Linux, and modern browsers
+- Save HDsex videos you are permitted to view without quality loss
+- Maintain original file metadata and timestamps
+- Batch queue multiple videos with automatic retry handling
+- Local-first architecture keeps private collections off the cloud
+- Works across Windows, macOS, Linux, and modern browsers
 pricing:
   label: One-time payment
-  price: $17
-  original_price: ""
+  price: $9
+  original_price: $17.00
   note: Contact us for current licensing options.
   cta_text: Get Notified
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-  - question: Does HDsex Downloader support full HD streams?
-    answer: Yes. Downloads save the original file so you keep the same resolution
-      and bitrate offered on HDsex.
-  - question: Can I queue multiple downloads?
-    answer: Absolutely. Add as many videos as you need and the downloader processes
-      them sequentially.
-  - question: Is there a limit on downloads?
-    answer: There are no artificial limits. Storage capacity on your device is the
-      only restriction.
-  - question: Do you track usage?
-    answer: No. HDsex Downloader runs locally and does not send usage analytics or
-      content data to external servers.
-  - question: Does it bypass premium logins?
-    answer: No. You must already have access to the video through HDsex. The tool
-      respects platform authentication.
+- question: Does HDsex Downloader support full HD streams?
+  answer: Yes. Downloads save the original file so you keep the same resolution and
+    bitrate offered on HDsex.
+- question: Can I queue multiple downloads?
+  answer: Absolutely. Add as many videos as you need and the downloader processes
+    them sequentially.
+- question: Is there a limit on downloads?
+  answer: There are no artificial limits. Storage capacity on your device is the only
+    restriction.
+- question: Do you track usage?
+  answer: No. HDsex Downloader runs locally and does not send usage analytics or content
+    data to external servers.
+- question: Does it bypass premium logins?
+  answer: No. You must already have access to the video through HDsex. The tool respects
+    platform authentication.
 reviews:
-  - name: Petra Lawson
-    title: Keeps HDsex research libraries synced
-    rating: 5
-    date: 2025-02-19
-    review: We manage reference clips and this downloader lets us grab high-res
-      files quickly without babysitting the process.
-  - name: Malik Ortega
-    title: Smooth HD downloads every time
-    rating: 4.9
-    date: 2025-03-06
-    review: Batch downloading from HDsex used to be messy. Now it's consistent and I
-      never lose metadata.
-  - name: Jada Soren
-    title: Great for offline reviews
-    rating: 4.8
-    date: 2025-01-27
-    review: I keep a local library for travel. HDsex Downloader keeps the quality
-      intact and nothing leaves my machine.
+- name: Petra Lawson
+  title: Keeps HDsex research libraries synced
+  rating: 5
+  date: 2025-02-19
+  review: We manage reference clips and this downloader lets us grab high-res files
+    quickly without babysitting the process.
+- name: Malik Ortega
+  title: Smooth HD downloads every time
+  rating: 4.9
+  date: 2025-03-06
+  review: Batch downloading from HDsex used to be messy. Now it's consistent and I
+    never lose metadata.
+- name: Jada Soren
+  title: Great for offline reviews
+  rating: 4.8
+  date: 2025-01-27
+  review: I keep a local library for travel. HDsex Downloader keeps the quality intact
+    and nothing leaves my machine.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Adult
+- Downloader
+- Adult
 keywords:
-  - hdsex downloader
-  - hdsex download tool
+- hdsex downloader
+- hdsex download tool
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -111,5 +111,5 @@ return_policy:
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 ghl:
   tag_ids:
-    - purchase-hdsex-downloader
+  - purchase-hdsex-downloader
 permission_justifications: []

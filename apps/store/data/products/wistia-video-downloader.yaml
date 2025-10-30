@@ -2,11 +2,14 @@ platform: Wistia
 name: Wistia Video Downloader
 tagline: Save Wistia videos instantly for offline viewing.
 slug: wistia-video-downloader
-description: |
-  Wistia Video Downloader scans any page you visit, lists every Wistia video it finds—playlist items included—and lets you save them as MP4s in a couple clicks. It handles embedded players on landing pages, documentation, and course portals, giving marketing and training teams a quick way to keep important assets offline.
+description: "Wistia Video Downloader scans any page you visit, lists every Wistia\
+  \ video it finds\u2014playlist items included\u2014and lets you save them as MP4s\
+  \ in a couple clicks. It handles embedded players on landing pages, documentation,\
+  \ and course portals, giving marketing and training teams a quick way to keep important\
+  \ assets offline.\n"
 seo_title: Wistia Video Downloader | Download Wistia Videos
-seo_description: Download Wistia videos easily for offline viewing. Fast,
-  reliable Wistia video downloader with high-quality downloads.
+seo_description: Download Wistia videos easily for offline viewing. Fast, reliable
+  Wistia video downloader with high-quality downloads.
 serply_link: https://serp.ly/wistia-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/wistia-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/wistia-video-downloader
@@ -17,17 +20,16 @@ cancel_url: https://apps.serp.co/checkout?product=wistia-video-downloader
 payment_link:
   live_url: https://buy.stripe.com/3cI6ozaiIbWCfdx0Kn0VO1p
   test_url: https://buy.stripe.com/test_aFa14ffD23q6aXh3Wz0VO1r
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/wistia-video-downloader/main/images/wistia-video-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg
-    alt: Wistia Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg
+  alt: Wistia Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts:
-  - download-wistia-videos-network-requests
+- download-wistia-videos-network-requests
 github_repo_url: https://github.com/serpapps/wistia-video-downloader
 github_repo_tags: []
 chrome_webstore_link: https://chromewebstore.google.com/detail/wistia-video-downloader/enlffdifedcjihdhejdgbihipfehgibl
@@ -35,86 +37,83 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Detects Wistia embeds on any website, including playlists and channels
-  - Lists every video in a playlist with titles, thumbnails, and quality options
-  - Downloads direct MP4 streams or falls back to HLS conversion when required
-  - Supports up to three simultaneous downloads with individual progress
-    indicators
-  - Works on Chrome, Edge, Firefox, Brave, and Opera on desktop
-  - Stores licence data locally and never routes downloads through third-party
-    servers
+- Detects Wistia embeds on any website, including playlists and channels
+- Lists every video in a playlist with titles, thumbnails, and quality options
+- Downloads direct MP4 streams or falls back to HLS conversion when required
+- Supports up to three simultaneous downloads with individual progress indicators
+- Works on Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Stores licence data locally and never routes downloads through third-party servers
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: Lifetime licence with playlist detection, HLS fallback, and progress
-    tracking. Sales are final.
+  original_price: $37.00
+  note: Lifetime licence with playlist detection, HLS fallback, and progress tracking.
+    Sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-    - Capture embedded Wistia assets from campaign sites before they disappear
-    - Save entire playlists or channels without manual link hunting
-    - Keep downloads private with on-device processing and no analytics
+  - Capture embedded Wistia assets from campaign sites before they disappear
+  - Save entire playlists or channels without manual link hunting
+  - Keep downloads private with on-device processing and no analytics
 faqs:
-  - question: How do I download a Wistia playlist with this extension?
-    answer: Open the page containing the playlist, click the downloader icon, review
-      the list of videos, choose the ones you want with the desired quality, and
-      start the downloads. Progress appears for each video.
-  - question: Can it download embedded Wistia videos on marketing sites?
-    answer: Yes. The extension scans any page you visit and lists Wistia videos even
-      when they are embedded on landing pages, documentation, or course portals.
-  - question: Does it work with password-protected projects?
-    answer: Only publicly viewable or login-free videos can be downloaded.
-      Password-protected or restricted projects remain inaccessible to respect
-      Wistia’s security settings.
-  - question: How many videos can download at once?
-    answer: Up to three downloads run simultaneously. Each shows its own progress
-      bar so you can monitor status at a glance.
-  - question: Which browsers are supported?
-    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
-      Windows, macOS, and Linux desktops.
-  - question: Are captions or transcripts included?
-    answer: The downloader focuses on video and audio. Captions, transcripts, or
-      attachments should be saved manually from the original site if you need
-      them.
+- question: How do I download a Wistia playlist with this extension?
+  answer: Open the page containing the playlist, click the downloader icon, review
+    the list of videos, choose the ones you want with the desired quality, and start
+    the downloads. Progress appears for each video.
+- question: Can it download embedded Wistia videos on marketing sites?
+  answer: Yes. The extension scans any page you visit and lists Wistia videos even
+    when they are embedded on landing pages, documentation, or course portals.
+- question: Does it work with password-protected projects?
+  answer: "Only publicly viewable or login-free videos can be downloaded. Password-protected\
+    \ or restricted projects remain inaccessible to respect Wistia\u2019s security\
+    \ settings."
+- question: How many videos can download at once?
+  answer: Up to three downloads run simultaneously. Each shows its own progress bar
+    so you can monitor status at a glance.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops.
+- question: Are captions or transcripts included?
+  answer: The downloader focuses on video and audio. Captions, transcripts, or attachments
+    should be saved manually from the original site if you need them.
 reviews:
-  - name: Mason Fuller
-    title: Playlist capture in minutes
-    rating: 5
-    date: 2025-02-18
-    review: Our marketing channel had 24 videos. The extension listed them instantly
-      and I downloaded the ones I needed in one pass.
-  - name: Riya Beale
-    title: Perfect for campaign landing pages
-    rating: 4.9
-    date: 2025-03-02
-    review: We archive campaign sites before they expire. This finds every embedded
-      Wistia player without digging through code.
-  - name: Hugo Lambert
-    title: Reliable HLS fallback
-    rating: 4.8
-    date: 2025-01-30
-    review: When a direct MP4 wasn’t available it merged the stream flawlessly.
-      Progress bars kept me updated the whole time.
+- name: Mason Fuller
+  title: Playlist capture in minutes
+  rating: 5
+  date: 2025-02-18
+  review: Our marketing channel had 24 videos. The extension listed them instantly
+    and I downloaded the ones I needed in one pass.
+- name: Riya Beale
+  title: Perfect for campaign landing pages
+  rating: 4.9
+  date: 2025-03-02
+  review: We archive campaign sites before they expire. This finds every embedded
+    Wistia player without digging through code.
+- name: Hugo Lambert
+  title: Reliable HLS fallback
+  rating: 4.8
+  date: 2025-01-30
+  review: "When a direct MP4 wasn\u2019t available it merged the stream flawlessly.\
+    \ Progress bars kept me updated the whole time."
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
+- Downloader
 keywords:
-  - wistia video downloader
-  - download wistia playlist
-  - wistia embed saver
-  - wistia mp4 downloader
-  - offline wistia archive
+- wistia video downloader
+- download wistia playlist
+- wistia embed saver
+- wistia mp4 downloader
+- offline wistia archive
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -127,38 +126,54 @@ stripe:
     stripe_product_id: prod_SqneqGTUexmjwU
 ghl:
   tag_ids:
-    - purchase-wistia-downloader
+  - purchase-wistia-downloader
 new_release: true
 permission_justifications:
-  - permission: downloads
-    justification: |
-      Saves each Wistia MP4 to your downloads folder and keeps progress indicators
-      accurate for simultaneous jobs.
-  - permission: storage
-    justification: |
-      Stores licence activation and quality preferences locally so playlist listings
-      stay configured between sessions.
-  - permission: activeTab
-    justification: |
-      Detects Wistia players on the page you’re viewing and injects the video list
-      into the extension popup.
-  - permission: tabs
-    justification: |
-      Allows the extension to refresh detected videos as you navigate between pages
-      or switch tabs with embedded players.
-  - permission: scripting
-    justification: |
-      Reads Wistia player configuration and manifest data so the downloader can fetch
-      the correct stream or MP4 source.
-  - permission: notifications
-    justification: |
-      Sends completion and error alerts for each download so you can multitask while
-      videos save.
-  - permission: contextMenus
-    justification: |
-      Adds an optional right-click “Download with Wistia Video Downloader” shortcut
-      for embedded players.
-  - permission: host_permissions
-    justification: |
-      Grants controlled access to wistia.com, fast.wistia.com, and related CDN hosts
-      required to retrieve video files.
+- permission: downloads
+  justification: 'Saves each Wistia MP4 to your downloads folder and keeps progress
+    indicators
+
+    accurate for simultaneous jobs.
+
+    '
+- permission: storage
+  justification: 'Stores licence activation and quality preferences locally so playlist
+    listings
+
+    stay configured between sessions.
+
+    '
+- permission: activeTab
+  justification: "Detects Wistia players on the page you\u2019re viewing and injects\
+    \ the video list\ninto the extension popup.\n"
+- permission: tabs
+  justification: 'Allows the extension to refresh detected videos as you navigate
+    between pages
+
+    or switch tabs with embedded players.
+
+    '
+- permission: scripting
+  justification: 'Reads Wistia player configuration and manifest data so the downloader
+    can fetch
+
+    the correct stream or MP4 source.
+
+    '
+- permission: notifications
+  justification: 'Sends completion and error alerts for each download so you can multitask
+    while
+
+    videos save.
+
+    '
+- permission: contextMenus
+  justification: "Adds an optional right-click \u201CDownload with Wistia Video Downloader\u201D\
+    \ shortcut\nfor embedded players.\n"
+- permission: host_permissions
+  justification: 'Grants controlled access to wistia.com, fast.wistia.com, and related
+    CDN hosts
+
+    required to retrieve video files.
+
+    '
