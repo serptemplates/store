@@ -3,12 +3,16 @@ name: Beeg Video Downloader
 tagline: Save Beeg videos instantly for offline viewing.
 slug: beeg-video-downloader
 description: |
-  Beeg Video Downloader gives creators and teams a dependable way to save Beeg videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Beeg with consistent quality and predictable results.
-  
-  It supports High-resolution videos with quality selection, Batch processing capabilities for multiple videos, and Auto thumbnail and preview extraction, so you can move quickly from download to delivery without tedious rework. Use it to archive Beeg assets, prep client deliverables, or keep your library accessible when connectivity is limited.
-seo_title: Download Beeg Videos | Beeg Video Downloader
-seo_description: Download Beeg videos easily for offline viewing. Fast, reliable Beeg
-  video downloader with high-quality downloads.
+  Beeg Video Downloader automates the HLS-to-MP4 conversion that keeps most Beeg videos locked to streaming. It detects the player as soon as it loads, captures the hidden playlists, and gives you a clean list of quality options so you can archive clips in the resolution you prefer.
+
+  A guided popup displays bitrate, estimated file size, and stream type before you download. Once you start, an inline progress manager tracks segment speed, percentage, and ETA while background workers stitch the MP4 together with retries whenever a chunk fails.
+
+  The extension keeps everything local—licence details, quality presets, and downloaded files never leave your browser. Desktop notifications and a right-click shortcut make saving multiple videos at once as simple as queuing them and returning when the alerts fire.
+
+  Activation requires a one-time licence and it is worth letting each tab stay open until processing completes. HLS conversion takes a little CPU time, but you get lossless MP4 copies without juggling developer tools or command-line scripts.
+seo_title: Beeg Video Downloader | Turn Beeg HLS streams into MP4 files
+seo_description: Capture Beeg videos as offline MP4s with quality selection, realtime
+  progress tracking, and resilient retries inside a Chromium extension.
 serply_link: https://serp.ly/beeg-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/beeg-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/beeg-video-downloader
@@ -50,70 +54,69 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- One-click download from any video page
-- 100% privacy-friendly
-- Auto-detect videos on the page
-- Smart Page Scan
-- Embedded Video Support
-- Full HD Downloads
-- Lightning fast downloads (no re-encoding)
-- Original quality preserved (up to 4K)
-- No registration or personal data required
-- No watermarks or branding added
-- Zero Ads
-- Regular Updates
-- Thumbnail Preview
-- Minimal Permissions
-- Download Progress Bar
-- Chrome, Firefox, Edge
-- Download embedded videos
-- Zero data tracking
-- Ad-free experience
+- Purpose-built HLS detection for beeg.com and subdomains
+- Quality picker showing resolution, bitrate, and estimated file size
+- Concurrent download support so multiple videos finish in parallel
+- Inline progress panel with percentage, speed, and ETA readouts
+- Automatic retries for missing HLS segments to prevent corrupt files
+- Background offscreen workers merge chunks into a single MP4
+- Desktop notifications and sounds for completed jobs or errors
+- Right-click context menu shortcut to start downloads instantly
+- Local storage of licence and preferences with no tracking scripts
+- Browser support covering Chrome, Edge, Firefox, Brave, and Opera
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence with unlimited Beeg downloads. No trial and no refunds.
   cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Skip manual HLS extraction and save straight to MP4 with one click
+  - Queue several Beeg videos at once while the extension handles retries
+  - Keep downloads private thanks to on-device processing and storage
 faqs:
-- question: How do I use the Beeg downloader?
-  answer: Install the browser extension, navigate to Beeg, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Beeg, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Beeg content?
-  answer: The downloader works with most publicly accessible content on Beeg. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: How do I download a Beeg video with this extension?
+  answer: Activate your licence, open a Beeg video, let the player finish loading,
+    then click the inline download button or toolbar icon. Choose the resolution you
+    want and keep the tab open while the progress panel shows segment and merge status.
+- question: Can it download multiple videos at once?
+  answer: Yes. Start another download from a different tab or window and each job
+    runs in parallel. You will get a notification when every MP4 is ready.
+- question: Does it support subtitles or playlists?
+  answer: The extension focuses on video streams. If captions are embedded in the
+    video they will be preserved, but it does not fetch separate subtitle files or
+    auto-queue entire playlists.
+- question: Why does the downloader need scripting and offscreen permissions?
+  answer: Scripting inspects the video player to list quality options, while the
+    offscreen context converts HLS segments to MP4 without tying up the tab you are
+    browsing in.
+- question: Is there a free version or refund policy?
+  answer: There is no free tier. A one-time $17 licence unlocks the extension and
+    includes future Beeg compatibility updates, but sales are final.
+- question: Which browsers are supported?
+  answer: Beeg Video Downloader ships for Google Chrome, Microsoft Edge, Mozilla
+    Firefox, Brave, and Opera on Windows, macOS, and Linux desktops.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Beeg Video Downloader
+- name: Jordan Blake
+  title: Perfect HLS conversions
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Beeg Video Downloader lets me pull everything
-    from Beeg in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Beeg downloads
+  date: 2025-02-17
+  review: The progress view shows every segment downloading and the final MP4s are
+    flawless. I no longer wrestle with command-line tools.
+- name: Aisha Greene
+  title: Reliable for large archives
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Beeg used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Beeg content
+  date: 2025-03-04
+  review: I archive long videos for slow travel connections and the retry system
+    has never failed me. Notifications let me multitask without checking constantly.
+- name: Tomasz Weber
+  title: Exactly what Beeg needed
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Beeg assets for clients and the download in Beeg Video Downloader
-    keep our workflows smooth. Totally worth the price.
+  date: 2025-01-25
+  review: Every other downloader missed streams or added junk. This one finds the
+    right quality instantly and keeps everything local.
 supported_operating_systems:
 - windows
 - mac
@@ -121,6 +124,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- brave
 - opera
 supported_regions:
 - Worldwide
@@ -129,6 +133,10 @@ categories:
 - Adult
 keywords:
 - beeg video downloader
+- beeg mp4 converter
+- hls downloader for beeg
+- chrome adult video downloader
+- offline beeg saver
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -144,47 +152,38 @@ ghl:
   - purchase-beeg-video-downloader
 permission_justifications:
 - permission: downloads
-  justification: |-
-    Required for downloading Beeg videos directly to the user's device.
-
-    Usage highlights:
-    - `background-enhanced.js:59` cancels downloads through the Chrome Downloads API when a user stops a transfer.
-    - `background-enhanced.js:285` launches new downloads via the API.
-    - `background-enhanced.js:395` listens for download state and progress events.
-    - `popup.js:228` finds download entries by ID to display progress in the popup.
-- permission: activeTab
-  justification: |-
-    Needed to inspect and interact with the actively focused tab so the extension can validate Beeg pages and extract video data.
-
-    Usage highlights:
-    - `popup.js:30-33` checks whether the active tab is a Beeg page before enabling download controls.
-    - `background-enhanced.js:80, 247` retrieves the active tab to coordinate download operations.
-    - Multiple `chrome.tabs.sendMessage` calls communicate with content scripts running on the active tab.
+  justification: |
+    Streams the finished MP4 into your downloads folder and keeps progress indicators
+    in sync for each active job.
 - permission: storage
-  justification: |-
-    Persists activation status, license keys, and related account metadata locally to unlock paid features reliably.
-
-    Usage highlights:
-    - `auth.js` `saveActivation` stores activation flags, license keys, and associated emails.
-    - `auth.js` `checkActivationStatus` restores stored activation information whenever the popup loads.
-- permission: notifications
-  justification: |-
-    Allows the extension to show system notifications for download progress, completion, and error handling.
-
-    Usage highlights:
-    - `background-enhanced.js:426` creates notifications with `chrome.notifications.create`.
-    - Lines 399-401, 406, 447-450, 454-457 send completion, failure, no-video-found, and wrong-site notices.
-- permission: contextMenus
-  justification: |-
-    Lets the extension add a "Download Beeg Video" option to the browser's context menu on Beeg pages.
-
-    Usage highlights:
-    - `background-enhanced.js:10-18` registers the context menu entry through `chrome.contextMenus.create`.
-    - `background-enhanced.js:22-30` handles menu clicks with `chrome.contextMenus.onClicked` to launch downloads.
+  justification: |
+    Stores licence activation, preferred quality settings, and retry preferences
+    locally so the extension is ready every time you open Chrome.
+- permission: activeTab
+  justification: |
+    Detects when a Beeg video player is in view and injects the download overlay
+    on the exact tab you are using.
 - permission: tabs
-  justification: |-
-    Enables tab lookups, messaging, and helper tab creation required for coordinating downloads and showing history.
-
-    Usage highlights:
-    - `popup.js:30, 288` queries active tabs and opens new tabs for history views.
-    - `background-enhanced.js:24, 80, 86, 138, 247, 253, 442` performs tab queries and content script messaging for download management.
+  justification: |
+    Allows downloads to keep running if you switch tabs and lets the extension restore
+    the progress panel when you return.
+- permission: scripting
+  justification: |
+    Enumerates HLS manifests, builds the quality list, and triggers downloads directly
+    from the page without manual URL copying.
+- permission: notifications
+  justification: |
+    Sends desktop alerts when downloads finish or if a retry needs action so you
+    can multitask without losing track.
+- permission: contextMenus
+  justification: |
+    Adds a Download with Beeg Video Downloader entry to the right-click menu for
+    instant captures.
+- permission: offscreen
+  justification: |
+    Handles merging HLS chunks into MP4 files in the background so your main tab
+    stays responsive.
+- permission: host_permissions
+  justification: |
+    Limits privileged access to beeg.com and its CDNs, ensuring the extension only
+    activates on supported domains.

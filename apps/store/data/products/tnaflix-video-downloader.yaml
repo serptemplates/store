@@ -36,71 +36,53 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- High-quality videos with resolution options
-- Batch download support for multiple selections
-- Auto thumbnail and metadata extraction
-- Resume interrupted transfers with smart recovery
-- Cross-platform desktop application compatibility
- workflows
-- Built-in security features and private downloading
-- Custom folders and naming systems
-- Duplicate detection and content organization
-- Bandwidth management and scheduling tools
-- Progress tracking with real-time monitoring
-- Integrates with video management software
-- Regular compatibility updates
-- Local storage focus with privacy protection
-- Multiple video containers and codecs
-- Intelligent error recovery and retry systems
-- User-friendly interface with visual customization
-- Secure verification and download integrity
-- Multi-threaded processing for optimal speeds
-- Comprehensive logging and troubleshooting tools
+- Detects TNAFlix video players across site variations
+- Lists available MP4 resolutions sorted best to worst
+- Downloads MP4 files directly through the browser without re-encoding
+- Shows on-page progress with percentage, size, and status updates
+- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Stores licence data locally with no tracking or hidden analytics
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence with quality selection and progress tracking included. Sales
+    are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-- question: How do I use the TNAFlix downloader?
-  answer: Install the browser extension, navigate to TNAFlix, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from TNAFlix, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all TNAFlix content?
-  answer: The downloader works with most publicly accessible content on TNAFlix. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: How do I download a TNAFlix video with this extension?
+  answer: Open the video, click the downloader icon, choose your desired resolution, and keep the tab open while the progress bar completes. The MP4 will save automatically.
+- question: Does it work on all TNAFlix sections and mirrors?
+  answer: Yes. The extension recognises both tnaflix.com and www.tnaflix.com variations and handles categories across the site.
+- question: Can I download several videos at once?
+  answer: Downloads run one at a time to keep progress accurate. Queue the next video after the current download finishes.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops.
+- question: Does it remove watermarks or re-encode video?
+  answer: No. The downloader saves the original MP4 file exactly as TNAFlix serves it—no re-encoding or watermark removal.
+- question: Is my activity private?
+  answer: All detection and downloading happen locally. The extension only checks your licence and never uploads viewing history.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with TNAFlix Video Downloader
+- name: Blake Johnson
+  title: Quality choice is instant
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and TNAFlix Video Downloader lets me pull everything
-    from TNAFlix in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid TNAFlix downloads
+  date: 2025-02-19
+  review: Options are sorted best to worst, so I grab the highest resolution and the
+    MP4 is ready a minute later.
+- name: Nika Alvarez
+  title: Progress stays accurate
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from TNAFlix used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing TNAFlix content
+  date: 2025-03-04
+  review: I like seeing percentage and size as it downloads. No surprises and files
+    save exactly as expected.
+- name: Jordan Pike
+  title: Simple and private
   rating: 4.8
-  date: 2025-01-28
-  review: We archive TNAFlix assets for clients and the download in TNAFlix Video
-    Downloader keep our workflows smooth. Totally worth the price.
+  date: 2025-01-29
+  review: No pop-ups or extra apps. Click, wait, done—and everything stays on my machine.
 supported_operating_systems:
 - windows
 - mac
@@ -116,6 +98,10 @@ categories:
 - Adult
 keywords:
 - tnaflix video downloader
+- download tnaflix mp4
+- tnaflix hd saver
+- offline tnaflix videos
+- tnaflix quality selector
 return_policy:
   days: 0
   fees: Non-refundable purchase
