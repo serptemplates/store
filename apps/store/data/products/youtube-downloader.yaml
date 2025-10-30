@@ -2,24 +2,27 @@ platform: Youtube
 name: Youtube Downloader
 tagline: Save Youtube videos instantly for offline viewing.
 slug: youtube-downloader
-description: |
-  YouTube Downloader plugs into watch pages, Shorts, and embedded players, decrypts YouTube’s adaptive streams, and delivers high-quality MP4 or WebM files you can use offline. It handles encrypted URLs, merges separate video/audio tracks automatically, and keeps a clean queue so creators and researchers can archive content reliably.
+description: "YouTube Downloader plugs into watch pages, Shorts, and embedded players,\
+  \ decrypts YouTube\u2019s adaptive streams, and delivers high-quality MP4 or WebM\
+  \ files you can use offline. It handles encrypted URLs, merges separate video/audio\
+  \ tracks automatically, and keeps a clean queue so creators and researchers can\
+  \ archive content reliably.\n"
 seo_title: Youtube Downloader | Download Youtube Downloader for Offline Access
 seo_description: Download videos and content from Youtube for Offline Access
 serply_link: https://serp.ly/youtube-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/youtube-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/youtube-downloader
 serp_co_product_page_url: https://serp.co/products/youtube-downloader/
+reddit_url: null
 buy_button_destination: https://ghl.serp.co/payment-link/68e021b667ee3b60a2699b6c
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=youtube-downloader
 payment_link:
   live_url: https://buy.stripe.com/eVq00b8aA6CiaXhbp10VO1t
   test_url: https://buy.stripe.com/test_4gM5kv1Mc5yefdxfFh0VO1w
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-5.jpg
-featured_image_gif: 
+featured_image_gif: null
 screenshots:
 - url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-1.jpg
   alt: YouTube Downloader home screen showing the video URL input form
@@ -37,11 +40,10 @@ related_posts:
 - how-to-download-youtube-videos
 - how-to-download-youtube-videos-for-free-with-yt-dlp
 github_repo_url: https://github.com/serpapps/youtube-downloader
-github_repo_tags: [
-  "youtube-downloader",
-  "youtube-video-downloader",
-  "youtube-transcript-downloader"
-]
+github_repo_tags:
+- youtube-downloader
+- youtube-video-downloader
+- youtube-transcript-downloader
 chrome_webstore_link: null
 firefox_addon_store_link: null
 edge_addons_store_link: null
@@ -58,8 +60,8 @@ features:
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: Download instantly • Lifetime updates included • No refunds
+  original_price: $37.00
+  note: "Download instantly \u2022 Lifetime updates included \u2022 No refunds"
   cta_text: Get it Now
   currency: USD
   availability: InStock
@@ -69,24 +71,31 @@ pricing:
   - Keep projects private thanks to on-device decryption and background processing
 faqs:
 - question: Does it work with YouTube Shorts and embedded players?
-  answer: Yes. The extension detects Shorts feeds, standard watch pages, and embedded players on third-party sites, then serves the same quality list in each case.
+  answer: Yes. The extension detects Shorts feeds, standard watch pages, and embedded
+    players on third-party sites, then serves the same quality list in each case.
 - question: Can I download a livestream while it is broadcasting?
-  answer: The downloader supports livestream replays, but it needs the on-demand version to exist first. Once the replay is posted it converts the HLS stream into a single MP4.
+  answer: The downloader supports livestream replays, but it needs the on-demand version
+    to exist first. Once the replay is posted it converts the HLS stream into a single
+    MP4.
 - question: Will it download movies or episodes I purchased on YouTube?
-  answer: No. DRM-protected purchases remain off limits. The downloader only works on videos you can already view without digital rights management.
+  answer: No. DRM-protected purchases remain off limits. The downloader only works
+    on videos you can already view without digital rights management.
 - question: How many downloads can run simultaneously?
-  answer: Up to three downloads can be active at once. Each item shows progress, speed, and an interrupt button so you can prioritise what matters.
+  answer: Up to three downloads can be active at once. Each item shows progress, speed,
+    and an interrupt button so you can prioritise what matters.
 - question: Do I need to keep the video tab open the whole time?
-  answer: For long conversions we recommend keeping the original tab open. That ensures the stream segments stay available until the MP4 is finalised.
+  answer: For long conversions we recommend keeping the original tab open. That ensures
+    the stream segments stay available until the MP4 is finalised.
 - question: Which browsers are supported?
-  answer: Chrome and Chromium-based browsers like Edge, Brave, and Opera are supported. Make sure you’re on an up-to-date build for Manifest V3 compatibility.
+  answer: "Chrome and Chromium-based browsers like Edge, Brave, and Opera are supported.\
+    \ Make sure you\u2019re on an up-to-date build for Manifest V3 compatibility."
 reviews:
 - name: Riley Thompson
   title: Finally handles encrypted YouTube streams
   rating: 5
   date: 2025-02-19
-  review: We archive client livestreams and Shorts. This is the only tool that keeps
-    up with YouTube’s encryption changes and still hands back perfect MP4 files.
+  review: "We archive client livestreams and Shorts. This is the only tool that keeps\
+    \ up with YouTube\u2019s encryption changes and still hands back perfect MP4 files."
 - name: Morgan Lee
   title: A must-have for creative briefs
   rating: 4.9
@@ -111,6 +120,7 @@ supported_regions:
 - Worldwide
 categories:
 - Downloader
+- Video Downloader
 keywords:
 - youtube video downloader
 - download youtube shorts mp4
@@ -134,34 +144,50 @@ ghl:
 new_release: true
 permission_justifications:
 - permission: downloads
-  justification: |
-    Writes the merged MP4 or WebM files directly to your downloads folder and tracks
+  justification: 'Writes the merged MP4 or WebM files directly to your downloads folder
+    and tracks
+
     progress for simultaneous jobs.
+
+    '
 - permission: storage
-  justification: |
-    Saves licence activation, preferred quality settings, and queue history locally
+  justification: 'Saves licence activation, preferred quality settings, and queue
+    history locally
+
     so everything persists between browser sessions.
+
+    '
 - permission: activeTab
-  justification: |
-    Injects the downloader UI into the YouTube page you’re viewing, including Shorts
-    feeds and embedded players.
+  justification: "Injects the downloader UI into the YouTube page you\u2019re viewing,\
+    \ including Shorts\nfeeds and embedded players.\n"
 - permission: tabs
-  justification: |
-    Monitors when you switch videos or open new players so the extension can refresh
+  justification: 'Monitors when you switch videos or open new players so the extension
+    can refresh
+
     available quality options automatically.
+
+    '
 - permission: scripting
-  justification: |
-    Reads player configuration data to decrypt stream URLs, fetch manifests, and merge
+  justification: 'Reads player configuration data to decrypt stream URLs, fetch manifests,
+    and merge
+
     DASH or HLS segments into a final MP4.
+
+    '
 - permission: notifications
-  justification: |
-    Sends completion, error, and licence prompts without forcing you to keep the popup
+  justification: 'Sends completion, error, and licence prompts without forcing you
+    to keep the popup
+
     open during longer conversions.
+
+    '
 - permission: contextMenus
-  justification: |
-    Adds a “Download with YouTube Downloader” option when you right-click embedded
-    videos for quicker access.
+  justification: "Adds a \u201CDownload with YouTube Downloader\u201D option when\
+    \ you right-click embedded\nvideos for quicker access.\n"
 - permission: host_permissions
-  justification: |
-    Limits privileged access to youtube.com, youtu.be, and YouTube CDN domains required
+  justification: 'Limits privileged access to youtube.com, youtu.be, and YouTube CDN
+    domains required
+
     to capture and decrypt the streams.
+
+    '

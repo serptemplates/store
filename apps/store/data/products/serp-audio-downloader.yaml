@@ -1,0 +1,147 @@
+platform: SERP Downloader
+name: SERP Audio Downloader
+tagline: Rip lossless audio, podcasts, and music from 1,000+ providers in one click.
+slug: serp-audio-downloader
+description: |
+  SERP Audio Downloader is the dedicated track and episode capture engine for people who need pristine masters from anywhere online. It fingerprints 1,000+ streaming, social, course, and podcast hosts, pulls the highest-quality rendition they expose—FLAC, WAV, 320kbps MP3, or AAC—and leaves you with clean, chapter-aware files ready for editing or archive.
+
+  The extension keeps a real-time manifest of supported providers, handles segmented HLS/DASH audio just as easily as progressive downloads, and merges multi-part shows without leaving stray gaps or channel drift. Teams can batch entire seasons, auto-normalise loudness to LKFS targets, and auto-fill ID3 artwork and metadata so the files are broadcast-ready the moment they land in storage.
+seo_title: SERP Audio Downloader | Capture lossless audio from any provider
+seo_description: Download studio-quality audio, podcasts, and music from thousands of sites with the dedicated SERP Audio Downloader browser extension.
+serply_link: https://serp.ly/serp-audio-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/serp-audio-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/serp-audio-downloader
+serp_co_product_page_url: https://serp.co/products/serp-audio-downloader/
+reddit_url: null
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=serp-audio-downloader
+status: pre_release
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-dashboard.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-workflow.gif
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-dashboard.jpg
+  alt: SERP Audio Downloader dashboard showing multi-source batch capture with loudness meter overlays
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-extractor.jpg
+  alt: SERP Audio Downloader extractor overlay highlighting FLAC and MP3 renditions with ID3 metadata options
+product_videos: []
+related_videos: []
+related_posts:
+- how-to-rip-lossless-audio-streams-without-quality-loss
+- podcast-archiving-workflows-for-audio-teams
+- automate-metadata-tagging-for-large-audio-libraries
+github_repo_url: https://github.com/serpapps/serp-downloader
+github_repo_tags:
+- universal-media-downloader
+- browser-extension
+- audio-downloader
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+opera_addons_store_link: null
+producthunt_link: null
+features:
+- Detects 1,000+ music, podcast, audiobook, and course providers in any active tab
+- Pulls lossless FLAC/WAV or highest-bitrate MP3/AAC renditions automatically
+- Merges segmented HLS/DASH audio with sample-accurate alignment and channel preservation
+- Batch downloads playlists, seasons, and private RSS feeds with per-item priorities
+- Normalises loudness to custom LKFS/LUFS targets while preserving dynamic range
+- Auto-captures artwork, lyrics, chapters, and cue sheets into ID3 and sidecar metadata
+- Generates reusable capture “recipes” with cookies, headers, and post-processing presets
+- Provides webhook/websocket updates so teams can track ingest progress in real time
+- Operates fully locally—no analytics, no relay servers, no audio fingerprint uploads
+- Exports optional ffmpeg/yt-dlp command equivalents for advanced automation
+pricing:
+  label: One-time payment
+  price: $47.00
+  original_price: $97
+  note: Join the waitlist for early access, roadmap votes, and launch pricing.
+  cta_text: Join the Waitlist
+  currency: USD
+  availability: PreOrder
+  benefits:
+  - Archive mixes, stems, and interviews without re-recording streams manually
+  - Deliver broadcast-ready masters with consistent loudness and metadata
+  - Equip support teams with repeatable recipes for every client platform
+faqs:
+- question: Which platforms does SERP Audio Downloader support?
+  answer: The manifest covers 1,000+ verified sources spanning DSPs, podcast hosts, livestreamers, membership communities, and course platforms. New providers ship weekly without waiting on store approvals.
+- question: Can it download entire podcast seasons or playlists?
+  answer: Yes. Queue full seasons, private RSS feeds, or branded playlists and the extension will parallelise downloads while respecting provider rate limits.
+- question: Does audio stay lossless?
+  answer: When providers expose lossless FLAC or WAV renditions, SERP Audio Downloader grabs them. Otherwise it selects the highest bitrate available and never transcodes unless you apply a post-processing recipe.
+- question: How are metadata and artwork handled?
+  answer: ID3v2 tags, embedded artwork, chapters, and cue sheets are pulled directly from the source manifest. You can customise templates so recurring fields—like show, season, or campaign IDs—stay consistent.
+- question: Can teams collaborate?
+  answer: Teams can share recipe presets, monitor download progress on a central dashboard, and export audit logs so compliance reviews are simple.
+- question: What about private or authenticated content?
+  answer: Bring your own cookies or headers, store them securely per provider, and SERP Audio Downloader reuses the session—if you can play the audio, you can save it.
+reviews:
+- name: Riley Chen
+  title: Broadcast engineer, syndication network
+  rating: 5
+  date: 2025-02-18
+  review: Finally a downloader that keeps 5.1 stems phase-aligned and loudness-normalised out of the box. Our editors cut hours off every show prep.
+- name: Morgan Alvarez
+  title: Audio archivist for enterprise training
+  rating: 4.9
+  date: 2025-02-02
+  review: We archive paywalled training portals nightly. The recipe system and webhook events mean everything lands in our MAM exactly how compliance needs it.
+- name: Priya Desai
+  title: Podcast producer, multi-show network
+  rating: 4.8
+  date: 2025-01-12
+  review: Love the metadata automation. My assistants load a recipe and the ID3 tags, artwork, and transcripts all sync in seconds.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+- brave
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+- Audio
+- Audio Downloader
+keywords:
+- capture lossless audio streams
+- download podcasts from any site
+- batch music downloader
+- automate audio metadata tagging
+- archive private rss feeds
+- flac wav downloader extension
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-serp-audio-downloader
+permission_justifications:
+- permission: downloads
+  justification: |
+    Writes finished audio files, cue sheets, transcripts, and metadata bundles directly to your downloads folder with resume support for long batches.
+- permission: storage
+  justification: |
+    Caches provider manifests, recipe presets, audio fingerprints, and queued jobs locally so capture workflows persist across sessions.
+- permission: activeTab
+  justification: |
+    Injects SERP Audio Downloader controls into the tab you are viewing and inspects media descriptors only for that context.
+- permission: tabs
+  justification: |
+    Tracks when you switch episodes or open playlists in new tabs so queued downloads map to the correct sources.
+- permission: scripting
+  justification: |
+    Extracts manifests, signed URLs, and segmented audio streams from protected players without sending data to external services.
+- permission: declarativeNetRequest
+  justification: |
+    Rewrites streaming requests when providers obfuscate segment paths or token refreshers, ensuring gapless audio downloads.
+- permission: host_permissions
+  justification: |
+    Limits elevated access to whitelisted provider domains and the manifest update endpoint required for extractor updates.

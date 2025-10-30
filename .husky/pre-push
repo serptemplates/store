@@ -28,6 +28,11 @@ echo "########################################"
 pnpm run validate:products
 
 echo "########################################"
+echo "→ Validating live Stripe payment links..."
+echo "########################################"
+pnpm --filter @apps/store test:stripe-payment-links
+
+echo "########################################"
 echo "→ Building @apps/store"
 echo "########################################"
 NEXT_TELEMETRY_DISABLED=1 pnpm --filter @apps/store build

@@ -144,6 +144,37 @@ function selectExternalDestination(product: ProductData): string {
   return resolved ?? `https://apps.serp.co/${product.slug}`;
 }
 
+function normalizeExternalHref(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function buildResourceLinks(product: ProductData):
+  | Array<{ label: string; href: string }>
+  | undefined {
+  const links: Array<{ label: string; href: string }> = [];
+
+  const addLink = (href: unknown, label: string) => {
+    const normalized = normalizeExternalHref(href);
+    if (normalized) {
+      links.push({ label, href: normalized });
+    }
+  };
+
+  addLink(product.serp_co_product_page_url, "SERP");
+  addLink(product.reddit_url, "Reddit Discussion");
+  addLink(product.github_repo_url, "GitHub Repository");
+  addLink(product.chrome_webstore_link, "Chrome Web Store");
+  addLink(product.firefox_addon_store_link, "Firefox Add-ons");
+  addLink(product.edge_addons_store_link, "Microsoft Edge Add-ons");
+  addLink(product.producthunt_link, "Product Hunt");
+
+  return links.length > 0 ? links : undefined;
+}
+
 function resolveProductCta(product: ProductData): ResolvedProductCta {
   const paymentLink = resolveProductPaymentLink(product);
   const paymentLinkHref = paymentLink?.url;
@@ -316,6 +347,7 @@ export function productToHomeTemplate(
     posts: resolvedPosts as PostItem[],
     postsTitle: resolvedPosts.length ? "Posts" : undefined,
     about,
+    resourceLinks: buildResourceLinks(product),
     permissionJustifications,
     pricing: {
       enabled: true,

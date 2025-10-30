@@ -263,6 +263,30 @@ describe("productToHomeTemplate", () => {
     expect(template.screenshots).toBeUndefined();
   });
 
+  it("collects resource links from supported metadata fields", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      github_repo_url: "https://github.com/serpapps/sample-product",
+      reddit_url: "https://www.reddit.com/r/sample/comments/abc",
+      chrome_webstore_link: "https://chromewebstore.google.com/detail/demo/abcdef123456",
+      firefox_addon_store_link: "https://addons.mozilla.org/en-US/firefox/addon/demo",
+      edge_addons_store_link: "https://microsoftedge.microsoft.com/addons/detail/demo",
+      producthunt_link: "https://www.producthunt.com/products/sample-product",
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.resourceLinks).toEqual([
+      { label: "SERP", href: "https://serp.co/products/sample-product/" },
+      { label: "Reddit Discussion", href: "https://www.reddit.com/r/sample/comments/abc" },
+      { label: "GitHub Repository", href: "https://github.com/serpapps/sample-product" },
+      { label: "Chrome Web Store", href: "https://chromewebstore.google.com/detail/demo/abcdef123456" },
+      { label: "Firefox Add-ons", href: "https://addons.mozilla.org/en-US/firefox/addon/demo" },
+      { label: "Microsoft Edge Add-ons", href: "https://microsoftedge.microsoft.com/addons/detail/demo" },
+      { label: "Product Hunt", href: "https://www.producthunt.com/products/sample-product" },
+    ]);
+  });
+
   it("selects posts based on related_posts ordering", () => {
     const product: ProductData = {
       ...baseProduct,

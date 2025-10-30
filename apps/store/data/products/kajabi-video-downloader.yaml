@@ -2,32 +2,35 @@ platform: Kajabi
 name: Kajabi Video Downloader
 tagline: Save Kajabi videos instantly for offline viewing.
 slug: kajabi-video-downloader
-description: |
-  Kajabi Video Downloader lets you own the lessons you already paid for. It recognises Kajabi’s hosted videos along with Vimeo and Wistia embeds inside lessons, queues as many modules as you need, and converts every stream into organised MP4 files you can keep forever.
-
-  Queue a module, and the extension will pull each lesson sequentially, respecting throttle limits, merging adaptive streams, and storing subtitles alongside the video. Smart file naming mirrors your course structure so your library is sorted the moment downloads finish.
-
-  Everything runs in Chrome, Edge, Firefox, Brave, or Opera using your existing Kajabi login, with processing kept entirely on your device for privacy-conscious archiving.
+description: "Kajabi Video Downloader lets you own the lessons you already paid for.\
+  \ It recognises Kajabi\u2019s hosted videos along with Vimeo and Wistia embeds inside\
+  \ lessons, queues as many modules as you need, and converts every stream into organised\
+  \ MP4 files you can keep forever.\n\nQueue a module, and the extension will pull\
+  \ each lesson sequentially, respecting throttle limits, merging adaptive streams,\
+  \ and storing subtitles alongside the video. Smart file naming mirrors your course\
+  \ structure so your library is sorted the moment downloads finish.\n\nEverything\
+  \ runs in Chrome, Edge, Firefox, Brave, or Opera using your existing Kajabi login,\
+  \ with processing kept entirely on your device for privacy-conscious archiving.\n"
 seo_title: Kajabi Video Downloader | Download Kajabi Videos
-seo_description: Download Kajabi videos easily for offline viewing. Fast,
-  reliable Kajabi video downloader with high-quality downloads.
+seo_description: Download Kajabi videos easily for offline viewing. Fast, reliable
+  Kajabi video downloader with high-quality downloads.
 serply_link: https://serp.ly/kajabi-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/kajabi-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/kajabi-video-downloader
 serp_co_product_page_url: https://serp.co/products/kajabi-video-downloader/
+reddit_url: null
 buy_button_destination: https://ghl.serp.co/payment-link/68e02c5b219709c8dde26735
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=kajabi-video-downloader
 payment_link:
   live_url: https://buy.stripe.com/00w7sDduUe4KghBfFh0VO0x
   test_url: https://buy.stripe.com/test_9B6dR1cqQ5yefdx0Kn0VO0y
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/kajabi-video-downloader/main/images/kajabi-video-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
-    alt: Kajabi Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kajabi-video-downloader.jpg
+  alt: Kajabi Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -38,95 +41,91 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Detects Kajabi-hosted lessons plus Vimeo and Wistia embeds inside modules
-  - Queue-based downloader processes multiple lessons sequentially with throttle
-    protection
-  - Converts HLS playlists and direct MP4/WebM sources into standard MP4 files
-  - Automatically names files using course, module, and lesson titles for easy
-    organisation
-  - Captures available WebVTT subtitles and saves them alongside each video
-  - Works with Kajabi custom domains, coaching programs, and membership portals
-  - Right-click “Download with Kajabi Downloader” shortcut for fast queueing
-  - Desktop notifications and progress manager monitor every stage of extraction
-  - Stores licence data and preferences locally—no analytics or tracking
-  - Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Detects Kajabi-hosted lessons plus Vimeo and Wistia embeds inside modules
+- Queue-based downloader processes multiple lessons sequentially with throttle protection
+- Converts HLS playlists and direct MP4/WebM sources into standard MP4 files
+- Automatically names files using course, module, and lesson titles for easy organisation
+- Captures available WebVTT subtitles and saves them alongside each video
+- Works with Kajabi custom domains, coaching programs, and membership portals
+- "Right-click \u201CDownload with Kajabi Downloader\u201D shortcut for fast queueing"
+- Desktop notifications and progress manager monitor every stage of extraction
+- "Stores licence data and preferences locally\u2014no analytics or tracking"
+- Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
-  note: Lifetime licence with queue management and subtitle capture included. No
-    free trial; refunds are not available.
+  original_price: $37.00
+  note: Lifetime licence with queue management and subtitle capture included. No free
+    trial; refunds are not available.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-    - Download entire Kajabi modules before creators retire or restructure
-      content
-    - Build organised offline course libraries with subtitles included
-    - Avoid recurring platform fees by owning videos you already purchased
+  - Download entire Kajabi modules before creators retire or restructure content
+  - Build organised offline course libraries with subtitles included
+  - Avoid recurring platform fees by owning videos you already purchased
 faqs:
-  - question: How do I queue multiple Kajabi lessons?
-    answer: Open the course, click the Kajabi Downloader icon, add the lessons you
-      want to the queue, and let the extension process them sequentially while
-      you continue browsing.
-  - question: Does it download subtitles and transcripts?
-    answer: If a lesson offers WebVTT captions, the downloader saves them alongside
-      the MP4 and can optionally merge them, keeping accessibility intact.
-  - question: Will it work on membership or coaching portals?
-    answer: Yes. It uses your current Kajabi session, so as long as you can watch
-      the content in your account, the downloader can capture it—even on custom
-      domains.
-  - question: Can I download multiple lessons in parallel?
-    answer: To avoid platform throttling, the queue runs lessons one after another.
-      You can stack as many as you like, but they’ll process sequentially.
-  - question: Which browsers are supported?
-    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
-      Windows, macOS, and Linux. Safari and mobile browsers are not supported.
-  - question: Why does it request offscreen access?
-    answer: Offscreen processing merges adaptive stream segments into cohesive MP4
-      files without freezing the active course tab.
-  - question: Is my data private?
-    answer: All detection and conversion happen locally. The extension only contacts
-      the licence server for activation and never stores passwords or viewing
-      history.
+- question: How do I queue multiple Kajabi lessons?
+  answer: Open the course, click the Kajabi Downloader icon, add the lessons you want
+    to the queue, and let the extension process them sequentially while you continue
+    browsing.
+- question: Does it download subtitles and transcripts?
+  answer: If a lesson offers WebVTT captions, the downloader saves them alongside
+    the MP4 and can optionally merge them, keeping accessibility intact.
+- question: Will it work on membership or coaching portals?
+  answer: "Yes. It uses your current Kajabi session, so as long as you can watch the\
+    \ content in your account, the downloader can capture it\u2014even on custom domains."
+- question: Can I download multiple lessons in parallel?
+  answer: "To avoid platform throttling, the queue runs lessons one after another.\
+    \ You can stack as many as you like, but they\u2019ll process sequentially."
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux. Safari and mobile browsers are not supported.
+- question: Why does it request offscreen access?
+  answer: Offscreen processing merges adaptive stream segments into cohesive MP4 files
+    without freezing the active course tab.
+- question: Is my data private?
+  answer: All detection and conversion happen locally. The extension only contacts
+    the licence server for activation and never stores passwords or viewing history.
 reviews:
-  - name: Sienna Crawford
-    title: Finally cancelled my Kajabi subscription
-    rating: 5
-    date: 2025-02-21
-    review: I queued every module from three courses and now have organised folders
-      with subtitles. No more paying monthly just to rewatch old lessons.
-  - name: Malik Thorne
-    title: Queueing saves so much time
-    rating: 4.9
-    date: 2025-03-03
-    review: I select a module, hit queue, and let it work while I’m on calls. The
-      throttle protection means it never stalls out mid-download.
-  - name: Elise Werner
-    title: Keeps my coaching library safe
-    rating: 4.8
-    date: 2025-01-29
-    review: My favourite creator moved platforms and I still have every video thanks
-      to this tool. The automatic naming is a huge bonus.
+- name: Sienna Crawford
+  title: Finally cancelled my Kajabi subscription
+  rating: 5
+  date: 2025-02-21
+  review: I queued every module from three courses and now have organised folders
+    with subtitles. No more paying monthly just to rewatch old lessons.
+- name: Malik Thorne
+  title: Queueing saves so much time
+  rating: 4.9
+  date: 2025-03-03
+  review: "I select a module, hit queue, and let it work while I\u2019m on calls.\
+    \ The throttle protection means it never stalls out mid-download."
+- name: Elise Werner
+  title: Keeps my coaching library safe
+  rating: 4.8
+  date: 2025-01-29
+  review: My favourite creator moved platforms and I still have every video thanks
+    to this tool. The automatic naming is a huge bonus.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Course Platforms
+- Downloader
+- Course Platforms
+- Video Downloader
 keywords:
-  - kajabi video downloader
-  - download kajabi course
-  - kajabi batch downloader
-  - kajabi subtitles
-  - offline kajabi lessons
+- kajabi video downloader
+- download kajabi course
+- kajabi batch downloader
+- kajabi subtitles
+- offline kajabi lessons
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -139,41 +138,60 @@ stripe:
     stripe_product_id: prod_Sv6HARVDc80PK1
 ghl:
   tag_ids:
-    - purchase-kajabi-downloader
+  - purchase-kajabi-downloader
 permission_justifications:
-  - permission: downloads
-    justification: |
-      Saves finished MP4 files and companion subtitle tracks to your chosen download
-      folder while keeping queue progress accurate.
-  - permission: storage
-    justification: |
-      Stores licence activation, preferred quality, and queue settings locally so the
-      downloader stays unlocked between sessions.
-  - permission: activeTab
-    justification: |
-      Detects Kajabi lessons, embedded players, and custom domains within the tab you’re
-      viewing to enable queue buttons.
-  - permission: tabs
-    justification: |
-      Allows queued downloads to run while you browse other lessons and brings the
-      progress manager back into view when you return.
-  - permission: scripting
-    justification: |
-      Extracts video manifests, lesson metadata, and subtitle references from Kajabi,
-      Vimeo, and Wistia players so files can be queued correctly.
-  - permission: notifications
-    justification: |
-      Sends completion and error alerts for each lesson, helping you track long batch
-      runs without monitoring the popup.
-  - permission: contextMenus
-    justification: |
-      Adds a “Download with Kajabi Downloader” menu entry for quickly queueing lessons
-      directly from the course player.
-  - permission: offscreen
-    justification: |
-      Merges adaptive stream segments and subtitle data into finished files in the
-      background so the course tab remains responsive.
-  - permission: host_permissions
-    justification: |
-      Covers kajabi.com, custom domains, and embed provider hosts to ensure every authorised
-      lesson you can watch can also be downloaded.
+- permission: downloads
+  justification: 'Saves finished MP4 files and companion subtitle tracks to your chosen
+    download
+
+    folder while keeping queue progress accurate.
+
+    '
+- permission: storage
+  justification: 'Stores licence activation, preferred quality, and queue settings
+    locally so the
+
+    downloader stays unlocked between sessions.
+
+    '
+- permission: activeTab
+  justification: "Detects Kajabi lessons, embedded players, and custom domains within\
+    \ the tab you\u2019re\nviewing to enable queue buttons.\n"
+- permission: tabs
+  justification: 'Allows queued downloads to run while you browse other lessons and
+    brings the
+
+    progress manager back into view when you return.
+
+    '
+- permission: scripting
+  justification: 'Extracts video manifests, lesson metadata, and subtitle references
+    from Kajabi,
+
+    Vimeo, and Wistia players so files can be queued correctly.
+
+    '
+- permission: notifications
+  justification: 'Sends completion and error alerts for each lesson, helping you track
+    long batch
+
+    runs without monitoring the popup.
+
+    '
+- permission: contextMenus
+  justification: "Adds a \u201CDownload with Kajabi Downloader\u201D menu entry for\
+    \ quickly queueing lessons\ndirectly from the course player.\n"
+- permission: offscreen
+  justification: 'Merges adaptive stream segments and subtitle data into finished
+    files in the
+
+    background so the course tab remains responsive.
+
+    '
+- permission: host_permissions
+  justification: 'Covers kajabi.com, custom domains, and embed provider hosts to ensure
+    every authorised
+
+    lesson you can watch can also be downloaded.
+
+    '

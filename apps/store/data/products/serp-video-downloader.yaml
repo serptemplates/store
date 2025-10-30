@@ -1,20 +1,21 @@
 platform: SERP Downloader
-name: SERP Downloader
+name: SERP Video Downloader
 tagline: Download videos, images, and audio from 1,000+ sites with one extension.
-slug: serp-downloader
+slug: serp-video-downloader
 description: |
   SERP Downloader is the all-in-one browser extension for people who need the fastest path from “I’m watching it now” to “I have the file saved forever.” It recognises 1,000+ streaming, social, and file-hosting providers, unwraps whatever format they use—HLS, DASH, progressive MP4, WebM, audio-only, or zipped image galleries—and returns clean downloads that match the original quality.
 
   Under the hood the extension keeps an up-to-date provider manifest, smartly routes each request through the right extractor, and merges segmented media without the user touching a command line. Teams can queue bulk jobs, monitor state from a single dashboard, and store recipes for recurring tasks so the same workflow works for the next platform that pops up.
-seo_title: SERP Downloader | SERP Video Downloader | SERP Image Downloader | SERP Website Downloader | SERP Universal Media Downloader Extension
+seo_title: SERP Video Downloader | Download any type of video, from any provider, anywhere on the web
 seo_description: Download videos, images, and audio from thousands of providers with the universal SERP Downloader browser extension.
 serply_link: https://serp.ly/serp-downloader
-store_serp_co_product_page_url: https://store.serp.co/product-details/product/serp-downloader
-apps_serp_co_product_page_url: https://apps.serp.co/serp-downloader
-serp_co_product_page_url: https://serp.co/products/serp-downloader/
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/serp-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/serp-video-downloader
+serp_co_product_page_url: https://serp.co/products/serp-video-downloader/
+reddit_url: null
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
-cancel_url: https://apps.serp.co/checkout?product=serp-downloader
+cancel_url: https://apps.serp.co/checkout?product=serp-video-downloader
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-dashboard.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-workflow.gif
@@ -29,7 +30,7 @@ related_posts:
 - how-to-download-hls-m3u8-streaming-videos
 - how-to-download-youtube-videos-for-free-with-yt-dlp
 - how-to-download-vimeo-videos-yt-dlp-at-the-m3u8-stream
-github_repo_url: https://github.com/serpapps/serp-downloader
+github_repo_url: https://github.com/serpapps/serp-video-downloader
 github_repo_tags:
 - universal-media-downloader
 - browser-extension
@@ -53,7 +54,7 @@ features:
 pricing:
   label: One-time payment
   price: $47.00
-  original_price: ''
+  original_price: $97
   note: Join the waitlist for early access, roadmap votes, and launch pricing.
   cta_text: Join the Waitlist
   currency: USD
@@ -106,6 +107,9 @@ supported_regions:
 - Worldwide
 categories:
 - Downloader
+- Video Downloader
+- Image Downloader
+- Audio Downloader
 keywords:
 - universal downloader extension
 - download videos from any site

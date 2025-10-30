@@ -3,14 +3,20 @@ name: AI Voice Cloner App
 tagline: Turn text into natural-sounding speech and clone voices on your own computer
   with coding needed.
 slug: ai-voice-cloner-app
-description: |
-  AI Voice Cloner App turns short audio samples into production-ready voice models in minutes. Feed it 3 to 30 seconds of clean speech and the neural engine analyses pitch, cadence, and inflection before letting you type any script and hear it back in the cloned voice.
-
-  Flexible input options let you drag and drop WAV, MP3, FLAC, or record directly inside the desktop interface. A guided workflow trims your best segments, selects Fast, Balanced, or High Quality presets, and generates speech 5 to 10 times faster than real time with adjustable speed, pitch, and emphasis controls.
-
-  Everything runs under a privacy-first architecture. Voice models, projects, and exports stay on your machine by default, with optional cloud acceleration, password-protected archives, invisible watermarks, and consent verification tools when you need them.
-
-  High-quality source audio is essential—studio-style recordings produce near-human realism while noisy clips reduce accuracy. Use the app for ethical, disclosed projects such as creative production, accessibility, localization, and personal voice preservation.
+description: "AI Voice Cloner App turns short audio samples into production-ready\
+  \ voice models in minutes. Feed it 3 to 30 seconds of clean speech and the neural\
+  \ engine analyses pitch, cadence, and inflection before letting you type any script\
+  \ and hear it back in the cloned voice.\n\nFlexible input options let you drag and\
+  \ drop WAV, MP3, FLAC, or record directly inside the desktop interface. A guided\
+  \ workflow trims your best segments, selects Fast, Balanced, or High Quality presets,\
+  \ and generates speech 5 to 10 times faster than real time with adjustable speed,\
+  \ pitch, and emphasis controls.\n\nEverything runs under a privacy-first architecture.\
+  \ Voice models, projects, and exports stay on your machine by default, with optional\
+  \ cloud acceleration, password-protected archives, invisible watermarks, and consent\
+  \ verification tools when you need them.\n\nHigh-quality source audio is essential\u2014\
+  studio-style recordings produce near-human realism while noisy clips reduce accuracy.\
+  \ Use the app for ethical, disclosed projects such as creative production, accessibility,\
+  \ localization, and personal voice preservation.\n"
 seo_title: AI Voice Cloner App | Fast local voice cloning in minutes
 seo_description: Clone voices offline with 3-30 second samples, real-time text-to-speech
   controls, watermarking, and privacy-first storage on your own device.
@@ -18,13 +24,13 @@ serply_link: https://serp.ly/ai-voice-cloner-app
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/ai-voice-cloner-app
 apps_serp_co_product_page_url: https://apps.serp.co/ai-voice-cloner-app
 serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
+reddit_url: null
 buy_button_destination: https://ghl.serp.co/payment-link/68f88f7d67ee3b70fd6a1b24
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app
 payment_link:
   live_url: https://buy.stripe.com/14AaEPcqQf8O0iD78L0VO04
   test_url: https://buy.stripe.com/test_4gM8wH76w6Ci7L5fFh0VO03
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg
 featured_image_gif: null
@@ -67,7 +73,7 @@ features:
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
+  original_price: $37.00
   note: Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features
     and commercial rights. No refunds.
   cta_text: Get it Now
@@ -94,9 +100,9 @@ faqs:
   answer: No. The app generates audio files you can preview and export. It is not
     designed for live streaming or instant voice replacement on calls.
 - question: How long does training take and what hardware is recommended?
-  answer: Training typically takes 2 to 10 minutes depending on quality settings
-    and whether you use CPU-only or GPU acceleration. Any modern Windows, macOS,
-    or Linux machine works; a dedicated GPU speeds the workflow up considerably.
+  answer: Training typically takes 2 to 10 minutes depending on quality settings and
+    whether you use CPU-only or GPU acceleration. Any modern Windows, macOS, or Linux
+    machine works; a dedicated GPU speeds the workflow up considerably.
 - question: Do exported files include watermarks?
   answer: Free mode watermarks audio and limits clones. Lifetime buyers get watermark-free
     exports, and Pro adds advanced pronunciation controls plus commercial usage rights.
@@ -150,18 +156,30 @@ ghl:
 new_release: true
 permission_justifications:
 - permission: microphone
-  justification: |
-    Enables direct recording inside the app so you can capture clean source samples
+  justification: 'Enables direct recording inside the app so you can capture clean
+    source samples
+
     without leaving the cloning workflow.
+
+    '
 - permission: file_system
-  justification: |
-    Required to save voice models, project files, and exported audio in your chosen
+  justification: 'Required to save voice models, project files, and exported audio
+    in your chosen
+
     folders and to reopen them later.
+
+    '
 - permission: internet
-  justification: |
-    Optional connection used for cloud acceleration, licence validation, and downloading
+  justification: 'Optional connection used for cloud acceleration, licence validation,
+    and downloading
+
     model updates when you request them.
+
+    '
 - permission: audio_output
-  justification: |
-    Lets the desktop app preview generated speech so you can review pronunciation,
+  justification: 'Lets the desktop app preview generated speech so you can review
+    pronunciation,
+
     pacing, and emphasis before exporting.
+
+    '

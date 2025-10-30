@@ -2,21 +2,23 @@ platform: hanime.tv
 name: Hanime Downloader
 tagline: Capture hanime.tv streams in original quality.
 slug: hanime-downloader
-description: >
-  Hanime Downloader gives collectors a private way to save hanime.tv videos they
-  have permission to view. Instead of juggling unreliable recorders, it pulls
+description: 'Hanime Downloader gives collectors a private way to save hanime.tv videos
+  they have permission to view. Instead of juggling unreliable recorders, it pulls
   the original stream files so quality stays crisp end-to-end.
 
 
-  Use it to archive niche titles, prep viewing libraries for travel, or back up
-  purchases you want available without depending on internet access.
+  Use it to archive niche titles, prep viewing libraries for travel, or back up purchases
+  you want available without depending on internet access.
+
+  '
 seo_title: Hanime Downloader | Download Hanime Videos
-seo_description: Download hanime.tv videos you are permitted to view. Fast,
-  private Hanime downloader tailored for collectors.
+seo_description: Download hanime.tv videos you are permitted to view. Fast, private
+  Hanime downloader tailored for collectors.
 serply_link: https://serp.ly/hanime-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/hanime-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/hanime-downloader
 serp_co_product_page_url: https://serp.co/products/hanime-downloader/
+reddit_url: null
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=hanime-downloader
@@ -24,8 +26,8 @@ status: pre_release
 featured_image: /media/products/hanime-downloader/featured.webp
 featured_image_gif: null
 screenshots:
-  - url: /media/products/hanime-downloader/hanime-homepage.webp
-    alt: Hanime Downloader website homepage
+- url: /media/products/hanime-downloader/hanime-homepage.webp
+  alt: Hanime Downloader website homepage
 product_videos: []
 related_videos: []
 related_posts: []
@@ -36,71 +38,72 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-  - Save hanime.tv videos you are authorized to watch
-  - Maintain original resolution, subtitles, and metadata
-  - Batch queue multi-part series with automatic retries
-  - Local-first workflow keeps sensitive libraries offline
-  - Works across Windows, macOS, Linux, and modern browsers
+- Save hanime.tv videos you are authorized to watch
+- Maintain original resolution, subtitles, and metadata
+- Batch queue multi-part series with automatic retries
+- Local-first workflow keeps sensitive libraries offline
+- Works across Windows, macOS, Linux, and modern browsers
 pricing:
   label: One-time payment
-  price: $17
-  original_price: ""
+  price: $9
+  original_price: $17.00
   note: Contact us for current licensing options.
   cta_text: Get Notified
   currency: USD
   availability: InStock
   benefits: []
 faqs:
-  - question: Does Hanime Downloader bypass paywalls?
-    answer: No. It only downloads videos you already have access to. It respects
-      hanime.tv authentication and policies.
-  - question: Can I batch download a full series?
-    answer: Yes. Queue the episodes you need and the downloader processes them
-      sequentially while preserving order.
-  - question: Are subtitles included?
-    answer: When subtitles are available, they download alongside the video so you
-      can view them offline.
-  - question: Is my usage tracked?
-    answer: Activity stays on your device. We do not collect analytics or share
-      viewing data.
-  - question: What formats are supported?
-    answer: Files save in the original stream container, so you keep the exact
-      quality provided by hanime.tv.
+- question: Does Hanime Downloader bypass paywalls?
+  answer: No. It only downloads videos you already have access to. It respects hanime.tv
+    authentication and policies.
+- question: Can I batch download a full series?
+  answer: Yes. Queue the episodes you need and the downloader processes them sequentially
+    while preserving order.
+- question: Are subtitles included?
+  answer: When subtitles are available, they download alongside the video so you can
+    view them offline.
+- question: Is my usage tracked?
+  answer: Activity stays on your device. We do not collect analytics or share viewing
+    data.
+- question: What formats are supported?
+  answer: Files save in the original stream container, so you keep the exact quality
+    provided by hanime.tv.
 reviews:
-  - name: Junpei Morita
-    title: Excellent for archiving favorites
-    rating: 5
-    date: 2025-03-02
-    review: Hanime Downloader keeps my library organized and downloads finish
-      quickly without quality loss.
-  - name: Riley Vaughn
-    title: Smooth batch performance
-    rating: 4.9
-    date: 2025-02-10
-    review: I grab entire playlists for travel. The batch queue never stalls and
-      subtitles stay intact.
-  - name: Suki Narang
-    title: Private and reliable
-    rating: 4.8
-    date: 2025-01-22
-    review: I needed an offline solution that stayed on my own drive. This
-      downloader delivers with zero tracking.
+- name: Junpei Morita
+  title: Excellent for archiving favorites
+  rating: 5
+  date: 2025-03-02
+  review: Hanime Downloader keeps my library organized and downloads finish quickly
+    without quality loss.
+- name: Riley Vaughn
+  title: Smooth batch performance
+  rating: 4.9
+  date: 2025-02-10
+  review: I grab entire playlists for travel. The batch queue never stalls and subtitles
+    stay intact.
+- name: Suki Narang
+  title: Private and reliable
+  rating: 4.8
+  date: 2025-01-22
+  review: I needed an offline solution that stayed on my own drive. This downloader
+    delivers with zero tracking.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
-  - Adult
+- Downloader
+- Adult
+- Video Downloader
 keywords:
-  - hanime downloader
-  - hanime download tool
+- hanime downloader
+- hanime download tool
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -109,5 +112,5 @@ return_policy:
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 ghl:
   tag_ids:
-    - purchase-hanime-downloader
+  - purchase-hanime-downloader
 permission_justifications: []

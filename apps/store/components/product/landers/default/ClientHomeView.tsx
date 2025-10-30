@@ -253,7 +253,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
           homeProps.pricing
             ? {
                 ...homeProps.pricing,
-                originalPrice: homeProps.pricing.originalPrice || "$27.99",
+                originalPrice: homeProps.pricing.originalPrice ?? undefined,
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,

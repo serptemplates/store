@@ -2,10 +2,19 @@ platform: Stream
 name: Stream Downloader
 tagline: Save Stream videos instantly for offline viewing.
 slug: stream-downloader
-description: |
-  Stream Downloader gives creators and teams a dependable way to save Stream videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stream with consistent quality and predictable results.
-  
-  It supports Live streams from various platforms, Multiple streaming protocols and formats, and Batch recording from multiple sources simultaneously, so you can move quickly from download to delivery without tedious rework. Use it to archive Stream assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+description: 'Stream Downloader gives creators and teams a dependable way to save
+  Stream videos instantly for offline viewing. Instead of juggling manual captures
+  or questionable browser extensions, it pulls content directly from Stream with consistent
+  quality and predictable results.
+
+
+  It supports Live streams from various platforms, Multiple streaming protocols and
+  formats, and Batch recording from multiple sources simultaneously, so you can move
+  quickly from download to delivery without tedious rework. Use it to archive Stream
+  assets, prep client deliverables, or keep your library accessible when connectivity
+  is limited.
+
+  '
 seo_title: Stream Downloader | Download Stream Downloader for Offline Access
 seo_description: Download videos, images, and content from stream with our reliable
   downloader tool. Fast, secure, and easy to use.
@@ -13,13 +22,13 @@ serply_link: https://serp.ly/stream-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/stream-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/stream-downloader
 serp_co_product_page_url: https://serp.co/products/stream-downloader/
+reddit_url: null
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=stream-downloader
 payment_link:
   live_url: https://buy.stripe.com/7sY3cn62s4uafdxakX0VO16
   test_url: https://buy.stripe.com/test_3cIbITfD22m20iD2Sv0VO18
-
 status: pre_release
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stream-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/stream-downloader/main/images/stream-downloader.gif
@@ -59,7 +68,7 @@ features:
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: ''
+  original_price: $37.00
   note: ''
   cta_text: Get it Now
   currency: USD
@@ -67,21 +76,33 @@ pricing:
   benefits: []
 faqs:
 - question: How do I use the Stream downloader?
-  answer: Install the browser extension, navigate to Stream, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
+  answer: Install the browser extension, navigate to Stream, find the content you
+    want to download, and click the download button that appears. The content will
+    be saved to your chosen location.
 - question: What quality options are available?
-  answer: The downloader supports all available quality levels from Stream, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
+  answer: The downloader supports all available quality levels from Stream, ranging
+    from standard definition up to 4K or higher where available. You can select your
+    preferred quality before downloading.
 - question: Does this work with all Stream content?
-  answer: The downloader works with most publicly accessible content on Stream. Some restricted or DRM-protected content may not be downloadable.
+  answer: The downloader works with most publicly accessible content on Stream. Some
+    restricted or DRM-protected content may not be downloadable.
 - question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
+  answer: If your connection is interrupted, you may need to restart the download.
+    However, for most content, downloads complete quickly enough that interruptions
+    are rare.
 - question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
+  answer: There are no artificial download limits imposed by the extension. You can
+    download as much content as your storage space allows, one item at a time.
 - question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
+  answer: Downloaded files are saved to your selected folder. You can organize them
+    manually using your computer's file system, creating folders by date, topic, or
+    any system that works for you.
 - question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
+  answer: The extension works on major desktop browsers including Chrome, Firefox,
+    and Edge. Make sure your browser is up to date for the best compatibility.
 - question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+  answer: Yes, the extension operates entirely on your local device. No download history
+    or personal data is sent to external servers, ensuring complete privacy.
 reviews:
 - name: Alex Martinez
   title: Saves hours every week with Stream Downloader
@@ -114,6 +135,7 @@ supported_regions:
 categories:
 - Downloader
 - Livestream
+- Video Downloader
 keywords:
 - stream downloader
 return_policy:

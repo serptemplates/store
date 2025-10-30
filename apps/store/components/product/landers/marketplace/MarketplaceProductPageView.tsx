@@ -261,9 +261,20 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   }
 
   const resourceLinks: Array<{ label: string; href: string }> = [];
-  if (product.serp_co_product_page_url) {
-    resourceLinks.push({ label: "serp.co", href: product.serp_co_product_page_url });
-  }
+  const addLink = (value: unknown, label: string) => {
+    if (typeof value !== "string") {
+      return;
+    }
+    const trimmed = value.trim();
+    if (trimmed.length === 0) {
+      return;
+    }
+    resourceLinks.push({ label, href: trimmed });
+  };
+
+  addLink(product.serp_co_product_page_url, "SERP");
+  addLink(product.reddit_url, "Reddit");
+  addLink(product.github_repo_url, "GitHub");
 
   const externalLinkCandidates: Array<{ href?: string | null; label: string }> = [
     { href: product.chrome_webstore_link, label: "Chrome Web Store" },
@@ -273,12 +284,7 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
     { href: product.producthunt_link, label: "Product Hunt" },
   ];
 
-  externalLinkCandidates.forEach((candidate) => {
-    const href = typeof candidate.href === "string" ? candidate.href.trim() : "";
-    if (href.length > 0) {
-      resourceLinks.push({ label: candidate.label, href });
-    }
-  });
+  externalLinkCandidates.forEach((candidate) => addLink(candidate.href, candidate.label));
 
   if (resourceLinks.length > 0) {
     metadata.push({

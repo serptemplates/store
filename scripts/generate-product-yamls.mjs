@@ -117,6 +117,7 @@ for (const slug of allSlugs) {
     seo_description: description || `Download ${name} content for offline use with ease.`,
     store_serp_co_product_page_url: storeUrl,
     apps_serp_co_product_page_url: appsUrl,
+    reddit_url: null,
     serply_link: `https://serp.ly/${slug}`,
     stripe: {
       price_id: priceId || 'PLACEHOLDER',
