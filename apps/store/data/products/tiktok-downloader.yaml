@@ -6,9 +6,9 @@ description: |
   TikTok Downloader adds a download button directly onto videos in your For You feed, Following feed, profiles, and direct links. Click once and it saves the MP4 that TikTok already serves—no copying URLs, switching tabs, or risking shady sites—so you can keep inspiration, references, and deliverables offline.
 
   The extension uses your logged-in session to detect playable videos, labels what can or cannot be saved, and downloads exactly what TikTok streams (watermarks included when TikTok requires them) while you keep scrolling.
-seo_title: Download Tiktok Videos | Tiktok Downloader
-seo_description: Download Tiktok videos easily for offline viewing. Fast, reliable
-  Tiktok video downloader with high-quality downloads.
+seo_title: Tiktok Downloader | Download Tiktok Videos
+seo_description: Download Tiktok videos easily for offline viewing. Fast,
+  reliable Tiktok video downloader with high-quality downloads.
 serply_link: https://serp.ly/tiktok-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/tiktok-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/tiktok-downloader
@@ -23,26 +23,27 @@ payment_link:
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
-  alt: Tiktok Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg
+    alt: Tiktok Downloader website preview
 product_videos: []
 related_videos: []
 related_posts:
-- how-to-download-tiktok-videos
-- how-to-download-tiktok-audio-music-audio-etc-from-videos
+  - how-to-download-tiktok-videos
+  - how-to-download-tiktok-audio-music-audio-etc-from-videos
 github_repo_url: https://github.com/serpapps/tiktok-video-downloader
 github_repo_tags: []
-chrome_webstore_link: null
+chrome_webstore_link: https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Injects download buttons into For You, Following, profile, and video pages
-- Uses your TikTok session to request video files securely and reliably
-- Identifies downloadable videos versus slideshows or image posts at a glance
-- Saves MP4 files directly through the browser without re-encoding or third-party sites
-- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop via Manifest V3
-- Stores licence status locally with no analytics or credential harvesting
+  - Injects download buttons into For You, Following, profile, and video pages
+  - Uses your TikTok session to request video files securely and reliably
+  - Identifies downloadable videos versus slideshows or image posts at a glance
+  - Saves MP4 files directly through the browser without re-encoding or
+    third-party sites
+  - Supports Chrome, Edge, Firefox, Brave, and Opera on desktop via Manifest V3
+  - Stores licence status locally with no analytics or credential harvesting
 pricing:
   label: One-time payment
   price: $17.00
@@ -53,69 +54,71 @@ pricing:
   currency: USD
   availability: InStock
   benefits:
-  - Capture TikTok inspiration as you scroll without leaving the site
-  - Keep offline copies for edits, reports, or travel with zero extra steps
-  - Download safely inside your browser using your legitimate account
+    - Capture TikTok inspiration as you scroll without leaving the site
+    - Keep offline copies for edits, reports, or travel with zero extra steps
+    - Download safely inside your browser using your legitimate account
 faqs:
-- question: How do I download a TikTok video with this extension?
-  answer: Browse TikTok normally. When you see the download icon on a video, click
-    it and the MP4 will save directly to your downloads folder while you keep scrolling.
-- question: Does it remove the TikTok watermark?
-  answer: The downloader saves exactly what TikTok serves. If TikTok applies a watermark,
-    the saved video will include it.
-- question: Can I download private or restricted content?
-  answer: You can only download videos you can already watch with your account. The
-    extension uses your authenticated session and respects TikTok’s access controls.
-- question: Does it work with slideshows or image posts?
-  answer: No. The extension recognises slideshows or non-video posts and indicates
-    that they cannot be downloaded.
-- question: Which browsers are supported?
-  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
-    macOS, and Linux desktops.
-- question: Can I queue multiple downloads?
-  answer: Downloads are initiated one at a time. Click the download icon on each video
-    you want to save.
-- question: Is my account data private?
-  answer: All detection and downloading happen locally. The extension never stores
-    or transmits your credentials and only checks your licence status.
+  - question: How do I download a TikTok video with this extension?
+    answer: Browse TikTok normally. When you see the download icon on a video, click
+      it and the MP4 will save directly to your downloads folder while you keep
+      scrolling.
+  - question: Does it remove the TikTok watermark?
+    answer: The downloader saves exactly what TikTok serves. If TikTok applies a
+      watermark, the saved video will include it.
+  - question: Can I download private or restricted content?
+    answer: You can only download videos you can already watch with your account.
+      The extension uses your authenticated session and respects TikTok’s access
+      controls.
+  - question: Does it work with slideshows or image posts?
+    answer: No. The extension recognises slideshows or non-video posts and indicates
+      that they cannot be downloaded.
+  - question: Which browsers are supported?
+    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux desktops.
+  - question: Can I queue multiple downloads?
+    answer: Downloads are initiated one at a time. Click the download icon on each
+      video you want to save.
+  - question: Is my account data private?
+    answer: All detection and downloading happen locally. The extension never stores
+      or transmits your credentials and only checks your licence status.
 reviews:
-- name: Riley Maddox
-  title: Downloads right from the feed
-  rating: 5
-  date: 2025-02-17
-  review: I click the button while scrolling and the MP4 lands instantly. No copy/paste
-    or switching sites.
-- name: Amina Joseph
-  title: Reliable for client research
-  rating: 4.9
-  date: 2025-03-02
-  review: Buttons show what’s downloadable and respect my login. Makes collecting
-    reference clips easy.
-- name: Leo Wu
-  title: Keeps my idea library stocked
-  rating: 4.8
-  date: 2025-01-29
-  review: I grab trends as I see them and watch offline later. The extension feels
-    like part of TikTok.
+  - name: Riley Maddox
+    title: Downloads right from the feed
+    rating: 5
+    date: 2025-02-17
+    review: I click the button while scrolling and the MP4 lands instantly. No
+      copy/paste or switching sites.
+  - name: Amina Joseph
+    title: Reliable for client research
+    rating: 4.9
+    date: 2025-03-02
+    review: Buttons show what’s downloadable and respect my login. Makes collecting
+      reference clips easy.
+  - name: Leo Wu
+    title: Keeps my idea library stocked
+    rating: 4.8
+    date: 2025-01-29
+    review: I grab trends as I see them and watch offline later. The extension feels
+      like part of TikTok.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Social Media
+  - Downloader
+  - Social Media
 keywords:
-- tiktok downloader
-- tiktok mp4 saver
-- download tiktok from feed
-- tiktok chrome download button
-- offline tiktok library
+  - tiktok downloader
+  - tiktok mp4 saver
+  - download tiktok from feed
+  - tiktok chrome download button
+  - offline tiktok library
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -128,38 +131,38 @@ stripe:
     stripe_product_id: prod_SqnavySFXhLMCk
 ghl:
   tag_ids:
-  - purchase-tiktok-downloader
+    - purchase-tiktok-downloader
 new_release: true
 permission_justifications:
-- permission: downloads
-  justification: |
-    Saves each TikTok MP4 directly to your downloads folder and keeps the progress
-    notification accurate.
-- permission: storage
-  justification: |
-    Stores licence activation and preference flags locally so download buttons stay
-    enabled between sessions.
-- permission: activeTab
-  justification: |
-    Injects download icons into the TikTok page you are actively viewing and captures
-    the relevant video data.
-- permission: tabs
-  justification: |
-    Monitors navigation between feed, profiles, and detail pages so buttons update
-    as you browse.
-- permission: scripting
-  justification: |
-    Reads TikTok’s page data, detects playable videos, and retrieves the MP4 URL using
-    your session headers.
-- permission: notifications
-  justification: |
-    Sends completion and error notifications so you know when a download finishes
-    without leaving the feed.
-- permission: contextMenus
-  justification: |
-    Adds an optional right-click “Download with TikTok Downloader” menu item for
-    direct saves from video links.
-- permission: host_permissions
-  justification: |
-    Grants access to tiktok.com and related subdomains so the extension can observe
-    videos only on official TikTok pages.
+  - permission: downloads
+    justification: |
+      Saves each TikTok MP4 directly to your downloads folder and keeps the progress
+      notification accurate.
+  - permission: storage
+    justification: |
+      Stores licence activation and preference flags locally so download buttons stay
+      enabled between sessions.
+  - permission: activeTab
+    justification: |
+      Injects download icons into the TikTok page you are actively viewing and captures
+      the relevant video data.
+  - permission: tabs
+    justification: |
+      Monitors navigation between feed, profiles, and detail pages so buttons update
+      as you browse.
+  - permission: scripting
+    justification: |
+      Reads TikTok’s page data, detects playable videos, and retrieves the MP4 URL using
+      your session headers.
+  - permission: notifications
+    justification: |
+      Sends completion and error notifications so you know when a download finishes
+      without leaving the feed.
+  - permission: contextMenus
+    justification: |
+      Adds an optional right-click “Download with TikTok Downloader” menu item for
+      direct saves from video links.
+  - permission: host_permissions
+    justification: |
+      Grants access to tiktok.com and related subdomains so the extension can observe
+      videos only on official TikTok pages.

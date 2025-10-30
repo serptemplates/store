@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 
-import type { ResolvedHomeCta } from "@/components/home/home-template.types";
+import type { ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta";
 import type { ProductData } from "@/lib/products/product-schema";
 

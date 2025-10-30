@@ -25,10 +25,7 @@ payment_link:
   test_url: https://buy.stripe.com/test_9B6cMXfD20dU6H18cP0VO05
 
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alpha-porno-downloader.jpg
-screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/alpha-porno-downloader.jpg
-  alt: Alpha Porno Video Downloader website preview
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
