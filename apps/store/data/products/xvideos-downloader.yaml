@@ -22,11 +22,9 @@ payment_link:
   live_url: https://buy.stripe.com/3cI8wHbmM7Gm5CXeBd0VO1S
   test_url: https://buy.stripe.com/test_14AfZ98aAbWC0iD2Sv0VO1R
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
+featured_image: 
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif
-screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xvideos-downloader.jpg
-  alt: XVideos Downloader website preview
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []

@@ -26,11 +26,9 @@ payment_link:
   live_url: https://buy.stripe.com/fZu7sD3Uk0dU5CX8cP0VO1D
   test_url: https://buy.stripe.com/test_8x2eV5cqQ9Ou5CX78L0VO1C
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/eporner-downloader/main/images/eporner-downloader.gif
-screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/eporner-video-downloader.jpg
-  alt: Eporner Video Downloader website preview
+featured_image: 
+featured_image_gif: 
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []

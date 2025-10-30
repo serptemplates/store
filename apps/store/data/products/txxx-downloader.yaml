@@ -2,16 +2,14 @@ platform: TXXX
 name: TXXX Downloader
 tagline: Download TXXX videos instantly.
 slug: txxx-downloader
-description: 'TXXX Downloader gives creators and teams a dependable way to save TXXX
-  videos for offline access. Instead of juggling manual captures or risky browser
-  extensions, it pulls publicly accessible files directly from TXXX with consistent
-  quality.
-
+description: |
+  TXXX Downloader gives creators and teams a dependable way to save TXXX videos for
+  offline access. Instead of juggling manual captures or risky browser extensions,
+  it pulls publicly accessible files directly from TXXX with consistent quality.
 
   Use it to archive research material, prep client deliverables, or keep your personal
-  library available when you''re traveling or working with limited connectivity.
+  library available when you're traveling or working with limited connectivity.
 
-  '
 seo_title: TXXX Downloader | Download TXXX Videos
 seo_description: Download TXXX videos for offline use. Fast, private TXXX downloader.
 serply_link: https://serp.ly/txxx-downloader
