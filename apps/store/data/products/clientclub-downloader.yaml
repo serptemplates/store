@@ -3,12 +3,13 @@ name: Clientclub Downloader
 tagline: Save Clientclub content instantly to your device.
 slug: clientclub-downloader
 description: |
-  Clientclub Downloader gives creators and teams a dependable way to save Clientclub content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Clientclub with consistent quality and predictable results.
-  
-  It supports ClientClub client portal content and resources, Password-protected client areas, and Batch client materials/shared files downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Clientclub assets, prep client deliverables, or keep your library accessible when connectivity is limited.
-seo_title: Download Clientclub Content | Clientclub Downloader
-seo_description: Download Clientclub content easily for offline use. Fast and reliable
-  Clientclub downloader.
+  ClientClub Downloader keeps agency training and community lessons within reach even after access expires. It recognises native ClientClub uploads alongside embedded videos from YouTube, Vimeo, Wistia, Loom, and GoHighLevel, presenting everything inside one popup so you can grab the exact lesson you need.
+
+  Pick the rendition you prefer, queue up to three downloads at once, and let the global progress panel track stage, speed, and ETA while background workers merge adaptive streams into MP4s. The extension relies on your existing ClientClub session, stores settings locally, and sends a desktop alert the moment a file is ready for offline study.
+seo_title: ClientClub Downloader | Archive ClientClub and embedded lessons offline
+seo_description: Download ClientClub trainings plus YouTube, Vimeo, Wistia, Loom, and
+  GoHighLevel embeds as MP4 files with queues, quality controls, and secure local
+  processing.
 serply_link: https://serp.ly/clientclub-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/clientclub-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/clientclub-downloader
@@ -36,70 +37,61 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- One-click download from any video page
-- 100% privacy-friendly
-- Auto-detect videos on the page
-- Smart Page Scan
-- Embedded Video Support
-- Full HD Downloads
-- Lightning fast downloads (no re-encoding)
-- Original quality preserved (up to 4K)
-- No registration or personal data required
-- No watermarks or branding added
-- Zero Ads
-- Regular Updates
-- Thumbnail Preview
-- Minimal Permissions
-- Download Progress Bar
-- Chrome, Firefox, Edge
-- Download embedded videos
-- Zero data tracking
-- Ad-free experience
+- Detects ClientClub uploads plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds
+- Queue up to three simultaneous downloads with automatic rollover for additional lessons
+- Quality picker shows resolution, format type, and estimated file sizes
+- Right-click download shortcut and inline buttons on lesson pages
+- Background merging converts HLS and DASH streams into a single MP4 without re-encoding
+- Uses your existing ClientClub login while keeping licence data stored locally
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence with ongoing compatibility updates. No free trial and no
+    refunds.
   cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Preserve ClientClub trainings before memberships or portals change
+  - Consolidate embedded lessons into one MP4 archive without juggling tools
+  - Study offline during travel or limited connectivity without buffering
 faqs:
-- question: How do I use the Clientclub downloader?
-  answer: Install the browser extension, navigate to Clientclub, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Clientclub, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Clientclub content?
-  answer: The downloader works with most publicly accessible content on Clientclub. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: How do I download a ClientClub lesson with this extension?
+  answer: Open the lesson or community post, let the video load, click the extension
+    icon or inline button, choose your preferred quality, and keep the tab open while
+    the progress manager finishes the MP4.
+- question: Which embedded platforms are supported?
+  answer: ClientClub Downloader captures native uploads along with YouTube, Vimeo,
+    Wistia, Loom, and GoHighLevel embeds, all labelled clearly inside the popup.
+- question: Does it work with members-only or premium content?
+  answer: Yes. It leverages your existing ClientClub session so any video you can
+    watch while logged in can be downloaded without extra authentication steps.
+- question: Can I download entire playlists automatically?
+  answer: The extension focuses on individual lessons. You can run up to three simultaneous
+    downloads and queue the rest, but full playlist automation is not supported.
+- question: Is there a free version or refund policy?
+  answer: A paid licence is required and all sales are final. Updates for new ClientClub
+    player changes are included for active customers.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Clientclub Downloader
+- name: Elise Morgan
+  title: Keeps our agency trainings backed up
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Clientclub Downloader lets me pull everything
-    from Clientclub in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Clientclub downloads
+  date: 2025-02-21
+  review: We download every ClientClub workshop before the cohort ends. Embedded
+    Loom and Vimeo recordings show up together and the queue runs three at a time.
+- name: Darryl Cho
+  title: Smooth experience for mixed content
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Clientclub used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Clientclub content
+  date: 2025-03-07
+  review: Some lessons use GoHighLevel, others YouTube, and this extension handles
+    all of them without plugins. The progress panel is clear and dependable.
+- name: Priya Anand
+  title: Perfect for offline study
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Clientclub assets for clients and the download in Clientclub
-    Downloader keep our workflows smooth. Totally worth the price.
+  date: 2025-01-29
+  review: I travel often and need lessons offline. Downloads stay in sync with my
+    login and finish quietly while I prep for calls.
 supported_operating_systems:
 - windows
 - mac
@@ -107,6 +99,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- brave
 - opera
 supported_regions:
 - Worldwide
@@ -115,6 +108,10 @@ categories:
 - Course Platforms
 keywords:
 - clientclub downloader
+- clientclub course backup
+- offline clientclub videos
+- chrome clientclub extension
+- agency training downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -128,4 +125,40 @@ stripe:
 ghl:
   tag_ids:
   - purchase-clientclub-downloader
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |
+    Writes the MP4 files you export to disk and updates progress indicators for each
+    running download.
+- permission: storage
+  justification: |
+    Saves licence activation details plus your preferred quality settings locally
+    so the extension is ready whenever you log in.
+- permission: activeTab
+  justification: |
+    Detects ClientClub lessons and embedded players in the tab you are viewing, enabling
+    inline download buttons.
+- permission: tabs
+  justification: |
+    Keeps queued downloads running in background tabs and restores status when you
+    come back to the lesson.
+- permission: scripting
+  justification: |
+    Extracts available renditions from ClientClub, YouTube, Vimeo, Wistia, Loom, and
+    GoHighLevel embeds so you can pick the quality you need.
+- permission: notifications
+  justification: |
+    Provides completion and error alerts so you know when each lesson is ready without
+    babysitting the popup.
+- permission: contextMenus
+  justification: |
+    Adds a Download with ClientClub Downloader entry to the right-click menu for
+    quick saves.
+- permission: offscreen
+  justification: |
+    Processes HLS and DASH segments into MP4 files in the background to avoid freezing
+    the lesson tab.
+- permission: host_permissions
+  justification: |
+    Restricts privileged access to clientclub.com and related training CDNs, keeping
+    the extension scoped to relevant pages.

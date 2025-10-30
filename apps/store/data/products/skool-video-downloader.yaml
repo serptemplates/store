@@ -3,9 +3,9 @@ name: Skool Video Downloader
 tagline: Save Skool videos instantly for offline viewing.
 slug: skool-video-downloader
 description: |
-  Skool Video Downloader gives creators and teams a dependable way to save Skool videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Skool with consistent quality and predictable results.
-  
-  It supports Download full courses offline, Save videos, docs, and materials, and Preserve course structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Skool assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+  Skool Video Downloader makes course lessons, community uploads, and classroom recordings available offline before access changes. It uses your active Skool login to detect videos, lists every resolution the platform provides, and converts the stream into a smooth MP4 without leaving the browser.
+
+  Queue a lesson, let the downloader fetch each segment with your authentication headers, and it will merge everything in the background while you continue studying. The result is a private MP4 library that mirrors what you can watch inside Skool.
 seo_title: Download Skool Videos | Skool Video Downloader
 seo_description: Download Skool videos easily for offline viewing. Fast, reliable
   Skool video downloader with high-quality downloads.
@@ -59,56 +59,66 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Download full courses offline
-- Save videos, docs, and materials
-- Preserve course structure
-- Download classrooms, posts, discussions
-- Download all attachments
-- Resume interrupted downloads
-- Works on all platforms
-- Local storage
-- Privacy-focused
-- Regular compatibility updates
+- Detects Skool course lessons, community posts, and live session recordings
+- Uses your logged-in session to download member-only content securely
+- Converts Skool HLS streams into MP4 files while preserving quality
+- Displays precise segment counts and progress so you know how long remains
+- Supports Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
+- Stores licence data and quality preferences locally with no analytics
 pricing:
+  label: One-time payment
   price: $37.00
+  original_price: ''
+  note: Download instantly • Lifetime updates included • No refunds
+  cta_text: Get it Now
   currency: USD
   availability: InStock
+  benefits:
+  - Archive Skool lessons and replays before cohorts or memberships end
+  - Study offline during travel or low-connectivity periods without buffering
+  - Keep downloads private with all processing handled on your own device
 faqs:
-- question: How do I download Skool videos?
-  answer: Use our Skool video downloader extension to easily download videos from Skool communities. Simply install the extension, navigate to any Skool video, and click the download button that appears. Choose your preferred quality and format, and the video will be saved directly to your device.
-- question: Is it legal to download from Skool?
-  answer: "We're not attorneys and can't provide legal advice, as we don't know your\ \ location or specific circumstances. However, our extension simply provides an\ \ easier way to do what you could already do manually without it. You can download\ \ anything manually on your own already\u2014we just make the process more convenient."
-- question: What video formats are supported?
-  answer: Our downloader successfully supports every type of video and video format we've encountered on the Skool platform. We've tested it extensively with various video uploads, and it handles all formats reliably. If you encounter any format that doesn't work, let us know and we'll add support for it.
-- question: Can I download Skool videos on mobile devices?
-  answer: We don't currently have a mobile version, but we're happy to develop one if there's demand for it. Right now, our downloader works on desktop browsers. If you'd like a mobile version, let us know by submitting a request to our project repository.
-- question: What if I encounter an error or issue?
-  answer: Simply submit an issue to our project repository and our support team will help you right away. We'll either troubleshoot any mistakes, fix bugs if they exist, or add new features if you need them. We're committed to making sure the downloader works perfectly for you.
-- question: Do I need to be logged into Skool to download videos?
-  answer: "Yes, you must be logged into your Skool account and have access to the\ \ community or course containing the video. Our downloader works within your existing\ \ permissions\u2014it cannot bypass Skool's access restrictions or download content\ \ from communities you're not a member of."
-- question: Are there any risks in downloading from Skool?
-  answer: No, there are no risks when using our downloader. It's a safe, straightforward tool that works within your browser.
-- question: Can I download videos from private or premium Skool communities?
-  answer: Yes, you can download videos from paid, premium, or private classrooms as long as you have access to them. If you're a member of the community and can watch the video on Skool, you can download it with our tool.
+- question: How do I download a Skool lesson with this extension?
+  answer: Open the lesson, click the downloader icon, choose your quality, and keep
+    the tab open while the segment counter completes. The MP4 will save with the community
+    and lesson name.
+- question: Does it work with private communities or paid cohorts?
+  answer: Yes. The downloader uses your existing Skool session, so any video you can
+    watch while logged in can be saved offline.
+- question: Can I download multiple lessons at once?
+  answer: Downloads run one at a time to keep session tokens valid. Queue the next
+    lesson after the current progress bar finishes.
+- question: Which browsers are supported?
+  answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops. Safari is not supported.
+- question: Do captions or attachments download too?
+  answer: Videos export as MP4 files. Captions, PDFs, or other attachments should
+    be saved separately from within Skool.
+- question: What happens if I refresh the page?
+  answer: Progress persists. As long as the original tab remains open, the downloader
+    resumes from the last segment and finishes the MP4.
+- question: Is my data private?
+  answer: All detection and conversion happen locally. Only licence checks touch remote
+    servers, and no viewing history or passwords are stored.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Skool Video Downloader
+- name: Mariah Keene
+  title: Perfect for cohort replays
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Skool Video Downloader lets me pull everything
-    from Skool in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Skool downloads
+  date: 2025-02-23
+  review: I grabbed every classroom replay before the cohort closed. Segment counters
+    let me know how long each download would take.
+- name: Theo Richter
+  title: Works with private communities
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Skool used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Skool content
+  date: 2025-03-04
+  review: My membership site locks lessons to members only. The downloader honoured
+    my login automatically and the MP4 quality is flawless.
+- name: Ines Navarro
+  title: Offline study made simple
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Skool assets for clients and the batch features in Skool Video
-    Downloader keep our workflows smooth. Totally worth the price.
+  date: 2025-01-31
+  review: I travel often and need lessons offline. This keeps downloads private and
+    never asks for extra credentials.
 supported_operating_systems:
 - windows
 - mac
@@ -126,6 +136,8 @@ keywords:
 - skool video downloader
 - download skool videos
 - skool classroom backup
+- offline skool lessons
+- skool course archive
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -139,4 +151,40 @@ stripe:
 ghl:
   tag_ids:
   - purchase-skool-video-downloader
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |
+    Saves the finished MP4 to your downloads folder and keeps the progress tracker
+    accurate for each lesson.
+- permission: storage
+  justification: |
+    Stores licence activation, preferred quality, and retry behaviour locally so
+    the downloader stays ready between sessions.
+- permission: activeTab
+  justification: |
+    Detects Skool lesson players and community videos on the tab you are viewing
+    and injects the download controls there.
+- permission: tabs
+  justification: |
+    Allows downloads to continue if you refresh or switch lessons and restores the
+    status window when you return.
+- permission: scripting
+  justification: |
+    Extracts stream manifests, quality variants, and authentication headers from
+    the page so the downloader can fetch the correct segments.
+- permission: notifications
+  justification: |
+    Sends completion or error alerts so you know when a recording finishes downloading
+    without monitoring the UI.
+- permission: contextMenus
+  justification: |
+    Adds a “Download with Skool Video Downloader” entry to the right-click menu for
+    quick access inside lessons.
+- permission: offscreen
+  justification: |
+    Merges HLS segments into MP4 files in the background, keeping your lesson tab
+    responsive during conversion.
+- permission: host_permissions
+  justification: |
+    Grants limited access to skool.com and related video hosts so the extension only
+    activates on pages that serve Skool content.
