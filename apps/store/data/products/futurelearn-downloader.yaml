@@ -19,6 +19,7 @@ serply_link: https://serp.ly/futurelearn-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/futurelearn-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/futurelearn-downloader
 serp_co_product_page_url: https://serp.co/products/futurelearn-downloader/
+reddit_url: null
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=futurelearn-downloader

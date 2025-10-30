@@ -24,6 +24,7 @@ serply_link: https://serp.ly/ai-voice-cloner-app
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/ai-voice-cloner-app
 apps_serp_co_product_page_url: https://apps.serp.co/ai-voice-cloner-app
 serp_co_product_page_url: https://serp.co/products/ai-voice-cloner-app/
+reddit_url: null
 buy_button_destination: https://ghl.serp.co/payment-link/68f88f7d67ee3b70fd6a1b24
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ai-voice-cloner-app

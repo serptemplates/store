@@ -21,6 +21,7 @@ serply_link: https://serp.ly/teachable-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/teachable-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/teachable-video-downloader
 serp_co_product_page_url: https://serp.co/products/teachable-video-downloader/
+reddit_url: null
 buy_button_destination: https://ghl.serp.co/payment-link/68e022e6613b1b34eece7f2f
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=teachable-video-downloader

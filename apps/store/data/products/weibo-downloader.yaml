@@ -19,6 +19,7 @@ serply_link: https://serp.ly/weibo-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/weibo-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/weibo-downloader
 serp_co_product_page_url: https://serp.co/products/weibo-downloader/
+reddit_url: null
 buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=weibo-downloader
