@@ -101,4 +101,8 @@ export type HomeTemplateProps = {
     title: string;
     paragraphs: string[];
   };
+  resourceLinks?: Array<{
+    label: string;
+    href: string;
+  }>;
 };

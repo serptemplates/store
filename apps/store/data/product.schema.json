@@ -50,6 +50,18 @@
       "format": "uri",
       "pattern": "^https://(www\\.)?serp\\.co/"
     },
+    "reddit_url": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^(https://((www|old|new)\\.)?reddit\\.com/|https://redd\\.it/)"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "serply_link": {
       "type": "string",
       "format": "uri",

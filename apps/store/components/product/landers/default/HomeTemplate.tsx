@@ -14,6 +14,7 @@ import { PermissionsJustificationAccordion } from "./sections/PermissionsJustifi
 import type { HomeTemplateProps } from "./home-template.types";
 import { teamMembers } from "@/data/team";
 import { ProductAboutSection } from "./sections/ProductAboutSection";
+import { ProductResourceLinks } from "./sections/ProductResourceLinks";
 
 export function HomeTemplate({
   ui,
@@ -44,6 +45,7 @@ export function HomeTemplate({
   videoSection,
   permissionJustifications,
   about,
+  resourceLinks,
   onPrimaryCtaClick,
 }: HomeTemplateProps) {
   const {
@@ -307,6 +309,10 @@ export function HomeTemplate({
 
         {/* Permissions */}
         <PermissionsJustificationAccordion items={permissionJustifications} />
+
+        {Array.isArray(resourceLinks) && resourceLinks.length > 0 ? (
+          <ProductResourceLinks links={resourceLinks} />
+        ) : null}
 
         {/* Posts */}
         {showPosts && Array.isArray(posts) && posts.length > 0 && (

@@ -2,156 +2,158 @@ platform: Vimeo
 name: Vimeo Video Downloader
 tagline: Save Vimeo videos instantly for offline viewing.
 slug: vimeo-video-downloader
-description: |
-  Vimeo Video Downloader makes it easy to save showcase links, client review pages, and embedded players—even when they’re protected by passwords or private share settings. Enter the password, choose the quality, and the extension downloads the stream (and merges separate audio/video when needed) into a single MP4 so you can edit or archive offline.
+description: "Vimeo Video Downloader makes it easy to save showcase links, client\
+  \ review pages, and embedded players\u2014even when they\u2019re protected by passwords\
+  \ or private share settings. Enter the password, choose the quality, and the extension\
+  \ downloads the stream (and merges separate audio/video when needed) into a single\
+  \ MP4 so you can edit or archive offline.\n"
 seo_title: Vimeo Video Downloader | Download Vimeo Videos
-seo_description: Download Vimeo videos easily for offline viewing. Fast,
-  reliable Vimeo video downloader with high-quality downloads.
+seo_description: Download Vimeo videos easily for offline viewing. Fast, reliable
+  Vimeo video downloader with high-quality downloads.
 serply_link: https://serp.ly/vimeo-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/vimeo-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/vimeo-video-downloader
 serp_co_product_page_url: https://serp.co/products/vimeo-video-downloader/
+reddit_url: https://www.reddit.com/r/serpdownloaders/comments/1oexd2g/vimeo_video_downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68df833f613b1b1429ce7b17
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=vimeo-video-downloader
 payment_link:
   live_url: https://buy.stripe.com/5kQ14ffD20dUe9takX0VO1m
   test_url: https://buy.stripe.com/test_3cI8wH8aA8Kq6H164H0VO1o
-
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.gif
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg
-    alt: Vimeo Video Downloader website preview
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot-1.jpg
-    alt: Vimeo Video Downloader main interface
-    caption: Main download interface with quality options
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot2.jpg
-    alt: Vimeo Video Downloader batch mode
-    caption: Batch download multiple videos at once
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot3.jpg
-    alt: Vimeo Video Downloader settings
-    caption: Customizable download settings and preferences
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot4.jpg
-    alt: Vimeo Video Downloader progress tracking
-    caption: Real-time download progress monitoring
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot5.jpg
-    alt: Vimeo Video Downloader library view
-    caption: Organized library of downloaded videos
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.png
-    alt: Vimeo Video Downloader logo
-    caption: Professional Vimeo downloading solution
-  - url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot.jpg
-    alt: Vimeo Video Downloader in action
-    caption: Downloading high-quality Vimeo content
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg
+  alt: Vimeo Video Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot-1.jpg
+  alt: Vimeo Video Downloader main interface
+  caption: Main download interface with quality options
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot2.jpg
+  alt: Vimeo Video Downloader batch mode
+  caption: Batch download multiple videos at once
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot3.jpg
+  alt: Vimeo Video Downloader settings
+  caption: Customizable download settings and preferences
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot4.jpg
+  alt: Vimeo Video Downloader progress tracking
+  caption: Real-time download progress monitoring
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/screenshots/vimeo-video-downloader-screenshot5.jpg
+  alt: Vimeo Video Downloader library view
+  caption: Organized library of downloaded videos
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.png
+  alt: Vimeo Video Downloader logo
+  caption: Professional Vimeo downloading solution
+- url: https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader-screenshot.jpg
+  alt: Vimeo Video Downloader in action
+  caption: Downloading high-quality Vimeo content
 product_videos:
-  - https://www.youtube.com/watch?v=-_zu7XgFuKs
-  - https://www.youtube.com/watch?v=jKf8VqvLGqQ
+- https://www.youtube.com/watch?v=-_zu7XgFuKs
+- https://www.youtube.com/watch?v=jKf8VqvLGqQ
 related_videos:
-  - https://www.youtube.com/watch?v=ZnoC6IZg4s4
-  - https://www.youtube.com/watch?v=MeLNJSwCnwk
+- https://www.youtube.com/watch?v=ZnoC6IZg4s4
+- https://www.youtube.com/watch?v=MeLNJSwCnwk
 related_posts:
-  - how-to-download-vimeo-videos
-  - how-to-download-vimeo-videos-method-2-yt-dlp-at-the-m3u8-stream
-  - how-to-download-vimeo-videos-streaming-via-hls-streamlink
-  - how-to-download-password-protected-vimeo-videos
-  - downloading-password-protected-vimeo-videos-with-yt-dlp
-  - downloading-long-vimeo-videos-dash-streams-with-yt-dlp
+- how-to-download-vimeo-videos
+- how-to-download-vimeo-videos-method-2-yt-dlp-at-the-m3u8-stream
+- how-to-download-vimeo-videos-streaming-via-hls-streamlink
+- how-to-download-password-protected-vimeo-videos
+- downloading-password-protected-vimeo-videos-with-yt-dlp
+- downloading-long-vimeo-videos-dash-streams-with-yt-dlp
 github_repo_url: https://github.com/serpapps/vimeo-video-downloader
 github_repo_tags:
-  - vimeo-downloader
-  - vimeo-video-downloader
-  - download-vimeo-videos
-  - download-private-vimeo-videos
+- vimeo-downloader
+- vimeo-video-downloader
+- download-vimeo-videos
+- download-private-vimeo-videos
 chrome_webstore_link: https://chromewebstore.google.com/detail/vimeo-video-downloader/dhgiccbhamhpghhoaajjiikjlegbfhdj
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: https://www.producthunt.com/products/vimeo-video-downloader
 features:
-  - Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites
-  - Prompts for video passwords and respects your logged-in Vimeo session
-  - Converts HLS/DASH streams into MP4, merging separate audio and video
-    automatically
-  - Supports up to three simultaneous downloads with individual progress tracking
-  - Captures video metadata (title, owner) to simplify project organisation
-  - Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
-  - Stores licence data locally with no analytics or credential harvesting
+- Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites
+- Prompts for video passwords and respects your logged-in Vimeo session
+- Converts HLS/DASH streams into MP4, merging separate audio and video automatically
+- Supports up to three simultaneous downloads with individual progress tracking
+- Captures video metadata (title, owner) to simplify project organisation
+- Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
+- Stores licence data locally with no analytics or credential harvesting
 pricing:
   label: One-time payment
   price: $17.00
-  original_price: '27.00'
+  original_price: $37.00
   note: Download immediately \u2022 Lifetime updates included \u2022 No refunds
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-    - Archive password-protected and private Vimeo links for offline editing
-    - Save embeds from portfolio or client review sites without copy/paste
-      workflows
-    - Keep downloads private with on-device processing and no analytics
+  - Archive password-protected and private Vimeo links for offline editing
+  - Save embeds from portfolio or client review sites without copy/paste workflows
+  - Keep downloads private with on-device processing and no analytics
 faqs:
-  - question: How do I download a password-protected Vimeo video?
-    answer: Open the video, click the downloader icon, enter the same password you
-      use in the Vimeo player, choose your quality, and let the download finish.
-      The MP4 will save automatically.
-  - question: Can I download private or team videos?
-    answer: Yes, as long as you’re logged into Vimeo and have permission to view the
-      video. The extension uses your session to access the file and never
-      bypasses permissions.
-  - question: Does it work on embedded Vimeo players?
-    answer: Absolutely. Whether the player lives on vimeo.com or is embedded on a
-      client portal or portfolio site, the extension detects it and offers the
-      same download workflow.
-  - question: How many videos can I download at once?
-    answer: You can run up to three simultaneous downloads. Each shows its own
-      progress bar so you can monitor status at a glance.
-  - question: Will captions or subtitles download too?
-    answer: The downloader focuses on video and audio. Subtitles or caption files
-      should be saved separately from within Vimeo if you need them.
-  - question: Which browsers are supported?
-    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
-      Windows, macOS, and Linux desktops.
+- question: How do I download a password-protected Vimeo video?
+  answer: Open the video, click the downloader icon, enter the same password you use
+    in the Vimeo player, choose your quality, and let the download finish. The MP4
+    will save automatically.
+- question: Can I download private or team videos?
+  answer: "Yes, as long as you\u2019re logged into Vimeo and have permission to view\
+    \ the video. The extension uses your session to access the file and never bypasses\
+    \ permissions."
+- question: Does it work on embedded Vimeo players?
+  answer: Absolutely. Whether the player lives on vimeo.com or is embedded on a client
+    portal or portfolio site, the extension detects it and offers the same download
+    workflow.
+- question: How many videos can I download at once?
+  answer: You can run up to three simultaneous downloads. Each shows its own progress
+    bar so you can monitor status at a glance.
+- question: Will captions or subtitles download too?
+  answer: The downloader focuses on video and audio. Subtitles or caption files should
+    be saved separately from within Vimeo if you need them.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops.
 reviews:
-  - name: Linnea Barrett
-    title: Passworded client links solved
-    rating: 5
-    date: 2025-02-16
-    review: Clients send protected Vimeo review pages. I enter the password once and
-      the MP4 lands ready for edit notes.
-  - name: Jamil Ortega
-    title: Embedded videos finally accessible
-    rating: 4.9
-    date: 2025-03-03
-    review: Our course portal embeds Vimeo players. This detects them instantly and
-      merges audio/video perfectly.
-  - name: Jaya Daniels
-    title: Reliable for agency archives
-    rating: 4.8
-    date: 2025-01-28
-    review: Three downloads at a time keeps our archive jobs moving, and progress
-      bars make status crystal clear.
+- name: Linnea Barrett
+  title: Passworded client links solved
+  rating: 5
+  date: 2025-02-16
+  review: Clients send protected Vimeo review pages. I enter the password once and
+    the MP4 lands ready for edit notes.
+- name: Jamil Ortega
+  title: Embedded videos finally accessible
+  rating: 4.9
+  date: 2025-03-03
+  review: Our course portal embeds Vimeo players. This detects them instantly and
+    merges audio/video perfectly.
+- name: Jaya Daniels
+  title: Reliable for agency archives
+  rating: 4.8
+  date: 2025-01-28
+  review: Three downloads at a time keeps our archive jobs moving, and progress bars
+    make status crystal clear.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
-  - Downloader
+- Downloader
+- Video Downloader
 keywords:
-  - vimeo video downloader
-  - download private vimeo
-  - vimeo password video mp4
-  - download embedded vimeo
-  - vimeo offline archive
-  - how to cancel vimeo
-  - what is vimeo pro
-  - how to change privacy settings on vimeo
+- vimeo video downloader
+- download private vimeo
+- vimeo password video mp4
+- download embedded vimeo
+- vimeo offline archive
+- how to cancel vimeo
+- what is vimeo pro
+- how to change privacy settings on vimeo
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -164,41 +166,60 @@ stripe:
     stripe_product_id: prod_SgReFRh1TixiX4
 ghl:
   tag_ids:
-    - purchase-vimeo-video-downloader
+  - purchase-vimeo-video-downloader
 permission_justifications:
-  - permission: downloads
-    justification: |
-      Streams the final MP4 (or merged audio/video) to your downloads folder and keeps
-      progress accurate for each item.
-  - permission: storage
-    justification: |
-      Stores licence activation, password prompts, and queue preferences locally so
-      the downloader stays configured between sessions.
-  - permission: activeTab
-    justification: |
-      Detects Vimeo players on the tab you’re viewing—whether on vimeo.com or embedded
-      elsewhere—and injects download controls.
-  - permission: tabs
-    justification: |
-      Monitors navigation so the extension can refresh download options as you move
-      between videos, showcases, or embeds.
-  - permission: scripting
-    justification: |
-      Reads video configuration data, manifests, and stream URLs from the player in
-      order to retrieve the correct quality variants.
-  - permission: notifications
-    justification: |
-      Sends prompts, success, and error alerts so you stay informed without watching
-      the popup.
-  - permission: contextMenus
-    justification: |
-      Adds a convenient “Download with Vimeo Video Downloader” option to the right-click
-      menu for embedded players.
-  - permission: cookies
-    justification: |
-      Uses your existing Vimeo session cookies to authenticate private, password-protected,
-      or team videos directly in your browser.
-  - permission: host_permissions
-    justification: |
-      Limits privileged access to vimeo.com, player.vimeo.com, and Vimeo CDN hosts
-      so the extension only touches official endpoints required for downloading.
+- permission: downloads
+  justification: 'Streams the final MP4 (or merged audio/video) to your downloads
+    folder and keeps
+
+    progress accurate for each item.
+
+    '
+- permission: storage
+  justification: 'Stores licence activation, password prompts, and queue preferences
+    locally so
+
+    the downloader stays configured between sessions.
+
+    '
+- permission: activeTab
+  justification: "Detects Vimeo players on the tab you\u2019re viewing\u2014whether\
+    \ on vimeo.com or embedded\nelsewhere\u2014and injects download controls.\n"
+- permission: tabs
+  justification: 'Monitors navigation so the extension can refresh download options
+    as you move
+
+    between videos, showcases, or embeds.
+
+    '
+- permission: scripting
+  justification: 'Reads video configuration data, manifests, and stream URLs from
+    the player in
+
+    order to retrieve the correct quality variants.
+
+    '
+- permission: notifications
+  justification: 'Sends prompts, success, and error alerts so you stay informed without
+    watching
+
+    the popup.
+
+    '
+- permission: contextMenus
+  justification: "Adds a convenient \u201CDownload with Vimeo Video Downloader\u201D\
+    \ option to the right-click\nmenu for embedded players.\n"
+- permission: cookies
+  justification: 'Uses your existing Vimeo session cookies to authenticate private,
+    password-protected,
+
+    or team videos directly in your browser.
+
+    '
+- permission: host_permissions
+  justification: 'Limits privileged access to vimeo.com, player.vimeo.com, and Vimeo
+    CDN hosts
+
+    so the extension only touches official endpoints required for downloading.
+
+    '
