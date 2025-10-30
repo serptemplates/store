@@ -143,51 +143,35 @@ ghl:
   - purchase-youtube-downloader
 new_release: true
 permission_justifications:
-- permission: downloads
-  justification: 'Writes the merged MP4 or WebM files directly to your downloads folder
-    and tracks
-
-    progress for simultaneous jobs.
-
-    '
-- permission: storage
-  justification: 'Saves licence activation, preferred quality settings, and queue
-    history locally
-
-    so everything persists between browser sessions.
-
-    '
-- permission: activeTab
-  justification: "Injects the downloader UI into the YouTube page you\u2019re viewing,\
-    \ including Shorts\nfeeds and embedded players.\n"
-- permission: tabs
-  justification: 'Monitors when you switch videos or open new players so the extension
-    can refresh
-
-    available quality options automatically.
-
-    '
-- permission: scripting
-  justification: 'Reads player configuration data to decrypt stream URLs, fetch manifests,
-    and merge
-
-    DASH or HLS segments into a final MP4.
-
-    '
-- permission: notifications
-  justification: 'Sends completion, error, and licence prompts without forcing you
-    to keep the popup
-
-    open during longer conversions.
-
-    '
-- permission: contextMenus
-  justification: "Adds a \u201CDownload with YouTube Downloader\u201D option when\
-    \ you right-click embedded\nvideos for quicker access.\n"
-- permission: host_permissions
-  justification: 'Limits privileged access to youtube.com, youtu.be, and YouTube CDN
-    domains required
-
-    to capture and decrypt the streams.
-
-    '
+  - permission: downloads
+    justification: |
+      Writes the merged MP4 or WebM files directly to your downloads folder
+      and tracks progress for simultaneous jobs.
+  - permission: storage
+    justification: |
+      Saves licence activation, preferred quality settings, and queue
+      history locally so everything persists between browser sessions.
+  - permission: activeTab
+    justification: |
+      Injects the downloader UI into the YouTube page you’re viewing,
+      including Shorts feeds and embedded players.
+  - permission: tabs
+    justification: |
+      Monitors when you switch videos or open new players so the extension
+      can refresh available quality options automatically.
+  - permission: scripting
+    justification: |
+      Reads player configuration data to decrypt stream URLs, fetch manifests,
+      and merge DASH or HLS segments into a final MP4.
+  - permission: notifications
+    justification: |
+      Sends completion, error, and licence prompts without forcing you
+      to keep the popup open during longer conversions.
+  - permission: contextMenus
+    justification: |
+      Adds a “Download with YouTube Downloader” option when you right-click embedded
+      videos for quicker access.
+  - permission: host_permissions
+    justification: |
+      Limits privileged access to youtube.com, youtu.be, and YouTube CDN
+      domains required to capture and decrypt the streams.
