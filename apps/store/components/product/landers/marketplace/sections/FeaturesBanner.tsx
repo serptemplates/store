@@ -28,7 +28,7 @@ export function FeaturesBanner({ imageUrl, caption, title, description }: Featur
               priority
             />
           </div>
-          <figcaption className="border-t border-[#e6e8eb] px-4 py-4 text-[14px] font-normal text-[#425466] sm:px-6">
+          <figcaption className="border-t border-[#e6e8eb] px-4 py-4 text-[14px] font-normal text-[#f1f5f9] sm:px-6">
             {caption}
           </figcaption>
         </figure>

@@ -35,7 +35,7 @@ type MetadataRow = {
 };
 
 const SECTION_LABEL_CLASS =
-  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90] lg:mb-0";
+  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#475569] lg:mb-0";
 
 export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
@@ -318,6 +318,20 @@ function buildMarketplaceCopy(product: ProductData) {
   };
 }
 
+function createAccordionItemId(rawValue: string | null | undefined, index: number, prefix: string): string {
+  const baseValue = typeof rawValue === "string" ? rawValue : "";
+  const stripped = baseValue
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036F]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (stripped.length === 0) {
+    return `${prefix}-${index}`;
+  }
+  return `${prefix}-${stripped}-${index}`;
+}
+
 function buildPermissionJustificationFaqItems(product: ProductData): FaqItem[] {
   return (
     product.permission_justifications
@@ -333,7 +347,7 @@ function buildPermissionJustificationFaqItems(product: ProductData): FaqItem[] {
         const answer = learnMore ? `${justification}\n\nLearn more: ${learnMore}` : justification;
 
         return {
-          id: `${permission}-${index}`,
+          id: createAccordionItemId(permission, index, "permission"),
           question: permission,
           answer,
         };
@@ -346,7 +360,7 @@ function buildFaqItems(product: ProductData): FaqItem[] {
     product.faqs
       ?.filter((faq) => faq.question && faq.answer)
       .map((faq, index) => ({
-        id: `${faq.question}-${index}`,
+        id: createAccordionItemId(faq.question, index, "faq"),
         question: faq.question,
         answer: faq.answer,
       })) ?? []
@@ -436,7 +450,7 @@ function MetadataList({ items, legalLinks }: MetadataListProps) {
         <dl className="space-y-6">
           {items.map((item) => (
             <div key={item.label} className="flex flex-col gap-2">
-              <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#6b7a90]">{item.label}</dt>
+              <dt className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#475569]">{item.label}</dt>
               <dd className="text-[14px] leading-[1.6] text-[#334155]">{item.value}</dd>
             </div>
           ))}
@@ -449,7 +463,7 @@ function MetadataList({ items, legalLinks }: MetadataListProps) {
         <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-[12px] font-medium text-[#635bff]">
           {legalLinks.map((link, index) => (
             <Fragment key={link.label}>
-              {index > 0 && <span className="text-[#6b7a90]">/</span>}
+              {index > 0 && <span className="text-[#475569]">/</span>}
               <a href={link.href} target="_blank" rel="noreferrer" className="hover:underline">
                 {link.label}
               </a>
