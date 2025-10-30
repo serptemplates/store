@@ -20,7 +20,7 @@ serply_link: https://serp.ly/sprout-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/sprout-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/sprout-video-downloader
 serp_co_product_page_url: https://serp.co/products/sprout-video-downloader/
-reddit_url: null
+reddit_url: https://www.reddit.com/r/serpdownloaders/comments/1oekx0x/sprout_video_downloader/
 buy_button_destination: https://ghl.serp.co/payment-link/68e08bb367ee3b1d9c699e36
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=sprout-video-downloader
