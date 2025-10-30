@@ -1,0 +1,146 @@
+platform: SERP Downloader
+name: SERP Downloader
+tagline: Download videos, images, and audio from 1,000+ sites with one extension.
+slug: serp-downloader
+description: |
+  SERP Downloader is the all-in-one browser extension for people who need the fastest path from “I’m watching it now” to “I have the file saved forever.” It recognises 1,000+ streaming, social, and file-hosting providers, unwraps whatever format they use—HLS, DASH, progressive MP4, WebM, audio-only, or zipped image galleries—and returns clean downloads that match the original quality.
+
+  Under the hood the extension keeps an up-to-date provider manifest, smartly routes each request through the right extractor, and merges segmented media without the user touching a command line. Teams can queue bulk jobs, monitor state from a single dashboard, and store recipes for recurring tasks so the same workflow works for the next platform that pops up.
+seo_title: SERP Downloader | Universal Media Downloader Extension
+seo_description: Download videos, images, and audio from thousands of providers with the universal SERP Downloader browser extension.
+serply_link: https://serp.ly/serp-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/serp-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/serp-downloader
+serp_co_product_page_url: https://serp.co/products/serp-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=serp-downloader
+status: pre_release
+featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-dashboard.jpg
+featured_image_gif: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-workflow.gif
+screenshots:
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-dashboard.jpg
+  alt: SERP Downloader dashboard showing queued jobs across multiple providers
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/serp-downloader-extractor.jpg
+  alt: SERP Downloader extractor overlay listing available renditions and captions
+product_videos: []
+related_videos: []
+related_posts:
+- how-to-download-hls-m3u8-streaming-videos
+- how-to-download-youtube-videos-for-free-with-yt-dlp
+- how-to-download-vimeo-videos-yt-dlp-at-the-m3u8-stream
+github_repo_url: https://github.com/serpapps/serp-downloader
+github_repo_tags:
+- universal-media-downloader
+- browser-extension
+- video-downloader
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+opera_addons_store_link: null
+producthunt_link: null
+features:
+- Detects 1,000+ video, audio, and image providers in any tab without manual toggles
+- Keeps a continuously updated extractor manifest backed by automated regression tests
+- Handles HLS, DASH, progressive MP4/WebM, audio-only streams, and zipped galleries
+- Uses hardware-accelerated merges so multi-hour 4K downloads finish in minutes
+- Batch queues mixed providers and formats with per-item priorities and retries
+- Generates reusable “recipes” that pre-fill authentication headers, cookies, and output presets
+- Auto-captures subtitles, metadata, and cover art into structured sidecar files
+- Ships with privacy-first defaults—no analytics, no remote logging, everything stays local
+- Works across Chrome, Edge, Firefox, Brave, and Arc with Manifest V3 compliance
+- Integrates with yt-dlp and ffmpeg behind the scenes so power users can export CLI commands
+pricing:
+  label: One-time payment
+  price: $47.00
+  original_price: ''
+  note: Join the waitlist for early access, roadmap votes, and launch pricing.
+  cta_text: Join the Waitlist
+  currency: USD
+  availability: PreOrder
+  benefits:
+  - Replace dozens of single-site downloaders with one maintained extension
+  - Guarantee archivists and compliance teams keep broadcast-quality masters
+  - Save support hours with repeatable download recipes that anyone on the team can run
+faqs:
+- question: How many providers does SERP Downloader actually support?
+  answer: The catalog tracks 1,000+ actively verified providers across streaming, social, course, and cloud file platforms. Every release ships with automated regression tests so the list keeps growing while existing sites stay compatible.
+- question: Can I add my own private or niche platform?
+  answer: Yes. You can define custom recipes with the URL patterns, headers, and extractor logic you need. Once saved, they appear in the same picker as the built-in providers.
+- question: What happens when a site changes its player or manifests?
+  answer: We monitor breaking changes with heartbeat tests, roll out extractor updates through the manifest service, and notify you in-app. Critical fixes can be pulled down without waiting for a full store review.
+- question: Does it capture subtitles, chapters, or metadata?
+  answer: Subtitle, chapter, and metadata scraping is built-in. The extension exports SRT/VTT tracks, chapter markers, and JSON sidecars so editors and translators can keep context intact.
+- question: Are there download limits or throttling?
+  answer: No artificial limits are imposed. SERP Downloader respects the provider’s rate limits and retries automatically, but you can queue as many jobs as your connection and storage allow.
+- question: How does authentication work for members-only content?
+  answer: The extension forwards your existing session cookies and can store per-provider auth headers securely. If you can view the content in your browser, SERP Downloader can pull the same files without bypassing permissions.
+- question: Which operating systems and browsers are supported?
+  answer: Chrome, Edge, Brave, Arc, Firefox, and other Chromium-based browsers on Windows, macOS, and Linux are supported. Safari support is on the roadmap once Manifest V3 parity lands.
+reviews:
+- name: Jordan Ellis
+  title: Built for serious archive teams
+  rating: 5
+  date: 2025-03-05
+  review: We maintain compliance archives for dozens of brands. SERP Downloader finally gave us one tool that handles the weird internal portals and consumer platforms equally well.
+- name: Casey Morgan
+  title: My production team’s secret weapon
+  rating: 4.9
+  date: 2025-02-24
+  review: The recipe system means junior editors can pull reference clips without touching yt-dlp. Everything lands in the same folder structure every time.
+- name: Amara Singh
+  title: Handles every client request
+  rating: 4.8
+  date: 2025-01-30
+  review: From livestream replays to gated course modules, the extension hasn’t failed us yet. Updates roll in fast when providers change players.
+supported_operating_systems:
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
+- brave
+supported_regions:
+- Worldwide
+categories:
+- Downloader
+keywords:
+- universal downloader extension
+- download videos from any site
+- yt-dlp gui for browser
+- capture m3u8 and dash streams
+- batch media downloader
+- compliance media archiving
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+  - purchase-serp-downloader
+permission_justifications:
+- permission: downloads
+  justification: |
+    Writes completed media files, subtitles, and metadata bundles directly to your downloads folder with resume support for long jobs.
+- permission: storage
+  justification: |
+    Caches provider manifests, queued jobs, and recipe presets locally so workflows persist across browser sessions.
+- permission: activeTab
+  justification: |
+    Injects the SERP Downloader controls into the page you are viewing and reads media descriptors only for that context.
+- permission: tabs
+  justification: |
+    Detects when you switch videos or open playlists in new tabs so queued downloads keep pointing at the right source.
+- permission: scripting
+  justification: |
+    Extracts manifests, signed URLs, and media segments from complex players without exposing data to external services.
+- permission: declarativeNetRequest
+  justification: |
+    Rewrites streaming requests when providers use obscured segment paths or token refreshers, ensuring downloads stay stable.
+- permission: host_permissions
+  justification: |
+    Limits privileged access to whitelisted provider domains and the manifest update endpoint required for extractor updates.
