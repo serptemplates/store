@@ -10,10 +10,10 @@ import { FaqSection } from "@repo/ui/sections/FaqSection";
 import type { FAQ } from "@repo/ui/sections/FaqSection";
 import { AboutSection } from "@repo/ui/sections/AboutSection";
 import type { HeroMediaItem } from "@repo/ui/sections/Hero";
-import { PermissionsJustificationAccordion } from "@/components/product/PermissionsJustificationAccordion";
+import { PermissionsJustificationAccordion } from "./sections/PermissionsJustificationAccordion";
 import type { HomeTemplateProps } from "./home-template.types";
 import { teamMembers } from "@/data/team";
-import { ProductAboutSection } from "@/components/product/ProductAboutSection";
+import { ProductAboutSection } from "./sections/ProductAboutSection";
 
 export function HomeTemplate({
   ui,

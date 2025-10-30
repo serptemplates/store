@@ -2,7 +2,7 @@ import type { FAQ } from "@repo/ui/sections/FaqSection";
 import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
 import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
-import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/home/home-template.types";
+import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";

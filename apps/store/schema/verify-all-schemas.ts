@@ -39,7 +39,7 @@ const requiredSchemas = [
       - VideoObject with name, description
       - Thumbnail URL from YouTube
       - Upload date, content URL, embed URL
-      - In: /components/product/pages/MarketplaceProductPageView.tsx`,
+      - In: /components/product/landers/marketplace/MarketplaceProductPageView.tsx`,
     test: 'VideoObject schema in marketplace pages'
   },
   {
@@ -49,7 +49,7 @@ const requiredSchemas = [
     implementation: `
       - FAQPage with mainEntity array
       - Question name and acceptedAnswer
-      - In: /components/product/pages/MarketplaceProductPageView.tsx`,
+      - In: /components/product/landers/marketplace/MarketplaceProductPageView.tsx`,
     test: 'FAQPage schema when faqs exist'
   },
   {

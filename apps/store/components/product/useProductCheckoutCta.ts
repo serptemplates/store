@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 
-import type { HomeCtaMode, ResolvedHomeCta } from "@/components/home/home-template.types";
+import type { HomeCtaMode, ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import type { ProductData } from "@/lib/products/product-schema";
 import { ensureResolvedHomeCta } from "@/lib/products/home-cta";
 import { trackProductCheckoutClick } from "@/lib/analytics/product";

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it } from "vitest";
 
-import { StickyPurchaseBar, type StickyPurchaseBarProps } from "@/components/product/StickyPurchaseBar";
+import { StickyPurchaseBar, type StickyPurchaseBarProps } from "@/components/product/landers/marketplace/StickyPurchaseBar";
 import type { ProductData } from "@/lib/products/product-schema";
 
 function buildProduct(overrides: Partial<ProductData>): ProductData {

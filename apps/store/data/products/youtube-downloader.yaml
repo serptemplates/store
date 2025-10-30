@@ -18,15 +18,9 @@ payment_link:
   test_url: https://buy.stripe.com/test_4gM5kv1Mc5yefdxfFh0VO1w
 
 status: live
-featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youtube-downloader.jpg
-featured_image_gif: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader.gif
+featured_image: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-5.jpg
+featured_image_gif: 
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/youtube-downloader.jpg
-  alt: Youtube Downloader website preview
-- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.jpg
-  alt: YouTube Downloader screenshot
-- url: https://raw.githubusercontent.com/serpapps/youtube-downloader/main/images/youtube-downloader-downloader.gif
-  alt: YouTube Downloader animation
 - url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-1.jpg
   alt: YouTube Downloader home screen showing the video URL input form
 - url: https://raw.githubusercontent.com/serpapps/youtube-downloader/refs/heads/main/screenshots/youtube-downloader-2.jpg

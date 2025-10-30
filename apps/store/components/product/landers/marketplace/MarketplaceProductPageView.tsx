@@ -14,13 +14,13 @@ import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta";
 import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal";
 
-import { MarketplaceLayout } from "@/components/product/layouts/MarketplaceLayout";
-import { AppHeader } from "@/components/product/marketplace/AppHeader";
-import { FeaturesBanner } from "@/components/product/marketplace/FeaturesBanner";
-import { AboutBlock } from "@/components/product/marketplace/AboutBlock";
-import { FaqAccordion, type FaqItem } from "@/components/product/marketplace/FaqAccordion";
-import { ReviewsList, type ReviewListItem } from "@/components/product/marketplace/ReviewsList";
-import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar";
+import { MarketplaceLayout } from "@/components/product/landers/marketplace/MarketplaceLayout";
+import { AppHeader } from "@/components/product/landers/marketplace/sections/AppHeader";
+import { FeaturesBanner } from "@/components/product/landers/marketplace/sections/FeaturesBanner";
+import { AboutBlock } from "@/components/product/landers/marketplace/sections/AboutBlock";
+import { FaqAccordion, type FaqItem } from "@/components/product/landers/marketplace/sections/FaqAccordion";
+import { ReviewsList, type ReviewListItem } from "@/components/product/landers/marketplace/sections/ReviewsList";
+import { StickyPurchaseBar } from "@/components/product/landers/marketplace/StickyPurchaseBar";
 import { ExternalLink } from "lucide-react";
 import { getBrandLogoPath } from "@/lib/products/brand-logos";
 
@@ -262,7 +262,7 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
 
   const resourceLinks: Array<{ label: string; href: string }> = [];
   if (product.serp_co_product_page_url) {
-    resourceLinks.push({ label: "SERP.co", href: product.serp_co_product_page_url });
+    resourceLinks.push({ label: "serp.co", href: product.serp_co_product_page_url });
   }
 
   const externalLinkCandidates: Array<{ href?: string | null; label: string }> = [

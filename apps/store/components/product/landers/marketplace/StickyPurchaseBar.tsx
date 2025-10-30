@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import type { MouseEventHandler } from "react";
-import type { ResolvedHomeCta } from "@/components/home/home-template.types";
+import type { ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import type { ProductData } from "@/lib/products/product-schema";
 
 export interface StickyPurchaseBarProps {
