@@ -68,7 +68,7 @@ features:
 pricing:
   label: One-time payment
   price: $37.00
-  original_price: ''
+  original_price: $47
   note: Download instantly • Lifetime updates included • No refunds
   cta_text: Get it Now
   currency: USD
