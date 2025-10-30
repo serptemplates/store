@@ -10,6 +10,7 @@ import {
   type CategorySelection,
 } from "./ProductSearchBar";
 import { isPreRelease, type ReleaseStatus } from "@/lib/products/release-status";
+import { getCategoryBadgeClasses } from "@/components/category-badge";
 
 export type ProductListItem = {
   slug: string;
@@ -30,97 +31,6 @@ const PRIMARY_CATEGORY_ENTRIES = PRIMARY_CATEGORIES.map((name) => ({
 const PRIMARY_CATEGORY_ORDER = new Map(
   PRIMARY_CATEGORY_ENTRIES.map((entry, index) => [entry.id, index] as const),
 );
-
-const BASE_BADGE_CLASSES =
-  "w-fit rounded-full px-3 py-1 text-xs font-medium transition-colors";
-
-type BadgePalette = {
-  background: string;
-  text: string;
-  hoverBackground?: string;
-  hoverText?: string;
-};
-
-const CATEGORY_BADGE_PALETTE: Record<string, BadgePalette> = {
-  downloader: {
-    background: "bg-[#e5f4ff]",
-    text: "text-[#0d4d8f]",
-    hoverBackground: "group-hover:bg-[#d5ecff]",
-    hoverText: "group-hover:text-[#0a3c70]",
-  },
-  "artificial intelligence": {
-    background: "bg-[#ede7ff]",
-    text: "text-[#5530c1]",
-    hoverBackground: "group-hover:bg-[#ded2ff]",
-    hoverText: "group-hover:text-[#44249f]",
-  },
-  adult: {
-    background: "bg-[#ffe8ed]",
-    text: "text-[#9b1c31]",
-    hoverBackground: "group-hover:bg-[#ffd3dc]",
-    hoverText: "group-hover:text-[#851326]",
-  },
-  "course platforms": {
-    background: "bg-[#f1f5f9]",
-    text: "text-[#1e293b]",
-    hoverBackground: "group-hover:bg-[#e2e8f0]",
-    hoverText: "group-hover:text-[#111827]",
-  },
-  livestream: {
-    background: "bg-[#fff1d6]",
-    text: "text-[#a15c00]",
-    hoverBackground: "group-hover:bg-[#ffe3ad]",
-    hoverText: "group-hover:text-[#7b4600]",
-  },
-  "creative assets": {
-    background: "bg-[#fbe7ff]",
-    text: "text-[#7d2a8f]",
-    hoverBackground: "group-hover:bg-[#f4d2ff]",
-    hoverText: "group-hover:text-[#662175]",
-  },
-  "image hosting": {
-    background: "bg-[#e5fbf2]",
-    text: "text-[#0f766e]",
-    hoverBackground: "group-hover:bg-[#ccf4e3]",
-    hoverText: "group-hover:text-[#0b5c56]",
-  },
-  "movies & tv": {
-    background: "bg-[#e9edff]",
-    text: "text-[#3546d3]",
-    hoverBackground: "group-hover:bg-[#d4dbff]",
-    hoverText: "group-hover:text-[#2b3bb1]",
-  },
-  "social media": {
-    background: "bg-[#dbe8ff]",
-    text: "text-[#1a46ad]",
-    hoverBackground: "group-hover:bg-[#c5d8ff]",
-    hoverText: "group-hover:text-[#15398d]",
-  },
-};
-
-const DEFAULT_BADGE_PALETTE: BadgePalette = {
-  background: "bg-[#f6f8fa]",
-  text: "text-[#2f363d]",
-  hoverBackground: "group-hover:bg-[#eaeef2]",
-  hoverText: "group-hover:text-[#1f2328]",
-};
-
-function getBadgePalette(category?: string): BadgePalette {
-  return CATEGORY_BADGE_PALETTE[category?.toLowerCase() ?? ""] ?? DEFAULT_BADGE_PALETTE;
-}
-
-function getCategoryBadgeClasses(category?: string) {
-  const palette = getBadgePalette(category);
-  return [
-    BASE_BADGE_CLASSES,
-    palette.background,
-    palette.text,
-    palette.hoverBackground ?? "",
-    palette.hoverText ?? "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
 
 function createInitialSelection(initial?: string[]): CategorySelection {
   if (!initial || initial.length === 0) {

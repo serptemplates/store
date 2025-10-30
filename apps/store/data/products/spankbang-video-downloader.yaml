@@ -6,9 +6,9 @@ description: |
   SpankBang Video Downloader grabs MP4 files from spankbang.com, /play/ pages, embeds, and the mobile site in just a couple clicks. It lists every resolution the video offers, downloads straight through your browser, and saves clean copies so you can watch offline without ads or buffering.
 
   Choose the quality, follow the progress bar, and the downloader delivers a finished MP4 with zero re-encoding—no command-line tools or pop-up sites required.
-seo_title: Download SpankBang Videos | SpankBang Video Downloader
-seo_description: Download SpankBang videos easily for offline viewing. Fast, reliable
-  SpankBang video downloader with high-quality downloads.
+seo_title: SpankBang Video Downloader | Download SpankBang Videos
+seo_description: Download SpankBang videos easily for offline viewing. Fast,
+  reliable SpankBang video downloader with high-quality downloads.
 serply_link: https://serp.ly/spankbang-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/spankbang-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/spankbang-video-downloader
@@ -23,8 +23,8 @@ payment_link:
 status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
-  alt: SpankBang Video Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg
+    alt: SpankBang Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -35,76 +35,84 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Detects SpankBang main pages, /play/ URLs, embed players, and the mobile site
-- Lists every MP4 resolution with estimated file sizes and remembers your last choice
-- Downloads direct MP4 streams at full speed without re-encoding
-- Shows in-page progress with percentage, speed, and cancel controls
-- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
-- Stores licence data locally with no analytics or third-party trackers
+  - Detects SpankBang main pages, /play/ URLs, embed players, and the mobile site
+  - Lists every MP4 resolution with estimated file sizes and remembers your last
+    choice
+  - Downloads direct MP4 streams at full speed without re-encoding
+  - Shows in-page progress with percentage, speed, and cancel controls
+  - Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+  - Stores licence data locally with no analytics or third-party trackers
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: Lifetime licence with multi-page detection and MP4 downloads included. Sales
-    are final.
+  note: Lifetime licence with multi-page detection and MP4 downloads included.
+    Sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-  - Save favourite SpankBang clips at the exact resolution you stream online
-  - Build an offline collection free from ads, buffering, or link removals
-  - Keep downloads private with 100% on-device processing
+    - Save favourite SpankBang clips at the exact resolution you stream online
+    - Build an offline collection free from ads, buffering, or link removals
+    - Keep downloads private with 100% on-device processing
 faqs:
-- question: How do I download a SpankBang video with this extension?
-  answer: Visit the video, click the downloader icon, pick your preferred MP4 resolution, and let the progress bar finish. The file saves directly to your downloads folder.
-- question: Does it work on /play/ pages, embeds, and the mobile site?
-  answer: Yes. The extension treats standard pages, /play/ URLs, embed players, and m.spankbang.com the same way—no extra setup needed.
-- question: Can I download multiple videos at once?
-  answer: Downloads run one at a time so progress stays accurate. Start the next clip after the current download completes.
-- question: Which browsers are supported?
-  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops.
-- question: Does it handle streaming formats or subtitles?
-  answer: The downloader captures direct MP4 files. HLS-only streams and captions are not supported.
-- question: Is my data private?
-  answer: All detection and downloading happens locally. No analytics or viewing history leave your machine.
+  - question: How do I download a SpankBang video with this extension?
+    answer: Visit the video, click the downloader icon, pick your preferred MP4
+      resolution, and let the progress bar finish. The file saves directly to
+      your downloads folder.
+  - question: Does it work on /play/ pages, embeds, and the mobile site?
+    answer: Yes. The extension treats standard pages, /play/ URLs, embed players,
+      and m.spankbang.com the same way—no extra setup needed.
+  - question: Can I download multiple videos at once?
+    answer: Downloads run one at a time so progress stays accurate. Start the next
+      clip after the current download completes.
+  - question: Which browsers are supported?
+    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux desktops.
+  - question: Does it handle streaming formats or subtitles?
+    answer: The downloader captures direct MP4 files. HLS-only streams and captions
+      are not supported.
+  - question: Is my data private?
+    answer: All detection and downloading happens locally. No analytics or viewing
+      history leave your machine.
 reviews:
-- name: Jace Holloway
-  title: Works on every SpankBang page type
-  rating: 5
-  date: 2025-02-16
-  review: Play pages, embeds, mobile—this grabs them all and the MP4s look exactly
-    like the stream.
-- name: Nira Patel
-  title: Fast, no-fuss downloads
-  rating: 4.9
-  date: 2025-03-02
-  review: I just pick 1080p and the file lands in seconds. Progress sticks even if
-    I minimise the tab.
-- name: Damon Wolfe
-  title: Keeps my collection offline
-  rating: 4.8
-  date: 2025-01-27
-  review: Downloads stay private on my drive and there’s zero adware. Exactly what
-    I needed.
+  - name: Jace Holloway
+    title: Works on every SpankBang page type
+    rating: 5
+    date: 2025-02-16
+    review: Play pages, embeds, mobile—this grabs them all and the MP4s look exactly
+      like the stream.
+  - name: Nira Patel
+    title: Fast, no-fuss downloads
+    rating: 4.9
+    date: 2025-03-02
+    review: I just pick 1080p and the file lands in seconds. Progress sticks even if
+      I minimise the tab.
+  - name: Damon Wolfe
+    title: Keeps my collection offline
+    rating: 4.8
+    date: 2025-01-27
+    review: Downloads stay private on my drive and there’s zero adware. Exactly what
+      I needed.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Adult
+  - Downloader
+  - Adult
 keywords:
-- spankbang video downloader
-- download spankbang mp4
-- spankbang play downloader
-- spankbang embed saver
-- offline spankbang collection
+  - spankbang video downloader
+  - download spankbang mp4
+  - spankbang play downloader
+  - spankbang embed saver
+  - offline spankbang collection
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -117,37 +125,37 @@ stripe:
     stripe_product_id: prod_T5OJxcMDHKSqyk
 ghl:
   tag_ids:
-  - purchase-spankbang-downloader
+    - purchase-spankbang-downloader
 permission_justifications:
-- permission: downloads
-  justification: |
-    Streams the finished MP4 into your downloads folder and keeps the progress indicator
-    accurate for each video.
-- permission: storage
-  justification: |
-    Stores licence activation and your preferred quality locally so the downloader
-    stays ready between sessions.
-- permission: activeTab
-  justification: |
-    Detects SpankBang players on the current tab and injects the download controls
-    in the right place.
-- permission: tabs
-  justification: |
-    Allows downloads to continue if you refresh or move to another page and restores
-    the status window when you return.
-- permission: scripting
-  justification: |
-    Extracts MP4 source URLs and metadata from the player so the downloader can fetch
-    the correct file.
-- permission: notifications
-  justification: |
-    Sends completion and error alerts so you know when a download finishes without
-    watching the page.
-- permission: contextMenus
-  justification: |
-    Adds a right-click “Download with SpankBang Video Downloader” shortcut for quick
-    saves from any video.
-- permission: host_permissions
-  justification: |
-    Grants controlled access to spankbang.com, embed domains, and m.spankbang.com
-    so the extension only activates on supported pages.
+  - permission: downloads
+    justification: |
+      Streams the finished MP4 into your downloads folder and keeps the progress indicator
+      accurate for each video.
+  - permission: storage
+    justification: |
+      Stores licence activation and your preferred quality locally so the downloader
+      stays ready between sessions.
+  - permission: activeTab
+    justification: |
+      Detects SpankBang players on the current tab and injects the download controls
+      in the right place.
+  - permission: tabs
+    justification: |
+      Allows downloads to continue if you refresh or move to another page and restores
+      the status window when you return.
+  - permission: scripting
+    justification: |
+      Extracts MP4 source URLs and metadata from the player so the downloader can fetch
+      the correct file.
+  - permission: notifications
+    justification: |
+      Sends completion and error alerts so you know when a download finishes without
+      watching the page.
+  - permission: contextMenus
+    justification: |
+      Adds a right-click “Download with SpankBang Video Downloader” shortcut for quick
+      saves from any video.
+  - permission: host_permissions
+    justification: |
+      Grants controlled access to spankbang.com, embed domains, and m.spankbang.com
+      so the extension only activates on supported pages.

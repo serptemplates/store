@@ -3,12 +3,12 @@
 import Image from "next/image";
 
 import { Button } from "@repo/ui";
-import { ArrowRight } from "lucide-react";
+import { getCategoryBadgeClasses } from "@/components/category-badge";
 
 type AppHeaderProps = {
   name: string;
   subtitle: string;
-  category?: string;
+  categories?: string[];
   iconUrl?: string | null;
   iconInitials: string;
   onPrimaryAction?: () => void;
@@ -18,12 +18,13 @@ type AppHeaderProps = {
 export function AppHeader({
   name,
   subtitle,
-  category = "Payment gateways",
+  categories = [],
   iconUrl,
   iconInitials,
   onPrimaryAction,
   primaryLabel,
 }: AppHeaderProps) {
+  const topCategories = categories.slice(0, 3);
   return (
     <section className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr),200px] lg:grid-cols-[minmax(0,1fr),240px]">
       <div className="flex flex-col gap-4">
@@ -36,9 +37,15 @@ export function AppHeader({
             <p className="text-[14px] leading-[1.6] text-[#425466] md:text-[15px]">
               {subtitle}
             </p>
-            <span className="inline-flex w-fit items-center rounded-md border border-[#eef2f7] bg-[#f6f9fc] px-3 py-1 text-[12px] font-medium text-[#425466] md:text-[13px]">
-              {category}
-            </span>
+            {topCategories.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {topCategories.map((category) => (
+                  <span key={category} className={getCategoryBadgeClasses(category)}>
+                    {category}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

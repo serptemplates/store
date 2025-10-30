@@ -6,9 +6,9 @@ description: |
   Skool Video Downloader makes course lessons, community uploads, and classroom recordings available offline before access changes. It uses your active Skool login to detect videos, lists every resolution the platform provides, and converts the stream into a smooth MP4 without leaving the browser.
 
   Queue a lesson, let the downloader fetch each segment with your authentication headers, and it will merge everything in the background while you continue studying. The result is a private MP4 library that mirrors what you can watch inside Skool.
-seo_title: Download Skool Videos | Skool Video Downloader
-seo_description: Download Skool videos easily for offline viewing. Fast, reliable
-  Skool video downloader with high-quality downloads.
+seo_title: Skool Video Downloader | Download Skool Videos
+seo_description: Download Skool videos easily for offline viewing. Fast,
+  reliable Skool video downloader with high-quality downloads.
 serply_link: https://serp.ly/skool-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/skool-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/skool-video-downloader
@@ -24,47 +24,47 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/skool-downloader/main/images/skool-video-downloader.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
-  alt: Skool Video Downloader website preview
-- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
-  alt: Skool Video Downloader extension interface
-  caption: Floating download controls injected on Skool lesson pages
-- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%202.png
-  alt: Skool Video Downloader screenshot
-  caption: Downloading Skool videos with ease
-- url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%203.png
-  alt: Skool Video Downloader interface
-  caption: Simple and intuitive download interface
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/skool-video-downloader.jpg
+    alt: Skool Video Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%201.png
+    alt: Skool Video Downloader extension interface
+    caption: Floating download controls injected on Skool lesson pages
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%202.png
+    alt: Skool Video Downloader screenshot
+    caption: Downloading Skool videos with ease
+  - url: https://raw.githubusercontent.com/serpapps/skool-downloader/main/screenshots/skool%20video%20downloader%203.png
+    alt: Skool Video Downloader interface
+    caption: Simple and intuitive download interface
 product_videos:
-- https://www.youtube.com/watch?v=J9eetd89HZk
-- https://www.youtube.com/watch?v=WRSzeFI_Q7g
+  - https://www.youtube.com/watch?v=J9eetd89HZk
+  - https://www.youtube.com/watch?v=WRSzeFI_Q7g
 related_videos:
-- https://www.youtube.com/watch?v=Ez7vpisxEdY
-- https://www.youtube.com/watch?v=YBBSkdb1YAw
-- https://www.youtube.com/watch?v=tgDmBdReTqA
-- https://www.youtube.com/watch?v=YH-oF2cWoDI
+  - https://www.youtube.com/watch?v=Ez7vpisxEdY
+  - https://www.youtube.com/watch?v=YBBSkdb1YAw
+  - https://www.youtube.com/watch?v=tgDmBdReTqA
+  - https://www.youtube.com/watch?v=YH-oF2cWoDI
 related_posts:
-- how-to-download-skool-platform-videos
-- how-to-download-skool-videos-with-yt-dlp
-- how-to-download-skool-videos-with-signed-m3u8
-- how-to-download-skool-videos-and-entire-course
-- download-skool-videos-m3u8-token
+  - how-to-download-skool-platform-videos
+  - how-to-download-skool-videos-with-yt-dlp
+  - how-to-download-skool-videos-with-signed-m3u8
+  - how-to-download-skool-videos-and-entire-course
+  - download-skool-videos-m3u8-token
 github_repo_url: https://github.com/serpapps/skool-downloader
 github_repo_tags:
-- skool-downloader
-- skool-video-downloader
-- download-skool-videos
+  - skool-downloader
+  - skool-video-downloader
+  - download-skool-videos
 chrome_webstore_link: https://chromewebstore.google.com/detail/skool-video-downloader-by/adjbknblejbhfmcefnhgkdboanoboimj
 firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: https://www.producthunt.com/products/skool-com-downloader
 features:
-- Detects Skool course lessons, community posts, and live session recordings
-- Uses your logged-in session to download member-only content securely
-- Converts Skool HLS streams into MP4 files while preserving quality
-- Displays precise segment counts and progress so you know how long remains
-- Supports Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
-- Stores licence data and quality preferences locally with no analytics
+  - Detects Skool course lessons, community posts, and live session recordings
+  - Uses your logged-in session to download member-only content securely
+  - Converts Skool HLS streams into MP4 files while preserving quality
+  - Displays precise segment counts and progress so you know how long remains
+  - Supports Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
+  - Stores licence data and quality preferences locally with no analytics
 pricing:
   label: One-time payment
   price: $37.00
@@ -74,70 +74,70 @@ pricing:
   currency: USD
   availability: InStock
   benefits:
-  - Archive Skool lessons and replays before cohorts or memberships end
-  - Study offline during travel or low-connectivity periods without buffering
-  - Keep downloads private with all processing handled on your own device
+    - Archive Skool lessons and replays before cohorts or memberships end
+    - Study offline during travel or low-connectivity periods without buffering
+    - Keep downloads private with all processing handled on your own device
 faqs:
-- question: How do I download a Skool lesson with this extension?
-  answer: Open the lesson, click the downloader icon, choose your quality, and keep
-    the tab open while the segment counter completes. The MP4 will save with the community
-    and lesson name.
-- question: Does it work with private communities or paid cohorts?
-  answer: Yes. The downloader uses your existing Skool session, so any video you can
-    watch while logged in can be saved offline.
-- question: Can I download multiple lessons at once?
-  answer: Downloads run one at a time to keep session tokens valid. Queue the next
-    lesson after the current progress bar finishes.
-- question: Which browsers are supported?
-  answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
-    macOS, and Linux desktops. Safari is not supported.
-- question: Do captions or attachments download too?
-  answer: Videos export as MP4 files. Captions, PDFs, or other attachments should
-    be saved separately from within Skool.
-- question: What happens if I refresh the page?
-  answer: Progress persists. As long as the original tab remains open, the downloader
-    resumes from the last segment and finishes the MP4.
-- question: Is my data private?
-  answer: All detection and conversion happen locally. Only licence checks touch remote
-    servers, and no viewing history or passwords are stored.
+  - question: How do I download a Skool lesson with this extension?
+    answer: Open the lesson, click the downloader icon, choose your quality, and
+      keep the tab open while the segment counter completes. The MP4 will save
+      with the community and lesson name.
+  - question: Does it work with private communities or paid cohorts?
+    answer: Yes. The downloader uses your existing Skool session, so any video you
+      can watch while logged in can be saved offline.
+  - question: Can I download multiple lessons at once?
+    answer: Downloads run one at a time to keep session tokens valid. Queue the next
+      lesson after the current progress bar finishes.
+  - question: Which browsers are supported?
+    answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux desktops. Safari is not supported.
+  - question: Do captions or attachments download too?
+    answer: Videos export as MP4 files. Captions, PDFs, or other attachments should
+      be saved separately from within Skool.
+  - question: What happens if I refresh the page?
+    answer: Progress persists. As long as the original tab remains open, the
+      downloader resumes from the last segment and finishes the MP4.
+  - question: Is my data private?
+    answer: All detection and conversion happen locally. Only licence checks touch
+      remote servers, and no viewing history or passwords are stored.
 reviews:
-- name: Mariah Keene
-  title: Perfect for cohort replays
-  rating: 5
-  date: 2025-02-23
-  review: I grabbed every classroom replay before the cohort closed. Segment counters
-    let me know how long each download would take.
-- name: Theo Richter
-  title: Works with private communities
-  rating: 4.9
-  date: 2025-03-04
-  review: My membership site locks lessons to members only. The downloader honoured
-    my login automatically and the MP4 quality is flawless.
-- name: Ines Navarro
-  title: Offline study made simple
-  rating: 4.8
-  date: 2025-01-31
-  review: I travel often and need lessons offline. This keeps downloads private and
-    never asks for extra credentials.
+  - name: Mariah Keene
+    title: Perfect for cohort replays
+    rating: 5
+    date: 2025-02-23
+    review: I grabbed every classroom replay before the cohort closed. Segment
+      counters let me know how long each download would take.
+  - name: Theo Richter
+    title: Works with private communities
+    rating: 4.9
+    date: 2025-03-04
+    review: My membership site locks lessons to members only. The downloader
+      honoured my login automatically and the MP4 quality is flawless.
+  - name: Ines Navarro
+    title: Offline study made simple
+    rating: 4.8
+    date: 2025-01-31
+    review: I travel often and need lessons offline. This keeps downloads private
+      and never asks for extra credentials.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Course Platforms
+  - Downloader
+  - Course Platforms
 keywords:
-- skool video downloader
-- download skool videos
-- skool classroom backup
-- offline skool lessons
-- skool course archive
+  - skool video downloader
+  - download skool videos
+  - skool classroom backup
+  - offline skool lessons
+  - skool course archive
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -150,41 +150,41 @@ stripe:
     stripe_product_id: prod_SgRUYSKnhuiXX6
 ghl:
   tag_ids:
-  - purchase-skool-video-downloader
+    - purchase-skool-video-downloader
 permission_justifications:
-- permission: downloads
-  justification: |
-    Saves the finished MP4 to your downloads folder and keeps the progress tracker
-    accurate for each lesson.
-- permission: storage
-  justification: |
-    Stores licence activation, preferred quality, and retry behaviour locally so
-    the downloader stays ready between sessions.
-- permission: activeTab
-  justification: |
-    Detects Skool lesson players and community videos on the tab you are viewing
-    and injects the download controls there.
-- permission: tabs
-  justification: |
-    Allows downloads to continue if you refresh or switch lessons and restores the
-    status window when you return.
-- permission: scripting
-  justification: |
-    Extracts stream manifests, quality variants, and authentication headers from
-    the page so the downloader can fetch the correct segments.
-- permission: notifications
-  justification: |
-    Sends completion or error alerts so you know when a recording finishes downloading
-    without monitoring the UI.
-- permission: contextMenus
-  justification: |
-    Adds a “Download with Skool Video Downloader” entry to the right-click menu for
-    quick access inside lessons.
-- permission: offscreen
-  justification: |
-    Merges HLS segments into MP4 files in the background, keeping your lesson tab
-    responsive during conversion.
-- permission: host_permissions
-  justification: |
-    Grants limited access to skool.com and related video hosts so the extension only
-    activates on pages that serve Skool content.
+  - permission: downloads
+    justification: |
+      Saves the finished MP4 to your downloads folder and keeps the progress tracker
+      accurate for each lesson.
+  - permission: storage
+    justification: |
+      Stores licence activation, preferred quality, and retry behaviour locally so
+      the downloader stays ready between sessions.
+  - permission: activeTab
+    justification: |
+      Detects Skool lesson players and community videos on the tab you are viewing
+      and injects the download controls there.
+  - permission: tabs
+    justification: |
+      Allows downloads to continue if you refresh or switch lessons and restores the
+      status window when you return.
+  - permission: scripting
+    justification: |
+      Extracts stream manifests, quality variants, and authentication headers from
+      the page so the downloader can fetch the correct segments.
+  - permission: notifications
+    justification: |
+      Sends completion or error alerts so you know when a recording finishes downloading
+      without monitoring the UI.
+  - permission: contextMenus
+    justification: |
+      Adds a “Download with Skool Video Downloader” entry to the right-click menu for
+      quick access inside lessons.
+  - permission: offscreen
+    justification: |
+      Merges HLS segments into MP4 files in the background, keeping your lesson tab
+      responsive during conversion.
+  - permission: host_permissions
+    justification: |
+      Grants limited access to skool.com and related video hosts so the extension only
+      activates on pages that serve Skool content.

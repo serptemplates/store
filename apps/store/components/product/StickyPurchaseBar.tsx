@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import type { MouseEventHandler } from "react";
 import type { ResolvedHomeCta } from "@/components/home/home-template.types";
@@ -39,11 +40,11 @@ export function StickyPurchaseBar({
   }
 
   const checkoutLabel = (() => {
-    const fromPricing = product.pricing?.cta_text?.trim();
-    if (fromPricing && fromPricing.length > 0) return fromPricing;
     const fromCta = checkoutCta?.text?.trim();
     if (fromCta && fromCta.length > 0) return fromCta;
-    return "Checkout";
+    const fromPricing = product.pricing?.cta_text?.trim();
+    if (fromPricing && fromPricing.length > 0) return fromPricing;
+    return waitlistEnabled ? "Get Notified" : "Checkout";
   })();
   const opensInNewTab = checkoutCta?.opensInNewTab ?? false;
   const checkoutRel = checkoutCta?.rel ?? "noopener noreferrer";

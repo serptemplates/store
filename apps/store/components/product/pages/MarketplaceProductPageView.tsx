@@ -18,7 +18,6 @@ import { MarketplaceLayout } from "@/components/product/layouts/MarketplaceLayou
 import { AppHeader } from "@/components/product/marketplace/AppHeader";
 import { FeaturesBanner } from "@/components/product/marketplace/FeaturesBanner";
 import { AboutBlock } from "@/components/product/marketplace/AboutBlock";
-import { PermissionsAccordion, type PermissionAccordionItem } from "@/components/product/marketplace/PermissionsAccordion";
 import { FaqAccordion, type FaqItem } from "@/components/product/marketplace/FaqAccordion";
 import { ReviewsList, type ReviewListItem } from "@/components/product/marketplace/ReviewsList";
 import { StickyPurchaseBar } from "@/components/product/StickyPurchaseBar";
@@ -35,7 +34,8 @@ type MetadataRow = {
   value: ReactNode;
 };
 
-const SECTION_LABEL_CLASS = "hidden lg:block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90]";
+const SECTION_LABEL_CLASS =
+  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6b7a90] lg:mb-0";
 
 export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
@@ -66,14 +66,15 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl;
 
-  const footerSite = useMemo(
-    () => ({ name: siteConfig.site?.name ?? "SERP", url: "https://serp.co" }),
-    [siteConfig],
-  );
+  const footerSite = useMemo(() => {
+    const rawName = siteConfig.site?.name ?? "SERP";
+    const normalizedName = rawName.replace(/\bApps\b/gi, "").trim() || "SERP";
+    return { name: normalizedName, url: "https://serp.co" };
+  }, [siteConfig]);
 
   const metadataRows = buildMetadataRows(product);
 
-  const permissions = buildPermissionItems(product);
+  const permissionJustifications = buildPermissionJustificationFaqItems(product);
   const faqItems = buildFaqItems(product);
   const reviewItems = buildReviewItems(product);
   const featuredImage = product.featured_image ?? product.screenshots?.[0]?.url ?? null;
@@ -82,18 +83,26 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
     product.tagline ??
     product.name ??
     "";
+  const categories =
+    product.categories
+      ?.map((category) => category.trim())
+      .filter((category) => category.length > 0) ?? [];
+  const waitlistEnabled = product.status === "pre_release";
+  const brandLogoPath = getBrandLogoPath(product.slug ?? "");
   const primaryButtonLabel = (() => {
-    const fromPricing = product.pricing?.cta_text?.trim();
-    if (fromPricing && fromPricing.length > 0) return fromPricing;
     const fromResolved = resolvedCta.text?.trim();
-    if (fromResolved && fromResolved.length > 0) return fromResolved;
-    return "Install app";
+    if (fromResolved && fromResolved.length > 0) {
+      return fromResolved;
+    }
+    const fromPricing = product.pricing?.cta_text?.trim();
+    if (fromPricing && fromPricing.length > 0) {
+      return fromPricing;
+    }
+    return waitlistEnabled ? "Get Notified" : "Install app";
   })();
   const handleHeroClick = useCallback(() => handleCtaClick("hero"), [handleCtaClick]);
   const handleStickyBarCheckoutClick = useCallback(() => handleCtaClick("sticky_bar"), [handleCtaClick]);
   const hasAboutContent = copy.aboutParagraphs.some((paragraph) => paragraph.trim().length > 0);
-  const waitlistEnabled = product.status === "pre_release";
-  const brandLogoPath = getBrandLogoPath(product.slug ?? "");
   const stickyImageSource = brandLogoPath || product.featured_image || undefined;
 
   useEffect(() => {
@@ -117,8 +126,8 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
           <AppHeader
             name={product.name ?? product.platform ?? "Marketplace app"}
             subtitle={copy.subtitle}
-            category={product.categories?.find((category) => category.trim().length > 0)}
-            iconUrl={product.featured_image}
+            categories={categories}
+            iconUrl={brandLogoPath || null}
             iconInitials={getInitials(product.platform ?? product.name)}
             onPrimaryAction={handleHeroClick}
             primaryLabel={primaryButtonLabel}
@@ -128,7 +137,7 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
       >
         <StickyPurchaseBar
           product={product}
-          priceLabel={product.pricing?.label ?? null}
+          priceLabel={null}
           price={product.pricing?.price ?? null}
           originalPrice={product.pricing?.original_price ?? null}
           show={showStickyBar}
@@ -136,7 +145,7 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
           mainImageSource={stickyImageSource}
           waitlistEnabled={waitlistEnabled}
           onWaitlistClick={() => setShowWaitlistModal(true)}
-          checkoutCta={waitlistEnabled ? null : resolvedCta}
+          checkoutCta={resolvedCta}
           onCheckoutClick={(event) => {
             event.preventDefault();
             handleStickyBarCheckoutClick();
@@ -170,20 +179,6 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
             </>
           ) : null}
 
-          {permissions.length > 0 ? (
-            <>
-              <div className="lg:col-span-12">
-                <Divider />
-              </div>
-              <aside className="lg:col-span-4">
-                <span className={SECTION_LABEL_CLASS}>Permissions</span>
-              </aside>
-              <section className="lg:col-span-8 space-y-12">
-                <PermissionsAccordion items={permissions} />
-              </section>
-            </>
-          ) : null}
-
           {faqItems.length > 0 ? (
             <>
               <div className="lg:col-span-12">
@@ -211,6 +206,20 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               </section>
             </>
           ) : null}
+
+          {permissionJustifications.length > 0 ? (
+            <>
+              <div className="lg:col-span-12">
+                <Divider />
+              </div>
+              <aside className="lg:col-span-4">
+                <span className={SECTION_LABEL_CLASS}>Permissions</span>
+              </aside>
+              <section className="lg:col-span-8">
+                <FaqAccordion items={permissionJustifications} />
+              </section>
+            </>
+          ) : null}
         </div>
       </MarketplaceLayout>
     </>
@@ -219,34 +228,8 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
 
 function buildMetadataRows(product: ProductData): MetadataRow[] {
   const supportedLanguages = getSupportedLanguages(product);
-  const testModeUrl = getPaymentLinkTestUrl(product);
-  const pricing = buildPricingDisplay(product);
-
   const metadata: MetadataRow[] = [];
-
-  if (product.brand && product.brand.trim().length > 0) {
-    metadata.push({
-      label: "Built by",
-      value: product.brand.trim(),
-    });
-  }
-
-  if (product.categories && product.categories.length > 0) {
-    const categories = product.categories.filter((category) => category.trim().length > 0);
-    if (categories.length > 0) {
-      metadata.push({
-        label: "Categories",
-        value: categories.join(", "),
-      });
-    }
-  }
-
-  if (pricing) {
-    metadata.push({
-      label: "Pricing",
-      value: pricing,
-    });
-  }
+  const compatibilityLabel = "Compatibility";
 
   if (supportedLanguages.length > 0) {
     metadata.push({
@@ -258,64 +241,48 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   if (product.supported_operating_systems && product.supported_operating_systems.length > 0) {
     const systems = product.supported_operating_systems.filter((system) => system.trim().length > 0);
     if (systems.length > 0) {
-      metadata.push({
-        label: "Supported platforms",
-        value: (
-          <ul className="list-none space-y-1 pl-0">
-            {systems.map((system) => (
-              <li key={system} className="text-[14px] leading-[1.6] text-[#334155]">
-                {system}
-              </li>
-            ))}
-          </ul>
-        ),
-      });
-    }
-  }
-
-  if (product.supported_regions && product.supported_regions.length > 0) {
-    const regions = product.supported_regions.filter((region) => region.trim().length > 0);
-    if (regions.length > 0) {
-      metadata.push({
-        label: "Supported regions",
-        value: regions.join(", "),
-      });
-    }
-  }
-
-  if (testModeUrl) {
-    metadata.push({
-      label: "Sandbox compatible",
-      value: "Available",
-    });
-  }
-
-  if (product.return_policy?.method || product.return_policy?.url) {
-    const pieces = [
-      product.return_policy?.method?.trim(),
-      product.return_policy?.fees?.trim(),
-    ].filter((value) => value && value.toLowerCase() !== "no returns accepted" && value.toLowerCase() !== "non-refundable purchase");
-    if (pieces.length > 0 || product.return_policy?.url) {
-      metadata.push({
-        label: "Return policy",
-        value: (
-          <span className="flex flex-col gap-1">
-            {pieces.length > 0 ? pieces.join(" — ") : null}
-            {product.return_policy?.url ? <RailLink href={product.return_policy.url} label="Policy details" /> : null}
-          </span>
-        ),
-      });
+      const normalizedSystems = systems.map((system) => formatPlatformLabel(system));
+      const rows = chunkIntoLines(normalizedSystems, 2);
+      if (rows.length > 0) {
+        metadata.push({
+          label: compatibilityLabel,
+          value: (
+            <div className="flex flex-col gap-1">
+              {rows.map((line, index) => (
+                <span key={`${line}-${index}`} className="text-[14px] leading-[1.6] text-[#334155]">
+                  {line}
+                </span>
+              ))}
+            </div>
+          ),
+        });
+      }
     }
   }
 
   const resourceLinks: Array<{ label: string; href: string }> = [];
   if (product.serp_co_product_page_url) {
-    resourceLinks.push({ label: "serp.co", href: product.serp_co_product_page_url });
+    resourceLinks.push({ label: "SERP.co", href: product.serp_co_product_page_url });
   }
+
+  const externalLinkCandidates: Array<{ href?: string | null; label: string }> = [
+    { href: product.chrome_webstore_link, label: "Chrome Web Store" },
+    { href: product.firefox_addon_store_link, label: "Firefox Add-ons" },
+    { href: product.edge_addons_store_link, label: "Microsoft Edge Add-ons" },
+    { href: product.opera_addons_store_link, label: "Opera Add-ons" },
+    { href: product.producthunt_link, label: "Product Hunt" },
+  ];
+
+  externalLinkCandidates.forEach((candidate) => {
+    const href = typeof candidate.href === "string" ? candidate.href.trim() : "";
+    if (href.length > 0) {
+      resourceLinks.push({ label: candidate.label, href });
+    }
+  });
 
   if (resourceLinks.length > 0) {
     metadata.push({
-      label: "Resources",
+      label: "Links",
       value: (
         <div className="flex flex-col gap-1">
           {resourceLinks.map((link) => (
@@ -327,25 +294,6 @@ function buildMetadataRows(product: ProductData): MetadataRow[] {
   }
 
   return metadata;
-}
-
-function buildPricingDisplay(product: ProductData) {
-  const label = product.pricing?.label?.trim();
-  const price = product.pricing?.price?.trim();
-
-  if (label && price) {
-    return `${label} • ${price}`;
-  }
-
-  if (price) {
-    return price;
-  }
-
-  if (label) {
-    return label;
-  }
-
-  return null;
 }
 
 function buildMarketplaceCopy(product: ProductData) {
@@ -370,18 +318,27 @@ function buildMarketplaceCopy(product: ProductData) {
   };
 }
 
-function buildPermissionItems(product: ProductData): PermissionAccordionItem[] {
-  const items =
+function buildPermissionJustificationFaqItems(product: ProductData): FaqItem[] {
+  return (
     product.permission_justifications
-      ?.filter((entry) => entry.permission && entry.justification)
-      .map((entry, index) => ({
-        id: `${entry.permission}-${index}`,
-        label: entry.permission,
-        description: entry.justification,
-        learnMoreUrl: entry.learn_more_url,
-      })) ?? [];
+      ?.filter((entry) => {
+        const permission = entry.permission?.trim();
+        const justification = entry.justification?.trim();
+        return Boolean(permission && justification);
+      })
+      .map((entry, index) => {
+        const permission = entry.permission?.trim() ?? "";
+        const justification = entry.justification?.trim() ?? "";
+        const learnMore = entry.learn_more_url?.trim();
+        const answer = learnMore ? `${justification}\n\nLearn more: ${learnMore}` : justification;
 
-  return items;
+        return {
+          id: `${permission}-${index}`,
+          question: permission,
+          answer,
+        };
+      }) ?? []
+  );
 }
 
 function buildFaqItems(product: ProductData): FaqItem[] {
@@ -409,6 +366,45 @@ function buildReviewItems(product: ProductData): ReviewListItem[] {
         review: review.review,
       })) ?? []
   );
+}
+
+function chunkIntoLines(values: string[], perLine: number): string[] {
+  const lines: string[] = [];
+  for (let index = 0; index < values.length; index += perLine) {
+    const slice = values.slice(index, index + perLine);
+    lines.push(slice.join(", "));
+  }
+  return lines;
+}
+
+function formatPlatformLabel(value: string): string {
+  const normalized = value.trim();
+  if (normalized.length === 0) {
+    return normalized;
+  }
+
+  const lower = normalized.toLowerCase();
+  const overrides: Record<string, string> = {
+    ios: "iOS",
+    macos: "macOS",
+    windows: "Windows",
+    mac: "Mac",
+    linux: "Linux",
+    android: "Android",
+    chrome: "Chrome",
+    firefox: "Firefox",
+    edge: "Edge",
+    opera: "Opera",
+  };
+
+  if (overrides[lower]) {
+    return overrides[lower];
+  }
+
+  return normalized
+    .split(/[\s_-]+/)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+    .join(" ");
 }
 
 function getInitials(value: string | undefined) {
@@ -476,18 +472,6 @@ function getSupportedLanguages(product: ProductData): string[] {
     .filter((value) => value.length > 0);
 
   return languages;
-}
-
-function getPaymentLinkTestUrl(product: ProductData): string | null {
-  const link = product.payment_link;
-  if (!link) return null;
-  if ("test_url" in link) {
-    const value = link.test_url;
-    if (typeof value === "string" && value.trim().length > 0) {
-      return value;
-    }
-  }
-  return null;
 }
 
 type RailLinkProps = {

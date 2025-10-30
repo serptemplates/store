@@ -39,8 +39,8 @@ const requiredSchemas = [
       - VideoObject with name, description
       - Thumbnail URL from YouTube
       - Upload date, content URL, embed URL
-      - In: /app/[slug]/hybrid-page.tsx`,
-    test: 'VideoObject schema in hybrid pages'
+      - In: /components/product/pages/MarketplaceProductPageView.tsx`,
+    test: 'VideoObject schema in marketplace pages'
   },
   {
     name: 'FAQs',
@@ -49,7 +49,7 @@ const requiredSchemas = [
     implementation: `
       - FAQPage with mainEntity array
       - Question name and acceptedAnswer
-      - In: /app/[slug]/hybrid-page.tsx`,
+      - In: /components/product/pages/MarketplaceProductPageView.tsx`,
     test: 'FAQPage schema when faqs exist'
   },
   {
