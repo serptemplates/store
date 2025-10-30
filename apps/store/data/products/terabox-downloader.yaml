@@ -133,6 +133,7 @@ supported_regions:
 categories:
 - Downloader
 - Image Hosting
+- Image Downloader
 keywords:
 - terabox downloader
 return_policy:

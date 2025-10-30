@@ -106,6 +106,7 @@ supported_regions:
 categories:
 - Downloader
 - Audio
+- Audio Downloader
 keywords:
 - capture lossless audio streams
 - download podcasts from any site

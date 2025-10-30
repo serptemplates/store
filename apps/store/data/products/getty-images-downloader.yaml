@@ -133,6 +133,8 @@ supported_regions:
 categories:
 - Downloader
 - Creative Assets
+- Video Downloader
+- Image Downloader
 keywords:
 - getty images downloader
 return_policy:

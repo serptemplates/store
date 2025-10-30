@@ -133,6 +133,7 @@ supported_regions:
 categories:
 - Downloader
 - Movies & TV
+- Video Downloader
 keywords:
 - tubi downloader
 return_policy:

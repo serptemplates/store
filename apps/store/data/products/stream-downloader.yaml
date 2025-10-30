@@ -135,6 +135,7 @@ supported_regions:
 categories:
 - Downloader
 - Livestream
+- Video Downloader
 keywords:
 - stream downloader
 return_policy:

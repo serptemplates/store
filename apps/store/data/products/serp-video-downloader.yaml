@@ -107,6 +107,9 @@ supported_regions:
 - Worldwide
 categories:
 - Downloader
+- Video Downloader
+- Image Downloader
+- Audio Downloader
 keywords:
 - universal downloader extension
 - download videos from any site
