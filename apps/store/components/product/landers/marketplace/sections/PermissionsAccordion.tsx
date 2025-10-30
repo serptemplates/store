@@ -56,7 +56,7 @@ export function PermissionsAccordion({ items }: PermissionsAccordionProps) {
                 />
                 <span className="flex-1">{item.label}</span>
                 {item.scope ? (
-                  <span className="text-[13px] font-medium text-[#6b7a90]">{item.scope}</span>
+                  <span className="text-[13px] font-medium text-[#475569]">{item.scope}</span>
                 ) : null}
               </button>
               <div
