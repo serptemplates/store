@@ -34,6 +34,8 @@ describe("MarketplaceProductPageView", () => {
       supported_operating_systems: ["windows", "mac"],
       chrome_webstore_link: "https://chromewebstore.google.com/detail/demo/abcdef123456",
       producthunt_link: "https://www.producthunt.com/products/demo-downloader",
+      github_repo_url: "https://github.com/serpapps/demo-downloader",
+      reddit_url: "https://www.reddit.com/r/serpapps/comments/demo-post/",
     });
 
     const siteConfig: SiteConfig = {
@@ -50,7 +52,10 @@ describe("MarketplaceProductPageView", () => {
     expect(screen.getByText(/works perfectly for batch downloads/i)).toBeInTheDocument();
     expect(screen.getByText(/required to save assets locally/i)).toBeInTheDocument();
     expect(screen.getByText(/links/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "SERP" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Chrome Web Store" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Product Hunt" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "GitHub" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Reddit" })).toBeInTheDocument();
   });
 });
