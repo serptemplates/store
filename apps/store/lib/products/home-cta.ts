@@ -1,4 +1,4 @@
-import type { ResolvedHomeCta, HomeCtaMode } from "@/components/home/home-template.types";
+import type { ResolvedHomeCta, HomeCtaMode } from "@/components/product/landers/default/home-template.types";
 import type { ProductData } from "./product-schema";
 
 type MinimalHomeCtaProps = {

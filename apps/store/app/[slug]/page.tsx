@@ -15,11 +15,6 @@ const ClientHome = dynamic(() => import("../ClientHome"), {
   ssr: true, // Keep SSR for SEO
 });
 
-const HybridPage = dynamic(() => import("./hybrid-page"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: true, // Keep SSR for SEO
-});
-
 const MarketplacePage = dynamic(() => import("./marketplace-page"), {
   loading: () => <div className="min-h-screen" />,
   ssr: true,
@@ -40,24 +35,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
   const videoEntries = getProductVideoEntries(product);
 
-  // Check for layout_type in product
-  const layoutType = product.layout_type || 'landing';
-  const shouldUseMarketplaceLayout = product.status === "pre_release";
+  // Marketplace layout is used for pre-release products or when explicitly configured
+  const shouldUseMarketplaceLayout =
+    product.status === "pre_release" || product.layout_type === "marketplace";
 
   if (shouldUseMarketplaceLayout) {
     return (
       <>
         <PrimaryNavbar {...navProps} />
         <MarketplacePage product={product} siteConfig={siteConfig} />
-      </>
-    );
-  }
-
-  if (layoutType === 'ecommerce') {
-    return (
-      <>
-        <PrimaryNavbar {...navProps} />
-        <HybridPage product={product} posts={posts} siteConfig={siteConfig} />
       </>
     );
   }

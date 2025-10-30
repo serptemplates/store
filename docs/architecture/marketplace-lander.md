@@ -10,7 +10,6 @@ Products live in `apps/store/data/products/<slug>.yaml`. Set one of the followin
 - or `status: "pre_release"` – also uses the marketplace lander automatically
 
 Other layout options:
-- `layout_type: "ecommerce"` – uses the hybrid ecommerce page
 - `layout_type: "landing"` (default) – uses the classic landing template
 
 Routing logic: `apps/store/app/[slug]/page.tsx` chooses the layout at request time.
@@ -70,11 +69,10 @@ Server wiring lives in `apps/store/app/[slug]/marketplace-page.tsx` and passes `
 
 - Use marketplace lander: add `layout_type: marketplace` (or set `status: pre_release`)
 - Classic landing: omit `layout_type` or set `layout_type: landing`
-- Hybrid ecommerce: set `layout_type: ecommerce`
+- Legacy hybrid ecommerce: remove `layout_type: ecommerce` (layout retired)
 
 ## Notes
 
 - Breadcrumbs and section labels use the same typography as other sections via `SECTION_LABEL_CLASS`.
 - Screenshot row uses a lightbox; videos open in a new tab from the grid.
 - You can adjust limits (e.g., videos per row) or scoring in `marketplace-page.tsx` if needed.
-

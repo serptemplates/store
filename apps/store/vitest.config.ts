@@ -21,8 +21,16 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname),
-    },
+    alias: [
+      { find: "@", replacement: path.resolve(__dirname) },
+      {
+        find: "@repo/ui",
+        replacement: path.resolve(__dirname, "../../packages/ui/src"),
+      },
+      {
+        find: "@repo/ui/",
+        replacement: path.resolve(__dirname, "../../packages/ui/src/"),
+      },
+    ],
   },
 });

@@ -8,9 +8,9 @@ description: |
   Direct MP4s finish quickly, while adaptive HLS and DASH streams are fetched in segments, merged in the background, and delivered with the original quality intact. Real-time progress, speed, and ETA keep you informed during longer lectures, and right-click shortcuts let you start downloads without leaving the lesson view.
 
   The extension authenticates through your existing Coursera session, respects enrollment status, and processes everything locally—perfect for building offline study libraries before courses retire or subscriptions change.
-seo_title: Download Coursera Courses | Coursera Downloader
-seo_description: Download Coursera courses and videos for offline learning. Fast and
-  reliable course content downloader.
+seo_title: Coursera Downloader | Download Coursera Courses
+seo_description: Download Coursera courses and videos for offline learning. Fast
+  and reliable course content downloader.
 serply_link: https://serp.ly/coursera-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/coursera-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/coursera-downloader
@@ -26,8 +26,8 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/coursera-downloader/main/images/featured.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
-  alt: Coursera Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg
+    alt: Coursera Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -38,15 +38,20 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Detects Coursera lecture videos across courses, specializations, and guided projects
-- Lists every available quality tier with format labels and estimated file sizes
-- Downloads MP4 sources directly or converts HLS/DASH streams into MP4 automatically
-- Right-click “Download with Coursera Downloader” for quick saving during study sessions
-- Progress window shows stage, speed, ETA, and offers pause/cancel controls
-- Stores licence details and quality preferences locally with no analytics or tracking
-- Works with your existing Coursera login—no manual cookie export required
-- Desktop notifications let you know when lectures finish downloading
-- Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux
+  - Detects Coursera lecture videos across courses, specializations, and guided
+    projects
+  - Lists every available quality tier with format labels and estimated file
+    sizes
+  - Downloads MP4 sources directly or converts HLS/DASH streams into MP4
+    automatically
+  - Right-click “Download with Coursera Downloader” for quick saving during
+    study sessions
+  - Progress window shows stage, speed, ETA, and offers pause/cancel controls
+  - Stores licence details and quality preferences locally with no analytics or
+    tracking
+  - Works with your existing Coursera login—no manual cookie export required
+  - Desktop notifications let you know when lectures finish downloading
+  - Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux
 pricing:
   label: One-time payment
   price: $17.00
@@ -57,70 +62,73 @@ pricing:
   currency: USD
   availability: InStock
   benefits:
-  - Build an offline lecture library for flights, commutes, and travel days
-  - Preserve access to courses before they retire or subscriptions lapse
-  - Keep study sessions private with on-device processing and storage
+    - Build an offline lecture library for flights, commutes, and travel days
+    - Preserve access to courses before they retire or subscriptions lapse
+    - Keep study sessions private with on-device processing and storage
 faqs:
-- question: How do I download a Coursera lecture?
-  answer: Open the lecture, click the Coursera Downloader icon, pick your preferred
-    resolution, and keep the tab open while the progress bar completes. The MP4 will
-    save with the course and lecture name.
-- question: Can I download entire courses automatically?
-  answer: Downloads are launched one lecture at a time. There’s no batch export,
-    but you can queue multiple lessons manually.
-- question: Does it include captions or transcripts?
-  answer: No. The extension focuses on video and audio. Download captions or transcripts
-    separately from the course materials if you need them.
-- question: Which browsers are supported?
-  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
-    macOS, and Linux. Safari and mobile browsers aren’t supported.
-- question: Will it download content I’m not enrolled in?
-  answer: No. The downloader works within your active Coursera session and only captures
-    videos you’re legitimately enrolled in or can preview.
-- question: Why does it request scripting and offscreen permissions?
-  answer: Scripting reads the player to enumerate stream URLs, and the offscreen context
-    stitches HLS/DASH segments into a single MP4 without freezing your browser.
-- question: Is my data private?
-  answer: Yes. All detection and conversion happen locally. Only licence verification
-    touches remote servers, and no watch history or credentials are stored.
+  - question: How do I download a Coursera lecture?
+    answer: Open the lecture, click the Coursera Downloader icon, pick your
+      preferred resolution, and keep the tab open while the progress bar
+      completes. The MP4 will save with the course and lecture name.
+  - question: Can I download entire courses automatically?
+    answer: Downloads are launched one lecture at a time. There’s no batch export,
+      but you can queue multiple lessons manually.
+  - question: Does it include captions or transcripts?
+    answer: No. The extension focuses on video and audio. Download captions or
+      transcripts separately from the course materials if you need them.
+  - question: Which browsers are supported?
+    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux. Safari and mobile browsers aren’t supported.
+  - question: Will it download content I’m not enrolled in?
+    answer: No. The downloader works within your active Coursera session and only
+      captures videos you’re legitimately enrolled in or can preview.
+  - question: Why does it request scripting and offscreen permissions?
+    answer: Scripting reads the player to enumerate stream URLs, and the offscreen
+      context stitches HLS/DASH segments into a single MP4 without freezing your
+      browser.
+  - question: Is my data private?
+    answer: Yes. All detection and conversion happen locally. Only licence
+      verification touches remote servers, and no watch history or credentials
+      are stored.
 reviews:
-- name: Nia Delgado
-  title: Perfect for studying on flights
-  rating: 5
-  date: 2025-02-18
-  review: I download lectures before travel days and the progress window keeps me
-    updated. Every video saves with the course name so review sessions are painless.
-- name: Jared Kim
-  title: Handles Coursera streaming flawlessly
-  rating: 4.9
-  date: 2025-03-04
-  review: HLS and DASH always caused trouble with other tools. This pulls 1080p files
-    reliably and keeps quality intact.
-- name: Lailah Suri
-  title: Essential for Coursera Plus
-  rating: 4.8
-  date: 2025-01-30
-  review: I’m working through a specialization and wanted permanent copies. Downloads
-    stay private, and I can review tough lectures without buffering.
+  - name: Nia Delgado
+    title: Perfect for studying on flights
+    rating: 5
+    date: 2025-02-18
+    review: I download lectures before travel days and the progress window keeps me
+      updated. Every video saves with the course name so review sessions are
+      painless.
+  - name: Jared Kim
+    title: Handles Coursera streaming flawlessly
+    rating: 4.9
+    date: 2025-03-04
+    review: HLS and DASH always caused trouble with other tools. This pulls 1080p
+      files reliably and keeps quality intact.
+  - name: Lailah Suri
+    title: Essential for Coursera Plus
+    rating: 4.8
+    date: 2025-01-30
+    review: I’m working through a specialization and wanted permanent copies.
+      Downloads stay private, and I can review tough lectures without buffering.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Course Platforms
+  - Downloader
+  - Course Platforms
 keywords:
-- coursera downloader
-- download coursera lectures
-- coursera offline videos
-- coursera mp4 converter
-- coursera plus offline study
+  - coursera downloader
+  - download coursera lectures
+  - coursera offline videos
+  - coursera mp4 converter
+  - coursera plus offline study
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -133,41 +141,41 @@ stripe:
     stripe_product_id: prod_Sv6Gv9ZcVq94rx
 ghl:
   tag_ids:
-  - purchase-coursera-downloader
+    - purchase-coursera-downloader
 permission_justifications:
-- permission: downloads
-  justification: |
-    Saves finished lecture MP4s to your downloads folder and keeps the progress interface
-    in sync while each file completes.
-- permission: storage
-  justification: |
-    Stores the licence key and preferred quality so the extension stays activated
-    and remembers your settings between sessions.
-- permission: activeTab
-  justification: |
-    Detects Coursera lecture players on the tab you are viewing and enables inline
-    controls for quick downloads.
-- permission: tabs
-  justification: |
-    Allows downloads to continue if you switch between course tabs and restores the
-    status window when you return.
-- permission: scripting
-  justification: |
-    Extracts video stream URLs from Coursera’s player, including HLS and DASH manifests,
-    so the downloader can retrieve the correct files.
-- permission: notifications
-  justification: |
-    Sends completion and error alerts so you know when a lecture is ready without
-    watching the tab.
-- permission: contextMenus
-  justification: |
-    Adds a right-click “Download with Coursera Downloader” option for faster access
-    while browsing lectures.
-- permission: offscreen
-  justification: |
-    Merges HLS/DASH segments into a single MP4 in a hidden context to keep the browser
-    responsive during conversion.
-- permission: host_permissions
-  justification: |
-    Restricts privileged access to coursera.org and its media subdomains, ensuring
-    the extension only runs where it is needed.
+  - permission: downloads
+    justification: |
+      Saves finished lecture MP4s to your downloads folder and keeps the progress interface
+      in sync while each file completes.
+  - permission: storage
+    justification: |
+      Stores the licence key and preferred quality so the extension stays activated
+      and remembers your settings between sessions.
+  - permission: activeTab
+    justification: |
+      Detects Coursera lecture players on the tab you are viewing and enables inline
+      controls for quick downloads.
+  - permission: tabs
+    justification: |
+      Allows downloads to continue if you switch between course tabs and restores the
+      status window when you return.
+  - permission: scripting
+    justification: |
+      Extracts video stream URLs from Coursera’s player, including HLS and DASH manifests,
+      so the downloader can retrieve the correct files.
+  - permission: notifications
+    justification: |
+      Sends completion and error alerts so you know when a lecture is ready without
+      watching the tab.
+  - permission: contextMenus
+    justification: |
+      Adds a right-click “Download with Coursera Downloader” option for faster access
+      while browsing lectures.
+  - permission: offscreen
+    justification: |
+      Merges HLS/DASH segments into a single MP4 in a hidden context to keep the browser
+      responsive during conversion.
+  - permission: host_permissions
+    justification: |
+      Restricts privileged access to coursera.org and its media subdomains, ensuring
+      the extension only runs where it is needed.

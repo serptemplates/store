@@ -4,9 +4,9 @@ tagline: Save Xhamster videos instantly for offline viewing.
 slug: xhamster-video-downloader
 description: |
   XHamster Video Downloader detects videos on xhamster.com and every regional mirror automatically, then lets you pick the resolution and save a clean MP4. It filters duplicate quality options, works the same on each domain, and shows a progress bar while it downloads so you can build an offline collection without fighting ads or pop-ups.
-seo_title: Download Xhamster Videos | Xhamster Video Downloader
-seo_description: Download Xhamster videos easily for offline viewing. Fast, reliable
-  Xhamster video downloader with high-quality downloads.
+seo_title: Xhamster Video Downloader | Download Xhamster Videos
+seo_description: Download Xhamster videos easily for offline viewing. Fast,
+  reliable Xhamster video downloader with high-quality downloads.
 serply_link: https://serp.ly/xhamster-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/xhamster-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/xhamster-video-downloader
@@ -22,8 +22,8 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/xhamster-video-downloader/main/images/xhamster-video-downloader.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg
-  alt: Xhamster Video Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg
+    alt: Xhamster Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -34,82 +34,86 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Works automatically on xhamster.com, xhamster.one, xhamster.desi, xhms.pro, and other mirrors
-- Detects video players and filters duplicate quality entries for a clean selection list
-- Downloads MP4 files directly at the resolution you choose with no re-encoding
-- Shows on-page progress with file size, percentage, and status updates
-- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
-- Stores licence data locally with no analytics or external routing of downloads
+  - Works automatically on xhamster.com, xhamster.one, xhamster.desi, xhms.pro,
+    and other mirrors
+  - Detects video players and filters duplicate quality entries for a clean
+    selection list
+  - Downloads MP4 files directly at the resolution you choose with no re-encoding
+  - Shows on-page progress with file size, percentage, and status updates
+  - Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+  - Stores licence data locally with no analytics or external routing of
+    downloads
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: Lifetime licence with multi-domain support and quality selection. Sales are
-    final.
+  note: Lifetime licence with multi-domain support and quality selection. Sales
+    are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-  - Save favourites from any XHamster mirror before they disappear
-  - Choose the exact MP4 quality you need without manual URL hunting
-  - Keep downloads private with 100% on-device processing
+    - Save favourites from any XHamster mirror before they disappear
+    - Choose the exact MP4 quality you need without manual URL hunting
+    - Keep downloads private with 100% on-device processing
 faqs:
-- question: How do I download a video from any XHamster domain?
-  answer: Visit the video on xhamster.com or any mirror, click the downloader icon,
-    choose your quality, and let the progress bar complete. The MP4 will save automatically.
-- question: Does it work on regional mirrors and alternative domains?
-  answer: Yes. The extension recognises xhamster.com, xhamster.one, xhamster.desi,
-    xhms.pro, and other mirrors without extra configuration.
-- question: Can I grab multiple videos at once?
-  answer: Downloads run one at a time so the file stays intact. Start the next clip
-    after the current download finishes.
-- question: Which browsers are supported?
-  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
-    macOS, and Linux desktops.
-- question: Does it remove watermarks or re-encode files?
-  answer: No. The downloader saves the original MP4 exactly as XHamster serves it—no
-    re-encoding is performed.
-- question: Is my activity private?
-  answer: Everything happens on your device. The extension only checks your licence
-    and never uploads viewing history or downloaded files.
+  - question: How do I download a video from any XHamster domain?
+    answer: Visit the video on xhamster.com or any mirror, click the downloader
+      icon, choose your quality, and let the progress bar complete. The MP4 will
+      save automatically.
+  - question: Does it work on regional mirrors and alternative domains?
+    answer: Yes. The extension recognises xhamster.com, xhamster.one, xhamster.desi,
+      xhms.pro, and other mirrors without extra configuration.
+  - question: Can I grab multiple videos at once?
+    answer: Downloads run one at a time so the file stays intact. Start the next
+      clip after the current download finishes.
+  - question: Which browsers are supported?
+    answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux desktops.
+  - question: Does it remove watermarks or re-encode files?
+    answer: No. The downloader saves the original MP4 exactly as XHamster serves
+      it—no re-encoding is performed.
+  - question: Is my activity private?
+    answer: Everything happens on your device. The extension only checks your
+      licence and never uploads viewing history or downloaded files.
 reviews:
-- name: Noah Brenner
-  title: Works on every mirror I use
-  rating: 5
-  date: 2025-02-20
-  review: Whether it’s .com or .desi, the downloader finds the video and saves the
-    MP4 without me changing anything.
-- name: Suri Hale
-  title: Quality list is super clean
-  rating: 4.9
-  date: 2025-03-01
-  review: No duplicate options—just 1080p, 720p, etc. Makes picking the right file
-    quick and easy.
-- name: Damon Ortiz
-  title: Reliable offline copies
-  rating: 4.8
-  date: 2025-01-26
-  review: I grab favourites before they vanish. Progress stays visible and the files
-    play perfectly offline.
+  - name: Noah Brenner
+    title: Works on every mirror I use
+    rating: 5
+    date: 2025-02-20
+    review: Whether it’s .com or .desi, the downloader finds the video and saves the
+      MP4 without me changing anything.
+  - name: Suri Hale
+    title: Quality list is super clean
+    rating: 4.9
+    date: 2025-03-01
+    review: No duplicate options—just 1080p, 720p, etc. Makes picking the right file
+      quick and easy.
+  - name: Damon Ortiz
+    title: Reliable offline copies
+    rating: 4.8
+    date: 2025-01-26
+    review: I grab favourites before they vanish. Progress stays visible and the
+      files play perfectly offline.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Adult
+  - Downloader
+  - Adult
 keywords:
-- xhamster video downloader
-- download xhamster mp4
-- xhamster mirror saver
-- xhamster offline videos
-- xhamster quality selector
+  - xhamster video downloader
+  - download xhamster mp4
+  - xhamster mirror saver
+  - xhamster offline videos
+  - xhamster quality selector
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -122,51 +126,51 @@ stripe:
     stripe_product_id: prod_SrFXX6huXVaXb9
 ghl:
   tag_ids:
-  - purchase-xhamster-downloader
+    - purchase-xhamster-downloader
 new_release: true
 permission_justifications:
-- permission: downloads
-  justification: |-
-    Required for downloading XHamster videos to local storage while monitoring progress.
+  - permission: downloads
+    justification: |-
+      Required for downloading XHamster videos to local storage while monitoring progress.
 
-    Usage highlights:
-    - `background-enhanced.js:69` cancels active downloads via the Chrome Downloads API.
-    - `background-enhanced.js:375` starts new downloads.
-    - `background-enhanced.js:464, 473, 477` listen for state changes and progress updates.
-    - `popup.js:210` looks up downloads by ID to surface progress information in the popup.
-- permission: activeTab
-  justification: |-
-    Lets the extension inspect the active tab so it can verify XHamster pages and collect video metadata.
+      Usage highlights:
+      - `background-enhanced.js:69` cancels active downloads via the Chrome Downloads API.
+      - `background-enhanced.js:375` starts new downloads.
+      - `background-enhanced.js:464, 473, 477` listen for state changes and progress updates.
+      - `popup.js:210` looks up downloads by ID to surface progress information in the popup.
+  - permission: activeTab
+    justification: |-
+      Lets the extension inspect the active tab so it can verify XHamster pages and collect video metadata.
 
-    Usage highlights:
-    - `popup.js:30-33` checks the active tab before enabling download controls.
-    - `background-enhanced.js:337` retrieves active tab details to drive download logic.
-    - Additional `chrome.tabs.query` calls support video URL extraction.
-- permission: storage
-  justification: |-
-    Stores license activation state and related information locally to ensure premium features remain unlocked.
+      Usage highlights:
+      - `popup.js:30-33` checks the active tab before enabling download controls.
+      - `background-enhanced.js:337` retrieves active tab details to drive download logic.
+      - Additional `chrome.tabs.query` calls support video URL extraction.
+  - permission: storage
+    justification: |-
+      Stores license activation state and related information locally to ensure premium features remain unlocked.
 
-    Usage highlights:
-    - `auth.js` `saveActivation` persists license status, keys, and emails.
-    - `auth.js` `checkActivationStatus` reloads stored activation details whenever the popup opens.
-- permission: notifications
-  justification: |-
-    Enables system notifications that inform users about download success, errors, or other status changes.
+      Usage highlights:
+      - `auth.js` `saveActivation` persists license status, keys, and emails.
+      - `auth.js` `checkActivationStatus` reloads stored activation details whenever the popup opens.
+  - permission: notifications
+    justification: |-
+      Enables system notifications that inform users about download success, errors, or other status changes.
 
-    Usage highlights:
-    - `background-enhanced.js:495` creates notifications with `chrome.notifications.create`.
-    - Notifications track download completions and error scenarios for clear feedback.
-- permission: contextMenus
-  justification: |-
-    Allows the extension to add a "Download XHamster Video" option to the browser's context menu on supported domains.
+      Usage highlights:
+      - `background-enhanced.js:495` creates notifications with `chrome.notifications.create`.
+      - Notifications track download completions and error scenarios for clear feedback.
+  - permission: contextMenus
+    justification: |-
+      Allows the extension to add a "Download XHamster Video" option to the browser's context menu on supported domains.
 
-    Usage highlights:
-    - `background-enhanced.js:10` registers the context menu entry through `chrome.contextMenus.create`.
-    - `background-enhanced.js:32` handles menu clicks via `chrome.contextMenus.onClicked` to launch downloads.
-- permission: tabs
-  justification: |-
-    Supports tab querying and messaging required to coordinate downloads and open supporting pages.
+      Usage highlights:
+      - `background-enhanced.js:10` registers the context menu entry through `chrome.contextMenus.create`.
+      - `background-enhanced.js:32` handles menu clicks via `chrome.contextMenus.onClicked` to launch downloads.
+  - permission: tabs
+    justification: |-
+      Supports tab querying and messaging required to coordinate downloads and open supporting pages.
 
-    Usage highlights:
-    - `popup.js:44, 265` sends messages to content scripts and opens new tabs as needed.
-    - `background-enhanced.js:34, 343, 511` exchanges messages with tabs to control download flows.
+      Usage highlights:
+      - `popup.js:44, 265` sends messages to content scripts and opens new tabs as needed.
+      - `background-enhanced.js:34, 343, 511` exchanges messages with tabs to control download flows.

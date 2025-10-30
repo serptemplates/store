@@ -6,9 +6,9 @@ description: |
   Redtube Video Downloader captures scenes from redtube.com, regional sites, and embedded players, converting them into MP4 files you can watch offline. It detects every available resolution, handles HLS streams behind the page, and keeps downloads moving even when you minimise the tab.
 
   Choose the quality you want, let the extension pull the stream segments, and it merges them in the background while you browse. The result is a clean MP4 saved locally with no ads, buffering, or tracking.
-seo_title: Download Redtube Videos | Redtube Video Downloader
-seo_description: Download Redtube videos easily for offline viewing. Fast, reliable
-  Redtube video downloader with high-quality downloads.
+seo_title: Redtube Video Downloader | Download Redtube Videos
+seo_description: Download Redtube videos easily for offline viewing. Fast,
+  reliable Redtube video downloader with high-quality downloads.
 serply_link: https://serp.ly/redtube-video-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/redtube-video-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/redtube-video-downloader
@@ -24,8 +24,8 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg
 featured_image_gif: https://raw.githubusercontent.com/serpapps/redtube-video-downloader/main/images/redtube-video-downloader.gif
 screenshots:
-- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg
-  alt: Redtube Video Downloader website preview
+  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg
+    alt: Redtube Video Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -36,83 +36,84 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Detects Redtube main site, regional domains, and embed.redtube.com players
-- Lists every quality option with file-size estimates and remembers your preference
-- Converts HLS streams into MP4 files while preserving source quality
-- Keeps progress running even if you reload or switch tabs
-- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
-- Stores licence data locally with no analytics or external tracking
+  - Detects Redtube main site, regional domains, and embed.redtube.com players
+  - Lists every quality option with file-size estimates and remembers your
+    preference
+  - Converts HLS streams into MP4 files while preserving source quality
+  - Keeps progress running even if you reload or switch tabs
+  - Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+  - Stores licence data locally with no analytics or external tracking
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: Lifetime licence with stream conversion and progress tracking included. Sales
-    are final.
+  note: Lifetime licence with stream conversion and progress tracking included.
+    Sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
   benefits:
-  - Save Redtube scenes at the exact resolution you stream online
-  - Build private offline collections without ads or buffering
-  - Keep downloads discreet with 100% local processing
+    - Save Redtube scenes at the exact resolution you stream online
+    - Build private offline collections without ads or buffering
+    - Keep downloads discreet with 100% local processing
 faqs:
-- question: How do I download a Redtube video?
-  answer: Open the video, click the downloader icon, pick your preferred resolution,
-    and let the progress bar finish. The MP4 saves to your downloads folder with
-    the video title.
-- question: Does it work on embedded Redtube players?
-  answer: Yes. The extension detects embed.redtube.com players and operates exactly
-    the same as it does on the main site.
-- question: Will it keep downloading if I reload the page?
-  answer: Progress persists even if you refresh or open a new tab. Just keep the original
-    video tab open so the session stays active.
-- question: Which browsers are supported?
-  answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
-    macOS, and Linux desktops.
-- question: Does it capture captions or interactive overlays?
-  answer: The downloader focuses on video and audio. Captions, overlays, or interactive
-    elements aren’t included in the MP4.
-- question: Is my activity private?
-  answer: All conversion happens locally, no analytics are collected, and the extension
-    never sends your viewing history to external services.
+  - question: How do I download a Redtube video?
+    answer: Open the video, click the downloader icon, pick your preferred
+      resolution, and let the progress bar finish. The MP4 saves to your
+      downloads folder with the video title.
+  - question: Does it work on embedded Redtube players?
+    answer: Yes. The extension detects embed.redtube.com players and operates
+      exactly the same as it does on the main site.
+  - question: Will it keep downloading if I reload the page?
+    answer: Progress persists even if you refresh or open a new tab. Just keep the
+      original video tab open so the session stays active.
+  - question: Which browsers are supported?
+    answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on
+      Windows, macOS, and Linux desktops.
+  - question: Does it capture captions or interactive overlays?
+    answer: The downloader focuses on video and audio. Captions, overlays, or
+      interactive elements aren’t included in the MP4.
+  - question: Is my activity private?
+    answer: All conversion happens locally, no analytics are collected, and the
+      extension never sends your viewing history to external services.
 reviews:
-- name: Lila Montrose
-  title: Works on every Redtube mirror
-  rating: 5
-  date: 2025-02-19
-  review: Regional sites used to break other tools. This handles them all and the
-    MP4s look identical to the site.
-- name: Oscar DeLuca
-  title: Reliable HLS conversion
-  rating: 4.9
-  date: 2025-03-05
-  review: Even adaptive streams merge cleanly. Progress survives refreshes, which
-    saves a ton of time.
-- name: Hanna Voss
-  title: Keeps my private stash offline
-  rating: 4.8
-  date: 2025-01-30
-  review: I download favourites before they disappear. Everything stays on my drive
-    with zero ads or pop-ups.
+  - name: Lila Montrose
+    title: Works on every Redtube mirror
+    rating: 5
+    date: 2025-02-19
+    review: Regional sites used to break other tools. This handles them all and the
+      MP4s look identical to the site.
+  - name: Oscar DeLuca
+    title: Reliable HLS conversion
+    rating: 4.9
+    date: 2025-03-05
+    review: Even adaptive streams merge cleanly. Progress survives refreshes, which
+      saves a ton of time.
+  - name: Hanna Voss
+    title: Keeps my private stash offline
+    rating: 4.8
+    date: 2025-01-30
+    review: I download favourites before they disappear. Everything stays on my
+      drive with zero ads or pop-ups.
 supported_operating_systems:
-- windows
-- mac
-- linux
-- chrome
-- firefox
-- edge
-- opera
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
 supported_regions:
-- Worldwide
+  - Worldwide
 categories:
-- Downloader
-- Adult
+  - Downloader
+  - Adult
 keywords:
-- redtube video downloader
-- download redtube mp4
-- redtube hls converter
-- offline redtube videos
-- embed redtube downloader
+  - redtube video downloader
+  - download redtube mp4
+  - redtube hls converter
+  - offline redtube videos
+  - embed redtube downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -125,42 +126,42 @@ stripe:
     stripe_product_id: prod_SrGTducRH5aPvE
 ghl:
   tag_ids:
-  - purchase-redtube-downloader
+    - purchase-redtube-downloader
 new_release: true
 permission_justifications:
-- permission: downloads
-  justification: |
-    Saves the finished MP4 into your downloads folder and keeps progress tracking
-    in sync for each Redtube video.
-- permission: storage
-  justification: |
-    Stores licence activation, preferred quality, and retry preferences locally so
-    the extension stays ready between sessions.
-- permission: activeTab
-  justification: |
-    Detects when a Redtube player is active on the current tab and injects the download
-    controls there.
-- permission: tabs
-  justification: |
-    Allows downloads to continue when you refresh or open new tabs and restores the
-    status view when you return.
-- permission: scripting
-  justification: |
-    Extracts stream manifests, quality variants, and metadata from the player so
-    the downloader can fetch the correct files.
-- permission: notifications
-  justification: |
-    Sends completion and error alerts so you know when a video finishes downloading
-    without monitoring the page.
-- permission: contextMenus
-  justification: |
-    Adds a right-click “Download with Redtube Video Downloader” shortcut for quick
-    saves directly from the video player.
-- permission: offscreen
-  justification: |
-    Merges HLS segments into MP4 files in the background, keeping the tab responsive
-    during conversion.
-- permission: host_permissions
-  justification: |
-    Grants access to redtube.com, embed.redtube.com, and regional domains so the
-    extension only activates on supported sites.
+  - permission: downloads
+    justification: |
+      Saves the finished MP4 into your downloads folder and keeps progress tracking
+      in sync for each Redtube video.
+  - permission: storage
+    justification: |
+      Stores licence activation, preferred quality, and retry preferences locally so
+      the extension stays ready between sessions.
+  - permission: activeTab
+    justification: |
+      Detects when a Redtube player is active on the current tab and injects the download
+      controls there.
+  - permission: tabs
+    justification: |
+      Allows downloads to continue when you refresh or open new tabs and restores the
+      status view when you return.
+  - permission: scripting
+    justification: |
+      Extracts stream manifests, quality variants, and metadata from the player so
+      the downloader can fetch the correct files.
+  - permission: notifications
+    justification: |
+      Sends completion and error alerts so you know when a video finishes downloading
+      without monitoring the page.
+  - permission: contextMenus
+    justification: |
+      Adds a right-click “Download with Redtube Video Downloader” shortcut for quick
+      saves directly from the video player.
+  - permission: offscreen
+    justification: |
+      Merges HLS segments into MP4 files in the background, keeping the tab responsive
+      during conversion.
+  - permission: host_permissions
+    justification: |
+      Grants access to redtube.com, embed.redtube.com, and regional domains so the
+      extension only activates on supported sites.

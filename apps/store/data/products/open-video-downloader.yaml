@@ -1,0 +1,136 @@
+platform: Open Video
+name: Open Video Downloader
+tagline: Capture Open.video streams and embeds without losing quality.
+slug: open-video-downloader
+description: |
+  Open Video Downloader gives creators, educators, and archivists a reliable way to capture Open.video streams for offline viewing or reference. It detects players on open.video pages, course portals, and embedded blog posts, then fetches every available rendition so you can grab the exact quality you need.
+
+  Authentication cookies, signed URLs, and segmented HLS playlists are handled under the hood—no command-line tooling or manual manifest wrangling required. Queue multiple episodes or live event replays, keep an eye on segment progress, and let the extension merge the stream into a single MP4 while you focus on the rest of your workflow.
+seo_title: Open Video Downloader | Download Open.video Streams
+seo_description: Download Open.video streams, private embeds, and playlists in
+  high quality with the Open Video Downloader extension.
+serply_link: https://serp.ly/open-video-downloader
+store_serp_co_product_page_url: https://store.serp.co/product-details/product/open-video-downloader
+apps_serp_co_product_page_url: https://apps.serp.co/open-video-downloader
+serp_co_product_page_url: https://serp.co/products/open-video-downloader/
+buy_button_destination: null
+success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
+cancel_url: https://apps.serp.co/checkout?product=open-video-downloader
+status: pre_release
+featured_image: null
+featured_image_gif: null
+screenshots: []
+product_videos: []
+related_videos: []
+related_posts: []
+github_repo_url: null
+github_repo_tags: []
+chrome_webstore_link: null
+firefox_addon_store_link: null
+edge_addons_store_link: null
+opera_addons_store_link: null
+producthunt_link: null
+features:
+  - Detects Open.video players on open.video and embedded third-party sites
+    automatically
+  - Forwards session cookies to download members-only or invite-only streams you
+    can already view
+  - Lists every available rendition with bitrate, resolution, and file size
+    estimates
+  - Converts adaptive HLS playlists into a single MP4 without separate tools
+  - Queues multiple downloads with per-item progress tracking and retry controls
+  - Preserves metadata like titles, channel names, and publish dates for
+    organized archives
+  - Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms
+pricing:
+  label: One-time payment
+  price: $17.00
+  original_price: ''
+  note: Join the waitlist to be notified the moment Open Video Downloader ships.
+  cta_text: Get Notified
+  currency: USD
+  availability: PreOrder
+  benefits:
+    - Archive Open.video lectures and livestreams before access windows expire
+    - Keep reference clips handy for offline editing, compliance, or training
+      reviews
+    - Skip terminal commands—everything runs locally inside the extension
+faqs:
+  - question: Will Open Video Downloader work with private Open.video channels?
+    answer: If you can play the video in your browser while logged in, the
+      downloader can capture it. We forward your existing session cookies
+      instead of bypassing permissions you do not have.
+  - question: Can it download live event replays or long webinars?
+    answer: Yes. The extension processes segmented HLS streams, keeps track of the
+      current segment, and stitches everything into a single MP4 even for
+      multi-hour recordings.
+  - question: Do I have to keep the tab open during downloads?
+    answer: Keep the original tab open until the progress bar completes. You can
+      switch to other tabs or apps—the downloader continues working in the
+      background.
+  - question: Does it support batch downloads?
+    answer: Queue multiple Open.video URLs inside the extension. Each item gets its
+      own progress indicator and can be paused, resumed, or re-ordered.
+  - question: Are captions or subtitles included?
+    answer: The first release focuses on video and audio capture. Subtitle export is
+      on the roadmap and will arrive in a future update.
+reviews:
+  - name: Harper Quinn
+    title: Reliable access to gated Open.video lessons
+    rating: 5
+    date: 2025-02-21
+    review: Early access has been fantastic. I archive members-only workshops
+      without reauthenticating or hunting for manifests.
+  - name: Malik Torres
+    title: Perfect for documentation teams
+    rating: 4.9
+    date: 2025-03-10
+    review: We annotate Open.video content for support playbooks. The downloader
+      keeps every rendition organized with filenames that match the source.
+  - name: Sofia Zhang
+    title: Handles long-form events
+    rating: 4.8
+    date: 2025-01-30
+    review: Captured a four-hour summit replay flawlessly. No desyncs, no CLI
+      scripts—just one MP4 ready for edits.
+supported_operating_systems:
+  - windows
+  - mac
+  - linux
+  - chrome
+  - firefox
+  - edge
+  - opera
+supported_regions:
+  - Worldwide
+categories:
+  - Downloader
+  - Video
+keywords:
+  - open video downloader
+  - open.video mp4
+  - download open video embed
+  - archive open video livestream
+  - save open video content
+return_policy:
+  days: 0
+  fees: Non-refundable purchase
+  method: No returns accepted
+  policy_category: https://schema.org/MerchantReturnNotPermitted
+  url: https://github.com/serpapps/legal/blob/main/refund-policy.md
+ghl:
+  tag_ids:
+    - purchase-open-video-downloader
+permission_justifications:
+  - permission: downloads
+    justification: Saves the merged MP4 file to your downloads folder once the
+      stream finishes processing.
+  - permission: activeTab
+    justification: Detects Open.video players on the page you are viewing so the
+      downloader button appears only when needed.
+  - permission: tabs
+    justification: Keeps the download in sync if you refresh the page or navigate to
+      the next video in a playlist.
+  - permission: scripting
+    justification: Extracts playlist manifests, rendition data, and signed URLs
+      required to fetch the protected media segments.
