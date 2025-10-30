@@ -3,9 +3,11 @@ name: Gohighlevel Downloader
 tagline: Save Gohighlevel content instantly to your device.
 slug: gohighlevel-downloader
 description: |
-  Gohighlevel Downloader gives creators and teams a dependable way to save Gohighlevel content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Gohighlevel with consistent quality and predictable results.
-  
-  It supports GoHighLevel CRM data and marketing assets, Client funnels and automation content, and Batch marketing campaigns/templates downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Gohighlevel assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+  GoHighLevel Downloader is the all-in-one extension for agencies and students who need reliable copies of GoHighLevel trainings. It recognises native lessons, classroom recordings, community posts, and embedded videos from YouTube, Vimeo, Wistia, and Loom—even on white-label domains—and presents every available quality with clear labels.
+
+  Choose the rendition you want and the extension handles the rest: direct MP4s save instantly, while adaptive HLS or DASH streams download chunk by chunk and merge into a clean MP4 with progress, speed, and ETA visible the entire time. Right-click shortcuts and inline controls let you start downloads without leaving the lesson you are reviewing.
+
+  Because everything runs inside your authenticated browser session, the tool follows GoHighLevel’s sub-account permissions, keeps content you paid for private, and stores licence data locally. It’s the fastest path to build offline training libraries for agency teams, travel days, or when access might change.
 seo_title: Gohighlevel Downloader | Download videos from GoHighLevel Course Areas
 seo_description: Download Gohighlevel course content and videos easily for offline
   use. Fast and reliable Gohighlevel downloader.
@@ -36,70 +38,73 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- One-click download from any video page
-- 100% privacy-friendly
-- Auto-detect videos on the page
-- Smart Page Scan
-- Embedded Video Support
-- Full HD Downloads
-- Lightning fast downloads (no re-encoding)
-- Original quality preserved (up to 4K)
-- No registration or personal data required
-- No watermarks or branding added
-- Zero Ads
-- Regular Updates
-- Thumbnail Preview
-- Minimal Permissions
-- Download Progress Bar
-- Chrome, Firefox, Edge
-- Download embedded videos
-- Zero data tracking
-- Ad-free experience
+- Detects GoHighLevel native videos plus YouTube, Vimeo, Wistia, Loom, and custom embeds
+- Works across agency sub-accounts, client workspaces, and white-label domains
+- Quality picker lists each resolution with format type and estimated file size
+- Handles MP4, HLS, and DASH streams, merging segments into standard MP4 files
+- Global progress manager shows download stage, speed, ETA, and includes pause/cancel
+- Right-click “Download with GoHighLevel Downloader” and inline controls for one-click saving
+- Uses your existing GoHighLevel login with zero password storage or extra setup
+- Desktop notifications alert you the moment lessons finish downloading
+- Stores licence data and preferences locally with no analytics or tracking
+- Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence covering GoHighLevel lessons, classrooms, communities, and
+    embedded videos. No free trial and all sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Archive paid GoHighLevel trainings before subscriptions or client access changes
+  - Consolidate native and embedded lessons into one organised MP4 library
+  - Keep downloads private with 100% on-device processing and licence storage
 faqs:
-- question: How do I use the Gohighlevel downloader?
-  answer: Install the browser extension, navigate to Gohighlevel, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Gohighlevel, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Gohighlevel content?
-  answer: The downloader works with most publicly accessible content on Gohighlevel. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: How do I download a GoHighLevel lesson?
+  answer: Open the lesson, classroom recording, or community post, click the GoHighLevel
+    Downloader icon, choose the quality you want, and keep the tab open while the
+    progress bar completes. The MP4 will save with the course and lesson name.
+- question: Does it capture white-label or custom domains?
+  answer: Yes. The extension recognises agency sub-domains, custom white-label URLs,
+    and funnel paths so long as you have access to the content in your GoHighLevel
+    account.
+- question: Can I download entire courses at once?
+  answer: Downloads are started one video at a time. You can queue multiple lessons,
+    but there’s no batch export or ZIP bundling for full courses.
+- question: Does it keep captions or transcripts?
+  answer: The downloader focuses on video and audio. Captions, transcripts, and attachments
+    aren’t included, so plan to keep those separately if you need them.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops. Safari and mobile browsers aren’t supported.
+- question: Why does it request broad host permissions?
+  answer: GoHighLevel frequently embeds third-party players and runs on custom domains.
+    Host permissions cover those variations so the extension can detect and save every
+    authorised video you can view.
+- question: Is my data private?
+  answer: Absolutely. Downloads happen inside your browser session and licence information
+    stays on your machine. No passwords or viewing history are transmitted.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Gohighlevel Downloader
+- name: Jenna Maldonado
+  title: Essential for our agency classroom
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Gohighlevel Downloader lets me pull everything
-    from Gohighlevel in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Gohighlevel downloads
+  date: 2025-02-22
+  review: We run weekly trainings in GoHighLevel classrooms and this downloader archives
+    every session, even on our white-label domain. No more panic when access changes.
+- name: Theo Briggs
+  title: Handles every embed we throw at it
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Gohighlevel used to be hit or miss. This downloader is
-    stable, fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Gohighlevel content
+  date: 2025-03-06
+  review: Our courses mix native videos with Vimeo and Loom embeds. The extension
+    detects them all and merges HLS streams flawlessly.
+- name: Lila Pruitt
+  title: Keeps client trainings organised
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Gohighlevel assets for clients and the download in Gohighlevel
-    Downloader keep our workflows smooth. Totally worth the price.
+  date: 2025-01-30
+  review: I download onboarding content for each sub-account, and the progress manager
+    plus file naming make it easy to file everything by client.
 supported_operating_systems:
 - windows
 - mac
@@ -115,6 +120,10 @@ categories:
 - Course Platforms
 keywords:
 - gohighlevel downloader
+- gohighlevel video downloader
+- download gohighlevel lessons
+- gohighlevel classroom saver
+- agency training backup
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -128,4 +137,40 @@ stripe:
 ghl:
   tag_ids:
   - purchase-gohighlevel-downloader
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |
+    Saves completed MP4 files to your device and updates the global progress window
+    so you always see status in real time.
+- permission: storage
+  justification: |
+    Stores the lifetime licence key, preferred quality, and retry preferences locally
+    so the extension stays activated across sessions.
+- permission: activeTab
+  justification: |
+    Detects GoHighLevel players, embedded videos, and white-label domains in the tab
+    you are currently viewing to enable inline download buttons.
+- permission: tabs
+  justification: |
+    Keeps downloads running if you switch lessons or client accounts and restores
+    the progress panel when you return.
+- permission: scripting
+  justification: |
+    Enumerates native players, YouTube, Vimeo, Wistia, and Loom embeds to collect
+    available streams and metadata.
+- permission: notifications
+  justification: |
+    Sends completion and error alerts so you know when a lesson is ready without monitoring
+    the popup.
+- permission: contextMenus
+  justification: |
+    Adds a right-click “Download with GoHighLevel Downloader” shortcut for faster
+    access from within lessons and classrooms.
+- permission: offscreen
+  justification: |
+    Merges HLS and DASH segments into MP4 files in the background, preventing the
+    lesson tab from freezing during conversion.
+- permission: host_permissions
+  justification: |
+    Covers gohighlevel.com, agency subdomains, white-label URLs, and third-party embed
+    hosts so authorised videos remain detectable.

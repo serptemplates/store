@@ -3,15 +3,11 @@ name: Loom Video Downloader
 tagline: Save Loom videos instantly for offline viewing.
 slug: loom-video-downloader
 description: |
-  Loom Video Downloader gives creators and teams a dependable way to save Loom videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Loom with consistent quality and predictable results.
-  
-  It supports One-click download from any video page, 100% privacy-friendly – no tracking or data collection, and Auto-detect videos on the page, so you can move quickly from download to delivery without tedious rework. Use it to archive Loom assets, prep client deliverables, or keep your library accessible when connectivity is limited.
-  Loom Video Downloader gives creators, teams, and educators a reliable way to save Loom videos instantly in full quality for offline viewing, archiving, or repurposing. Whether you’re backing up team recordings, sharing client updates, or preparing deliverables, this lightweight tool makes downloading from Loom effortless and dependable.
+  Loom Video Downloader helps remote teams and creators save recordings before links expire. It detects Loom share pages, embedded players, and workspace libraries, prompts for passwords when required, and converts every recording into a standard MP4 you can archive, edit, or watch offline.
 
-  Most people who rely on Loom for communication face the same problem — once videos are uploaded, they live exclusively on Loom’s servers. Access depends on stable internet, login status, and account permissions. Loom Video Downloader removes that limitation by letting you securely download your Loom recordings and store them locally, with no compression or re-encoding.
+  Whether Loom delivers the video as a direct MP4 or an adaptive HLS/DASH stream, the downloader queues the job, fetches segments in the background, merges them without freezing your browser, and keeps you informed with live progress, speed, and ETA. Queue multiple recordings, cancel any job midstream, and keep your content accessible even after access changes.
 
-  With a clean interface and automatic video detection, the extension finds playable Loom videos on the page and surfaces a “Download” button instantly. No manual URL copying, no sketchy third-party sites, and no data tracking. It’s a privacy-friendly way to take control of your Loom content.
-  
+  Everything runs locally in Chrome, Edge, Firefox, Brave, or Opera using your existing Loom account, so private recordings stay private while you build the library your team relies on.
 seo_title: Download Loom Videos | Loom Video Downloader
 seo_description: Download Loom videos easily for offline viewing. Fast, reliable Loom
   video downloader with high-quality downloads.
@@ -62,70 +58,69 @@ edge_addons_store_link: null
 opera_addons_store_link: null
 producthunt_link: null
 features:
-- One-click download from any video page
-- 100% privacy-friendly
-- Auto-detect videos on the page
-- Smart Page Scan
-- Embedded Video Support
-- Full HD Downloads
-- Lightning fast downloads (no re-encoding)
-- Original quality preserved (up to 4K)
-- No registration or personal data required
-- No watermarks or branding added
-- Zero Ads
-- Regular Updates
-- Thumbnail Preview
-- Minimal Permissions
-- Download Progress Bar
-- Chrome, Firefox, Edge
-- Download embedded videos
-- Zero data tracking
-- Ad-free experience
+- Detects Loom share links, embedded players, and workspace libraries automatically
+- Prompts for passwords on restricted recordings without storing credentials
+- Converts HLS and DASH streams into MP4 files while preserving source quality
+- Queue manager processes multiple recordings sequentially with cancel controls
+- Works with existing Loom sessions to save private and team-only videos securely
+- Desktop notifications and progress bars keep you informed during long downloads
+- Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux
+- Stores licence data and preferences locally with zero analytics or tracking
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
-  cta_text: Download Now
+  note: Lifetime licence with password handling, queue processing, and adaptive stream
+    conversion included. Sales are final.
+  cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Archive Loom walkthroughs, demos, and training updates before links expire
+  - Save password-protected recordings safely without third-party sites
+  - Create MP4 libraries for editing, compliance, or offline review
 faqs:
-- question: How do I download Loom videos?
-  answer: To download Loom videos, you can use specialized software or browser extensions designed for Loom. Look for tools that support high-quality downloads and multiple formats. Always ensure you have permission to download content and respect copyright laws.
-- question: Is it legal to download from Loom?
-  answer: 'The legality of downloading Loom content depends on several factors: 1) Copyright ownership, 2) Terms of service, 3) Your intended use, and 4) Local laws. Generally, downloading copyrighted content without permission is not legal. Always check Loom''s terms of service and only download content you own or have explicit permission to download.'
-- question: What video formats are supported for Loom downloads?
-  answer: Most Loom downloaders support common formats including MP4, WebM, and sometimes FLV. MP4 is typically the most compatible format for playback on various devices. Some tools also allow you to choose video quality (480p, 720p, 1080p, etc.) and extract audio-only files in MP3 format.
-- question: Can I download Loom videos on mobile devices?
-  answer: Yes, there are mobile apps and mobile-friendly websites that allow Loom video downloads on smartphones and tablets. However, mobile options may be more limited than desktop software. Always download apps from official app stores and be cautious of malicious software.
-- question: How do I fix Loom download errors?
-  answer: 'Common solutions for Loom download errors include: 1) Check your internet connection, 2) Verify the video URL is correct and accessible, 3) Update your downloader software, 4) Clear browser cache/cookies, 5) Try a different download format or quality. If errors persist, the video may have download restrictions or be region-locked.'
-- question: What quality options are available for Loom downloads?
-  answer: Loom downloaders typically offer various quality options ranging from 144p to 4K, depending on the original video quality. Common options include 720p HD, 1080p Full HD, and sometimes higher resolutions. Choose quality based on your device's capabilities and storage space.
-- question: Are there any risks in downloading from Loom?
-  answer: 'Potential risks include: 1) Legal issues if downloading copyrighted content without permission, 2) Malware from untrusted downloader software, 3) Violating Loom''s terms of service, 4) Poor quality or incomplete downloads. Always use reputable downloaders and respect content creators'' rights.'
-- question: Can I download private or restricted Loom videos?
-  answer: Generally, you cannot and should not download private or restricted Loom videos. These are protected by privacy settings and attempting to bypass these restrictions may violate terms of service and privacy laws. Only download publicly available content that you have permission to save.
+- question: How do I download a Loom recording with this extension?
+  answer: Open the Loom share page or embedded player, click the downloader icon,
+    enter a password if prompted, choose your preferred quality, and let the queue
+    finish. The MP4 saves with the original recording name.
+- question: Does it support password-protected Loom links?
+  answer: Yes. The extension prompts for the share password, uses it for that session
+    only, and never stores the credential.
+- question: Can I queue multiple Loom recordings?
+  answer: You can add several recordings to the queue and the downloader will process
+    them sequentially, keeping you within Loom’s rate limits.
+- question: Which browsers work with Loom Video Downloader?
+  answer: Versions are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux. Safari is not supported.
+- question: Do captions or transcripts download with the video?
+  answer: Loom’s automated captions aren’t exported. The tool focuses on delivering
+    a clean MP4; download transcripts separately from Loom if required.
+- question: Why does it need offscreen access?
+  answer: Loom often streams recordings via HLS or DASH. Offscreen processing lets
+    the extension merge those segments into an MP4 without freezing your browser.
+- question: Is my data private?
+  answer: All detection and conversion happen locally. Only licence checks touch remote
+    servers, and the extension never stores your passwords or viewing history.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Loom Video Downloader
+- name: Rowan Blake
+  title: Passworded recordings finally easy
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Loom Video Downloader lets me pull everything
-    from Loom in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Loom downloads
+  date: 2025-02-20
+  review: Clients lock every Loom share with a password. This prompts once, downloads
+    the MP4, and I never have to chase them for access again.
+- name: Talia Mendes
+  title: Handles embedded Loom players
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Loom used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Loom content
+  date: 2025-03-01
+  review: Our documentation embeds Loom everywhere. The queue converts each HLS stream
+    flawlessly and names files so I can edit them immediately.
+- name: Gregor Hale
+  title: Must-have for async teams
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Loom assets for clients and the batch features in Loom Video
-    Downloader keep our workflows smooth. Totally worth the price.
+  date: 2025-01-27
+  review: We archive standups and training in batches. Notifications let me run downloads
+    in the background without babysitting.
 supported_operating_systems:
 - windows
 - mac
@@ -142,6 +137,9 @@ keywords:
 - loom video downloader
 - download loom videos
 - loom offline access
+- password protected loom download
+- save loom share link
+- loom batch downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -159,28 +157,42 @@ layout_type: marketplace
 new_release: true
 permission_justifications:
 - permission: downloads
-  justification: The "downloads" permission is required to save Loom videos directly to the user's computer; without it, files could not be written to local storage.
-- permission: activeTab
-  justification: The "activeTab" permission allows the extension to interact only with the Loom tab the user has activated, ensuring downloads run on the correct page.
+  justification: |
+    Streams the finished MP4 into your downloads folder and keeps queue progress
+    accurate for each Loom recording.
 - permission: storage
-  justification: Local storage keeps user preferences and configuration so the downloader behaves consistently between sessions.
-- permission: notifications
-  justification: Notifications alert users when a download starts, finishes, or encounters an error, providing status feedback without leaving the page.
-- permission: contextMenus
-  justification: Context menu entries let users trigger Loom downloads directly from the right-click menu for faster workflows.
-- permission: clipboardRead
-  justification: Clipboard access lets users paste Loom video URLs straight into the extension, streamlining the download process.
+  justification: |
+    Saves licence activation, queue preferences, and last-used quality locally so
+    the extension stays ready between sessions.
+- permission: activeTab
+  justification: |
+    Detects when a Loom share page or embedded player is open and injects the download
+    controls into that exact tab.
 - permission: tabs
-  justification: Tabs access is needed to confirm the current page is a Loom video before enabling download actions.
+  justification: |
+    Allows queued downloads to continue if you switch tabs and restores the status
+    window when you return.
 - permission: scripting
-  justification: The scripting permission injects lightweight scripts to detect Loom video elements and coordinate downloads.
+  justification: |
+    Reads Loom player data, extracts stream manifests, and coordinates password prompts
+    so recordings can be queued accurately.
+- permission: notifications
+  justification: |
+    Sends completion and error alerts so you know when recordings finish without
+    watching the progress window.
+- permission: contextMenus
+  justification: |
+    Adds a “Download with Loom Video Downloader” option to the right-click menu for
+    quick queueing from any share link.
 - permission: offscreen
-  justification: Offscreen contexts process video transfers in the background so downloads run smoothly without blocking the UI.
+  justification: |
+    Merges HLS and DASH segments into MP4 files in the background, preventing the
+    active tab from freezing during large downloads.
 - permission: cookies
-  justification: Cookie access respects existing Loom authentication, enabling downloads of videos that require the user to be signed in.
-- permission: webNavigation
-  justification: Navigation events help the extension detect when users arrive on Loom video pages so it can present download options at the right moment.
+  justification: |
+    Uses existing Loom session cookies to access private or team-only recordings
+    without asking for your password again.
 - permission: host_permissions
-  justification: Host permissions limited to loom.com and its subdomains enable the extension to detect and download Loom videos directly from Loom properties, without touching other hosts.
-- permission: remote_code
-  justification: No remote code is executed; every script ships with the extension bundle, so nothing external runs at runtime.
+  justification: |
+    Limits privileged access to loom.com, share URLs, and Loom CDNs so the extension
+    only activates where recordings actually live.

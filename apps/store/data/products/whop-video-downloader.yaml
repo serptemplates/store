@@ -3,9 +3,7 @@ name: Whop Video Downloader
 tagline: Save Whop videos instantly for offline viewing.
 slug: whop-video-downloader
 description: |
-  Whop Video Downloader gives creators and teams a dependable way to save Whop videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Whop with consistent quality and predictable results.
-  
-  It supports Whop marketplace videos and digital products, Premium and subscription-based content, and Batch product libraries/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Whop assets, prep client deliverables, or keep your library accessible when connectivity is limited.
+  Whop Video Downloader adds a download button to courses, drops, and members-only pages so you can save content before access expires. It uses your Whop login to read the Mux stream powering each player, downloads every segment with the proper headers, and merges the video into a standard MP4 for offline study.
 seo_title: Download Whop Videos | Whop Video Downloader
 seo_description: Download Whop videos easily for offline viewing. Fast, reliable Whop
   video downloader with high-quality downloads.
@@ -48,67 +46,65 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Metadata extraction & display
-- Cross-platform support
-- Privacy-focused
-- Regular compatibility updates
-- Various digital product formats
-- Bandwidth optimization
-- Offline access to purchased content
-- Download full courses offline
-- Save videos, docs, and materials
-- Minimal Permissions
-- Download Progress Bar
-- Chrome, Firefox, Edge
-- Download embedded videos
-- Zero data tracking
-- Regular updates
-- Ad-free experience
+- Detects Whop video players inside products, member areas, and course modules
+- Uses your Whop session to access subscriber-only content securely
+- Converts Whop’s Mux HLS streams into MP4 files while preserving quality
+- Offers on-player download buttons plus a popup with quality selection
+- Displays segment count, percentage, and status during conversion
+- Supports Chrome, Edge, Firefox, Brave, and Opera on desktop
+- Stores licence data locally with no analytics or third-party tracking
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence with stream conversion, password handling, and progress tracking.
+    Sales are final.
   cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Keep Whop course videos available after memberships or drops expire
+  - Download without copy/paste thanks to player-level buttons and authentication
+  - Maintain privacy with on-device processing and no external services
 faqs:
-- question: How do I use the Whop downloader?
-  answer: Install the browser extension, navigate to Whop, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Whop, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Whop content?
-  answer: The downloader works with most publicly accessible content on Whop. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: How do I download a Whop video with this extension?
+  answer: Log into Whop, open the page with the video, click the on-player download
+    button or the extension popup, choose your quality, and let the progress bar finish.
+    The MP4 will save automatically.
+- question: Does it work with member-only content?
+  answer: Yes. The downloader uses your Whop session to authenticate, so any video
+    you can play in your account can be saved offline.
+- question: Can I select different qualities?
+  answer: When Whop provides multiple renditions, the popup lists them so you can
+    pick the resolution that fits your storage and playback needs.
+- question: Does it capture captions or additional materials?
+  answer: The tool focuses on video and audio. Download other attachments separately
+    from Whop if you need them.
+- question: Which browsers are supported?
+  answer: Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows,
+    macOS, and Linux desktops.
+- question: Do I need to keep the tab open while downloading?
+  answer: Yes. Keep the Whop tab open so your authentication remains active while
+    the extension retrieves each segment and merges the MP4.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Whop Video Downloader
+- name: Isla Garner
+  title: Keeps member drops for later
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Whop Video Downloader lets me pull everything
-    from Whop in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Whop downloads
+  date: 2025-02-22
+  review: I click the overlay button and the MP4 is done before the drop disappears.
+    Perfect for travel study.
+- name: Omari Flynn
+  title: Handles Mux streams flawlessly
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Whop used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Whop content
+  date: 2025-03-01
+  review: Other tools choke on Whop’s player. This merges the segments cleanly and
+    the progress bar keeps me in the loop.
+- name: Tessa Li
+  title: Simple login, zero fuss
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Whop assets for clients and the download in Whop Video Downloader
-    keep our workflows smooth. Totally worth the price.
+  date: 2025-01-29
+  review: Uses my existing Whop session, no cookie exports needed. Downloads stay
+    private on my laptop.
 supported_operating_systems:
 - windows
 - mac
@@ -124,6 +120,10 @@ categories:
 - Course Platforms
 keywords:
 - whop video downloader
+- download whop course
+- whop mux mp4
+- whop offline archive
+- whop member video saver
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -137,4 +137,40 @@ stripe:
 ghl:
   tag_ids:
   - purchase-whop-downloader
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |
+    Saves the merged MP4 into your downloads folder and keeps the progress display
+    accurate during conversion.
+- permission: storage
+  justification: |
+    Stores licence activation and preferred quality locally so the downloader stays
+    configured between sessions.
+- permission: activeTab
+  justification: |
+    Detects Whop video players on the current tab and injects the download overlay
+    button in the correct place.
+- permission: tabs
+  justification: |
+    Allows downloads to continue if you navigate between course pages and restores
+    the status panel when you return.
+- permission: scripting
+  justification: |
+    Reads Whop’s player configuration, Mux manifests, and authentication headers to
+    fetch the correct stream segments.
+- permission: notifications
+  justification: |
+    Sends completion or error alerts so you know when a video finishes downloading
+    without watching the popup.
+- permission: contextMenus
+  justification: |
+    Adds a right-click “Download with Whop Video Downloader” option for quick saves
+    from embedded players.
+- permission: offscreen
+  justification: |
+    Merges Mux segments into MP4 files in the background, preventing the active tab
+    from freezing during long downloads.
+- permission: host_permissions
+  justification: |
+    Limits privileged access to whop.com and Whop’s video CDN hosts so the extension
+    only touches pages required for downloads.

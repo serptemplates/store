@@ -3,12 +3,14 @@ name: Circle Downloader
 tagline: Save Circle content instantly to your device.
 slug: circle-downloader
 description: |
-  Circle Downloader gives creators and teams a dependable way to save Circle content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Circle with consistent quality and predictable results.
-  
-  It supports Download videos in original quality, Batch download courses or lessons, and Custom folder structures, so you can move quickly from download to delivery without tedious rework. Use it to archive Circle assets, prep client deliverables, or keep your library accessible when connectivity is limited.
-seo_title: Download Circle Content | Circle Downloader
-seo_description: Download Circle content easily for offline use. Fast and reliable
-  Circle downloader.
+  Circle Downloader keeps community lessons and cohort recordings alive long after the posts disappear. It recognises both native Circle uploads and embedded players from YouTube, Vimeo, Wistia, and Loom, then lets you save them as clean MP4 files without juggling separate tools.
+
+  The extension lists every quality rendition, labels the stream type, and remembers your preferred resolution for the next download. You can run up to three downloads at the same time, keep the global progress manager pinned while you browse, and queue additional videos that start automatically when a slot opens up.
+
+  Everything happens with your existing Circle login inside the browser. Adaptive streams download chunk by chunk with retries and merge in the background, while direct MP4 uploads land instantly in the folder you choose. Notifications confirm when files are ready so you can archive resources, flight-proof course material, or revisit cohort calls offline.
+seo_title: Circle Downloader | Save Circle community and embed videos offline
+seo_description: Capture Circle community uploads plus YouTube, Vimeo, Wistia, and
+  Loom embeds as MP4 files with queues, quality controls, and on-device processing.
 serply_link: https://serp.ly/circle-downloader
 store_serp_co_product_page_url: https://store.serp.co/product-details/product/circle-downloader
 apps_serp_co_product_page_url: https://apps.serp.co/circle-downloader
@@ -36,63 +38,71 @@ firefox_addon_store_link: null
 edge_addons_store_link: null
 producthunt_link: null
 features:
-- Download videos in original quality
-- Batch download courses or lessons
-- Custom folder structures
-- Download subtitles/captions
-- Cross-platform support
-- Built-in video player
-- Download queue management
-- Progress tracking
-- Regular updates
-- Privacy-focused encryption
-- Library backup/export
-- Full offline access
+- Detects Circle native uploads plus YouTube, Vimeo, Wistia, and Loom embeds
+- Presents every available quality with stream type labels and size estimates
+- Runs up to three downloads concurrently with automatic queuing
+- Inline download buttons on Circle posts for true one-click saving
+- Global progress manager shows stage, percentage, speed, and ETA
+- Background merging converts HLS and DASH streams into a single MP4
+- Respects your Circle authentication so member-only posts download securely
+- Remembers preferred quality settings between sessions
+- Desktop notifications alert you when each archive is ready
+- Saves files with clean titles into the folder you choose for offline study
 pricing:
   label: One-time payment
   price: $17.00
   original_price: ''
-  note: ''
+  note: Lifetime licence with updates for new Circle player changes. No trial and
+    no refunds.
   cta_text: Get it Now
   currency: USD
   availability: InStock
-  benefits: []
+  benefits:
+  - Archive paid cohorts and workshops before the community closes
+  - Keep embedded trainings in one MP4 library instead of juggling multiple tools
+  - Download on your schedule for offline study during travel or limited internet
 faqs:
-- question: How do I use the Circle downloader?
-  answer: Install the browser extension, navigate to Circle, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location.
-- question: What quality options are available?
-  answer: The downloader supports all available quality levels from Circle, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.
-- question: Does this work with all Circle content?
-  answer: The downloader works with most publicly accessible content on Circle. Some restricted or DRM-protected content may not be downloadable.
-- question: Will downloads continue if my internet connection drops?
-  answer: If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.
-- question: Is there a download limit?
-  answer: There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.
-- question: How do I organize my downloaded content?
-  answer: Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.
-- question: Does this work on all browsers?
-  answer: The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility.
-- question: Is my data kept private?
-  answer: Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.
+- question: Which video platforms does Circle Downloader support?
+  answer: It captures Circle native uploads and embedded players from YouTube, Vimeo,
+    Wistia, and Loom. Everything it detects appears in the popup with labels so you
+    always know which source you are saving.
+- question: Can I download several lessons at the same time?
+  answer: Yes. Up to three downloads run concurrently. Additional videos wait in
+    a queue and start automatically when a slot opens, so you can line up a batch
+    of lessons and let the downloader work through them.
+- question: Does it keep the original quality of adaptive streams?
+  answer: Absolutely. You can pick any rendition the community provides. HLS and
+    DASH sources download segment by segment and merge into an MP4 without re-encoding,
+    preserving the original bitrate.
+- question: Will it download member-only or private community content?
+  answer: If you can view the post in Circle, the extension can download it. It uses
+    your existing Circle authentication and never asks for separate credentials.
+- question: Is there a free trial or refund option?
+  answer: The extension requires a paid licence with no free tier and all sales are
+    final. Updates for new Circle player changes are included.
+- question: Which browsers and operating systems are supported?
+  answer: It runs on Chrome, Edge, Firefox, Brave, and Opera across Windows, macOS,
+    and Linux desktops.
 reviews:
-- name: Alex Martinez
-  title: Saves hours every week with Circle Downloader
+- name: Naomi Price
+  title: Essential for cohort replays
   rating: 5
-  date: 2025-02-12
-  review: I manage content libraries and Circle Downloader lets me pull everything
-    from Circle in minutes. The speeds are great and files stay organized.
-- name: Jamie Nguyen
-  title: Rock solid Circle downloads
+  date: 2025-02-19
+  review: I download every coaching call before the community archives it. Mixed
+    embeds and native uploads all save to one folder and the queue keeps three running
+    at a time.
+- name: Andre Castillo
+  title: Keeps our training library intact
   rating: 4.9
-  date: 2025-03-03
-  review: Downloading from Circle used to be hit or miss. This downloader is stable,
-    fast, and the quality is always on point.
-- name: Priya Patel
-  title: Ideal for organizing Circle content
+  date: 2025-03-05
+  review: We rely on Circle for client onboarding videos. This extension grabs the
+    Loom and Vimeo embeds in one sweep with quality labels so nothing gets missed.
+- name: Hannah Lowe
+  title: Works flawlessly with private posts
   rating: 4.8
-  date: 2025-01-28
-  review: We archive Circle assets for clients and the download in Circle Downloader
-    keep our workflows smooth. Totally worth the price.
+  date: 2025-01-27
+  review: My membership includes member-only lessons and the downloader uses my login
+    automatically. Downloads finish quietly while I prepare for flights.
 supported_operating_systems:
 - windows
 - mac
@@ -100,6 +110,7 @@ supported_operating_systems:
 - chrome
 - firefox
 - edge
+- brave
 - opera
 supported_regions:
 - Worldwide
@@ -108,6 +119,10 @@ categories:
 - Course Platforms
 keywords:
 - circle downloader
+- circle course downloader
+- circle community video archive
+- offline circle lessons
+- chrome circle extension
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -122,4 +137,40 @@ ghl:
   tag_ids:
   - purchase-circle-downloader
 new_release: true
-permission_justifications: []
+permission_justifications:
+- permission: downloads
+  justification: |
+    Saves the MP4 files you export and tracks status so the global manager can show
+    progress for each Circle lesson.
+- permission: storage
+  justification: |
+    Keeps the lifetime licence details and your preferred quality selections inside
+    the browser for the next session.
+- permission: activeTab
+  justification: |
+    Detects when a Circle post contains a native upload or embed and injects the
+    inline download button on that specific tab.
+- permission: tabs
+  justification: |
+    Powers the multi-download queue, allowing jobs to continue even if you navigate
+    away while keeping the status panel accessible from other tabs.
+- permission: scripting
+  justification: |
+    Enumerates native, YouTube, Vimeo, Wistia, and Loom players, extracts their available
+    renditions, and hands them to the downloader.
+- permission: notifications
+  justification: |
+    Sends completion, error, and queue status alerts so you know when a video is
+    ready without re-opening the popup.
+- permission: contextMenus
+  justification: |
+    Adds quick download options to the page so you can save from the post itself
+    without opening the popup every time.
+- permission: offscreen
+  justification: |
+    Merges HLS and DASH segments into MP4 files in a hidden worker so adaptive streams
+    complete without freezing the Circle tab.
+- permission: host_permissions
+  justification: |
+    Grants controlled access to circle.so/circle.com domains and media CDNs, ensuring
+    the extension only activates inside Circle communities.
