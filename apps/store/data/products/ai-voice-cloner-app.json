@@ -14,7 +14,7 @@
   "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   "cancel_url": "https://apps.serp.co/checkout?product=ai-voice-cloner-app",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/ai-voice-cloner-app.jpg",
+  "featured_image": null,
   "featured_image_gif": null,
   "screenshots": [
     {

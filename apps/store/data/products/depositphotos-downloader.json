@@ -14,7 +14,7 @@
   "cancel_url": "https://apps.serp.co/checkout?product=depositphotos-downloader",
   "status": "pre_release",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/depositphotos-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/depositphotos-downloader/main/images/depositphotos-downloader.gif",
+  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/depositphotos-downloader.jpg",

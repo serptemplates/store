@@ -15,7 +15,7 @@
   "cancel_url": "https://apps.serp.co/checkout?product=tnaflix-video-downloader",
   "status": "live",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/tnaflix-video-downloader/main/images/tnaflix-video-downloader.gif",
+  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg",
