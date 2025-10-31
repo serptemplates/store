@@ -99,6 +99,7 @@ const DEFAULT_BADGE_PALETTE: BadgePalette = {
 const CATEGORY_SYNONYMS: Record<string, string> = {
   audio: "audio",
   "audio downloader": "audio",
+  "audio downloaders": "audio",
   "audio production": "audio",
   music: "audio",
   comics: "comics",
@@ -109,11 +110,13 @@ const CATEGORY_SYNONYMS: Record<string, string> = {
   "image": "image hosting",
   images: "image hosting",
   "image downloader": "image hosting",
+  "image downloaders": "image hosting",
   enterprise: "enterprise",
   social: "social media",
   "stock media": "creative assets",
   video: "movies & tv",
   "video downloader": "downloader",
+  "video downloaders": "downloader",
 };
 
 function normalizeCategory(category?: string): string {

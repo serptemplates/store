@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef } from "react";
+import type { ReactNode } from "react";
 import HeroMedia, { type HeroMediaHandle } from "./hero-media";
 import { Button } from "@repo/ui";
 import { getYoutubeThumbnail, useHeroTitle } from "../utils";
@@ -22,9 +23,10 @@ type HeroProps = {
   highlight?: string;
   links?: HeroLink[];
   media?: HeroMediaProps["items"];
+  eyebrow?: ReactNode;
 };
 
-const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
+const Hero = ({ title, description, highlight, links, media, eyebrow }: HeroProps) => {
   const mediaRef = useRef<HeroMediaHandle>(null);
 
   const processedMedia = useMemo(() => {
@@ -69,6 +71,7 @@ const Hero = ({ title, description, highlight, links, media }: HeroProps) => {
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col items-center gap-6">
+              {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
               <Title title={title} highlight={highlight} />
               {description && description.trim().length > 0 && (
                 <p className="text-base text-balance text-center font-medium leading-relaxed text-gray-700 md:text-xl md:max-w-3xl">
