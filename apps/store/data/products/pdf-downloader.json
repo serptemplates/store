@@ -1,0 +1,164 @@
+{
+  "platform": "Pdf",
+  "name": "Pdf Downloader",
+  "tagline": "Save Pdf documents instantly for offline reading.",
+  "slug": "pdf-downloader",
+  "description": "Pdf Downloader gives creators and teams a dependable way to save Pdf documents instantly for offline reading. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pdf with consistent quality and predictable results.\n\nIt supports PDF documents from various sources, Batch processing for document collections, and Auto metadata extraction and indexing, so you can move quickly from download to delivery without tedious rework. Use it to archive Pdf assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Pdf Downloader | Download Pdf Documents",
+  "seo_description": "Download Pdf documents for offline reading. Fast and reliable document downloader.",
+  "serply_link": "https://serp.ly/pdf-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pdf-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/pdf-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/pdf-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=pdf-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pdf-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/pdf-downloader/main/images/pdf-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pdf-downloader.jpg",
+      "alt": "Pdf Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/pdf-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "PDF documents from various sources",
+    "Batch processing for document collections",
+    "Auto metadata extraction and indexing",
+    "Resume downloads",
+    "Cross-platform support",
+    "PDF viewer",
+    "Organize by category or source",
+    "Duplicate detection and document management",
+    "Search document libraries",
+    "Integrates with document management systems",
+    "Export capabilities for different formats",
+    "Local-only storage for privacy",
+    "Regular compatibility updates",
+    "Password-protected documents",
+    "Bandwidth-efficient downloads",
+    "Progress tracking for large document collections",
+    "Backup & sync",
+    "Optical Character Recognition (OCR) integration",
+    "Smart organization"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the Pdf downloader?",
+      "answer": "Install the browser extension, navigate to Pdf, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from Pdf, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all Pdf content?",
+      "answer": "The downloader works with most publicly accessible content on Pdf. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Pdf Downloader lets me pull everything from Pdf in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Pdf Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Pdf used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Pdf downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Pdf assets for clients and the download in Pdf Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Pdf content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader"
+  ],
+  "keywords": [
+    "pdf downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/cNi6ozbmMe4K7L550D0VO0M",
+    "test_url": "https://buy.stripe.com/test_aFa8wH2Qg1hYfdxct50VO0N"
+  },
+  "stripe": {
+    "price_id": "price_1S99g006JrOmKRCmVzelEW6H",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6HOiUUVHSA9S"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-pdf-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

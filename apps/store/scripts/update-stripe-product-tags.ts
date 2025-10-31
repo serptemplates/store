@@ -1,17 +1,16 @@
 #!/usr/bin/env tsx
 /* eslint-disable no-console */
 
-import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import { parse } from "yaml";
+import fs from "node:fs";
+import { getAllProducts } from "../lib/products/product";
 
 const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
 const REPO_ROOT = path.resolve(__dirname, "../../..");
-const PRODUCTS_DIR = path.join(REPO_ROOT, "apps/store/data/products");
 
 function loadEnvFiles() {
   const candidates = [
@@ -83,24 +82,10 @@ function createStripeClients(): StripeClient[] {
   return clients;
 }
 
-type ProductYaml = {
-  slug?: unknown;
-  ghl?: { tag_ids?: unknown };
-  stripe?: {
-    price_id?: unknown;
-    test_price_id?: unknown;
-    metadata?: Record<string, unknown> | null | undefined;
-  };
-};
-
 async function updateStripeProducts() {
-  if (!fs.existsSync(PRODUCTS_DIR)) {
-    throw new Error(`Products directory not found at ${PRODUCTS_DIR}`);
-  }
-
-  const files = fs.readdirSync(PRODUCTS_DIR).filter((file) => /\.ya?ml$/i.test(file));
-  if (files.length === 0) {
-    console.log("No product YAML files found. Nothing to update.");
+  const products = getAllProducts();
+  if (products.length === 0) {
+    console.log("No product records found. Nothing to update.");
     return;
   }
 
@@ -111,19 +96,18 @@ async function updateStripeProducts() {
   let priceUpdatesApplied = 0;
   let priceWarnings = 0;
 
-  for (const file of files) {
-    const absolutePath = path.join(PRODUCTS_DIR, file);
-    const raw = fs.readFileSync(absolutePath, "utf8");
-    const data = parse(raw) as ProductYaml;
-
-    const slug = typeof data.slug === "string" ? data.slug : file.replace(/\.ya?ml$/i, "");
-    const tagIds = Array.isArray(data.ghl?.tag_ids) ? data.ghl?.tag_ids : [];
+  for (const product of products) {
+    const slug = product.slug;
+    const tagIds = Array.isArray(product.ghl?.tag_ids) ? product.ghl?.tag_ids : [];
     const primaryTag = typeof tagIds[0] === "string" && tagIds[0].trim().length > 0 ? tagIds[0].trim() : undefined;
-    const stripeProductId = typeof data.stripe?.metadata?.stripe_product_id === "string"
-      ? data.stripe?.metadata?.stripe_product_id
-      : undefined;
-    const livePriceId = typeof data.stripe?.price_id === "string" ? data.stripe.price_id.trim() : undefined;
-    const testPriceId = typeof data.stripe?.test_price_id === "string" ? data.stripe.test_price_id.trim() : undefined;
+    const stripeProductId =
+      typeof product.stripe?.metadata?.stripe_product_id === "string"
+        ? product.stripe.metadata.stripe_product_id.trim()
+        : undefined;
+    const livePriceId =
+      typeof product.stripe?.price_id === "string" ? product.stripe.price_id.trim() : undefined;
+    const testPriceId =
+      typeof product.stripe?.test_price_id === "string" ? product.stripe.test_price_id.trim() : undefined;
     const priceIds = [livePriceId, testPriceId].filter(
       (value): value is string => typeof value === "string" && value.length > 0,
     );

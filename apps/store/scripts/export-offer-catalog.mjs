@@ -2,8 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { parse } from "yaml";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -20,10 +18,7 @@ if (!fs.existsSync(docsDir)) {
   fs.mkdirSync(docsDir, { recursive: true });
 }
 
-const files = fs
-  .readdirSync(productsDir)
-  .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-  .sort();
+const files = fs.readdirSync(productsDir).filter((file) => file.toLowerCase().endsWith(".json")).sort();
 
 const headers = [
   "slug",
@@ -58,7 +53,14 @@ const rows = [headers.join(",")];
 for (const file of files) {
   const filePath = path.join(productsDir, file);
   const raw = fs.readFileSync(filePath, "utf8");
-  const data = parse(raw) ?? {};
+  let data = {};
+
+  try {
+    data = JSON.parse(raw) ?? {};
+  } catch (error) {
+    console.error(`Failed to parse ${filePath} as JSON:`, error);
+    continue;
+  }
 
   const pricing = data.pricing ?? {};
   const stripe = data.stripe ?? {};

@@ -1,0 +1,186 @@
+{
+  "platform": "123rf",
+  "name": "123rf Downloader",
+  "tagline": "Save 123rf images and content instantly to your device.",
+  "slug": "123rf-downloader",
+  "description": "123rf Downloader helps designers and teams download and archive 123rf royalty‑free images, vectors and high‑resolution assets for offline use and editing. It supports batch exports for project collections, preserves metadata and keyword tags, and can export license and usage information to help with compliance tracking.\n\nThe tool offers resume-on-failure, an image viewer, and CLI integration for inclusion in design workflows. Use it to assemble project libraries, prepare client deliverables, or back up purchased/free assets while respecting 123rf licensing terms and usage restrictions.",
+  "seo_title": "123rf Downloader | Download 123rf Images",
+  "seo_description": "Download 123rf images and graphics for offline use. Fast and reliable 123rf content downloader.",
+  "serply_link": "https://serp.ly/123rf-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123rf-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/123rf-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/123rf-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68dfb074219709c521e2638c",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=123rf-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123rf-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/123rf-downloader/main/images/featured.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123rf-downloader.jpg",
+      "alt": "123rf Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/123rf-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Royalty-free stock images and vectors",
+    "Batch processing for creative project collections",
+    "Various image formats and resolutions",
+    "Auto metadata extraction and keyword tagging",
+    "Organize by project/usage rights",
+    "Resume downloads with recovery",
+    "Cross-platform support",
+    "Image viewer",
+    "Design workflow CLI",
+    "Integrates with creative software applications",
+    "Export image data/license information",
+    "Search capabilities across stock image libraries",
+    "Local-only storage for privacy",
+    "Regular compatibility updates",
+    "High-res downloads",
+    "Bandwidth management for large image collections",
+    "Backup & sync",
+    "Smart categorization",
+    "License compliance tracking and management",
+    "Professional workflow integration features"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the 123rf downloader?",
+      "answer": "Install the browser extension, navigate to 123rf, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from 123rf, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all 123rf content?",
+      "answer": "The downloader works with most publicly accessible content on 123rf. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and 123rf Downloader lets me pull everything from 123rf in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with 123rf Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from 123rf used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid 123rf downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive 123rf assets for clients and the download in 123rf Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing 123rf content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Creative Assets",
+    "Image Hosting",
+    "Image Downloader"
+  ],
+  "keywords": [
+    "123rf downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/8x29ALaiId0Ge9t9gT0VO02",
+    "test_url": "https://buy.stripe.com/test_28EbITfD22m23uPbp10VO01"
+  },
+  "stripe": {
+    "price_id": "price_1S99wh06JrOmKRCmViWhNpBg",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6GU0QSzFNUOd"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-123rf-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Required so the extension can transfer high-resolution 123rf assets directly to the user's device, keep download queues in sync, and resume failed transfers without manual retries."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Lets the extension confirm the user is browsing a 123rf page, collect the current asset metadata, and inject the download controls in the right context."
+    },
+    {
+      "permission": "storage",
+      "justification": "Persists activation details, preferred export formats, and batch queue settings so creative teams do not lose their configuration between browser sessions."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Enables lightweight desktop alerts that confirm when large asset batches complete or if a download encounters an error and needs attention."
+    }
+  ],
+  "brand": "SERP Apps"
+}

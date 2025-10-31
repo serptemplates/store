@@ -1,0 +1,207 @@
+{
+  "platform": "Youporn",
+  "name": "Youporn Video Downloader",
+  "tagline": "Save Youporn videos instantly for offline viewing.",
+  "slug": "youporn-video-downloader",
+  "description": "YouPorn Video Downloader analyses each video page, pulls every quality option YouPorn exposes, and saves the stream as an MP4—whether it’s a direct file or an HLS playlist. Just pick your resolution, let the extension handle headers and conversion, and the finished video lands in your downloads folder ready for offline viewing.",
+  "seo_title": "Youporn Video Downloader | Download Youporn Videos",
+  "seo_description": "Download Youporn videos easily for offline viewing. Fast, reliable Youporn video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/youporn-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youporn-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/youporn-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/youporn-video-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68e021c467ee3b4be4699b6e",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=youporn-video-downloader",
+  "status": "live",
+  "featured_image": "/media/products/youporn-video-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot1.webp",
+      "alt": "Youporn Video Downloader website preview"
+    },
+    {
+      "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot2.webp",
+      "alt": "Youporn Video Downloader workflow overview"
+    },
+    {
+      "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot3.webp",
+      "alt": "Queue of Youporn downloads ready for export"
+    },
+    {
+      "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot4.webp",
+      "alt": "Download quality selection controls for Youporn videos"
+    },
+    {
+      "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot5.webp",
+      "alt": "Youporn Video Downloader automation settings panel"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/youporn-video-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Parses YouPorn pages to uncover full quality lists, including hidden HD variants",
+    "Downloads direct MP4 files when available and converts HLS streams when necessary",
+    "Labels each option with resolution, format, and estimated size for easy selection",
+    "Shows real-time progress and status, including conversion stages for streaming sources",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop with local-only processing",
+    "Stores licence data locally with no analytics or third-party routing"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with dual MP4/HLS workflow and progress tracking. Sales are final.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Save YouPorn videos in the exact quality you want without external sites",
+      "Capture streams even when only HLS playback is available",
+      "Keep downloads private thanks to 100% on-device processing"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I download a YouPorn video with this extension?",
+      "answer": "Open the video, click the downloader icon, choose the format/resolution you prefer, and keep the tab open while the progress bar completes. The MP4 saves automatically."
+    },
+    {
+      "question": "What happens if only streaming formats are available?",
+      "answer": "The downloader detects when only HLS is present, fetches the segments, and merges them into a standard MP4 without any extra steps from you."
+    },
+    {
+      "question": "Can I queue multiple downloads?",
+      "answer": "Downloads run one at a time so conversion stays reliable. Start the next video once the current download finishes."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Does it change the video or remove watermarks?",
+      "answer": "No. The tool saves the original content exactly as YouPorn provides it—whether that’s a direct MP4 or the merged result of a stream."
+    },
+    {
+      "question": "Is my activity private?",
+      "answer": "All detection and conversion happens locally. The extension only validates your licence and never uploads viewing or download history."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Evan Shore",
+      "review": "When MP4 wasn’t available it switched to HLS and still delivered a perfect file. No manual work required.",
+      "title": "Streaming fallback is clutch",
+      "rating": 5,
+      "date": "2025-02-18"
+    },
+    {
+      "name": "Lana Ortiz",
+      "review": "Tells me if an option is direct MP4 or streaming. I grab 1080p every time and it never fails.",
+      "title": "Quality labels make choosing easy",
+      "rating": 4.9,
+      "date": "2025-03-01"
+    },
+    {
+      "name": "Darius Cole",
+      "review": "Progress stays accurate and the final video plays flawlessly on my tablet.",
+      "title": "Dependable for offline viewing",
+      "rating": 4.8,
+      "date": "2025-01-30"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "youporn video downloader",
+    "download youporn mp4",
+    "youporn hls converter",
+    "youporn offline videos",
+    "youporn quality selector"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/eVq7sDcqQ0dUaXh1Or0VO1T",
+    "test_url": "https://buy.stripe.com/test_3cI8wHbmM7Gm5CXeBd0VO1S"
+  },
+  "stripe": {
+    "price_id": "price_1SO0fL06JrOmKRCmmSnOmBwT",
+    "metadata": {
+      "stripe_product_id": "prod_SrFXRIL4LAgGyt"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-youporn-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Streams the final MP4 to your downloads folder and keeps the progress display\nin sync for each video."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores licence activation, preferred quality, and conversion settings locally\nso the downloader stays configured between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects the YouPorn player on the page you’re viewing and injects the quality/format\nselector."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Allows the extension to refresh download options as you navigate between videos\nwithout losing progress."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Extracts video metadata, MP4 URLs, and HLS manifests from the player so the downloader\ncan fetch the correct stream."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Sends completion and error alerts so you know when a download finishes or needs\nattention."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds an optional right-click “Download with YouPorn Video Downloader” menu item\nfor quick saves."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Merges HLS segments into MP4 files in the background, keeping the active tab responsive\nduring conversion."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Grants scoped access to youporn.com and related CDN domains required to retrieve\nvideo files."
+    }
+  ],
+  "brand": "SERP Apps"
+}

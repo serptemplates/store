@@ -5,7 +5,7 @@ Stripe Payment Links now own all post-purchase offers. We no longer maintain ord
 ## What changed
 
 - Cross-sell / “order bump” offers are configured directly in the Stripe Dashboard.
-- Product YAML under `apps/store/data/products/*.yaml` should omit the `order_bump` block; any legacy entries can be removed without impacting the hosted flow.
+- Product JSON under `apps/store/data/products/*.json` should omit the `order_bump` block; any legacy entries can be removed without impacting the hosted flow.
 - Checkout metadata emitted by the storefront excludes `orderBump*` keys. Downstream systems should rely on Stripe’s `after_completion` settings or Dashboard reporting for upsell performance.
 
 ## Stripe configuration

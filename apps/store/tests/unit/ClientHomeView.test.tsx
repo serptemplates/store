@@ -96,7 +96,7 @@ describe("ClientHomeView", () => {
         { question: "How does it work?", answer: "Click the download button on any page." },
       ],
       reviews: [
-        { name: "Morgan", review: "Super helpful for our content team." },
+        { name: "Morgan", review: "Super helpful for our content team.", rating: 4.9 },
       ],
       pricing: {
         price: "$27",

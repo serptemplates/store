@@ -68,9 +68,6 @@ importers:
       vaul:
         specifier: ^0.9.9
         version: 0.9.9(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      yaml:
-        specifier: ^2.6.1
-        version: 2.8.1
     devDependencies:
       globals:
         specifier: ^16.4.0
@@ -150,9 +147,6 @@ importers:
       sanitize-html:
         specifier: ^2.17.0
         version: 2.17.0
-      yaml:
-        specifier: ^2.6.1
-        version: 2.8.1
       zod:
         specifier: ^3.25.76
         version: 3.25.76
@@ -2708,8 +2702,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@141.0.4:
-    resolution: {integrity: sha512-pUpriiZRn+JXkBud54eTnhFwp2hRc9B7szSk7smN7swsqQq8aK9Q6WGeV8RcTpYqaZ+4/gMIUaZAUqe1Ds4W1w==}
+  chromedriver@142.0.0:
+    resolution: {integrity: sha512-BlMMPFOKAOYOT23tjtAjvci57gyYcasKqd/3yGKOjGMEbFZa5kfwoNcUzwL/5ugZ932MJX1fW/j8zk5KD5mHBw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -6615,7 +6609,7 @@ snapshots:
     dependencies:
       '@axe-core/webdriverjs': 4.10.2(selenium-webdriver@4.22.0(bufferutil@4.0.9))
       axe-core: 4.10.3
-      chromedriver: 141.0.4
+      chromedriver: 142.0.0
       colors: 1.4.0
       commander: 9.5.0
       dotenv: 16.6.1
@@ -9037,7 +9031,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@141.0.4:
+  chromedriver@142.0.0:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.12.2

@@ -21,7 +21,8 @@
   "properties": {
     "slug": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "pattern": "^[a-z0-9-]+$"
     },
     "platform": {
       "type": "string",
@@ -101,8 +102,15 @@
       "minLength": 1
     },
     "github_repo_url": {
-      "type": "string",
-      "format": "uri"
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "chrome_webstore_link": {
       "anyOf": [
@@ -219,7 +227,8 @@
         "properties": {
           "url": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "pattern": "^(https?://|/)"
           },
           "alt": {
             "type": "string"
@@ -412,8 +421,7 @@
         },
         "currency": {
           "type": "string",
-          "minLength": 3,
-          "maxLength": 3
+          "pattern": "^[A-Z]{3}$"
         },
         "availability": {
           "type": "string",
@@ -534,11 +542,13 @@
       "properties": {
         "price_id": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "pattern": "^price_"
         },
         "test_price_id": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "pattern": "^price_"
         },
         "mode": {
           "type": "string",

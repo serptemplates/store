@@ -7,12 +7,11 @@ import process from "node:process";
 
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import { isMap, parse, parseDocument, YAMLMap } from "yaml";
-
 import {
   createStripePaymentLinkMetadata,
   type StripePaymentLinkMetadata,
 } from "@/lib/stripe/payment-link-metadata";
+import { STRIPE_FIELD_ORDER } from "@/lib/products/product-schema";
 
 const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
 const REPO_ROOT = path.resolve(__dirname, "../../..");
@@ -24,7 +23,7 @@ const SUCCESS_REDIRECT_BASE =
 
 type StripeMode = "live" | "test";
 
-type ProductYaml = {
+type ProductDocument = {
   slug?: unknown;
   name?: unknown;
   success_url?: unknown;
@@ -95,6 +94,79 @@ const LOG_PATH = path.join(
   MODE === "test" ? `${LOG_BASENAME}-test.md` : `${LOG_BASENAME}.md`,
 );
 
+const PAYMENT_LINK_FIELD_ORDER = ["live_url", "test_url", "ghl_url"] as const;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function orderObject(
+  record: Record<string, unknown>,
+  order: readonly string[],
+): Record<string, unknown> {
+  const ordered: Record<string, unknown> = {};
+  const visited = new Set<string>();
+
+  for (const key of order) {
+    if (Object.prototype.hasOwnProperty.call(record, key)) {
+      ordered[key] = record[key];
+      visited.add(key);
+    }
+  }
+
+  const remaining = Object.keys(record)
+    .filter((key) => !visited.has(key))
+    .sort((a, b) => a.localeCompare(b));
+
+  for (const key of remaining) {
+    ordered[key] = record[key];
+  }
+
+  return ordered;
+}
+
+function orderPlainRecord(record: Record<string, unknown>): Record<string, unknown> {
+  return orderObject(record, []);
+}
+
+function orderPaymentLinkRecord(record: Record<string, unknown>): Record<string, unknown> {
+  return orderObject(record, PAYMENT_LINK_FIELD_ORDER);
+}
+
+function orderStripeRecord(record: Record<string, unknown>): Record<string, unknown> {
+  const ordered = orderObject(record, STRIPE_FIELD_ORDER);
+  const metadata = ordered.metadata;
+
+  if (isRecord(metadata)) {
+    ordered.metadata = orderPlainRecord(metadata);
+  }
+
+  return ordered;
+}
+
+function updateProductDocument(
+  filePath: string,
+  updater: (document: Record<string, unknown>) => boolean,
+): void {
+  const raw = fs.readFileSync(filePath, "utf8");
+  let document: Record<string, unknown>;
+
+  try {
+    document = JSON.parse(raw) as Record<string, unknown>;
+  } catch (error) {
+    throw new Error(
+      `Failed to parse ${filePath} as JSON: ${(error instanceof Error && error.message) || String(error)}`,
+    );
+  }
+
+  const changed = updater(document);
+  if (!changed) {
+    return;
+  }
+
+  fs.writeFileSync(filePath, `${JSON.stringify(document, null, 2)}\n`, "utf8");
+}
+
 function loadEnvFiles() {
   const candidates = [
     path.resolve(process.cwd(), ".env.local"),
@@ -115,16 +187,6 @@ function loadEnvFiles() {
 
 loadEnvFiles();
 
-function updateYamlFile(filePath: string, updater: (doc: import("yaml").Document) => void) {
-  const raw = fs.readFileSync(filePath, "utf8");
-  const doc = parseDocument(raw);
-  updater(doc);
-  const output = doc.toString({
-    lineWidth: 0,
-  });
-  fs.writeFileSync(filePath, output, "utf8");
-}
-
 function upsertPaymentLinkUrl({
   filePath,
   variant,
@@ -134,19 +196,31 @@ function upsertPaymentLinkUrl({
   variant: "live" | "test" | "ghl";
   url: string;
 }) {
-  updateYamlFile(filePath, (doc) => {
-    const existingNode = doc.get("payment_link");
-    let paymentLinkMap: YAMLMap;
+  const key = variant === "ghl" ? "ghl_url" : `${variant}_url`;
 
-    if (isMap(existingNode)) {
-      paymentLinkMap = existingNode;
-    } else {
-      paymentLinkMap = new YAMLMap();
-      doc.set("payment_link", paymentLinkMap);
+  updateProductDocument(filePath, (document) => {
+    const current = isRecord(document.payment_link)
+      ? (document.payment_link as Record<string, unknown>)
+      : {};
+    const canonicalBefore = isRecord(document.payment_link)
+      ? orderPaymentLinkRecord(current)
+      : null;
+
+    const existing = { ...current };
+    if (current[key] !== url) {
+      existing[key] = url;
     }
 
-    const key = `${variant}_url`;
-    paymentLinkMap.set(key, url);
+    const canonicalAfter = orderPaymentLinkRecord(existing);
+    const changed =
+      canonicalBefore === null ||
+      JSON.stringify(canonicalBefore) !== JSON.stringify(canonicalAfter);
+
+    if (changed) {
+      document.payment_link = canonicalAfter;
+    }
+
+    return changed;
   });
 }
 
@@ -159,30 +233,34 @@ function upsertStripeTestIdentifiers({
   testPriceId: string;
   testProductId: string;
 }) {
-  updateYamlFile(filePath, (doc) => {
-    const stripeNode = doc.get("stripe");
-    let stripeMap: YAMLMap;
+  updateProductDocument(filePath, (document) => {
+    const stripe = isRecord(document.stripe)
+      ? { ...(document.stripe as Record<string, unknown>) }
+      : {};
 
-    if (isMap(stripeNode)) {
-      stripeMap = stripeNode;
-    } else {
-      stripeMap = new YAMLMap();
-      doc.set("stripe", stripeMap);
+    let changed = false;
+
+    if (stripe.test_price_id !== testPriceId) {
+      stripe.test_price_id = testPriceId;
+      changed = true;
     }
 
-    stripeMap.set("test_price_id", testPriceId);
+    const metadata = isRecord(stripe.metadata)
+      ? { ...(stripe.metadata as Record<string, unknown>) }
+      : {};
 
-    const metadataNode = stripeMap.get("metadata");
-    let metadataMap: YAMLMap;
-
-    if (isMap(metadataNode)) {
-      metadataMap = metadataNode;
-    } else {
-      metadataMap = new YAMLMap();
-      stripeMap.set("metadata", metadataMap);
+    if (metadata.test_stripe_product_id !== testProductId) {
+      metadata.test_stripe_product_id = testProductId;
+      changed = true;
     }
 
-    metadataMap.set("test_stripe_product_id", testProductId);
+    if (!changed) {
+      return false;
+    }
+
+    stripe.metadata = orderPlainRecord(metadata);
+    document.stripe = orderStripeRecord(stripe);
+    return true;
   });
 }
 
@@ -248,7 +326,7 @@ function getPrimaryTag(tags: unknown): string | null {
   return null;
 }
 
-function derivePricingInfo(data: ProductYaml): PriceInfo | null {
+function derivePricingInfo(data: ProductDocument): PriceInfo | null {
   const priceValue = coerceString(data.pricing?.price);
   if (!priceValue) {
     return null;
@@ -285,7 +363,7 @@ function loadProducts(): ProductRecord[] {
 
   const files = fs
     .readdirSync(PRODUCTS_DIR)
-    .filter((file) => file.toLowerCase().endsWith(".yaml"))
+    .filter((file) => file.toLowerCase().endsWith(".json"))
     .sort();
 
   const products: ProductRecord[] = [];
@@ -293,11 +371,20 @@ function loadProducts(): ProductRecord[] {
   for (const file of files) {
     const absolutePath = path.join(PRODUCTS_DIR, file);
     const raw = fs.readFileSync(absolutePath, "utf8");
-    const data = parse(raw) as ProductYaml;
+    let data: ProductDocument;
+
+    try {
+      data = JSON.parse(raw) as ProductDocument;
+    } catch (error) {
+      console.warn(
+        `⚠️  Skipping ${file}: failed to parse JSON (${(error instanceof Error && error.message) || String(error)})`,
+      );
+      continue;
+    }
 
     const slug =
       coerceString(data.slug) ??
-      file.replace(/\.ya?ml$/i, "").trim().toLowerCase();
+      file.replace(/\.json$/i, "").trim().toLowerCase();
     const name = coerceString(data.name) ?? slug;
     const livePriceId = coerceString(data.stripe?.price_id);
     const testPriceId = coerceString(data.stripe?.test_price_id);

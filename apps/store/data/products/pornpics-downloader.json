@@ -1,0 +1,127 @@
+{
+  "platform": "PornPics",
+  "name": "PornPics Downloader",
+  "tagline": "Download PornPics galleries with full-resolution images.",
+  "slug": "pornpics-downloader",
+  "description": "PornPics Downloader gives researchers and collectors a dependable way to save galleries they are authorized to view. It grabs original-resolution images, preserves album order, and avoids the broken downloads that usually happen with manual saving.\n\nUse it to catalog inspiration sets, prep creative mood boards, or keep personal reference folders ready when you're offline—all while keeping content private on your own storage.",
+  "seo_title": "PornPics Downloader | Download PornPics Galleries",
+  "seo_description": "Download PornPics galleries in full resolution with organized folders. Reliable PornPics downloader for private archives.",
+  "serply_link": "https://serp.ly/pornpics-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pornpics-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/pornpics-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/pornpics-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=pornpics-downloader",
+  "status": "pre_release",
+  "featured_image": null,
+  "featured_image_gif": null,
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "features": [
+    "Save PornPics galleries in original quality without compression",
+    "Preserve album structure, tags, and ordering automatically",
+    "Batch download multiple galleries with duplicate detection",
+    "Local-first design keeps sensitive collections off third-party servers",
+    "Works across Windows, macOS, Linux, and major browsers"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9",
+    "original_price": "$17.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "Will PornPics Downloader keep images in order?",
+      "answer": "Yes. Files save in the same order displayed on PornPics so galleries stay intact."
+    },
+    {
+      "question": "Can I mix multiple galleries in one batch?",
+      "answer": "Add as many gallery URLs as you need; the downloader processes them sequentially and keeps folders separate."
+    },
+    {
+      "question": "Are EXIF details preserved?",
+      "answer": "Available metadata is preserved so you can reference dimensions and timestamps later."
+    },
+    {
+      "question": "Does this bypass paywalls?",
+      "answer": "No. It only downloads galleries you already have permission to access on PornPics."
+    },
+    {
+      "question": "Do you track what I download?",
+      "answer": "No. Downloads stay on your device and we do not collect analytics or usage logs."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Gage Ramirez",
+      "review": "Our creative team pulls references weekly and this downloader keeps every gallery organized automatically.",
+      "title": "Perfect for inspiration boards",
+      "rating": 5,
+      "date": "2025-02-03"
+    },
+    {
+      "name": "Tori Gilles",
+      "review": "Manual saving always reduced quality. PornPics Downloader keeps originals untouched.",
+      "title": "High-res files every time",
+      "rating": 4.9,
+      "date": "2025-03-10"
+    },
+    {
+      "name": "Kaleb Snow",
+      "review": "I maintain a sizeable reference library. Bulk downloads finish fast and never skip images.",
+      "title": "Reliable for large archives",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Images",
+    "Image Downloader"
+  ],
+  "keywords": [
+    "pornpics downloader",
+    "pornpics download tool"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-pornpics-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

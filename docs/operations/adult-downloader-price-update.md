@@ -7,11 +7,11 @@ Use this checklist end-to-end for each adult downloader that needs a price chang
 - [ ] Gather the product name, current price, and any known Stripe product/price IDs before making changes.
 
 ## Identify Targets
-- [ ] Locate the product file: `rg -l -- "- Adult" apps/store/data/products` and select the YAML entry for this downloader.
+- [ ] Locate the product file: `rg -l -- "- Adult" apps/store/data/products` and select the JSON entry for this downloader.
 - [ ] Scan the file for price references (`pricing.price`, `note`, marketing copy) and record the existing Stripe price/checkout identifiers (`stripe_price_id`, `live_url`, etc.).
 
 ## Update Repository Content
-- [ ] Edit the product YAML to drop the public price from `$17`/`$17.00` to `$9`, keeping the formatting style used in that file.
+- [ ] Edit the product JSON to drop the public price from `$17`/`$17.00` to `$9`, keeping the formatting style used in that file.
 - [ ] Update any additional price mentions in the same file (notes, marketing blurbs, CTA copy) so the public story matches the new cost.
 - [ ] Search the codebase for other references to the product’s old price or Stripe identifiers and adjust them: `rg "<OLD_STRIPE_PRICE_ID>"` and `rg "\\$17"`.
 

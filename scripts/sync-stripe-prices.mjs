@@ -4,7 +4,48 @@ import path from "node:path";
 import process from "node:process";
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import { parseDocument, YAMLMap } from "yaml";
+const PRICING_FIELD_ORDER = [
+  "label",
+  "subheading",
+  "price",
+  "original_price",
+  "note",
+  "cta_text",
+  "cta_href",
+  "currency",
+  "availability",
+  "benefits",
+] as const;
+
+function isRecord(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function orderObject(record, order) {
+  const ordered = {};
+  const visited = new Set();
+
+  for (const key of order) {
+    if (Object.prototype.hasOwnProperty.call(record, key)) {
+      ordered[key] = record[key];
+      visited.add(key);
+    }
+  }
+
+  const remaining = Object.keys(record)
+    .filter((key) => !visited.has(key))
+    .sort((a, b) => a.localeCompare(b));
+
+  for (const key of remaining) {
+    ordered[key] = record[key];
+  }
+
+  return ordered;
+}
+
+function orderPricingRecord(record) {
+  return orderObject(record, PRICING_FIELD_ORDER);
+}
 
 const apiVersion = "2024-04-10";
 
@@ -93,9 +134,9 @@ async function main() {
     process.exit(1);
   }
 
-  const files = fs.readdirSync(productsDir).filter((file) => /\.ya?ml$/i.test(file));
+  const files = fs.readdirSync(productsDir).filter((file) => file.toLowerCase().endsWith(".json"));
   if (!files.length) {
-    console.log("ℹ️  No product YAML files found. Nothing to sync.");
+    console.log("ℹ️  No product JSON files found. Nothing to sync.");
     return;
   }
 
@@ -104,16 +145,29 @@ async function main() {
   for (const file of files) {
     const absolutePath = path.join(productsDir, file);
     const raw = fs.readFileSync(absolutePath, "utf8");
-    const doc = parseDocument(raw);
+    let product;
 
-    const stripeNode = doc.get("stripe", true);
-    if (!stripeNode || typeof stripeNode.get !== "function") {
+    try {
+      product = JSON.parse(raw);
+    } catch (error) {
+      console.error(`❌  ${file}: failed to parse JSON (${error instanceof Error ? error.message : String(error)}).`);
+      process.exitCode = 1;
+      continue;
+    }
+
+    if (!isRecord(product)) {
+      console.log(`ℹ️  ${file}: product content is not an object, skipping.`);
+      continue;
+    }
+
+    const stripe = isRecord(product.stripe) ? product.stripe : null;
+    if (!stripe) {
       console.log(`ℹ️  ${file}: no stripe block, skipping.`);
       continue;
     }
 
-    const priceId = stripeNode.get("price_id");
-    if (!priceId || typeof priceId !== "string" || priceId.toUpperCase() === "PLACEHOLDER" || !priceId.startsWith("price_")) {
+    const priceId = typeof stripe.price_id === "string" ? stripe.price_id.trim() : "";
+    if (!priceId || priceId.toUpperCase() === "PLACEHOLDER" || !priceId.startsWith("price_")) {
       console.log(`ℹ️  ${file}: stripe.price_id not set to a real Stripe price, skipping.`);
       continue;
     }
@@ -122,21 +176,20 @@ async function main() {
       const { price } = await fetchPrice(priceId);
       const formatted = formatAmount(price.unit_amount, price.currency);
 
-      let pricingNode = doc.get("pricing", true);
-      if (!pricingNode || typeof pricingNode.get !== "function") {
-        pricingNode = new YAMLMap();
-        doc.set("pricing", pricingNode);
-      }
-
-      const existing = pricingNode.get("price");
+      const pricing = isRecord(product.pricing)
+        ? { ...product.pricing }
+        : {};
+      const existing = typeof pricing.price === "string" ? pricing.price : null;
 
       if (existing === formatted) {
         console.log(`✅  ${file}: price already up to date (${formatted}).`);
         continue;
       }
 
-      pricingNode.set("price", formatted);
-      fs.writeFileSync(absolutePath, doc.toString({ lineWidth: 0 }));
+      pricing.price = formatted;
+      product.pricing = orderPricingRecord(pricing);
+
+      fs.writeFileSync(absolutePath, `${JSON.stringify(product, null, 2)}\n`);
       updatedFiles += 1;
       console.log(`📝  ${file}: price updated to ${formatted}.`);
     } catch (error) {

@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parse } from "yaml";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
@@ -22,12 +21,10 @@ addFormats(ajv);
 
 const validate = ajv.compile(schema);
 
-const productFiles = fs
-  .readdirSync(productsDir)
-  .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"));
+const productFiles = fs.readdirSync(productsDir).filter((file) => file.toLowerCase().endsWith(".json"));
 
 if (productFiles.length === 0) {
-  console.error(`No product YAML files found in ${productsDir}`);
+  console.error(`No product JSON files found in ${productsDir}`);
   process.exit(1);
 }
 
@@ -37,7 +34,14 @@ const nameIndex = new Map();
 for (const file of productFiles) {
   const filePath = path.join(productsDir, file);
   const raw = fs.readFileSync(filePath, "utf8");
-  const data = parse(raw);
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (error) {
+    hasErrors = true;
+    console.error(`\n❌ ${file} failed to parse as JSON: ${(error instanceof Error && error.message) || error}`);
+    continue;
+  }
   const valid = validate(data);
 
   if (!valid) {
