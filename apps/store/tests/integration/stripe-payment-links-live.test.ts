@@ -1,9 +1,9 @@
-import { promises as fs } from "fs";
 import path from "path";
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import { parse } from "yaml";
 import { describe, expect, it } from "vitest";
+import { getAllProducts } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 
 type ProductRecord = {
   slug: string;
@@ -40,48 +40,50 @@ function priceLabelToCents(value: unknown): number | undefined {
   return Math.round(numeric * 100);
 }
 
+function hasStripePaymentLink(
+  link: ProductData["payment_link"],
+): link is { live_url: string; test_url?: string | undefined } {
+  return Boolean(link && typeof link === "object" && "live_url" in link);
+}
+
 async function loadProductRecords(): Promise<ProductRecord[]> {
-  const productsDir = path.resolve(process.cwd(), "data/products");
-  const entries = await fs.readdir(productsDir);
+  const products = getAllProducts();
 
-  const records: ProductRecord[] = [];
+  return products
+    .filter((product) => {
+      const link = product.payment_link;
+      if (!hasStripePaymentLink(link)) {
+        return false;
+      }
 
-  for (const entry of entries) {
-    if (!entry.endsWith(".yaml")) {
-      continue;
-    }
+      const liveUrl = link.live_url;
+      if (typeof liveUrl !== "string" || !liveUrl.startsWith("https://buy.stripe.com/")) {
+        return false;
+      }
 
-    const raw = await fs.readFile(path.join(productsDir, entry), "utf8");
-    const data = parse(raw) as Record<string, unknown> | null;
-    if (!data || typeof data !== "object") {
-      continue;
-    }
+      if (product.status && product.status !== "live") {
+        return false;
+      }
 
-    const record = data as Record<string, unknown>;
+      return true;
+    })
+    .map((product) => {
+      const link = product.payment_link;
+      if (!hasStripePaymentLink(link)) {
+        throw new Error(`Expected Stripe payment link for ${product.slug}`);
+      }
+      const liveUrl = link.live_url;
+      const priceCents = priceLabelToCents(product.pricing?.price);
+      const currency =
+        typeof product.pricing?.currency === "string" ? product.pricing!.currency : undefined;
 
-    const paymentLink = record["payment_link"] as { live_url?: unknown } | undefined;
-    const liveUrl = paymentLink?.live_url;
-    if (typeof liveUrl !== "string" || !liveUrl.startsWith("https://buy.stripe.com/")) {
-      continue;
-    }
-
-    const status = record["status"];
-    if (typeof status === "string" && status !== "live" && status !== "beta") {
-      continue;
-    }
-
-    const pricing = record["pricing"] as { price?: unknown; currency?: unknown } | undefined;
-    const priceCents = priceLabelToCents(pricing?.price);
-
-    records.push({
-      slug: typeof record["slug"] === "string" ? (record["slug"] as string) : entry.replace(/\.yaml$/, ""),
-      liveUrl,
-      priceCents,
-      currency: typeof pricing?.currency === "string" ? pricing.currency : undefined,
+      return {
+        slug: product.slug,
+        liveUrl: liveUrl,
+        priceCents,
+        currency,
+      };
     });
-  }
-
-  return records;
 }
 
 async function mapPaymentLinksByUrl(stripe: Stripe): Promise<Map<string, Stripe.PaymentLink>> {

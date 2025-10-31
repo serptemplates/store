@@ -1,0 +1,166 @@
+{
+  "platform": "Khan",
+  "name": "Khan Academy Downloader",
+  "tagline": "Download Khan Academy course content instantly for offline learning.",
+  "slug": "khan-academy-downloader",
+  "description": "Khan Academy Downloader gives creators and teams a dependable way to download Khan Academy course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Khan with consistent quality and predictable results.\n\nIt supports Complete Khan Academy courses and exercises, Educational videos and interactive content, and Maintain subject hierarchy and lesson structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Khan assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Khan Academy Downloader | Download Khan Academy Courses",
+  "seo_description": "Download Khan Academy courses and videos for offline learning. Fast and reliable course content downloader.",
+  "serply_link": "https://serp.ly/khan-academy-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/khan-academy-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/khan-academy-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/khan-academy-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=khan-academy-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/khan-academy-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/khan-academy-downloader/main/images/khan-academy-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/khan-academy-downloader.jpg",
+      "alt": "Khan Academy Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/khan-academy-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Complete Khan Academy courses and exercises",
+    "Course Platformsal videos and interactive content",
+    "Maintain subject hierarchy and lesson structure",
+    "Practice problems and assessments",
+    "Multi-language subtitle extraction",
+    "Batch download by grade level or subject area",
+    "Resume downloads",
+    "Cross-platform support",
+    "Built-in player with educational controls",
+    "Integrates with classroom management systems",
+    "Export progress reports/achievement data",
+    "Search educational content",
+    "Privacy protection designed for student use",
+    "Regular updates to maintain Khan Academy compatibility",
+    "Custom organization by curriculum standards",
+    "Backup & restore capabilities",
+    "Offline study mode with progress tracking",
+    "Multiple user profiles and accounts",
+    "Integrates"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the Khan downloader?",
+      "answer": "Install the browser extension, navigate to Khan, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from Khan, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all Khan content?",
+      "answer": "The downloader works with most publicly accessible content on Khan. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Khan Academy Downloader lets me pull everything from Khan in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Khan Academy Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Khan used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Khan downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Khan assets for clients and the download in Khan Academy Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Khan content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Course Platforms",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "khan academy downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/9B6dR1cqQ5yefdx0Kn0VO0y",
+    "test_url": "https://buy.stripe.com/test_dRm28j76waSy8P9gJl0VO0z"
+  },
+  "stripe": {
+    "price_id": "price_1S99wx06JrOmKRCmqkFPnN9s",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6HO7CKmlA65g"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-khan-academy-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

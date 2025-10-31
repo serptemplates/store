@@ -4,7 +4,7 @@ This document describes the new marketplace-style product lander, how to enable 
 
 ## Enable per product
 
-Products live in `apps/store/data/products/<slug>.yaml`. Set one of the following to activate the marketplace lander:
+Products live in `apps/store/data/products/<slug>.json`. Set one of the following to activate the marketplace lander:
 
 - `layout_type: "marketplace"` – forces the marketplace lander for this product
 - or `status: "pre_release"` – also uses the marketplace lander automatically
@@ -14,7 +14,7 @@ Other layout options:
 
 Routing logic: `apps/store/app/[slug]/page.tsx` chooses the layout at request time.
 
-## Content sources (YAML)
+## Content sources (JSON)
 
 - Main hero video: first URL in `product_videos` (falls back to `related_videos` where needed for rows)
 - Screenshots: `screenshots` entries (URLs); also uses `featured_image` as a fallback
@@ -59,7 +59,7 @@ We output the same schema set used on the other lander via `ProductStructuredDat
 
 Inputs are passed from the marketplace view:
 
-- `posts`: resolved blog posts matching `related_posts` from product YAML
+- `posts`: resolved blog posts matching `related_posts` from product JSON
 - `images`: `featured_image` + all `screenshots` (absolute URLs)
 - `videoEntries`: all primary + related videos (with embed/thumbnail metadata)
 

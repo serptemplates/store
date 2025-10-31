@@ -1,0 +1,190 @@
+{
+  "platform": "Alpha Porno",
+  "name": "Alpha Porno Video Downloader",
+  "tagline": "Save Alpha Porno videos instantly for offline viewing.",
+  "slug": "alpha-porno-video-downloader",
+  "description": "Alpha Porno Video Downloader zeroes in on alphaporno.com video players so you can save clips for offline viewing in a couple clicks. It scans each page for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide exactly what lands in your downloads folder.\n\nConcurrent downloads mean you can queue multiple clips at once, watch progress bars inline, and keep browsing while the extension finishes its work. A right-click shortcut and compact popup deliver quality selection, speed indicators, and discreet desktop notifications when each file wraps.\n\nLicence activation takes seconds and settings stay local, so nothing leaves your browser beyond a quick licence check. The extension only runs on AlphaPorno domains, keeping the rest of your browsing untouched and your saved copies private.\n\nKeep the source tab open until the merge completes, remember it cannot grab DRM-protected streams, and consider splitting long sessions into batches so your hardware can stitch complex HLS videos without slowing down.",
+  "seo_title": "Alpha Porno Video Downloader | Concurrent downloads for alphaporno.com",
+  "seo_description": "Capture AlphaPorno videos with multi-quality selection, concurrent downloads, and fully local processing for private offline viewing.",
+  "serply_link": "https://serp.ly/alpha-porno-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/alpha-porno-video-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68e07e19613b1b580fce818f",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=alpha-porno-video-downloader",
+  "status": "live",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/alpha-porno-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Purpose-built detection for alphaporno.com MP4 and HLS video streams",
+    "Concurrent download queue so you can save multiple clips at once",
+    "Quality picker that lists every available resolution from 480p through 1080p",
+    "One-click right-click overlay to skip the popup and start downloads instantly",
+    "Inline progress bars and desktop notifications for real-time status",
+    "Runs on Chrome, Edge, Firefox, Brave, Opera, and other supported desktop browsers",
+    "Licence and preferences stored locally with no external tracking or analytics",
+    "Offscreen processing merges HLS chunks in the background without freezing tabs",
+    "Smart retry logic handles dynamic pages and reconnects when mirrors shift",
+    "Site-scoped permissions limit the extension to alphaporno.com domains only"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with unlimited downloads on alphaporno.com. No trial and no refunds.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Save multiple AlphaPorno videos simultaneously without manual babysitting",
+      "Skip developer tools and complicated scripts to find hidden stream URLs",
+      "Keep your offline library private thanks to 100% local processing"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I start a download with Alpha Porno Video Downloader?",
+      "answer": "Install the extension, activate it with your licence key, open any alphaporno.com video, and click either the inline download button or the toolbar icon to pick a quality. Keep the tab open while the progress bar completes and the MP4 will land in your downloads folder."
+    },
+    {
+      "question": "Can it grab more than one video at the same time?",
+      "answer": "Yes. You can launch several downloads in parallel. They continue in the background so you can minimise the tab, and you will receive a notification when each file is ready."
+    },
+    {
+      "question": "Does the downloader work on other adult sites?",
+      "answer": "No. It is intentionally scoped to alphaporno.com and its video servers. Site-specific tuning keeps detection accurate and limits the permissions required."
+    },
+    {
+      "question": "Why does it request scripting, offscreen, and context menu permissions?",
+      "answer": "Scripting reads the video player to collect quality options, offscreen allows the HLS merger to run without freezing your tab, and context menu access powers the right-click download shortcut. Each permission directly supports a core feature."
+    },
+    {
+      "question": "Is there a free version or refund policy?",
+      "answer": "The tool requires a one-time $9 purchase with no free trial and no refunds. Updates for future site changes are included for licence holders."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "The extension runs on Google Chrome, Microsoft Edge, Mozilla Firefox, Brave, and Opera across Windows, macOS, and Linux desktops."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Lena Morrison",
+      "review": "I can queue five clips at once, keep browsing, and every file arrives in the quality I picked. No more hunting for stream URLs by hand.",
+      "title": "Multi-downloads that actually finish",
+      "rating": 5,
+      "date": "2025-02-14"
+    },
+    {
+      "name": "Victor Hale",
+      "review": "Other downloaders miss the main video or grab ads. This one finds every stream instantly and the right-click shortcut is a huge time saver.",
+      "title": "Designed specifically for alphaporno",
+      "rating": 4.9,
+      "date": "2025-03-02"
+    },
+    {
+      "name": "Riya Das",
+      "review": "Everything stays on my machine, the notifications are discreet, and the licence activated in seconds. Worth the price for the convenience.",
+      "title": "Private and reliable",
+      "rating": 4.8,
+      "date": "2025-01-24"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "brave",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "alpha porno video downloader",
+    "alphaporno downloader",
+    "concurrent adult video downloads",
+    "chrome alphaporno extension",
+    "offline alphaporno saver"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/eVq00b2QggcSfdxgJl0VO1y",
+    "test_url": "https://buy.stripe.com/test_8x228jduUd0G1mH3Wz0VO1x"
+  },
+  "stripe": {
+    "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
+    "metadata": {
+      "stripe_product_id": "prod_TAg09llcKpydjr"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-alpha-porno-downloader",
+      "purchase-adult-downloaders"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Saves the MP4 files you select and tracks progress so the popup and inline bars\nstay accurate while each download completes."
+    },
+    {
+      "permission": "storage",
+      "justification": "Retains the lifetime licence key, activation email, and your preferred quality\ndefaults directly inside the browser."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Lets the extension inspect the current AlphaPorno tab to detect embedded video\nplayers and inject the download overlay button."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Required to keep downloads running if you switch tabs or windows and to restore\nprogress indicators when you come back."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Injects lightweight scripts that enumerate available video qualities and trigger\ndownloads without manual URL copying."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Shows discreet desktop alerts when each download completes or if an error needs\nyour attention."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Powers the right-click Download with Alpha Porno Downloader action for instant\nsaves."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Handles HLS chunk merging in a hidden context so your main tab stays responsive\nduring complex downloads."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Limits access to alphaporno.com and its video CDNs, ensuring the extension only\nactivates on supported domains."
+    }
+  ],
+  "brand": "SERP Apps"
+}

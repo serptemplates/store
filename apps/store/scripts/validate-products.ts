@@ -3,9 +3,14 @@ import path from "path"
 import { pathToFileURL } from "url"
 import Stripe from "stripe"
 import dotenv from "dotenv"
-import { parse, parseDocument } from "yaml"
 import { productSchema } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
+import {
+  getProductsDataRoot,
+  getProductsDirectory,
+  resolveProductFilePath,
+  type ProductFileResolution,
+} from "../lib/products/product"
 
 // Load env files from the package directory and fallback to the repository root.
 const envFilenames = [".env.local", ".env"] as const
@@ -175,7 +180,7 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
     return {}
   }
 
-  const manifestDir = path.join(process.cwd(), "data", "prices")
+  const manifestDir = path.join(getProductsDataRoot(), "prices")
   await fs.mkdir(manifestDir, { recursive: true })
 
   const sortedEntries = Object.fromEntries(Object.entries(manifestEntries).sort(([a], [b]) => a.localeCompare(b)))
@@ -197,13 +202,12 @@ export type ValidateProductsResult = {
 export async function validateProducts(options: ValidateProductsOptions = {}): Promise<ValidateProductsResult> {
   const { skipPriceManifest = false } = options
 
-  const productsDir = path.join(process.cwd(), "data", "products")
+  const productsDir = getProductsDirectory()
   const entries = await fs.readdir(productsDir)
-  const yamlFiles = entries.filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
+  const productFiles = entries.filter((file) => file.toLowerCase().endsWith(".json"))
 
   const errors: string[] = []
   const warnings: string[] = []
-  const productSlugs = new Set<string>()
   const referencedStripePriceIds = new Set<string>()
 
   const recordPriceId = (candidate?: unknown) => {
@@ -212,23 +216,34 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
     }
   }
 
-  for (const file of yamlFiles) {
-    const fullPath = path.join(productsDir, file)
-    const raw = await fs.readFile(fullPath, "utf8")
+  const slugsFromFiles = new Set(
+    productFiles.map((file) => file.replace(/\.json$/i, "")).filter((slug) => slug.trim().length > 0),
+  )
 
-    let parsed: unknown
-    const document = parseDocument(raw)
-    if (document.errors.length > 0) {
-      document.errors.forEach((err) => {
-        errors.push(`❌ ${file}: YAML parse error - ${err.message}`)
-      })
+  for (const slug of Array.from(slugsFromFiles).sort((a, b) => a.localeCompare(b))) {
+    let resolution: ProductFileResolution
+    try {
+      resolution = resolveProductFilePath(slug)
+    } catch (error) {
+      errors.push(`❌ ${slug}: Unable to resolve product file - ${(error as Error).message}`)
       continue
     }
 
+    const fileLabel = path.relative(process.cwd(), resolution.absolutePath)
+
+    let raw: string
     try {
-      parsed = parse(raw)
+      raw = await fs.readFile(resolution.absolutePath, "utf8")
     } catch (error) {
-      errors.push(`❌ ${file}: YAML parse error - ${(error as Error).message}`)
+      errors.push(`❌ ${fileLabel}: Failed to read file - ${(error as Error).message}`)
+      continue
+    }
+
+    let parsed: unknown
+    try {
+      parsed = JSON.parse(raw)
+    } catch (error) {
+      errors.push(`❌ ${fileLabel}: JSON parse error - ${(error as Error).message}`)
       continue
     }
 
@@ -236,11 +251,10 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
     try {
       product = productSchema.parse(parsed)
     } catch (error) {
-      errors.push(`❌ ${file}: Schema validation failed - ${(error as Error).message}`)
+      errors.push(`❌ ${fileLabel}: Schema validation failed - ${(error as Error).message}`)
       continue
     }
 
-    productSlugs.add(product.slug)
     recordPriceId(product.stripe?.price_id)
     recordPriceId(product.stripe?.test_price_id)
 
@@ -253,13 +267,13 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
 
     if (activeBadges.length > 1) {
       errors.push(
-        `❌ ${file}: Multiple badge flags set (${activeBadges.join(", ")}). Only one of pre_release (status), new_release, popular is allowed.`,
+        `❌ ${fileLabel}: Multiple badge flags set (${activeBadges.join(", ")}). Only one of pre_release (status), new_release, popular is allowed.`,
       )
     }
 
     if (product.status === "live" && product.waitlist_url) {
       warnings.push(
-        `⚠️  ${file}: Product marked as live but still has a waitlist_url configured. Double-check intended state.`,
+        `⚠️  ${fileLabel}: Product marked as live but still has a waitlist_url configured. Double-check intended state.`,
       )
     }
   }
@@ -269,7 +283,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
   return {
     warnings,
     errors,
-    validatedCount: yamlFiles.length,
+    validatedCount: slugsFromFiles.size,
     priceManifest,
   }
 }

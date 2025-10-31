@@ -1,37 +1,11 @@
 import fs from "node:fs";
-import path from "node:path";
 
-import { getProductSlugs } from "@/lib/products/product";
+import { getProductSlugs, getProductsDirectory, resolveProductFilePath } from "@/lib/products/product";
 import { getAllPosts } from "@/lib/blog";
 import { getSiteConfig } from "@/lib/site-config";
 
 function resolveProductsDir(): string {
-  const candidates = [
-    process.env.PRODUCTS_ROOT,
-    path.join(process.cwd(), "data"),
-    path.join(process.cwd(), "apps", "store", "data"),
-    path.join(process.cwd(), "..", "data"),
-  ].filter((value): value is string => Boolean(value));
-
-  for (const candidate of candidates) {
-    const absolute = path.isAbsolute(candidate)
-      ? candidate
-      : path.resolve(process.cwd(), candidate);
-
-    const productsPath = path.join(absolute, "products");
-    if (fs.existsSync(productsPath)) {
-      return productsPath;
-    }
-  }
-
-  const tried = candidates
-    .map((value) => (path.isAbsolute(value) ? value : path.resolve(process.cwd(), value)))
-    .join(", ");
-
-  throw new Error(
-    `Unable to locate product data directory (checked: ${tried || "<none>"}). ` +
-      "Set PRODUCTS_ROOT to override the data directory.",
-  );
+  return getProductsDirectory();
 }
 
 export const SITEMAP_PAGE_SIZE = 20000;
@@ -119,12 +93,11 @@ export function buildCorePageEntries(): SitemapUrlEntry[] {
 
 export function buildProductEntries(): SitemapUrlEntry[] {
   const baseUrl = resolveBaseUrl();
-  const productsDir = resolveProductsDir();
   const now = new Date();
 
   return getProductSlugs().map((slug) => {
-    const productFilePath = path.join(productsDir, `${slug}.yaml`);
-    const lastModified = readLastModified(productFilePath) ?? now;
+    const { absolutePath } = resolveProductFilePath(slug);
+    const lastModified = readLastModified(absolutePath) ?? now;
 
     return {
       loc: `${baseUrl}/${slug}`,

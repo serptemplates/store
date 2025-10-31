@@ -3,35 +3,22 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-  import Stripe from "stripe";
-  import dotenv from "dotenv";
-  import { parse } from "yaml";
+import Stripe from "stripe";
+import dotenv from "dotenv";
 
 import {
     buildPaymentLinkUpdatePayload,
   } from "../lib/stripe/payment-link-config";
+import { getAllProducts } from "../lib/products/product";
+import type { ProductData } from "../lib/products/product-schema";
 
   const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
   const REPO_ROOT = path.resolve(__dirname, "../../..");
-  const PRODUCTS_DIR = path.join(REPO_ROOT, "apps/store/data/products");
   const SUCCESS_REDIRECT_BASE =
     process.env.STRIPE_PAYMENT_LINK_SUCCESS_REDIRECT_URL ??
     "https://apps.serp.co/checkout/success";
 
   type StripeMode = "live" | "test";
-
-  type ProductYaml = {
-    slug?: unknown;
-    payment_link?: {
-      live_url?: unknown;
-      test_url?: unknown;
-      ghl_url?: unknown;
-    } | null;
-    ghl?: { tag_ids?: unknown };
-    stripe?: {
-      metadata?: Record<string, unknown> | null | undefined;
-    };
-  };
 
   type PaymentLinkTarget = {
     slug: string;
@@ -80,21 +67,7 @@ import {
     return typeof value === "string" && value.trim().length > 0;
   }
 
-  function coerceSlug(candidate: unknown, fallback: string): string {
-    if (isNonEmptyString(candidate)) {
-      return candidate;
-    }
-    return fallback;
-  }
-
-  function coerceString(value: unknown): string | null {
-    if (!isNonEmptyString(value)) {
-      return null;
-    }
-    return value.trim();
-  }
-
-  function getPrimaryTag(data: ProductYaml): string | null {
+  function getPrimaryTag(data: ProductData): string | null {
     const tagIds = Array.isArray(data.ghl?.tag_ids) ? data.ghl?.tag_ids : [];
     const candidate = tagIds.find((tag) => isNonEmptyString(tag));
     return candidate ? (candidate as string).trim() : null;
@@ -105,38 +78,37 @@ import {
   }
 
 function loadPaymentLinks(): PaymentLinkTarget[] {
-  if (!fs.existsSync(PRODUCTS_DIR)) {
-      throw new Error(`Products directory not found at ${PRODUCTS_DIR}`);
-    }
-
-    const entries = fs
-      .readdirSync(PRODUCTS_DIR)
-      .filter((file) => file.toLowerCase().endsWith(".yaml"));
-
     const targets: PaymentLinkTarget[] = [];
     const seenUrls = new Set<string>();
 
-    for (const file of entries) {
-      const absolutePath = path.join(PRODUCTS_DIR, file);
-      const raw = fs.readFileSync(absolutePath, "utf8");
-      const data = parse(raw) as ProductYaml;
+    const products = getAllProducts();
 
-      const slug = coerceSlug(data.slug, file.replace(/\.ya?ml$/i, ""));
-      const ghlTag = getPrimaryTag(data);
+    for (const product of products) {
+      const ghlTag = getPrimaryTag(product);
       if (!ghlTag) {
         continue;
       }
-      const stripeProductId = coerceString(data.stripe?.metadata?.stripe_product_id);
-      const productName = coerceString((data as Record<string, unknown>)?.name);
 
-      const linkData = data.payment_link;
-      if (!linkData || isNonEmptyString(linkData.ghl_url)) {
+      const stripeProductIdValue = product.stripe?.metadata?.stripe_product_id;
+      const stripeProductId =
+        typeof stripeProductIdValue === "string" && stripeProductIdValue.trim().length > 0
+          ? stripeProductIdValue.trim()
+          : null;
+      const productName =
+        typeof product.name === "string" && product.name.trim().length > 0 ? product.name.trim() : null;
+
+      const linkData = product.payment_link;
+      if (!linkData) {
         continue;
       }
 
-      const urlCandidate =
-        (isNonEmptyString(linkData.live_url) ? linkData.live_url : null)
-        ?? (isNonEmptyString(linkData.test_url) ? linkData.test_url : null);
+      if ("ghl_url" in linkData) {
+        continue;
+      }
+
+      const liveUrl = typeof linkData.live_url === "string" ? linkData.live_url.trim() : "";
+      const testUrl = typeof linkData.test_url === "string" ? linkData.test_url.trim() : "";
+      const urlCandidate = liveUrl || testUrl;
 
       if (!urlCandidate) {
         continue;
@@ -149,12 +121,12 @@ function loadPaymentLinks(): PaymentLinkTarget[] {
 
       seenUrls.add(normalizedUrl);
       targets.push({
-        slug,
+        slug: product.slug,
         url: urlCandidate,
         normalizedUrl,
         ghlTag,
         stripeProductId,
-        productName: productName ?? slug,
+        productName: productName ?? product.slug,
       });
     }
 

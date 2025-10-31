@@ -185,7 +185,7 @@ pnpm run merchant:upload -- --slug=onlyfans-downloader --dry-run
 pnpm run merchant:upload
 ```
 
-The script reads from `apps/store/data/products/*.yaml`, validates each entry with the shared schema, and inserts them via the Content API. Use `--dry-run` while testing—no requests are dispatched, but the payload summary is printed.
+The script reads from `apps/store/data/products/*.json`, validates each entry with the shared schema, and inserts them via the Content API. Use `--dry-run` while testing—no requests are dispatched, but the payload summary is printed.
 
 ## Step 5: Upload Product Feed
 

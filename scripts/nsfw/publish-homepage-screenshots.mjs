@@ -1,4 +1,4 @@
-// Publish homepage screenshots into product YAMLs and media folders.
+// Publish homepage screenshots into product JSON files and media folders.
 // - Prefers blurred images when available, falls back to original.
 // - Converts to WebP and writes to /apps/store/public/media/products/{slug}/
 // - Updates YAML: featured_image + screenshots[0]
@@ -14,7 +14,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import Jimp from 'jimp';
-import YAML from 'yaml';
 
 const args = Object.fromEntries(
   process.argv.slice(2).map((arg) => {
@@ -70,13 +69,13 @@ async function listImages(dir) {
   return out.sort();
 }
 
-async function readYaml(file) {
+async function readProduct(file) {
   const txt = await fs.readFile(file, 'utf8');
-  return { doc: YAML.parse(txt), raw: txt };
+  return JSON.parse(txt);
 }
 
-async function writeYaml(file, obj) {
-  const txt = YAML.stringify(obj);
+async function writeProduct(file, obj) {
+  const txt = `${JSON.stringify(obj, null, 2)}\n`;
   await fs.writeFile(file, txt);
 }
 
@@ -102,9 +101,9 @@ async function run() {
     const { base, root } = parseFilename(imgPath);
     const rootGuess = guessSlugRoot(root);
     const slug = `${rootGuess}-downloader`;
-    const yamlPath = path.join(PRODUCTS_DIR, `${slug}.yaml`);
-    const yamlExists = await fs.access(yamlPath).then(()=>true).catch(()=>false);
-    if (!yamlExists) { skipped++; continue; }
+    const productPath = path.join(PRODUCTS_DIR, `${slug}.json`);
+    const productExists = await fs.access(productPath).then(()=>true).catch(()=>false);
+    if (!productExists) { skipped++; continue; }
 
     const srcBlur = path.join(BLURRED_DIR, base);
     const usePath = await fs.access(srcBlur).then(()=>srcBlur).catch(()=>imgPath);
@@ -115,13 +114,14 @@ async function run() {
     const outFeatured = await convertToWebp(usePath, featuredPath);
     const outHomepage = await convertToWebp(usePath, homepagePath);
 
-    const { doc } = await readYaml(yamlPath);
+    const doc = await readProduct(productPath);
+    if (typeof doc !== 'object' || doc === null) { skipped++; continue; }
     doc.featured_image = `/media/products/${slug}/featured.webp`;
     const altBase = doc.name ? `${doc.name} website homepage` : `${rootGuess} website homepage`;
     const shotEntry = { url: `/media/products/${slug}/${path.basename(outHomepage)}`, alt: altBase };
     if (!Array.isArray(doc.screenshots)) doc.screenshots = [];
     if (doc.screenshots.length) doc.screenshots[0] = shotEntry; else doc.screenshots.push(shotEntry);
-    await writeYaml(yamlPath, doc);
+    await writeProduct(productPath, doc);
     updated++;
     console.log(`Updated ${slug}`);
   }
@@ -129,4 +129,3 @@ async function run() {
 }
 
 run().catch((e)=>{ console.error('Fatal:', e); process.exit(1); });
-

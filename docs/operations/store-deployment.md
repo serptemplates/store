@@ -54,7 +54,7 @@ pnpm --filter @apps/store test:e2e
 
 ## Runtime touchpoints
 
-- **XML sitemap** – `/app/sitemap.ts`, exported at https://apps.serp.co/sitemap.xml. It enumerates products from `apps/store/data/products/*.yaml`.
+- **XML sitemap** – `/app/sitemap.ts`, exported at https://apps.serp.co/sitemap.xml. It enumerates products from `apps/store/data/products/*.json`.
 - **Google Tag Manager** – Configured in `apps/store/data/site.config.json` (container `GTM-WS97TH45`) and wired through `app/layout.tsx`.
 - **Health checks** – `/api/monitoring/health` (called nightly via Vercel cron) and the Playwright smoke run.
 

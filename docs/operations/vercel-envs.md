@@ -58,6 +58,6 @@ SHOPIFY_ADMIN_API_VERSION=2024-04
 - Replace each `xxx_replace_me` value with the correct credential when entering it into Vercel.
 - Keep live and test webhook endpoints separate in Stripe so signing secrets stay isolated.
 - After updating variables in Vercel, redeploy so both server and client bundles pick up the changes.
-- Product checkout destinations now come from Stripe or GHL Payment Links defined in `apps/store/data/products/*.yaml`; no client-side checkout endpoint URL is required.
+- Product checkout destinations now come from Stripe or GHL Payment Links defined in `apps/store/data/products/*.json`; no client-side checkout endpoint URL is required.
 - When running preview/test deployments, also supplying `STRIPE_SECRET_KEY` allows the app to auto-clone live prices into test mode when needed; otherwise configure test prices manually.
-- Ensure every `stripe.price_id` in `apps/store/data/products/*.yaml` points at the correct mode (live vs test) before enabling real payments.
+- Ensure every `stripe.price_id` in `apps/store/data/products/*.json` points at the correct mode (live vs test) before enabling real payments.

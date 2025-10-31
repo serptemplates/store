@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { parseDocument } from "yaml";
-import YAML from "yaml";
 import { parse } from "csv-parse/sync";
 import { JSDOM } from "jsdom";
 
@@ -67,8 +65,8 @@ if (!fs.existsSync(outputDir)) {
 
 const existingFiles = new Set(
   fs.readdirSync(outputDir)
-    .filter((file) => file.endsWith(".yaml"))
-    .map((file) => file.replace(/\.yaml$/i, ""))
+    .filter((file) => file.endsWith(".json"))
+    .map((file) => file.replace(/\.json$/i, ""))
 );
 
 const htmlToText = (html = "") => {
@@ -154,10 +152,8 @@ for (const slug of allSlugs) {
     },
   };
 
-  const doc = new YAML.Document();
-  doc.contents = data;
-  fs.writeFileSync(path.join(outputDir, `${slug}.yaml`), doc.toString({ lineWidth: 0 }));
+  fs.writeFileSync(path.join(outputDir, `${slug}.json`), `${JSON.stringify(data, null, 2)}\n`);
   created += 1;
 }
 
-console.log(`Generated ${created} new product YAML files. Skipped ${skipped} existing file(s).`);
+console.log(`Generated ${created} new product JSON files. Skipped ${skipped} existing file(s).`);

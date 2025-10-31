@@ -1,0 +1,174 @@
+{
+  "platform": "XVideos",
+  "name": "XVideos Downloader",
+  "tagline": "Save XVideos videos instantly for offline viewing.",
+  "slug": "xvideos-downloader",
+  "description": "XVideos Downloader avoids the usual “403 Forbidden” failures by sending the exact headers XVideos expects on every request. It works on xvideos.com, xvideos.es, and mirror domains, lists the MP4 qualities you can grab, and saves the stream at full speed so you can build a reliable offline library without wrestling with errors.",
+  "seo_title": "XVideos Downloader | Download XVideos Videos",
+  "seo_description": "Download XVideos videos easily for offline viewing. Fast, reliable XVideos video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/xvideos-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xvideos-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/xvideos-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/xvideos-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68df9862613b1b6817ce7b4c",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=xvideos-downloader",
+  "status": "live",
+  "featured_image": null,
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/xvideos-video-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Works seamlessly on xvideos.com, xvideos.es, and mirror domains without tweaks",
+    "Extracts MP4 source URLs using multiple detection methods for higher reliability",
+    "Adds the correct headers automatically to avoid 403 or access errors",
+    "Displays a clean quality list and downloads the selected resolution at full speed",
+    "Shows on-page progress with percentage, downloaded size, and cancel controls",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop with local-only storage"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with header management and multi-domain support. Sales are final.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Download reliably from any XVideos domain without copy/paste hacks",
+      "Eliminate common 403 errors thanks to automatic header handling",
+      "Keep downloads private with on-device processing and no analytics"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I download an XVideos video with reliable results?",
+      "answer": "Open the video on any XVideos domain, click the downloader icon, choose your preferred quality, and let the extension handle the rest. It applies the correct headers automatically so the MP4 saves without error."
+    },
+    {
+      "question": "Does it work on regional mirrors like xvideos.es?",
+      "answer": "Yes. The extension supports xvideos.com, xvideos.es, and other official mirrors with no extra configuration."
+    },
+    {
+      "question": "Can I download multiple videos simultaneously?",
+      "answer": "Downloads run one at a time so each file completes successfully. Start the next video after the current one finishes."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Does it remove watermarks or change the file?",
+      "answer": "No. The downloader saves the original MP4 exactly as XVideos delivers it—no re-encoding or watermark removal is performed."
+    },
+    {
+      "question": "Is my activity private?",
+      "answer": "All operations happen locally. The extension only validates your licence and never uploads viewing or download history."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Caden Murray",
+      "review": "Every other tool gave me forbidden messages. This one finishes the MP4 on the first try every time.",
+      "title": "No more 403 errors",
+      "rating": 5,
+      "date": "2025-02-19"
+    },
+    {
+      "name": "Mira Valdez",
+      "review": "I switch between .com and .es depending on network. Downloads work identically on both.",
+      "title": "Works on all mirrors",
+      "rating": 4.9,
+      "date": "2025-03-04"
+    },
+    {
+      "name": "Jonah Reeves",
+      "review": "The quality list is neat and the progress bar keeps me updated. Exactly what I needed.",
+      "title": "Clean quality picks",
+      "rating": 4.8,
+      "date": "2025-01-31"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "xvideos video downloader",
+    "download xvideos mp4",
+    "xvideos header fixer",
+    "xvideos mirror support",
+    "offline xvideos videos"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/3cI8wHbmM7Gm5CXeBd0VO1S",
+    "test_url": "https://buy.stripe.com/test_14AfZ98aAbWC0iD2Sv0VO1R"
+  },
+  "stripe": {
+    "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",
+    "metadata": {
+      "stripe_product_id": "prod_SrGW6pAdy73l9t"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-xvideos-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Required to download XVideos content directly to the user's device.\n\nUsage highlights:\n- `background-enhanced.js:63` cancels in-progress downloads using the Chrome Downloads API.\n- `background-enhanced.js:390` initiates new file downloads through the API.\n- `background-enhanced.js:479, 488, 492` listen for download state and progress events.\n- `popup.js:226` searches for downloads by ID to display progress inside the popup."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Lets the extension inspect the active tab so it can detect XVideos pages and extract video URLs.\n\nUsage highlights:\n- `chrome.tabs.query({ active: true, currentWindow: true })` powers implicit active tab access.\n- `popup.js:30` verifies the current page before enabling download controls.\n- `background-enhanced.js:352` retrieves the active tab for download coordination."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores activation state and license details locally to keep premium functionality unlocked.\n\nUsage highlights:\n- `auth.js` `saveActivation` persists activation flags, license keys, and associated emails.\n- `auth.js` `checkActivationStatus` restores stored activation info whenever the popup loads."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Enables desktop notifications to inform users about download success, errors, or other status updates.\n\nUsage highlights:\n- `background-enhanced.js:510` creates notifications with `chrome.notifications.create`.\n- Notifications surface completion and error messages for user awareness."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds a \"Download XVideos Video\" entry to the browser context menu on supported domains.\n\nUsage highlights:\n- `background-enhanced.js:10` registers the context menu item via `chrome.contextMenus.create`.\n- `background-enhanced.js:26` handles clicks with `chrome.contextMenus.onClicked` to begin downloads."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Supports tab lookups, messaging, and helper tab creation necessary for managing downloads.\n\nUsage highlights:\n- `popup.js:30, 44, 281` query tabs, communicate with content scripts, and open new tabs.\n- `background-enhanced.js:28, 352, 358, 526` send messages to tabs to orchestrate downloads."
+    }
+  ],
+  "brand": "SERP Apps"
+}

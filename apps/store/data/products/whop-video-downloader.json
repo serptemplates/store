@@ -1,0 +1,215 @@
+{
+  "platform": "Whop",
+  "name": "Whop Video Downloader",
+  "tagline": "Save Whop videos instantly for offline viewing.",
+  "slug": "whop-video-downloader",
+  "description": "Whop Video Downloader adds a download button to courses, drops, and members-only pages so you can save content before access expires. It uses your Whop login to read the Mux stream powering each player, downloads every segment with the proper headers, and merges the video into a standard MP4 for offline study.",
+  "seo_title": "Whop Video Downloader | Download Whop Videos",
+  "seo_description": "Download Whop videos easily for offline viewing. Fast, reliable Whop video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/whop-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/whop-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/whop-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/whop-video-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68df9818613b1b77b5ce7b48",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=whop-video-downloader",
+  "status": "live",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/whop-video-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/whop-video-downloader/main/images/whop-video-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-1.jpg",
+      "alt": "Whop Video Downloader extension overlay on Whop product page",
+      "caption": "Capture Whop videos directly from marketplace listings in one click."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-2.jpg",
+      "alt": "Whop Video Downloader download queue and progress indicators",
+      "caption": "Monitor download progress across multiple Whop assets simultaneously."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-3.jpg",
+      "alt": "Whop Video Downloader metadata panel showing organized files",
+      "caption": "Auto-organize Whop downloads with extracted metadata and folder structure."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/whop-video-downloader/refs/heads/main/screenshots/whop-video-downloader-4.jpg",
+      "alt": "Whop Video Downloader settings modal with quality options",
+      "caption": "Choose output quality, formats, and destinations right inside the app."
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [
+    "https://www.youtube.com/watch?v=oWmu4MOS2HE"
+  ],
+  "related_posts": [
+    "how-to-download-whop-videos"
+  ],
+  "github_repo_url": "https://github.com/serpapps/whop-video-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/whop-video-downloader/obiiijgnmblffcopbdfpdlmbdkgmblgf",
+  "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/whop-video-downloader/",
+  "producthunt_link": "https://www.producthunt.com/products/whop-video-downloader",
+  "features": [
+    "Detects Whop video players inside products, member areas, and course modules",
+    "Uses your Whop session to access subscriber-only content securely",
+    "Converts Whop’s Mux HLS streams into MP4 files while preserving quality",
+    "Offers on-player download buttons plus a popup with quality selection",
+    "Displays segment count, percentage, and status during conversion",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
+    "Stores licence data locally with no analytics or third-party tracking"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with stream conversion, password handling, and progress tracking. Sales are final.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Keep Whop course videos available after memberships or drops expire",
+      "Download without copy/paste thanks to player-level buttons and authentication",
+      "Maintain privacy with on-device processing and no external services"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I download a Whop video with this extension?",
+      "answer": "Log into Whop, open the page with the video, click the on-player download button or the extension popup, choose your quality, and let the progress bar finish. The MP4 will save automatically."
+    },
+    {
+      "question": "Does it work with member-only content?",
+      "answer": "Yes. The downloader uses your Whop session to authenticate, so any video you can play in your account can be saved offline."
+    },
+    {
+      "question": "Can I select different qualities?",
+      "answer": "When Whop provides multiple renditions, the popup lists them so you can pick the resolution that fits your storage and playback needs."
+    },
+    {
+      "question": "Does it capture captions or additional materials?",
+      "answer": "The tool focuses on video and audio. Download other attachments separately from Whop if you need them."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Do I need to keep the tab open while downloading?",
+      "answer": "Yes. Keep the Whop tab open so your authentication remains active while the extension retrieves each segment and merges the MP4."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Isla Garner",
+      "review": "I click the overlay button and the MP4 is done before the drop disappears. Perfect for travel study.",
+      "title": "Keeps member drops for later",
+      "rating": 5,
+      "date": "2025-02-22"
+    },
+    {
+      "name": "Omari Flynn",
+      "review": "Other tools choke on Whop’s player. This merges the segments cleanly and the progress bar keeps me in the loop.",
+      "title": "Handles Mux streams flawlessly",
+      "rating": 4.9,
+      "date": "2025-03-01"
+    },
+    {
+      "name": "Tessa Li",
+      "review": "Uses my existing Whop session, no cookie exports needed. Downloads stay private on my laptop.",
+      "title": "Simple login, zero fuss",
+      "rating": 4.8,
+      "date": "2025-01-29"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Course Platforms",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "whop video downloader",
+    "download whop course",
+    "whop mux mp4",
+    "whop offline archive",
+    "whop member video saver"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/3cI8wH8aA8Kq6H164H0VO1o",
+    "test_url": "https://buy.stripe.com/test_5kQ6ozfD27Gmfdx2Sv0VO1q"
+  },
+  "stripe": {
+    "price_id": "price_1S99gJ06JrOmKRCmkAYY713T",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Ie4IH2swYcq"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-whop-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Saves the merged MP4 into your downloads folder and keeps the progress display\naccurate during conversion."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores licence activation and preferred quality locally so the downloader stays\nconfigured between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects Whop video players on the current tab and injects the download overlay\nbutton in the correct place."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Allows downloads to continue if you navigate between course pages and restores\nthe status panel when you return."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Reads Whop’s player configuration, Mux manifests, and authentication headers to\nfetch the correct stream segments."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Sends completion or error alerts so you know when a video finishes downloading\nwithout watching the popup."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds a right-click “Download with Whop Video Downloader” option for quick saves\nfrom embedded players."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Merges Mux segments into MP4 files in the background, preventing the active tab\nfrom freezing during long downloads."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Limits privileged access to whop.com and Whop’s video CDN hosts so the extension\nonly touches pages required for downloads."
+    }
+  ],
+  "brand": "SERP Apps"
+}

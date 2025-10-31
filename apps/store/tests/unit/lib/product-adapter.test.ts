@@ -30,6 +30,7 @@ const baseProduct: ProductData = {
     {
       name: "Happy Customer",
       review: "Great tool!",
+      rating: 5,
     },
   ],
   faqs: [
