@@ -6,12 +6,16 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     // Only run on Node.js runtime (not Edge)
+    const { loadMonorepoEnv } = await import("./lib/load-env");
     const { validateEnvironmentOrThrow, getEnvironmentInfo } = await import(
       "./lib/env-validation"
     );
     const logger = (await import("./lib/logger")).default;
 
     try {
+      // Ensure both app-level and repo-root env files are considered
+      loadMonorepoEnv();
+
       // Validate environment variables
       validateEnvironmentOrThrow();
 

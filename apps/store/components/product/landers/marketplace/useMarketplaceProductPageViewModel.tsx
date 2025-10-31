@@ -110,11 +110,9 @@ export function useMarketplaceProductPageViewModel(
   const faqItems = useMemo(() => buildFaqEntries(product), [product]);
   const reviewItems = useMemo(() => buildReviewEntries(product), [product]);
 
+  // Build a deterministic base URL from configured site domain to avoid SSR/CSR mismatches
   const canonicalBaseUrl = useMemo(
-    () =>
-      canonicalizeStoreOrigin(
-        typeof window !== "undefined" ? window.location.origin : siteConfig?.site?.domain,
-      ),
+    () => canonicalizeStoreOrigin(siteConfig?.site?.domain),
     [siteConfig],
   );
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";

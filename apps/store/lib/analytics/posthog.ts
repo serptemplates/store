@@ -64,12 +64,16 @@ type IgnoreContext = {
 const THIRD_PARTY_STACK_PATTERNS = [
   /googletagmanager\.com\/gtm\.js/i,
   /\bgtm\.js\b/i,
+  /posthog/i,
+  /rrweb/i,
 ];
 
 const THIRD_PARTY_MESSAGE_PATTERNS = [
   /getConsole/i,
   /Cannot read properties of undefined \(reading ['"]trigger['"]\)/i,
   /Cannot read properties of undefined \(reading ['"]events['"]\)/i,
+  /CSP violation/i,
+  /caughtAssetErrorFromIframe/i,
 ];
 
 const MAX_INSPECTED_PROPERTY_VALUES = 10;

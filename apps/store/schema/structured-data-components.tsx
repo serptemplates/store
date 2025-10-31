@@ -73,7 +73,7 @@ const buildVideoSchemas = (product: ProductData, storeUrl: string) => {
           product.tagline ??
           `Discover ${product.name} in action.`,
         thumbnailUrl: thumbnailUrl ? [thumbnailUrl] : undefined,
-        uploadDate: new Date().toISOString(),
+        // Avoid non-deterministic dates during hydration; omit if not available from data
         contentUrl: videoUrl,
         embedUrl,
         duration: "PT5M",
