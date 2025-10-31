@@ -2,29 +2,26 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
-import NextLink from "next/link"
-import Image from "next/image"
 
 import { HomeTemplate } from "./HomeTemplate"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
-import { cn } from "@repo/ui/lib/utils"
 
-import { useAffiliateTracking } from "@/components/product/useAffiliateTracking"
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { ProductStructuredData } from "@/schema/structured-data-components"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import type { BlogPostMeta } from "@/lib/blog"
 import type { PrimaryNavProps } from "@/lib/navigation"
-import { trackCheckoutSuccessBanner, trackProductPageView } from "@/lib/analytics/product"
 import { productToHomeTemplate } from "@/lib/products/product-adapter"
-import { useProductCheckoutCta } from "@/components/product/useProductCheckoutCta"
 import type { ProductData } from "@/lib/products/product-schema"
 import type { ProductVideoEntry } from "@/lib/products/video"
 import type { SiteConfig } from "@/lib/site-config"
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url"
 import { GhlWaitlistModal } from "@/components/waitlist/GhlWaitlistModal"
 import { normalizeProductAssetPath } from "@/lib/products/asset-paths"
+import { useProductPageExperience } from "@/components/product/hooks/useProductPageExperience"
+import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
+import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -50,14 +47,10 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedVideos = videoEntries
   const isPreRelease = product.status === "pre_release"
   const videosToDisplay = isPreRelease ? [] : resolvedVideos.slice(0, 3)
-  const { affiliateId, checkoutSuccess } = useAffiliateTracking()
-
   const [showStickyBar, setShowStickyBar] = useState(false)
-  const [showWaitlistModal, setShowWaitlistModal] = useState(false)
-
-  const { cta: resolvedCta, handleCtaClick } = useProductCheckoutCta({
+  const experience = useProductPageExperience(
     product,
-    homeCta: {
+    {
       cta: homeProps.cta,
       ctaMode: homeProps.ctaMode,
       ctaHref: homeProps.ctaHref,
@@ -66,77 +59,15 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       ctaRel: homeProps.ctaRel,
       ctaOpensInNewTab: homeProps.ctaOpensInNewTab,
     },
-    affiliateId,
-    onShowWaitlist: () => setShowWaitlistModal(true),
-  })
+    { analytics: true },
+  )
+  const { resolvedCta, handleCtaClick, waitlist, checkoutSuccess } = experience
 
   const shouldOpenInNewTab = resolvedCta.opensInNewTab
   const resolvedCtaHref = resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
-  const videoSection =
-    videosToDisplay.length > 0 ? (
-      <section className="bg-gray-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="mb-8 flex flex-col gap-3 text-center">
-            <span className="mx-auto inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
-              Watch
-            </span>
-            <h2 className="text-3xl font-semibold text-gray-900">Videos</h2>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {videosToDisplay.map((video) => (
-              <article
-                key={video.watchPath}
-                className="flex h-full flex-col overflow-hidden rounded-2xl bg-white transition-transform hover:-translate-y-1"
-              >
-                <NextLink href={video.watchPath} className="relative block aspect-video overflow-hidden bg-gray-200">
-                  {video.thumbnailUrl ? (
-                    <Image
-                      src={video.thumbnailUrl}
-                      alt={video.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      quality={85}
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A/9k="
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">
-                      Video preview unavailable
-                    </div>
-                  )}
-                </NextLink>
-                <div className="flex flex-1 flex-col gap-3 p-5">
-                  <h3 className="text-base font-medium text-gray-900">
-                    <NextLink href={video.watchPath} className="hover:text-blue-600">
-                      {video.title}
-                    </NextLink>
-                  </h3>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-10 flex justify-center">
-            <NextLink
-              href="/videos"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
-            >
-              More videos
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" />
-                <path d="M12 5l7 7-7 7" />
-              </svg>
-            </NextLink>
-          </div>
-        </div>
-      </section>
-    ) : null
+  const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
 
   const showPosts = siteConfig.blog?.enabled !== false
 
@@ -167,16 +98,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       ),
     )
   }, [isPreRelease, product])
-  useEffect(() => {
-    trackProductPageView(product, { affiliateId })
-  }, [product, affiliateId])
-
-  useEffect(() => {
-    if (checkoutSuccess) {
-      trackCheckoutSuccessBanner(product, { affiliateId })
-    }
-  }, [checkoutSuccess, product, affiliateId])
-
   useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
@@ -265,73 +186,20 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       }
       />
 
-      <StickyProductCTA
+      <ProductStickyBar
+        variant="default"
         show={showStickyBar}
         productName={product.name}
-        onCtaClick={handleStickyCtaClick}
-        ctaHref={resolvedCtaHref}
-        label={resolvedCtaText}
+        ctaLabel={resolvedCtaText}
+        onClick={handleStickyCtaClick}
+        href={resolvedCtaHref}
         openInNewTab={shouldOpenInNewTab}
         rel={resolvedCtaRel}
       />
 
-      <GhlWaitlistModal open={showWaitlistModal} onClose={() => setShowWaitlistModal(false)} />
+      <GhlWaitlistModal open={waitlist.isOpen} onClose={waitlist.close} />
     </>
   )
 }
 
 export default ClientHomeView
-
-type StickyProductCTAProps = {
-  show: boolean
-  productName: string
-  onCtaClick: () => void
-  ctaHref: string
-  label: string
-  openInNewTab: boolean
-  rel?: string
-}
-
-function StickyProductCTA({ show, productName, onCtaClick, ctaHref, label, openInNewTab, rel }: StickyProductCTAProps) {
-  const ctaClasses = "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:opacity-60";
-  const trimmedLabel = label.trim();
-  const displayLabel = trimmedLabel.length > 0 ? trimmedLabel.toUpperCase() : "GET IT NOW";
-  return (
-    <div
-      className={cn(
-        "pointer-events-none fixed inset-x-0 top-0 z-[80] transition-transform duration-200",
-        show ? "translate-y-0" : "-translate-y-full"
-      )}
-    >
-      <div className="pointer-events-auto border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-        <div className="container flex h-14 items-center justify-between gap-4">
-          <span className="line-clamp-1 text-sm font-semibold text-foreground">{productName}</span>
-          {openInNewTab ? (
-            <a
-              href={ctaHref}
-              target="_blank"
-              rel={rel ?? "noopener noreferrer"}
-              onClick={(event) => {
-                event.preventDefault();
-                onCtaClick();
-              }}
-              className={ctaClasses}
-            >
-              <span aria-hidden className="text-base">🚀</span>
-              <span>{displayLabel}</span>
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={onCtaClick}
-              className={ctaClasses}
-            >
-              <span aria-hidden className="text-base">🚀</span>
-              <span>{displayLabel}</span>
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}

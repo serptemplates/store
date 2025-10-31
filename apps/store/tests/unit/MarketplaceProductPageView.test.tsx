@@ -55,7 +55,7 @@ describe("MarketplaceProductPageView", () => {
     expect(screen.getByRole("link", { name: "SERP" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Chrome Web Store" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Product Hunt" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "GitHub" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Reddit" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "GitHub Repository" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Reddit Discussion" })).toBeInTheDocument();
   });
 });

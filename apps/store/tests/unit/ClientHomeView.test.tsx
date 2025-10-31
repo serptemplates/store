@@ -10,22 +10,31 @@ import type { SiteConfig } from "@/lib/site-config";
 import type { PrimaryNavProps } from "@/lib/navigation";
 import { createTestProduct } from "./lib/google-merchant/test-utils";
 
-const analyticsMock = vi.hoisted(() => ({
-  trackProductPageView: vi.fn(),
-  trackCheckoutSuccessBanner: vi.fn(),
+const experienceMock = vi.hoisted(() => ({
+  useProductPageExperience: vi.fn(() => ({
+    affiliateId: undefined,
+    checkoutSuccess: false,
+    resolvedCta: {
+      mode: "external" as const,
+      href: "https://example.com/checkout",
+      text: "Get It Now",
+      target: "_blank" as const,
+      rel: "noopener noreferrer",
+      opensInNewTab: true,
+      analytics: { destination: "external" as const },
+    },
+    handleCtaClick: vi.fn(),
+    navigateToCta: vi.fn(),
+    waitlist: {
+      isOpen: false,
+      open: vi.fn(),
+      close: vi.fn(),
+    },
+  })),
 }));
 
-const affiliateTrackingMock = vi.hoisted(() => ({
-  useAffiliateTracking: vi.fn(() => ({ affiliateId: undefined, checkoutSuccess: false })),
-}));
-
-vi.mock("@/lib/analytics/product", () => ({
-  trackProductPageView: analyticsMock.trackProductPageView,
-  trackCheckoutSuccessBanner: analyticsMock.trackCheckoutSuccessBanner,
-}));
-
-vi.mock("@/components/product/useAffiliateTracking", () => ({
-  useAffiliateTracking: affiliateTrackingMock.useAffiliateTracking,
+vi.mock("@/components/product/hooks/useProductPageExperience", () => ({
+  useProductPageExperience: experienceMock.useProductPageExperience,
 }));
 
 vi.mock("@repo/ui/lib/utils", () => ({
@@ -81,9 +90,7 @@ vi.mock("@repo/ui/components/ui/carousel", () => ({
 
 describe("ClientHomeView", () => {
   beforeEach(() => {
-    analyticsMock.trackProductPageView.mockClear();
-    analyticsMock.trackCheckoutSuccessBanner.mockClear();
-    affiliateTrackingMock.useAffiliateTracking.mockClear();
+    experienceMock.useProductPageExperience.mockClear();
   });
 
   it("renders the primary sections including videos and permissions", async () => {
