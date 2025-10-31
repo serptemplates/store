@@ -39,11 +39,17 @@ export function AppHeader({
             </p>
             {topCategories.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {topCategories.map((category) => (
-                  <span key={category} className={getCategoryBadgeClasses(category)}>
-                    {category}
-                  </span>
-                ))}
+                {topCategories.map((category) => {
+                  const label = category.trim();
+                  if (!label) {
+                    return null;
+                  }
+                  return (
+                    <span key={label} className={getCategoryBadgeClasses(label)}>
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
             ) : null}
           </div>

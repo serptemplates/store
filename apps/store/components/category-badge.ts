@@ -15,6 +15,12 @@ const CATEGORY_BADGE_PALETTE: Record<string, BadgePalette> = {
     hoverBackground: "hover:bg-[#d5ecff] group-hover:bg-[#d5ecff]",
     hoverText: "hover:text-[#0a3c70] group-hover:text-[#0a3c70]",
   },
+  audio: {
+    background: "bg-[#e6f3ff]",
+    text: "text-[#0c4a7a]",
+    hoverBackground: "hover:bg-[#d4eaff] group-hover:bg-[#d4eaff]",
+    hoverText: "hover:text-[#08365a] group-hover:text-[#08365a]",
+  },
   "artificial intelligence": {
     background: "bg-[#ede7ff]",
     text: "text-[#5530c1]",
@@ -33,6 +39,18 @@ const CATEGORY_BADGE_PALETTE: Record<string, BadgePalette> = {
     hoverBackground: "hover:bg-[#e2e8f0] group-hover:bg-[#e2e8f0]",
     hoverText: "hover:text-[#111827] group-hover:text-[#111827]",
   },
+  comics: {
+    background: "bg-[#fff3e6]",
+    text: "text-[#9a3412]",
+    hoverBackground: "hover:bg-[#ffe0c2] group-hover:bg-[#ffe0c2]",
+    hoverText: "hover:text-[#7c260b] group-hover:text-[#7c260b]",
+  },
+  enterprise: {
+    background: "bg-[#eef2ff]",
+    text: "text-[#312e81]",
+    hoverBackground: "hover:bg-[#e0e7ff] group-hover:bg-[#e0e7ff]",
+    hoverText: "hover:text-[#1e1b4b] group-hover:text-[#1e1b4b]",
+  },
   livestream: {
     background: "bg-[#fff1d6]",
     text: "text-[#a15c00]",
@@ -50,6 +68,12 @@ const CATEGORY_BADGE_PALETTE: Record<string, BadgePalette> = {
     text: "text-[#0f766e]",
     hoverBackground: "hover:bg-[#ccf4e3] group-hover:bg-[#ccf4e3]",
     hoverText: "hover:text-[#0b5c56] group-hover:text-[#0b5c56]",
+  },
+  "file storage": {
+    background: "bg-[#eafcf4]",
+    text: "text-[#0e5f3a]",
+    hoverBackground: "hover:bg-[#d7f7e8] group-hover:bg-[#d7f7e8]",
+    hoverText: "hover:text-[#0b472b] group-hover:text-[#0b472b]",
   },
   "movies & tv": {
     background: "bg-[#e9edff]",
@@ -72,8 +96,37 @@ const DEFAULT_BADGE_PALETTE: BadgePalette = {
   hoverText: "hover:text-[#1f2328] group-hover:text-[#1f2328]",
 };
 
+const CATEGORY_SYNONYMS: Record<string, string> = {
+  audio: "audio",
+  "audio downloader": "audio",
+  "audio production": "audio",
+  music: "audio",
+  comics: "comics",
+  "community": "social media",
+  communities: "social media",
+  education: "course platforms",
+  "file storage": "file storage",
+  "image": "image hosting",
+  images: "image hosting",
+  "image downloader": "image hosting",
+  enterprise: "enterprise",
+  social: "social media",
+  "stock media": "creative assets",
+  video: "movies & tv",
+  "video downloader": "downloader",
+};
+
+function normalizeCategory(category?: string): string {
+  return category?.trim().toLowerCase() ?? "";
+}
+
 function getBadgePalette(category?: string): BadgePalette {
-  return CATEGORY_BADGE_PALETTE[category?.toLowerCase() ?? ""] ?? DEFAULT_BADGE_PALETTE;
+  const normalized = normalizeCategory(category);
+  if (!normalized) {
+    return DEFAULT_BADGE_PALETTE;
+  }
+  const resolved = CATEGORY_SYNONYMS[normalized] ?? normalized;
+  return CATEGORY_BADGE_PALETTE[resolved] ?? DEFAULT_BADGE_PALETTE;
 }
 
 export function getCategoryBadgeClasses(category?: string) {
