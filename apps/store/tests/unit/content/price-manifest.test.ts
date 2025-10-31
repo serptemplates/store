@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
-import path from "node:path";
-import { parse } from "yaml";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
+import { getAllProducts } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 
 function parsePrice(value?: string | null): number | null {
   if (!value) return null;
@@ -12,51 +11,53 @@ function parsePrice(value?: string | null): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-describe("price manifest", () => {
-  const productsDir = path.resolve(process.cwd(), "data", "products");
-  const productFiles = readdirSync(productsDir).filter((file) => /\.ya?ml$/i.test(file));
+function getStripePaymentLink(
+  product: ProductData,
+): { live_url: string; test_url?: string | undefined } | null {
+  const link = product.payment_link;
+  if (!link || typeof link !== "object") {
+    return null;
+  }
+  if ("live_url" in link) {
+    return link;
+  }
+  return null;
+}
 
+describe("price manifest", () => {
   it("keeps manifest amounts and payment link metadata in sync with product copy", () => {
     const mismatches: string[] = [];
     const missingPaymentLinks: string[] = [];
     const missingStripeProducts: string[] = [];
 
-    for (const file of productFiles) {
-      const absolutePath = path.join(productsDir, file);
-      const raw = readFileSync(absolutePath, "utf8");
-      const product = parse(raw) as Record<string, unknown> | null;
-      if (!product) continue;
+    const products = getAllProducts();
 
-      const stripe = product?.stripe as {
-        price_id?: string;
-        metadata?: Record<string, unknown> | null;
-      } | undefined;
+    for (const product of products) {
+      const stripe = product.stripe;
       if (!stripe?.price_id) continue;
 
       const manifestEntry = findPriceEntry(stripe.price_id, undefined);
       if (!manifestEntry) continue;
 
-      const pricing = product?.pricing as { price?: string | null } | undefined;
-      const declaredPrice = parsePrice(pricing?.price ?? null);
+      const declaredPrice = parsePrice(product.pricing?.price ?? null);
       if (declaredPrice == null) continue;
 
       const manifestPrice = manifestEntry.unitAmount / 100;
       if (Math.abs(manifestPrice - declaredPrice) > 0.005) {
         mismatches.push(
-          `${file}: Stripe price ${formatAmountFromCents(manifestEntry.unitAmount, manifestEntry.currency)} does not match YAML price ${pricing?.price ?? declaredPrice}`,
+          `${product.slug}: Stripe price ${formatAmountFromCents(manifestEntry.unitAmount, manifestEntry.currency)} does not match declared price ${product.pricing?.price ?? declaredPrice}`,
         );
       }
 
-      const paymentLink = product?.payment_link as { live_url?: unknown } | undefined;
-      const liveUrl =
-        typeof paymentLink?.live_url === "string" ? paymentLink.live_url.trim() : "";
+      const paymentLink = getStripePaymentLink(product);
+      const liveUrl = typeof paymentLink?.live_url === "string" ? paymentLink.live_url.trim() : "";
       if (!liveUrl.startsWith("https://buy.stripe.com/")) {
-        missingPaymentLinks.push(`${file}: missing Stripe Payment Link live_url`);
+        missingPaymentLinks.push(`${product.slug}: missing Stripe Payment Link live_url`);
       }
 
       const stripeProductId = stripe.metadata?.stripe_product_id;
       if (typeof stripeProductId !== "string" || stripeProductId.trim().length === 0) {
-        missingStripeProducts.push(`${file}: missing stripe.metadata.stripe_product_id`);
+        missingStripeProducts.push(`${product.slug}: missing stripe.metadata.stripe_product_id`);
       }
     }
 

@@ -9,7 +9,7 @@
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && pnpm run validate:content && pnpm run check:products",
     "typecheck": "tsc --noEmit",
     "typecheck:clean": "pnpm run clean:next && pnpm run typecheck",
     "test": "pnpm run test:all",
@@ -26,6 +26,9 @@
     "test:lhci": "lhci autorun --config=lhci.config.cjs",
     "test:lhci:local": "node scripts/run-lhci-local.mjs",
     "validate:products": "tsx scripts/validate-products.ts",
+    "convert:products": "tsx scripts/convert-products.ts",
+    "check:products": "tsx scripts/convert-products.ts --check",
+    "format:products": "tsx scripts/convert-products.ts",
     "validate:content": "node scripts/validate-product.mjs",
     "stripe:create-payment-links": "tsx scripts/create-stripe-payment-links.ts",
     "stripe:sync-payment-links": "tsx scripts/sync-stripe-payment-links.ts",
@@ -60,7 +63,6 @@
     "rehype-code-titles": "^1.2.0",
     "rehype-highlight": "^7.0.2",
     "sanitize-html": "^2.17.0",
-    "yaml": "^2.6.1",
     "zod": "^3.25.76"
   },
   "devDependencies": {

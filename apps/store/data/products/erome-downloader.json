@@ -1,0 +1,203 @@
+{
+  "platform": "Erome",
+  "name": "Erome Downloader",
+  "tagline": "Save Erome content instantly to your device.",
+  "slug": "erome-downloader",
+  "description": "Erome Downloader is built specifically for Erome’s player so you can save clips before creators remove them. The extension scans each post with multiple detection methods—HTML5 tags, metadata, and script analysis—to surface every MP4 or HLS source and label it clearly with resolution, format, and estimated size.\n\nChoose the rendition you want, click download, and a persistent progress panel tracks percentage, speed, and time remaining while background workers assemble HLS segments into a single MP4. A cancel button lets you stop mid-stream without leaving half-finished files, and desktop notifications confirm the moment the video is ready.\n\nAll processing stays local: licence data, preferences, and downloads never leave your browser, and permissions are scoped to Erome domains only. Right-click shortcuts and inline controls make it simple to archive the videos you care about before they disappear.\n\nRun it in Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, or Linux—just keep the tab open until the download finishes for the cleanest files.",
+  "seo_title": "Erome Downloader | Capture Erome videos as MP4 files",
+  "seo_description": "Detect every Erome video source, label quality options, and save reliable MP4 copies with cancel support and local processing.",
+  "serply_link": "https://serp.ly/erome-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68e0232567ee3b840f699b84",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
+  "status": "live",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
+      "alt": "Erome Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/erome-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Triple-source detection catches HTML5, metadata, and script-based video URLs",
+    "Quality picker lists every MP4 and HLS option with resolution and estimated size",
+    "Real-time progress window with speed, ETA, and a cancel button",
+    "Background HLS segment merging produces clean MP4 files with no re-encode",
+    "Right-click “Download with Erome Downloader” shortcut for instant saves",
+    "Desktop notifications announce completion or errors so you can multitask",
+    "Licence and preferences stored locally with no analytics or tracking",
+    "Permissions scoped to Erome domains for privacy-first operation",
+    "Works across Chrome, Edge, Firefox, Brave, and Opera on desktop",
+    "Built on Manifest V3 for up-to-date extension security"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Preserve Erome videos before posts or profiles disappear",
+      "Skip manual URL hunting thanks to automatic quality detection",
+      "Keep archives private with 100% on-device processing"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I download an Erome video with this extension?",
+      "answer": "Open the post, let the player finish loading, click the Erome Downloader icon, pick your preferred quality, and keep the tab open while the progress bar completes. The MP4 will save to your default downloads folder."
+    },
+    {
+      "question": "Does it label every quality correctly?",
+      "answer": "Yes. The extension analyses filenames and metadata to identify each available resolution, orders them from highest to lowest, and marks whether the source is MP4 or HLS so you can choose confidently."
+    },
+    {
+      "question": "Can I cancel or pause a download?",
+      "answer": "You can cancel at any time using the button in the progress panel. Pausing isn’t supported, but you can restart the download from the beginning whenever you’re ready."
+    },
+    {
+      "question": "Does it support albums or multi-video bundles?",
+      "answer": "The downloader focuses on single videos. If a post contains multiple clips, launch each download individually—there’s no ZIP or album packaging."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Erome Downloader ships builds for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux. It does not support Safari or mobile browsers."
+    },
+    {
+      "question": "Why does it need scripting and offscreen permissions?",
+      "answer": "Scripting inspects the page to locate hidden video URLs, and the offscreen context stitches HLS segments into a single MP4 without freezing your tab. Both are required for reliable downloads."
+    },
+    {
+      "question": "Is my data private?",
+      "answer": "Absolutely. All extraction, assembly, and storage happen locally. Only licence verification touches external servers, and no download history is collected."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Mila Gresham",
+      "review": "Posts vanish fast, but this extension finds the source every time and the cancel button has already rescued me when I picked the wrong quality.",
+      "title": "Saved my favorite Erome creators",
+      "rating": 5,
+      "date": "2025-02-16"
+    },
+    {
+      "name": "Harvey Watts",
+      "review": "All the 1080p streams show up with file sizes before I click download. No more guessing which link is which.",
+      "title": "Accurate quality labels",
+      "rating": 4.9,
+      "date": "2025-03-04"
+    },
+    {
+      "name": "Selene Ortiz",
+      "review": "Everything stays on my machine and the notifications let me multitask while the MP4s finish. Worth every penny.",
+      "title": "Private downloads with zero hassle",
+      "rating": 4.8,
+      "date": "2025-01-31"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "erome downloader",
+    "erome video downloader",
+    "download erome mp4",
+    "offline erome saver",
+    "erome hls downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/eVq7sD76w9OuaXhbp10VO1E",
+    "test_url": "https://buy.stripe.com/test_fZu7sD3Uk0dU5CX8cP0VO1D"
+  },
+  "stripe": {
+    "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Gl659Drkqem"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-erome-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Saves completed MP4 files to your downloads folder and tracks progress so the\nstatus window stays accurate."
+    },
+    {
+      "permission": "storage",
+      "justification": "Keeps the lifetime licence key, preferred quality, and retry settings stored\nlocally between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects when an Erome post is open, injects inline buttons, and reads the active\nplayer data in that specific tab."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Allows downloads to continue if you switch tabs and lets the extension reopen\nthe progress panel when you return."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Scans HTML, metadata, and page scripts to enumerate hidden video URLs and quality\noptions."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Sends completion or error alerts so you know when a download finishes without\nwatching the tab."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds the “Download with Erome Downloader” option to the right-click menu for\nfaster access."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Processes HLS segments in a hidden worker so chunk merging doesn’t freeze the\nmain browser tab."
+    },
+    {
+      "permission": "declarativeNetRequest",
+      "justification": "Applies lightweight request rules when Erome routes media through alternate subdomains,\nensuring streams remain detectable."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Restricts privileged access to erome.com and related CDNs so the extension only\nactivates where it is needed."
+    }
+  ],
+  "brand": "SERP Apps"
+}

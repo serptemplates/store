@@ -1,0 +1,173 @@
+{
+  "platform": "XNXX",
+  "name": "XNXX Video Downloader",
+  "tagline": "Save XNXX videos instantly for offline viewing.",
+  "slug": "xnxx-video-downloader",
+  "description": "XNXX Video Downloader recognises videos on xnxx.com, video.xnxx.com, xnxx3.com, and other mirrors automatically, then gives you a clean list of MP4 qualities to choose from. Pick your resolution, follow the progress bar, and it saves the stream as a tidy MP4 for offline viewing.",
+  "seo_title": "XNXX Video Downloader | Download XNXX Videos",
+  "seo_description": "Download XNXX videos easily for offline viewing. Fast, reliable XNXX video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/xnxx-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xnxx-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/xnxx-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/xnxx-video-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68e022a367ee3b7242699b7a",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=xnxx-video-downloader",
+  "status": "live",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.gif",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/xnxx-video-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Works automatically on xnxx.com, video.xnxx.com, xnxx3.com, and regional mirrors",
+    "Filters duplicate quality entries to show a clean MP4 resolution list",
+    "Downloads MP4 files directly at the quality you select with no re-encoding",
+    "Displays on-page progress with percentage, downloaded size, and status updates",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
+    "Stores licence data locally with no tracking or external routing of downloads"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with multi-domain detection and quality selection. Sales are final.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Capture XNXX videos from any mirror without manual configuration",
+      "Choose the exact MP4 resolution you need for offline viewing",
+      "Keep downloads private with on-device processing and no analytics"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I download an XNXX video with this extension?",
+      "answer": "Visit the video on any XNXX domain, click the downloader icon, pick the resolution you want, and wait for the progress bar to finish. The MP4 saves automatically."
+    },
+    {
+      "question": "Does it work on alternative domains like xnxx3.com?",
+      "answer": "Yes. The extension recognises xnxx.com, video.xnxx.com, xnxx3.com, and other mirrors without extra setup."
+    },
+    {
+      "question": "Can I download multiple videos at once?",
+      "answer": "Downloads run one at a time so the file stays intact. Start the next video after the current one completes."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Does it change the video or remove watermarks?",
+      "answer": "No. The downloader saves the original MP4 exactly as XNXX delivers it, preserving quality and any embedded overlays."
+    },
+    {
+      "question": "Is my activity private?",
+      "answer": "Everything runs locally. The extension only verifies your licence and never uploads browsing or download history."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Gio Ramirez",
+      "review": "No matter which mirror I land on, the downloader recognises the video and saves the MP4 without any extra steps.",
+      "title": "Works on every domain I try",
+      "rating": 5,
+      "date": "2025-02-18"
+    },
+    {
+      "name": "Kira Sato",
+      "review": "Highest resolution is always first and file sizes help me choose quickly. Downloads finish fast too.",
+      "title": "Clean quality picker",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Leon Briggs",
+      "review": "I save favourites before they vanish. Progress stays visible and the files play perfectly offline.",
+      "title": "Dependable offline copies",
+      "rating": 4.8,
+      "date": "2025-01-27"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "xnxx video downloader",
+    "download xnxx mp4",
+    "xnxx mirror support",
+    "xnxx hd saver",
+    "offline xnxx videos"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/14AfZ98aAbWC0iD2Sv0VO1R",
+    "test_url": "https://buy.stripe.com/test_14A8wHgH64uae9tgJl0VO1Q"
+  },
+  "stripe": {
+    "price_id": "price_1SO0fB06JrOmKRCmDKbwSVtx",
+    "metadata": {
+      "stripe_product_id": "prod_SrGYKrazcfgi5G"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-xnxx-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Required for downloading XNXX videos to the user's computer while tracking progress.\n\nUsage highlights:\n- `background-enhanced.js:60` cancels downloads through the Chrome Downloads API.\n- `background-enhanced.js:357` starts new downloads.\n- `background-enhanced.js:446, 455, 459` watch download state and progress events.\n- `popup.js:210` looks up downloads by ID to show progress in the popup."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Enables the extension to work with the active tab, validate XNXX pages, and gather video metadata.\n\nUsage highlights:\n- `chrome.tabs.query({ active: true, currentWindow: true })` provides implicit access to the focused tab.\n- Supports communication with content scripts running on the active tab."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores activation status and license information locally so paid features remain enabled.\n\nUsage highlights:\n- `auth.js` `saveActivation` persists activation flags, license keys, and emails.\n- `auth.js` `checkActivationStatus` reloads stored activation details when the popup initializes."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Allows the extension to issue system notifications about download completion and error states.\n\nUsage highlights:\n- `background-enhanced.js:477` creates notifications via `chrome.notifications.create`.\n- Notifications inform users about finished downloads and failure scenarios."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds a \"Download XNXX Video\" item to the right-click menu on XNXX domains for quick access.\n\nUsage highlights:\n- `background-enhanced.js:10` registers the context menu item with `chrome.contextMenus.create`.\n- `background-enhanced.js:23` listens for clicks using `chrome.contextMenus.onClicked`."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Supports tab queries, messaging, and opening helper tabs to coordinate downloads.\n\nUsage highlights:\n- `popup.js:30, 44, 265` query tabs, communicate with content scripts, and open new tabs.\n- `background-enhanced.js:25, 319, 325, 493` handle tab messaging for download workflows."
+    }
+  ],
+  "brand": "SERP Apps"
+}

@@ -1,28 +1,71 @@
 import fs from "node:fs";
 import path from "node:path";
-import { parse } from "yaml";
 import { productSchema, type ProductData } from "./product-schema";
 import { isExcludedSlug } from "@/lib/site-config";
 
+const PRODUCT_DIRECTORY_NAME = "products";
+const PRODUCT_FILE_EXTENSION = ".json";
+
+export type ProductFileResolution = {
+  slug: string;
+  absolutePath: string;
+};
+
 function resolveDataRoot() {
   const override = process.env.PRODUCTS_ROOT;
-  if (override) {
-    return path.isAbsolute(override) ? override : path.join(process.cwd(), override);
+  const candidates = [
+    override,
+    path.join(process.cwd(), "data"),
+    path.join(process.cwd(), "apps", "store", "data"),
+    path.join(process.cwd(), "..", "data"),
+  ].filter((candidate): candidate is string => Boolean(candidate));
+
+  for (const candidate of candidates) {
+    const absolute = path.isAbsolute(candidate) ? candidate : path.resolve(process.cwd(), candidate);
+    const productsPath = path.join(absolute, PRODUCT_DIRECTORY_NAME);
+    if (fs.existsSync(productsPath)) {
+      return absolute;
+    }
   }
-  return path.join(process.cwd(), "data");
+
+  const tried = candidates
+    .map((candidate) => (path.isAbsolute(candidate) ? candidate : path.resolve(process.cwd(), candidate)))
+    .join(", ");
+
+  throw new Error(
+    `Unable to locate product data directory (checked: ${tried || "<none>"}). Set PRODUCTS_ROOT to override.`,
+  );
 }
 
 const dataRoot = resolveDataRoot();
-const productsDir = path.join(dataRoot, "products");
+const productsDir = path.join(dataRoot, PRODUCT_DIRECTORY_NAME);
 
 let cachedSlugs: string[] | undefined;
 const productCache = new Map<string, ProductData>();
 
-function loadProductFromFile(slug: string): ProductData {
-  const filePath = path.join(productsDir, `${slug}.yaml`);
-  const rawFile = fs.readFileSync(filePath, "utf8");
-  const parsed = parse(rawFile);
+function readProductFile(filePath: string) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const parsed = JSON.parse(raw);
   return productSchema.parse(parsed);
+}
+
+function resolveProductFile(slug: string): ProductFileResolution {
+  const candidatePath = path.join(productsDir, `${slug}${PRODUCT_FILE_EXTENSION}`);
+  if (fs.existsSync(candidatePath)) {
+    return {
+      slug,
+      absolutePath: candidatePath,
+    };
+  }
+
+  throw new Error(
+    `Missing product data for slug "${slug}". Expected ${path.relative(process.cwd(), candidatePath)}`,
+  );
+}
+
+function loadProductFromFile(slug: string): ProductData {
+  const resolution = resolveProductFile(slug);
+  return readProductFile(resolution.absolutePath);
 }
 
 export function getProductSlugs(): string[] {
@@ -32,12 +75,20 @@ export function getProductSlugs(): string[] {
       return cachedSlugs;
     }
 
-    cachedSlugs = fs
-      .readdirSync(productsDir)
-      .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-      .map((file) => file.replace(/\.ya?ml$/i, ""))
+    const slugs = new Set<string>();
+
+    for (const file of fs.readdirSync(productsDir)) {
+      if (!file.toLowerCase().endsWith(PRODUCT_FILE_EXTENSION)) {
+        continue;
+      }
+
+      const slug = file.replace(/\.json$/i, "");
+      slugs.add(slug);
+    }
+
+    cachedSlugs = Array.from(slugs)
       .filter((slug) => !isExcludedSlug(slug))
-      .sort();
+      .sort((a, b) => a.localeCompare(b));
   }
 
   return cachedSlugs;
@@ -71,4 +122,12 @@ export function getProductJson(slug?: string, indent = 2): string {
 
 export function getProductsDataRoot(): string {
   return dataRoot;
+}
+
+export function getProductsDirectory(): string {
+  return productsDir;
+}
+
+export function resolveProductFilePath(slug: string): ProductFileResolution {
+  return resolveProductFile(slug);
 }

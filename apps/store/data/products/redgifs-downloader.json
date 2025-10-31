@@ -1,0 +1,168 @@
+{
+  "platform": "Redgifs",
+  "name": "Redgifs Downloader",
+  "tagline": "Save Redgifs content instantly to your device.",
+  "slug": "redgifs-downloader",
+  "description": "Redgifs Downloader gives creators and teams a dependable way to save Redgifs content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Redgifs with consistent quality and predictable results.\n\nIt supports High-quality GIFs and short videos, Batch processing for tag-based content collections, and Various media formats and qualities, so you can move quickly from download to delivery without tedious rework. Use it to archive Redgifs assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Redgifs Downloader | Download Redgifs Content",
+  "seo_description": "Download Redgifs content easily for offline use. Fast and reliable Redgifs downloader.",
+  "serply_link": "https://serp.ly/redgifs-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/redgifs-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/redgifs-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/redgifs-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68df9abf613b1bca79ce7b58",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=redgifs-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/redgifs-downloader/main/images/redgifs-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redgifs-downloader.jpg",
+      "alt": "Redgifs Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/redgifs-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "One-click download from any video page",
+    "100% privacy-friendly",
+    "Auto-detect videos on the page",
+    "Smart Page Scan",
+    "Embedded Video Support",
+    "Full HD Downloads",
+    "Lightning fast downloads (no re-encoding)",
+    "Original quality preserved (up to 4K)",
+    "No registration or personal data required",
+    "No watermarks or branding added",
+    "Zero Ads",
+    "Regular Updates",
+    "Thumbnail Preview",
+    "Minimal Permissions",
+    "Download Progress Bar",
+    "Chrome, Firefox, Edge",
+    "Download embedded videos",
+    "Zero data tracking",
+    "Ad-free experience"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the Redgifs downloader?",
+      "answer": "Install the browser extension, navigate to Redgifs, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from Redgifs, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all Redgifs content?",
+      "answer": "The downloader works with most publicly accessible content on Redgifs. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Redgifs Downloader lets me pull everything from Redgifs in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Redgifs Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Redgifs used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Redgifs downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Redgifs assets for clients and the download in Redgifs Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Redgifs content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Image Hosting",
+    "Image Downloader"
+  ],
+  "keywords": [
+    "redgifs downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/8x2aEP62sd0G6H1fFh0VO1K",
+    "test_url": "https://buy.stripe.com/test_3cI14f9eEbWCe9t9gT0VO1J"
+  },
+  "stripe": {
+    "price_id": "price_1SO0ed06JrOmKRCmgVSOpoOb",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6HU86lnZmPqb"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-redgifs-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

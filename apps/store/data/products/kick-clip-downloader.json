@@ -1,0 +1,167 @@
+{
+  "platform": "Kick",
+  "name": "Kick Clip Downloader",
+  "tagline": "Save Kick Clip videos instantly for offline viewing.",
+  "slug": "kick-clip-downloader",
+  "description": "Kick Clip Downloader gives creators and teams a dependable way to save Kick Clip videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Kick with consistent quality and predictable results.\n\nIt supports Kick.com stream clips and highlights, Live stream recordings and VODs, and Auto metadata extraction and organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Kick assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Kick Clip Downloader | Kick Downloader | Download Kick Downloader for Offline Access",
+  "seo_description": "Download videos, images, and content from kick with our reliable downloader tool. Fast, secure, and easy to use.",
+  "serply_link": "https://serp.ly/kick-clip-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kick-clip-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/kick-clip-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/kick-clip-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=kick-clip-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kick-clip-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/kick-clip-downloader/main/images/kick-clip-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/kick-clip-downloader.jpg",
+      "alt": "Kick Clip Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/kick-clip-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Kick.com stream clips and highlights",
+    "Live stream recordings and VODs",
+    "Auto metadata extraction and organization",
+    "Custom folders by streamer and date",
+    "Resume downloads",
+    "Cross-platform support",
+    "Built-in player with gaming-focused controls",
+    "CLI tools",
+    "Gaming integration",
+    "Export clip data/engagement metrics",
+    "Search clip libraries",
+    "Local-only storage for privacy",
+    "Regular compatibility updates",
+    "Various containers/codecs",
+    "Bandwidth optimization",
+    "Backup & sync options",
+    "Smart categorization",
+    "Gaming content discovery features",
+    "Streamer following and notification system"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the Kick downloader?",
+      "answer": "Install the browser extension, navigate to Kick, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from Kick, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all Kick content?",
+      "answer": "The downloader works with most publicly accessible content on Kick. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Kick Clip Downloader lets me pull everything from Kick in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Kick Clip Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Kick used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Kick downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Kick assets for clients and the download in Kick Clip Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Kick content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Livestream",
+    "Social Media",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "kick clip downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/dRm28j76waSy8P9gJl0VO0z",
+    "test_url": "https://buy.stripe.com/test_eVqbITgH67Gm0iD64H0VO0A"
+  },
+  "stripe": {
+    "price_id": "price_1S99wx06JrOmKRCmTvX5yYRV",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6HB1QfBD03L4"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-kick-clip-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

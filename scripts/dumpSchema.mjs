@@ -15,12 +15,11 @@
     "store",
     "data",
     "products",
-    `${slug}.yaml`
+    `${slug}.json`
   );
 
-  const yamlText = await readFile(productPath, "utf8");
-  const { parse } = await import("yaml");
-  const product = parse(yamlText);
+  const rawText = await readFile(productPath, "utf8");
+  const product = JSON.parse(rawText);
 
   const schemaProduct = createSchemaProduct(product, {
     price: product.pricing?.price ?? null,

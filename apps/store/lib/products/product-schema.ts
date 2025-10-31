@@ -67,6 +67,81 @@ const optionalExternalUrl = z.preprocess(
   z.string().url().optional(),
 );
 
+const slugSchema = () =>
+  z
+    .string()
+    .trim()
+    .regex(/^[a-z0-9-]+$/, {
+      message: "Slug must use lowercase letters, numbers, and hyphens only",
+    });
+
+const optionalArray = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess(
+    (value) => {
+      if (value === null || value === undefined) {
+        return undefined;
+      }
+      return value;
+    },
+    z.array(schema).optional().default([]),
+  );
+
+const optionalIsoDate = z.preprocess(
+  (value) => {
+    if (value === null || value === undefined) {
+      return undefined;
+    }
+    if (typeof value !== "string") {
+      return value;
+    }
+    const trimmed = value.trim();
+    return trimmed.length === 0 ? undefined : trimmed;
+  },
+  z
+    .string()
+    .superRefine((value, ctx) => {
+      if (Number.isNaN(Date.parse(value))) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Expected an ISO 8601 date string",
+        });
+      }
+    })
+    .optional(),
+);
+
+const isoCurrencyCode = z.preprocess(
+  (value) => {
+    if (value === null || value === undefined) {
+      return undefined;
+    }
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      if (trimmed.length === 0) {
+        return undefined;
+      }
+      return trimmed.toUpperCase();
+    }
+    return value;
+  },
+  z
+    .string()
+    .regex(/^[A-Z]{3}$/, {
+      message: "Currency must be an ISO 4217 alpha code (e.g. USD)",
+    })
+    .optional(),
+);
+
+const stripeIdSchema = (prefixes: string[]) =>
+  trimmedString().superRefine((value, ctx) => {
+    if (!prefixes.some((prefix) => value.startsWith(prefix))) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Expected an identifier starting with ${prefixes.join(" or ")}`,
+      });
+    }
+  });
+
 const assetPathSchema = trimmedString().superRefine((value, ctx) => {
   if (/^https?:\/\//i.test(value)) {
     return;
@@ -82,16 +157,16 @@ const assetPathSchema = trimmedString().superRefine((value, ctx) => {
 
 const screenshotSchema = z.object({
   url: assetPathSchema,
-  alt: trimmedString().optional(),
-  caption: trimmedString().optional(),
+  alt: optionalTrimmedString(),
+  caption: optionalTrimmedString(),
 });
 
 const reviewSchema = z.object({
   name: trimmedString(),
   review: trimmedString(),
-  title: z.string().trim().optional(),
-  rating: z.number().optional(),
-  date: z.string().trim().optional(),
+  title: optionalTrimmedString(),
+  rating: z.number().min(0).max(5),
+  date: optionalIsoDate,
 });
 
 const faqSchema = z.object({
@@ -146,26 +221,34 @@ const cancelUrlSchema = trimmedString()
   });
 
 const stripeSchemaShape = {
-  price_id: z.string(),
-  test_price_id: z.string().optional(),
+  price_id: stripeIdSchema(["price_"]),
+  test_price_id: stripeIdSchema(["price_"]).optional(),
   mode: z.enum(["payment", "subscription"]).optional(),
   metadata: z
-    .preprocess((value) => (value == null ? {} : value), z.record(z.any()).default({})),
+    .preprocess(
+      (value) => {
+        if (value === null || value === undefined) {
+          return {};
+        }
+        return value;
+      },
+      z.record(trimmedString()).default({}),
+    ),
 } satisfies Record<string, z.ZodTypeAny>;
 
 const stripeSchema = z.object(stripeSchemaShape);
 
-const ghlCustomFieldSchema = z.record(z.string());
+const ghlCustomFieldSchema = z.record(trimmedString());
 
 const ghlSchema = z
   .object({
-    pipeline_id: z.string().optional(),
-    stage_id: z.string().optional(),
-    status: z.string().optional(),
-    source: z.string().optional(),
-    tag_ids: z.array(z.string()).optional().default([]),
-    workflow_ids: z.array(z.string()).optional().default([]),
-    opportunity_name_template: z.string().optional(),
+    pipeline_id: optionalTrimmedString(),
+    stage_id: optionalTrimmedString(),
+    status: optionalTrimmedString(),
+    source: optionalTrimmedString(),
+    tag_ids: optionalArray(trimmedString()),
+    workflow_ids: optionalArray(trimmedString()),
+    opportunity_name_template: optionalTrimmedString(),
     contact_custom_field_ids: ghlCustomFieldSchema.optional(),
     opportunity_custom_field_ids: ghlCustomFieldSchema.optional(),
   })
@@ -185,12 +268,23 @@ const pricingSchemaShape = {
   note: z.string().trim().optional(),
   cta_text: z.string().trim().optional(),
   cta_href: z.string().trim().optional(),
-  currency: z.string().trim().optional(),
+  currency: isoCurrencyCode,
   availability: z.string().trim().optional(),
-  benefits: z.array(z.string().trim()).optional().default([]),
+  benefits: optionalArray(z.string().trim()),
 } satisfies Record<string, z.ZodTypeAny>;
 
-export const PRICING_FIELD_ORDER = Object.keys(pricingSchemaShape);
+export const PRICING_FIELD_ORDER = [
+  "label",
+  "subheading",
+  "price",
+  "original_price",
+  "note",
+  "cta_text",
+  "cta_href",
+  "currency",
+  "availability",
+  "benefits",
+] as const;
 const pricingSchema = z.object(pricingSchemaShape).optional();
 
 const returnPolicySchemaShape = {
@@ -230,7 +324,7 @@ export const productSchemaShape = {
   platform: z.string().trim().optional(),
   name: trimmedString(),
   tagline: trimmedString(),
-  slug: trimmedString(),
+  slug: slugSchema(),
   description: trimmedString(),
   seo_title: trimmedString(),
   seo_description: trimmedString(),
@@ -245,26 +339,26 @@ export const productSchemaShape = {
   status: z.enum(["draft", "pre_release", "live"]).default("draft"),
   featured_image: assetPathSchema.nullable().optional(),
   featured_image_gif: assetPathSchema.nullable().optional(),
-  screenshots: z.array(screenshotSchema).optional().default([]),
-  product_videos: z.array(z.string().trim()).optional().default([]),
-  related_videos: z.array(z.string().trim()).optional().default([]),
-  related_posts: z.array(trimmedString()).optional().default([]),
+  screenshots: optionalArray(screenshotSchema),
+  product_videos: optionalArray(z.string().trim().url()),
+  related_videos: optionalArray(z.string().trim().url()),
+  related_posts: optionalArray(trimmedString()),
   github_repo_url: z.string().trim().url().nullable().optional(),
-  github_repo_tags: z.array(z.string().trim()).optional().default([]),
+  github_repo_tags: optionalArray(z.string().trim()),
   chrome_webstore_link: optionalHost(["chromewebstore.google.com", "chrome.google.com"]),
   firefox_addon_store_link: optionalHost(["addons.mozilla.org"]),
   edge_addons_store_link: optionalHost(["microsoftedge.microsoft.com"]),
   opera_addons_store_link: optionalHost(["addons.opera.com"]),
   producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
-  features: z.array(z.string().trim()).optional().default([]),
+  features: optionalArray(z.string().trim()),
   pricing: pricingSchema,
   order_bump: z.any().optional().transform(() => undefined),
-  faqs: z.array(faqSchema).optional().default([]),
-  reviews: z.array(reviewSchema).optional().default([]),
-  supported_operating_systems: z.array(z.string().trim()).optional().default([]),
-  supported_regions: z.array(z.string().trim()).optional().default([]),
-  categories: z.array(z.string().trim()).optional().default([]),
-  keywords: z.array(z.string().trim()).optional().default([]),
+  faqs: optionalArray(faqSchema),
+  reviews: optionalArray(reviewSchema),
+  supported_operating_systems: optionalArray(z.string().trim()),
+  supported_regions: optionalArray(z.string().trim()),
+  categories: optionalArray(z.string().trim()),
+  keywords: optionalArray(z.string().trim()),
   return_policy: returnPolicySchema,
   payment_link: paymentLinkSchema,
   stripe: stripeSchema.optional(),
@@ -275,9 +369,9 @@ export const productSchemaShape = {
   waitlist_url: z.string().url().optional(),
   new_release: z.boolean().optional().default(false),
   popular: z.boolean().optional().default(false),
-  permission_justifications: z.array(permissionJustificationSchema).optional().default([]),
-  brand: z.string().optional().default("SERP Apps"),
-  sku: z.string().optional(),
+  permission_justifications: optionalArray(permissionJustificationSchema),
+  brand: z.string().trim().optional().default("SERP Apps"),
+  sku: optionalTrimmedString(),
 } satisfies Record<string, z.ZodTypeAny>;
 
 export const PRODUCT_FIELD_ORDER = [
@@ -363,3 +457,13 @@ export const productSchema = z
   .transform(({ order_bump: _legacyOrderBump, ...rest }) => rest);
 
 export type ProductData = z.infer<typeof productSchema>;
+
+export const SCREENSHOT_FIELD_ORDER = ["url", "alt", "caption"] as const;
+export const FAQ_FIELD_ORDER = ["question", "answer"] as const;
+export const REVIEW_FIELD_ORDER = ["name", "review", "title", "rating", "date"] as const;
+export const PERMISSION_JUSTIFICATION_FIELD_ORDER = [
+  "permission",
+  "justification",
+  "learn_more_url",
+] as const;
+export const STRIPE_FIELD_ORDER = ["price_id", "test_price_id", "mode", "metadata"] as const;

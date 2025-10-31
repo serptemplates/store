@@ -1,0 +1,166 @@
+{
+  "platform": "Dreamstime",
+  "name": "Dreamstime Downloader",
+  "tagline": "Save Dreamstime images and content instantly to your device.",
+  "slug": "dreamstime-downloader",
+  "description": "Dreamstime Downloader gives creators and teams a dependable way to save Dreamstime images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Dreamstime with consistent quality and predictable results.\n\nIt supports Royalty-free photos, vectors, and illustrations, Batch processing for creative content collections, and Exclusive Dreamstime contributor content, so you can move quickly from download to delivery without tedious rework. Use it to archive Dreamstime assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Dreamstime Downloader | Download Dreamstime Images",
+  "seo_description": "Download Dreamstime images and graphics for offline use. Fast and reliable Dreamstime content downloader.",
+  "serply_link": "https://serp.ly/dreamstime-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dreamstime-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/dreamstime-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/dreamstime-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=dreamstime-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/dreamstime-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/dreamstime-downloader/main/images/dreamstime-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/dreamstime-downloader.jpg",
+      "alt": "Dreamstime Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/dreamstime-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Royalty-free photos, vectors, and illustrations",
+    "Batch processing for creative content collections",
+    "Exclusive Dreamstime contributor content",
+    "Auto metadata and keyword extraction",
+    "Organize by theme/usage rights",
+    "Resume downloads with recovery",
+    "Cross-platform support",
+    "Built-in asset browser with advanced preview",
+    "Design integration",
+    "Professional Search & filtering by categories",
+    "Duplicate detection across media libraries",
+    "Local-only storage for privacy",
+    "Regular compatibility updates",
+    "Export capabilities for asset management systems",
+    "Smart Bandwidth optimization",
+    "Various licensing models and formats",
+    "Intelligent content recommendation and discovery",
+    "Backup & sync",
+    "Advanced license management and tracking"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use the Dreamstime downloader?",
+      "answer": "Install the browser extension, navigate to Dreamstime, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "The downloader supports all available quality levels from Dreamstime, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+    },
+    {
+      "question": "Does this work with all Dreamstime content?",
+      "answer": "The downloader works with most publicly accessible content on Dreamstime. Some restricted or DRM-protected content may not be downloadable."
+    },
+    {
+      "question": "Will downloads continue if my internet connection drops?",
+      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+    },
+    {
+      "question": "Is there a download limit?",
+      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+    },
+    {
+      "question": "How do I organize my downloaded content?",
+      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+    },
+    {
+      "question": "Is my data kept private?",
+      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Dreamstime Downloader lets me pull everything from Dreamstime in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Dreamstime Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Dreamstime used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Dreamstime downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Dreamstime assets for clients and the download in Dreamstime Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Dreamstime content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Creative Assets",
+    "Image Downloader"
+  ],
+  "keywords": [
+    "dreamstime downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/cNi9AL8aAaSyaXhfFh0VO0i",
+    "test_url": "https://buy.stripe.com/test_6oU7sD1Mc5ye8P950D0VO0j"
+  },
+  "stripe": {
+    "price_id": "price_1S99wq06JrOmKRCmT1rrKjcd",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6GEMnA4OrbWe"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-dreamstime-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

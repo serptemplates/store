@@ -13,8 +13,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parse } from "yaml";
-
 import { query } from "../../lib/database";
 
 type PaymentLinkTestDetails = {
@@ -58,18 +56,25 @@ const testResults: {
 async function testPaymentLinkConfiguration() {
   console.log("\n🔗 PAYMENT LINK CONFIGURATION CHECK\n");
 
-  const productFiles = readdirSync(productsDir).filter((file) => /\.ya?ml$/i.test(file));
+  const productFiles = readdirSync(productsDir).filter((file) => file.toLowerCase().endsWith(".json"));
   const missing: string[] = [];
   let liveProductCount = 0;
 
   for (const file of productFiles) {
     const raw = readFileSync(path.join(productsDir, file), "utf8");
-    const data = parse(raw) as {
+    let data: {
       slug?: string;
       status?: string;
       payment_link?: Record<string, string> | null;
       buy_button_destination?: string | null;
-    } | null;
+    } | null = null;
+
+    try {
+      data = JSON.parse(raw);
+    } catch (error) {
+      log.warning(`Skipping ${file}: invalid JSON (${error instanceof Error ? error.message : String(error)})`);
+      continue;
+    }
 
     if (!data) continue;
 
@@ -77,7 +82,7 @@ async function testPaymentLinkConfiguration() {
     if (status !== "live") continue;
 
     liveProductCount += 1;
-    const slug = data.slug ?? file.replace(/\.ya?ml$/i, "");
+    const slug = data.slug ?? file.replace(/\.json$/i, "");
 
     const paymentLink = data.payment_link ?? null;
     const hasStripeLink =
@@ -104,7 +109,7 @@ async function testPaymentLinkConfiguration() {
     log.warning(
       `Found ${missing.length} live product(s) missing Payment Links: ${missing.join(", ")}`,
     );
-    log.info("Add `payment_link` entries to the product YAML before shipping.");
+    log.info("Add `payment_link` entries to the product JSON before shipping.");
   }
 }
 

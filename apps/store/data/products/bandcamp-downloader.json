@@ -1,0 +1,131 @@
+{
+  "platform": "Bandcamp",
+  "name": "Bandcamp Downloader",
+  "tagline": "Download Bandcamp audio instantly.",
+  "slug": "bandcamp-downloader",
+  "description": "Bandcamp Downloader gives creators and teams a dependable way to save Bandcamp albums and audio tracks for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Bandcamp with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
+  "seo_title": "Bandcamp Downloader | Download Bandcamp Audio",
+  "seo_description": "Download Bandcamp albums and audio tracks for offline use. Fast, private Bandcamp downloader.",
+  "serply_link": "https://serp.ly/bandcamp-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/bandcamp-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/bandcamp-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/bandcamp-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=bandcamp-downloader",
+  "status": "pre_release",
+  "featured_image": "/media/products/bandcamp-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/bandcamp-downloader/bandcamp-homepage.webp",
+      "alt": "Bandcamp Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "features": [
+    "One-click downloads from Bandcamp",
+    "Preserves original quality and metadata",
+    "Batch queue with automatic retries",
+    "Local-first workflows with no tracking",
+    "Works on Windows, macOS, and Linux"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17",
+    "original_price": "$37.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "How do I use Bandcamp Downloader?",
+      "answer": "Open Bandcamp, choose the albums and audio tracks you need, and start the download directly from the app. Files save to your designated folder immediately."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "Bandcamp Downloader keeps the highest quality available from Bandcamp, preserving resolution, bitrate, and metadata whenever possible."
+    },
+    {
+      "question": "Does this work with private or DRM content?",
+      "answer": "It's designed for publicly accessible material that you have rights to download. It doesn't bypass DRM, logins, or paywalls."
+    },
+    {
+      "question": "Can I run bulk downloads?",
+      "answer": "Yes. Queue multiple links and the downloader processes them sequentially with automatic retries if the connection drops."
+    },
+    {
+      "question": "Is my data tracked?",
+      "answer": "No. Downloads stay on your device and we don't capture usage analytics or content copies."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Mateo Knight",
+      "review": "I download Bandcamp albums and audio tracks for my projects and Bandcamp Downloader keeps everything organized without hiccups.",
+      "title": "Keeps Bandcamp projects moving",
+      "rating": 5,
+      "date": "2025-02-07"
+    },
+    {
+      "name": "Skye Hughes",
+      "review": "The quality from Bandcamp stays perfect, and batch downloads mean I can collect hours of material in minutes.",
+      "title": "Ideal for building Bandcamp archives",
+      "rating": 4.9,
+      "date": "2025-03-08"
+    },
+    {
+      "name": "Rowan Moretti",
+      "review": "Privacy-friendly workflows were the missing piece for us-Bandcamp Downloader never sends Bandcamp data anywhere else.",
+      "title": "Smooth Bandcamp capture every time",
+      "rating": 4.8,
+      "date": "2025-02-09"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Music",
+    "Audio Downloader"
+  ],
+  "keywords": [
+    "bandcamp downloader",
+    "bandcamp download"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-bandcamp-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

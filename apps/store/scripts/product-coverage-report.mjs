@@ -2,8 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { parse } from "yaml";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -83,11 +81,11 @@ if (!fs.existsSync(productsDir)) {
 
 const productFiles = fs
   .readdirSync(productsDir)
-  .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
+  .filter((file) => file.toLowerCase().endsWith(".json"))
   .sort();
 
 if (productFiles.length === 0) {
-  console.error(`No product YAML files found in ${productsDir}`);
+  console.error(`No product JSON files found in ${productsDir}`);
   process.exit(1);
 }
 
@@ -125,7 +123,14 @@ const results = [];
 for (const file of productFiles) {
   const filePath = path.join(productsDir, file);
   const raw = fs.readFileSync(filePath, "utf8");
-  const data = parse(raw);
+  let data;
+
+  try {
+    data = JSON.parse(raw);
+  } catch (error) {
+    console.error(`Skipping ${filePath} due to JSON parse error:`, error);
+    continue;
+  }
   const slug = data?.slug ?? path.basename(file, path.extname(file));
 
   const missing = [];

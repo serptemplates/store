@@ -55,7 +55,7 @@
 
               await checkout_page.close()
           else:
-              print("   ❌ No Stripe Payment Link CTA found – verify product YAML configuration.")
+              print("   ❌ No Stripe Payment Link CTA found – verify product JSON configuration.")
 
           # Test Summary
           print("\n=== Test Summary ===")

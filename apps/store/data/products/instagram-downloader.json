@@ -1,0 +1,166 @@
+{
+  "platform": "Instagram",
+  "name": "Instagram Downloader",
+  "tagline": "Save Instagram videos instantly for offline viewing.",
+  "slug": "instagram-downloader",
+  "description": "Instagram Downloader gives creators and teams a dependable way to save Instagram videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Instagram with consistent quality and predictable results.\n\nIt supports Original quality Instagram content, IGTV, Reels & carousel support, and Batch profile/highlight downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Instagram assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "seo_title": "Instagram Downloader | Download Instagram Videos",
+  "seo_description": "Download Instagram videos easily for offline viewing. Fast, reliable Instagram video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/instagram-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/instagram-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/instagram-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/instagram-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=instagram-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/instagram-downloader/main/images/instagram-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/instagram-downloader.jpg",
+      "alt": "Instagram Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/instagram-downloader",
+  "github_repo_tags": [],
+  "features": [
+    "Original quality Instagram content",
+    "IGTV, Reels & carousel support",
+    "Batch profile/highlight downloads",
+    "Auto story archiving",
+    "Post metadata extraction",
+    "Profile picture/bio download",
+    "Private account support",
+    "Resume downloads",
+    "Organize by user or date",
+    "Duplicate detection",
+    "Cross-platform support",
+    "Media viewer with slideshow",
+    "Multi-format data export",
+    "Media center integration",
+    "Local-only storage for privacy",
+    "Regular compatibility updates",
+    "Bandwidth-efficient downloads",
+    "Search & filter downloads",
+    "Backup & sync options"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "Can I download Instagram Stories before they disappear?",
+      "answer": "Yes! The downloader lets you save Instagram Stories, including photos and videos, before the 24-hour expiration. You can also download Story highlights that creators have saved permanently to their profiles."
+    },
+    {
+      "question": "Does this work with Instagram Reels and IGTV videos?",
+      "answer": "Absolutely! The downloader supports all Instagram video formats including Reels, IGTV, regular feed videos, and carousel posts. Each format is downloaded in its original quality and aspect ratio."
+    },
+    {
+      "question": "Will the downloader save Instagram captions and hashtags?",
+      "answer": "Yes! All post metadata including captions, hashtags, location tags, and timestamps are saved with your downloads. This makes it easy to organize and search your saved content later."
+    },
+    {
+      "question": "Can I download from private Instagram accounts I follow?",
+      "answer": "You can download content from private accounts that you have access to view. Simply authenticate with your Instagram account, and you'll be able to save content from any account you follow."
+    },
+    {
+      "question": "What about Instagram carousel posts with multiple images?",
+      "answer": "Carousel posts are fully supported! All images and videos in a carousel are downloaded and can be saved as separate files or kept together in a folder, depending on your preference."
+    },
+    {
+      "question": "Does this preserve the original image quality?",
+      "answer": "Yes, the downloader fetches the highest resolution version available from Instagram. Images and videos are saved without compression or quality loss, giving you the same quality the creator uploaded."
+    },
+    {
+      "question": "Can I download my own Instagram content as a backup?",
+      "answer": "Definitely! Many users use this downloader to backup their own Instagram content. It's a fast way to create local copies of all your posts, Stories, and Reels for safekeeping."
+    },
+    {
+      "question": "Does this work on all browsers?",
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Ensure your browser is up to date for optimal performance."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Alex Martinez",
+      "review": "I manage content libraries and Instagram Downloader lets me pull everything from Instagram in minutes. The speeds are great and files stay organized.",
+      "title": "Saves hours every week with Instagram Downloader",
+      "rating": 5,
+      "date": "2025-02-12"
+    },
+    {
+      "name": "Jamie Nguyen",
+      "review": "Downloading from Instagram used to be hit or miss. This downloader is stable, fast, and the quality is always on point.",
+      "title": "Rock solid Instagram downloads",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Priya Patel",
+      "review": "We archive Instagram assets for clients and the download in Instagram Downloader keep our workflows smooth. Totally worth the price.",
+      "title": "Ideal for organizing Instagram content",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Social Media",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "instagram downloader"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/dRmdR176wf8Oe9t50D0VO0u",
+    "test_url": "https://buy.stripe.com/test_00w00b1Mce4K2qL3Wz0VO0v"
+  },
+  "stripe": {
+    "price_id": "price_1S99wv06JrOmKRCm5BKNZ3Kj",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6HurnDKF4TUS"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-instagram-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

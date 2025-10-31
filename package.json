@@ -11,7 +11,7 @@
     "dev:stripe-webhook": "node scripts/stripe-webhook-test-server.js",
     "dev:test:stripe": "tsx scripts/dev-test-stripe.ts",
     "sync:stripe-prices": "node scripts/sync-stripe-prices.mjs",
-    "generate:products": "node scripts/generate-product-yamls.mjs",
+    "generate:products": "node scripts/generate-product-json.mjs",
     "fetch:ghl-products": "node scripts/fetch-ghl-products.mjs",
     "cleanup:stripe-products": "node scripts/cleanup-stripe-products.mjs",
     "stripe:create-prices": "node scripts/create-stripe-prices.mjs",
@@ -50,8 +50,7 @@
     "remark-rehype": "^11.1.2",
     "stripe": "^15.12.0",
     "unified": "^11.0.5",
-    "vaul": "^0.9.9",
-    "yaml": "^2.6.1"
+    "vaul": "^0.9.9"
   },
   "devDependencies": {
     "globals": "^16.4.0",

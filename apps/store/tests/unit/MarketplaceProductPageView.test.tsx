@@ -29,7 +29,7 @@ describe("MarketplaceProductPageView", () => {
         { question: "How do I install it?", answer: "Install from the Chrome Web Store." },
       ],
       reviews: [
-        { name: "Jordan", review: "Works perfectly for batch downloads." },
+        { name: "Jordan", review: "Works perfectly for batch downloads.", rating: 4.8 },
       ],
       supported_operating_systems: ["windows", "mac"],
       chrome_webstore_link: "https://chromewebstore.google.com/detail/demo/abcdef123456",

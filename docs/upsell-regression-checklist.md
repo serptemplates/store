@@ -3,7 +3,7 @@
 Run these checks whenever we touch pricing CTA logic, schema files, or checkout code to ensure products *without* an upsell still behave exactly as before.
 
 ## 1. Landers Without Upsells
-- Pick a product that has no `order_bump` in YAML (e.g. `youtube-downloader.yaml`).
+- Pick a product that has no `order_bump` in JSON (e.g. `youtube-downloader.json`).
 - `pnpm --filter @apps/store dev` → visit `/youtube-downloader`.
 - Confirm the Pricing CTA renders without any upsell panel, the hero CTA and button copy are unchanged, and the “Total” card shows only the base price.
 - Run `pnpm --filter @apps/store test:unit -- --run` to ensure `productToHomeTemplate` tests still pass (these guard the `pricing` subset for non-upsell cases).

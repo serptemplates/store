@@ -7,11 +7,10 @@ import process from "node:process";
 
 import Stripe from "stripe";
 import dotenv from "dotenv";
-import { parse } from "yaml";
+import { getAllProducts } from "../lib/products/product";
 
 const API_VERSION = "2025-06-30.basil" as unknown as Stripe.LatestApiVersion;
 const REPO_ROOT = path.resolve(__dirname, "../../..");
-const PRODUCTS_DIR = path.join(REPO_ROOT, "apps/store/data/products");
 
 const CROSS_SELL_TARGETS: Partial<Record<StripeMode, string>> = {
   live: "prod_TF3OkFaJi31aur", // SERP Downloaders Bundle
@@ -87,14 +86,6 @@ function createStripeClients(): StripeClient[] {
   return clients;
 }
 
-type ProductYaml = {
-  slug?: unknown;
-  name?: unknown;
-  stripe?: {
-    metadata?: Record<string, unknown> | null | undefined;
-  };
-};
-
 function shouldUpdateProduct(slug: string, name: string | undefined) {
   const loweredSlug = slug.toLowerCase();
   const loweredName = name?.toLowerCase() ?? "";
@@ -107,13 +98,9 @@ function shouldUpdateProduct(slug: string, name: string | undefined) {
 }
 
 async function updateStripeCrossSells() {
-  if (!fs.existsSync(PRODUCTS_DIR)) {
-    throw new Error(`Products directory not found at ${PRODUCTS_DIR}`);
-  }
-
-  const files = fs.readdirSync(PRODUCTS_DIR).filter((file) => /\.ya?ml$/i.test(file));
-  if (files.length === 0) {
-    console.log("No product YAML files found. Nothing to update.");
+  const products = getAllProducts();
+  if (products.length === 0) {
+    console.log("No product records found. Nothing to update.");
     return;
   }
 
@@ -122,16 +109,13 @@ async function updateStripeCrossSells() {
   let updatesAttempted = 0;
   let updatesApplied = 0;
 
-  for (const file of files) {
-    const absolutePath = path.join(PRODUCTS_DIR, file);
-    const raw = fs.readFileSync(absolutePath, "utf8");
-    const data = parse(raw) as ProductYaml;
-
-    const slug = typeof data.slug === "string" ? data.slug : file.replace(/\.ya?ml$/i, "");
-    const name = typeof data.name === "string" ? data.name : undefined;
-    const stripeProductId = typeof data.stripe?.metadata?.stripe_product_id === "string"
-      ? data.stripe?.metadata?.stripe_product_id.trim()
-      : undefined;
+  for (const product of products) {
+    const slug = product.slug;
+    const name = product.name;
+    const stripeProductId =
+      typeof product.stripe?.metadata?.stripe_product_id === "string"
+        ? product.stripe.metadata.stripe_product_id.trim()
+        : undefined;
 
     if (!stripeProductId) {
       continue;

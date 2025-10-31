@@ -1,0 +1,191 @@
+{
+  "platform": "Udemy",
+  "name": "Udemy Video Downloader",
+  "tagline": "Save Udemy videos instantly for offline viewing.",
+  "slug": "udemy-video-downloader",
+  "description": "Udemy Video Downloader keeps entire courses available offline by using your authenticated session to queue lectures, videos, captions, and resources automatically. It mirrors Udemy’s course structure so self‑learners and training teams can build organised archives without juggling ffmpeg scripts or unreliable web tools.",
+  "seo_title": "Udemy Video Downloader | Download Udemy Videos",
+  "seo_description": "Download Udemy videos easily for offline viewing. Fast, reliable Udemy video downloader with high-quality downloads.",
+  "serply_link": "https://serp.ly/udemy-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/udemy-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/udemy-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/udemy-video-downloader/",
+  "buy_button_destination": "https://ghl.serp.co/payment-link/68e022fe67ee3bbf40699b80",
+  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "cancel_url": "https://apps.serp.co/checkout?product=udemy-video-downloader",
+  "status": "pre_release",
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/udemy-video-downloader.jpg",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/udemy-video-downloader.jpg",
+      "alt": "Udemy Video Downloader website preview"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-downloader.gif",
+      "alt": "Udemy Video Downloader screenshot"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [
+    "how-to-download-udemy-videos"
+  ],
+  "github_repo_url": "https://github.com/serpapps/udemy-video-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/udemy-downloader/ecbbfcaojpjlnpeabmdmggbffdlghjjk",
+  "features": [
+    "Uses your Udemy session cookies to authenticate against purchased courses",
+    "Queues sections or individual lectures with automatic retry and throttle handling",
+    "Downloads MP4 videos, audio-only tracks, captions, and downloadable resources together",
+    "Mirrors Udemy’s Course > Section > Lecture structure when naming folders and files",
+    "Generates optional searchable transcript PDFs from caption files",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
+    "Stores licence details locally with no analytics or external tracking"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with full-course queues, caption downloads, and resource syncing included. Sales are final.",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Preserve entire Udemy courses for offline study or compliance archives",
+      "Keep videos, captions, and resources organised exactly like the course curriculum",
+      "Avoid throttling surprises with automatic pause/resume logic"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I start downloading a Udemy course?",
+      "answer": "Log into Udemy, open the course curriculum, launch the downloader, choose the sections or lectures you need, and start the queue. The extension uses your session cookies to fetch videos, captions, and resources."
+    },
+    {
+      "question": "Does it handle Udemy rate limits automatically?",
+      "answer": "Yes. When the platform throttles requests the downloader pauses, waits the required interval, and resumes so your account stays in good standing."
+    },
+    {
+      "question": "What files are saved with each lecture?",
+      "answer": "Each lecture can include the MP4 video, optional audio-only track, caption files in available languages, and any downloadable resources or attachments linked to that lecture."
+    },
+    {
+      "question": "Can I choose specific sections instead of the whole course?",
+      "answer": "Absolutely. Queue entire courses, individual sections, or selected lectures with the quality and caption languages you prefer."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Is my Udemy account information safe?",
+      "answer": "The extension relies on locally exported session cookies. Credentials are never stored or transmitted, and all downloads happen on your device."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Elena Brooks",
+      "review": "I queued a 120-lecture course and woke up to perfectly organised folders with captions and resources intact.",
+      "title": "Full course archives in hours",
+      "rating": 5,
+      "date": "2025-02-21"
+    },
+    {
+      "name": "Victor Singh",
+      "review": "When Udemy throttled the queue it paused and resumed automatically. Zero manual babysitting.",
+      "title": "Handles rate limits gracefully",
+      "rating": 4.9,
+      "date": "2025-03-05"
+    },
+    {
+      "name": "Margo Diaz",
+      "review": "We archive important courses for staff travel. Videos, PDFs, and transcripts all stay synced.",
+      "title": "Keeps training accessible offline",
+      "rating": 4.8,
+      "date": "2025-01-30"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Course Platforms",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "udemy video downloader",
+    "download udemy course",
+    "udemy offline archive",
+    "udemy caption downloader",
+    "udemy resource saver"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/28E9AL4Yo9Ou8P964H0VO1j",
+    "test_url": "https://buy.stripe.com/test_00w8wH0I87Gme9t50D0VO1l"
+  },
+  "stripe": {
+    "price_id": "price_1S99gH06JrOmKRCmSnepXJPa",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6pwoyYNJYNSU"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-udemy-video-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Writes lecture videos, captions, and resources to your downloads folder while\nkeeping queue progress accurate."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores licence activation, cookie status, and queue preferences locally so the\ndownloader stays configured between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects the Udemy course currently open and injects queue controls into the curriculum\npage."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Tracks navigation between lectures and sections so queued downloads remain aligned\nwith the right course."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Reads course metadata, lecture manifests, caption links, and resource URLs from\nUdemy’s pages in order to queue downloads."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Sends completion, pause, and error alerts so you know what the queue is doing\nwithout keeping the popup open."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Grants controlled access to udemy.com and associated CDN endpoints so the extension\ncan fetch course assets securely."
+    }
+  ],
+  "brand": "SERP Apps"
+}
