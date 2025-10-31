@@ -51,4 +51,16 @@ describe("lib/product", () => {
     expect(products).toHaveLength(2);
     expect(products.map((p) => p.slug)).toEqual(["another-product", "test-product"]);
   });
+
+  it("rejects attempts to read unknown slugs", async () => {
+    const { getProductData } = await loadProductModule();
+
+    expect(() => getProductData("missing-product")).toThrowError(/Unknown product slug/i);
+  });
+
+  it("rejects slugs with path traversal characters", async () => {
+    const { resolveProductFilePath } = await loadProductModule();
+
+    expect(() => resolveProductFilePath("../evil")).toThrowError(/unsupported characters/i);
+  });
 });
