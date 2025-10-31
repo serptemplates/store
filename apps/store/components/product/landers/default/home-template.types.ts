@@ -4,14 +4,9 @@ import type { FAQ } from "@repo/ui/sections/FaqSection";
 import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { PricingCtaProps } from "@repo/ui/sections/PricingCta";
 import type { HeroMediaItem } from "@repo/ui/sections/Hero";
+import type { ProductPermissionEntry } from "@/lib/products/view-model";
 
 type GenericComponent = ComponentType<Record<string, unknown>>;
-
-export type PermissionJustificationItem = {
-  permission: string;
-  justification: string;
-  learn_more_url?: string;
-};
 
 export type HomeCtaMode = "checkout" | "external" | "pre_release";
 
@@ -96,7 +91,7 @@ export type HomeTemplateProps = {
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;
   videoSection?: ReactNode;
-  permissionJustifications?: PermissionJustificationItem[];
+  permissionItems?: ProductPermissionEntry[];
   about?: {
     title: string;
     paragraphs: string[];

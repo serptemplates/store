@@ -98,7 +98,7 @@ Review these after each migration milestone to confirm behaviour:
 - `apps/store/components/home/HomePageView.tsx`
 - `apps/store/components/product/landers/default/ClientHomeView.tsx`
 - `apps/store/components/product/landers/marketplace/MarketplaceProductPageView.tsx`
-- `apps/store/components/product/landers/marketplace/StickyPurchaseBar.tsx`
+- `apps/store/components/product/shared/ProductStickyBar.tsx`
 - `apps/store/components/product/useProductCheckoutCta.ts`
 - `apps/store/components/product/ProductStructuredDataScripts.tsx`
 - `apps/store/lib/products/product-adapter.ts`
