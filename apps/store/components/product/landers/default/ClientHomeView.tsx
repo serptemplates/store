@@ -123,11 +123,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
+  // Build a deterministic product URL from configured site origin to avoid SSR/CSR mismatches
   const productUrl = useMemo(() => {
-    if (typeof window !== "undefined") {
-      return `${window.location.origin.replace(/\/$/, "")}${productPath}`
-    }
-
     return `${siteUrl.replace(/\/$/, "")}${productPath}`
   }, [productPath, siteUrl])
 
