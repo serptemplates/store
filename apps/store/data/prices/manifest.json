@@ -23,6 +23,10 @@
     "unit_amount": 1700,
     "currency": "usd"
   },
+  "price_1S99fz06JrOmKRCmwpZifMkf": {
+    "unit_amount": 1700,
+    "currency": "usd"
+  },
   "price_1S99fz06JrOmKRCmxFh2vLWI": {
     "unit_amount": 1700,
     "currency": "usd"
@@ -340,10 +344,6 @@
     "currency": "usd"
   },
   "price_1SO0es06JrOmKRCmvhvRUOkH": {
-    "unit_amount": 900,
-    "currency": "usd"
-  },
-  "price_1SO0eT06JrOmKRCmURKdH9hA": {
     "unit_amount": 900,
     "currency": "usd"
   },
