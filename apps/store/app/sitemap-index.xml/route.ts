@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   SITEMAP_PAGE_SIZE,
   buildBlogEntries,
+  buildCategoryEntries,
   buildCorePageEntries,
   buildProductEntries,
   escapeXml,
@@ -35,6 +36,12 @@ export function GET(): NextResponse {
       return !latest || entry.lastModified > latest ? entry.lastModified : latest;
     }, null) ?? now;
 
+  const categoryEntries = buildCategoryEntries();
+  const categoryLastMod =
+    categoryEntries.reduce<Date | null>((latest, entry) => {
+      return !latest || entry.lastModified > latest ? entry.lastModified : latest;
+    }, null) ?? now;
+
   const sitemapEntries: Array<{ loc: string; lastmod: string }> = [];
 
   if (coreEntries.length > 0) {
@@ -62,6 +69,13 @@ export function GET(): NextResponse {
     sitemapEntries.push({
       loc: `${baseUrl}/blog-sitemap.xml`,
       lastmod: blogLastMod.toISOString(),
+    });
+  }
+
+  if (categoryEntries.length > 0) {
+    sitemapEntries.push({
+      loc: `${baseUrl}/categories-sitemap.xml`,
+      lastmod: categoryLastMod.toISOString(),
     });
   }
 

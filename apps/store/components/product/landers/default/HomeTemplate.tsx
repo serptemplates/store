@@ -14,6 +14,7 @@ import { ProductAboutSection } from "./sections/ProductAboutSection";
 import { ProductResourceLinks } from "./sections/ProductResourceLinks";
 import { buildHomeTemplateViewModel } from "./home-template.view-model";
 import { mapPermissionItemsToFaq } from "@/components/product/shared/mapPermissionItemsToFaq";
+import { ProductCategoryPills } from "@/components/product/shared/ProductCategoryPills";
 
 export function HomeTemplate(props: HomeTemplateProps) {
   const viewModel = buildHomeTemplateViewModel({
@@ -82,6 +83,11 @@ export function HomeTemplate(props: HomeTemplateProps) {
           description={viewModel.hero.description}
           links={viewModel.hero.links}
           media={viewModel.hero.media}
+          eyebrow={
+            viewModel.categories.length > 0 ? (
+              <ProductCategoryPills categories={viewModel.categories} max={3} className="justify-center" />
+            ) : null
+          }
         />
 
         {viewModel.aboutSection ? (

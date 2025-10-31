@@ -11,6 +11,7 @@ import { getReleaseBadgeText } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
 import { buildPermissionEntries, buildProductResourceLinks } from "./view-model";
 import type { ProductData } from "./product-schema";
+import { deriveProductCategories } from "./categories";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -317,6 +318,7 @@ export function productToHomeTemplate(
       return links.length > 0 ? links : undefined;
     })(),
     permissionItems,
+    categories: deriveProductCategories(product),
     pricing: {
       enabled: true,
       heading: product.name,

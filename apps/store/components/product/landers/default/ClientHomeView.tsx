@@ -22,6 +22,7 @@ import { normalizeProductAssetPath } from "@/lib/products/asset-paths"
 import { useProductPageExperience } from "@/components/product/hooks/useProductPageExperience"
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
+import { deriveProductCategories } from "@/lib/products/categories"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -44,6 +45,10 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [posts, product.related_posts])
 
   const homeProps = productToHomeTemplate(product, resolvedPosts)
+  const derivedCategories =
+    Array.isArray(homeProps.categories) && homeProps.categories.length > 0
+      ? homeProps.categories
+      : deriveProductCategories(product)
   const resolvedVideos = videoEntries
   const isPreRelease = product.status === "pre_release"
   const videosToDisplay = isPreRelease ? [] : resolvedVideos.slice(0, 3)
@@ -153,6 +158,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
+        categories={derivedCategories}
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}

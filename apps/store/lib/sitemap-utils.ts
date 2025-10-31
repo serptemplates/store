@@ -1,8 +1,9 @@
 import fs from "node:fs";
 
-import { getProductSlugs, getProductsDirectory, resolveProductFilePath } from "@/lib/products/product";
+import { getProductData, getProductSlugs, getProductsDirectory, resolveProductFilePath } from "@/lib/products/product";
 import { getAllPosts } from "@/lib/blog";
 import { getSiteConfig } from "@/lib/site-config";
+import { deriveProductCategories, slugifyCategoryLabel } from "./products/categories";
 
 function resolveProductsDir(): string {
   return getProductsDirectory();
@@ -49,6 +50,15 @@ export function buildCorePageEntries(): SitemapUrlEntry[] {
         lastModified: now,
         changeFrequency: "daily",
         priority: 1,
+      },
+    ],
+    [
+      `${baseUrl}/categories`,
+      {
+        loc: `${baseUrl}/categories`,
+        lastModified: now,
+        changeFrequency: "daily",
+        priority: 0.85,
       },
     ],
     [
@@ -116,6 +126,39 @@ export function buildBlogEntries(): SitemapUrlEntry[] {
     changeFrequency: "monthly",
     priority: 0.6,
   }));
+}
+
+export function buildCategoryEntries(): SitemapUrlEntry[] {
+  const baseUrl = resolveBaseUrl();
+  const now = new Date();
+  const categoryMap = new Map<string, { loc: string; lastModified: Date }>();
+
+  getProductSlugs().forEach((slug) => {
+    const product = getProductData(slug);
+    const { absolutePath } = resolveProductFilePath(slug);
+    const lastModified = readLastModified(absolutePath) ?? now;
+    const categories = deriveProductCategories(product);
+
+    categories.forEach((category) => {
+      const categorySlug = slugifyCategoryLabel(category);
+      if (!categorySlug) {
+        return;
+      }
+
+      const loc = `${baseUrl}/categories/${categorySlug}`;
+      const existing = categoryMap.get(categorySlug);
+      if (!existing || existing.lastModified < lastModified) {
+        categoryMap.set(categorySlug, { loc, lastModified });
+      }
+    });
+  });
+
+  return Array.from(categoryMap.values()).map((entry) => ({
+    loc: entry.loc,
+    lastModified: entry.lastModified,
+    changeFrequency: "weekly",
+    priority: 0.6,
+  } satisfies SitemapUrlEntry));
 }
 
 export function buildAppSitemapEntries(): SitemapUrlEntry[] {
