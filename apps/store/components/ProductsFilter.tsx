@@ -4,24 +4,12 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 import { PRIMARY_CATEGORIES } from "@/lib/products/category-constants";
-import {
-  ProductSearchBar,
-  type ProductCategory,
-  type CategorySelection,
-} from "./ProductSearchBar";
-import { isPreRelease, type ReleaseStatus } from "@/lib/products/release-status";
+import { ProductSearchBar, type ProductCategory, type CategorySelection } from "./ProductSearchBar";
+import { isPreRelease } from "@/lib/products/release-status";
 import { getCategoryBadgeClasses } from "@/components/category-badge";
+import type { ProductFilterItem } from "@/lib/products/filter-items";
 
-export type ProductListItem = {
-  slug: string;
-  name: string;
-  categories: string[];
-  keywords: string[];
-  platform?: string;
-  status: ReleaseStatus;
-  new_release?: boolean;
-  popular?: boolean;
-};
+export type ProductListItem = ProductFilterItem;
 
 const PRIMARY_CATEGORY_ENTRIES = PRIMARY_CATEGORIES.map((name) => ({
   id: name.toLowerCase(),
@@ -71,7 +59,7 @@ export type FilterOptions = {
 };
 
 export function filterProducts(
-  products: ProductListItem[],
+  products: ProductFilterItem[],
   { searchQuery, categorySelection, showPreRelease, showNewReleases }: FilterOptions,
 ): ProductListItem[] {
   const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -152,7 +140,7 @@ export function ProductsFilter({
   products,
   initialSelectedCategories,
 }: {
-  products: ProductListItem[];
+  products: ProductFilterItem[];
   initialSelectedCategories?: string[];
 }) {
   const [searchQuery, setSearchQuery] = useState("");

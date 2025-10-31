@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import { Button } from "@repo/ui";
-import { getCategoryBadgeClasses } from "@/components/category-badge";
+import { ProductCategoryPills } from "@/components/product/shared/ProductCategoryPills";
 
 type AppHeaderProps = {
   name: string;
@@ -38,19 +38,7 @@ export function AppHeader({
               {subtitle}
             </p>
             {topCategories.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {topCategories.map((category) => {
-                  const label = category.trim();
-                  if (!label) {
-                    return null;
-                  }
-                  return (
-                    <span key={label} className={getCategoryBadgeClasses(label)}>
-                      {label}
-                    </span>
-                  );
-                })}
-              </div>
+              <ProductCategoryPills categories={topCategories} max={3} />
             ) : null}
           </div>
         </div>
