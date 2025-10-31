@@ -7,9 +7,10 @@ import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { resolveProductPaymentLink } from "@/lib/products/payment-link";
-import type { ProductData } from "./product-schema";
 import { getReleaseBadgeText } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
+import { buildPermissionEntries, buildProductResourceLinks } from "./view-model";
+import type { ProductData } from "./product-schema";
 
 const defaultPricingBenefits = [
   "Instant access after checkout",
@@ -19,7 +20,6 @@ const defaultPricingBenefits = [
   "Works on macOS, Windows, and Linux"
 ];
 
-const WAITLIST_EMBED_URL = "https://ghl.serp.co/widget/form/p0UQfTbXR69iXnRlE953";
 const WAITLIST_LABEL = "Get Notified";
 const DEFAULT_CTA_LABEL = "Get It Now";
 const DEFAULT_CTA_LABEL_LOWER = DEFAULT_CTA_LABEL.toLowerCase();
@@ -142,37 +142,6 @@ function selectExternalDestination(product: ProductData): string {
   );
 
   return resolved ?? `https://apps.serp.co/${product.slug}`;
-}
-
-function normalizeExternalHref(value: unknown): string | null {
-  if (typeof value !== "string") {
-    return null;
-  }
-  const trimmed = value.trim();
-  return trimmed.length > 0 ? trimmed : null;
-}
-
-function buildResourceLinks(product: ProductData):
-  | Array<{ label: string; href: string }>
-  | undefined {
-  const links: Array<{ label: string; href: string }> = [];
-
-  const addLink = (href: unknown, label: string) => {
-    const normalized = normalizeExternalHref(href);
-    if (normalized) {
-      links.push({ label, href: normalized });
-    }
-  };
-
-  addLink(product.serp_co_product_page_url, "SERP");
-  addLink(product.reddit_url, "Reddit Discussion");
-  addLink(product.github_repo_url, "GitHub Repository");
-  addLink(product.chrome_webstore_link, "Chrome Web Store");
-  addLink(product.firefox_addon_store_link, "Firefox Add-ons");
-  addLink(product.edge_addons_store_link, "Microsoft Edge Add-ons");
-  addLink(product.producthunt_link, "Product Hunt");
-
-  return links.length > 0 ? links : undefined;
 }
 
 function resolveProductCta(product: ProductData): ResolvedProductCta {
@@ -298,14 +267,10 @@ export function productToHomeTemplate(
         paragraphs: aboutParagraphs,
       }
     : undefined;
-  const permissionJustifications =
-    product.permission_justifications
-      ?.map((entry) => ({
-        permission: entry.permission?.trim() ?? "",
-        justification: entry.justification?.trim() ?? "",
-        learn_more_url: entry.learn_more_url?.trim() || undefined,
-      }))
-      .filter((entry) => entry.permission.length > 0 && entry.justification.length > 0) ?? undefined;
+  const permissionItems = (() => {
+    const entries = buildPermissionEntries(product);
+    return entries.length > 0 ? entries : undefined;
+  })();
 
   if (!derivedOriginalPrice && currentPriceValue != null) {
     if (Math.abs(currentPriceValue - 17) < 0.01) {
@@ -347,8 +312,11 @@ export function productToHomeTemplate(
     posts: resolvedPosts as PostItem[],
     postsTitle: resolvedPosts.length ? "Posts" : undefined,
     about,
-    resourceLinks: buildResourceLinks(product),
-    permissionJustifications,
+    resourceLinks: (() => {
+      const links = buildProductResourceLinks(product);
+      return links.length > 0 ? links : undefined;
+    })(),
+    permissionItems,
     pricing: {
       enabled: true,
       heading: product.name,

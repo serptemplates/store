@@ -76,3 +76,4 @@ Server wiring lives in `apps/store/app/[slug]/marketplace-page.tsx` and passes `
 - Breadcrumbs and section labels use the same typography as other sections via `SECTION_LABEL_CLASS`.
 - Screenshot row uses a lightbox; videos open in a new tab from the grid.
 - You can adjust limits (e.g., videos per row) or scoring in `marketplace-page.tsx` if needed.
+- `MarketplaceProductPageView` is now a thin orchestrator; all derived data, CTA wiring, and sticky-bar state live in `apps/store/components/product/landers/marketplace/useMarketplaceProductPageViewModel.tsx` and `MarketplaceMetadataList.tsx`. Extend those helpers when adding new sections so the component stays declarative.
