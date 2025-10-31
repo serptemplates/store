@@ -243,7 +243,7 @@ function resolvePrimaryButtonLabel({
     return fromPricing;
   }
 
-  return waitlistEnabled ? "Get Notified" : "Install app";
+  return waitlistEnabled ? "Get Notified 🔔" : "Install app";
 }
 
 function getInitials(value: string | undefined) {

@@ -118,7 +118,7 @@ function renderMarketplaceStickyBar({
     if (fromCta) return fromCta;
     const fromPricing = product.pricing?.cta_text?.trim();
     if (fromPricing) return fromPricing;
-    return waitlistEnabled ? "Get Notified" : "Checkout";
+    return waitlistEnabled ? "Get Notified 🔔" : "Checkout";
   })();
   const opensInNewTab = checkoutCta?.opensInNewTab ?? false;
   const checkoutRel = checkoutCta?.rel ?? "noopener noreferrer";
@@ -155,7 +155,7 @@ function renderMarketplaceStickyBar({
             <button
               type="button"
               onClick={onWaitlistClick}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#635bff] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#635bff] sm:w-auto sm:text-base whitespace-nowrap"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff9e00] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#635bff] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#635bff] sm:w-auto sm:text-base whitespace-nowrap"
             >
               <span className="whitespace-nowrap">{checkoutLabel}</span>
             </button>
@@ -170,7 +170,7 @@ function renderMarketplaceStickyBar({
                     event.preventDefault();
                     onCheckoutClick?.(event);
                   }}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#5752ff] sm:w-auto sm:text-base whitespace-nowrap"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff9e00] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#635bff] sm:w-auto sm:text-base whitespace-nowrap"
                 >
                   <CartIcon />
                   <span className="whitespace-nowrap">{checkoutLabel}</span>
@@ -179,7 +179,7 @@ function renderMarketplaceStickyBar({
                 <button
                   type="button"
                   onClick={onCheckoutClick}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#635bff] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#5752ff] sm:w-auto sm:text-base whitespace-nowrap"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#ff9e00] px-6 py-2 text-sm font-semibold text-white transition hover:bg-[#635bff] sm:w-auto sm:text-base whitespace-nowrap"
                 >
                   <CartIcon />
                   <span className="whitespace-nowrap">{checkoutLabel}</span>
