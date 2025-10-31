@@ -3,7 +3,7 @@ import path from "path"
 import { pathToFileURL } from "url"
 import Stripe from "stripe"
 import dotenv from "dotenv"
-import { productSchema } from "../lib/products/product-schema"
+import { productSchema, type ProductData } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
 import {
   getProductsDataRoot,
@@ -54,6 +54,130 @@ const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
   "new_release",
   "popular",
 ]
+
+const REMOTE_URL_PATTERN = /^https?:\/\//i
+const ASSET_CHECK_TIMEOUT_MS = 8000
+
+type AssetReference = {
+  field: string
+  url: string
+}
+
+export type ProductAssetCheckFailure = {
+  slug: string
+  file: string
+  field: string
+  url: string
+  status?: number
+  reason: string
+}
+
+function collectAssetReferences(product: ProductData): AssetReference[] {
+  const references: AssetReference[] = []
+  const seen = new Set<string>()
+
+  const add = (candidate: unknown, field: string) => {
+    if (typeof candidate !== "string") {
+      return
+    }
+    const trimmed = candidate.trim()
+    if (!trimmed || !REMOTE_URL_PATTERN.test(trimmed)) {
+      return
+    }
+    const key = `${field}:${trimmed}`
+    if (seen.has(key)) {
+      return
+    }
+    seen.add(key)
+    references.push({ field, url: trimmed })
+  }
+
+  add(product.featured_image, "featured_image")
+  add(product.featured_image_gif, "featured_image_gif")
+
+  if (Array.isArray(product.screenshots)) {
+    product.screenshots.forEach((shot, index) => {
+      if (shot && typeof shot === "object") {
+        add((shot as { url?: string }).url, `screenshots[${index}].url`)
+      }
+    })
+  }
+
+  return references
+}
+
+type AssetCheckResult = {
+  ok: boolean
+  status?: number
+  reason?: string
+}
+
+async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), timeoutMs)
+  try {
+    return await fetch(url, { ...init, signal: controller.signal })
+  } finally {
+    clearTimeout(timer)
+  }
+}
+
+function isAcceptableContentType(contentType: string | null): boolean {
+  if (!contentType) {
+    return true
+  }
+  const normalized = contentType.toLowerCase()
+  return (
+    normalized.startsWith("image/") ||
+    normalized.startsWith("video/") ||
+    normalized === "application/octet-stream"
+  )
+}
+
+async function checkAssetReference(reference: AssetReference): Promise<AssetCheckResult> {
+  const attempt = async (method: "HEAD" | "GET"): Promise<AssetCheckResult> => {
+    try {
+      const response = await fetchWithTimeout(reference.url, { method, redirect: "follow" }, ASSET_CHECK_TIMEOUT_MS)
+      if (method === "GET" && response.body) {
+        void response.body.cancel().catch(() => undefined)
+      }
+
+      if (!response.ok) {
+        return { ok: false, status: response.status, reason: `HTTP ${response.status}` }
+      }
+
+      if (!isAcceptableContentType(response.headers.get("content-type"))) {
+        const contentType = response.headers.get("content-type")
+        return {
+          ok: false,
+          status: response.status,
+          reason: contentType ? `Unexpected content-type ${contentType}` : "Missing content-type header",
+        }
+      }
+
+      return { ok: true, status: response.status }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      return { ok: false, reason: message }
+    }
+  }
+
+  const headResult = await attempt("HEAD")
+  if (headResult.ok) {
+    return headResult
+  }
+
+  const getResult = await attempt("GET")
+  if (getResult.ok) {
+    return getResult
+  }
+
+  return {
+    ok: false,
+    status: getResult.status ?? headResult.status,
+    reason: getResult.reason ?? headResult.reason ?? "Unknown error",
+  }
+}
 
 function createStripeClients(): StripeClientConfig[] {
   const clients: StripeClientConfig[] = []
@@ -190,6 +314,7 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
 
 export type ValidateProductsOptions = {
   skipPriceManifest?: boolean
+  checkAssets?: boolean
 }
 
 export type ValidateProductsResult = {
@@ -197,10 +322,11 @@ export type ValidateProductsResult = {
   errors: string[]
   validatedCount: number
   priceManifest: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>
+  assetFailures: ProductAssetCheckFailure[]
 }
 
 export async function validateProducts(options: ValidateProductsOptions = {}): Promise<ValidateProductsResult> {
-  const { skipPriceManifest = false } = options
+  const { skipPriceManifest = false, checkAssets = false } = options
 
   const productsDir = getProductsDirectory()
   const entries = await fs.readdir(productsDir)
@@ -209,6 +335,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
   const errors: string[] = []
   const warnings: string[] = []
   const referencedStripePriceIds = new Set<string>()
+  const assetFailures: ProductAssetCheckFailure[] = []
 
   const recordPriceId = (candidate?: unknown) => {
     if (typeof candidate === "string" && candidate.startsWith("price_")) {
@@ -247,12 +374,32 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
       continue
     }
 
-    let product
+    let product: ProductData
     try {
       product = productSchema.parse(parsed)
     } catch (error) {
       errors.push(`❌ ${fileLabel}: Schema validation failed - ${(error as Error).message}`)
       continue
+    }
+
+    if (checkAssets) {
+      const assetReferences = collectAssetReferences(product)
+      for (const reference of assetReferences) {
+        const outcome = await checkAssetReference(reference)
+        if (!outcome.ok) {
+          const reason = outcome.reason ?? (outcome.status ? `HTTP ${outcome.status}` : "Unknown error")
+          const message = `❌ ${fileLabel}: Asset check failed for ${reference.field} (${reference.url}) - ${reason}`
+          errors.push(message)
+          assetFailures.push({
+            slug,
+            file: fileLabel,
+            field: reference.field,
+            url: reference.url,
+            status: outcome.status,
+            reason,
+          })
+        }
+      }
     }
 
     recordPriceId(product.stripe?.price_id)
@@ -285,12 +432,28 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
     errors,
     validatedCount: slugsFromFiles.size,
     priceManifest,
+    assetFailures,
   }
+}
+
+function parseCliOptions(args: readonly string[]): ValidateProductsOptions {
+  const options: ValidateProductsOptions = {}
+
+  for (const arg of args) {
+    if (arg === "--skip-price-manifest") {
+      options.skipPriceManifest = true
+    } else if (arg === "--check-assets") {
+      options.checkAssets = true
+    }
+  }
+
+  return options
 }
 
 async function runCli() {
   try {
-    const result = await validateProducts()
+    const options = parseCliOptions(process.argv.slice(2))
+    const result = await validateProducts(options)
 
     result.warnings.forEach((message) => console.warn(message))
 
@@ -300,7 +463,19 @@ async function runCli() {
       process.exit(1)
     }
 
-    console.log(`✅ Validated ${result.validatedCount} product definitions. No badge conflicts detected.`)
+    const summary: string[] = [`✅ Validated ${result.validatedCount} product definitions.`]
+
+    if (options.checkAssets) {
+      summary.push(
+        result.assetFailures.length === 0
+          ? "All referenced remote assets responded successfully."
+          : `${result.assetFailures.length} remote asset issue(s) detected.`,
+      )
+    } else {
+      summary.push("No badge conflicts detected.")
+    }
+
+    console.log(summary.join(" "))
   } catch (error) {
     console.error("Unexpected error during product validation:", error)
     process.exit(1)

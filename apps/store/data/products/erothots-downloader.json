@@ -13,14 +13,9 @@
   "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   "cancel_url": "https://apps.serp.co/checkout?product=erothots-downloader",
   "status": "pre_release",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erothots-downloader.jpg",
+  "featured_image": null,
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erothots-downloader/main/images/erothots-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erothots-downloader.jpg",
-      "alt": "Erothots Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],

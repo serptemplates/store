@@ -15,7 +15,7 @@
   "cancel_url": "https://apps.serp.co/checkout?product=udemy-video-downloader",
   "status": "pre_release",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/udemy-video-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/udemy-video-downloader/main/images/udemy-video-downloader.gif",
+  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/udemy-video-downloader.jpg",

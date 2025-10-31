@@ -15,7 +15,7 @@
   "cancel_url": "https://apps.serp.co/checkout?product=wistia-video-downloader",
   "status": "live",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/wistia-video-downloader/main/images/wistia-video-downloader.gif",
+  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/wistia-video-downloader.jpg",
