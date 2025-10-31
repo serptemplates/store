@@ -91,6 +91,14 @@ describe("productToHomeTemplate", () => {
     expect(template.faqs).toEqual(baseProduct.faqs);
   });
 
+  it("surfaces normalized categories for downstream landers", () => {
+    const template = productToHomeTemplate(baseProduct, []);
+
+    expect(Array.isArray(template.categories)).toBe(true);
+    expect(template.categories?.length ?? 0).toBeGreaterThan(0);
+    expect(template.categories).toContain("Downloader");
+  });
+
   it("merges pricing CTA settings and posts", () => {
     const product: ProductData = {
       ...baseProduct,

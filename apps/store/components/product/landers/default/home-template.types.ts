@@ -100,4 +100,5 @@ export type HomeTemplateProps = {
     label: string;
     href: string;
   }>;
+  categories?: string[];
 };

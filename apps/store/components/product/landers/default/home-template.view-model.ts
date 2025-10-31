@@ -19,6 +19,7 @@ export type HomeTemplateViewModel = {
     links: HeroLink[];
     media: HeroMediaItem[];
   };
+  categories: string[];
   features: Array<{ title: string; description: string }>;
   faqItems: FaqItem[];
   pricing: {
@@ -133,6 +134,7 @@ export function buildHomeTemplateViewModel(options: BuildHomeTemplateOptions): H
       links: heroLinks,
       media: heroMedia.items,
     },
+    categories: normalizeCategories(options.categories),
     features: normalizedFeatures,
     faqItems,
     pricing: pricingView,
@@ -226,6 +228,33 @@ function normalizeFeatures(
       };
     })
     .filter((value): value is { title: string; description: string } => Boolean(value));
+}
+
+function normalizeCategories(categories?: string[]): string[] {
+  if (!Array.isArray(categories) || categories.length === 0) {
+    return [];
+  }
+
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  categories.forEach((category) => {
+    if (typeof category !== "string") {
+      return;
+    }
+    const trimmed = category.trim();
+    if (!trimmed) {
+      return;
+    }
+    const key = trimmed.toLowerCase();
+    if (seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    result.push(trimmed);
+  });
+
+  return result;
 }
 
 function buildDefaultFaqs(platform: string): FaqItem[] {

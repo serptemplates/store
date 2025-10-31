@@ -22,6 +22,7 @@ import { normalizeProductAssetPath } from "@/lib/products/asset-paths"
 import { useProductPageExperience } from "@/components/product/hooks/useProductPageExperience"
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
+import { deriveProductCategories } from "@/lib/products/categories"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -44,6 +45,10 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [posts, product.related_posts])
 
   const homeProps = productToHomeTemplate(product, resolvedPosts)
+  const derivedCategories =
+    Array.isArray(homeProps.categories) && homeProps.categories.length > 0
+      ? homeProps.categories
+      : deriveProductCategories(product)
   const resolvedVideos = videoEntries
   const isPreRelease = product.status === "pre_release"
   const videosToDisplay = isPreRelease ? [] : resolvedVideos.slice(0, 3)
@@ -118,11 +123,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
+  // Build a deterministic product URL from configured site origin to avoid SSR/CSR mismatches
   const productUrl = useMemo(() => {
-    if (typeof window !== "undefined") {
-      return `${window.location.origin.replace(/\/$/, "")}${productPath}`
-    }
-
     return `${siteUrl.replace(/\/$/, "")}${productPath}`
   }, [productPath, siteUrl])
 
@@ -153,6 +155,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       <HomeTemplate
         ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
+        categories={derivedCategories}
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}

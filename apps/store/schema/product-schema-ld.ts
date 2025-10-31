@@ -206,7 +206,8 @@ export function generateProductSchemaLD({
       acquireLicensePage: acquireLicensePageUrl,
       creator: brandOrganization,
       copyrightHolder: brandOrganization,
-      copyrightNotice: `© ${new Date().getFullYear()} ${brandName}. All rights reserved.`,
+      // Avoid non-deterministic year during hydration; omit year to keep SSR/CSR identical
+      copyrightNotice: `© ${brandName}. All rights reserved.`,
       representativeOfPage: index === 0,
       fileFormat: guessImageMimeType(imageUrl),
     };
@@ -242,7 +243,8 @@ export function generateProductSchemaLD({
       '@type': 'Person',
       name: review.name || 'Verified Buyer',
     },
-    datePublished: review.date || new Date().toISOString(),
+    // Use provided review date only; avoid generating a dynamic timestamp
+    ...(review.date ? { datePublished: review.date } : {}),
     reviewBody: review.text ?? review.review,
   }));
 
@@ -252,7 +254,6 @@ export function generateProductSchemaLD({
     url: url,
     priceCurrency: currency,
     price: resolvedPrice,
-    priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
     // Set availability based on pre_release flag
     availability: preRelease
       ? 'https://schema.org/PreOrder'
