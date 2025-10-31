@@ -21,8 +21,8 @@ status: live
 featured_image: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg
 featured_image_gif: null
 screenshots:
-  - url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg
-    alt: Onlyfans Downloader website preview
+- url: https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg
+  alt: Onlyfans Downloader website preview
 product_videos: []
 related_videos: []
 related_posts: []
@@ -91,22 +91,22 @@ reviews:
     date: 2025-01-28
     review: We archive Onlyfans assets for clients and the download in Onlyfans Downloader keep our workflows smooth. Totally worth the price.
 supported_operating_systems:
-  - windows
-  - mac
-  - linux
-  - chrome
-  - firefox
-  - edge
-  - opera
+- windows
+- mac
+- linux
+- chrome
+- firefox
+- edge
+- opera
 supported_regions:
-  - Worldwide
+- Worldwide
 categories:
   - Downloader
   - Adult
   - Social Media
   - Video Downloader
 keywords:
-  - onlyfans downloader
+- onlyfans downloader
 return_policy:
   days: 0
   fees: Non-refundable purchase
@@ -114,7 +114,7 @@ return_policy:
   policy_category: https://schema.org/MerchantReturnNotPermitted
   url: https://github.com/serpapps/legal/blob/main/refund-policy.md
 stripe:
-  price_id: price_1S99fz06JrOmKRCmwpZifMkf
+  price_id: price_1SO0eT06JrOmKRCmURKdH9hA
   metadata:
     stripe_product_id: prod_Sv6HHbpO7I9vt0
 ghl:
