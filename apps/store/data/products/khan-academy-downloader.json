@@ -28,7 +28,7 @@
   "github_repo_tags": [],
   "features": [
     "Complete Khan Academy courses and exercises",
-    "Course Platformsal videos and interactive content",
+    "Educational videos and interactive content",
     "Maintain subject hierarchy and lesson structure",
     "Practice problems and assessments",
     "Multi-language subtitle extraction",
@@ -45,7 +45,7 @@
     "Backup & restore capabilities",
     "Offline study mode with progress tracking",
     "Multiple user profiles and accounts",
-    "Integrates"
+    "Integrates with popular learning management systems (LMS) and educational platforms"
   ],
   "pricing": {
     "label": "One-time payment",
