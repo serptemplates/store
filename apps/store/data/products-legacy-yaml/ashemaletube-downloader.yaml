@@ -24,11 +24,9 @@ buy_button_destination: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=ashemaletube-downloader
 status: pre_release
-featured_image: /media/products/ashemaletube-downloader/featured.webp
+featured_image:
 featured_image_gif: null
-screenshots:
-- url: /media/products/ashemaletube-downloader/ashemaletube-homepage.webp
-  alt: AShemaleTube Downloader website homepage
+screenshots: []
 product_videos: []
 related_videos: []
 related_posts: []
@@ -49,7 +47,7 @@ pricing:
   price: $9
   original_price: $17.00
   note: Contact us for current licensing options.
-  cta_text: Get Notified
+  cta_text: Get Notified 🔔
   currency: USD
   availability: InStock
   benefits: []

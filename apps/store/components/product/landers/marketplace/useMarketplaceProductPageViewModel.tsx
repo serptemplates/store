@@ -110,11 +110,9 @@ export function useMarketplaceProductPageViewModel(
   const faqItems = useMemo(() => buildFaqEntries(product), [product]);
   const reviewItems = useMemo(() => buildReviewEntries(product), [product]);
 
+  // Build a deterministic base URL from configured site domain to avoid SSR/CSR mismatches
   const canonicalBaseUrl = useMemo(
-    () =>
-      canonicalizeStoreOrigin(
-        typeof window !== "undefined" ? window.location.origin : siteConfig?.site?.domain,
-      ),
+    () => canonicalizeStoreOrigin(siteConfig?.site?.domain),
     [siteConfig],
   );
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";
@@ -243,16 +241,16 @@ function resolvePrimaryButtonLabel({
     return fromPricing;
   }
 
-  return waitlistEnabled ? "Get Notified" : "Install app";
+  return waitlistEnabled ? "Get Notified 🔔" : "Install app";
 }
 
 function getInitials(value: string | undefined) {
   if (!value) {
     return "A";
   }
-  const words = value.trim().split(/\s+/).filter(word => word.length > 0);
-  if (words.length >= 2) {
-    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  const words = value.trim().split(/\s+/);
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase();
   }
-  return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0]}${words[1][0]}`.toUpperCase();
 }

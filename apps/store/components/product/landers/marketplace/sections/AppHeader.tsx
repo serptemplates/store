@@ -47,7 +47,7 @@ export function AppHeader({
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-start md:flex-col md:items-end">
         <Button
           size="sm"
-          className="h-10 w-full rounded-lg bg-[#635bff] px-4 text-[14px] font-medium text-white transition hover:bg-[#5752ff] sm:w-auto"
+          className="h-10 w-full rounded-lg bg-[#ff9e00] px-4 text-[14px] font-medium text-white transition hover:bg-[#635bff] sm:w-auto"
           onClick={onPrimaryAction}
         >
           {primaryLabel}

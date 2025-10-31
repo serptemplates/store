@@ -157,7 +157,9 @@ export function validateEnvironment(): ValidationResult {
     }
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-    if (siteUrl && !siteUrl.startsWith("https://")) {
+    // Allow http for localhost when running a production build locally
+    const isLocalhost = siteUrl?.startsWith("http://localhost") || siteUrl?.startsWith("http://127.0.0.1");
+    if (siteUrl && !siteUrl.startsWith("https://") && !isLocalhost) {
       errors.push("NEXT_PUBLIC_SITE_URL must use HTTPS in production");
     }
   } else if (stripeMode === "live") {
