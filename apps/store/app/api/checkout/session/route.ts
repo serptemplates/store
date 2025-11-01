@@ -61,8 +61,8 @@ export async function POST(req: NextRequest) {
     ...(payload.metadata ?? {}),
   };
 
-  if (payload.dubCustomerId && payload.dubCustomerId.trim().length > 0) {
-    metadata.dubCustomerId = payload.dubCustomerId.trim();
+  if (payload.dubCustomerId) {
+    metadata.dubCustomerId = payload.dubCustomerId;
   }
 
   const params: Stripe.Checkout.SessionCreateParams = {
