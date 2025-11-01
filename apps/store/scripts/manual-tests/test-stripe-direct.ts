@@ -142,6 +142,9 @@ async function testStripe() {
       metadata: {
         test: 'true',
         timestamp: new Date().toISOString(),
+        // Demonstrate Dub integration: associate this Stripe session to a user in your DB
+        // Replace with a real user ID when testing end-to-end
+        dubCustomerId: process.env.DUB_TEST_CUSTOMER_ID || 'user_123',
       },
     });
 

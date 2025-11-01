@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { DelayedGTM } from "@/components/DelayedGTM";
 import { PostHogAnalytics } from "@/components/analytics/PostHogAnalytics";
+import { DubAnalytics } from "@/components/analytics/DubAnalytics";
 import { getSiteConfig } from "@/lib/site-config";
 import { Providers } from "./providers";
 import { inter } from "./fonts";
@@ -70,6 +71,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {children}
             {/* Load GTM after page content to improve performance */}
             {gtmId && <DelayedGTM gtmId={gtmId} />}
+            {/* Dub Analytics for affiliate and click tracking */}
+            <DubAnalytics />
           </PostHogAnalytics>
         </Providers>
       </body>

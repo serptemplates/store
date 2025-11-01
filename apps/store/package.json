@@ -41,6 +41,7 @@
     "test:e2e": "tsx scripts/run-checkout-e2e.ts"
   },
   "dependencies": {
+    "@dub/analytics": "^0.0.32",
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.1",
     "@next/third-parties": "^15.5.5",
@@ -72,12 +73,12 @@
     "@playwright/test": "^1.55.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
-    "@types/sanitize-html": "^2.13.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22",
     "@types/nodemailer": "^6.4.15",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.13.0",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "autoprefixer": "^10.4.20",
