@@ -4,8 +4,8 @@
   "tagline": "Save Youtube videos instantly for offline viewing.",
   "slug": "youtube-downloader",
   "description": "YouTube Video Downloader plugs into watch pages, Shorts, and embedded players, decrypts YouTube’s adaptive streams, and delivers high-quality MP4 or WebM files you can use offline. It handles encrypted URLs, merges separate video/audio tracks automatically, and keeps a clean queue so creators and researchers can archive content reliably.",
-  "seo_title": "Youtube Video Downloader | Download the Youtube Video Downloader for easy Offline Access to videos",
-  "seo_description": "Download videos and content from Youtube for Offline Access",
+  "seo_title": "Youtube Video Downloader | Download Youtube Videos to MP4s for easy Offline Access to videos",
+  "seo_description": "Download YouTube videos to Mp4s and content from Youtube for Offline Access",
   "serply_link": "https://serp.ly/youtube-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youtube-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/youtube-downloader",
@@ -52,6 +52,7 @@
   ],
   "features": [
     "Detects YouTube watch pages, Shorts, and embedded players instantly",
+    "Download YouTube videos to MP4s",
     "Decrypts player responses to surface the original MP4 or WebM sources",
     "Converts DASH and HLS streams, merging audio and video into a single MP4",
     "Lists every available quality with file-size estimates and remembers your last pick",
