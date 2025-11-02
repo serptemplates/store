@@ -15,6 +15,7 @@ import {
   type ProductData,
   productSchema,
 } from "../lib/products/product-schema";
+import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "../lib/products/category-constants";
 import { getProductsDirectory } from "../lib/products/product";
 
 const PRODUCT_FILE_EXTENSION = ".json";
@@ -174,6 +175,24 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
     }
 
     switch (key) {
+      case "success_url": {
+        const rawUrl = String(value);
+        try {
+          const url = new URL(rawUrl);
+          // Drop placeholder-only session_id param
+          const sid = url.searchParams.get("session_id");
+          if (sid === "{CHECKOUT_SESSION_ID}") {
+            url.searchParams.delete("session_id");
+          }
+          const serialized = url.searchParams.toString();
+          const withoutQuery = `${url.origin}${url.pathname}`;
+          normalized[key] = serialized ? `${withoutQuery}?${serialized}` : withoutQuery;
+        } catch {
+          // If not a valid URL, pass through unchanged
+          normalized[key] = cloneValue(value);
+        }
+        break;
+      }
       case "screenshots": {
         const screenshots = value as NonNullable<ProductData["screenshots"]>;
         normalized[key] = screenshots.map((shot) =>
@@ -208,6 +227,28 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
       case "return_policy": {
         const policy = value as NonNullable<ProductData["return_policy"]>;
         normalized[key] = orderObject(policy as Record<string, unknown>, RETURN_POLICY_FIELD_ORDER);
+        break;
+      }
+      case "categories": {
+        const categories = (value as string[] | undefined) ?? [];
+        const allAccepted: readonly string[] = ACCEPTED_CATEGORIES as unknown as readonly string[];
+        const acceptedLower = new Map(allAccepted.map((c) => [c.toLowerCase(), c] as const));
+        const synonyms = CATEGORY_SYNONYMS;
+        const seen = new Set<string>();
+        const out: string[] = [];
+        for (const label of categories) {
+          if (typeof label !== "string") continue;
+          const lower = label.trim().toLowerCase();
+          if (!lower) continue;
+          const mapped = synonyms[lower] ?? acceptedLower.get(lower);
+          if (mapped && !seen.has(mapped.toLowerCase())) {
+            seen.add(mapped.toLowerCase());
+            out.push(mapped);
+          }
+        }
+        if (out.length > 0) {
+          normalized[key] = out;
+        }
         break;
       }
       case "payment_link": {
@@ -310,7 +351,23 @@ async function convertSingleProduct(
       throw new Error("Expected the JSON file to contain an object");
     }
 
-    const parsed = productSchema.safeParse(data);
+    // Pre-validate normalization: map category synonyms to accepted labels
+    const prepped = (() => {
+      if (!isRecord(data)) return data;
+      const copy: Record<string, unknown> = { ...data };
+      const categories = Array.isArray(copy.categories) ? (copy.categories as unknown[]) : null;
+      if (categories) {
+        const synonyms = CATEGORY_SYNONYMS as Record<string, string>;
+        copy.categories = categories.map((v) => {
+          if (typeof v !== "string") return v;
+          const lower = v.trim().toLowerCase();
+          return synonyms[lower] ?? v;
+        });
+      }
+      return copy;
+    })();
+
+    const parsed = productSchema.safeParse(prepped);
     if (!parsed.success) {
       throw new Error(formatZodError(parsed.error));
     }

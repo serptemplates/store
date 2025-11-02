@@ -124,7 +124,6 @@ type ResolvedProductCta = ResolvedHomeCta;
 
 function selectExternalDestination(product: ProductData): string {
   const candidateLinks = [
-    product.buy_button_destination,
     product.pricing?.cta_href,
     product.apps_serp_co_product_page_url,
     product.store_serp_co_product_page_url,
@@ -152,24 +151,6 @@ function resolveProductCta(product: ProductData): ResolvedProductCta {
   const trimmedCtaText =
     typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
-
-  // Explicit internal checkout route takes precedence when configured (buy_button_destination)
-  if (
-    typeof product.buy_button_destination === "string" &&
-    (product.buy_button_destination.startsWith("/checkout/") || product.buy_button_destination.startsWith("https://apps.serp.co/checkout/")) &&
-    product.status !== "pre_release"
-  ) {
-    return {
-      mode: "external",
-      href: product.buy_button_destination,
-      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
-      opensInNewTab: false,
-      target: "_self",
-      analytics: {
-        destination: "checkout",
-      },
-    };
-  }
 
   // Or if pricing.cta_href explicitly targets internal checkout, prefer it too
   if (

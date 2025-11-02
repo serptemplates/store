@@ -10,7 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/futurelearn-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/futurelearn-downloader",
   "serp_co_product_page_url": "https://serp.co/products/futurelearn-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=futurelearn-downloader",
   "status": "pre_release",
   "featured_image": "/media/products/futurelearn-downloader/featured.webp",

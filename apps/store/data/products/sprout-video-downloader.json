@@ -11,8 +11,7 @@
   "apps_serp_co_product_page_url": "https://apps.serp.co/sprout-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/sprout-video-downloader/",
   "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1oekx0x/sprout_video_downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68e08bb367ee3b1d9c699e36",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=sprout-video-downloader",
   "status": "live",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg",
@@ -87,6 +86,7 @@
     "original_price": "$37.00",
     "note": "Lifetime licence covering embed detection, authentication forwarding, and stream conversion. Sales are final.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/sprout-video-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -178,10 +178,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/3cIdR1aiI4ua9Tdct50VO12",
-    "test_url": "https://buy.stripe.com/test_aFa7sD1Mcd0Gc1lct50VO14"
-  },
   "stripe": {
     "price_id": "price_1S99g906JrOmKRCmqpFh4LYc",
     "metadata": {
@@ -193,6 +189,11 @@
       "purchase-sprout-video-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "sprout-video-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,

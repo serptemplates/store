@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68df98b52197090089e262f1",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
   "status": "live",
   "featured_image": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
@@ -73,6 +72,7 @@
     "original_price": "$17.00",
     "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -162,10 +162,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/9B628jeyYgcS4yT8cP0VO1z",
-    "test_url": "https://buy.stripe.com/test_eVq00b2QggcSfdxgJl0VO1y"
-  },
   "stripe": {
     "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
     "metadata": {
@@ -177,6 +173,11 @@
       "purchase-beeg-video-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "beeg-video-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,

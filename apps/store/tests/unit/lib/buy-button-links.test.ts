@@ -46,21 +46,10 @@ describe("buy button destinations", () => {
     const successViolations: Array<{ slug: string; successUrl?: string }> = [];
 
     products.forEach((product) => {
-      const buy = product.buy_button_destination;
-      const needsFallback =
-        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-      if (!needsFallback) {
-        return;
-      }
-
       const successUrl = product.success_url;
-
-      if (typeof successUrl === "string" && successUrl.startsWith("https://apps.serp.co/checkout/success")) {
-        expect(successUrl).toContain("{CHECKOUT_SESSION_ID}");
-      }
-
-      if (successUrl !== FALLBACK_SUCCESS_URL) {
+      const ok = typeof successUrl === "string"
+        && successUrl.startsWith("https://apps.serp.co/checkout/success");
+      if (!ok) {
         successViolations.push({ slug: product.slug, successUrl });
       }
     });
@@ -70,14 +59,6 @@ describe("buy button destinations", () => {
     const cancelViolations: Array<{ slug: string; cancelUrl?: string; expected: string }> = [];
 
     products.forEach((product) => {
-      const buy = product.buy_button_destination;
-      const needsFallback =
-        typeof buy !== "string" || !buy.trim() || !buy.startsWith("https://ghl.serp.co/");
-
-      if (!needsFallback) {
-        return;
-      }
-
       const cancelUrl = product.cancel_url;
       const expected = `${FALLBACK_CANCEL_BASE}${product.slug}`;
       if (cancelUrl !== expected) {
