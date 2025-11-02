@@ -69,7 +69,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const { resolvedCta, handleCtaClick, waitlist, checkoutSuccess } = experience
 
   const shouldOpenInNewTab = resolvedCta.opensInNewTab
-  const resolvedCtaHref = resolvedCta.href
+  const [resolvedCtaHrefWithDub, setResolvedCtaHrefWithDub] = useState(resolvedCta.href)
+  const resolvedCtaHref = resolvedCtaHrefWithDub
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
   const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
@@ -112,6 +113,41 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [setShowStickyBar])
+
+  // Client-side enhancement: append Dub click ID to Stripe Payment Links
+  // so Dub can attribute purchases made via Payment Links.
+  useEffect(() => {
+    try {
+      if (typeof window === "undefined") return
+      const href = resolvedCta.href
+      if (!href || typeof href !== "string") {
+        setResolvedCtaHrefWithDub(href)
+        return
+      }
+
+      const url = new URL(href, window.location.origin)
+      const hostname = url.hostname
+
+      const isStripeHost = hostname === "buy.stripe.com" || hostname === "checkout.stripe.com"
+      if (!isStripeHost) {
+        setResolvedCtaHrefWithDub(url.toString())
+        return
+      }
+
+      const cookies = document.cookie.split(";").map((c) => c.trim())
+      const dubCookie = cookies.find((c) => c.startsWith("dub_id="))
+      const dubId = dubCookie ? decodeURIComponent(dubCookie.split("=")[1] || "").trim() : ""
+
+      if (dubId) {
+        url.searchParams.set("client_reference_id", dubId)
+      }
+
+      setResolvedCtaHrefWithDub(url.toString())
+    } catch {
+      setResolvedCtaHrefWithDub(resolvedCta.href)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedCta.href])
 
   const handlePrimaryCtaClick = useCallback(() => {
     handleCtaClick("pricing")
