@@ -105,13 +105,35 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       ? [rawEntitlements.trim()]
       : undefined;
 
+    // Helper to coerce arbitrary values into Stripe-safe string metadata
+    const toMetadataRecord = (input: Record<string, unknown>): Record<string, string> => {
+      const out: Record<string, string> = {};
+      for (const [key, value] of Object.entries(input)) {
+        if (value == null) continue;
+        if (typeof value === "string") {
+          out[key] = value;
+        } else if (Array.isArray(value)) {
+          out[key] = value.map((v) => (typeof v === "string" ? v : String(v))).join(",");
+        } else if (typeof value === "number" || typeof value === "boolean") {
+          out[key] = String(value);
+        } else {
+          try {
+            out[key] = JSON.stringify(value);
+          } catch {
+            out[key] = String(value);
+          }
+        }
+      }
+      return out;
+    };
+
     return offerConfigSchema.parse({
       id: product.slug,
       stripePriceId: priceId,
       successUrl,
       cancelUrl,
       mode: stripeConfig.mode ?? "payment",
-      metadata: {
+      metadata: toMetadataRecord({
         productSlug: product.slug,
         productName: product.name,
         productPageUrl: product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url,
@@ -124,7 +146,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         environment: isTest ? 'test' : 'live',
         ...(licenseEntitlements ? { licenseEntitlements } : {}),
         ...(stripeConfig.metadata ?? {}),
-      },
+      }),
       productName: product.name,
       productDescription: product.tagline ?? product.seo_description,
       productImage: productImageUrl,
