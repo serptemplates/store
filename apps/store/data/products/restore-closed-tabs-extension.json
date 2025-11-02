@@ -1,0 +1,54 @@
+{
+  "platform": "Restore Tabs",
+  "name": "Restore Closed Tabs Extension",
+  "tagline": "Reopen accidentally closed tabs instantly.",
+  "slug": "restore-closed-tabs-extension",
+  "description": "Restore Closed Tabs Extension keeps your browsing flow intact. Quickly reopen accidentally closed tabs and windows, search recent history, and pin important sessions so they’re never lost.",
+  "seo_title": "Restore Closed Tabs Extension",
+  "seo_description": "Reopen closed tabs and windows instantly with a simple browser extension.",
+  "serply_link": "https://serp.ly/restore-closed-tabs-extension",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/restore-closed-tabs-extension",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/restore-closed-tabs-extension",
+  "serp_co_product_page_url": "https://serp.co/products/restore-closed-tabs-extension/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=restore-closed-tabs-extension",
+  "status": "pre_release",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/restore-closed-tabs-extension",
+  "github_repo_tags": [],
+  "features": [],
+  "faqs": [],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Productivity"
+  ],
+  "keywords": [
+    "restore tabs",
+    "reopen tab"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "license": {
+    "entitlements": [
+      "restore-closed-tabs-extension"
+    ]
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

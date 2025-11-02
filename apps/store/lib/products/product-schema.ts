@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "./category-constants";
 
 const trimmedString = () => z.string().trim().min(1);
 
@@ -357,7 +358,30 @@ export const productSchemaShape = {
   reviews: optionalArray(reviewSchema),
   supported_operating_systems: optionalArray(z.string().trim()),
   supported_regions: optionalArray(z.string().trim()),
-  categories: optionalArray(z.string().trim()),
+  categories: z.preprocess(
+    (value) => {
+      if (!Array.isArray(value)) {
+        return value;
+      }
+      const all: readonly string[] = ACCEPTED_CATEGORIES as unknown as readonly string[];
+      const acceptedLower = new Map(all.map((c) => [c.toLowerCase(), c] as const));
+      const synonyms = CATEGORY_SYNONYMS as Record<string, string>;
+      const seen = new Set<string>();
+      const out: string[] = [];
+      for (const v of value) {
+        if (typeof v !== "string") continue;
+        const lower = v.trim().toLowerCase();
+        if (!lower) continue;
+        const mapped = synonyms[lower] ?? acceptedLower.get(lower);
+        if (mapped && !seen.has(mapped.toLowerCase())) {
+          seen.add(mapped.toLowerCase());
+          out.push(mapped);
+        }
+      }
+      return out;
+    },
+    z.array(z.enum(ACCEPTED_CATEGORIES as unknown as [string, ...string[]])).optional().default([]),
+  ),
   keywords: optionalArray(z.string().trim()),
   return_policy: returnPolicySchema,
   payment_link: paymentLinkSchema,
@@ -430,6 +454,26 @@ export const productSchema = z
   .object(productSchemaShape)
   .strict()
   .superRefine((data, ctx) => {
+    // Badge exclusivity rules: only one of (pre_release via status, new_release, popular)
+    const isPreRelease = data.status === "pre_release";
+    const isNew = Boolean((data as { new_release?: boolean }).new_release);
+    const isPopular = Boolean((data as { popular?: boolean }).popular);
+
+    if ([isPreRelease, isNew, isPopular].filter(Boolean).length > 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          "Multiple badge flags set (pre_release, new_release, popular). Only one of pre_release (status), new_release, popular is allowed.",
+      });
+    }
+
+    if ((isNew || isPopular) && data.status !== "live") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "new_release/popular badges require status=live",
+      });
+    }
+
     if (data.status === "live") {
       const link = data.payment_link;
       const hasStripeLink =

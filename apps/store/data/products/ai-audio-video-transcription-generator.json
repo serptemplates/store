@@ -1,0 +1,55 @@
+{
+  "platform": "AI Transcription",
+  "name": "AI Audio & Video Transcription Generator",
+  "tagline": "Turn audio and video into clean transcripts with one click.",
+  "slug": "ai-audio-video-transcription-generator",
+  "description": "AI Audio & Video Transcription Generator converts recordings into accurate, ready‑to‑use text. Upload an audio or video file, pick a language, and get clean transcripts you can edit, search, and share. Perfect for creators, teams, and marketers documenting calls, webinars, podcasts, and training.",
+  "seo_title": "AI Audio & Video Transcription Generator",
+  "seo_description": "Transcribe audio and video into accurate, editable text for docs, captions, and summaries.",
+  "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-audio-video-transcription-generator",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
+  "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
+  "status": "pre_release",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
+  "github_repo_tags": [],
+  "features": [],
+  "faqs": [],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Artificial Intelligence"
+  ],
+  "keywords": [
+    "transcription",
+    "speech to text",
+    "captions"
+  ],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "license": {
+    "entitlements": [
+      "ai-audio-video-transcription-generator"
+    ]
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

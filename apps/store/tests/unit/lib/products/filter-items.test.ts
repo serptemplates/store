@@ -10,8 +10,13 @@ describe("buildProductFilterItem", () => {
       categories: ["Downloader", "Video Downloader"],
       keywords: ["youtube ripper"],
       platform: "Web",
+      status: "live",
       new_release: true,
-      popular: true,
+      popular: false,
+      pricing: {
+        cta_href: "https://apps.serp.co/checkout/youtube-downloader",
+        benefits: [],
+      },
     });
 
     const item = buildProductFilterItem(product);
@@ -26,7 +31,7 @@ describe("buildProductFilterItem", () => {
       "Video Downloaders",
     ]);
     expect(item.new_release).toBe(true);
-    expect(item.popular).toBe(true);
+    expect(item.popular).toBe(false);
   });
 
   it("falls back to baseline values when flags are disabled", () => {
