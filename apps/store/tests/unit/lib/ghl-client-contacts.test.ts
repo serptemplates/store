@@ -79,7 +79,8 @@ describe("syncOrderWithGhl custom field payloads", () => {
     const result = await syncOrderWithGhl(config, context);
     expect(result).toEqual({ contactId: "contact_123", opportunityCreated: false });
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    // contacts.search (existing purchase metadata) + contacts.search (tag merge) + contacts.upsert
+    expect(fetchMock).toHaveBeenCalledTimes(3);
     const calls = fetchMock.mock.calls as Array<[unknown, RequestInit?]>;
     const upsertCall = calls.find(([requestUrl]) =>
       toUrlString(requestUrl).includes("/contacts/upsert"),
@@ -183,7 +184,8 @@ describe("syncOrderWithGhl custom field payloads", () => {
     const result = await syncOrderWithGhl(config, context);
     expect(result).toEqual({ contactId: "contact_789", opportunityCreated: false });
 
-    expect(fetchMock).toHaveBeenCalledTimes(3);
+    // customFields + contacts.search (existing purchase metadata) + contacts.search (tag merge) + contacts.upsert
+    expect(fetchMock).toHaveBeenCalledTimes(4);
     const calls = fetchMock.mock.calls as Array<[unknown, RequestInit?]>;
     expect(calls.length).toBeGreaterThanOrEqual(3);
 
@@ -320,7 +322,8 @@ describe("syncOrderWithGhl custom field payloads", () => {
     const result = await syncOrderWithGhl(config, context);
     expect(result).toEqual({ contactId: "contact_123", opportunityCreated: false });
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    // contacts.search (existing record) + contacts.search (tag merge) + contacts.upsert
+    expect(fetchMock).toHaveBeenCalledTimes(3);
     const calls = fetchMock.mock.calls as Array<[unknown, RequestInit?]>;
     const upsertCall = calls.find(([requestUrl]) =>
       toUrlString(requestUrl).includes("/contacts/upsert"),

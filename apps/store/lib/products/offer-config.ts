@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { getProductData } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 import { isStripeTestMode } from "@/lib/payments/stripe-environment";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "./asset-paths";
 
@@ -95,6 +96,15 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         : toAbsoluteProductAssetUrl(normalizedImage, baseUrl)
       : undefined;
 
+    // Collect license metadata (entitlements/features) from product content
+    // Normalize entitlements to string[] if provided
+    const rawEntitlements = (product as ProductData)?.license?.entitlements as unknown;
+    const licenseEntitlements: string[] | undefined = Array.isArray(rawEntitlements)
+      ? (rawEntitlements as string[]).filter((s) => typeof s === "string" && s.trim().length > 0)
+      : typeof rawEntitlements === "string" && rawEntitlements.trim().length > 0
+      ? [rawEntitlements.trim()]
+      : undefined;
+
     return offerConfigSchema.parse({
       id: product.slug,
       stripePriceId: priceId,
@@ -112,6 +122,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         success_url: successUrl,
         cancel_url: cancelUrl,
         environment: isTest ? 'test' : 'live',
+        ...(licenseEntitlements ? { licenseEntitlements } : {}),
         ...(stripeConfig.metadata ?? {}),
       },
       productName: product.name,

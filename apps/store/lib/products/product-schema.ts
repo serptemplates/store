@@ -333,7 +333,7 @@ export const productSchemaShape = {
   apps_serp_co_product_page_url: enforceHost(["apps.serp.co"]),
   serp_co_product_page_url: optionalHost(["serp.co", "www.serp.co"]),
   reddit_url: optionalHost(["www.reddit.com", "reddit.com", "old.reddit.com", "new.reddit.com", "redd.it"]),
-  buy_button_destination: optionalExternalUrl,
+  // buy_button_destination removed; use pricing.cta_href for CTA targeting
   success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "pre_release", "live"]).default("draft"),
@@ -387,7 +387,6 @@ export const PRODUCT_FIELD_ORDER = [
   "apps_serp_co_product_page_url",
   "serp_co_product_page_url",
   "reddit_url",
-  "buy_button_destination",
   "success_url",
   "cancel_url",
   "status",
@@ -444,12 +443,21 @@ export const productSchema = z
         typeof link.ghl_url === "string" &&
         link.ghl_url.trim().length > 0;
 
-      if (!hasStripeLink && !hasGhlLink) {
+      // Allow internal checkout to satisfy the requirement (no Payment Link needed)
+      const internalCheckoutHref = data.pricing?.cta_href as unknown;
+      const hasInternalCheckout =
+        typeof internalCheckoutHref === "string" &&
+        (
+          internalCheckoutHref.startsWith("/checkout/") ||
+          internalCheckoutHref.startsWith("https://apps.serp.co/checkout/")
+        );
+
+      if (!hasStripeLink && !hasGhlLink && !hasInternalCheckout) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["payment_link"],
           message:
-            "Products with status 'live' must define a Stripe payment link (live/test) or a GoHighLevel payment link.",
+            "Live products must define an internal checkout CTA (pricing.cta_href → /checkout/:slug) or a Payment Link.",
         });
       }
     }

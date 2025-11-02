@@ -24,7 +24,6 @@ const baseProduct: ProductData = {
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
-  buy_button_destination: undefined,
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",

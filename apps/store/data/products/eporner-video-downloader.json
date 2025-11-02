@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/eporner-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/eporner-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/eporner-video-downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68df98e767ee3b7d3f69979d",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=eporner-video-downloader",
   "status": "live",
   "featured_image": null,
@@ -36,6 +35,7 @@
     "original_price": "$17.00",
     "note": "Lifetime licence with site-specific updates. No free tier or refunds.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/eporner-video-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -136,6 +136,11 @@
       "purchase-eporner-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "eporner-video-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,
