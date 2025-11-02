@@ -14,7 +14,8 @@ const CreateSessionSchema = z.object({
   cancelUrl: z.string().url().optional(),
   customerEmail: z.string().email().optional(),
   clientReferenceId: z.string().min(1).optional(),
-  dubCustomerId: z.string().min(1).optional(),
+  dubCustomerExternalId: z.string().min(1).optional(),
+  dubClickId: z.string().min(1).optional(),
   metadata: z
     .record(z.union([z.string(), z.number(), z.boolean()]))
     .optional()
@@ -61,8 +62,12 @@ export async function POST(req: NextRequest) {
     ...(payload.metadata ?? {}),
   };
 
-  if (payload.dubCustomerId) {
-    metadata.dubCustomerId = payload.dubCustomerId;
+  if (payload.dubCustomerExternalId) {
+    metadata.dubCustomerExternalId = payload.dubCustomerExternalId;
+  }
+
+  if (payload.dubClickId) {
+    metadata.dubClickId = payload.dubClickId;
   }
 
   const params: Stripe.Checkout.SessionCreateParams = {
