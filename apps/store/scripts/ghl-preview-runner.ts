@@ -6,9 +6,7 @@ import { config as loadEnv } from "dotenv";
 const projectRoot = path.resolve(__dirname, "..", "..", "..");
 const appRoot = path.resolve(__dirname, "..");
 const envFiles = [
-  path.join(projectRoot, ".env.local"),
   path.join(projectRoot, ".env"),
-  path.join(appRoot, ".env.local"),
   path.join(appRoot, ".env"),
 ];
 

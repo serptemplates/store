@@ -97,18 +97,24 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
 
     // Step 1: Simulate Dub redirect with dub_id parameter
     // (DubAnalytics would normally read this from window.location.search)
+    // Provide a realistic window.location so components relying on it (e.g., next/image) don't crash
+    const testUrl = new URL('https://apps.serp.co/product?dub_id=mds');
     Object.defineProperty(window, 'location', {
       value: {
-        search: '?dub_id=mds',
-        hostname: 'apps.serp.co',
-        href: ''
+        search: testUrl.search,
+        hostname: testUrl.hostname,
+        href: testUrl.href,
+        origin: testUrl.origin,
+        protocol: testUrl.protocol,
+        host: testUrl.host,
+        pathname: testUrl.pathname,
       },
       writable: true
     });
 
     // Step 2: Simulate DubAnalytics setting the cookie
     // (In real app, @dub/analytics/react does this automatically)
-    document.cookie = 'dub_id=mds; path=/; domain=.serp.co';
+    document.cookie = 'dub_id=mds; path=/';
 
     // Step 3: User visits product page with stripe.price_id
     const product = createTestProduct({
@@ -147,9 +153,8 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
     );
     vi.stubGlobal("fetch", mockFetch);
 
-    // Mock window.location for redirect
-    const mockLocation = { href: "" };
-    vi.stubGlobal("location", mockLocation);
+    // Track redirect by mutating window.location.href in-place
+    const mockLocation = window.location as unknown as { href: string };
 
     await act(async () => {
       render(
@@ -167,8 +172,8 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
     expect(cta).toBeInTheDocument();
 
     // Verify buy button is set up for interception (href="#")
-    const href = (cta as HTMLAnchorElement).href;
-    expect(href).toBe("#");
+    const hrefAttr = (cta as HTMLAnchorElement).getAttribute("href");
+    expect(hrefAttr).toBe("#");
 
     // Step 4: User clicks buy button
     await act(async () => {

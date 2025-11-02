@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import { parse } from "csv-parse/sync";
 import Stripe from "stripe";
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const preferredEnv = (process.env.STRIPE_CREATE_PRICES_ENV || '').toLowerCase();

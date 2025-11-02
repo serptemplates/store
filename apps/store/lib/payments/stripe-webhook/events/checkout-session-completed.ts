@@ -978,4 +978,26 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       });
     }
   }
+
+  // Best-effort Stripe Entitlements grant (guarded by flag)
+  try {
+    const stripeCustomerId = typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id ?? null;
+
+    const featuresToGrant = (licenseEntitlements && licenseEntitlements.length > 0)
+      ? licenseEntitlements
+      : (offerId ? [offerId] : []);
+
+    if (stripeCustomerId && featuresToGrant.length > 0) {
+      const { ensureFeaturesExist, grantCustomerFeatures } = await import("@/lib/payments/stripe-entitlements");
+      await ensureFeaturesExist(featuresToGrant);
+      await grantCustomerFeatures(stripeCustomerId, featuresToGrant);
+    }
+  } catch (error) {
+    logger.debug("stripe.entitlements_grant_skipped_or_failed", {
+      sessionId: session.id,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+  }
 }

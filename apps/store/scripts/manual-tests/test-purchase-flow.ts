@@ -9,7 +9,6 @@ import Stripe from "stripe";
 import { getOptionalStripeWebhookSecret } from "../../lib/payments/stripe-environment";
 
 // Load environment variables
-config({ path: "../../.env.local" });
 config({ path: "../../.env" });
 config();
 

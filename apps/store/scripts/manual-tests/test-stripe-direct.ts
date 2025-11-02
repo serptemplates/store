@@ -43,9 +43,7 @@ function findRepoRoot(startDir: string): string {
 
 const REPO_ROOT = findRepoRoot(path.resolve(HERE));
 const ENV_CANDIDATES = [
-  path.join(process.cwd(), '.env.local'),
   path.join(process.cwd(), '.env'),
-  path.join(REPO_ROOT, '.env.local'),
   path.join(REPO_ROOT, '.env'),
 ];
 for (const candidate of ENV_CANDIDATES) {
