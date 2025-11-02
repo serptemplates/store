@@ -12,7 +12,7 @@
   "serp_co_product_page_url": "https://serp.co/products/rawpixel-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=rawpixel-downloader",
-  "status": "live",
+  "status": "pre_release",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/rawpixel-downloader.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/rawpixel-downloader/main/images/rawpixel-downloader.gif",
   "screenshots": [
@@ -141,10 +141,6 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/dRmfZ93Ukf8O2qL50D0VO0R",
-    "test_url": "https://buy.stripe.com/test_dRmeV5bmM2m2fdx2Sv0VO0T"
   },
   "stripe": {
     "price_id": "price_1S99g206JrOmKRCm0DpSeCzS",
