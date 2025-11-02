@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
   "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68e0232567ee3b840f699b84",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
   "status": "live",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
@@ -45,6 +44,7 @@
     "original_price": "$17.00",
     "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/erome-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -137,10 +137,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/eVq7sD76w9OuaXhbp10VO1E",
-    "test_url": "https://buy.stripe.com/test_fZu7sD3Uk0dU5CX8cP0VO1D"
-  },
   "stripe": {
     "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
     "metadata": {
@@ -152,6 +148,11 @@
       "purchase-erome-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "erome-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,

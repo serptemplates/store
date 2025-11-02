@@ -38,7 +38,8 @@
     "export:static": "next export",
     "test:purchase": "npx tsx scripts/manual-tests/test-purchase-flow.ts",
     "db:check": "npx tsx db-check.ts",
-    "test:e2e": "tsx scripts/run-checkout-e2e.ts"
+    "test:e2e": "tsx scripts/run-checkout-e2e.ts",
+    "migrate:checkout": "tsx scripts/migrate-products-to-internal-checkout.ts"
   },
   "dependencies": {
     "@dub/analytics": "^0.0.32",

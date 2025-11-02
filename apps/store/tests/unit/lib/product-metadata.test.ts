@@ -13,7 +13,6 @@ const baseProduct = (): ProductData => ({
   serply_link: "https://serp.ly/sample-product",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
-  buy_button_destination: undefined,
   name: "Sample Product",
   tagline: "Download everything",
   featured_image: "https://cdn.example.com/sample.jpg",

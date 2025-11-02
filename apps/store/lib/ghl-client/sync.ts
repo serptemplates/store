@@ -460,6 +460,28 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
   }
 
   const contactSource = config.source ?? "Stripe Checkout";
+  // Merge existing contact tags with configured tagIds to avoid overwriting
+  let mergedTags: string[] | undefined = Array.isArray(config.tagIds) ? [...config.tagIds] : undefined;
+  try {
+    const normalizedEmail = (context.customerEmail || "").trim().toLowerCase();
+    if (normalizedEmail) {
+      const existingContacts = await fetchContactsForEmail(normalizedEmail);
+      const preferred = selectPreferredContact(existingContacts, normalizedEmail);
+      const existingTags = Array.isArray((preferred as Record<string, unknown> | null | undefined)?.["tags"]) 
+        ? (((preferred as Record<string, unknown>)["tags"]) as string[])
+        : [];
+      const incoming = Array.isArray(config.tagIds) ? config.tagIds : [];
+      const union = new Set<string>([...existingTags, ...incoming].filter(Boolean));
+      mergedTags = union.size > 0 ? Array.from(union) : undefined;
+    }
+  } catch (error) {
+    // Non-fatal; fall back to configured tags only
+    mergedTags = Array.isArray(config.tagIds) ? [...config.tagIds] : undefined;
+    logger.debug("ghl.tag_merge_skipped", {
+      email: context.customerEmail,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
 
   const contactResult = await upsertContact({
     email: context.customerEmail,
@@ -467,7 +489,7 @@ export async function syncOrderWithGhl(config: GhlSyncConfig | undefined, contex
     lastName,
     phone: context.customerPhone ?? undefined,
     source: contactSource,
-    tags: config.tagIds,
+    tags: mergedTags,
     customFields: contactCustomFields,
   });
 

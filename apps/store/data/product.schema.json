@@ -68,17 +68,6 @@
       "format": "uri",
       "pattern": "^https://serp\\.ly/"
     },
-    "buy_button_destination": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "name": {
       "type": "string",
       "minLength": 1
@@ -333,7 +322,24 @@
       "type": "array",
       "items": {
         "type": "string",
-        "minLength": 1
+        "enum": [
+          "Downloader",
+          "Artificial Intelligence",
+          "Adult",
+          "Course Platforms",
+          "Livestream",
+          "Creative Assets",
+          "Image Hosting",
+          "Movies & TV",
+          "Social Media",
+          "Video Downloader",
+          "Image Downloader",
+          "Audio Downloader",
+          "Music",
+          "File Storage",
+          "Productivity",
+          "Utilities"
+        ]
       },
       "default": []
     },
@@ -625,5 +631,57 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "live" } }
+      },
+      "then": {
+        "anyOf": [
+          { "required": ["payment_link"] },
+          {
+            "allOf": [
+              { "required": ["pricing"] },
+              {
+                "properties": {
+                  "pricing": {
+                    "required": ["cta_href"],
+                    "properties": {
+                      "cta_href": { "type": "string", "pattern": "^https://apps\\.serp\\.co/checkout/" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "not": {
+        "allOf": [
+          { "properties": { "new_release": { "const": true } } },
+          { "properties": { "popular": { "const": true } } }
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "pre_release" } } },
+      "then": {
+        "allOf": [
+          { "not": { "properties": { "new_release": { "const": true } } } },
+          { "not": { "properties": { "popular": { "const": true } } } }
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "new_release": { "const": true } } },
+      "then": { "properties": { "status": { "const": "live" } } }
+    },
+    {
+      "if": { "properties": { "popular": { "const": true } } },
+      "then": { "properties": { "status": { "const": "live" } } }
+    }
+  ]
 }

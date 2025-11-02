@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/loom-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/loom-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/loom-video-downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68e02c70613b1bd3c1ce7f87",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=loom-video-downloader",
   "status": "live",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/loom-video-downloader.jpg",
@@ -76,6 +75,7 @@
     "original_price": "$37.00",
     "note": "Lifetime licence with password handling, queue processing, and adaptive stream conversion included. Sales are final.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/loom-video-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -168,10 +168,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/bJe6oz1McgcSaXheBd0VO0E",
-    "test_url": "https://buy.stripe.com/test_7sY6oz2Qgf8Oe9t0Kn0VO0F"
-  },
   "stripe": {
     "price_id": "price_1S9BFJ06JrOmKRCmdpVOP8Em",
     "metadata": {
@@ -183,6 +179,11 @@
       "purchase-loom-video-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "loom-video-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,

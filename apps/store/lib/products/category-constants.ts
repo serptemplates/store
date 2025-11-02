@@ -169,3 +169,39 @@ export const CATEGORY_RULES: CategoryRule[] = [
     ],
   },
 ];
+
+// Secondary (allowed) categories that we support explicitly in content
+export const SECONDARY_CATEGORIES = [
+  "Video Downloader",
+  "Image Downloader",
+  "Audio Downloader",
+  "Music",
+  "File Storage",
+  "Productivity",
+  "Utilities",
+] as const;
+
+export const ACCEPTED_CATEGORIES = [
+  ...PRIMARY_CATEGORIES,
+  ...SECONDARY_CATEGORIES,
+] as const;
+
+// Synonyms and legacy labels that should map to canonical accepted labels
+export const CATEGORY_SYNONYMS: Record<string, string> = {
+  "ai tools": "Artificial Intelligence",
+  "video downloaders": "Video Downloader",
+  "image downloaders": "Image Downloader",
+  "audio downloaders": "Audio Downloader",
+};
+
+export function canonicalizeAcceptedCategory(label: string): string | null {
+  if (typeof label !== "string") return null;
+  const trimmed = label.trim();
+  if (!trimmed) return null;
+  const lower = trimmed.toLowerCase();
+  const synonym = CATEGORY_SYNONYMS[lower];
+  if (synonym) return synonym;
+  const all: readonly string[] = ACCEPTED_CATEGORIES as unknown as readonly string[];
+  const found = all.find((c) => c.toLowerCase() === lower);
+  return found ?? null;
+}

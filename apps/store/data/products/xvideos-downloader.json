@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xvideos-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/xvideos-downloader",
   "serp_co_product_page_url": "https://serp.co/products/xvideos-downloader/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68df9862613b1b6817ce7b4c",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=xvideos-downloader",
   "status": "live",
   "featured_image": null,
@@ -36,6 +35,7 @@
     "original_price": "$17.00",
     "note": "Lifetime licence with header management and multi-domain support. Sales are final.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/xvideos-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -124,10 +124,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/3cI8wHbmM7Gm5CXeBd0VO1S",
-    "test_url": "https://buy.stripe.com/test_14AfZ98aAbWC0iD2Sv0VO1R"
-  },
   "stripe": {
     "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",
     "metadata": {
@@ -139,6 +135,11 @@
       "purchase-xvideos-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "xvideos-downloader"
+    ]
   },
   "layout_type": "landing",
   "featured": false,
