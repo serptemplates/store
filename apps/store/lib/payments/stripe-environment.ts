@@ -61,6 +61,18 @@ function isServer(): boolean {
   return typeof window === "undefined";
 }
 
+function getBrowserHostname(): string | null {
+  try {
+    if (typeof window !== "undefined") {
+      const maybeHostname = (window as unknown as { location?: { hostname?: unknown } }).location?.hostname;
+      return typeof maybeHostname === "string" ? maybeHostname : null;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
 function emitWarning(message: string, context?: Record<string, unknown>) {
   if (isServer()) {
     logger.warn("stripe.env_warning", { message, ...(context ?? {}) });
@@ -87,7 +99,9 @@ export function getRuntimeEnvironment(): RuntimeEnvironment {
   }
 
   if (!isServer()) {
-    const hostname = window.location.hostname.toLowerCase();
+    // In some test environments window.location may be undefined or partial
+    const rawHost = getBrowserHostname();
+    const hostname = rawHost ? rawHost.toLowerCase() : "";
     if (
       hostname === "localhost" ||
       hostname === "127.0.0.1" ||
@@ -101,12 +115,12 @@ export function getRuntimeEnvironment(): RuntimeEnvironment {
       /\.vercel\.app$/i,
       /\.vercel\.dev$/i,
     ];
-    if (previewHostPatterns.some((pattern) => pattern.test(hostname))) {
+    if (hostname && previewHostPatterns.some((pattern) => pattern.test(hostname))) {
       return "preview";
     }
 
     const previewKeywords = ["-git-", "preview.", "staging."];
-    if (previewKeywords.some((keyword) => hostname.includes(keyword))) {
+    if (hostname && previewKeywords.some((keyword) => hostname.includes(keyword))) {
       return "preview";
     }
   }

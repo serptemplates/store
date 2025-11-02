@@ -81,6 +81,12 @@ export async function POST(req: NextRequest) {
     success_url: payload.successUrl ?? defaultSuccessUrl(),
     cancel_url: payload.cancelUrl ?? defaultCancelUrl(),
     metadata,
+    // Enforce Terms of Service acceptance in Checkout
+    consent_collection: {
+      terms_of_service: "required",
+    },
+    // Ensure a Stripe Customer record exists even for one-time payments
+    customer_creation: "always",
   };
 
   if (payload.customerEmail) {
@@ -89,6 +95,26 @@ export async function POST(req: NextRequest) {
 
   if (payload.clientReferenceId) {
     params.client_reference_id = payload.clientReferenceId;
+  }
+
+  // Record affiliateId alongside Dub for analytics parity
+  if (!("affiliateId" in metadata)) {
+    const dubId = metadata.dubCustomerExternalId || metadata.dubClickId || payload.clientReferenceId || null;
+    if (typeof dubId === "string" && dubId.trim()) {
+      const affiliate = dubId.replace(/^dub_id_/, "");
+      metadata.affiliateId = affiliate;
+    }
+  }
+
+  // Mirror metadata onto underlying intent/subscription
+  if (payload.mode === "payment") {
+    (params as Stripe.Checkout.SessionCreateParams).payment_intent_data = {
+      metadata,
+    };
+  } else if (payload.mode === "subscription") {
+    (params as Stripe.Checkout.SessionCreateParams).subscription_data = {
+      metadata,
+    } as Stripe.Checkout.SessionCreateParams.SubscriptionData;
   }
 
   try {
@@ -101,4 +127,3 @@ export async function POST(req: NextRequest) {
 }
 
 export const runtime = "nodejs";
-

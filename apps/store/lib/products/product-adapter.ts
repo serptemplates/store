@@ -153,6 +153,44 @@ function resolveProductCta(product: ProductData): ResolvedProductCta {
     typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
 
+  // Explicit internal checkout route takes precedence when configured (buy_button_destination)
+  if (
+    typeof product.buy_button_destination === "string" &&
+    (product.buy_button_destination.startsWith("/checkout/") || product.buy_button_destination.startsWith("https://apps.serp.co/checkout/")) &&
+    product.status !== "pre_release"
+  ) {
+    return {
+      mode: "external",
+      href: product.buy_button_destination,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab: false,
+      target: "_self",
+      analytics: {
+        destination: "checkout",
+      },
+    };
+  }
+
+  // Or if pricing.cta_href explicitly targets internal checkout, prefer it too
+  if (
+    typeof product.pricing?.cta_href === "string" &&
+    (product.pricing.cta_href.startsWith("/checkout/") || product.pricing.cta_href.startsWith("https://apps.serp.co/checkout/")) &&
+    product.status !== "pre_release"
+  ) {
+    return {
+      mode: "external",
+      href: product.pricing.cta_href,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab: false,
+      target: "_self",
+      analytics: {
+        destination: "checkout",
+      },
+    };
+  }
+
+  // Otherwise fall through to payment link or external destination resolution
+
   if (paymentLinkHref && product.status !== "pre_release") {
     const opensInNewTab = true;
     return {

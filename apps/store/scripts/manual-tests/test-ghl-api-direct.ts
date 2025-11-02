@@ -5,7 +5,7 @@
 import { config } from "dotenv";
 
 // Load environment variables
-config({ path: "../../../.env.local" });
+config({ path: "../../../.env" });
 config({ path: "../../../.env" });
 
 const GHL_BASE_URL = "https://services.leadconnectorhq.com";

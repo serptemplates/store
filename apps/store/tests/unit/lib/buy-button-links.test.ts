@@ -31,7 +31,7 @@ describe("buy button destinations", () => {
           return { slug: product.slug, href: String(href) };
         }
 
-        const isInternalCheckout = href.startsWith("/checkout?product=");
+        const isInternalCheckout = href.startsWith("/checkout?product=") || href.startsWith("/checkout/");
         const isAllowed =
           isInternalCheckout
           || ALLOWED_EXACT.has(href)

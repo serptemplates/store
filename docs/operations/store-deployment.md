@@ -60,7 +60,7 @@ pnpm --filter @apps/store test:e2e
 
 ## Environment variables
 
-- Local development: `.env.local` at repo root and/or `apps/store/.env.local`.
+- Local development: `.env` at repo root.
 - CI / Vercel: manage through the Vercel dashboard (`Settings → Environment Variables`).
 - Scripts: use `loadScriptEnvironment` from `apps/store/scripts/utils/env.ts` when authoring new CLIs so they load `.env` files the same way as `update-video-metadata.ts` and `revoke-refunded-licenses.ts`.
 
@@ -112,7 +112,7 @@ pnpm dev  # Runs the store app specifically
 ```
 
 ### Environment Variables
-- **Local**: Create `.env.local` in `/apps/store/`
+- **Local**: Create `.env` at the repo root
 - **Production**: Set in Vercel Dashboard → Settings → Environment Variables
 
 ### Checkout E2E Verification
@@ -209,7 +209,7 @@ vercel --prod       # Deploy to production
 
 ## Important Notes
 
-1. **Never commit** `.vercel/` or `.env.local` files
+1. **Never commit** `.vercel/` or `.env` files
 2. **Always deploy** from `/apps/store/` directory, not monorepo root
 3. **GTM Container** (`GTM-WS97TH45`) is shared across the store
 4. **Build commands** must navigate to monorepo root to access PNPM workspace

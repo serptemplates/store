@@ -16,13 +16,9 @@ export function loadIntegrationEnv(metaUrl: string): void {
 
   const candidateEnvFiles = Array.from(
     new Set([
-      path.resolve(process.cwd(), ".env.local"),
       path.resolve(process.cwd(), ".env"),
-      path.resolve(__dirname, "../../.env.local"),
       path.resolve(__dirname, "../../.env"),
-      path.resolve(__dirname, "../../../.env.local"),
       path.resolve(__dirname, "../../../.env"),
-      path.resolve(__dirname, "../../../../.env.local"),
       path.resolve(__dirname, "../../../../.env"),
     ]),
   );

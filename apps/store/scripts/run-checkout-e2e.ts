@@ -1,5 +1,7 @@
 import { spawn, spawnSync, type ChildProcess } from "node:child_process";
-import { resolve } from "node:path";
+import { resolve, join } from "node:path";
+import fs from "node:fs";
+import dotenv from "dotenv";
 
 const projectRoot = resolve(__dirname, "..");
 const repoRoot = resolve(projectRoot, "..", "..");
@@ -7,34 +9,42 @@ const repoRoot = resolve(projectRoot, "..", "..");
 const pnpmCmd = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 const stripeCmd = process.platform === "win32" ? "stripe.exe" : "stripe";
 
-const steps: Array<{
-  title: string;
-  command: string[];
-  description: string;
-}> = [
-  {
-    title: "Playwright checkout flow",
-    description: "Simulate product lander → Stripe checkout → thank-you page",
-    command: [
-      pnpmCmd,
-      "exec",
-      "playwright",
-      "test",
-      "tests/checkout-smoke.spec.ts",
-      "--project=Desktop Chrome",
-    ],
-  },
-  {
-    title: "Automated payment flow",
-    description: "Create Stripe session, confirm webhook + DB writes, trigger GHL sync",
-    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/automated-payment-test.ts"],
-  },
-  {
-    title: "Acceptance suite",
-    description: "Verify Stripe, Postgres, email, and GHL automation end-to-end",
-    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/acceptance-test.ts"],
-  },
-];
+type Step = { title: string; command: string[]; description: string };
+
+function hasTestStripeSecret(): boolean {
+  if (process.env.STRIPE_SECRET_KEY_TEST && process.env.STRIPE_SECRET_KEY_TEST.startsWith("sk_test_")) return true;
+  if (process.env.STRIPE_TEST_SECRET_KEY && process.env.STRIPE_TEST_SECRET_KEY.startsWith("sk_test_")) return true;
+  if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_test_")) return true;
+  return false;
+}
+
+function buildSteps(): Step[] {
+  const skipSdk = process.env.E2E_SKIP_STRIPE_SDK === "1" || !hasTestStripeSecret();
+  const out: Step[] = [];
+
+  if (!skipSdk) {
+    out.push(
+      {
+        title: "Stripe session (direct)",
+        description: "Create a test Checkout Session via Stripe SDK and print metadata",
+        command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/test-stripe-direct.ts"],
+      },
+      {
+        title: "Dub attribution session",
+        description: "Create a Checkout Session with Dub metadata and print details",
+        command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/test-dub-attribution.ts"],
+      },
+    );
+  }
+
+  out.push({
+    title: "Mock webhook: checkout.session.completed",
+    description: "Send a signed test webhook to the local endpoint and verify DB writes",
+    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/test-purchase-flow.ts"],
+  });
+
+  return out;
+}
 
 const backgroundProcesses: ChildProcess[] = [];
 
@@ -160,12 +170,23 @@ async function main() {
   console.log("🚀 Running full checkout E2E verification...\n");
 
   const devServerAlreadyRunning = await detectDevServer();
+  const skipSdk = process.env.E2E_SKIP_STRIPE_SDK === "1" || !hasTestStripeSecret();
+  const skipAutoStart = process.env.E2E_AUTO_START === "0" || process.env.E2E_SKIP_LISTENER === "1" || skipSdk;
   let injectedSecret: string | undefined;
 
   if (devServerAlreadyRunning) {
     console.log("ℹ Detected dev server on http://localhost:3000. Skipping auto-start.");
     console.log("   Ensure your Stripe CLI listener is running and matches the configured webhook secret.\n");
   } else {
+    if (skipAutoStart) {
+      console.log("⚠ Auto-start disabled (or SDK steps skipped) and dev server not detected.\n");
+      console.log("Next steps:");
+      console.log("  1) Start dev server in another terminal: pnpm --filter @apps/store dev");
+      console.log(
+        "  2) Ensure STRIPE_WEBHOOK_SECRET_TEST is set in .env.local (same value used to sign the mock webhook)\n",
+      );
+      process.exit(1);
+    }
     try {
       const forwardUrl = process.env.STRIPE_WEBHOOK_FORWARD_URL ?? "http://localhost:3000/api/stripe/webhook";
       injectedSecret = await startStripeListener(forwardUrl);
@@ -181,12 +202,8 @@ async function main() {
     }
   }
 
-  console.log(
-    "\nRunning E2E steps:\n" +
-      "  1. Playwright checkout flow\n" +
-      "  2. Automated payment flow\n" +
-      "  3. Acceptance suite\n",
-  );
+  const steps = buildSteps();
+  console.log("\nRunning E2E steps:\n" + steps.map((s, i) => `  ${i + 1}. ${s.title}`).join("\n") + "\n");
 
   for (const step of steps) {
     runStep(step.title, step.description, step.command);
@@ -226,3 +243,21 @@ process.on("SIGTERM", () => {
     cleanup();
   }
 })();
+// Load .env files from repo root to populate process.env
+function loadEnvFiles() {
+  const candidates = [
+    join(repoRoot, ".env"),
+    join(projectRoot, ".env"),
+  ];
+  for (const file of candidates) {
+    try {
+      if (fs.existsSync(file)) {
+        dotenv.config({ path: file, override: true });
+      }
+    } catch {
+      // ignore
+    }
+  }
+}
+
+loadEnvFiles();

@@ -16,8 +16,7 @@ const http = require('http');
 const dotenv = require('dotenv');
 const Stripe = require('stripe');
 
-// Load env files (local overrides default)
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+// Load env file (single source of truth)
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const port = Number(process.env.STRIPE_WEBHOOK_PORT || 4242);
