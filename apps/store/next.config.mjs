@@ -155,6 +155,16 @@ const nextConfig = {
   // React strict mode for better error detection
   reactStrictMode: true,
 
+  // Ensure server functions include product data files for runtime fs access
+  // This allows API/Route handlers (e.g., /checkout/[slug]) to read
+  // apps/store/data/products/*.json in serverless environments.
+  outputFileTracingIncludes: {
+    // Include product JSON for all API routes and the checkout route tree.
+    // Paths are relative to the project root (apps/store when deployed on Vercel).
+    "/api/(.*)": ["./data/**"],
+    "/checkout/(.*)": ["./data/**"],
+  },
+
   ...(isStaticExport
     ? {
         output: "export",

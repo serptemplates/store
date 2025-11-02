@@ -52,7 +52,16 @@ export async function GET(
   // Look up offer config from product data
   const offer = getOfferConfig(slug);
   if (!offer) {
-    // Do not silently fall back to Payment Links.
+    // If the product isn't configured for internal Checkout Sessions (no stripe.price_id),
+    // fall back to its configured Payment Link when available so existing flows keep working.
+    try {
+      const product = getProductData(slug);
+      const link = resolveProductPaymentLink(product);
+      if (link && link.provider === "stripe") {
+        return NextResponse.redirect(link.url, { status: 302 });
+      }
+    } catch {}
+
     return json({ error: `Unknown or unconfigured product slug: ${slug}` }, 404);
   }
 
