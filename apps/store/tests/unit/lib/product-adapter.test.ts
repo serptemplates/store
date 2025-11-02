@@ -13,7 +13,6 @@ const baseProduct: ProductData = {
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
-  buy_button_destination: undefined,
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
@@ -179,23 +178,7 @@ describe("productToHomeTemplate", () => {
     expect(templateWithBlank.pricing?.subheading).toBeUndefined();
   });
 
-  it("prefers buy_button_destination for CTA links when provided", () => {
-    const destination = "https://store.serp.co/external/landing";
-    const product: ProductData = {
-      ...baseProduct,
-      buy_button_destination: destination,
-      stripe: undefined,
-      payment_link: undefined,
-    };
-
-    const template = productToHomeTemplate(product, []);
-
-    expect(template.ctaMode).toBe("external");
-    expect(template.ctaOpensInNewTab).toBe(true);
-    expect(template.cta?.mode).toBe("external");
-    expect(template.ctaHref).toBe(destination);
-    expect(template.pricing?.ctaHref).toBe(destination);
-  });
+  // Removed: legacy buy_button_destination no longer supported
 
   it("falls back to GHL payment link when only ghl_url is provided", () => {
     const product: ProductData = {
@@ -217,7 +200,7 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       stripe: undefined,
       payment_link: undefined,
-      buy_button_destination: undefined,
+      
       pricing: {
         price: baseProduct.pricing?.price,
         benefits: baseProduct.pricing?.benefits ?? [],
@@ -241,7 +224,7 @@ describe("productToHomeTemplate", () => {
       status: "pre_release",
       stripe: undefined,
       payment_link: undefined,
-      buy_button_destination: undefined,
+      
       pricing: {
         price: baseProduct.pricing?.price,
         benefits: baseProduct.pricing?.benefits ?? [],

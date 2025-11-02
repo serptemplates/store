@@ -68,17 +68,6 @@
       "format": "uri",
       "pattern": "^https://serp\\.ly/"
     },
-    "buy_button_destination": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "name": {
       "type": "string",
       "minLength": 1
@@ -625,5 +614,32 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "const": "live" } }
+      },
+      "then": {
+        "anyOf": [
+          { "required": ["payment_link"] },
+          {
+            "allOf": [
+              { "required": ["pricing"] },
+              {
+                "properties": {
+                  "pricing": {
+                    "required": ["cta_href"],
+                    "properties": {
+                      "cta_href": { "type": "string", "pattern": "^https://apps\\.serp\\.co/checkout/" }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

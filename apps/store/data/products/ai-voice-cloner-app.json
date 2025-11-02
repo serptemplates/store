@@ -10,8 +10,7 @@
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-voice-cloner-app",
   "apps_serp_co_product_page_url": "https://apps.serp.co/ai-voice-cloner-app",
   "serp_co_product_page_url": "https://serp.co/products/ai-voice-cloner-app/",
-  "buy_button_destination": "https://ghl.serp.co/payment-link/68f88f7d67ee3b70fd6a1b24",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=ai-voice-cloner-app",
   "status": "live",
   "featured_image": null,
@@ -70,6 +69,7 @@
     "original_price": "$37.00",
     "note": "Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features and commercial rights. No refunds.",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/ai-voice-cloner-app",
     "currency": "USD",
     "availability": "InStock",
     "benefits": [
@@ -167,6 +167,11 @@
       "purchase-ai-voice-cloner-app"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "ai-voice-cloner-app"
+    ]
   },
   "layout_type": "landing",
   "featured": false,

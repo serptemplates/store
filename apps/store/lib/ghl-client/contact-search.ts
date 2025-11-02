@@ -13,6 +13,7 @@ import {
 export type ContactCandidate = {
   id?: string | null;
   email?: string | null;
+  tags?: string[] | null;
   customFields?: unknown;
   custom_fields?: unknown;
   fields?: unknown;
@@ -180,4 +181,3 @@ export async function fetchContactsForEmail(normalisedEmail: string): Promise<Co
     return [];
   }
 }
-

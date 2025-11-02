@@ -174,6 +174,24 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
     }
 
     switch (key) {
+      case "success_url": {
+        const rawUrl = String(value);
+        try {
+          const url = new URL(rawUrl);
+          // Drop placeholder-only session_id param
+          const sid = url.searchParams.get("session_id");
+          if (sid === "{CHECKOUT_SESSION_ID}") {
+            url.searchParams.delete("session_id");
+          }
+          const serialized = url.searchParams.toString();
+          const withoutQuery = `${url.origin}${url.pathname}`;
+          normalized[key] = serialized ? `${withoutQuery}?${serialized}` : withoutQuery;
+        } catch {
+          // If not a valid URL, pass through unchanged
+          normalized[key] = cloneValue(value);
+        }
+        break;
+      }
       case "screenshots": {
         const screenshots = value as NonNullable<ProductData["screenshots"]>;
         normalized[key] = screenshots.map((shot) =>
