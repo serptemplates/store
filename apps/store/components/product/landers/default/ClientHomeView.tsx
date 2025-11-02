@@ -136,10 +136,11 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
       const cookies = document.cookie.split(";").map((c) => c.trim())
       const dubCookie = cookies.find((c) => c.startsWith("dub_id="))
-      const dubId = dubCookie ? decodeURIComponent(dubCookie.split("=")[1] || "").trim() : ""
+      const rawDubId = dubCookie ? decodeURIComponent(dubCookie.split("=")[1] || "").trim() : ""
 
-      if (dubId) {
-        url.searchParams.set("client_reference_id", dubId)
+      if (rawDubId) {
+        const normalized = rawDubId.startsWith("dub_id_") ? rawDubId : `dub_id_${rawDubId}`
+        url.searchParams.set("client_reference_id", normalized)
       }
 
       setResolvedCtaHrefWithDub(url.toString())
