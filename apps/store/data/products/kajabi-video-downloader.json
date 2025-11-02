@@ -137,10 +137,6 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/00w7sDduUe4KghBfFh0VO0x",
-    "test_url": "https://buy.stripe.com/test_9B6dR1cqQ5yefdx0Kn0VO0y"
-  },
   "stripe": {
     "price_id": "price_1S99wx06JrOmKRCmFaiTWpCK",
     "metadata": {
