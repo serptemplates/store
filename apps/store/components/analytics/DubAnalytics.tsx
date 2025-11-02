@@ -19,6 +19,8 @@ export function DubAnalytics() {
   return (
     <DubAnalyticsLib
       publishableKey={publishableKey}
+      cookieOptions={{ domain: ".serp.co" }}
+      queryParams={["via", "dub_id"]}
       domainsConfig={{
         // Short link domain used on Dub for this partner program
         refer: "serp.cc",
