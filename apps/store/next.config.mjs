@@ -159,10 +159,9 @@ const nextConfig = {
   // This allows API/Route handlers (e.g., /checkout/[slug]) to read
   // apps/store/data/products/*.json in serverless environments.
   outputFileTracingIncludes: {
-    // Include product JSON for all API routes and the checkout route tree.
-    // Support both monorepo-root and app-root deployments safely.
-    "/api/(.*)": ["./data/**", "./apps/store/data/**"],
-    "/checkout/(.*)": ["./data/**", "./apps/store/data/**"],
+    // Include product JSON broadly for all server functions to avoid
+    // route-matching edge cases in serverless packaging.
+    "/(.*)": ["./data/**", "./apps/store/data/**"],
   },
 
   ...(isStaticExport
