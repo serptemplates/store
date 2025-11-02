@@ -322,7 +322,24 @@
       "type": "array",
       "items": {
         "type": "string",
-        "minLength": 1
+        "enum": [
+          "Downloader",
+          "Artificial Intelligence",
+          "Adult",
+          "Course Platforms",
+          "Livestream",
+          "Creative Assets",
+          "Image Hosting",
+          "Movies & TV",
+          "Social Media",
+          "Video Downloader",
+          "Image Downloader",
+          "Audio Downloader",
+          "Music",
+          "File Storage",
+          "Productivity",
+          "Utilities"
+        ]
       },
       "default": []
     },
@@ -640,6 +657,31 @@
           }
         ]
       }
+    },
+    {
+      "not": {
+        "allOf": [
+          { "properties": { "new_release": { "const": true } } },
+          { "properties": { "popular": { "const": true } } }
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "pre_release" } } },
+      "then": {
+        "allOf": [
+          { "not": { "properties": { "new_release": { "const": true } } } },
+          { "not": { "properties": { "popular": { "const": true } } } }
+        ]
+      }
+    },
+    {
+      "if": { "properties": { "new_release": { "const": true } } },
+      "then": { "properties": { "status": { "const": "live" } } }
+    },
+    {
+      "if": { "properties": { "popular": { "const": true } } },
+      "then": { "properties": { "status": { "const": "live" } } }
     }
   ]
 }

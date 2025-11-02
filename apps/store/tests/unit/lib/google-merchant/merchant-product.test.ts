@@ -30,7 +30,7 @@ describe("merchant-product helpers", () => {
     expect(result.availability).toBe("out of stock");
     expect(result.brand).toBe("SERP Apps");
     expect(result.googleProductCategory).toBe("Software > Computer Software");
-    expect(result.productTypes).toEqual(["AI Tools", "Platform::Web"]);
+    expect(result.productTypes).toEqual(["Artificial Intelligence", "Platform::Web"]);
     expect(result.shipping).toStrictEqual([
       { country: "US", price: { value: "0.00", currency: "USD" } },
     ]);
