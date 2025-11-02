@@ -23,7 +23,7 @@ User Purchase → Stripe Checkout → Webhook → Database → GHL API
 
 ## Environment Variables Required
 
-Add these to your `.env.local`:
+Add these to your `.env`:
 
 ```env
 # GHL Configuration

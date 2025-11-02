@@ -6,6 +6,9 @@ import logger from "@/lib/logger";
 import { handleCheckoutSessionCompleted } from "./events/checkout-session-completed";
 import { handlePaymentIntentSucceeded } from "./events/payment-intent-succeeded";
 import { handlePaymentIntentFailed } from "./events/payment-intent-failed";
+import { handleChargeRefunded } from "./events/charge-refunded";
+import { handleChargeDisputeCreated } from "./events/charge-dispute-created";
+import { handleChargeDisputeClosed } from "./events/charge-dispute-closed";
 import { handleUnhandledStripeEvent } from "./events/unhandled-event";
 
 export async function handleStripeEvent(event: Stripe.Event) {
@@ -18,6 +21,15 @@ export async function handleStripeEvent(event: Stripe.Event) {
       break;
     case "payment_intent.payment_failed":
       await handlePaymentIntentFailed(event.data.object as Stripe.PaymentIntent);
+      break;
+    case "charge.refunded":
+      await handleChargeRefunded(event.data.object as Stripe.Charge);
+      break;
+    case "charge.dispute.created":
+      await handleChargeDisputeCreated(event.data.object as Stripe.Dispute);
+      break;
+    case "charge.dispute.closed":
+      await handleChargeDisputeClosed(event.data.object as Stripe.Dispute);
       break;
     default:
       handleUnhandledStripeEvent(event);

@@ -12,7 +12,7 @@ type ProductRecord = {
   currency?: string;
 };
 
-const ENV_FILENAMES = [".env.local", ".env"] as const;
+const ENV_FILENAMES = [".env"] as const;
 const ENV_SEARCH_ROOTS = [
   process.cwd(),
   path.resolve(process.cwd(), ".."),

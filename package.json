@@ -10,6 +10,8 @@
     "prepare": "husky",
     "dev:stripe-webhook": "node scripts/stripe-webhook-test-server.js",
     "dev:test:stripe": "tsx scripts/dev-test-stripe.ts",
+    "test:local:checkout": "pnpm --filter @apps/store exec tsx scripts/run-checkout-e2e.ts",
+    "test:local:tmux": "bash scripts/checkout-e2e-tmux.sh",
     "sync:stripe-prices": "node scripts/sync-stripe-prices.mjs",
     "generate:products": "node scripts/generate-product-json.mjs",
     "fetch:ghl-products": "node scripts/fetch-ghl-products.mjs",

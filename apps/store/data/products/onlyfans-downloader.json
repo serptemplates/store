@@ -15,12 +15,28 @@
   "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   "cancel_url": "https://apps.serp.co/checkout?product=onlyfans-downloader",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg",
+  "featured_image": "/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg",
   "featured_image_gif": null,
   "screenshots": [
     {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/onlyfans-downloader.jpg",
-      "alt": "Onlyfans Downloader website preview"
+      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg",
+      "alt": "Onlyfans Downloader product screenshot 1"
+    },
+    {
+      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-2.jpg",
+      "alt": "Onlyfans Downloader product screenshot 2"
+    },
+    {
+      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-3.jpg",
+      "alt": "Onlyfans Downloader product screenshot 3"
+    },
+    {
+      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-4.jpg",
+      "alt": "Onlyfans Downloader product screenshot 4"
+    },
+    {
+      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-5.jpg",
+      "alt": "Onlyfans Downloader product screenshot 5"
     }
   ],
   "product_videos": [],

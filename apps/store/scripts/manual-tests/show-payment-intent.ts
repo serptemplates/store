@@ -9,9 +9,7 @@ function loadEnv() {
   const here = typeof __dirname !== 'undefined' ? __dirname : path.dirname(new URL(import.meta.url).pathname);
   const repoRoot = findRepoRoot(here);
   const candidates = [
-    path.join(process.cwd(), '.env.local'),
     path.join(process.cwd(), '.env'),
-    path.join(repoRoot, '.env.local'),
     path.join(repoRoot, '.env'),
   ];
   for (const p of candidates) {

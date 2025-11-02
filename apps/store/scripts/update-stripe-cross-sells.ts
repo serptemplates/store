@@ -12,15 +12,30 @@ import { getAllProducts } from "../lib/products/product";
 const API_VERSION = "2025-06-30.basil" as unknown as Stripe.LatestApiVersion;
 const REPO_ROOT = path.resolve(__dirname, "../../..");
 
-const CROSS_SELL_TARGETS: Partial<Record<StripeMode, string>> = {
-  live: "prod_TF3OkFaJi31aur", // SERP Downloaders Bundle
+type CrossSellConfig = {
+  allBundleProductId?: string; // e.g., SERP Downloaders Bundle (all-downloaders)
+  adultBundleProductId?: string; // e.g., SERP Adult Downloaders Bundle
 };
+
+function resolveCrossSellConfig(mode: StripeMode): CrossSellConfig {
+  if (mode === "live") {
+    return {
+      allBundleProductId:
+        process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_LIVE ||
+        "prod_TF3OkFaJi31aur", // fallback to current all-downloaders bundle
+      adultBundleProductId: process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_LIVE,
+    };
+  }
+
+  return {
+    allBundleProductId: process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_TEST,
+    adultBundleProductId: process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_TEST,
+  };
+}
 
 function loadEnvFiles() {
   const candidates = [
-    path.resolve(process.cwd(), ".env.local"),
     path.resolve(process.cwd(), ".env"),
-    path.join(REPO_ROOT, ".env.local"),
     path.join(REPO_ROOT, ".env"),
   ];
 
@@ -86,11 +101,21 @@ function createStripeClients(): StripeClient[] {
   return clients;
 }
 
-function shouldUpdateProduct(slug: string, name: string | undefined) {
+function shouldUpdateProduct(slug: string, name: string | undefined, status?: string) {
   const loweredSlug = slug.toLowerCase();
   const loweredName = name?.toLowerCase() ?? "";
 
   if (loweredSlug === "serp-downloaders-bundle") {
+    return false;
+  }
+
+  // Skip obvious bundle products by name as a safety
+  if (loweredSlug.includes("bundle") || loweredName.includes("bundle")) {
+    return false;
+  }
+
+  // Skip pre-release products (no checkout yet)
+  if (status === "pre_release") {
     return false;
   }
 
@@ -112,6 +137,7 @@ async function updateStripeCrossSells() {
   for (const product of products) {
     const slug = product.slug;
     const name = product.name;
+    const status = product.status;
     const stripeProductId =
       typeof product.stripe?.metadata?.stripe_product_id === "string"
         ? product.stripe.metadata.stripe_product_id.trim()
@@ -121,16 +147,21 @@ async function updateStripeCrossSells() {
       continue;
     }
 
-    if (!shouldUpdateProduct(slug, name)) {
+    if (!shouldUpdateProduct(slug, name, status)) {
       continue;
     }
 
     productsProcessed += 1;
 
+    // Determine if this product is marked as Adult via categories
+    const isAdult = (product.categories || []).some((c) => c?.toLowerCase() === "adult");
+
     for (const client of clients) {
-      const crossSellTarget = CROSS_SELL_TARGETS[client.mode];
-      if (!crossSellTarget) {
-        console.log(`⚪️  [${client.mode}] ${slug}: skipping (no cross-sell target configured).`);
+      const cfg = resolveCrossSellConfig(client.mode);
+      const target = isAdult ? cfg.adultBundleProductId : cfg.allBundleProductId;
+      if (!target) {
+        const reason = isAdult ? "no adult bundle configured" : "no all-downloaders bundle configured";
+        console.log(`⚪️  [${client.mode}] ${slug}: skipping (${reason}).`);
         continue;
       }
 
@@ -138,11 +169,11 @@ async function updateStripeCrossSells() {
 
       try {
         await client.stripe.products.update(stripeProductId, {
-          cross_sells: [crossSellTarget],
+          cross_sells: [target],
         } as Stripe.ProductUpdateParams);
 
         updatesApplied += 1;
-        console.log(`✅ [${client.mode}] ${slug} (${stripeProductId}) cross-sells -> ${crossSellTarget}`);
+        console.log(`✅ [${client.mode}] ${slug} (${stripeProductId}) cross-sells -> ${target}`);
       } catch (error) {
         const stripeError = error as Stripe.errors.StripeError;
 

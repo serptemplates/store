@@ -23,6 +23,7 @@ import { useProductPageExperience } from "@/components/product/hooks/useProductP
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 import { deriveProductCategories } from "@/lib/products/categories"
+import { useDubCheckout } from "@/lib/checkout/use-dub-checkout"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -68,9 +69,50 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   )
   const { resolvedCta, handleCtaClick, waitlist, checkoutSuccess } = experience
 
+  // Set up Dub-aware checkout handler
+  // This intercepts buy button clicks to create programmatic checkout sessions
+  // with proper Dub attribution metadata when stripe.price_id is available
+  const dubCheckout = useDubCheckout({
+    product,
+    fallbackUrl: resolvedCta.href,
+    onCheckoutStart: () => {
+      // Track checkout start event
+      handleCtaClick("pricing")
+    },
+    onCheckoutError: (error) => {
+      console.error("Dub checkout error:", error)
+    },
+  })
+
   const shouldOpenInNewTab = resolvedCta.opensInNewTab
-  const [resolvedCtaHrefWithDub, setResolvedCtaHrefWithDub] = useState(resolvedCta.href)
-  const resolvedCtaHref = resolvedCtaHrefWithDub
+  const isInternalCheckoutRoute = (() => {
+    if (typeof resolvedCta.href !== "string") return false
+    if (resolvedCta.href.startsWith("/checkout/")) return true
+    try {
+      const url = new URL(resolvedCta.href)
+      return url.pathname.startsWith("/checkout/")
+    } catch {
+      return false
+    }
+  })()
+  const renderedCheckoutHref = (() => {
+    if (!isInternalCheckoutRoute || typeof resolvedCta.href !== "string") return resolvedCta.href
+    // If we’re on localhost and the CTA points to apps.serp.co/checkout, convert to a local relative path for easier testing
+    try {
+      // window only exists client-side; on SSR just return the absolute href
+      if (typeof window === 'undefined') return resolvedCta.href
+      const host = window.location.hostname
+      const isLocal = host === 'localhost' || host === '127.0.0.1'
+      const u = new URL(resolvedCta.href, window.location.origin)
+      if (isLocal && u.pathname.startsWith('/checkout/')) {
+        return `${u.pathname}${u.search ?? ''}`
+      }
+    } catch {}
+    return resolvedCta.href
+  })()
+  // If CTA is explicitly the internal checkout route, render it (optionally localhost-normalized)
+  // Otherwise, use "#" when we have a price ID (intercept to add Dub metadata)
+  const resolvedCtaHref = isInternalCheckoutRoute ? renderedCheckoutHref : (dubCheckout.hasPriceId ? "#" : resolvedCta.href)
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
   const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
@@ -114,49 +156,32 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     return () => window.removeEventListener("scroll", handleScroll)
   }, [setShowStickyBar])
 
-  // Client-side enhancement: append Dub click ID to Stripe Payment Links
-  // so Dub can attribute purchases made via Payment Links.
-  useEffect(() => {
-    try {
-      if (typeof window === "undefined") return
-      const href = resolvedCta.href
-      if (!href || typeof href !== "string") {
-        setResolvedCtaHrefWithDub(href)
-        return
-      }
-
-      const url = new URL(href, window.location.origin)
-      const hostname = url.hostname
-
-      const isStripeHost = hostname === "buy.stripe.com" || hostname === "checkout.stripe.com"
-      if (!isStripeHost) {
-        setResolvedCtaHrefWithDub(url.toString())
-        return
-      }
-
-      const cookies = document.cookie.split(";").map((c) => c.trim())
-      const dubCookie = cookies.find((c) => c.startsWith("dub_id="))
-      const rawDubId = dubCookie ? decodeURIComponent(dubCookie.split("=")[1] || "").trim() : ""
-
-      if (rawDubId) {
-        const normalized = rawDubId.startsWith("dub_id_") ? rawDubId : `dub_id_${rawDubId}`
-        url.searchParams.set("client_reference_id", normalized)
-      }
-
-      setResolvedCtaHrefWithDub(url.toString())
-    } catch {
-      setResolvedCtaHrefWithDub(resolvedCta.href)
+  // Handle buy button clicks with Dub attribution
+  // Intercepts primary CTA clicks to create programmatic checkout sessions
+  const handlePrimaryCtaClick = useCallback((event?: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isInternalCheckoutRoute) {
+      // allow default navigation but still capture analytics
+      handleCtaClick("pricing")
+      return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolvedCta.href])
+    if (dubCheckout.hasPriceId) {
+      dubCheckout.handleBuyClick(event)
+    } else {
+      handleCtaClick("pricing")
+    }
+  }, [dubCheckout, handleCtaClick, isInternalCheckoutRoute])
 
-  const handlePrimaryCtaClick = useCallback(() => {
-    handleCtaClick("pricing")
-  }, [handleCtaClick])
-
-  const handleStickyCtaClick = useCallback(() => {
-    handleCtaClick("sticky_bar")
-  }, [handleCtaClick])
+  const handleStickyCtaClick = useCallback((event?: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isInternalCheckoutRoute) {
+      handleCtaClick("sticky_bar")
+      return
+    }
+    if (dubCheckout.hasPriceId) {
+      dubCheckout.handleBuyClick(event)
+    } else {
+      handleCtaClick("sticky_bar")
+    }
+  }, [dubCheckout, handleCtaClick, isInternalCheckoutRoute])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`

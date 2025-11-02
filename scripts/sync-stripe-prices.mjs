@@ -49,7 +49,6 @@ function orderPricingRecord(record) {
 
 const apiVersion = "2024-04-10";
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const liveSecret = process.env.STRIPE_SECRET_KEY;

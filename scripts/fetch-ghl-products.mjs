@@ -5,7 +5,7 @@ import process from "node:process";
 import dotenv from "dotenv";
 
 const root = process.cwd();
-dotenv.config({ path: path.resolve(root, ".env.local") });
+dotenv.config({ path: path.resolve(root, ".env") });
 dotenv.config({ path: path.resolve(root, ".env") });
 
 const pat = process.env.GHL_PAT_LOCATION || process.env.GHL_API_TOKEN || "";

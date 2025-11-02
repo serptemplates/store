@@ -3,7 +3,9 @@
 This directory collects the docs that support the refactored checkout, payment, and operations stack. The content is grouped by topic so new contributors can find the right context quickly.
 
 - `architecture/` – Application structure, module boundaries, and integration contracts.
+  - See `architecture/checkout-internal-vs-payment-links.md` for how CTAs resolve and why `/checkout/:slug` no longer falls back to Payment Links.
 - `operations/` – Deployment workflow, environment configuration, monitoring, and provider setup runbooks.
+  - See `operations/env-files.md` for the single-file env setup (`/.env`).
 - `security/` – Implementation guidance, validation playbooks, and audit notes.
 - `data/` – CSV exports that backfill product/domain metadata.
 - `analytics/` – GTM / GA4 configuration blobs.

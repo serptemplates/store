@@ -52,9 +52,9 @@ export function loadScriptEnvironment(
     roots.add(process.cwd());
   }
 
-  for (const root of roots) {
-    loadEnv({ path: path.join(root, ".env.local") });
-    loadEnv({ path: path.join(root, ".env") });
+  // Single source of truth: prefer repo-root/.env only to avoid duplication
+  if (paths.repoRoot) {
+    loadEnv({ path: path.join(paths.repoRoot, ".env") });
   }
 
   return paths;
