@@ -160,9 +160,9 @@ const nextConfig = {
   // apps/store/data/products/*.json in serverless environments.
   outputFileTracingIncludes: {
     // Include product JSON for all API routes and the checkout route tree.
-    // Paths are relative to the project root (apps/store when deployed on Vercel).
-    "/api/(.*)": ["./data/**"],
-    "/checkout/(.*)": ["./data/**"],
+    // Support both monorepo-root and app-root deployments safely.
+    "/api/(.*)": ["./data/**", "./apps/store/data/**"],
+    "/checkout/(.*)": ["./data/**", "./apps/store/data/**"],
   },
 
   ...(isStaticExport
