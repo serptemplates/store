@@ -21,9 +21,13 @@
       "alt": "Circle Downloader website preview"
     }
   ],
-  "product_videos": [],
+  "product_videos": [
+    "https://www.youtube.com/watch?v=_8XKKHj0eLs"
+  ],
   "related_videos": [],
-  "related_posts": [],
+  "related_posts": [
+    "how-to-download-circle-so-videos-free"
+  ],
   "github_repo_url": "https://github.com/serpapps/circle-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/circle-downloader/afjjgeafaiahjlcgnflgeojbjobglblg",
