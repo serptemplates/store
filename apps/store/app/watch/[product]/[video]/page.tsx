@@ -12,6 +12,8 @@ import { getSiteBaseUrl, toAbsoluteUrl } from "@/lib/urls";
 import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { buildPrimaryNavProps } from "@/lib/navigation";
+import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
+import { generateBreadcrumbSchema } from "@/schema/product-schema-ld";
 
 type WatchPageParams = { product: string; video: string };
 
@@ -177,30 +179,14 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     videoQuality: "HD",
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${baseUrl}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: product.name,
-        item: productUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: entry.title,
-        item: watchUrl,
-      },
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: "Home", url: "/" },
+      { name: "Videos", url: "/videos" },
+      { name: entry.title, url: entry.watchPath },
     ],
-  };
+    storeUrl: baseUrl,
+  });
 
   const webPageSchema = {
     "@context": "https://schema.org",
@@ -212,8 +198,8 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     primaryImageOfPage: entry.thumbnailUrl,
     isPartOf: {
       "@type": "CollectionPage",
-      url: productUrl,
-      name: product.name,
+      url: `${baseUrl}/videos`,
+      name: "Videos",
     },
   };
 
@@ -226,13 +212,16 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
       <Script id="watch-webpage-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
       <div className="border-b bg-gray-50">
-        <nav className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-4 text-sm text-gray-600">
-          <Link href="/" className="hover:text-gray-900">Home</Link>
-          <span>/</span>
-          <Link href={`/${product.slug}`} className="hover:text-gray-900">{product.name}</Link>
-          <span>/</span>
-          <span className="text-gray-900">{entry.title}</span>
-        </nav>
+        <div className="mx-auto flex max-w-6xl items-center px-4 py-4">
+          <ProductBreadcrumb
+            className="text-sm text-gray-600"
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Videos", href: "/videos" },
+              { label: entry.title },
+            ]}
+          />
+        </div>
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 lg:flex-row lg:items-start lg:gap-12">

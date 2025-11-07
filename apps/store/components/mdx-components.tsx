@@ -38,6 +38,35 @@ export const mdxComponents: MDXComponents = {
   Image: ({ alt, ...props }: ImageProps) => <Image alt={alt} {...props} />,
   img: ({ src, alt, width: _width, height: _height, ...props }: ImgHTMLAttributes<HTMLImageElement>) => {
     if (typeof src !== "string") return null;
+    const isAbsolute = /^https?:\/\//i.test(src);
+    let host: string | null = null;
+    if (isAbsolute) {
+      try {
+        host = new URL(src).hostname.toLowerCase();
+      } catch {
+        host = null;
+      }
+    }
+    const allowedHosts = new Set([
+      'i.pravatar.cc',
+      'ui-avatars.com',
+      'i.ytimg.com',
+      'img.youtube.com',
+      'raw.githubusercontent.com',
+      'gist.github.com',
+      'github.com',
+    ]);
+
+    const canUseNextImage = !isAbsolute || (host && allowedHosts.has(host));
+
+    if (!canUseNextImage) {
+      // Fallback to native <img> for unsupported hosts to avoid Next<Image> domain errors
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt={alt || ''} width={800} height={450} className="rounded-lg" {...props} />
+      );
+    }
+
     return (
       <Image
         src={src}

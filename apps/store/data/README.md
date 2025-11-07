@@ -18,6 +18,40 @@
 - **Commerce & fulfilment** – `payment_link`, `stripe`, `ghl`, `license`, `return_policy`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays.
 - **Navigation & taxonomy** – `categories`, `keywords`, `supported_operating_systems`, `supported_regions`, `github_repo_tags`, plus optional `brand`, `sku`, and `waitlist_url`.
 
+## Blog + Video linking
+
+The product pages surface both curated blog posts and product demo videos from the product JSON. This section documents the exact fields and how the runtime resolves them.
+
+- Blog posts live under `apps/store/content/blog/*.md` (or `.mdx`).
+  - Each post may declare frontmatter fields such as `slug`, `title`, `seoTitle`, `seoDescription`, `date`, `author`, `image`, and `tags`.
+  - If `slug` is omitted, the filename (without extension) is used. For reliable product linking, prefer setting `slug` explicitly in the frontmatter.
+  - Posts are discovered at runtime by `getAllPosts()` from `@/lib/blog` and rendered by the blog routes and SEO schema generators.
+
+- Connect blog posts to a product page via `related_posts` in the product JSON:
+  - `related_posts` is an array of blog post slugs (frontmatter `slug`).
+  - Order is preserved. The UI will display the posts in the same sequence, if present.
+  - If `related_posts` is empty, the product page falls back to the global blog list (see `resolvePosts()` in `@/lib/products/product-adapter.ts`).
+
+- Connect videos to a product page via `product_videos` and `related_videos` in the product JSON:
+  - Use full watch URLs for YouTube or Vimeo (e.g. `https://www.youtube.com/watch?v=XXXXXXX` or `https://vimeo.com/123456`). Do not use embed URLs.
+  - `product_videos[0]` is treated as the primary demo video for the product hero; additional entries are exposed in the video library and watch routes.
+  - `related_videos` lists secondary videos that should appear alongside the product’s media.
+  - At render time, `getProductVideoEntries()` (`@/lib/products/video.ts`) extracts the platform + ID, builds an embeddable URL, and merges metadata.
+
+- Video metadata lives in `apps/store/data/video-metadata.json` and is keyed by the lowercase video ID (e.g. YouTube ID `hToCX2VST_A` → key `htocx2vst_a`).
+  - To backfill or refresh metadata automatically, run `pnpm --filter @apps/store update:video-metadata`. The script fetches from the YouTube API if `YOUTUBE_API_KEY` is set, otherwise falls back to HTML scraping.
+  - Required fields are filled from the scrape/API when available; otherwise sensible defaults are derived from the product JSON (title/description/thumbnail/date), so pages still render even if the cache is incomplete.
+  - Consumers read this cache through `getVideoMetadataByKeys()`; the resolution strategy tries the YouTube/Vimeo ID, then the raw URL, ensuring stable lookups.
+
+Practical example:
+
+- Add a blog post at `apps/store/content/blog/how-to-download-onlyfans-profiles-videos-images.md` with frontmatter `slug: how-to-download-onlyfans-profiles-videos-images`.
+- In `apps/store/data/products/onlyfans-downloader.json`, set:
+  - `product_videos: ["https://www.youtube.com/watch?v=hToCX2VST_A"]`
+  - `related_posts: ["how-to-download-onlyfans-profiles-videos-images"]`
+- Run `pnpm --filter @apps/store update:video-metadata` to ensure the YouTube metadata is cached.
+- The product page now renders the hero video, links the blog post, and the video appears in `/videos` and `/watch/<product>/<video>`.
+
 ## Conversion CLI
 
 - Default run: `pnpm --filter @apps/store convert:products`. JSON output uses the deterministic field order defined in `@/lib/products/product-schema.ts`.
