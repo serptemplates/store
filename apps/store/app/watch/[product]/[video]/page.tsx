@@ -183,6 +183,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     items: [
       { name: "Home", url: "/" },
       { name: "Videos", url: "/videos" },
+      { name: product.name, url: productUrl },
       { name: entry.title, url: entry.watchPath },
     ],
     storeUrl: baseUrl,
@@ -218,6 +219,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
             items={[
               { label: "Home", href: "/" },
               { label: "Videos", href: "/videos" },
+              { label: product.name, href: productUrl },
               { label: entry.title },
             ]}
           />
