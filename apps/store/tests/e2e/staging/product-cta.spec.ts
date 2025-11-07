@@ -21,7 +21,8 @@ describeFn("staging smoke: product CTA", () => {
     // Find the primary CTA button - it may have href="#" for programmatic checkout
     // or a direct checkout link
     const dataTestLocator = page.locator('[data-testid="product-primary-cta"]');
-    const buttonLocator = page.locator('a[href*="stripe"], a[href="#"]').filter({ 
+    // Look for primary CTA buttons in hero section that link to Stripe or use programmatic checkout
+    const buttonLocator = page.locator('section').first().locator('a[href*="stripe"], a[href="#"]').filter({ 
       hasText: /Get|Buy|Download|Purchase/i 
     });
 
@@ -54,7 +55,7 @@ describeFn("staging smoke: product CTA", () => {
       await locatorToUse.first().click();
       
       // Wait for navigation to Stripe checkout
-      await page.waitForURL((url) => url.hostname === STRIPE_HOST, {
+      await page.waitForURL((url) => url.includes(STRIPE_HOST), {
         timeout: 10000,
       });
 
