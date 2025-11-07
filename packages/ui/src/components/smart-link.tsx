@@ -6,6 +6,7 @@ type SmartLinkProps = PropsWithChildren<
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
     href: string;
     nextLinkProps?: Omit<LinkProps<string>, "href">;
+    "data-testid"?: string;
   }
 >;
 
