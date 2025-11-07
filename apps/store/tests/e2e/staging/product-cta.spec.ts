@@ -22,7 +22,8 @@ describeFn("staging smoke: product CTA", () => {
     // or a direct checkout link
     const dataTestLocator = page.locator('[data-testid="product-primary-cta"]');
     // Look for primary CTA buttons in hero section that link to Stripe or use programmatic checkout
-    const buttonLocator = page.locator('section').first().locator('a[href*="stripe"], a[href="#"]').filter({ 
+    // This can be either an anchor tag with href or a button element with onClick handler
+    const buttonLocator = page.locator('section').first().locator('button, a[href*="stripe"], a[href="#"]').filter({ 
       hasText: /Get|Buy|Download|Purchase/i 
     });
 
@@ -34,23 +35,12 @@ describeFn("staging smoke: product CTA", () => {
     await locatorToUse.first().scrollIntoViewIfNeeded();
 
     // Click the CTA and wait for either a new tab or navigation to checkout
+    const tagName = await locatorToUse.first().evaluate((el) => el.tagName.toLowerCase());
     const href = await locatorToUse.first().getAttribute("href");
     
-    if (href && href !== "#") {
-      // Direct checkout link - expect new tab
-      const waitForTab = context.waitForEvent("page");
-      await locatorToUse.first().click();
-      const checkoutPage = await waitForTab;
-
-      await checkoutPage.waitForLoadState("domcontentloaded");
-      await checkoutPage.waitForTimeout(2000);
-
-      const checkoutUrl = checkoutPage.url();
-      const parsed = new URL(checkoutUrl);
-      expect(parsed.hostname).toBe(STRIPE_HOST);
-
-      await checkoutPage.close();
-    } else {
+    // For buttons or links with href="#", expect programmatic checkout redirect
+    // For anchor links with a Stripe URL, expect new tab
+    if (tagName === "button" || href === "#") {
       // Programmatic checkout - expect same-page redirect
       await locatorToUse.first().click();
       
@@ -69,6 +59,20 @@ describeFn("staging smoke: product CTA", () => {
       const checkoutUrl = page.url();
       const parsed = new URL(checkoutUrl);
       expect(parsed.hostname).toBe(STRIPE_HOST);
+    } else if (href) {
+      // Direct checkout link - expect new tab
+      const waitForTab = context.waitForEvent("page");
+      await locatorToUse.first().click();
+      const checkoutPage = await waitForTab;
+
+      await checkoutPage.waitForLoadState("domcontentloaded");
+      await checkoutPage.waitForTimeout(2000);
+
+      const checkoutUrl = checkoutPage.url();
+      const parsed = new URL(checkoutUrl);
+      expect(parsed.hostname).toBe(STRIPE_HOST);
+
+      await checkoutPage.close();
     }
 
     await context.close();
