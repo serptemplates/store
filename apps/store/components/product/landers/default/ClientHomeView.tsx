@@ -52,7 +52,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       : deriveProductCategories(product)
   const resolvedVideos = videoEntries
   const isPreRelease = product.status === "pre_release"
-  const videosToDisplay = isPreRelease ? [] : resolvedVideos.slice(0, 3)
+  // Always render videos when available, even for pre_release
+  const videosToDisplay = resolvedVideos.slice(0, 3)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const experience = useProductPageExperience(
     product,
@@ -125,9 +126,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
 
   const productImages = useMemo(() => {
-    if (isPreRelease) {
-      return [] as string[]
-    }
     const candidates = [
       product.featured_image,
       product.featured_image_gif,
@@ -145,7 +143,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
           .filter((value): value is string => Boolean(value)),
       ),
     )
-  }, [isPreRelease, product])
+  }, [product])
   useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
@@ -221,7 +219,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        cta={resolvedCta}
+        cta={{ ...resolvedCta, href: resolvedCtaHref }}
         ctaMode={resolvedCta.mode}
         ctaHref={resolvedCtaHref}
         ctaText={resolvedCtaText}
