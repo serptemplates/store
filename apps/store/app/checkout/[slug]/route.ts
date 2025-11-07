@@ -119,6 +119,7 @@ export async function GET(
     success_url: offer.successUrl,
     cancel_url: offer.cancelUrl,
     metadata,
+    allow_promotion_codes: true,
     consent_collection: {
       terms_of_service: "required",
     },

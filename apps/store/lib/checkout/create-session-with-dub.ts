@@ -1,7 +1,13 @@
 /**
  * Create a Stripe checkout session with Dub attribution metadata
- * This utility reads the dub_id cookie and calls the checkout API
- * to create a session with proper attribution for the Dub Partner Program
+ *
+ * Context:
+ * - Primary product CTAs now use the internal server route (/checkout/[slug]).
+ * - This utility targets /api/checkout/session for programmatic flows/tests.
+ *   Keep for custom integrations; safe to remove once no callers remain.
+ *
+ * Behavior:
+ * - Reads the dub_id cookie and forwards attribution metadata so analytics stay consistent.
  */
 
 export interface CreateSessionWithDubOptions {

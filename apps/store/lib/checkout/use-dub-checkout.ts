@@ -1,6 +1,10 @@
 /**
- * React hook for handling buy button clicks with Dub attribution
- * Intercepts clicks to create programmatic checkout sessions with proper metadata
+ * React hook for handling buy button clicks with Dub attribution.
+ *
+ * Note:
+ * - Current CTA strategy is internal (/checkout/[slug]) so this hook should not
+ *   intercept when the CTA is that internal route.
+ * - Retained for custom programmatic flows and tests; remove when unused.
  */
 
 import { useCallback, useState } from "react"

@@ -1,3 +1,10 @@
+/**
+ * Note on usage
+ * - Primary CTA flows now use the server route at /checkout/[slug].
+ * - This endpoint remains for programmatic session creation (e.g., client-side flows/tests)
+ *   and keeps feature parity (allow_promotion_codes, consent, customer_creation).
+ * - Safe to remove once no callers remain (see create-session-with-dub.ts, use-dub-checkout.ts, tests).
+ */
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -81,6 +88,8 @@ export async function POST(req: NextRequest) {
     success_url: payload.successUrl ?? defaultSuccessUrl(),
     cancel_url: payload.cancelUrl ?? defaultCancelUrl(),
     metadata,
+    // Show the promotion code field on hosted Checkout
+    allow_promotion_codes: true,
     // Enforce Terms of Service acceptance in Checkout
     consent_collection: {
       terms_of_service: "required",
