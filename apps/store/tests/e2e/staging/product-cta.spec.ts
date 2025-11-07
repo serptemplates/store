@@ -55,7 +55,14 @@ describeFn("staging smoke: product CTA", () => {
       await locatorToUse.first().click();
       
       // Wait for navigation to Stripe checkout
-      await page.waitForURL((url) => url.includes(STRIPE_HOST), {
+      await page.waitForURL((urlString) => {
+        try {
+          const url = new URL(urlString);
+          return url.hostname === STRIPE_HOST;
+        } catch {
+          return false;
+        }
+      }, {
         timeout: 10000,
       });
 
