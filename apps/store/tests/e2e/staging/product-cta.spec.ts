@@ -8,6 +8,25 @@ const shouldRun = process.env.RUN_STAGING_SMOKE === "1";
 const describeFn = shouldRun ? test.describe : test.describe.skip;
 
 describeFn("staging smoke: product CTA", () => {
+  // Helper function for programmatic checkout validation
+  const validateProgrammaticCheckout = async (page: any) => {
+    // Wait for navigation to Stripe checkout
+    await page.waitForURL((urlString: string) => {
+      try {
+        const url = new URL(urlString);
+        return url.hostname === STRIPE_HOST;
+      } catch {
+        return false;
+      }
+    }, {
+      timeout: 10000,
+    });
+
+    const checkoutUrl = page.url();
+    const parsed = new URL(checkoutUrl);
+    expect(parsed.hostname).toBe(STRIPE_HOST);
+  };
+
   test("opens Stripe Checkout Session", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -42,22 +61,7 @@ describeFn("staging smoke: product CTA", () => {
     if (tagName === "button") {
       // Programmatic checkout - expect same-page redirect
       await locatorToUse.first().click();
-      
-      // Wait for navigation to Stripe checkout
-      await page.waitForURL((urlString) => {
-        try {
-          const url = new URL(urlString);
-          return url.hostname === STRIPE_HOST;
-        } catch {
-          return false;
-        }
-      }, {
-        timeout: 10000,
-      });
-
-      const checkoutUrl = page.url();
-      const parsed = new URL(checkoutUrl);
-      expect(parsed.hostname).toBe(STRIPE_HOST);
+      await validateProgrammaticCheckout(page);
     } else {
       // For anchor tags, check href
       const href = await locatorToUse.first().getAttribute("href");
@@ -65,22 +69,7 @@ describeFn("staging smoke: product CTA", () => {
       if (href === "#") {
         // Programmatic checkout - expect same-page redirect
         await locatorToUse.first().click();
-        
-        // Wait for navigation to Stripe checkout
-        await page.waitForURL((urlString) => {
-          try {
-            const url = new URL(urlString);
-            return url.hostname === STRIPE_HOST;
-          } catch {
-            return false;
-          }
-        }, {
-          timeout: 10000,
-        });
-
-        const checkoutUrl = page.url();
-        const parsed = new URL(checkoutUrl);
-        expect(parsed.hostname).toBe(STRIPE_HOST);
+        await validateProgrammaticCheckout(page);
       } else if (href) {
         // Direct checkout link - expect new tab
         const waitForTab = context.waitForEvent("page");
