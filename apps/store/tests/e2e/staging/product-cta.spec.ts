@@ -3,12 +3,12 @@ import type { Route } from "next";
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "https://staging-apps.serp.co";
 const PRODUCT_SLUG = process.env.STAGING_SMOKE_PRODUCT ?? "beeg-video-downloader";
-const STRIPE_HOST = "buy.stripe.com";
+const STRIPE_HOST = "checkout.stripe.com";
 const shouldRun = process.env.RUN_STAGING_SMOKE === "1";
 const describeFn = shouldRun ? test.describe : test.describe.skip;
 
 describeFn("staging smoke: product CTA", () => {
-  test("opens Stripe Payment Link", async ({ browser }) => {
+  test("opens Stripe Checkout Session", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
 
@@ -18,33 +18,51 @@ describeFn("staging smoke: product CTA", () => {
     const productTitle = await page.locator("h1").first();
     await expect(productTitle).toBeVisible();
 
+    // Find the primary CTA button - it may have href="#" for programmatic checkout
+    // or a direct checkout link
     const dataTestLocator = page.locator('[data-testid="product-primary-cta"]');
-    const fallbackLocator = page.locator("a[href^='https://buy.stripe.com']");
+    const buttonLocator = page.locator('a[href*="stripe"], a[href="#"]').filter({ 
+      hasText: /Get|Buy|Download|Purchase/i 
+    });
 
-    const locatorToUse = (await dataTestLocator.count()) > 0 ? dataTestLocator : fallbackLocator;
+    const locatorToUse = (await dataTestLocator.count()) > 0 ? dataTestLocator : buttonLocator;
 
     await expect(locatorToUse.first()).toBeVisible();
-
-    const href = await locatorToUse.first().getAttribute("href");
-    expect(href, "CTA href should be defined").toBeTruthy();
 
     // Ensure element inside view before clicking
     await locatorToUse.first().scrollIntoViewIfNeeded();
 
-    const waitForTab = context.waitForEvent("page");
-    await locatorToUse.first().evaluate((element) => {
-      (element as HTMLElement).click();
-    });
-    const checkoutPage = await waitForTab;
+    // Click the CTA and wait for either a new tab or navigation to checkout
+    const href = await locatorToUse.first().getAttribute("href");
+    
+    if (href && href !== "#") {
+      // Direct checkout link - expect new tab
+      const waitForTab = context.waitForEvent("page");
+      await locatorToUse.first().click();
+      const checkoutPage = await waitForTab;
 
-    await checkoutPage.waitForLoadState("domcontentloaded");
-    await checkoutPage.waitForTimeout(2000);
+      await checkoutPage.waitForLoadState("domcontentloaded");
+      await checkoutPage.waitForTimeout(2000);
 
-    const checkoutUrl = checkoutPage.url();
-    const parsed = new URL(checkoutUrl);
-    expect(parsed.hostname).toBe(STRIPE_HOST);
+      const checkoutUrl = checkoutPage.url();
+      const parsed = new URL(checkoutUrl);
+      expect(parsed.hostname).toBe(STRIPE_HOST);
 
-    await checkoutPage.close();
+      await checkoutPage.close();
+    } else {
+      // Programmatic checkout - expect same-page redirect
+      await locatorToUse.first().click();
+      
+      // Wait for navigation to Stripe checkout
+      await page.waitForURL((url) => url.hostname === STRIPE_HOST, {
+        timeout: 10000,
+      });
+
+      const checkoutUrl = page.url();
+      const parsed = new URL(checkoutUrl);
+      expect(parsed.hostname).toBe(STRIPE_HOST);
+    }
+
     await context.close();
   });
 });
