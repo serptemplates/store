@@ -1,15 +1,18 @@
 import { test, expect } from "@playwright/test";
 import type { Route } from "next";
+import type { Page } from "@playwright/test";
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "https://staging-apps.serp.co";
 const PRODUCT_SLUG = process.env.STAGING_SMOKE_PRODUCT ?? "beeg-video-downloader";
 const STRIPE_HOST = "checkout.stripe.com";
+const CHECKOUT_TIMEOUT = 10000;
+const CTA_SELECTOR = 'button, a[href*="stripe"], a[href="#"]';
 const shouldRun = process.env.RUN_STAGING_SMOKE === "1";
 const describeFn = shouldRun ? test.describe : test.describe.skip;
 
 describeFn("staging smoke: product CTA", () => {
   // Helper function for programmatic checkout validation
-  const validateProgrammaticCheckout = async (page: any) => {
+  const validateProgrammaticCheckout = async (page: Page) => {
     // Wait for navigation to Stripe checkout
     await page.waitForURL((urlString: string) => {
       try {
@@ -19,7 +22,7 @@ describeFn("staging smoke: product CTA", () => {
         return false;
       }
     }, {
-      timeout: 10000,
+      timeout: CHECKOUT_TIMEOUT,
     });
 
     const checkoutUrl = page.url();
@@ -42,7 +45,7 @@ describeFn("staging smoke: product CTA", () => {
     const dataTestLocator = page.locator('[data-testid="product-primary-cta"]');
     // Look for primary CTA buttons in hero section that link to Stripe or use programmatic checkout
     // This can be either an anchor tag with href or a button element with onClick handler
-    const buttonLocator = page.locator('section').first().locator('button, a[href*="stripe"], a[href="#"]').filter({ 
+    const buttonLocator = page.locator('section').first().locator(CTA_SELECTOR).filter({ 
       hasText: /Get|Buy|Download|Purchase/i 
     });
 
