@@ -384,17 +384,13 @@ function buildHeroLinks({
 
   const heroCtaLabel = primaryCtaText.toUpperCase();
 
-  if (onPrimaryCtaClick) {
-    links.push({
-      label: heroCtaLabel,
-      onClick: onPrimaryCtaClick,
-    });
-  } else {
-    links.push({
-      label: heroCtaLabel,
-      url: primaryCtaHref,
-    });
-  }
+  // Always include the URL, and optionally add onClick for programmatic checkout
+  links.push({
+    label: heroCtaLabel,
+    url: primaryCtaHref,
+    onClick: onPrimaryCtaClick,
+    "data-testid": "product-primary-cta",
+  });
 
   return links;
 }

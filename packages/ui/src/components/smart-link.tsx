@@ -14,13 +14,21 @@ const SmartLink = ({
   children,
   nextLinkProps,
   className,
+  onClick,
+  "data-testid": dataTestId,
   ...rest
 }: SmartLinkProps) => {
   const isInternal = href.startsWith("/") || href.startsWith("#");
 
   if (isInternal) {
     return (
-      <Link href={href as Route} className={className} {...nextLinkProps}>
+      <Link 
+        href={href as Route} 
+        className={className} 
+        onClick={onClick}
+        data-testid={dataTestId}
+        {...nextLinkProps}
+      >
         {children}
       </Link>
     );
@@ -32,6 +40,8 @@ const SmartLink = ({
       target="_blank"
       rel="noopener noreferrer"
       className={className}
+      onClick={onClick}
+      data-testid={dataTestId}
       {...rest}
     >
       {children}
