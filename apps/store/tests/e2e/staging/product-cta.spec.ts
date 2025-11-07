@@ -36,11 +36,10 @@ describeFn("staging smoke: product CTA", () => {
 
     // Click the CTA and wait for either a new tab or navigation to checkout
     const tagName = await locatorToUse.first().evaluate((el) => el.tagName.toLowerCase());
-    const href = await locatorToUse.first().getAttribute("href");
     
-    // For buttons or links with href="#", expect programmatic checkout redirect
-    // For anchor links with a Stripe URL, expect new tab
-    if (tagName === "button" || href === "#") {
+    // For buttons, always expect programmatic checkout redirect
+    // For anchor tags, check href to determine behavior
+    if (tagName === "button") {
       // Programmatic checkout - expect same-page redirect
       await locatorToUse.first().click();
       
@@ -59,20 +58,44 @@ describeFn("staging smoke: product CTA", () => {
       const checkoutUrl = page.url();
       const parsed = new URL(checkoutUrl);
       expect(parsed.hostname).toBe(STRIPE_HOST);
-    } else if (href) {
-      // Direct checkout link - expect new tab
-      const waitForTab = context.waitForEvent("page");
-      await locatorToUse.first().click();
-      const checkoutPage = await waitForTab;
+    } else {
+      // For anchor tags, check href
+      const href = await locatorToUse.first().getAttribute("href");
+      
+      if (href === "#") {
+        // Programmatic checkout - expect same-page redirect
+        await locatorToUse.first().click();
+        
+        // Wait for navigation to Stripe checkout
+        await page.waitForURL((urlString) => {
+          try {
+            const url = new URL(urlString);
+            return url.hostname === STRIPE_HOST;
+          } catch {
+            return false;
+          }
+        }, {
+          timeout: 10000,
+        });
 
-      await checkoutPage.waitForLoadState("domcontentloaded");
-      await checkoutPage.waitForTimeout(2000);
+        const checkoutUrl = page.url();
+        const parsed = new URL(checkoutUrl);
+        expect(parsed.hostname).toBe(STRIPE_HOST);
+      } else if (href) {
+        // Direct checkout link - expect new tab
+        const waitForTab = context.waitForEvent("page");
+        await locatorToUse.first().click();
+        const checkoutPage = await waitForTab;
 
-      const checkoutUrl = checkoutPage.url();
-      const parsed = new URL(checkoutUrl);
-      expect(parsed.hostname).toBe(STRIPE_HOST);
+        await checkoutPage.waitForLoadState("domcontentloaded");
+        await checkoutPage.waitForTimeout(2000);
 
-      await checkoutPage.close();
+        const checkoutUrl = checkoutPage.url();
+        const parsed = new URL(checkoutUrl);
+        expect(parsed.hostname).toBe(STRIPE_HOST);
+
+        await checkoutPage.close();
+      }
     }
 
     await context.close();
