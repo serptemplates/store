@@ -1,33 +1,58 @@
 import { test, expect } from "@playwright/test";
 
-const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "https://staging-apps.serp.co";
-const DUB_TEST_LINK = process.env.DUB_TEST_LINK; // e.g., https://serp.cc/mds
-const shouldRun = process.env.RUN_STAGING_SMOKE === "1";
-const describeFn = shouldRun ? test.describe : test.describe.skip;
+// This test asserts exact Dub cookies seen in staging after visiting the affiliate link.
+// It is intentionally strict per request. If Dub rotates click IDs, update the constants below.
 
-describeFn("staging smoke: dub attribution", () => {
-  test("sets dub_id cookie on staging", async ({ browser }) => {
-    const context = await browser.newContext();
-    const page = await context.newPage();
+const DUB_TEST_LINK = process.env.DUB_TEST_LINK || "https://apps.serp.co/loom-video-downloader?via=mds";
+const STAGING_BASE_URL = process.env.STAGING_BASE_URL || "https://staging-apps.serp.co";
 
-    if (DUB_TEST_LINK) {
-      await page.goto(DUB_TEST_LINK, { waitUntil: "domcontentloaded" });
-      await page.waitForLoadState("networkidle");
-    } else {
-      // Fallback: pass affiliate via query param expected by Dub (?via=...)
-      await page.goto(`${BASE_URL}/?via=mds`, { waitUntil: "domcontentloaded" });
-      await page.waitForLoadState("networkidle");
-    }
+const EXPECTED_DUB_ID = "5lPAmZWDhsWcvbM6";
+const EXPECTED_PARTNER_JSON =
+  "{\"clickId\":\"5lPAmZWDhsWcvbM6\",\"partner\":{\"id\":\"pn_1K90RYAD6VHZFZSK1A19WRPVS\",\"name\":\"m.devinschumacher%40gmail.com\",\"image\":\"https%3A%2F%2Fapi.dub.co%2Fog%2Favatar%2Fpn_1K90RYAD6VHZFZSK1A19WRPVS\"},\"discount\":null}";
 
-    // Read cookies for the staging domain
-    const cookies = await context.cookies(BASE_URL);
-    const dubCookie = cookies.find((c) => c.name === "dub_id");
-    expect(dubCookie, `Expected dub_id cookie on ${BASE_URL}`).toBeTruthy();
+// Opt-in via env
+const maybe = process.env.RUN_STAGING_SMOKE ? test : test.skip;
 
-    const raw = dubCookie?.value ?? "";
-    const normalized = raw.startsWith("dub_id_") ? raw.substring("dub_id_".length) : raw;
-    expect(normalized.length).toBeGreaterThan(0);
+function extractCookieValue(cookieStr: string, name: string): string | null {
+  const parts = cookieStr.split(/;\s*/);
+  for (const part of parts) {
+    const [k, ...rest] = part.split("=");
+    if (k === name) return rest.join("=");
+  }
+  return null;
+}
 
-    await context.close();
-  });
+async function waitForCookie(page, name: string, timeoutMs = 15000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const cookieStr: string = await page.evaluate(() => document.cookie);
+    if (cookieStr.includes(`${name}=`)) return cookieStr;
+    await page.waitForTimeout(500);
+  }
+  throw new Error(`Timed out waiting for cookie ${name}`);
+}
+
+maybe("Dub affiliate cookies set and persist to staging", async ({ page, context }) => {
+  // Tighten timeouts so staging runs never hang
+  test.setTimeout(45_000);
+  page.setDefaultTimeout(10_000);
+  page.setDefaultNavigationTimeout(15_000);
+  // 1) Visit affiliate link on production domain to set cookies
+  await page.goto(DUB_TEST_LINK, { waitUntil: "domcontentloaded" });
+
+  // 2) Wait for dub_id to appear
+  const cookiesStr = await waitForCookie(page, "dub_id");
+
+  const dubId = extractCookieValue(cookiesStr, "dub_id");
+  const partnerRaw = extractCookieValue(cookiesStr, "dub_partner_data");
+
+  expect(dubId, `dub_id should be ${EXPECTED_DUB_ID}`).toBe(EXPECTED_DUB_ID);
+  expect(partnerRaw, "dub_partner_data should exist").not.toBeNull();
+  expect(partnerRaw).toBe(EXPECTED_PARTNER_JSON);
+
+  // 3) Navigate to staging and verify persistence
+  await page.goto(`${STAGING_BASE_URL}/loom-video-downloader`, { waitUntil: "domcontentloaded" });
+  const stagingCookiesStr = await waitForCookie(page, "dub_id");
+  const stagingDubId = extractCookieValue(stagingCookiesStr, "dub_id");
+  expect(stagingDubId).toBe(EXPECTED_DUB_ID);
 });
