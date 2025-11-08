@@ -13,7 +13,7 @@ import {
 } from "../lib/products/product"
 
 // Load env files from the package directory and fallback to the repository root.
-const envFilenames = [".env.local", ".env"] as const
+const envFilenames = [".env"] as const
 const envSearchRoots = [
   process.cwd(),
   path.resolve(process.cwd(), ".."),

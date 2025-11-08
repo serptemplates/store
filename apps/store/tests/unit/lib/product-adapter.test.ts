@@ -249,10 +249,11 @@ describe("productToHomeTemplate", () => {
     expect(template.ctaTarget).toBe("_self");
     expect(template.pricing?.ctaHref).toBe("#waitlist");
     expect(template.pricing?.ctaText).toBe("Get Notified");
-    expect(template.heroLightThumbnailSrc).toBeUndefined();
-    expect(template.heroDarkThumbnailSrc).toBeUndefined();
-    expect(template.videoUrl).toBeUndefined();
-    expect(template.screenshots).toBeUndefined();
+    expect(template.heroLightThumbnailSrc).toBe("https://cdn.example.com/hero.jpg");
+    expect(template.heroDarkThumbnailSrc).toBe("https://cdn.example.com/hero.jpg");
+    expect(template.videoUrl).toBe("https://cdn.example.com/demo.mp4");
+    // Screenshots should render even for pre_release products when provided
+    expect(Array.isArray(template.screenshots) && template.screenshots.length).toBeGreaterThan(0);
   });
 
   it("collects resource links from supported metadata fields", () => {

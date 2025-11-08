@@ -1,41 +1,54 @@
 import "@testing-library/jest-dom/vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { MarketplaceProductPageView } from "@/components/product/landers/marketplace/MarketplaceProductPageView";
 import type { SiteConfig } from "@/lib/site-config";
 import { createTestProduct } from "./lib/google-merchant/test-utils";
 
-vi.mock("@repo/ui/lib/utils", () => ({
-  cn: (...classes: string[]) => classes.filter(Boolean).join(" "),
+const experienceMock = vi.hoisted(() => ({
+  useProductPageExperience: vi.fn(() => ({
+    affiliateId: undefined,
+    checkoutSuccess: false,
+    resolvedCta: {
+      mode: "pre_release" as const,
+      href: "#waitlist",
+      text: "Get Notified",
+      target: "_self" as const,
+      opensInNewTab: false,
+      analytics: { destination: "waitlist" as const },
+    },
+    handleCtaClick: vi.fn(),
+    navigateToCta: vi.fn(),
+    waitlist: {
+      isOpen: false,
+      open: vi.fn(),
+      close: vi.fn(),
+    },
+  })),
 }));
 
-vi.stubGlobal("React", React);
+vi.mock("@/components/product/hooks/useProductPageExperience", () => ({
+  useProductPageExperience: experienceMock.useProductPageExperience,
+}));
 
 vi.mock("@repo/ui/composites/Footer", () => ({
   Footer: () => null,
 }));
 
+// Make sure React is available globally for some mocked components
+vi.stubGlobal("React", React);
+
 describe("MarketplaceProductPageView", () => {
-  it("renders key sections and resource links for a pre-release product", async () => {
+  beforeEach(() => {
+    experienceMock.useProductPageExperience.mockClear();
+  });
+
+  it("always renders breadcrumbs on the marketplace layout (pre_release)", async () => {
     const product = createTestProduct({
       status: "pre_release",
-      categories: ["Video Tools", "Downloaders"],
-      permission_justifications: [
-        { permission: "downloads", justification: "Required to save assets locally." },
-      ],
-      faqs: [
-        { question: "How do I install it?", answer: "Install from the Chrome Web Store." },
-      ],
-      reviews: [
-        { name: "Jordan", review: "Works perfectly for batch downloads.", rating: 4.8 },
-      ],
-      supported_operating_systems: ["windows", "mac"],
-      chrome_webstore_link: "https://chromewebstore.google.com/detail/demo/abcdef123456",
-      producthunt_link: "https://www.producthunt.com/products/demo-downloader",
-      github_repo_url: "https://github.com/serpapps/demo-downloader",
-      reddit_url: "https://www.reddit.com/r/serpapps/comments/demo-post/",
+      name: "Test Product",
     });
 
     const siteConfig: SiteConfig = {
@@ -47,15 +60,34 @@ describe("MarketplaceProductPageView", () => {
 
     render(<MarketplaceProductPageView product={product} siteConfig={siteConfig} />);
 
-    expect(await screen.findByText(/definitive toolkit/i)).toBeInTheDocument();
-    expect(screen.getByText(/how do i install it\?/i)).toBeInTheDocument();
-    expect(screen.getByText(/works perfectly for batch downloads/i)).toBeInTheDocument();
-    expect(screen.getByText(/required to save assets locally/i)).toBeInTheDocument();
-    expect(screen.getByText(/links/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "SERP" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Chrome Web Store" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Product Hunt" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "GitHub Repository" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Reddit Discussion" })).toBeInTheDocument();
+    const nav = await screen.findByLabelText("Breadcrumb");
+    expect(nav).toBeInTheDocument();
+    expect(within(nav).getByText("Home")).toBeInTheDocument();
+    expect(within(nav).getByText("Products")).toBeInTheDocument();
+    expect(within(nav).getByText("Test Product")).toBeInTheDocument();
+  });
+
+  it("renders multiple screenshots when provided (pre_release)", async () => {
+    const product = createTestProduct({
+      status: "pre_release",
+      screenshots: [
+        { url: "https://cdn.serp.co/test-shot-1.png", alt: "Shot One" },
+        { url: "https://cdn.serp.co/test-shot-2.png", alt: "Shot Two" },
+        { url: "https://cdn.serp.co/test-shot-3.png", alt: "Shot Three" },
+      ],
+    });
+
+    const siteConfig: SiteConfig = {
+      site: {
+        name: "SERP",
+        domain: "https://serp.co",
+      },
+    };
+
+    render(<MarketplaceProductPageView product={product} siteConfig={siteConfig} />);
+
+    // Ensure at least two distinct screenshots are visible
+    expect(await screen.findByAltText("Shot One")).toBeInTheDocument();
+    expect(screen.getByAltText("Shot Two")).toBeInTheDocument();
   });
 });

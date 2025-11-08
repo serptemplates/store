@@ -110,6 +110,16 @@ const nextConfig = {
             hostname: 'raw.githubusercontent.com',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'gist.github.com',
+            pathname: '/user-attachments/**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'github.com',
+            pathname: '/user-attachments/**',
+          },
         ],
       },
 

@@ -59,6 +59,9 @@ function renderDefaultStickyBar({
   openInNewTab = false,
   rel,
 }: DefaultVariantProps) {
+  if (!show) {
+    return null;
+  }
   const ctaClasses =
     "cta-pulse inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_20px_-12px_rgba(79,70,229,0.65)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_-14px_rgba(79,70,229,0.7)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:opacity-60";
   const trimmedLabel = ctaLabel.trim();
@@ -70,6 +73,7 @@ function renderDefaultStickyBar({
         "pointer-events-none fixed inset-x-0 top-0 z-[80] transition-transform duration-200",
         show ? "translate-y-0" : "-translate-y-full",
       )}
+      aria-hidden={!show}
     >
       <div className="pointer-events-auto border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="container flex h-14 items-center justify-between gap-4">

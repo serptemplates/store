@@ -15,6 +15,7 @@ export type HeroLink = {
   variant?: "outline" | "default";
   onClick?: () => void;
   openMediaIndex?: number;
+  "data-testid"?: string;
 };
 
 type HeroProps = {
@@ -119,6 +120,26 @@ const Title = ({ title, highlight }: TitleProps) => {
 };
 
 const LinkItem = ({ link }: { link: HeroLink }) => {
+  const testId = link["data-testid"];
+
+  // If both url and onClick are present, render as anchor with click handler
+  if (link.url && link.onClick) {
+    return (
+      <Button
+        variant={link.variant || "default"}
+        size="lg"
+        className="font-bold"
+        asChild
+      >
+        <SmartLink href={link.url} onClick={link.onClick} data-testid={testId}>
+          {link.icon}
+          {link.label}
+        </SmartLink>
+      </Button>
+    );
+  }
+
+  // If only onClick is present, render as button
   if (link.onClick) {
     return (
       <Button
@@ -127,6 +148,7 @@ const LinkItem = ({ link }: { link: HeroLink }) => {
         className="font-bold"
         type="button"
         onClick={link.onClick}
+        data-testid={testId}
       >
         {link.icon}
         {link.label}
@@ -134,6 +156,7 @@ const LinkItem = ({ link }: { link: HeroLink }) => {
     );
   }
 
+  // If only url is present, render as anchor
   if (!link.url) {
     return null;
   }
@@ -145,7 +168,7 @@ const LinkItem = ({ link }: { link: HeroLink }) => {
       className="font-bold"
       asChild
     >
-      <SmartLink href={link.url}>
+      <SmartLink href={link.url} data-testid={testId}>
         {link.icon}
         {link.label}
       </SmartLink>

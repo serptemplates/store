@@ -1,0 +1,129 @@
+{
+  "platform": "Shadcn UI",
+  "name": "SERP Blocks",
+  "tagline": "Elevate Your UI with Themed Blocks",
+  "slug": "serp-blocks",
+  "description": "Unleash the power of 1200+ meticulously crafted, theme-ready blocks. Built for Shadcn UI and Tailwind, optimized for NextJS and AstroJS. Copy and paste fully-designed, full-width sections to build landing and marketing pages in minutes.",
+  "seo_title": "SERP Blocks – The Largest ShadcnUI Component Library for React, NextJS Built on TailwindCSS - 1200+ Themed ShadcnUI Blocks",
+  "seo_description": "Theme-ready UI blocks for Shadcn UI and Tailwind. 1200+ blocks, 40 themes, dark mode, and support for NextJS, Astro, Vue, Svelte, React, and HTML/JS.",
+  "serply_link": "https://serp.ly/serp-blocks",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
+  "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
+  "status": "pre_release",
+  "featured_image": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+      "alt": "SERP Blocks product screenshot 1"
+    },
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-2.webp",
+      "alt": "SERP Blocks product screenshot 2"
+    },
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-3.webp",
+      "alt": "SERP Blocks product screenshot 3"
+    },
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-4.webp",
+      "alt": "SERP Blocks product screenshot 4"
+    },
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-5.webp",
+      "alt": "SERP Blocks product screenshot 5"
+    }
+  ],
+  "product_videos": [
+    "https://youtu.be/6Yjf4y2MOds",
+    "https://youtu.be/e-TGkOl9gQg"
+  ],
+  "related_videos": [],
+  "related_posts": [
+    "https://blocks.serp.co/",
+    "https://serp.co/products/serp-blocks/reviews/"
+  ],
+  "github_repo_url": "https://github.com/serpapps/serp-blocks",
+  "github_repo_tags": [],
+  "producthunt_link": "https://producthunt.com/posts/serp-ui-blocks",
+  "features": [
+    "1200+ themed UI blocks based on ShadcnUI",
+    "Built for Shadcn UI and Tailwind",
+    "Optimized for NextJS and AstroJS",
+    "40 themes with Dark Mode support",
+    "Framework support: NextJS, Astro, Vue, Svelte, React, HTML/JS",
+    "Includes 50 free components",
+    "Use the shadcn CLI to add components to your project",
+    "init command installs dependencies, adds the cn util, and configures CSS variables",
+    "Theming using CSS Variables (recommended) or utility classes",
+    "Toggle theming via components.json → tailwind.cssVariables",
+    "Dark mode guides for Next.js, Vite, Astro, and Remix",
+    "CLI can initialize projects with Tailwind v4",
+    "Full support for the @theme directive and @theme inline",
+    "Components updated for Tailwind v4 and React 19",
+    "Primitives expose data-slot attributes for styling",
+    "Deprecates toast in favor of sonner",
+    "New projects use the new-york style (default style deprecated)",
+    "HSL colors converted to OKLCH"
+  ],
+  "pricing": {
+    "label": "One-time payment",
+    "price": "$97.00",
+    "currency": "USD",
+    "benefits": []
+  },
+  "faqs": [
+    {
+      "question": "Is there a free trial available?",
+      "answer": "No, not at this moment. We are currently running a 60% discount for the first 2 months as our block library is in early access."
+    },
+    {
+      "question": "Can I change my plan later?",
+      "answer": "No, this is a once-off purchase. Once you buy the package, it is yours for life and you will remain a pro member for life. If you want to remove or deactivate your account, please contact support."
+    },
+    {
+      "question": "Do you make use of AI when designing your components?",
+      "answer": "We are an AI-first company. Our components are built using agentic workflows and rigorously reviewed by skilled developers for accuracy and consistency."
+    },
+    {
+      "question": "How do you build your components?",
+      "answer": "Our components draw inspiration from established design patterns and best practices found across the web. We then infuse them with our unique style and ensure they are fully themeable."
+    },
+    {
+      "question": "What does \"lifetime access\" mean?",
+      "answer": "Once you have purchased the UI kit, you will have access to all of the future updates, free of charge. We'll let you know about releases."
+    },
+    {
+      "question": "Is it a one-time payment?",
+      "answer": "Just a one-time payment! No recurring charges or surprises, we promise. We know you're sick of recurring charges too."
+    },
+    {
+      "question": "How does support work?",
+      "answer": "If you're having trouble with SERP Blocks, we're here to help via support@blocks.serp.com. We're a small team, but we'll get back to you soon."
+    },
+    {
+      "question": "Do you provide tutorials?",
+      "answer": "Not yet, but we're working on it! In the meantime, we've done our best to make it intuitive and we're building our documentation page."
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [],
+  "keywords": [],
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps"
+}

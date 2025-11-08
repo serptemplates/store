@@ -31,9 +31,7 @@ import type { ProductData } from "../lib/products/product-schema";
 
   function loadEnvFiles() {
     const candidates = [
-      path.resolve(process.cwd(), ".env.local"),
       path.resolve(process.cwd(), ".env"),
-      path.join(REPO_ROOT, ".env.local"),
       path.join(REPO_ROOT, ".env"),
     ];
 

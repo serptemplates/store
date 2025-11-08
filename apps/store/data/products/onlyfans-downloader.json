@@ -38,9 +38,14 @@
       "alt": "Onlyfans Downloader product screenshot 5"
     }
   ],
-  "product_videos": [],
+  "product_videos": [
+    "https://www.youtube.com/watch?v=hToCX2VST_A",
+    "https://youtu.be/43virGMRbvE"
+  ],
   "related_videos": [],
-  "related_posts": [],
+  "related_posts": [
+    "how-to-download-onlyfans-profiles-videos-images"
+  ],
   "github_repo_url": "https://github.com/serpapps/onlyfans-downloader",
   "github_repo_tags": [],
   "producthunt_link": "https://www.producthunt.com/products/onlyfans-downloader-2",
