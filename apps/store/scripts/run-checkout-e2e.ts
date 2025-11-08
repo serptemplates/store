@@ -183,7 +183,7 @@ async function main() {
       console.log("Next steps:");
       console.log("  1) Start dev server in another terminal: pnpm --filter @apps/store dev");
       console.log(
-        "  2) Ensure STRIPE_WEBHOOK_SECRET_TEST is set in .env.local (same value used to sign the mock webhook)\n",
+        "  2) Ensure STRIPE_WEBHOOK_SECRET_TEST is set in .env (same value used to sign the mock webhook)\n",
       );
       process.exit(1);
     }

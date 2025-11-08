@@ -54,7 +54,7 @@ describe("DubAnalytics configuration", () => {
 
     // query params and cookie domain options
     expect(script?.getAttribute("data-query-params")).toBe(
-      JSON.stringify(["via", "dub_id"])
+      JSON.stringify(["via"]) 
     );
 
     expect(script?.getAttribute("data-cookie-options")).toBe(

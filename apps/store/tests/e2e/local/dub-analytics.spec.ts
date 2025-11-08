@@ -7,13 +7,13 @@ test.describe("Dub Analytics e2e", () => {
     const pk = process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
     test.skip(!pk, "NEXT_PUBLIC_DUB_PUBLISHABLE_KEY not provided to webServer env");
 
-    await page.goto("/?via=mds&dub_id=e2e_dub_123", { waitUntil: "domcontentloaded" });
+    await page.goto("/?via=mds", { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle");
 
-    // dub_id cookie present
+    // dub_id cookie present (set by Dub SDK reading ?via=mds)
     const cookies = await page.context().cookies();
     const dub = cookies.find((c) => c.name === "dub_id");
-    expect(dub?.value).toBe("e2e_dub_123");
+    expect(dub && typeof dub.value === "string" && dub.value.length > 0).toBe(true);
 
     // SDK script is injected with correct attributes
     const attrs = await page.evaluate(() => {

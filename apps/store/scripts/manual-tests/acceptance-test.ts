@@ -22,7 +22,6 @@ import { query } from '../../lib/database';
 import { requireStripeSecretKey } from '../../lib/payments/stripe-environment';
 
 const projectRoot = resolve(__dirname, '..', '..');
-config({ path: resolve(projectRoot, '.env.local') });
 config({ path: resolve(projectRoot, '.env') });
 
 let stripeSecret: string;
@@ -30,7 +29,7 @@ try {
   stripeSecret = requireStripeSecretKey('test');
 } catch (error) {
   console.error('❌', error instanceof Error ? error.message : String(error));
-  console.log('Please set STRIPE_SECRET_KEY_TEST in your .env.local file for acceptance tests.');
+  console.log('Please set STRIPE_SECRET_KEY_TEST in your .env file for acceptance tests.');
   process.exit(1);
 }
 

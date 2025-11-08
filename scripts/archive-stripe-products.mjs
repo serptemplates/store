@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import Stripe from "stripe";
 
 const cwd = process.cwd();
-dotenv.config({ path: path.join(cwd, ".env.local") });
 dotenv.config({ path: path.join(cwd, ".env") });
 
 const ARCHIVE_TARGETS = [

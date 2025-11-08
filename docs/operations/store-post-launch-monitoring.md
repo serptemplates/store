@@ -54,7 +54,7 @@ Detailed checklist for locking down observability and automated smoke-tests befo
 
 ## 5. run checkout e2e verification (test mode)
 
-1. Confirm `.env.local` contains `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY`, and `NEXT_PUBLIC_STRIPE_MODE=test`. The `test:e2e` runner uses the live key only to look up metadata; no live charges occur.
+1. Confirm `.env` contains `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY`, and `NEXT_PUBLIC_STRIPE_MODE=test`. The `test:e2e` runner uses the live key only to look up metadata; no live charges occur.
 2. Start a Stripe CLI listener so webhooks reach your local app:
    ```sh
    stripe listen --forward-to http://localhost:3000/api/stripe/webhook --api-key $STRIPE_SECRET_KEY_TEST

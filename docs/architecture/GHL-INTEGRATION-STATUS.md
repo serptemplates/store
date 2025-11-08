@@ -139,7 +139,7 @@ pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test
 - `GHL_LOCATION_ID` and `GHL_PAT_LOCATION` with API access
 - Optional: `STRIPE_INTEGRATION_OFFER_ID` to target a non-default offer slug
 
-> The test auto-loads `.env.local` / `.env` from the repo root and `apps/store` so you can keep secrets in those files.
+> The test auto-loads `.env` from the repo root and `apps/store` so you can keep secrets in that file.
 
 The spec previously pre-seeded a PayPal checkout session, stubbed the capture call, hit `/api/paypal/capture-order`, and verified that both the order record and `checkout_sessions` row mirrored our Stripe flow (including `ghlSyncedAt`, `ghlContactId`, and PayPal metadata). Keep this section for historical audits; new work should rely on Stripe Payment Links.
 
@@ -226,7 +226,7 @@ The spec previously pre-seeded a PayPal checkout session, stubbed the capture ca
 **Goal**: Verify a Stripe test checkout persists to Postgres and syncs to GoHighLevel without automation.
 
 ### Environment
-- `.env.local` includes working `STRIPE_SECRET_KEY`, latest `STRIPE_WEBHOOK_SECRET_TEST`, `DATABASE_URL`, and required `GHL_*` keys.
+- `.env` includes working `STRIPE_SECRET_KEY`, latest `STRIPE_WEBHOOK_SECRET_TEST`, `DATABASE_URL`, and required `GHL_*` keys.
 - Dev server started with `pnpm --filter @apps/store dev` (watch for `env.validation_success`).
 - Stripe CLI relay running:
 

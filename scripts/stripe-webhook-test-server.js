@@ -2,7 +2,7 @@
 /**
  * Simple local Stripe webhook test server.
  *
- * Loads environment variables from `.env.local` then `.env`.
+ * Loads environment variables from `.env` only.
  * Expects the following vars:
  *   STRIPE_SECRET_KEY_TEST or STRIPE_SECRET_KEY
  *   STRIPE_WEBHOOK_SECRET_TEST or STRIPE_WEBHOOK_SECRET

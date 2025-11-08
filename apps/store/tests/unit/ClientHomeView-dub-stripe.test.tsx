@@ -91,14 +91,14 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
 
   it("full Dub attribution flow: affiliate link → cookie → checkout session", async () => {
     // Simulate the real user journey:
-    // 1. User visits serp.cc/mds → redirects to apps.serp.co/product?dub_id=mds
-    // 2. DubAnalytics reads dub_id=mds from URL and sets cookie
+    // 1. User visits serp.cc/mds → redirects to apps.serp.co/product?via=mds
+    // 2. DubAnalytics reads via=mds from URL and sets the dub_id cookie
     // 3. User clicks buy button → system reads cookie → creates session with Dub metadata
 
-    // Step 1: Simulate Dub redirect with dub_id parameter
+    // Step 1: Simulate Dub redirect with via parameter
     // (DubAnalytics would normally read this from window.location.search)
     // Provide a realistic window.location so components relying on it (e.g., next/image) don't crash
-    const testUrl = new URL('https://apps.serp.co/product?dub_id=mds');
+    const testUrl = new URL('https://apps.serp.co/product?via=mds');
     Object.defineProperty(window, 'location', {
       value: {
         search: testUrl.search,
@@ -192,7 +192,7 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
         mode: "payment",
         successUrl: product.success_url,
         cancelUrl: product.cancel_url,
-        // These come from reading the dub_id=mds cookie
+        // These come from reading the dub_id cookie set by the Dub SDK
         dubCustomerExternalId: "dub_id_mds",
         dubClickId: "dub_id_mds",
         clientReferenceId: "dub_id_mds"
@@ -204,7 +204,7 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
 
     console.log("✅ FULL DUB ATTRIBUTION FLOW TEST PASSED");
     console.log("   - Affiliate link: serp.cc/mds");
-    console.log("   - Cookie set: dub_id=mds");
+    console.log("   - Cookie set: dub_id=<value from Dub>");
     console.log("   - Checkout session created with Dub metadata");
     console.log("   - Sale will be attributed to affiliate 'mds'");
   });

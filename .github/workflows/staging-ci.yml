@@ -54,6 +54,7 @@ jobs:
     env:
       STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       PLAYWRIGHT_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
+      DUB_TEST_LINK: ${{ secrets.DUB_TEST_LINK }}
       PLAYWRIGHT_NO_SERVER: "1"
       LHCI_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
       AXE_BASE_URL: ${{ secrets.STAGING_BASE_URL }}

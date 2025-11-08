@@ -19,7 +19,7 @@ If any of these are missing, the verification flow still succeeds, but the sync 
 
 ## Local Testing Flow
 
-1. Export the env vars above in `.env.local` and ensure Postgres is reachable.
+1. Export the env vars above in `.env` and ensure Postgres is reachable.
 2. Run `pnpm dev --filter @apps/store`.
 3. Visit `http://localhost:3000/account` and request a verification code.
 4. Submit the code (or use the `?token=` link) to trigger the sync.

@@ -19,7 +19,6 @@ import { config as loadEnv } from 'dotenv';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-loadEnv({ path: path.resolve(__dirname, '../.env.local') });
 loadEnv({ path: path.resolve(__dirname, '../.env') });
 
 const rawBaseUrl = process.env.GHL_API_BASE_URL?.trim() || 'https://rest.gohighlevel.com';
