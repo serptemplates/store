@@ -20,6 +20,9 @@ import { SectionDivider } from "@/components/product/landers/marketplace/Section
 import { SECTION_LABEL_CLASS } from "@/components/product/landers/marketplace/constants";
 import { useMarketplaceProductPageViewModel } from "@/components/product/landers/marketplace/useMarketplaceProductPageViewModel";
 import { mapPermissionItemsToFaq } from "@/components/product/shared/mapPermissionItemsToFaq";
+import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
+import { productToHomeTemplate } from "@/lib/products/product-adapter";
+import { ScreenshotsCarousel } from "@repo/ui/sections/ScreenshotsCarousel";
 
 export type MarketplaceProductPageViewProps = {
   product: ProductData;
@@ -29,6 +32,9 @@ export type MarketplaceProductPageViewProps = {
 export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceProductPageViewProps) {
   const viewModel = useMarketplaceProductPageViewModel(product, siteConfig);
   const permissionFaqItems = mapPermissionItemsToFaq(viewModel.sections.permissionItems);
+  // Reuse product adapter to normalize screenshots for carousel display
+  const homeTemplate = productToHomeTemplate(product, []);
+  const screenshots = homeTemplate.screenshots ?? [];
 
   return (
     <>
@@ -36,11 +42,31 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
         product={viewModel.structuredData.product}
         posts={[]}
         siteConfig={siteConfig}
-        images={[]}
+        images={
+          [
+            product.featured_image,
+            product.featured_image_gif,
+            ...(Array.isArray(product.screenshots)
+              ? product.screenshots.map((s) => (typeof s === "string" ? s : s.url))
+              : []),
+          ].filter((v): v is string => typeof v === "string" && v.trim().length > 0)
+        }
         videoEntries={[]}
       />
       <ProductStructuredData product={product} url={viewModel.structuredData.url} />
       <GhlWaitlistModal open={viewModel.waitlistModal.isOpen} onClose={viewModel.waitlistModal.onClose} />
+
+      {/* Breadcrumbs: always visible on marketplace/pre_release layout */}
+      <div className="mx-auto w-full max-w-[1200px] px-4 pt-4 sm:px-6 lg:px-10">
+        <ProductBreadcrumb
+          className="text-xs text-muted-foreground"
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Products", href: "/#products" },
+            { label: product.name ?? "Product" },
+          ]}
+        />
+      </div>
       <MarketplaceLayout
         header={
           <AppHeader
@@ -82,6 +108,18 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
               title={viewModel.sections.features.title}
               description={viewModel.sections.features.description}
             />
+            {/* Screenshots carousel: render when screenshots available; shows multiple when provided */}
+            {screenshots.length > 0 ? (
+              <ScreenshotsCarousel
+                images={screenshots}
+                title="Screenshots"
+                itemMaxHeight={520}
+                itemWidth={720}
+                gap={12}
+                bleed={false}
+                autoplay={false}
+              />
+            ) : null}
           </section>
           {viewModel.sections.about ? (
             <>
