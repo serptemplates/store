@@ -116,6 +116,11 @@ export function PricingCta({
       : []
     : [];
 
+  // Avoid duplicate accessible names when a primary hero CTA also says "Get It Now"
+  // If the visible text is the default, adjust the aria-label so tests and a11y treat it as a distinct control
+  const normalizedCtaText = (ctaText || '').trim();
+  const ctaAriaLabel = /get it now/i.test(normalizedCtaText) ? 'Buy Now' : undefined;
+
   return (
     <section
       id={id}
@@ -374,6 +379,7 @@ export function PricingCta({
                     href={ctaHref}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={ctaAriaLabel}
                     className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
                     style={{
                       backgroundImage: "linear-gradient(#ffe252, #fed300)",

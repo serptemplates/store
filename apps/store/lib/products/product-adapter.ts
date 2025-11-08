@@ -257,10 +257,12 @@ export function productToHomeTemplate(
   const resolvedCta = resolveProductCta(product);
   const productIsPreRelease = product.status === "pre_release";
   const rawVideoUrl = product.product_videos?.[0];
-  const videoUrl = productIsPreRelease ? undefined : rawVideoUrl;
+  // Always surface hero video when available, even for pre_release
+  const videoUrl = rawVideoUrl;
   const normalizedFeaturedImage = normalizeProductAssetPath(product.featured_image);
   const normalizedFeaturedImageGif = normalizeProductAssetPath(product.featured_image_gif);
-  const screenshots = productIsPreRelease ? undefined : toScreenshots(product.screenshots, product);
+  // Always render screenshots when available, even for pre_release products
+  const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
   const priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
@@ -312,10 +314,9 @@ export function productToHomeTemplate(
   return {
     platform,
     videoUrl,
-    heroLightThumbnailSrc: productIsPreRelease ? undefined : normalizedFeaturedImage ?? undefined,
-    heroDarkThumbnailSrc: productIsPreRelease
-      ? undefined
-      : normalizedFeaturedImageGif ?? normalizedFeaturedImage ?? undefined,
+    // Always surface hero images even for pre_release
+    heroLightThumbnailSrc: normalizedFeaturedImage ?? undefined,
+    heroDarkThumbnailSrc: normalizedFeaturedImageGif ?? normalizedFeaturedImage ?? undefined,
     heroVideoTitle: `${product.name} demo video`,
     heroTitle,
     heroDescription,
