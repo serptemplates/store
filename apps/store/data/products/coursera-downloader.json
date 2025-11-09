@@ -12,7 +12,7 @@
   "serp_co_product_page_url": "https://serp.co/products/coursera-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=coursera-downloader",
-  "status": "live",
+  "status": "pre_release",
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/coursera-downloader.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/coursera-downloader/main/images/featured.gif",
   "screenshots": [

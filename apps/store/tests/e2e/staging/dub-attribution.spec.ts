@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 // This test asserts exact Dub cookies seen in staging after visiting the affiliate link.
 // It is intentionally strict per request. If Dub rotates click IDs, update the constants below.
@@ -22,7 +22,7 @@ function extractCookieValue(cookieStr: string, name: string): string | null {
   return null;
 }
 
-async function waitForCookie(page, name: string, timeoutMs = 15000) {
+async function waitForCookie(page: Page, name: string, timeoutMs = 15000): Promise<string> {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     const cookieStr: string = await page.evaluate(() => document.cookie);
