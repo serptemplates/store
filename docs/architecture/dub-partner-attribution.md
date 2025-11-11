@@ -224,7 +224,7 @@ logger.error("checkout.session.create_failed", {
 
 If attribution issues occur:
 
-1. **Immediate**: Revert ClientHomeView changes (restore Payment Link direct links)
+1. **Immediate**: Revert the CTA normalization + `/checkout/[slug]` route changes to the last known-good commit so CTAs keep working while you investigate.
 2. **Investigation**: Check Dub webhook logs for errors
 3. **Fix**: Update metadata field names or cookie reading logic as needed
 4. **Redeploy**: Test thoroughly before re-enabling
