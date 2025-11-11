@@ -150,7 +150,7 @@ const handlePrimaryCtaClick = useCallback((event) => {
 ┌─────────────────────────────────────────────────────────────┐
 │ 4. POST /api/checkout/session                               │
 │    {                                                         │
-│      priceId: "price_1S99fz06JrOmKRCmwpZifMkf",            │
+│      priceId: "price_1SRotl06JrOmKRCmY0T4Yy2P",            │
 │      dubCustomerExternalId: "dub_id_abc123",                │
 │      dubClickId: "dub_id_abc123",                           │
 │      clientReferenceId: "dub_id_abc123"                     │
@@ -207,7 +207,7 @@ For this solution to work, products must have `stripe.price_id` field in their J
 ```json
 {
   "stripe": {
-    "price_id": "price_1S99fz06JrOmKRCmwpZifMkf",
+    "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }
