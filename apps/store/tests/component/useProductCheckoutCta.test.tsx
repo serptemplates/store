@@ -36,6 +36,7 @@ const baseProduct: ProductData = {
   pricing: {
     price: "$19",
     benefits: [],
+    cta_href: "https://apps.serp.co/checkout/sample-product",
   },
   screenshots: [],
   supported_operating_systems: [],
@@ -46,10 +47,6 @@ const baseProduct: ProductData = {
   stripe: {
     price_id: "price_123",
     metadata: {},
-  },
-  payment_link: {
-    live_url: "https://buy.stripe.com/live-sample-product",
-    test_url: "https://buy.stripe.com/test-sample-product",
   },
   layout_type: "landing",
   status: "live",
@@ -70,24 +67,17 @@ const baseProduct: ProductData = {
 const waitlistProduct: ProductData = {
   ...baseProduct,
   status: "pre_release",
-  payment_link: undefined,
 };
 
-const paymentLinkResolvedCta: ResolvedHomeCta = {
-  mode: "external",
-  href: "https://buy.stripe.com/test-sample-product",
+const checkoutResolvedCta: ResolvedHomeCta = {
+  mode: "checkout",
+  href: "https://apps.serp.co/checkout/sample-product",
   text: "Get It Now",
-  target: "_blank",
-  rel: "noopener noreferrer",
-  opensInNewTab: true,
+  target: "_self",
+  rel: undefined,
+  opensInNewTab: false,
   analytics: {
-    destination: "payment_link",
-    paymentLink: {
-      provider: "stripe",
-      variant: "test",
-      linkId: "test-sample-product",
-      url: "https://buy.stripe.com/test-sample-product",
-    },
+    destination: "checkout",
   },
 };
 
@@ -104,15 +94,32 @@ const waitlistResolvedCta: ResolvedHomeCta = {
 
 let originalStripeMode: string | undefined;
 let windowOpenSpy: any;
+let locationAssignSpy: ReturnType<typeof vi.fn>;
+let originalLocation: Location;
 
 beforeEach(() => {
   analyticsMock.trackProductCheckoutClick.mockReset();
   originalStripeMode = process.env.NEXT_PUBLIC_STRIPE_MODE;
   windowOpenSpy = vi.spyOn(window, "open").mockImplementation(() => ({} as Window));
+  originalLocation = window.location;
+  locationAssignSpy = vi.fn();
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    writable: true,
+    value: {
+      ...originalLocation,
+      assign: locationAssignSpy,
+    },
+  });
 });
 
 afterEach(() => {
   windowOpenSpy.mockRestore();
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    writable: true,
+    value: originalLocation,
+  });
   if (originalStripeMode === undefined) {
     delete process.env.NEXT_PUBLIC_STRIPE_MODE;
   } else {
@@ -121,20 +128,20 @@ afterEach(() => {
 });
 
 describe("useProductCheckoutCta", () => {
-  it("opens the payment link in a new tab for live products and records analytics", () => {
+  it("navigates to the internal checkout CTA and records analytics", () => {
     process.env.NEXT_PUBLIC_STRIPE_MODE = "test";
 
     const { result } = renderHook(() =>
       useProductCheckoutCta({
         product: baseProduct,
         homeCta: {
-          cta: paymentLinkResolvedCta,
-          ctaMode: paymentLinkResolvedCta.mode,
-          ctaHref: paymentLinkResolvedCta.href,
-          ctaText: paymentLinkResolvedCta.text,
-          ctaOpensInNewTab: paymentLinkResolvedCta.opensInNewTab,
-          ctaTarget: paymentLinkResolvedCta.target,
-          ctaRel: paymentLinkResolvedCta.rel ?? null,
+          cta: checkoutResolvedCta,
+          ctaMode: checkoutResolvedCta.mode,
+          ctaHref: checkoutResolvedCta.href,
+          ctaText: checkoutResolvedCta.text,
+          ctaOpensInNewTab: checkoutResolvedCta.opensInNewTab,
+          ctaTarget: checkoutResolvedCta.target,
+          ctaRel: checkoutResolvedCta.rel ?? null,
         },
         affiliateId: "aff-123",
       }),
@@ -147,19 +154,12 @@ describe("useProductCheckoutCta", () => {
     expect(analyticsMock.trackProductCheckoutClick).toHaveBeenCalledTimes(1);
     expect(analyticsMock.trackProductCheckoutClick).toHaveBeenCalledWith(baseProduct, {
       placement: "hero",
-      destination: "payment_link",
+      destination: "checkout",
       affiliateId: "aff-123",
-      paymentLinkProvider: "stripe",
-      paymentLinkVariant: "test",
-      paymentLinkId: "test-sample-product",
-      paymentLinkUrl: "https://buy.stripe.com/test-sample-product",
     });
 
-    expect(windowOpenSpy).toHaveBeenCalledWith(
-      "https://buy.stripe.com/test-sample-product",
-      "_blank",
-      "noopener,noreferrer",
-    );
+    expect(windowOpenSpy).not.toHaveBeenCalled();
+    expect(locationAssignSpy).toHaveBeenCalledWith("/checkout/sample-product");
   });
 
   it("triggers the waitlist callback for pre-release products without navigating away", () => {
@@ -190,10 +190,6 @@ describe("useProductCheckoutCta", () => {
       placement: "sticky_bar",
       destination: "waitlist",
       affiliateId: null,
-      paymentLinkProvider: null,
-      paymentLinkVariant: null,
-      paymentLinkId: null,
-      paymentLinkUrl: null,
     });
 
     expect(windowOpenSpy).not.toHaveBeenCalled();

@@ -37,12 +37,6 @@ function buildSteps(): Step[] {
     );
   }
 
-  out.push({
-    title: "Mock webhook: checkout.session.completed",
-    description: "Send a signed test webhook to the local endpoint and verify DB writes",
-    command: [pnpmCmd, "exec", "tsx", "scripts/manual-tests/test-purchase-flow.ts"],
-  });
-
   return out;
 }
 

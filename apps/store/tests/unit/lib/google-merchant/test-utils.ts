@@ -31,6 +31,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
       original_price: "$29",
       currency: "usd",
       availability: "OutOfStock",
+      cta_href: "https://apps.serp.co/checkout/demo-product",
       benefits: [],
       ...pricingOverrides,
     },

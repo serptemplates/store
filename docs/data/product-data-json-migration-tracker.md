@@ -60,7 +60,6 @@ Use this checklist to track JSON migration updates across code, tests, scripts, 
 - [x] `scripts/nsfw/publish-homepage-screenshots.mjs`
 - [ ] `scripts/google-merchant/upload-products.ts`
 - [ ] `scripts/google-merchant/export-feed.ts`
-- [x] `apps/store/scripts/manual-tests/automated-payment-test.ts`
 
 ## Documentation / SOPs
 - [x] `apps/store/data/README.md`

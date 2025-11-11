@@ -122,10 +122,7 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
       pricing: {
         price: "$27",
         cta_text: "Get It Now",
-      },
-      payment_link: {
-        live_url: "https://buy.stripe.com/live-test",
-        test_url: "https://buy.stripe.com/test_xyz789",
+        cta_href: "https://apps.serp.co/checkout/sample-product",
       },
       stripe: {
         price_id: "price_1SRotl06JrOmKRCmY0T4Yy2P",

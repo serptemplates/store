@@ -11,13 +11,7 @@ type GenericComponent = ComponentType<Record<string, unknown>>;
 export type HomeCtaMode = "checkout" | "external" | "pre_release";
 
 export type CtaAnalyticsContext = {
-  destination: "checkout" | "external" | "waitlist" | "payment_link";
-  paymentLink?: {
-    provider: "stripe" | "ghl";
-    variant: "live" | "test";
-    linkId: string | null;
-    url: string;
-  };
+  destination: "checkout" | "external" | "waitlist";
 };
 
 export type ResolvedHomeCta = {

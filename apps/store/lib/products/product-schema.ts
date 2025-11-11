@@ -305,22 +305,6 @@ const permissionJustificationSchema = z.object({
   learn_more_url: trimmedString().url().optional(),
 });
 
-const paymentLinkSchema = z
-  .union([
-    z
-      .object({
-        live_url: enforceHost("buy.stripe.com"),
-        test_url: enforceHost("buy.stripe.com").optional(),
-      })
-      .strict(),
-    z
-      .object({
-        ghl_url: enforceHost("ghl.serp.co"),
-      })
-      .strict(),
-  ])
-  .optional();
-
 export const productSchemaShape = {
   platform: z.string().trim().optional(),
   name: trimmedString(),
@@ -384,7 +368,6 @@ export const productSchemaShape = {
   ),
   keywords: optionalArray(z.string().trim()),
   return_policy: returnPolicySchema,
-  payment_link: paymentLinkSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
   license: licenseSchema,
@@ -436,7 +419,6 @@ export const PRODUCT_FIELD_ORDER = [
   "categories",
   "keywords",
   "return_policy",
-  "payment_link",
   "stripe",
   "ghl",
   "license",
@@ -475,33 +457,19 @@ export const productSchema = z
     }
 
     if (data.status === "live") {
-      const link = data.payment_link;
-      const hasStripeLink =
-        link != null &&
-        "live_url" in link &&
-        typeof link.live_url === "string" &&
-        link.live_url.trim().length > 0;
-      const hasGhlLink =
-        link != null &&
-        "ghl_url" in link &&
-        typeof link.ghl_url === "string" &&
-        link.ghl_url.trim().length > 0;
-
-      // Allow internal checkout to satisfy the requirement (no Payment Link needed)
       const internalCheckoutHref = data.pricing?.cta_href as unknown;
       const hasInternalCheckout =
-        typeof internalCheckoutHref === "string" &&
-        (
-          internalCheckoutHref.startsWith("/checkout/") ||
-          internalCheckoutHref.startsWith("https://apps.serp.co/checkout/")
+        typeof internalCheckoutHref === "string"
+        && (
+          internalCheckoutHref.startsWith("/checkout/")
+          || internalCheckoutHref.startsWith("https://apps.serp.co/checkout/")
         );
 
-      if (!hasStripeLink && !hasGhlLink && !hasInternalCheckout) {
+      if (!hasInternalCheckout) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["payment_link"],
-          message:
-            "Live products must define an internal checkout CTA (pricing.cta_href → /checkout/:slug) or a Payment Link.",
+          path: ["pricing", "cta_href"],
+          message: "Live products must define an internal checkout CTA (pricing.cta_href → /checkout/:slug).",
         });
       }
     }

@@ -32,13 +32,10 @@
     "validate:content": "node scripts/validate-product.mjs",
     "validate:mdx": "node scripts/validate-mdx.mjs",
     "fix:mdx": "node scripts/validate-mdx.mjs --fix",
-    "stripe:create-payment-links": "tsx scripts/create-stripe-payment-links.ts",
-    "stripe:sync-payment-links": "tsx scripts/sync-stripe-payment-links.ts",
     "update:video-metadata": "tsx --tsconfig tsconfig.json scripts/update-video-metadata.ts",
     "report:product-coverage": "node scripts/product-coverage-report.mjs",
     "export:offers": "node scripts/export-offer-catalog.mjs",
     "export:static": "next export",
-    "test:purchase": "npx tsx scripts/manual-tests/test-purchase-flow.ts",
     "db:check": "npx tsx db-check.ts",
     "test:e2e": "tsx scripts/run-checkout-e2e.ts",
     "migrate:checkout": "tsx scripts/migrate-products-to-internal-checkout.ts"

@@ -54,7 +54,39 @@ export function useProductCheckoutCta({
   );
 
   const analyticsDestination = resolvedCta.analytics?.destination ?? "external";
-  const paymentLinkDetails = resolvedCta.analytics?.paymentLink;
+
+  const normalizeNavigationHref = useCallback((rawHref?: string | null): string | null => {
+    if (!rawHref) {
+      return null;
+    }
+
+    if (rawHref.startsWith("#") || rawHref.startsWith("/")) {
+      return rawHref;
+    }
+
+    if (typeof window === "undefined") {
+      return rawHref;
+    }
+
+    try {
+      const candidateUrl = new URL(rawHref, window.location.origin);
+      const internalHosts = new Set([
+        window.location.hostname,
+        "localhost",
+        "127.0.0.1",
+        "apps.serp.co",
+        "store.serp.co",
+      ]);
+
+      if (internalHosts.has(candidateUrl.hostname)) {
+        return `${candidateUrl.pathname}${candidateUrl.search}${candidateUrl.hash}`;
+      }
+
+      return candidateUrl.toString();
+    } catch {
+      return rawHref;
+    }
+  }, []);
 
   const navigateToCta = useCallback(() => {
     if (resolvedCta.mode === "pre_release") {
@@ -62,12 +94,21 @@ export function useProductCheckoutCta({
       return;
     }
 
-    if (resolvedCta.opensInNewTab) {
-      window.open(resolvedCta.href, resolvedCta.target, "noopener,noreferrer");
-    } else {
-      window.location.assign(resolvedCta.href);
+    const normalizedHref = normalizeNavigationHref(resolvedCta.href);
+    if (!normalizedHref) {
+      return;
     }
-  }, [onShowWaitlist, resolvedCta]);
+
+    if (resolvedCta.opensInNewTab) {
+      const absoluteHref =
+        normalizedHref.startsWith("http") || normalizedHref.startsWith("//")
+          ? normalizedHref
+          : `${window.location.origin}${normalizedHref}`;
+      window.open(absoluteHref, resolvedCta.target, "noopener,noreferrer");
+    } else {
+      window.location.assign(normalizedHref);
+    }
+  }, [normalizeNavigationHref, onShowWaitlist, resolvedCta]);
 
   const handleCtaClick = useCallback(
     (placement: Placement) => {
@@ -75,21 +116,16 @@ export function useProductCheckoutCta({
         placement,
         destination: analyticsDestination,
         affiliateId,
-        paymentLinkProvider: paymentLinkDetails?.provider ?? null,
-        paymentLinkVariant: paymentLinkDetails?.variant ?? null,
-        paymentLinkId: paymentLinkDetails?.linkId ?? null,
-        paymentLinkUrl: paymentLinkDetails?.url ?? null,
       });
 
       navigateToCta();
     },
-    [affiliateId, analyticsDestination, navigateToCta, paymentLinkDetails, product],
+    [affiliateId, analyticsDestination, navigateToCta, product],
   );
 
   return {
     cta: resolvedCta,
     analyticsDestination,
-    paymentLinkDetails,
     handleCtaClick,
     navigateToCta,
   };

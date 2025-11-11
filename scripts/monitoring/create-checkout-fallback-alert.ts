@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Upserts a PostHog insight for monitoring Payment Link fallbacks.
+ * Upserts a PostHog insight for monitoring checkout CTA fallbacks.
  *
  * Usage:
  *   POSTHOG_API_KEY=phx_... POSTHOG_PROJECT_ID=12345 pnpm tsx scripts/monitoring/create-checkout-fallback-alert.ts
@@ -29,9 +29,9 @@ if (!PROJECT_ID) {
 }
 
 const INSIGHT_NAME =
-  process.env.POSTHOG_CHECKOUT_INSIGHT_NAME ?? "Payment Link Fallback Monitor"
+  process.env.POSTHOG_CHECKOUT_INSIGHT_NAME ?? "Checkout Fallback Monitor"
 const INSIGHT_DESCRIPTION =
-  "Tracks how often live products fall back to a non-Payment Link destination after a CTA click."
+  "Tracks how often live products fall back to a non-checkout destination after a CTA click."
 
 type PostHogInsight = {
   id: number
@@ -84,7 +84,7 @@ function buildInsightPayload() {
   const fallbackFilters = [
     {
       key: "destination",
-      value: "payment_link",
+      value: "checkout",
       operator: "is_not",
       type: "event",
     },
@@ -211,7 +211,7 @@ async function main() {
   }
 
   console.warn(
-    "Recommended alert copy: Monitor `product_checkout_clicked` events where destination ≠ payment_link for sustained spikes (> 2 hits / 15 min).",
+    "Recommended alert copy: Monitor `product_checkout_clicked` events where destination ≠ checkout for sustained spikes (> 2 hits / 15 min).",
   )
   if (process.env.POSTHOG_ALERT_DESTINATION) {
     console.warn(

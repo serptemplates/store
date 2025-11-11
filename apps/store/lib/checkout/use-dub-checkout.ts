@@ -18,10 +18,23 @@ export function useDubCheckout(options: UseDubCheckoutOptions) {
   const { product, fallbackUrl, onCheckoutStart, onCheckoutError } = options
   const [isCreatingSession, setIsCreatingSession] = useState(false)
 
+  const resolveCheckoutFallback = useCallback((): string | null => {
+    if (typeof fallbackUrl === "string" && fallbackUrl.trim().length > 0) {
+      return fallbackUrl.trim()
+    }
+
+    const ctaHref = product.pricing?.cta_href
+    if (typeof ctaHref === "string" && ctaHref.trim().length > 0) {
+      return ctaHref.trim()
+    }
+
+    return product.slug ? `/checkout/${product.slug}` : null
+  }, [fallbackUrl, product.pricing?.cta_href, product.slug])
+
   /**
    * Handle buy button click
    * Creates a checkout session with Dub attribution if stripe.price_id is available
-   * Otherwise falls back to the Payment Link
+   * Otherwise relies on the internal checkout CTA fallback
    */
   const handleBuyClick = useCallback(
     async (event?: React.MouseEvent<HTMLAnchorElement>) => {
@@ -53,30 +66,21 @@ export function useDubCheckout(options: UseDubCheckoutOptions) {
         })
 
         if (sessionUrl) {
-          // Redirect to the checkout session
           window.location.href = sessionUrl
-        } else {
-          // Failed to create session - fallback to Payment Link if available
-          const paymentLink = product.payment_link
-          const fallback =
-            fallbackUrl ||
-            (paymentLink && "live_url" in paymentLink ? paymentLink.live_url : undefined)
-          if (fallback) {
-            window.location.href = fallback
-          } else {
-            throw new Error("No checkout URL available")
-          }
+          return
         }
+
+        const fallback = resolveCheckoutFallback()
+        if (!fallback) {
+          throw new Error("No checkout URL available")
+        }
+        window.location.href = fallback
       } catch (error) {
         setIsCreatingSession(false)
         const err = error instanceof Error ? error : new Error(String(error))
         onCheckoutError?.(err)
 
-        // Try to fallback to Payment Link
-        const paymentLink = product.payment_link
-        const fallback =
-          fallbackUrl ||
-          (paymentLink && "live_url" in paymentLink ? paymentLink.live_url : undefined)
+        const fallback = resolveCheckoutFallback()
         if (fallback) {
           window.location.href = fallback
         }
@@ -84,10 +88,10 @@ export function useDubCheckout(options: UseDubCheckoutOptions) {
     },
     [
       product,
-      fallbackUrl,
       isCreatingSession,
       onCheckoutStart,
       onCheckoutError,
+      resolveCheckoutFallback,
     ],
   )
 

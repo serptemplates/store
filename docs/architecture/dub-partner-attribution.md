@@ -202,7 +202,7 @@ This implementation follows the exact same pattern as the existing GHL affiliate
 
 ## Product Data Requirements
 
-For this solution to work, products must have `stripe.price_id` field in their JSON:
+For this solution to work, products must have `stripe.price_id` and an internal checkout CTA in their JSON:
 
 ```json
 {
@@ -212,14 +212,13 @@ For this solution to work, products must have `stripe.price_id` field in their J
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/...",
-    "test_url": "https://buy.stripe.com/test_..."
+  "pricing": {
+    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader"
   }
 }
 ```
 
-**Graceful Degradation**: If `stripe.price_id` is not present, the buy button falls back to the Payment Link (no attribution, but purchase still works).
+**Graceful Degradation**: If `stripe.price_id` is missing, the hook skips the programmatic session and lets the CTA behave like a normal link (no Dub attribution, but the `/checkout/<slug>` route still loads).
 
 ## Testing
 

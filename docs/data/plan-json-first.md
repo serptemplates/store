@@ -9,7 +9,7 @@
 ## Migration Strategy
 1. **Define Canonical Schema**
    - Model the product document in TypeScript (e.g., `zod` or `ts-json-schema-generator`).
-   - Capture both marketing fields (`pricing`, `payment_link`) and operational metadata (`stripe`, `ghl`).
+   - Capture both marketing fields (`pricing` including CTAs) and operational metadata (`stripe`, `ghl`).
    - Document block intent (why payment links and Stripe IDs are separate) to preserve context lost with YAML comments.
 2. **Update Loaders for JSON**
    - Teach `getProducts` and related consumers to load `.json` files first while maintaining backward compatibility with `.yaml` during transition.
@@ -59,10 +59,10 @@
 
 ### Tooling & scripts
 - Validation/generation: `apps/store/scripts/validate-products.ts`, `apps/store/scripts/validate-product.mjs`, `scripts/generate-product-json.mjs`, `scripts/dumpSchema.mjs`
-- Stripe automation: `apps/store/scripts/create-stripe-payment-links.ts`, `apps/store/scripts/sync-stripe-payment-links.ts`, `apps/store/scripts/update-stripe-cross-sells.ts`, `apps/store/scripts/update-stripe-product-tags.ts`, `scripts/sync-stripe-prices.mjs`
+- Stripe automation: `apps/store/scripts/update-stripe-cross-sells.ts`, `apps/store/scripts/update-stripe-product-tags.ts`, `scripts/sync-stripe-prices.mjs`
 - Catalog/ops reporting: `apps/store/scripts/export-offer-catalog.mjs`, `apps/store/scripts/product-coverage-report.mjs`, `apps/store/scripts/update-categories.mjs`, `scripts/nsfw/publish-homepage-screenshots.mjs`
 - Merchant Center: `apps/store/lib/google-merchant/catalog.ts`, `scripts/google-merchant/upload-products.ts`, `scripts/google-merchant/export-feed.ts`
-- Manual QA: `apps/store/scripts/manual-tests/automated-payment-test.ts`
+- Manual QA: ad-hoc harnesses under `apps/store/scripts/manual-tests/` (e.g., `test-stripe-direct.ts`, `test-payment-flow.ts`)
 
 ### Documentation & process
 - `apps/store/data/README.md`, `docs/operations/*` references to “product YAML”.
@@ -132,7 +132,7 @@ Review these after each migration milestone to confirm behaviour:
 - `scripts/nsfw/publish-homepage-screenshots.mjs`
 - `scripts/google-merchant/upload-products.ts`
 - `scripts/google-merchant/export-feed.ts`
-- `apps/store/scripts/manual-tests/automated-payment-test.ts`
+- `apps/store/scripts/manual-tests/test-payment-flow.ts`
 
 ### Documentation / SOP updates
 - `apps/store/data/README.md`

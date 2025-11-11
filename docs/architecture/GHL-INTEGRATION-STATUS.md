@@ -3,7 +3,7 @@
 ## Current Implementation Status ✅
 
 ### 1. **Payment Processing Integration** ✅
-- **Stripe Payment Links**: Configured per product via `payment_link` entries; metadata comes from Stripe product tags.
+- **Internal Stripe Checkout**: Product CTAs point to `/checkout/<slug>` and create programmatic Checkout Sessions via `/api/checkout/session`. Metadata comes from Stripe product and price tags so webhooks can hydrate fulfilment records.
 - **Stripe Webhook**: Handles events at `/api/stripe/webhook`
 - **Affiliate Tracking**: Captures `affiliateId` in checkout metadata
 - **Order Persistence**: Saves to PostgreSQL via `upsertOrder()`
@@ -58,7 +58,7 @@ STRIPE_WEBHOOK_SECRET_TEST=whsec_xxx         # optional: explicit test webhook s
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 ```
 
-> Use `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` to validate Payment Link metadata and webhook health after changing these credentials. PayPal automation references are legacy and only apply when auditing historical orders.
+> Use `pnpm --filter @apps/store exec tsx scripts/manual-tests/test-payment-flow.ts` (local session sanity) or `scripts/manual-tests/test-stripe-direct.ts` (direct Stripe SDK call) to validate Stripe connectivity after changing credentials. PayPal automation references are legacy and only apply when auditing historical orders.
 
 ## Verification Steps
 
@@ -81,9 +81,9 @@ curl -X GET "https://services.leadconnectorhq.com/locations/${GHL_LOCATION_ID}" 
 ```
 
 ### 3. Test Purchase Flow
-1. Launch the product page and click the primary CTA (or open the Stripe Payment Link directly).
+1. Launch the product page and click the primary CTA (it should resolve to `/checkout/<slug>` and create a Checkout Session via the API).
 2. Complete a Stripe test purchase (`4242 4242 4242 4242`) and confirm the webhook fires in the local logs (`pnpm --filter @apps/store dev` outputs or `logs/webhook.log` if running via PM2).
-3. Verify in the Stripe Dashboard that the Payment Link metadata includes the expected `offerId`, `landerId`, `ghl_tag`, and affiliate data.
+3. Verify in the Stripe Dashboard that the Checkout Session metadata includes the expected `offerId`, `landerId`, `ghl_tag`, and affiliate data.
 4. Inspect the database/GHL:
    - Checkout session row created with `source = stripe`.
    - GHL contact tagged and custom fields populated.
@@ -187,7 +187,7 @@ The spec previously pre-seeded a PayPal checkout session, stubbed the capture ca
 - [ ] Email validation working
 
 ### Automated Checks
-- [ ] `pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts` runs without failures
+- [ ] `pnpm --filter @apps/store exec tsx scripts/manual-tests/test-payment-flow.ts` runs without failures
 - [ ] `tests/integration/paypal-ghl-flow.test.ts` passes (`pnpm --filter @apps/store exec vitest run tests/integration/paypal-ghl-flow.test.ts`)
 
 ## Monitoring & Alerts

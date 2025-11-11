@@ -108,10 +108,7 @@ describe("ClientHomeView", () => {
       pricing: {
         price: "$27",
         cta_text: "Get It Now",
-      },
-      payment_link: {
-        live_url: "https://buy.stripe.com/live-clienthome",
-        test_url: "https://buy.stripe.com/test-clienthome",
+        cta_href: "https://apps.serp.co/checkout/sample-product",
       },
       related_posts: ["first-post"],
     });

@@ -506,39 +506,6 @@
         }
       }
     },
-    "payment_link": {
-      "oneOf": [
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["live_url"],
-          "properties": {
-            "live_url": {
-              "type": "string",
-              "format": "uri",
-              "pattern": "^https://buy\\.stripe\\.com/"
-            },
-            "test_url": {
-              "type": "string",
-              "format": "uri",
-              "pattern": "^https://buy\\.stripe\\.com/"
-            }
-          }
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["ghl_url"],
-          "properties": {
-            "ghl_url": {
-              "type": "string",
-              "format": "uri",
-              "pattern": "^https://ghl\\.serp\\.co/"
-            }
-          }
-        }
-      ]
-    },
     "stripe": {
       "type": "object",
       "additionalProperties": false,
@@ -638,22 +605,17 @@
         "properties": { "status": { "const": "live" } }
       },
       "then": {
-        "anyOf": [
-          { "required": ["payment_link"] },
+        "allOf": [
+          { "required": ["pricing"] },
           {
-            "allOf": [
-              { "required": ["pricing"] },
-              {
+            "properties": {
+              "pricing": {
+                "required": ["cta_href"],
                 "properties": {
-                  "pricing": {
-                    "required": ["cta_href"],
-                    "properties": {
-                      "cta_href": { "type": "string", "pattern": "^https://apps\\.serp\\.co/checkout/" }
-                    }
-                  }
+                  "cta_href": { "type": "string", "pattern": "^https://apps\\.serp\\.co/checkout/" }
                 }
               }
-            ]
+            }
           }
         ]
       }

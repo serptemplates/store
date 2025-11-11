@@ -1,6 +1,6 @@
 # Checkout Cross-Sell Setup
 
-Stripe Payment Links now own all post-purchase offers. We no longer maintain order-bump YAML or embedded UI logic in the storefront.
+Stripe-hosted Checkout now owns all post-purchase offers. We no longer maintain order-bump YAML or embedded UI logic in the storefront.
 
 ## What changed
 
@@ -16,8 +16,8 @@ Stripe Payment Links now own all post-purchase offers. We no longer maintain ord
 
 ## Storefront verification
 
-- Visit the product page and click the primary CTA; confirm it opens the configured payment link (Stripe or GHL) without triggering popup blockers.
-- Ensure product YAML defines a `payment_link` so the storefront knows which checkout experience to launch.
+- Visit the product page and click the primary CTA; confirm it hits `/checkout/<slug>` and creates a Stripe Checkout Session without triggering popup blockers.
+- Ensure product JSON defines `pricing.cta_href` with the internal checkout URL so the storefront knows which experience to launch.
 - Confirm Stripe session metadata still includes the expected fields for downstream fulfillment.
 
 ## PayPal parity
