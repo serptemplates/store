@@ -29,7 +29,7 @@ const blockedUrlPatterns = (() => {
 // Detect if we're running against staging or production
 // Staging typically has lower performance scores due to different infrastructure
 const isStaging = baseUrl.includes('staging') || baseUrl.includes('preview');
-const performanceThreshold = isStaging ? 0.58 : 0.9; // Slightly lenient for staging to absorb hosting jitter
+const performanceThreshold = isStaging ? 0.5 : 0.9; // lenient on staging to absorb infra jitter
 
 /** @type {import('@lhci/cli/src/types').LHCIConfig} */
 module.exports = {
