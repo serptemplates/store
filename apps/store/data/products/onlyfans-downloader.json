@@ -70,7 +70,7 @@
   ],
   "pricing": {
     "label": "One-time payment",
-    "price": "$17.00",
+    "price": "$27.00",
     "original_price": "$37.00",
     "note": "",
     "cta_text": "Get it Now",
@@ -164,8 +164,12 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "payment_link": {
+    "live_url": "https://buy.stripe.com/14AaEP0I84ua5CX0Kn0VO1I",
+    "test_url": "https://buy.stripe.com/test-onlyfans-downloader"
+  },
   "stripe": {
-    "price_id": "price_1S99fz06JrOmKRCmwpZifMkf",
+    "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }

@@ -128,7 +128,7 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
         test_url: "https://buy.stripe.com/test_xyz789",
       },
       stripe: {
-        price_id: "price_1S99fz06JrOmKRCmwpZifMkf",
+        price_id: "price_1SRotl06JrOmKRCmY0T4Yy2P",
         metadata: {
           stripe_product_id: "prod_Sv6HHbpO7I9vt0"
         }
@@ -187,7 +187,7 @@ describe("ClientHomeView Stripe client_reference_id append", () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        priceId: "price_1S99fz06JrOmKRCmwpZifMkf",
+        priceId: "price_1SRotl06JrOmKRCmY0T4Yy2P",
         quantity: 1,
         mode: "payment",
         successUrl: product.success_url,

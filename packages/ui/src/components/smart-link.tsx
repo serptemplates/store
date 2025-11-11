@@ -10,6 +10,40 @@ type SmartLinkProps = PropsWithChildren<
   }
 >;
 
+const INTERNAL_HOSTS = new Set([
+  "apps.serp.co",
+  "store.serp.co",
+]);
+
+function normalizeInternalHref(rawHref: string): string | null {
+  if (!rawHref) {
+    return null;
+  }
+
+  if (rawHref.startsWith("/")) {
+    return rawHref;
+  }
+
+  if (rawHref.startsWith("#")) {
+    return rawHref;
+  }
+
+  if (!rawHref.startsWith("http://") && !rawHref.startsWith("https://")) {
+    return null;
+  }
+
+  try {
+    const url = new URL(rawHref);
+    if (!INTERNAL_HOSTS.has(url.hostname)) {
+      return null;
+    }
+    const normalizedPath = url.pathname || "/";
+    return `${normalizedPath}${url.search}${url.hash}`;
+  } catch {
+    return null;
+  }
+}
+
 const SmartLink = ({
   href,
   children,
@@ -19,19 +53,33 @@ const SmartLink = ({
   "data-testid": dataTestId,
   ...rest
 }: SmartLinkProps) => {
-  const isInternal = href.startsWith("/") || href.startsWith("#");
+  const normalized = normalizeInternalHref(href);
 
-  if (isInternal) {
+  if (normalized && normalized.startsWith("/")) {
     return (
-      <Link 
-        href={href as Route} 
-        className={className} 
+      <Link
+        href={normalized as Route}
+        className={className}
         onClick={onClick}
         data-testid={dataTestId}
         {...nextLinkProps}
       >
         {children}
       </Link>
+    );
+  }
+
+  if (normalized && normalized.startsWith("#")) {
+    return (
+      <a
+        href={normalized}
+        className={className}
+        onClick={onClick}
+        data-testid={dataTestId}
+        {...rest}
+      >
+        {children}
+      </a>
     );
   }
 
