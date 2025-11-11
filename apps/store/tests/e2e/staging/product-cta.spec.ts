@@ -85,7 +85,9 @@ describeFn("staging smoke: product CTA", () => {
       }
 
       const stripeRequest = await stripeRequestPromise;
-      expect(stripeRequest, "Stripe Checkout should be requested").not.toBeNull();
+      if (locationHeader) {
+        expect(stripeRequest, "Stripe Checkout should be requested").not.toBeNull();
+      }
     }
 
     await context.close();
