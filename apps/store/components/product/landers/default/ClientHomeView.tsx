@@ -23,7 +23,6 @@ import { useProductPageExperience } from "@/components/product/hooks/useProductP
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 import { deriveProductCategories } from "@/lib/products/categories"
-import { getBrandLogoPath } from "@/lib/products/brand-logos"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -136,20 +135,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       ),
     )
   }, [product])
-  const brandLogoPath = useMemo(() => getBrandLogoPath(product.slug ?? "") ?? null, [product.slug])
-  const stickyImageSource = useMemo(() => {
-    const normalizedLogo = normalizeProductAssetPath(brandLogoPath ?? undefined)
-    if (normalizedLogo) {
-      return normalizedLogo
-    }
-    return normalizeProductAssetPath(
-      typeof product.featured_image === "string"
-        ? product.featured_image
-        : typeof product.featured_image_gif === "string"
-          ? product.featured_image_gif
-          : undefined,
-    )
-  }, [brandLogoPath, product.featured_image, product.featured_image_gif])
   useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
@@ -245,12 +230,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       <ProductStickyBar
         show={showStickyBar}
         product={product}
-        productName={product.name}
-        priceLabel={showPrices ? homeProps.pricing?.priceLabel ?? null : null}
-        price={showPrices ? homeProps.pricing?.price ?? null : null}
-        originalPrice={showPrices ? homeProps.pricing?.originalPrice ?? null : null}
-        brandLogoPath={brandLogoPath}
-        mainImageSource={stickyImageSource ?? undefined}
         waitlistEnabled={isPreRelease}
         onWaitlistClick={waitlist.open}
         checkoutCta={normalizedCta}

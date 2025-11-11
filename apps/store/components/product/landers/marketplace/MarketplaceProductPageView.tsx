@@ -84,13 +84,7 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
       >
         <ProductStickyBar
           show={viewModel.stickyBar.show}
-          productName={viewModel.stickyBar.productName}
           product={viewModel.stickyBar.product}
-          priceLabel={viewModel.stickyBar.priceLabel}
-          price={viewModel.stickyBar.price}
-          originalPrice={viewModel.stickyBar.originalPrice}
-          brandLogoPath={viewModel.stickyBar.brandLogoPath ?? undefined}
-          mainImageSource={viewModel.stickyBar.mainImageSource ?? undefined}
           waitlistEnabled={viewModel.stickyBar.waitlistEnabled}
           onWaitlistClick={viewModel.stickyBar.onWaitlistClick}
           checkoutCta={viewModel.stickyBar.checkoutCta}

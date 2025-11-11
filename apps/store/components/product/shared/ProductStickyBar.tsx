@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import type { MouseEventHandler } from "react";
 
 import type { ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
@@ -8,12 +7,6 @@ import type { ProductData } from "@/lib/products/product-schema";
 export type ProductStickyBarProps = {
   show: boolean;
   product: ProductData;
-  productName: string;
-  priceLabel?: string | null;
-  price?: string | null;
-  originalPrice?: string | null;
-  brandLogoPath?: string | null;
-  mainImageSource?: string | null | undefined;
   waitlistEnabled?: boolean;
   onWaitlistClick?: () => void;
   checkoutCta?: ResolvedHomeCta | null;
@@ -24,12 +17,6 @@ export type ProductStickyBarProps = {
 export function ProductStickyBar({
   show,
   product,
-  productName,
-  priceLabel,
-  price,
-  originalPrice,
-  brandLogoPath,
-  mainImageSource,
   waitlistEnabled = false,
   onWaitlistClick,
   checkoutCta,
@@ -62,30 +49,6 @@ export function ProductStickyBar({
   return (
     <div className="fixed inset-x-0 top-0 z-40 bg-white/95 shadow-lg backdrop-blur transition-transform dark:bg-gray-900/95">
       <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-3">
-        <div className="hidden items-center gap-3 sm:flex">
-          {mainImageSource ? (
-            <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-              <Image
-                src={mainImageSource}
-                alt={productName}
-                fill
-                className={brandLogoPath ? "object-contain p-1" : "object-cover"}
-                unoptimized
-              />
-            </div>
-          ) : null}
-          <div>
-            <h3 className="line-clamp-1 text-sm font-semibold">{productName}</h3>
-            {price ? (
-              <p className="text-lg font-bold text-green-600">
-                {price}
-                {originalPrice ? <span className="ml-2 text-sm text-gray-500 line-through">{originalPrice}</span> : null}
-              </p>
-            ) : null}
-            {priceLabel ? <p className="text-xs text-gray-500 dark:text-gray-400">{priceLabel}</p> : null}
-          </div>
-        </div>
-
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
           {waitlistEnabled ? (
             <button

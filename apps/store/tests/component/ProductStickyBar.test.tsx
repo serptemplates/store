@@ -45,12 +45,6 @@ function buildProduct(overrides: Partial<ProductData>): ProductData {
 describe("ProductStickyBar", () => {
   const baseProps: Omit<ProductStickyBarProps, "product"> = {
     show: true,
-    productName: "Demo Product",
-    priceLabel: "One-time payment",
-    price: "$17.00",
-    originalPrice: null,
-    brandLogoPath: null,
-    mainImageSource: null,
     waitlistEnabled: false,
     checkoutCta: {
       mode: "external",

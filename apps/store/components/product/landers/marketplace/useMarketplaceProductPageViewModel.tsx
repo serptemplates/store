@@ -12,7 +12,6 @@ import {
 } from "@/lib/products/view-model";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import { useProductPageExperience } from "@/components/product/hooks/useProductPageExperience";
-import { getBrandLogoPath } from "@/lib/products/brand-logos";
 import type { ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import type { MetadataRow, LegalLink } from "./MarketplaceMetadataList";
 import { buildMetadataRows } from "./MarketplaceMetadataList";
@@ -44,12 +43,6 @@ export type MarketplaceProductPageViewModel = {
   stickyBar: {
     show: boolean;
     product: ProductData;
-    productName: string;
-    priceLabel: string | null;
-    price: string | null;
-    originalPrice: string | null;
-    brandLogoPath: string | null;
-    mainImageSource?: string | null;
     waitlistEnabled: boolean;
     onWaitlistClick: () => void;
     checkoutCta: ResolvedHomeCta | null;
@@ -129,8 +122,6 @@ export function useMarketplaceProductPageViewModel(
   }, [siteConfig]);
 
   const waitlistEnabled = product.status === "pre_release";
-  const brandLogoPath = getBrandLogoPath(product.slug ?? "");
-  const stickyImageSource = brandLogoPath || product.featured_image || null;
 
   const primaryButtonLabel = resolvePrimaryButtonLabel({
     resolvedCta,
@@ -164,7 +155,7 @@ export function useMarketplaceProductPageViewModel(
         name: product.name ?? product.platform ?? "Marketplace app",
         subtitle: copy.subtitle,
         categories: metadata.categories,
-        iconUrl: brandLogoPath || null,
+        iconUrl: product.featured_image || null,
         iconInitials: getInitials(product.platform ?? product.name),
         onPrimaryAction: handleHeroClick,
         primaryLabel: primaryButtonLabel,
@@ -174,12 +165,6 @@ export function useMarketplaceProductPageViewModel(
     stickyBar: {
       show: showStickyBar,
       product,
-      productName: product.name ?? "Product",
-      priceLabel: null,
-      price: showPrices ? product.pricing?.price ?? null : null,
-      originalPrice: showPrices ? product.pricing?.original_price ?? null : null,
-      brandLogoPath: brandLogoPath ?? null,
-      mainImageSource: stickyImageSource,
       waitlistEnabled,
       onWaitlistClick: waitlist.open,
       checkoutCta: resolvedCta,
