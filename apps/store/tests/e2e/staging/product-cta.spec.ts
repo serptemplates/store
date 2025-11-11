@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import type { Request } from "@playwright/test";
 import type { Route } from "next";
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "https://staging-apps.serp.co";
@@ -60,6 +61,13 @@ describeFn("staging smoke: product CTA", () => {
         )
         .catch(() => null);
 
+      const stripeRequestPromise = context
+        .waitForEvent("request", {
+          predicate: (request: Request) => request.url().startsWith(`https://${STRIPE_HOST}`),
+          timeout: 20_000,
+        })
+        .catch(() => null);
+
       await primaryCta.click();
       const checkoutResponse = await checkoutResponsePromise;
       expect(checkoutResponse, "internal checkout route should respond").not.toBeNull();
@@ -74,6 +82,9 @@ describeFn("staging smoke: product CTA", () => {
         const parsedLocation = new URL(locationHeader);
         expect(parsedLocation.hostname).toBe(STRIPE_HOST);
       }
+
+      const stripeRequest = await stripeRequestPromise;
+      expect(stripeRequest, "Stripe Checkout should be requested").not.toBeNull();
     }
 
     await context.close();
