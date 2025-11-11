@@ -33,39 +33,51 @@ describeFn("staging smoke: product CTA", () => {
     // Ensure element inside view before clicking
     await locatorToUse.first().scrollIntoViewIfNeeded();
 
-    // Click the CTA and wait for either a new tab or navigation to checkout
-    const href = await locatorToUse.first().getAttribute("href");
-    
-    if (href && href !== "#") {
-      // Direct checkout link - expect new tab
+    const primaryCta = locatorToUse.first();
+    const href = (await primaryCta.getAttribute("href")) ?? "";
+    const target = (await primaryCta.getAttribute("target")) ?? "";
+    const opensNewTab = target === "_blank";
+    const looksLikeStripeLink = href.startsWith("https://" + STRIPE_HOST);
+
+    if (opensNewTab || looksLikeStripeLink) {
       const waitForTab = context.waitForEvent("page");
-      await locatorToUse.first().click();
+      await primaryCta.click();
       const checkoutPage = await waitForTab;
 
       await checkoutPage.waitForLoadState("domcontentloaded");
-      await checkoutPage.waitForTimeout(2000);
-
       const checkoutUrl = checkoutPage.url();
       const parsed = new URL(checkoutUrl);
       expect(parsed.hostname).toBe(STRIPE_HOST);
 
       await checkoutPage.close();
     } else {
-      // Programmatic checkout - expect same-page redirect
-      await locatorToUse.first().click();
-      
-      // Wait for navigation to Stripe checkout
-      await page.waitForURL((urlString) => {
-        try {
-          const url = new URL(urlString);
-          return url.hostname === STRIPE_HOST;
-        } catch {
-          return false;
-        }
-      }, {
-        timeout: 10000,
-      });
+      const checkoutPathFragment = `/checkout/`;
+      const checkoutRequestPromise = page
+        .waitForRequest(
+          (request) =>
+            request.method() === "GET" &&
+            request.url().startsWith(`${BASE_URL}${checkoutPathFragment}`),
+          { timeout: 15_000 }
+        )
+        .catch(() => null);
 
+      const stripeNavigationPromise = page.waitForURL(
+        (urlString) => {
+          try {
+            const url = new URL(urlString);
+            return url.hostname === STRIPE_HOST;
+          } catch {
+            return false;
+          }
+        },
+        { timeout: 20_000 }
+      );
+
+      await primaryCta.click();
+      const checkoutRequest = await checkoutRequestPromise;
+      await stripeNavigationPromise;
+
+      expect(checkoutRequest, "internal checkout route should be hit before Stripe").not.toBeNull();
       const checkoutUrl = page.url();
       const parsed = new URL(checkoutUrl);
       expect(parsed.hostname).toBe(STRIPE_HOST);
