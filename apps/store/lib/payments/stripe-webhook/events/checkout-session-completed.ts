@@ -224,31 +224,21 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     null;
   ensureMetadataValues(productNameValue, "productName", "product_name");
 
-  const paymentLinkId =
-    typeof session.payment_link === "string"
-      ? session.payment_link
-      : session.payment_link?.id ?? null;
-
-  const canonicalPaymentLinkId =
-    paymentLinkId ?? metadata.payment_link_id ?? metadata.paymentLinkId ?? null;
-  if (canonicalPaymentLinkId) {
-    metadata.payment_link_id = canonicalPaymentLinkId;
-    metadata.paymentLinkId = canonicalPaymentLinkId;
-  }
-
-  const paymentLinkMode =
+  const checkoutMode =
     typeof session.livemode === "boolean"
       ? session.livemode ? "live" : "test"
       : metadata.payment_link_mode ?? metadata.paymentLinkMode ?? null;
-  if (paymentLinkMode) {
-    metadata.payment_link_mode = paymentLinkMode;
-    metadata.paymentLinkMode = paymentLinkMode;
+  if (checkoutMode) {
+    metadata.checkout_mode = checkoutMode;
+    metadata.checkoutMode = checkoutMode;
+    metadata.payment_link_mode = checkoutMode;
+    metadata.paymentLinkMode = checkoutMode;
   }
 
   const stripeModeForLineItems: StripeModeInput =
-    paymentLinkMode === "test"
+    checkoutMode === "test"
       ? "test"
-      : paymentLinkMode === "live"
+      : checkoutMode === "live"
       ? "live"
       : "auto";
 
@@ -271,109 +261,6 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     metadata.ghlTag = ghlTagValue;
   }
 
-  if (
-    canonicalPaymentLinkId
-    && (!productSlugValue || !stripeProductIdValue || !ghlTagValue)
-  ) {
-    try {
-      const stripeClient = getStripeClient(
-        paymentLinkMode === "test"
-          ? "test"
-          : paymentLinkMode === "live"
-          ? "live"
-          : "auto",
-      );
-      const link = await stripeClient.paymentLinks.retrieve(canonicalPaymentLinkId, {
-        expand: ["line_items.data.price.product"],
-      });
-      const linkMetadata = normalizeMetadata(link.metadata);
-
-      if (!productSlugValue) {
-        const fallbackSlug = linkMetadata.product_slug ?? linkMetadata.productSlug ?? null;
-        if (fallbackSlug) {
-          metadata.product_slug = fallbackSlug;
-          metadata.productSlug = fallbackSlug;
-          productSlugValue = fallbackSlug;
-        }
-      }
-
-      if (!stripeProductIdValue) {
-        const fallbackProductId =
-          linkMetadata.stripe_product_id
-            ?? linkMetadata.stripeProductId
-            ?? (typeof link.line_items?.data?.[0]?.price?.product === "string"
-              ? (link.line_items?.data?.[0]?.price?.product as string)
-              : (
-                link.line_items?.data?.[0]?.price?.product
-                && typeof link.line_items.data[0].price?.product === "object"
-              )
-              ? (link.line_items?.data?.[0]?.price?.product as Stripe.Product | Stripe.DeletedProduct | null)?.id ?? null
-              : null);
-
-        if (fallbackProductId) {
-          metadata.stripe_product_id = fallbackProductId;
-          metadata.stripeProductId = fallbackProductId;
-          stripeProductIdValue = fallbackProductId;
-        }
-      }
-
-      if (!metadata.stripe_price_id && !metadata.stripePriceId) {
-        const fallbackPriceId = linkMetadata.stripe_price_id ?? linkMetadata.stripePriceId ?? link.line_items?.data?.[0]?.price?.id ?? null;
-        if (fallbackPriceId) {
-          metadata.stripe_price_id = fallbackPriceId;
-          metadata.stripePriceId = fallbackPriceId;
-        }
-      }
-
-      if (!ghlTagValue) {
-        const fallbackTag = linkMetadata.ghl_tag ?? linkMetadata.ghlTag ?? null;
-        if (fallbackTag) {
-          metadata.ghl_tag = fallbackTag;
-          metadata.ghlTag = fallbackTag;
-          ghlTagValue = fallbackTag;
-        }
-      }
-
-      if (!paymentLinkMode && typeof link.livemode === "boolean") {
-        const inferredMode = link.livemode ? "live" : "test";
-        metadata.payment_link_mode = inferredMode;
-        metadata.paymentLinkMode = inferredMode;
-      }
-
-      if (!productNameValue) {
-        const fallbackProductName =
-          coerceMetadataString(linkMetadata["productName"]) ??
-          coerceMetadataString(linkMetadata["product_name"]) ??
-          (() => {
-            const lineItem = link.line_items?.data?.[0];
-            const priceProduct = lineItem?.price?.product;
-            if (priceProduct && typeof priceProduct === "object" && "deleted" in priceProduct) {
-              return null;
-            }
-            if (priceProduct && typeof priceProduct === "object" && "name" in priceProduct) {
-              return coerceMetadataString((priceProduct as Stripe.Product).name);
-            }
-            if (typeof priceProduct === "string") {
-              return null;
-            }
-            if (lineItem?.description) {
-              return coerceMetadataString(lineItem.description);
-            }
-            return null;
-          })();
-
-        if (fallbackProductName) {
-          productNameValue = fallbackProductName;
-          ensureMetadataValues(productNameValue, "productName", "product_name");
-        }
-      }
-    } catch (error) {
-      logger.warn("stripe.payment_link_metadata_lookup_failed", {
-        paymentLinkId: canonicalPaymentLinkId,
-        error: error instanceof Error ? { message: error.message, name: error.name } : error,
-      });
-    }
-  }
 
   const tosStatus = session.consent?.terms_of_service ?? null;
   if (tosStatus) {
@@ -630,24 +517,6 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
 
     if (metadata.ghl_tag_ids) {
       licenseMetadata.ghl_tag_ids = metadata.ghl_tag_ids;
-    }
-
-    if (metadata.paymentLinkId) {
-      licenseMetadata.paymentLinkId = metadata.paymentLinkId;
-      licenseMetadata.payment_link_id = metadata.paymentLinkId;
-    }
-
-    if (metadata.payment_link_id) {
-      licenseMetadata.payment_link_id = metadata.payment_link_id;
-    }
-
-    if (metadata.paymentLinkMode) {
-      licenseMetadata.paymentLinkMode = metadata.paymentLinkMode;
-      licenseMetadata.payment_link_mode = metadata.paymentLinkMode;
-    }
-
-    if (metadata.payment_link_mode) {
-      licenseMetadata.payment_link_mode = metadata.payment_link_mode;
     }
 
     if (metadata.stripeProductId) {

@@ -24,9 +24,7 @@ type ProcessedOrderDetails = {
   items: Array<{ id: string; name: string; price: number; quantity: number }>;
   coupon?: string | null;
   affiliateId?: string | null;
-  paymentLinkId?: string | null;
   productSlug?: string | null;
-  paymentLinkMode?: "live" | "test" | null;
 };
 
 type ProcessCheckoutResult = {
@@ -101,14 +99,6 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     const alreadyProcessed = existingSession?.metadata?.processedAt;
 
     const metadata = (session.metadata ?? {}) as Record<string, unknown>;
-    const paymentLinkId =
-      typeof session.payment_link === "string"
-        ? session.payment_link
-        : session.payment_link?.id ?? null;
-    const paymentLinkMode: "live" | "test" | null =
-      typeof session.livemode === "boolean"
-        ? (session.livemode ? "live" : "test")
-        : null;
 
     const metadataOfferId = coerceMetadataString(metadata.offerId);
     const metadataProductSlugCamel = coerceMetadataString(metadata.productSlug);
@@ -218,10 +208,6 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       augmentedMetadata.stripeTermsOfServiceRequirement = tosRequirement;
     }
 
-    if (paymentLinkId) {
-      augmentedMetadata.payment_link_id = paymentLinkId;
-    }
-
     if (productSlug) {
       if (!augmentedMetadata.product_slug) {
         augmentedMetadata.product_slug = productSlug;
@@ -279,16 +265,8 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         currency: currencyCode,
       };
 
-      if (paymentLinkId) {
-        licenseMetadata.paymentLinkId = paymentLinkId;
-      }
-
       if (productSlug) {
         licenseMetadata.productSlug = productSlug;
-      }
-
-      if (paymentLinkMode) {
-        licenseMetadata.paymentLinkMode = paymentLinkMode;
       }
 
       if (session.customer_details?.name) {
@@ -439,9 +417,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         items: orderItems,
         coupon: couponCode,
         affiliateId: affiliateIdValue,
-        paymentLinkId,
         productSlug: productSlug ?? offerId ?? null,
-        paymentLinkMode,
       },
     };
   } catch (error) {

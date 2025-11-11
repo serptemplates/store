@@ -120,14 +120,6 @@ function orderPlainRecord(input: Record<string, unknown>): Record<string, unknow
   return orderObject(input, []);
 }
 
-function normalizePaymentLink(link: NonNullable<ProductData["payment_link"]>): Record<string, unknown> {
-  if ("live_url" in link) {
-    return orderObject(link as Record<string, unknown>, ["live_url", "test_url"]);
-  }
-
-  return orderObject(link as Record<string, unknown>, ["ghl_url"]);
-}
-
 function normalizeStripe(stripe: NonNullable<ProductData["stripe"]>): Record<string, unknown> {
   const ordered = orderObject(stripe as Record<string, unknown>, STRIPE_FIELD_ORDER);
   const metadata = ordered.metadata;
@@ -249,11 +241,6 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
         if (out.length > 0) {
           normalized[key] = out;
         }
-        break;
-      }
-      case "payment_link": {
-        const paymentLink = value as NonNullable<ProductData["payment_link"]>;
-        normalized[key] = normalizePaymentLink(paymentLink);
         break;
       }
       case "stripe": {

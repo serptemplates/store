@@ -182,7 +182,6 @@ function buildCheckoutSessionEvent() {
       tax_ids: [],
     },
     payment_intent: "pi_test_123",
-    payment_link: "plink_123",
     metadata: {
       offerId: "demo-offer",
       landerId: "demo-offer",
@@ -365,10 +364,6 @@ describe("POST /api/stripe/webhook", () => {
           stripe_product_id: "prod_demo",
           productSlug: "demo-offer",
           product_slug: "demo-offer",
-          paymentLinkId: "plink_123",
-          payment_link_id: "plink_123",
-          paymentLinkMode: "test",
-          payment_link_mode: "test",
           ghlTag: "purchase-demo",
           ghl_tag: "purchase-demo",
           ghlTagIds: "purchase-demo",
@@ -397,10 +392,6 @@ describe("POST /api/stripe/webhook", () => {
           stripeTermsOfServiceRequirement: "required",
           productSlug: "demo-offer",
           product_slug: "demo-offer",
-          paymentLinkId: "plink_123",
-          payment_link_id: "plink_123",
-          paymentLinkMode: "test",
-          payment_link_mode: "test",
           ghlTag: "purchase-demo",
           ghl_tag: "purchase-demo",
           ghlTagIds: "purchase-demo",
@@ -419,10 +410,6 @@ describe("POST /api/stripe/webhook", () => {
           offerId: "demo-offer",
           productSlug: "demo-offer",
           product_slug: "demo-offer",
-          paymentLinkId: "plink_123",
-          payment_link_id: "plink_123",
-          paymentLinkMode: "test",
-          payment_link_mode: "test",
           stripeProductId: "prod_demo",
           stripe_product_id: "prod_demo",
           ghlTag: "purchase-demo",
@@ -576,94 +563,6 @@ describe("POST /api/stripe/webhook", () => {
           ghl_tag: "purchase-demo",
           ghlTag: "purchase-demo",
           ghlTagIds: "purchase-demo,purchase-cross-sell",
-        }),
-      }),
-    );
-  });
-
-  it("hydrates metadata from Payment Link when session metadata is missing", async () => {
-    const event = buildCheckoutSessionEvent();
-    const session = event.data.object as Stripe.Checkout.Session;
-    session.metadata = {};
-    session.payment_link = "plink_test_fallback";
-
-    const webhookClient = {
-      webhooks: {
-        constructEvent: vi.fn().mockReturnValue(event),
-      },
-    } as unknown as ReturnType<typeof getStripeClient>;
-
-    const paymentLinkRetrieve = vi.fn().mockResolvedValue({
-      id: "plink_test_fallback",
-      livemode: false,
-      metadata: {
-        product_slug: "demo-offer",
-        stripe_product_id: "prod_demo",
-        stripe_price_id: "price_123",
-        ghl_tag: "purchase-demo",
-      },
-      line_items: {
-        data: [
-          {
-            price: {
-              id: "price_123",
-              product: "prod_demo",
-            },
-          },
-        ],
-      },
-    });
-
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
-        return {
-          paymentLinks: {
-            retrieve: paymentLinkRetrieve,
-          },
-        } as unknown as ReturnType<typeof getStripeClient>;
-      }
-      return webhookClient;
-    });
-
-    getOfferConfigMock.mockReturnValue(offerConfigFixture);
-    findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
-
-    syncOrderWithGhlMock.mockResolvedValue({
-      contactId: "contact_456",
-      opportunityCreated: true,
-    });
-
-    recordWebhookLogMock.mockResolvedValueOnce(null);
-    recordWebhookLogMock.mockResolvedValueOnce({
-      status: "success",
-      attempts: 1,
-    });
-
-    const response = await POST(buildRequest("{}"));
-    expect(response.status).toBe(200);
-
-    const payload = (await response.json()) as { received: boolean };
-    expect(payload.received).toBe(true);
-
-    expect(paymentLinkRetrieve).toHaveBeenCalledWith("plink_test_fallback", {
-      expand: ["line_items.data.price.product"],
-    });
-
-    expect(syncOrderWithGhlMock).toHaveBeenCalledWith(
-      offerConfigFixture.ghl,
-      expect.objectContaining({
-        offerId: "demo-offer",
-        metadata: expect.objectContaining({
-          productSlug: "demo-offer",
-          product_slug: "demo-offer",
-          stripeProductId: "prod_demo",
-          stripe_product_id: "prod_demo",
-          stripePriceId: "price_123",
-          stripe_price_id: "price_123",
-          paymentLinkId: "plink_test_fallback",
-          payment_link_id: "plink_test_fallback",
-          ghlTag: "purchase-demo",
-          ghl_tag: "purchase-demo",
         }),
       }),
     );

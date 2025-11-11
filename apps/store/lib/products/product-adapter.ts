@@ -6,7 +6,6 @@ import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/product/la
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
 import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
-import { resolveProductPaymentLink } from "@/lib/products/payment-link";
 import { getReleaseBadgeText } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
 import { buildPermissionEntries, buildProductResourceLinks } from "./view-model";
@@ -145,52 +144,30 @@ function selectExternalDestination(product: ProductData): string {
 }
 
 function resolveProductCta(product: ProductData): ResolvedProductCta {
-  const paymentLink = resolveProductPaymentLink(product);
-  const paymentLinkHref = paymentLink?.url;
-
   const trimmedCtaText =
     typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
 
-  // Or if pricing.cta_href explicitly targets internal checkout, prefer it too
+  const checkoutHref = typeof product.pricing?.cta_href === "string"
+    ? product.pricing.cta_href.trim()
+    : undefined;
+
   if (
-    typeof product.pricing?.cta_href === "string" &&
-    (product.pricing.cta_href.startsWith("/checkout/") || product.pricing.cta_href.startsWith("https://apps.serp.co/checkout/")) &&
-    product.status !== "pre_release"
+    checkoutHref
+    && product.status !== "pre_release"
+    && (
+      checkoutHref.startsWith("/checkout/")
+      || checkoutHref.startsWith("https://apps.serp.co/checkout/")
+    )
   ) {
     return {
-      mode: "external",
-      href: product.pricing.cta_href,
+      mode: "checkout",
+      href: checkoutHref,
       text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
       opensInNewTab: false,
       target: "_self",
       analytics: {
         destination: "checkout",
-      },
-    };
-  }
-
-  // Otherwise fall through to payment link or external destination resolution
-
-  if (paymentLinkHref && product.status !== "pre_release") {
-    const opensInNewTab = true;
-    return {
-      mode: "external",
-      href: paymentLinkHref,
-      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
-      opensInNewTab,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      analytics: {
-        destination: "payment_link",
-        paymentLink: paymentLink
-          ? {
-              provider: paymentLink.provider,
-              variant: paymentLink.variant,
-              linkId: paymentLink.linkId,
-              url: paymentLink.url,
-            }
-          : undefined,
       },
     };
   }

@@ -16,14 +16,14 @@ This branch introduces a schema-level toggle so pre-release products can share a
    - `waitlist_url`: provide a custom fallback URL (used if the modal cannot render). Most products can omit this.
    - `pricing.cta_text`: provide custom button copy (use sparingly; “Get Notified” is the standard).
 3. **Returning to checkout**
-   - Change the product `status` back to `live` when you are ready to sell, and configure the appropriate `payment_link`.
+   - Change the product `status` back to `live` when you are ready to sell, and ensure `pricing.cta_href` points to `/checkout/<slug>` (or the absolute equivalent on apps.serp.co).
 
 ## Hosted Checkout Usage
 
-Any product with `status: pre_release` automatically routes visitors to the waitlist CTA. Production launches must provide a `payment_link` (Stripe or GHL) so the storefront directs the shopper straight to the correct checkout destination.
+Any product with `status: pre_release` automatically routes visitors to the waitlist CTA. Production launches must provide a valid `pricing.cta_href` so the storefront directs the shopper straight to the internal checkout route.
 
 ## QA Checklist
 
 - Confirm all CTA variants on the product page display **Get Notified**, open the GoHighLevel modal, and successfully load the embedded form.
 - Inspect DevTools → Network while triggering the modal and verify `product_checkout_clicked` reports `destination: "waitlist"`.
-- Switch the product back to `live` and confirm the landing page routes to the configured payment link with in-tab navigation.
+- Switch the product back to `live` and confirm the landing page routes to `/checkout/<slug>` with in-tab navigation.

@@ -11,31 +11,9 @@ function parsePrice(value?: string | null): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function getStripePaymentLink(
-  product: ProductData,
-): { live_url: string; test_url?: string | undefined } | null {
-  const link = product.payment_link;
-  if (!link || typeof link !== "object") {
-    return null;
-  }
-  if ("live_url" in link) {
-    return link;
-  }
-  return null;
-}
-
-function usesInternalCheckout(product: ProductData): boolean {
-  const href = product.pricing?.cta_href;
-  return (
-    typeof href === "string" &&
-    (href.startsWith("/checkout/") || href.startsWith("https://apps.serp.co/checkout/"))
-  );
-}
-
 describe("price manifest", () => {
-  it("keeps manifest amounts and payment link metadata in sync with product copy", () => {
+  it("keeps manifest amounts in sync with product copy", () => {
     const mismatches: string[] = [];
-    const missingPaymentLinks: string[] = [];
     const missingStripeProducts: string[] = [];
 
     const products = getAllProducts();
@@ -57,15 +35,6 @@ describe("price manifest", () => {
         );
       }
 
-      // If the product uses internal checkout (/checkout/:slug), a Payment Link is not required
-      if (!usesInternalCheckout(product)) {
-        const paymentLink = getStripePaymentLink(product);
-        const liveUrl = typeof paymentLink?.live_url === "string" ? paymentLink.live_url.trim() : "";
-        if (!liveUrl.startsWith("https://buy.stripe.com/")) {
-          missingPaymentLinks.push(`${product.slug}: missing Stripe Payment Link live_url`);
-        }
-      }
-
       const stripeProductId = stripe.metadata?.stripe_product_id;
       if (typeof stripeProductId !== "string" || stripeProductId.trim().length === 0) {
         missingStripeProducts.push(`${product.slug}: missing stripe.metadata.stripe_product_id`);
@@ -73,7 +42,6 @@ describe("price manifest", () => {
     }
 
     expect(mismatches).toEqual([]);
-    expect(missingPaymentLinks).toEqual([]);
     expect(missingStripeProducts).toEqual([]);
   });
 });

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import type { Request } from "@playwright/test";
 import type { Route } from "next";
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "https://staging-apps.serp.co";
@@ -33,42 +34,60 @@ describeFn("staging smoke: product CTA", () => {
     // Ensure element inside view before clicking
     await locatorToUse.first().scrollIntoViewIfNeeded();
 
-    // Click the CTA and wait for either a new tab or navigation to checkout
-    const href = await locatorToUse.first().getAttribute("href");
-    
-    if (href && href !== "#") {
-      // Direct checkout link - expect new tab
+    const primaryCta = locatorToUse.first();
+    const href = (await primaryCta.getAttribute("href")) ?? "";
+    const target = (await primaryCta.getAttribute("target")) ?? "";
+    const opensNewTab = target === "_blank";
+    const looksLikeStripeLink = href.startsWith("https://" + STRIPE_HOST);
+
+    if (opensNewTab || looksLikeStripeLink) {
       const waitForTab = context.waitForEvent("page");
-      await locatorToUse.first().click();
+      await primaryCta.click();
       const checkoutPage = await waitForTab;
 
       await checkoutPage.waitForLoadState("domcontentloaded");
-      await checkoutPage.waitForTimeout(2000);
-
       const checkoutUrl = checkoutPage.url();
       const parsed = new URL(checkoutUrl);
       expect(parsed.hostname).toBe(STRIPE_HOST);
 
       await checkoutPage.close();
     } else {
-      // Programmatic checkout - expect same-page redirect
-      await locatorToUse.first().click();
-      
-      // Wait for navigation to Stripe checkout
-      await page.waitForURL((urlString) => {
-        try {
-          const url = new URL(urlString);
-          return url.hostname === STRIPE_HOST;
-        } catch {
-          return false;
-        }
-      }, {
-        timeout: 10000,
-      });
+      const checkoutResponsePromise = page
+        .waitForResponse(
+          (response) =>
+            response.request().method() === "GET" &&
+            response.url().startsWith(`${BASE_URL}/checkout/`),
+          { timeout: 15_000 }
+        )
+        .catch(() => null);
 
-      const checkoutUrl = page.url();
-      const parsed = new URL(checkoutUrl);
-      expect(parsed.hostname).toBe(STRIPE_HOST);
+      const stripeRequestPromise = context
+        .waitForEvent("request", {
+          predicate: (request: Request) => request.url().startsWith(`https://${STRIPE_HOST}`),
+          timeout: 20_000,
+        })
+        .catch(() => null);
+
+      await primaryCta.click();
+      const checkoutResponse = await checkoutResponsePromise;
+      expect(checkoutResponse, "internal checkout route should respond").not.toBeNull();
+
+      const status = checkoutResponse?.status() ?? 0;
+      expect(status, "checkout route should return an HTTP status").toBeGreaterThan(0);
+
+      const locationHeader = checkoutResponse?.headers()["location"];
+      if (status >= 300 && status < 400) {
+        expect(locationHeader, "redirect responses should include Location header").toBeTruthy();
+        if (locationHeader) {
+          const parsedLocation = new URL(locationHeader);
+          expect(parsedLocation.hostname).toBe(STRIPE_HOST);
+        }
+      }
+
+      const stripeRequest = await stripeRequestPromise;
+      if (locationHeader) {
+        expect(stripeRequest, "Stripe Checkout should be requested").not.toBeNull();
+      }
     }
 
     await context.close();

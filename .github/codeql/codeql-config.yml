@@ -1,0 +1,11 @@
+name: store-codeql
+languages:
+  - javascript
+  - typescript
+paths:
+  - apps
+  - packages
+  - scripts
+paths-ignore:
+  - node_modules
+  - .tmp

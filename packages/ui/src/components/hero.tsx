@@ -3,7 +3,8 @@
 import { useMemo, useRef } from "react";
 import type { ReactNode } from "react";
 import HeroMedia, { type HeroMediaHandle } from "./hero-media";
-import { Button } from "@repo/ui";
+import { Button, buttonVariants } from "@repo/ui";
+import { cn } from "@repo/ui/lib/utils";
 import { getYoutubeThumbnail, useHeroTitle } from "../utils";
 import type { HeroMediaProps } from "./hero-media";
 import SmartLink from "./smart-link";
@@ -121,25 +122,28 @@ const Title = ({ title, highlight }: TitleProps) => {
 
 const LinkItem = ({ link }: { link: HeroLink }) => {
   const testId = link["data-testid"];
+  const variantClasses = cn(
+    buttonVariants({
+      variant: link.variant || "default",
+      size: "lg",
+    }),
+    "font-bold",
+  );
 
-  // If both url and onClick are present, render as anchor with click handler
-  if (link.url && link.onClick) {
+  if (link.url) {
     return (
-      <Button
-        variant={link.variant || "default"}
-        size="lg"
-        className="font-bold"
-        asChild
+      <SmartLink
+        href={link.url}
+        onClick={link.onClick}
+        data-testid={testId}
+        className={variantClasses}
       >
-        <SmartLink href={link.url} onClick={link.onClick} data-testid={testId}>
-          {link.icon}
-          {link.label}
-        </SmartLink>
-      </Button>
+        {link.icon}
+        {link.label}
+      </SmartLink>
     );
   }
 
-  // If only onClick is present, render as button
   if (link.onClick) {
     return (
       <Button
@@ -156,24 +160,7 @@ const LinkItem = ({ link }: { link: HeroLink }) => {
     );
   }
 
-  // If only url is present, render as anchor
-  if (!link.url) {
-    return null;
-  }
-
-  return (
-    <Button
-      variant={link.variant || "default"}
-      size="lg"
-      className="font-bold"
-      asChild
-    >
-      <SmartLink href={link.url} data-testid={testId}>
-        {link.icon}
-        {link.label}
-      </SmartLink>
-    </Button>
-  );
+  return null;
 };
 
 export default Hero;

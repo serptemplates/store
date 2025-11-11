@@ -86,8 +86,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Stripe session + webhook contract
         run: pnpm --filter @apps/store run test:stripe-live
-      - name: Payment links resolve and match pricing
-        run: pnpm --filter @apps/store run test:stripe-payment-links
 
   staging-playwright:
     name: Playwright Staging Smoke
