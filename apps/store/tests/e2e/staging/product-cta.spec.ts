@@ -51,36 +51,29 @@ describeFn("staging smoke: product CTA", () => {
 
       await checkoutPage.close();
     } else {
-      const checkoutPathFragment = `/checkout/`;
-      const checkoutRequestPromise = page
-        .waitForRequest(
-          (request) =>
-            request.method() === "GET" &&
-            request.url().startsWith(`${BASE_URL}${checkoutPathFragment}`),
+      const checkoutResponsePromise = page
+        .waitForResponse(
+          (response) =>
+            response.request().method() === "GET" &&
+            response.url().startsWith(`${BASE_URL}/checkout/`),
           { timeout: 15_000 }
         )
         .catch(() => null);
 
-      const stripeNavigationPromise = page.waitForURL(
-        (urlString) => {
-          try {
-            const url = new URL(urlString);
-            return url.hostname === STRIPE_HOST;
-          } catch {
-            return false;
-          }
-        },
-        { timeout: 20_000 }
-      );
-
       await primaryCta.click();
-      const checkoutRequest = await checkoutRequestPromise;
-      await stripeNavigationPromise;
+      const checkoutResponse = await checkoutResponsePromise;
+      expect(checkoutResponse, "internal checkout route should respond").not.toBeNull();
 
-      expect(checkoutRequest, "internal checkout route should be hit before Stripe").not.toBeNull();
-      const checkoutUrl = page.url();
-      const parsed = new URL(checkoutUrl);
-      expect(parsed.hostname).toBe(STRIPE_HOST);
+      const status = checkoutResponse?.status() ?? 0;
+      expect([302, 303, 307]).toContain(status);
+
+      const locationHeader = checkoutResponse?.headers()["location"];
+      expect(locationHeader, "checkout redirect should include Location header").toBeTruthy();
+
+      if (locationHeader) {
+        const parsedLocation = new URL(locationHeader);
+        expect(parsedLocation.hostname).toBe(STRIPE_HOST);
+      }
     }
 
     await context.close();
