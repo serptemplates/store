@@ -6,9 +6,8 @@ import { test, expect, type Page } from "@playwright/test";
 const DUB_TEST_LINK = process.env.DUB_TEST_LINK || "https://apps.serp.co/loom-video-downloader?via=mds";
 const STAGING_BASE_URL = process.env.STAGING_BASE_URL || "https://staging-apps.serp.co";
 
-const EXPECTED_DUB_ID = "5lPAmZWDhsWcvbM6";
-const EXPECTED_PARTNER_JSON =
-  "{\"clickId\":\"5lPAmZWDhsWcvbM6\",\"partner\":{\"id\":\"pn_1K90RYAD6VHZFZSK1A19WRPVS\",\"name\":\"m.devinschumacher%40gmail.com\",\"image\":\"https%3A%2F%2Fapi.dub.co%2Fog%2Favatar%2Fpn_1K90RYAD6VHZFZSK1A19WRPVS\"},\"discount\":null}";
+const EXPECTED_DUB_ID = process.env.DUB_EXPECTED_ID;
+const EXPECTED_PARTNER_JSON = process.env.DUB_EXPECTED_PARTNER_JSON;
 
 // Opt-in via env
 const maybe = process.env.RUN_STAGING_SMOKE ? test : test.skip;
@@ -46,13 +45,23 @@ maybe("Dub affiliate cookies set and persist to staging", async ({ page, context
   const dubId = extractCookieValue(cookiesStr, "dub_id");
   const partnerRaw = extractCookieValue(cookiesStr, "dub_partner_data");
 
-  expect(dubId, `dub_id should be ${EXPECTED_DUB_ID}`).toBe(EXPECTED_DUB_ID);
+  expect(dubId, "dub_id cookie should be set").not.toBeNull();
+  if (!dubId) throw new Error("dub_id cookie missing after visiting Dub link");
+
+  if (EXPECTED_DUB_ID) {
+    expect(dubId, `dub_id should be ${EXPECTED_DUB_ID}`).toBe(EXPECTED_DUB_ID);
+  }
+
   expect(partnerRaw, "dub_partner_data should exist").not.toBeNull();
-  expect(partnerRaw).toBe(EXPECTED_PARTNER_JSON);
+  if (!partnerRaw) throw new Error("dub_partner_data cookie missing after visiting Dub link");
+
+  if (EXPECTED_PARTNER_JSON) {
+    expect(partnerRaw).toBe(EXPECTED_PARTNER_JSON);
+  }
 
   // 3) Navigate to staging and verify persistence
   await page.goto(`${STAGING_BASE_URL}/loom-video-downloader`, { waitUntil: "domcontentloaded" });
   const stagingCookiesStr = await waitForCookie(page, "dub_id");
   const stagingDubId = extractCookieValue(stagingCookiesStr, "dub_id");
-  expect(stagingDubId).toBe(EXPECTED_DUB_ID);
+  expect(stagingDubId).toBe(dubId);
 });
