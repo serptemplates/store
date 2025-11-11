@@ -27,13 +27,11 @@ export type ConversionData = {
   items?: ConversionItem[];
   coupon?: string | null;
   affiliateId?: string | null;
-  paymentLinkId?: string | null;
   productSlug?: string | null;
 };
 
 type ConversionTrackingProps = {
   sessionId?: string | null;
-  paymentLinkId?: string | null;
   order?: ConversionData | null;
   provider?: string | null;
 };
@@ -51,10 +49,9 @@ function toEcommerceItems(items?: ConversionItem[]): EcommerceItem[] {
   }));
 }
 
-export function ConversionTracking({ sessionId, paymentLinkId, order, provider }: ConversionTrackingProps) {
+export function ConversionTracking({ sessionId, order, provider }: ConversionTrackingProps) {
   useEffect(() => {
-    const trackingKey =
-      sessionId ?? paymentLinkId ?? order?.paymentLinkId ?? null;
+    const trackingKey = order?.sessionId ?? sessionId ?? null;
 
     if (!trackingKey || !order) {
       return;
@@ -85,7 +82,6 @@ export function ConversionTracking({ sessionId, paymentLinkId, order, provider }
       posthog.capture("checkout_completed", {
         source: "client",
         transaction_id: transactionId,
-        payment_link_id: order.paymentLinkId ?? null,
         product_slug: order.productSlug ?? null,
         currency: order.currency ?? null,
         amount_total: amountValue,
@@ -175,7 +171,7 @@ export function ConversionTracking({ sessionId, paymentLinkId, order, provider }
     }
 
     sessionStorage.setItem(storageKey, "true");
-  }, [sessionId, paymentLinkId, order, provider]);
+  }, [sessionId, order, provider]);
 
   return null;
 }

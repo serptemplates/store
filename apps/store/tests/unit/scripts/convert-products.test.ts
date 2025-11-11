@@ -57,9 +57,6 @@ describe("scripts/convert-products", () => {
       cancel_url: "https://apps.serp.co/checkout?product=sample-product",
       tagline: "Save time instantly",
       featured_image: "/media/products/sample-product/featured.png",
-      payment_link: {
-        live_url: "https://buy.stripe.com/sample",
-      },
       screenshots: [
         {
           url: "/media/products/sample-product/secondary.png",
@@ -70,6 +67,7 @@ describe("scripts/convert-products", () => {
       pricing: {
         currency: "usd",
         price: "$10",
+        cta_href: "https://apps.serp.co/checkout/sample-product",
         benefits: ["Benefit one"],
       },
       faqs: [

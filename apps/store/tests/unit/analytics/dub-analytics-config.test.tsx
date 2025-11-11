@@ -7,10 +7,10 @@ import { DubAnalytics } from "@/components/analytics/DubAnalytics";
 
 describe("DubAnalytics configuration", () => {
   const PUBLISHABLE_KEY = "dub_pk_test_123456";
-
   beforeEach(() => {
     vi.stubGlobal("React", React);
     process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY = PUBLISHABLE_KEY;
+    process.env.NEXT_PUBLIC_RUNTIME_ENV = "production";
     // Clean any previous script tags to get a clean slate
     document.head
       .querySelectorAll('script[data-sdkn="@dub/analytics"]')
@@ -19,6 +19,8 @@ describe("DubAnalytics configuration", () => {
 
   afterEach(() => {
     cleanup();
+    delete process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
+    delete process.env.NEXT_PUBLIC_RUNTIME_ENV;
   });
 
   it("injects the Dub script with correct attributes and domains config", async () => {
@@ -64,5 +66,12 @@ describe("DubAnalytics configuration", () => {
     // The script src should be the analytics script (features concatenated by the SDK)
     const src = script?.getAttribute("src") ?? "";
     expect(src).toContain("https://www.dubcdn.com/analytics/script");
+  });
+
+  it("skips loading Dub script outside production runtime", () => {
+    process.env.NEXT_PUBLIC_RUNTIME_ENV = "development";
+    render(<DubAnalytics />);
+    const script = document.head.querySelector('script[data-sdkn="@dub/analytics"]');
+    expect(script).toBeNull();
   });
 });

@@ -12,9 +12,9 @@
 | --- | --- | --- |
 | Product JSON used at runtime | UI, checkout API, feeds read this canonical document | `apps/store/data/products/onlyfans-downloader.json:71-80` for `pricing.*`, `168-172` for `stripe.price_id` |
 | Price manifest | `findPriceEntry()` (`apps/store/lib/products/product-adapter.ts:268-303`) and Google Merchant (`apps/store/lib/google-merchant/merchant-product.ts:1-99`) source amounts from `apps/store/data/prices/manifest.json` |
-| Internal checkout API | `/api/checkout/products/[slug]` and `/api/checkout/session` rely on the manifest to charge the correct amount (`apps/store/app/api/checkout/products/[slug]/route.ts:1-56`) |
-| Tests & partner docs | Dub integration docs/tests assert the Stripe price ID (`apps/store/tests/unit/ClientHomeView-dub-stripe.test.tsx:120-200`, `docs/architecture/dub-partner-attribution.md:153-212`) |
-| Ops references | Stripe exports + ops tables surface price IDs (`docs/data/prices.csv:65`, `docs/data/offer-catalog.csv:49`, `docs/offer-catalog.csv:97`, `docs/operations/stripe-payment-links.md:107`) |
+| Internal checkout route | `/checkout/<slug>` resolves the manifest entry server-side when creating the Stripe session (`apps/store/app/checkout/[slug]/route.ts`) |
+| Tests & partner docs | Dub integration docs reference the live Stripe price ID (`docs/architecture/dub-partner-attribution.md`) |
+| Ops references | Stripe exports + ops tables surface price IDs (`docs/data/prices.csv:65`, `docs/data/offer-catalog.csv:49`, `docs/offer-catalog.csv:97`) |
 
 Keep this table handy while editing; every row needs to be touched or re-generated.
 
@@ -30,7 +30,7 @@ Keep this table handy while editing; every row needs to be touched or re-generat
 3. Snapshot current identifiers (adjust the ID strings whenever you mint a new price):  
   ```bash
   rg -n "price_1SRotl06JrOmKRCmY0T4Yy2P" -n   # current $27 live price
-  rg -n "price_1SO0eT06JrOmKRCmURKdH9hA" -n   # retired $9 payment-link price (should stay unused)
+  rg -n "price_1SO0eT06JrOmKRCmURKdH9hA" -n   # retired $9 legacy price (should stay unused)
   ```  
   This gives you a quick checklist of everywhere the live/retired price IDs are referenced before you edit anything.
 
@@ -40,9 +40,8 @@ Keep this table handy while editing; every row needs to be touched or re-generat
 
 1. In Stripe, open **Products → OnlyFans Downloader (`prod_Sv6HHbpO7I9vt0`)**.
 2. Create a **new one-time USD price** for **$27.00**. Stripe prices are immutable, so you must mint a new ID (e.g. `price_XXXXXXXXXXXX27`).
-3. (Optional) While you’re in Stripe, create a fresh **payment link** pointing at the new price. Even though the product currently uses internal checkout (`pricing.cta_href` goes to `/checkout/onlyfans-downloader`), Ops keeps payment-link inventory in `docs/operations/stripe-payment-links.md`.
-4. Disable/Archive the old `$17` price(s) so no one selects them accidentally.
-5. Record the new price ID and payment-link ID for the repo updates in the next section.
+3. Disable/Archive the old `$17` price(s) so no one selects them accidentally.
+4. Record the new price ID for the repo updates in the next section.
 
 ---
 
@@ -68,15 +67,10 @@ Keep this table handy while editing; every row needs to be touched or re-generat
    - `docs/data/prices.csv:65`: update the `Price ID` column to the new ID and the `Amount` column to `27.00`.
    - `docs/data/offer-catalog.csv:49` and `docs/offer-catalog.csv:97`: set the `Price` column to `$27.00` and swap the `price_...` column to the new ID. These files fuel sales/merchant handoffs.
 
-4. **Stripe payment-link audit** (`docs/operations/stripe-payment-links.md:107`)
-   - Update the table row so it tracks the new price ID, payment-link ID (`plink_...`), and public URL.  
-   - Note in the description column that the price moved from $17 to $27 so future audits know why.
+4. **Dub attribution docs**
+   - `docs/architecture/dub-partner-attribution.md`: change the example `priceId` and JSON snippet to the new Stripe price. This keeps the documentation accurate for partner engineers.
 
-5. **Dub attribution docs & tests**
-   - `docs/architecture/dub-partner-attribution.md:153-212`: change the example `priceId` and JSON snippet to the new Stripe price. This keeps the documentation accurate for partner engineers.
-   - `apps/store/tests/unit/ClientHomeView-dub-stripe.test.tsx:120-200`: update both the mocked `product.stripe.price_id` and the expectation inside `mockFetch` to the new ID. The test already asserts `$27`, so no further adjustment is needed unless you alter the amount again later.
-
-6. **Housekeeping**
+5. **Housekeeping**
    - Re-run `rg -n "<old_price_id>"` to confirm the old ID is gone everywhere in the repo (code, docs, tests).
    - If you retire the $9 Stripe price (`price_1SO0eT06JrOmKRCmURKdH9hA`), clean up any lingering references the same way.
 

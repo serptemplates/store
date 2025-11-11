@@ -15,7 +15,7 @@
 
 - **Identity & SEO** – `platform`, `slug`, `name`, `tagline`, `description`, `seo_title`, `seo_description`, and canonical URLs (`serply_link`, `apps_serp_co_product_page_url`, `store_serp_co_product_page_url`, optional `serp_co_product_page_url`). URL hosts are locked down so broken redirects fail validation early.
 - **Marketing surfaces** – `features`, `pricing`, `screenshots`, `product_videos`, `related_videos`, `related_posts`, `faqs`, `reviews`, and optional badges (`featured`, `new_release`, `popular`). Currency codes are auto-uppercased and constrained to ISO 4217; review ratings must sit between 0–5.
-- **Commerce & fulfilment** – `payment_link`, `stripe`, `ghl`, `license`, `return_policy`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays.
+- **Commerce & fulfilment** – `pricing` (CTA + copy), `stripe`, `ghl`, `license`, `return_policy`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays.
 - **Navigation & taxonomy** – `categories`, `keywords`, `supported_operating_systems`, `supported_regions`, `github_repo_tags`, plus optional `brand`, `sku`, and `waitlist_url`.
 
 ## Blog + Video linking

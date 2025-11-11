@@ -71,21 +71,19 @@ The ad-hoc harnesses under `apps/store/scripts/manual-tests/` are still handy fo
 | Script | Purpose |
 | --- | --- |
 | `npx tsx scripts/manual-tests/acceptance-test.ts` | Full Stripe checkout simulation (webhooks + GHL sync). |
-| `npx tsx scripts/manual-tests/automated-payment-test.ts` | Stress-tests automated payment flow without UI. |
 | `npx tsx scripts/manual-tests/test-payment-flow.ts` | Fast preflight for DB + Stripe connectivity. |
-| `npx tsx scripts/manual-tests/test-purchase-flow.ts` | Replays `checkout.session.completed` against the webhook dispatcher. |
+| `npx tsx scripts/manual-tests/test-stripe-direct.ts` | Direct Stripe SDK sanity check (no UI). |
+| `npx tsx scripts/manual-tests/test-dub-attribution.ts` | Exercises Dub attribution flow + Checkout Session creation. |
 | `npx tsx scripts/manual-tests/test-ghl-direct.ts` (and friends) | Exercises GoHighLevel APIs directly. |
-| `python scripts/manual-tests/test_checkout_with_playwright.py` | Interactive Playwright checkout run. |
 
 ## GHL integration checks
 
 Use the automation harnesses when validating metadata changes:
 
 ```bash
-# Payment Link health check
+# Checkout session health check
 
-> Legacy note: PayPal checks were removed in Q4 2024; the steps below focus exclusively on the Stripe Payment Link path.
-pnpm --filter @apps/store exec tsx scripts/manual-tests/automated-payment-test.ts
+pnpm --filter @apps/store exec tsx scripts/manual-tests/test-payment-flow.ts
 
 # Legacy PayPal → GHL integration spec
 
@@ -134,7 +132,7 @@ Review Stripe (test mode), your inbox, Postgres, and GoHighLevel afterward to in
 
 For deeper troubleshooting you can run the ad-hoc harnesses under `apps/store/scripts/manual-tests/` (all of them load env vars from the project root):
 
-- `acceptance-test.ts` & `automated-payment-test.ts` – full end-to-end flows with Stripe Payment Links, Postgres, and GHL (`npx tsx scripts/manual-tests/acceptance-test.ts`, `npx tsx scripts/manual-tests/automated-payment-test.ts`).
+- `acceptance-test.ts` – full end-to-end flow with Stripe Checkout, Postgres, and GHL (`npx tsx scripts/manual-tests/acceptance-test.ts`).
 - `test-payment-flow.ts` – quick environment/database sanity check (`npx tsx scripts/manual-tests/test-payment-flow.ts`).
 - `test-purchase-flow.ts` – replays a synthetic `checkout.session.completed` event against the webhook (`npx tsx scripts/manual-tests/test-purchase-flow.ts`).
 - `test-ghl-direct.ts`, `test-ghl-api-direct.ts`, `test-exact-request.ts` – focused GHL connectivity probes (`npx tsx scripts/manual-tests/<script>.ts`).

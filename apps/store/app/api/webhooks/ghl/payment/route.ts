@@ -460,7 +460,7 @@ export async function POST(request: NextRequest) {
           },
         },
         paymentStatus: parsed.paymentStatus ?? null,
-        paymentMethod: parsed.paymentSource ?? "ghl_payment_link",
+        paymentMethod: parsed.paymentSource ?? "ghl_checkout",
         source: "ghl",
       });
     } catch (error) {

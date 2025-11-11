@@ -14,8 +14,8 @@ The Dub Stripe integration requires specific metadata fields (`dubCustomerExtern
 
 1. **Affiliate shares Dub link**: `serp.cc/xxx` → `apps.serp.co/product?dub_id=xyz`
 2. **DubAnalytics sets cookie**: `dub_id` cookie stored on `.serp.co` domain
-3. **User clicks buy button**: Instead of linking directly to Payment Link, we intercept the click
-4. **Create programmatic session**: Call `/api/checkout/session` with Dub metadata from cookie
+3. **User clicks buy button**: CTA always navigates to `/checkout/<slug>`
+4. **Server route creates session**: `app/checkout/[slug]/route.ts` reads the `dub_id` cookie and attaches Dub metadata while creating the Stripe Checkout Session
 5. **Redirect to Stripe**: User completes checkout with proper attribution metadata
 6. **Dub Stripe app tracks**: Webhook receives session with `dubCustomerExternalId`, attributes sale to affiliate
 
@@ -30,98 +30,23 @@ The Dub Stripe integration requires specific metadata fields (`dubCustomerExtern
 - Cookie domain: `.serp.co` (works across subdomains)
 - Tracked query params: `via`, `dub_id`
 
-#### 2. Checkout Session API
+#### 2. Server-Side Checkout Session Creation
 
-**File**: `/apps/store/app/api/checkout/session/route.ts`
+**File**: `/apps/store/app/checkout/[slug]/route.ts`
 
-- Accepts `dubCustomerExternalId` and `dubClickId` parameters
-- Passes them to Stripe checkout session metadata
-- Also sets `clientReferenceId` for additional tracking
+- Resolves the product/offer config from JSON.
+- Reads the `dub_id` cookie from the request and normalizes it (`dub_id_...`).
+- Adds Dub identifiers (`dubCustomerExternalId`, `dubClickId`, `client_reference_id`) directly to the Stripe Checkout Session metadata.
+- Redirects the user to `session.url`.
 
-**Request Schema**:
-```typescript
-{
-  priceId: string,
-  quantity?: number,
-  mode?: "payment" | "subscription",
-  successUrl?: string,
-  cancelUrl?: string,
-  customerEmail?: string,
-  clientReferenceId?: string,
-  dubCustomerExternalId?: string,  // Required for Dub attribution
-  dubClickId?: string,              // Required for Dub attribution
-  metadata?: Record<string, string>
-}
-```
+Because this happens inside the Next.js route handler, there is no client-side fetch or API proxy to maintain, and metadata is attached for every checkout regardless of how the CTA was triggered.
 
-#### 3. Dub Checkout Utility
-
-**File**: `/apps/store/lib/checkout/create-session-with-dub.ts`
-
-- Reads `dub_id` cookie from browser
-- Normalizes the value (ensures `dub_id_` prefix)
-- Calls checkout session API with proper Dub metadata
-- Returns checkout session URL for redirect
-
-**Key Function**:
-```typescript
-async function createSessionWithDub(options: CreateSessionWithDubOptions): Promise<string | null>
-```
-
-#### 4. React Hook for Buy Button
-
-**File**: `/apps/store/lib/checkout/use-dub-checkout.ts`
-
-- React hook that encapsulates the buy button logic
-- Checks if product has `stripe.price_id` available
-- Intercepts click events when price ID is present
-- Creates programmatic checkout session with Dub metadata
-- Falls back to Payment Link if anything fails
-
-**Usage**:
-```typescript
-const dubCheckout = useDubCheckout({
-  product,
-  fallbackUrl: resolvedCta.href,
-  onCheckoutStart: () => { /* analytics */ },
-  onCheckoutError: (error) => { /* error handling */ }
-})
-
-// Returns: { handleBuyClick, isCreatingSession, hasPriceId }
-```
-
-#### 5. Integration in Product Page
+#### 3. Integration in Product Page
 
 **File**: `/apps/store/components/product/landers/default/ClientHomeView.tsx`
 
-**Changes**:
-1. Import `useDubCheckout` hook
-2. Initialize hook with product data and fallback URL
-3. Modify CTA handlers to use `dubCheckout.handleBuyClick()` when price ID is available
-4. Set CTA href to `"#"` when intercepting (prevents default navigation)
-5. Remove old useEffect that attempted to modify Payment Link URLs
-
-**Before**:
-```typescript
-// Attempted to append dub_id to Payment Link URL (doesn't work)
-const handlePrimaryCtaClick = useCallback(() => {
-  handleCtaClick("pricing")
-}, [handleCtaClick])
-```
-
-**After**:
-```typescript
-// Intercepts click to create programmatic session with Dub metadata
-const dubCheckout = useDubCheckout({ product, fallbackUrl: resolvedCta.href })
-
-const handlePrimaryCtaClick = useCallback((event) => {
-  if (dubCheckout.hasPriceId) {
-    dubCheckout.handleBuyClick(event)  // Creates session with Dub data
-  } else {
-    handleCtaClick("pricing")  // Fallback to normal flow
-  }
-}, [dubCheckout, handleCtaClick])
-```
+- `useProductCheckoutCta` handles analytics + waitlist behaviour and normalizes CTA URLs so they always land on `/checkout/<slug>` (or the configured waitlist URL).
+- Once the browser navigates to `/checkout/<slug>`, the server route handles the Dub metadata injection and Stripe session creation.
 
 ## Data Flow Diagram
 
@@ -141,20 +66,16 @@ const handlePrimaryCtaClick = useCallback((event) => {
                   ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ 3. User clicks "Get it Now" buy button                      │
-│    - useDubCheckout hook intercepts click                   │
-│    - Reads dub_id cookie: "abc123"                          │
-│    - Normalizes: "dub_id_abc123"                            │
+│    - useProductCheckoutCta logs analytics                   │
+│    - Browser navigates to /checkout/onlyfans-downloader     │
 └─────────────────┬───────────────────────────────────────────┘
                   │
                   ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ 4. POST /api/checkout/session                               │
-│    {                                                         │
-│      priceId: "price_1SRotl06JrOmKRCmY0T4Yy2P",            │
-│      dubCustomerExternalId: "dub_id_abc123",                │
-│      dubClickId: "dub_id_abc123",                           │
-│      clientReferenceId: "dub_id_abc123"                     │
-│    }                                                         │
+│ 4. GET /checkout/onlyfans-downloader                        │
+│    - Route reads dub_id cookie: "abc123"                    │
+│    - Normalizes: "dub_id_abc123"                            │
+│    - Creates Stripe Checkout Session w/ Dub metadata        │
 └─────────────────┬───────────────────────────────────────────┘
                   │
                   ▼
@@ -167,7 +88,7 @@ const handlePrimaryCtaClick = useCallback((event) => {
                   ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ 6. Redirect user to Stripe checkout                         │
-│    window.location.href = session.url                       │
+│    Next.js issues 302 → https://checkout.stripe.com/...     │
 └─────────────────┬───────────────────────────────────────────┘
                   │
                   ▼
@@ -202,7 +123,7 @@ This implementation follows the exact same pattern as the existing GHL affiliate
 
 ## Product Data Requirements
 
-For this solution to work, products must have `stripe.price_id` field in their JSON:
+For this solution to work, products must have `stripe.price_id` and an internal checkout CTA in their JSON:
 
 ```json
 {
@@ -212,14 +133,13 @@ For this solution to work, products must have `stripe.price_id` field in their J
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }
   },
-  "payment_link": {
-    "live_url": "https://buy.stripe.com/...",
-    "test_url": "https://buy.stripe.com/test_..."
+  "pricing": {
+    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader"
   }
 }
 ```
 
-**Graceful Degradation**: If `stripe.price_id` is not present, the buy button falls back to the Payment Link (no attribution, but purchase still works).
+**Graceful Degradation**: If `stripe.price_id` is missing, schema validation surfaces the error for live products. Draft or pre-release entries can still link to waitlists or docs, but `/checkout/<slug>` is never rendered so there is no partial attribution state.
 
 ## Testing
 
@@ -251,59 +171,60 @@ For this solution to work, products must have `stripe.price_id` field in their J
 ### Automated Tests
 
 Add to test suite:
-- Unit test for `createSessionWithDub()` cookie reading logic
-- Unit test for `useDubCheckout()` click interception
-- Integration test for full checkout flow with Dub cookie
-- E2E test with Playwright to verify end-to-end attribution
+- Unit test for the `/checkout/[slug]` route handler that stubs a request with `dub_id` and asserts the Stripe payload includes `dubCustomerExternalId`, `dubClickId`, and `client_reference_id`.
+- Unit/component test for `useProductCheckoutCta` to ensure CTA clicks normalize internal URLs and invoke `handleCtaClick` without rewriting to external hosts.
+- E2E test with Playwright to verify: CTA navigates to `/checkout/<slug>`, Fast Refresh logs show the 302 to Stripe, and Stripe test sessions include the Dub metadata.
 
 ## Monitoring
 
 ### Success Metrics
 
-- Checkout sessions created via API (with `dubCustomerExternalId`) vs Payment Links
-- Dub webhook attribution success rate
-- Fallback to Payment Links rate (when price_id missing)
+- Percentage of `/checkout/<slug>` responses that include Dub metadata (should mirror the percentage of CTA clicks that originated from a Dub link).
+- Dub webhook attribution success rate.
+- Stripe webhook error rate for `checkout.session.completed`.
 
 ### Error Scenarios
 
-1. **No dub_id cookie**: Session created without Dub metadata (no attribution)
-2. **API call fails**: Fallback to Payment Link (no attribution)
-3. **No price_id in product**: Direct link to Payment Link (expected behavior)
-4. **Session creation timeout**: Fallback to Payment Link after 5s
+1. **No dub_id cookie**: Session created without Dub metadata (expected; no attribution).
+2. **No price_id on product**: Route returns 404 and schema validation should have failed earlier.
+3. **Stripe API error**: Route returns 500 and CTA displays an error toast; investigate Stripe logs.
 
 ### Logging
 
-Key events to monitor:
+Key events to monitor from `/checkout/[slug]`:
 ```typescript
-// Success
-console.log("Dub checkout session created", { dubId, sessionId })
+logger.info("checkout.session.create", {
+  slug,
+  dubId,
+  stripeMode,
+  sessionId,
+})
 
-// Fallback
-console.log("Falling back to Payment Link", { reason, productSlug })
-
-// Error
-console.error("Dub checkout error", { error, dubId, priceId })
+logger.error("checkout.session.create_failed", {
+  slug,
+  dubId,
+  error: error instanceof Error ? error.message : String(error),
+})
 ```
 
 ## Deployment Checklist
 
-- [x] Create checkout session utility
-- [x] Create React hook for buy button interception
-- [x] Update ClientHomeView to use Dub checkout
-- [x] Remove old Payment Link URL modification code
+- [x] Normalize all product CTAs to `/checkout/<slug>` and enforce via schema.
+- [x] Update `/checkout/[slug]/route.ts` to read `dub_id` and attach metadata.
+- [x] Update client CTAs (ClientHomeView + sticky bar) to rely on internal navigation only.
 - [x] Run lint checks
 - [x] Run type checks
 - [ ] Run unit tests
 - [ ] Test with real Dub affiliate link
 - [ ] Verify Dub dashboard shows attributed sales
-- [ ] Monitor error rates for first 24 hours
+- [ ] Monitor webhook error rates for first 24 hours
 - [ ] Update product JSON files to include `stripe.price_id` where missing
 
 ## Rollback Plan
 
 If attribution issues occur:
 
-1. **Immediate**: Revert ClientHomeView changes (restore Payment Link direct links)
+1. **Immediate**: Revert the CTA normalization + `/checkout/[slug]` route changes to the last known-good commit so CTAs keep working while you investigate.
 2. **Investigation**: Check Dub webhook logs for errors
 3. **Fix**: Update metadata field names or cookie reading logic as needed
 4. **Redeploy**: Test thoroughly before re-enabling

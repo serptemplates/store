@@ -23,7 +23,6 @@ import { useProductPageExperience } from "@/components/product/hooks/useProductP
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 import { deriveProductCategories } from "@/lib/products/categories"
-import { useDubCheckout } from "@/lib/checkout/use-dub-checkout"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -73,18 +72,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   // Set up Dub-aware checkout handler
   // This intercepts buy button clicks to create programmatic checkout sessions
   // with proper Dub attribution metadata when stripe.price_id is available
-  const dubCheckout = useDubCheckout({
-    product,
-    fallbackUrl: resolvedCta.href,
-    onCheckoutStart: () => {
-      // Track checkout start event
-      handleCtaClick("pricing")
-    },
-    onCheckoutError: (error) => {
-      console.error("Dub checkout error:", error)
-    },
-  })
-
   const shouldOpenInNewTab = resolvedCta.opensInNewTab
   const isInternalCheckoutRoute = (() => {
     if (typeof resolvedCta.href !== "string") return false
@@ -113,7 +100,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   })()
   // If CTA is explicitly the internal checkout route, render it (optionally localhost-normalized)
   // Otherwise, use "#" when we have a price ID (intercept to add Dub metadata)
-  const resolvedCtaHref = isInternalCheckoutRoute ? renderedCheckoutHref : (dubCheckout.hasPriceId ? "#" : resolvedCta.href)
+  const resolvedCtaHref = isInternalCheckoutRoute ? renderedCheckoutHref : resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
   const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
@@ -156,30 +143,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
 
   // Handle buy button clicks with Dub attribution
   // Intercepts primary CTA clicks to create programmatic checkout sessions
-  const handlePrimaryCtaClick = useCallback((event?: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isInternalCheckoutRoute) {
-      // allow default navigation but still capture analytics
-      handleCtaClick("pricing")
-      return
-    }
-    if (dubCheckout.hasPriceId) {
-      dubCheckout.handleBuyClick(event)
-    } else {
-      handleCtaClick("pricing")
-    }
-  }, [dubCheckout, handleCtaClick, isInternalCheckoutRoute])
+  const handlePrimaryCtaClick = useCallback(() => {
+    handleCtaClick("pricing")
+  }, [handleCtaClick])
 
-  const handleStickyCtaClick = useCallback((event?: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isInternalCheckoutRoute) {
-      handleCtaClick("sticky_bar")
-      return
-    }
-    if (dubCheckout.hasPriceId) {
-      dubCheckout.handleBuyClick(event)
-    } else {
-      handleCtaClick("sticky_bar")
-    }
-  }, [dubCheckout, handleCtaClick, isInternalCheckoutRoute])
+  const handleStickyCtaClick = useCallback(() => {
+    handleCtaClick("sticky_bar")
+  }, [handleCtaClick])
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`

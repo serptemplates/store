@@ -41,6 +41,7 @@ const baseProduct: ProductData = {
   pricing: {
     price: "$99",
     benefits: [],
+    cta_href: "https://apps.serp.co/checkout/sample-product",
   },
   screenshots: [],
   supported_operating_systems: [],
@@ -50,10 +51,6 @@ const baseProduct: ProductData = {
   stripe: {
     price_id: "price_123",
     metadata: {},
-  },
-  payment_link: {
-    live_url: "https://buy.stripe.com/live-sample-product",
-    test_url: "https://buy.stripe.com/test-sample-product",
   },
   layout_type: "landing",
   status: "live",
@@ -103,7 +100,7 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       pricing: {
         price: "$49",
-        cta_href: "https://store.serp.co/checkout/example",
+        cta_href: "https://apps.serp.co/checkout/sample-product",
         cta_text: "Get Started",
         benefits: ["One", "Two"],
       },
@@ -128,21 +125,15 @@ describe("productToHomeTemplate", () => {
 
     const template = productToHomeTemplate(product, posts);
 
-    expect(template.ctaMode).toBe("external");
-    expect(template.ctaOpensInNewTab).toBe(true);
-    expect(template.cta?.mode).toBe("external");
-    expect(template.ctaHref).toBe("https://buy.stripe.com/test-sample-product");
+    expect(template.ctaMode).toBe("checkout");
+    expect(template.ctaOpensInNewTab).toBe(false);
+    expect(template.cta?.mode).toBe("checkout");
+    expect(template.ctaHref).toBe("https://apps.serp.co/checkout/sample-product");
     expect(template.ctaText).toBe("Get Started");
-    expect(template.cta?.analytics?.destination).toBe("payment_link");
-    expect(template.cta?.analytics?.paymentLink).toEqual({
-      provider: "stripe",
-      variant: "test",
-      linkId: expect.any(String),
-      url: "https://buy.stripe.com/test-sample-product",
-    });
+    expect(template.cta?.analytics?.destination).toBe("checkout");
     const pricing = template.pricing!;
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
-    expect(pricing.ctaHref).toBe("https://buy.stripe.com/test-sample-product");
+    expect(pricing.ctaHref).toBe("https://apps.serp.co/checkout/sample-product");
     expect(pricing.ctaText).toBe("Get Started");
     expect(pricing.subheading).toBeUndefined();
     expect(template.posts).toHaveLength(1);
@@ -180,26 +171,10 @@ describe("productToHomeTemplate", () => {
 
   // Removed: legacy buy_button_destination no longer supported
 
-  it("falls back to GHL payment link when only ghl_url is provided", () => {
-    const product: ProductData = {
-      ...baseProduct,
-      payment_link: {
-        ghl_url: "https://ghl.serp.co/payment-link/test",
-      },
-    };
-
-    const template = productToHomeTemplate(product, []);
-
-    expect(template.ctaMode).toBe("external");
-    expect(template.ctaOpensInNewTab).toBe(true);
-    expect(template.ctaHref).toBe("https://ghl.serp.co/payment-link/test");
-  });
-
   it("falls back to apps product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
       stripe: undefined,
-      payment_link: undefined,
       
       pricing: {
         price: baseProduct.pricing?.price,
@@ -223,7 +198,6 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       status: "pre_release",
       stripe: undefined,
-      payment_link: undefined,
       
       pricing: {
         price: baseProduct.pricing?.price,

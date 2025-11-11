@@ -223,7 +223,6 @@ export function SuccessContent() {
   const sessionId = searchParams.get("session_id");
   const source = searchParams.get("source");
   const providerParam = searchParams.get("provider");
-  const paymentLinkIdParam = searchParams.get("payment_link_id");
   const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
   const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
   const slugParam = searchParams.get("slug");
@@ -250,7 +249,6 @@ export function SuccessContent() {
   const [error, setError] = useState<string | null>(null);
   const [isVideoActive, setIsVideoActive] = useState(false);
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
-  const [paymentLinkId, setPaymentLinkId] = useState<string | null>(paymentLinkIdParam);
   const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
@@ -283,13 +281,8 @@ export function SuccessContent() {
           items: conversionItems,
           coupon: result.order.coupon ?? undefined,
           affiliateId: result.order.affiliateId ?? undefined,
-          paymentLinkId: result.order.paymentLinkId ?? null,
           productSlug: result.order.productSlug ?? null,
         });
-
-        if (result.order.paymentLinkId) {
-          setPaymentLinkId(result.order.paymentLinkId);
-        }
 
         if (result.order.productSlug) {
           setProductSlug(result.order.productSlug);
@@ -352,11 +345,6 @@ export function SuccessContent() {
     const url = new URL(window.location.href);
     let mutated = false;
 
-    if (paymentLinkId && url.searchParams.get("payment_link_id") !== paymentLinkId) {
-      url.searchParams.set("payment_link_id", paymentLinkId);
-      mutated = true;
-    }
-
     if (productSlug && url.searchParams.get("slug") !== productSlug) {
       url.searchParams.set("slug", productSlug);
       mutated = true;
@@ -373,7 +361,7 @@ export function SuccessContent() {
       const nextUrl = search ? `${url.pathname}?${search}` : url.pathname;
       window.history.replaceState({}, "", nextUrl);
     }
-  }, [paymentLinkId, productSlug, providerParam, variant]);
+  }, [productSlug, providerParam, variant]);
 
   const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
@@ -395,7 +383,6 @@ export function SuccessContent() {
     orderDetails?.sessionId ??
     sessionId ??
     ghlPaymentId ??
-    paymentLinkId ??
     null;
   const analyticsProvider = providerParam ?? variant;
 
@@ -411,7 +398,6 @@ export function SuccessContent() {
     <div className="bg-background py-12">
       <ConversionTracking
         sessionId={resolvedSessionId}
-        paymentLinkId={paymentLinkId ?? orderDetails?.paymentLinkId ?? null}
         order={orderDetails}
         provider={analyticsProvider}
       />

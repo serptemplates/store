@@ -192,9 +192,8 @@ describe("apps/store/app/[slug]/page routing", () => {
     const liveProduct = createTestProduct({
       slug: "live-product",
       status: "live",
-      payment_link: {
-        live_url: "https://buy.stripe.com/live-product",
-        test_url: "https://buy.stripe.com/test-product",
+      pricing: {
+        cta_href: "https://apps.serp.co/checkout/live-product",
       },
     });
 
