@@ -3,7 +3,7 @@
 ## Current Implementation Status ✅
 
 ### 1. **Payment Processing Integration** ✅
-- **Internal Stripe Checkout**: Product CTAs point to `/checkout/<slug>` and create programmatic Checkout Sessions via `/api/checkout/session`. Metadata comes from Stripe product and price tags so webhooks can hydrate fulfilment records.
+- **Internal Stripe Checkout**: Product CTAs point to `/checkout/<slug>`, and the route handler (`app/checkout/[slug]/route.ts`) creates Checkout Sessions on the server. Metadata comes from Stripe product and price tags so webhooks can hydrate fulfilment records.
 - **Stripe Webhook**: Handles events at `/api/stripe/webhook`
 - **Affiliate Tracking**: Captures `affiliateId` in checkout metadata
 - **Order Persistence**: Saves to PostgreSQL via `upsertOrder()`
@@ -81,7 +81,7 @@ curl -X GET "https://services.leadconnectorhq.com/locations/${GHL_LOCATION_ID}" 
 ```
 
 ### 3. Test Purchase Flow
-1. Launch the product page and click the primary CTA (it should resolve to `/checkout/<slug>` and create a Checkout Session via the API).
+1. Launch the product page and click the primary CTA (it should resolve to `/checkout/<slug>` and immediately redirect to Stripe Checkout).
 2. Complete a Stripe test purchase (`4242 4242 4242 4242`) and confirm the webhook fires in the local logs (`pnpm --filter @apps/store dev` outputs or `logs/webhook.log` if running via PM2).
 3. Verify in the Stripe Dashboard that the Checkout Session metadata includes the expected `offerId`, `landerId`, `ghl_tag`, and affiliate data.
 4. Inspect the database/GHL:

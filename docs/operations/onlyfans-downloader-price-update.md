@@ -12,8 +12,8 @@
 | --- | --- | --- |
 | Product JSON used at runtime | UI, checkout API, feeds read this canonical document | `apps/store/data/products/onlyfans-downloader.json:71-80` for `pricing.*`, `168-172` for `stripe.price_id` |
 | Price manifest | `findPriceEntry()` (`apps/store/lib/products/product-adapter.ts:268-303`) and Google Merchant (`apps/store/lib/google-merchant/merchant-product.ts:1-99`) source amounts from `apps/store/data/prices/manifest.json` |
-| Internal checkout API | `/api/checkout/products/[slug]` and `/api/checkout/session` rely on the manifest to charge the correct amount (`apps/store/app/api/checkout/products/[slug]/route.ts:1-56`) |
-| Tests & partner docs | Dub integration docs/tests assert the Stripe price ID (`apps/store/tests/unit/ClientHomeView-dub-stripe.test.tsx:120-200`, `docs/architecture/dub-partner-attribution.md:153-212`) |
+| Internal checkout route | `/checkout/<slug>` resolves the manifest entry server-side when creating the Stripe session (`apps/store/app/checkout/[slug]/route.ts`) |
+| Tests & partner docs | Dub integration docs reference the live Stripe price ID (`docs/architecture/dub-partner-attribution.md`) |
 | Ops references | Stripe exports + ops tables surface price IDs (`docs/data/prices.csv:65`, `docs/data/offer-catalog.csv:49`, `docs/offer-catalog.csv:97`, `docs/operations/stripe-payment-links.md:107`) |
 
 Keep this table handy while editing; every row needs to be touched or re-generated.
@@ -72,9 +72,8 @@ Keep this table handy while editing; every row needs to be touched or re-generat
    - Update the table row so it tracks the new price ID, payment-link ID (`plink_...`), and public URL.  
    - Note in the description column that the price moved from $17 to $27 so future audits know why.
 
-5. **Dub attribution docs & tests**
-   - `docs/architecture/dub-partner-attribution.md:153-212`: change the example `priceId` and JSON snippet to the new Stripe price. This keeps the documentation accurate for partner engineers.
-   - `apps/store/tests/unit/ClientHomeView-dub-stripe.test.tsx:120-200`: update both the mocked `product.stripe.price_id` and the expectation inside `mockFetch` to the new ID. The test already asserts `$27`, so no further adjustment is needed unless you alter the amount again later.
+5. **Dub attribution docs**
+   - `docs/architecture/dub-partner-attribution.md`: change the example `priceId` and JSON snippet to the new Stripe price. This keeps the documentation accurate for partner engineers.
 
 6. **Housekeeping**
    - Re-run `rg -n "<old_price_id>"` to confirm the old ID is gone everywhere in the repo (code, docs, tests).
