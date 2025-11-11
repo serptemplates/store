@@ -149,7 +149,7 @@ export function HomePageView() {
 
         <main className="container flex flex-col gap-16 py-16">
           <section className="relative z-0 text-center space-y-6">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Store</h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">SERP Apps</h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{heroDescription}</p>
           </section>
 

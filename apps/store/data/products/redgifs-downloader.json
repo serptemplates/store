@@ -6,6 +6,7 @@
   "description": "Redgifs Downloader gives creators and teams a dependable way to save Redgifs content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Redgifs with consistent quality and predictable results.\n\nIt supports High-quality GIFs and short videos, Batch processing for tag-based content collections, and Various media formats and qualities, so you can move quickly from download to delivery without tedious rework. Use it to archive Redgifs assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Redgifs Downloader | Download Redgifs Content",
   "seo_description": "Download Redgifs content easily for offline use. Fast and reliable Redgifs downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/redgifs-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/redgifs-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/redgifs-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/redgifs-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click download from any video page",
     "100% privacy-friendly",
@@ -48,7 +51,7 @@
     "Ad-free experience"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

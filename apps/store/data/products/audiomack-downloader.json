@@ -6,6 +6,7 @@
   "description": "Audiomack Downloader gives creators and teams a dependable way to save Audiomack audio tracks for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Audiomack with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "Audiomack Downloader | Download Audiomack Audio",
   "seo_description": "Download Audiomack audio tracks for offline use. Fast, private Audiomack downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/audiomack-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/audiomack-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/audiomack-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click downloads from Audiomack",
     "Preserves original quality and metadata",
@@ -34,7 +37,7 @@
     "Works on Windows, macOS, and Linux"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17",
     "original_price": "$37.00",
     "note": "Contact us for current licensing options.",

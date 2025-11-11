@@ -6,6 +6,7 @@
   "description": "Pinterest Downloader gives creators and teams a dependable way to save Pinterest images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pinterest with consistent quality and predictable results.\n\nIt supports Pinterest images and board collections, High-res image downloads, and Batch entire boards/user profiles downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Pinterest assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Pinterest Downloader | Download Pinterest Images",
   "seo_description": "Download Pinterest images and graphics for offline use. Fast and reliable Pinterest content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/pinterest-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pinterest-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/pinterest-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/pinterest-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Pinterest images and board collections",
     "High-res image downloads",
@@ -48,7 +51,7 @@
     "Trending content discovery and recommendations"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

@@ -6,6 +6,7 @@
   "description": "TXXX Downloader gives creators and teams a dependable way to save TXXX videos for\noffline access. Instead of juggling manual captures or risky browser extensions,\nit pulls publicly accessible files directly from TXXX with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal\nlibrary available when you're traveling or working with limited connectivity.",
   "seo_title": "TXXX Downloader | Download TXXX Videos",
   "seo_description": "Download TXXX videos for offline use. Fast, private TXXX downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/txxx-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/txxx-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/txxx-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click downloads from TXXX",
     "Preserves original quality and metadata",
@@ -34,7 +37,7 @@
     "Works on Windows, macOS, and Linux"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

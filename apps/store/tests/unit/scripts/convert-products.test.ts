@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import stripJsonComments from "strip-json-comments";
 
 import {
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
@@ -129,7 +130,7 @@ describe("scripts/convert-products", () => {
     expect(outcome.warnings).toEqual(["Unrecognised fields: order_bump"]);
 
     const output = await fs.readFile(productPath("sample-product"), "utf8");
-    const parsed = JSON.parse(output) as Record<string, unknown>;
+    const parsed = JSON.parse(stripJsonComments(output)) as Record<string, unknown>;
 
     const productKeys = Object.keys(parsed);
     const expectedOrder = PRODUCT_FIELD_ORDER.filter((field) => parsed[field] !== undefined);

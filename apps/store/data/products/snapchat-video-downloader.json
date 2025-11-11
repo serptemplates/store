@@ -6,6 +6,7 @@
   "description": "Snapchat Video Downloader gives creators and teams a dependable way to save Snapchat videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Snapchat with consistent quality and predictable results.\n\nIt supports Snapchat stories and spotlight videos, Public and friend's content, and Batch user stories/highlights downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Snapchat assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Snapchat Video Downloader | Download Snapchat Videos",
   "seo_description": "Download Snapchat videos easily for offline viewing. Fast, reliable Snapchat video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/snapchat-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/snapchat-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/snapchat-video-downloader",
@@ -32,8 +33,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/snapchat-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Snapchat stories and spotlight videos",
     "Public and friend's content",
@@ -56,7 +59,7 @@
     "Smart content categorization and tagging"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

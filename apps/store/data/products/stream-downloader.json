@@ -6,6 +6,7 @@
   "description": "Stream Downloader gives creators and teams a dependable way to save Stream videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stream with consistent quality and predictable results.\n\nIt supports Live streams from various platforms, Multiple streaming protocols and formats, and Batch recording from multiple sources simultaneously, so you can move quickly from download to delivery without tedious rework. Use it to archive Stream assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Stream Downloader | Download Stream Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from stream with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/stream-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stream-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/stream-downloader",
@@ -26,8 +27,10 @@
   "related_posts": [
     "how-to-download-rtmp-live-streams"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/stream-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click download from any video page",
     "100% privacy-friendly",
@@ -50,7 +53,7 @@
     "Ad-free experience"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

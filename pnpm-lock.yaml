@@ -150,6 +150,9 @@ importers:
       sanitize-html:
         specifier: ^2.17.0
         version: 2.17.0
+      strip-json-comments:
+        specifier: ^5.0.3
+        version: 5.0.3
       zod:
         specifier: ^3.25.76
         version: 3.25.76
@@ -2708,8 +2711,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@142.0.0:
-    resolution: {integrity: sha512-BlMMPFOKAOYOT23tjtAjvci57gyYcasKqd/3yGKOjGMEbFZa5kfwoNcUzwL/5ugZ932MJX1fW/j8zk5KD5mHBw==}
+  chromedriver@142.0.1:
+    resolution: {integrity: sha512-Cgm5rPQ1aNdkoA4wiwJiKweQErbv+8w5xnN5SA5EIAxN0bcZzWrbcFtwlaKG3DUcJJYQKKArLe4vg+s85wmhfQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -5599,6 +5602,10 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
+  strip-json-comments@5.0.3:
+    resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
+    engines: {node: '>=14.16'}
+
   stripe@15.12.0:
     resolution: {integrity: sha512-slTbYS1WhRJXVB8YXU8fgHizkUrM9KJyrw4Dd8pLEwzKHYyQTIE46EePC2MVbSDZdE24o1GdNtzmJV4PrPpmJA==}
     engines: {node: '>=12.*'}
@@ -6618,7 +6625,7 @@ snapshots:
     dependencies:
       '@axe-core/webdriverjs': 4.10.2(selenium-webdriver@4.22.0(bufferutil@4.0.9))
       axe-core: 4.10.3
-      chromedriver: 142.0.0
+      chromedriver: 142.0.1
       colors: 1.4.0
       commander: 9.5.0
       dotenv: 16.6.1
@@ -9044,7 +9051,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@142.0.0:
+  chromedriver@142.0.1:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.12.2
@@ -12740,6 +12747,8 @@ snapshots:
       min-indent: 1.0.1
 
   strip-json-comments@3.1.1: {}
+
+  strip-json-comments@5.0.3: {}
 
   stripe@15.12.0:
     dependencies:

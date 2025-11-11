@@ -6,6 +6,7 @@
   "description": "Chaturbate Downloader gives creators and teams a dependable way to save Chaturbate videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Chaturbate with consistent quality and predictable results.\n\nIt supports Record and download live cam shows and broadcasts, Auto stream detection and quality selection, and Resume interrupted recordings with smart recovery, so you can move quickly from download to delivery without tedious rework. Use it to archive Chaturbate assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Chaturbate Downloader | Download Chaturbate Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from chaturbate with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/chaturbate-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/chaturbate-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/chaturbate-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/chaturbate-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Record and download live cam shows and broadcasts",
     "Auto stream detection and quality selection",
@@ -48,7 +51,7 @@
     "Comprehensive logging and recording history"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

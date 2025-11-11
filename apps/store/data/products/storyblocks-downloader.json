@@ -6,6 +6,7 @@
   "description": "Storyblocks Downloader gives creators and teams a dependable way to save Storyblocks images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Storyblocks with consistent quality and predictable results.\n\nIt supports Storyblocks video, audio, and image assets, Unlimited subscription content, and Batch download creative project collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Storyblocks assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Storyblocks Downloader | Download Storyblocks Images",
   "seo_description": "Download Storyblocks images and graphics for offline use. Fast and reliable Storyblocks content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/storyblocks-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/storyblocks-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/storyblocks-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/storyblocks-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Storyblocks video, audio, and image assets",
     "Unlimited subscription content",
@@ -48,7 +51,7 @@
     "Asset discovery and recommendation system"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

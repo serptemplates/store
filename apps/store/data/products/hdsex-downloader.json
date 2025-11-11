@@ -6,6 +6,7 @@
   "description": "HDsex Downloader makes it easy to save HDsex videos you are authorized to watch, so you can keep projects and personal libraries synchronized across devices. It pulls files directly from the source, preserving the high bitrate HDsex is known for.\n\nUse it to maintain content references, review clips without buffering, or prep offline collections for travel while keeping everything private on your own drives.",
   "seo_title": "HDsex Downloader | Download HDsex Videos",
   "seo_description": "Download HDsex videos in original quality for private offline viewing. Reliable HDsex downloader with batch support.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/hdsex-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hdsex-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/hdsex-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Save HDsex videos you are permitted to view without quality loss",
     "Maintain original file metadata and timestamps",
@@ -34,7 +37,7 @@
     "Works across Windows, macOS, Linux, and modern browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

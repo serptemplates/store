@@ -85,7 +85,11 @@ export function useMarketplaceProductPageViewModel(
   product: ProductData,
   siteConfig: SiteConfig,
 ): MarketplaceProductPageViewModel {
-  const homeTemplate = useMemo(() => productToHomeTemplate(product, []), [product]);
+  const showPrices = siteConfig.storefront?.showPrices !== false;
+  const homeTemplate = useMemo(
+    () => productToHomeTemplate(product, [], { showPrices }),
+    [product, showPrices],
+  );
 
   const { resolvedCta, handleCtaClick, waitlist } = useProductPageExperience(
     product,
@@ -172,8 +176,8 @@ export function useMarketplaceProductPageViewModel(
       product,
       productName: product.name ?? "Product",
       priceLabel: null,
-      price: product.pricing?.price ?? null,
-      originalPrice: product.pricing?.original_price ?? null,
+      price: showPrices ? product.pricing?.price ?? null : null,
+      originalPrice: showPrices ? product.pricing?.original_price ?? null : null,
       brandLogoPath: brandLogoPath ?? null,
       mainImageSource: stickyImageSource,
       waitlistEnabled,

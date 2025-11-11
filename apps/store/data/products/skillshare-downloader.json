@@ -6,6 +6,7 @@
   "description": "Skillshare Downloader gives creators and teams a dependable way to download Skillshare course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Skillshare with consistent quality and predictable results.\n\nIt supports Complete complete Skillshare classes downloads, Class projects and community feedback, and Maintain class structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Skillshare assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Skillshare Downloader | Download Skillshare Courses",
   "seo_description": "Download Skillshare courses and videos for offline learning. Fast and reliable course content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/skillshare-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/skillshare-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/skillshare-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/skillshare-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Complete complete Skillshare classes downloads",
     "Class projects and community feedback",
@@ -48,7 +51,7 @@
     "Offline viewing with sync tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

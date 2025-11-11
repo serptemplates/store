@@ -6,6 +6,7 @@
   "description": "123rf Downloader helps designers and teams download and archive 123rf royalty‑free images, vectors and high‑resolution assets for offline use and editing. It supports batch exports for project collections, preserves metadata and keyword tags, and can export license and usage information to help with compliance tracking.\n\nThe tool offers resume-on-failure, an image viewer, and CLI integration for inclusion in design workflows. Use it to assemble project libraries, prepare client deliverables, or back up purchased/free assets while respecting 123rf licensing terms and usage restrictions.",
   "seo_title": "123rf Downloader | Download 123rf Images",
   "seo_description": "Download 123rf images and graphics for offline use. Fast and reliable 123rf content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/123rf-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123rf-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/123rf-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/123rf-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Royalty-free stock images and vectors",
     "Batch processing for creative project collections",
@@ -49,7 +52,7 @@
     "Professional workflow integration features"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

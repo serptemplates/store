@@ -81,6 +81,7 @@ export type HomeTemplateProps = {
     ctaLoading?: PricingCtaProps["ctaLoading"];
     ctaDisabled?: PricingCtaProps["ctaDisabled"];
     terms?: PricingCtaProps["terms"];
+    showPriceDetails?: boolean;
   };
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;

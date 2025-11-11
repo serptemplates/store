@@ -6,6 +6,7 @@
   "description": "Circle Downloader keeps community lessons and cohort recordings alive long after the posts disappear. It recognises both native Circle uploads and embedded players from YouTube, Vimeo, Wistia, and Loom, then lets you save them as clean MP4 files without juggling separate tools.\n\nThe extension lists every quality rendition, labels the stream type, and remembers your preferred resolution for the next download. You can run up to three downloads at the same time, keep the global progress manager pinned while you browse, and queue additional videos that start automatically when a slot opens up.\n\nEverything happens with your existing Circle login inside the browser. Adaptive streams download chunk by chunk with retries and merge in the background, while direct MP4 uploads land instantly in the folder you choose. Notifications confirm when files are ready so you can archive resources, flight-proof course material, or revisit cohort calls offline.",
   "seo_title": "Circle Downloader | Save Circle community and embed videos offline",
   "seo_description": "Capture Circle community uploads plus YouTube, Vimeo, Wistia, and Loom embeds as MP4 files with queues, quality controls, and on-device processing.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/circle-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/circle-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/circle-downloader",
@@ -28,9 +29,11 @@
   "related_posts": [
     "how-to-download-circle-so-videos-free"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/circle-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/circle-downloader/afjjgeafaiahjlcgnflgeojbjobglblg",
+  "resource_links": [],
   "features": [
     "Detects Circle native uploads plus YouTube, Vimeo, Wistia, and Loom embeds",
     "Presents every available quality with stream type labels and size estimates",
@@ -44,7 +47,7 @@
     "Saves files with clean titles into the folder you choose for offline study"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with updates for new Circle player changes. No trial and no refunds.",

@@ -6,6 +6,7 @@
   "description": "Restore Closed Tabs Extension keeps your browsing flow intact. Quickly reopen accidentally closed tabs and windows, search recent history, and pin important sessions so they’re never lost.",
   "seo_title": "Restore Closed Tabs Extension",
   "seo_description": "Reopen closed tabs and windows instantly with a simple browser extension.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/restore-closed-tabs-extension",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/restore-closed-tabs-extension",
   "apps_serp_co_product_page_url": "https://apps.serp.co/restore-closed-tabs-extension",
@@ -17,8 +18,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/restore-closed-tabs-extension",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [],
   "faqs": [],
   "reviews": [],

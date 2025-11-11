@@ -6,6 +6,7 @@
   "description": "DASH Stream Downloader gives creators and teams a dependable way to save DASH Stream videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from DASH Stream with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "DASH Stream Downloader | Download DASH Stream Videos",
   "seo_description": "Download DASH Stream videos for offline use. Fast, private DASH Stream downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/dash-stream-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dash-stream-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/dash-stream-video-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click downloads from DASH Stream",
     "Preserves original quality and metadata",
@@ -29,7 +32,7 @@
     "Works on Windows, macOS, and Linux"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17",
     "original_price": "$37.00",
     "note": "Contact us for current licensing options.",

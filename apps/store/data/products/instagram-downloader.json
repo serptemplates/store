@@ -6,6 +6,7 @@
   "description": "Instagram Downloader gives creators and teams a dependable way to save Instagram videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Instagram with consistent quality and predictable results.\n\nIt supports Original quality Instagram content, IGTV, Reels & carousel support, and Batch profile/highlight downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Instagram assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Instagram Downloader | Download Instagram Videos",
   "seo_description": "Download Instagram videos easily for offline viewing. Fast, reliable Instagram video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/instagram-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/instagram-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/instagram-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/instagram-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Original quality Instagram content",
     "IGTV, Reels & carousel support",
@@ -48,7 +51,7 @@
     "Backup & sync options"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

@@ -6,6 +6,7 @@
   "description": "Khan Academy Downloader gives creators and teams a dependable way to download Khan Academy course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Khan with consistent quality and predictable results.\n\nIt supports Complete Khan Academy courses and exercises, Educational videos and interactive content, and Maintain subject hierarchy and lesson structure, so you can move quickly from download to delivery without tedious rework. Use it to archive Khan assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Khan Academy Downloader | Download Khan Academy Courses",
   "seo_description": "Download Khan Academy courses and videos for offline learning. Fast and reliable course content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/khan-academy-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/khan-academy-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/khan-academy-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/khan-academy-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Complete Khan Academy courses and exercises",
     "Educational videos and interactive content",
@@ -48,7 +51,7 @@
     "Integrates with popular learning management systems (LMS) and educational platforms"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

@@ -6,6 +6,7 @@
   "description": "Kick Clip Downloader gives creators and teams a dependable way to save Kick Clip videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Kick with consistent quality and predictable results.\n\nIt supports Kick.com stream clips and highlights, Live stream recordings and VODs, and Auto metadata extraction and organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Kick assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Kick Clip Downloader | Kick Downloader | Download Kick Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from kick with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/kick-clip-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kick-clip-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/kick-clip-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/kick-clip-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Kick.com stream clips and highlights",
     "Live stream recordings and VODs",
@@ -48,7 +51,7 @@
     "Streamer following and notification system"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

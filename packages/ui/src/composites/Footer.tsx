@@ -12,6 +12,21 @@ const DEFAULT_LEGAL_LINKS: FooterProps["legalLinks"] = [
   { label: "Videos", href: "/videos" },
   { label: "Categories", href: "/categories" },
   {
+    label: "About",
+    href: "https://serp.co/about",
+    external: true,
+  },
+  {
+    label: "SERP Extensions",
+    href: "https://extensions.serp.co",
+    external: true,
+  },
+  {
+    label: "SERP Tools",
+    href: "https://tools.serp.co",
+    external: true,
+  },
+  {
     label: "Terms of Service",
     href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
     external: true,

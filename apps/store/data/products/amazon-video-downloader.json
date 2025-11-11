@@ -6,6 +6,7 @@
   "description": "Amazon Video Downloader gives creators and teams a dependable way to save Amazon videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Amazon with consistent quality and predictable results.\n\nIt supports Amazon Prime Video movies and series, Multiple audio tracks and subtitles, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Amazon assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Amazon Video Downloader | Download Amazon Videos",
   "seo_description": "Download Amazon videos easily for offline viewing. Fast, reliable Amazon video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/amazon-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/amazon-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/amazon-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/amazon-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Amazon Prime Video movies and series",
     "Multiple audio tracks and subtitles",
@@ -49,7 +52,7 @@
     "Smart content recommendation based on preferences"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$1.00",
     "original_price": "",
     "note": "",

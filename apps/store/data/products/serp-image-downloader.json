@@ -6,6 +6,7 @@
   "description": "SERP Image Downloader is the all-format asset grabber for creative teams that need the fastest path from inspiration to organised library. It recognises 1,000+ stock sites, marketplaces, design tools, and social feeds, fetches original-resolution files—JPG, PNG, SVG, WebP, AVIF, sprites, and zipped collections—and hands you clean, deduplicated folders tagged with the metadata you care about.\n\nThe extension maintains a living provider manifest, unwraps complex gallery APIs, and stitches infinite-scrolling boards into tidy downloads without brittle manual scripts. Design ops teams can schedule bulk pulls, auto-map licensing metadata, and sync drops straight into DAM buckets while keeping everything on-device.",
   "seo_title": "SERP Image Downloader | Archive high-resolution images from any provider",
   "seo_description": "Download high-resolution images, galleries, and vectors from thousands of providers with the dedicated SERP Image Downloader browser extension.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/serp-image-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-image-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/serp-image-downloader",
@@ -23,12 +24,14 @@
     "streamline-design-ops-with-automatic-asset-tagging",
     "automate-design-inspiration-boards-into-your-dam"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/serp-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
     "browser-extension",
     "image-downloader"
   ],
+  "resource_links": [],
   "features": [
     "Detects 1,000+ stock libraries, design tools, marketplaces, and social feeds automatically",
     "Pulls original-resolution JPG, PNG, SVG, WebP, AVIF, and sprite sheets without compression",
@@ -42,7 +45,7 @@
     "Emits optional CLI command exports for automation in CI/CD and creative pipelines"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$47.00",
     "original_price": "$97",
     "note": "Join the waitlist for early access, roadmap votes, and launch pricing.",

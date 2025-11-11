@@ -6,6 +6,7 @@
   "description": "Livejasmin Downloader gives creators and teams a dependable way to save Livejasmin videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Livejasmin with consistent quality and predictable results.\n\nIt supports And record LiveJasmin premium shows, Exclusive and VIP content recording, and Auto quality selection and optimization, so you can move quickly from download to delivery without tedious rework. Use it to archive Livejasmin assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Livejasmin Downloader | Download Livejasmin Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from livejasmin with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/livejasmin-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/livejasmin-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/livejasmin-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/livejasmin-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "And record LiveJasmin premium shows",
     "Exclusive and VIP content recording",
@@ -48,7 +51,7 @@
     "Detailed analytics and recording history"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

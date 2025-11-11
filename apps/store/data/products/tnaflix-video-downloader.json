@@ -6,6 +6,7 @@
   "description": "TNAFlix Video Downloader gives creators and teams a dependable way to save TNAFlix videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from TNAFlix with consistent quality and predictable results.\n\nIt supports High-quality videos with resolution options, Batch download support for multiple selections, and Auto thumbnail and metadata extraction, so you can move quickly from download to delivery without tedious rework. Use it to archive TNAFlix assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "TNAFlix Video Downloader | Download TNAFlix Videos",
   "seo_description": "Download TNAFlix videos easily for offline viewing. Fast, reliable TNAFlix video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/tnaflix-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tnaflix-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/tnaflix-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/tnaflix-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects TNAFlix video players across site variations",
     "Lists available MP4 resolutions sorted best to worst",
@@ -35,7 +38,7 @@
     "Stores licence data locally with no tracking or hidden analytics"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with quality selection and progress tracking included. Sales are final.",

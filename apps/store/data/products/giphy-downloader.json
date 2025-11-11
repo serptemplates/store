@@ -6,6 +6,7 @@
   "description": "Giphy Downloader gives creators and teams a dependable way to save Giphy images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Giphy with consistent quality and predictable results.\n\nIt supports High-quality GIFs and animated stickers, Batch trending/popular content downloads, and Various GIF formats and resolutions, so you can move quickly from download to delivery without tedious rework. Use it to archive Giphy assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Giphy Downloader | Download Giphy Images",
   "seo_description": "Download Giphy images and graphics for offline use. Fast and reliable Giphy content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/giphy-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/giphy-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/giphy-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/giphy-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "High-quality GIFs and animated stickers",
     "Batch trending/popular content downloads",
@@ -48,7 +51,7 @@
     "Trending content discovery and recommendations"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

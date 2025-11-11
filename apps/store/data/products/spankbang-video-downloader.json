@@ -6,6 +6,7 @@
   "description": "SpankBang Video Downloader grabs MP4 files from spankbang.com, /play/ pages, embeds, and the mobile site in just a couple clicks. It lists every resolution the video offers, downloads straight through your browser, and saves clean copies so you can watch offline without ads or buffering.\n\nChoose the quality, follow the progress bar, and the downloader delivers a finished MP4 with zero re-encoding—no command-line tools or pop-up sites required.",
   "seo_title": "SpankBang Video Downloader | Download SpankBang Videos",
   "seo_description": "Download SpankBang videos easily for offline viewing. Fast, reliable SpankBang video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/spankbang-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/spankbang-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/spankbang-video-downloader",
@@ -23,8 +24,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/spankbang-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects SpankBang main pages, /play/ URLs, embed players, and the mobile site",
     "Lists every MP4 resolution with estimated file sizes and remembers your last choice",
@@ -34,7 +37,7 @@
     "Stores licence data locally with no analytics or third-party trackers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with multi-page detection and MP4 downloads included. Sales are final.",

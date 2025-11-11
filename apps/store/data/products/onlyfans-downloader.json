@@ -3,9 +3,10 @@
   "name": "Onlyfans Downloader",
   "tagline": "Save Onlyfans content instantly to your device.",
   "slug": "onlyfans-downloader",
-  "description": "Onlyfans Downloader gives creators and teams a dependable way to save Onlyfans content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Onlyfans with consistent quality and predictable results. It supports Subscriber content and media files, Photos, videos, and story content, and Batch creator profiles/posts downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Onlyfans assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
-  "seo_title": "Onlyfans Downloader | Download Onlyfans Videos, Images & Content",
-  "seo_description": "Download Onlyfans content easily for offline use. Fast and reliable Onlyfans downloader",
+  "description": "Download, organize, and back up videos, photos, and entire profiles in a single click — all while keeping your privacy fully protected. Built with zero tracking, zero analytics, and no third-party data collection – just fast, reliable, and organized downloads automatically sorted by creator and categorized by media type, giving you total control over your content with this browser extension that works on all major browsers.",
+  "seo_title": "Onlyfans Downloader | Download Onlyfans Profile Media in Bulk - Videos, Images & Content",
+  "seo_description": "Download Onlyfans Media in Bulk from profiles for offline use including images and videos. Fast and reliable Onlyfans downloader",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/onlyfans-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/onlyfans-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/onlyfans-downloader",
@@ -18,58 +19,74 @@
   "featured_image_gif": null,
   "screenshots": [
     {
-      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg",
-      "alt": "Onlyfans Downloader product screenshot 1"
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-modal.jpg",
+      "alt": "Onlyfans Downloader media modal view"
     },
     {
-      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-2.jpg",
-      "alt": "Onlyfans Downloader product screenshot 2"
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-detection.jpg",
+      "alt": "Onlyfans Downloader automatic media detection"
     },
     {
-      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-3.jpg",
-      "alt": "Onlyfans Downloader product screenshot 3"
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-automatic-download-organization.jpg",
+      "alt": "Onlyfans Downloader automatic download organization"
     },
     {
-      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-4.jpg",
-      "alt": "Onlyfans Downloader product screenshot 4"
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-creator-selection.jpg",
+      "alt": "Onlyfans Downloader creator selection controls"
     },
     {
-      "url": "/media/products/onlyfans-downloader/onlyfans-downloader-5.jpg",
-      "alt": "Onlyfans Downloader product screenshot 5"
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-button-overlay.jpg",
+      "alt": "Onlyfans Downloader download button overlay"
+    },
+    {
+      "url": "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-progress.jpg",
+      "alt": "Onlyfans Downloader download progress indicator"
     }
   ],
   "product_videos": [
-    "https://www.youtube.com/watch?v=hToCX2VST_A",
-    "https://youtu.be/43virGMRbvE",
-    "https://youtu.be/gI7xgzIQ-HY",
     "https://youtu.be/rCp66iA-j3s"
   ],
-  "related_videos": [],
+  "related_videos": [
+    "https://www.youtube.com/watch?v=hToCX2VST_A",
+    "https://youtu.be/43virGMRbvE",
+    "https://youtu.be/gI7xgzIQ-HY"
+  ],
   "related_posts": [
     "how-to-download-onlyfans-profiles-videos-images"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/onlyfans-downloader",
   "github_repo_tags": [],
   "producthunt_link": "https://www.producthunt.com/products/onlyfans-downloader-2",
+  "resource_links": [
+    {
+      "label": "Firefox Store",
+      "href": "https://addons.mozilla.org/en-US/firefox/addon/onlyfans-video-downloader/"
+    },
+    {
+      "label": "SERP Extensions",
+      "href": "https://extensions.serp.co/extensions/serp/onlyfans-downloader/"
+    },
+    {
+      "label": "Open Collective",
+      "href": "https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader"
+    }
+  ],
   "features": [
-    "One-click download from any video page",
-    "100% privacy-friendly",
-    "Auto-detect videos on the page",
-    "No watermarks or branding added",
-    "Zero Ads",
+    "Single & bulk downloading supported",
+    "Media auto detection",
+    "Download progress indicators",
+    "One-click downloads",
+    "No watermarks added",
+    "No ads",
     "Regular Updates",
-    "Minimal Permissions",
+    "100% privacy-friendly",
     "Zero data tracking",
-    "Quality selection before download",
-    "Download progress with live percentage and speed",
-    "Cancel button to safely stop in-progress downloads",
-    "Export logs from the popup (copy) for fast support",
-    "Helpful status messages",
-    "Refresh detection action",
-    "Password prompt support for protected videos"
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$27.00",
     "original_price": "$37.00",
     "note": "",
@@ -82,7 +99,7 @@
   "faqs": [
     {
       "question": "How do I use the Onlyfans downloader?",
-      "answer": "Install the browser extension, navigate to Onlyfans, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+      "answer": "Install the browser extension, navigate to Onlyfans, find the content or profile you want to download, and click a button."
     },
     {
       "question": "What quality options are available?",
@@ -90,7 +107,7 @@
     },
     {
       "question": "Does this work with all Onlyfans content?",
-      "answer": "The downloader works with most publicly accessible content on Onlyfans. Some restricted or DRM-protected content may not be downloadable."
+      "answer": "The downloader works with almost all publicly accessible content on Onlyfans. Some restricted or DRM-protected content may not be downloadable."
     },
     {
       "question": "Will downloads continue if my internet connection drops?",
@@ -102,11 +119,11 @@
     },
     {
       "question": "How do I organize my downloaded content?",
-      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+      "answer": "Downloaded files are automatically saved & organized by creator & media type into subfolders, and saved to your already selected default download location in your browser settings. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
     },
     {
       "question": "Does this work on all browsers?",
-      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
+      "answer": "The extension works on major desktop browsers including Chrome, Firefox, Edge, Opera, etc. Make sure your browser is up to date for the best compatibility."
     },
     {
       "question": "Is my data kept private?",
@@ -185,6 +202,23 @@
   "featured": false,
   "new_release": false,
   "popular": false,
-  "permission_justifications": [],
+  "permission_justifications": [
+    {
+      "permission": "storage",
+      "justification": "Stores creator selections, download queue state, and dynamic rules locally so your preferences and progress persist between browser sessions."
+    },
+    {
+      "permission": "cookies",
+      "justification": "Reads the OnlyFans auth_id cookie to verify you're logged in and authenticate API requests for downloading your content."
+    },
+    {
+      "permission": "downloads",
+      "justification": "Saves downloaded videos and photos to your Downloads/OnlyFans folder and manages the download progress for each media file."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Opens OnlyFans in a new tab when you need to sign in or sign out of your account."
+    }
+  ],
   "brand": "SERP Apps"
 }

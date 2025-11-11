@@ -62,6 +62,7 @@ const baseProduct: ProductData = {
   license: {
     entitlements: ["single_user"],
   },
+  resource_links: [],
 };
 
 const waitlistProduct: ProductData = {

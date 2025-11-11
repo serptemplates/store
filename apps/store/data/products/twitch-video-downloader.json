@@ -6,6 +6,7 @@
   "description": "Twitch Video Downloader gives creators and teams a dependable way to save Twitch videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Twitch with consistent quality and predictable results.\n\nIt supports Twitch VODs and highlights in high quality, Livestream recording with automatic archiving, and Batch download streamer's entire video library, so you can move quickly from download to delivery without tedious rework. Use it to archive Twitch assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Twitch Video Downloader | Twitch Downloader | Download Twitch Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from twitch with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/twitch-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/twitch-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/twitch-video-downloader",
@@ -26,8 +27,10 @@
   "related_posts": [
     "how-to-download-twitch-streams-and-vods"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/twitch-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Twitch VODs and highlights in high quality",
     "Livestream recording with automatic archiving",
@@ -50,7 +53,7 @@
     "Various video formats and qualities"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

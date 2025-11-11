@@ -6,6 +6,7 @@
   "description": "Erothots Downloader gives creators and teams a dependable way to save Erothots content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Erothots with consistent quality and predictable results.\n\nIt supports Content from Erothots platform, Various media types and formats, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Erothots assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Erothots Downloader | Download Erothots Content",
   "seo_description": "Download Erothots content easily for offline use. Fast and reliable Erothots downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/erothots-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erothots-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/erothots-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/erothots-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click download from any video page",
     "100% privacy-friendly",
@@ -43,7 +46,7 @@
     "Ad-free experience"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

@@ -46,6 +46,7 @@ const baseProduct = (): ProductData => ({
   popular: false,
   brand: "SERP Apps",
   permission_justifications: [],
+  resource_links: [],
 });
 
 describe("buildProductMetadata", () => {

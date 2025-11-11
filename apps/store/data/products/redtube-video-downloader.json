@@ -6,6 +6,7 @@
   "description": "Redtube Video Downloader captures scenes from redtube.com, regional sites, and embedded players, converting them into MP4 files you can watch offline. It detects every available resolution, handles HLS streams behind the page, and keeps downloads moving even when you minimise the tab.\n\nChoose the quality you want, let the extension pull the stream segments, and it merges them in the background while you browse. The result is a clean MP4 saved locally with no ads, buffering, or tracking.",
   "seo_title": "Redtube Video Downloader | Download Redtube Videos",
   "seo_description": "Download Redtube videos easily for offline viewing. Fast, reliable Redtube video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/redtube-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/redtube-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/redtube-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/redtube-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects Redtube main site, regional domains, and embed.redtube.com players",
     "Lists every quality option with file-size estimates and remembers your preference",
@@ -35,7 +38,7 @@
     "Stores licence data locally with no analytics or external tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with stream conversion and progress tracking included. Sales are final.",

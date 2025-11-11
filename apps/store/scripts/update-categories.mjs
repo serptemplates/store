@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import stripJsonComments from "strip-json-comments";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +29,7 @@ for (const file of files) {
 
   let data;
   try {
-    data = JSON.parse(raw);
+    data = JSON.parse(stripJsonComments(raw));
   } catch (error) {
     console.error(`Skipping ${filePath} due to JSON parse error:`, error);
     continue;

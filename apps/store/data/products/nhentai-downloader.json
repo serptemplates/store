@@ -6,6 +6,7 @@
   "description": "NHentai Downloader lets collectors save doujinshi they are permitted to view, complete with page order and metadata. Skip page-by-page saving and keep your library ready for offline reading.\n\nUse it to organize research references, preserve favorite works on your tablet, or keep backups when traveling without stable internet.",
   "seo_title": "NHentai Downloader | Download NHentai Doujinshi",
   "seo_description": "Download NHentai doujinshi for private offline reading. Fast, secure NHentai downloader with full gallery support.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/nhentai-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/nhentai-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/nhentai-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Download authorized NHentai galleries in the original page order",
     "Capture metadata, tags, and titles for quick cataloging",
@@ -34,7 +37,7 @@
     "Works across Windows, macOS, Linux, and major browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

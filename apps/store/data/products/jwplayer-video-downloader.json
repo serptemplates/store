@@ -6,6 +6,7 @@
   "description": "JW Player Video Downloader unlocks the videos hiding behind jwplayer.com and jwplatform.com embeds used across newsrooms, OTT portals, and course platforms. The extension detects the player, resolves the signed media URLs, and saves a clean MP4 so you can review, archive, or edit content offline.\n\nFrom newsroom replays and subscriber-only interviews to customer education hubs, JW Player Video Downloader keeps teams in control of their media without reverse-engineering manifests or juggling third-party apps.",
   "seo_title": "JW Player Video Downloader | Download JW Player Videos",
   "seo_description": "Download JW Player videos and playlists in MP4 format with the JW Player Video Downloader browser extension.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/jwplayer-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/jwplayer-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/jwplayer-video-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects JW Player embeds on jwplayer.com, jwplatform.com, and white-labelled partner domains",
     "Replays the same signed URLs your session uses so subscriber-only or paywalled videos download securely",
@@ -30,7 +33,7 @@
     "Built for Chrome, Edge, Firefox, Brave, and Opera with hardware-accelerated merging on desktop"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Reserve your seat on the beta waitlist to receive launch pricing and early feature access.",

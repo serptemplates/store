@@ -33,7 +33,8 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
   const viewModel = useMarketplaceProductPageViewModel(product, siteConfig);
   const permissionFaqItems = mapPermissionItemsToFaq(viewModel.sections.permissionItems);
   // Reuse product adapter to normalize screenshots for carousel display
-  const homeTemplate = productToHomeTemplate(product, []);
+  const showPrices = siteConfig.storefront?.showPrices !== false;
+  const homeTemplate = productToHomeTemplate(product, [], { showPrices });
   const screenshots = homeTemplate.screenshots ?? [];
 
   return (
@@ -82,7 +83,6 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
         footer={<FooterComposite site={viewModel.layout.footerSite} />}
       >
         <ProductStickyBar
-          variant="marketplace"
           show={viewModel.stickyBar.show}
           productName={viewModel.stickyBar.productName}
           product={viewModel.stickyBar.product}

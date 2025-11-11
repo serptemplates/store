@@ -6,6 +6,7 @@
   "description": "AI Bulk Image Generator creates consistent image batches for ads, posts, and product pages. Provide a prompt or template and generate variations at scale with sizes, formats, and background options ready for publishing.",
   "seo_title": "AI Bulk Image Generator",
   "seo_description": "Create image batches from prompts and templates for ads, posts, and product pages.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/ai-bulk-image-generator",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
   "apps_serp_co_product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
@@ -17,8 +18,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/ai-bulk-image-generator",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [],
   "faqs": [],
   "reviews": [],

@@ -6,6 +6,7 @@
   "description": "Deviantart Downloader gives creators and teams a dependable way to save Deviantart images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Deviantart with consistent quality and predictable results.\n\nIt supports DeviantArt artwork downloads, Various art format support, and Batch gallery/collection downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Deviantart assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Deviantart Downloader | Download Deviantart Images",
   "seo_description": "Download Deviantart images and graphics for offline use. Fast and reliable Deviantart content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/deviantart-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/deviantart-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/deviantart-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/deviantart-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "DeviantArt artwork downloads",
     "Various art format support",
@@ -48,7 +51,7 @@
     "Artist recommendations"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

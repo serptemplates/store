@@ -6,6 +6,7 @@
   "description": "Flickr Downloader gives creators and teams a dependable way to save Flickr images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Flickr with consistent quality and predictable results.\n\nIt supports High-res Flickr downloads and albums, Batch photographer portfolios/collections downloads, and Creative Commons and rights-managed content, so you can move quickly from download to delivery without tedious rework. Use it to archive Flickr assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Flickr Downloader | Download Flickr Images",
   "seo_description": "Download Flickr images and graphics for offline use. Fast and reliable Flickr content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/flickr-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/flickr-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/flickr-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/flickr-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "High-res Flickr downloads and albums",
     "Batch photographer portfolios/collections downloads",
@@ -49,7 +52,7 @@
     "Photography workflow integration features"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

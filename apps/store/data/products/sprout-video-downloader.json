@@ -6,6 +6,7 @@
   "description": "Sprout Video Downloader captures videos hosted on sproutvideo.com as well as embedded players inside private portals, courses, and documentation. It detects the player, lists every available quality, and converts hosted streams into MP4 files you can store offline without juggling ffmpeg or manual URL scraping.\n\nStay logged in to your SproutVideo account, choose the resolution you need, and the extension forwards authentication headers, downloads each segment, and merges them quietly in the background while you continue working.",
   "seo_title": "Sprout Video Downloader | Download Sprout Videos",
   "seo_description": "Download Sprout videos easily for offline viewing. Fast, reliable Sprout video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/sprout-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/sprout-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/sprout-video-downloader",
@@ -67,10 +68,12 @@
   ],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/sprout-video-downloader",
   "github_repo_tags": [],
   "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/sprout-video-downloader/",
   "producthunt_link": "https://www.producthunt.com/products/sprout-video-downloader",
+  "resource_links": [],
   "features": [
     "Detects SproutVideo players on sproutvideo.com and embedded on third-party sites",
     "Uses your active session to access gated or private videos securely",
@@ -81,7 +84,7 @@
     "Stores licence data locally with no analytics or remote tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence covering embed detection, authentication forwarding, and stream conversion. Sales are final.",

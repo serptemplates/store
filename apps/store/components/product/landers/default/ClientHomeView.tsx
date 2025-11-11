@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState, type MouseEvent } from "react"
 
 import { HomeTemplate } from "./HomeTemplate"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
@@ -23,6 +23,7 @@ import { useProductPageExperience } from "@/components/product/hooks/useProductP
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 import { deriveProductCategories } from "@/lib/products/categories"
+import { getBrandLogoPath } from "@/lib/products/brand-logos"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -44,7 +45,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       .sort((a, b) => (order.get(a.slug)! - order.get(b.slug)!))
   }, [posts, product.related_posts])
 
-  const homeProps = productToHomeTemplate(product, resolvedPosts)
+  const showPrices = siteConfig.storefront?.showPrices !== false
+  const homeProps = productToHomeTemplate(product, resolvedPosts, { showPrices })
   const derivedCategories =
     Array.isArray(homeProps.categories) && homeProps.categories.length > 0
       ? homeProps.categories
@@ -72,7 +74,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   // Set up Dub-aware checkout handler
   // This intercepts buy button clicks to create programmatic checkout sessions
   // with proper Dub attribution metadata when stripe.price_id is available
-  const shouldOpenInNewTab = resolvedCta.opensInNewTab
   const isInternalCheckoutRoute = (() => {
     if (typeof resolvedCta.href !== "string") return false
     if (resolvedCta.href.startsWith("/checkout/")) return true
@@ -103,6 +104,10 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   const resolvedCtaHref = isInternalCheckoutRoute ? renderedCheckoutHref : resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
+  const normalizedCta = useMemo(
+    () => ({ ...resolvedCta, href: resolvedCtaHref }),
+    [resolvedCta, resolvedCtaHref],
+  )
   const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
 
   const showPosts = siteConfig.blog?.enabled !== false
@@ -131,6 +136,20 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       ),
     )
   }, [product])
+  const brandLogoPath = useMemo(() => getBrandLogoPath(product.slug ?? "") ?? null, [product.slug])
+  const stickyImageSource = useMemo(() => {
+    const normalizedLogo = normalizeProductAssetPath(brandLogoPath ?? undefined)
+    if (normalizedLogo) {
+      return normalizedLogo
+    }
+    return normalizeProductAssetPath(
+      typeof product.featured_image === "string"
+        ? product.featured_image
+        : typeof product.featured_image_gif === "string"
+          ? product.featured_image_gif
+          : undefined,
+    )
+  }, [brandLogoPath, product.featured_image, product.featured_image_gif])
   useEffect(() => {
     const handleScroll = () => {
       setShowStickyBar(window.scrollY > 320)
@@ -147,9 +166,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     handleCtaClick("pricing")
   }, [handleCtaClick])
 
-  const handleStickyCtaClick = useCallback(() => {
-    handleCtaClick("sticky_bar")
-  }, [handleCtaClick])
+  const handleStickyCheckoutClick = useCallback(
+    (event?: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+      event?.preventDefault?.()
+      handleCtaClick("sticky_bar")
+    },
+    [handleCtaClick],
+  )
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -189,13 +212,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        cta={{ ...resolvedCta, href: resolvedCtaHref }}
-        ctaMode={resolvedCta.mode}
-        ctaHref={resolvedCtaHref}
+        cta={normalizedCta}
+        ctaMode={normalizedCta.mode}
+        ctaHref={normalizedCta.href}
         ctaText={resolvedCtaText}
-        ctaTarget={resolvedCta.target}
+        ctaTarget={normalizedCta.target}
         ctaRel={resolvedCtaRel}
-        ctaOpensInNewTab={resolvedCta.opensInNewTab}
+        ctaOpensInNewTab={normalizedCta.opensInNewTab}
         onPrimaryCtaClick={handlePrimaryCtaClick}
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -211,7 +234,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,
-                ctaHref: resolvedCtaHref,
+                ctaHref: normalizedCta.href,
                 ctaText: homeProps.pricing?.ctaText ?? resolvedCtaText,
                 ctaExtra: null,
               }
@@ -220,14 +243,18 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       />
 
       <ProductStickyBar
-        variant="default"
         show={showStickyBar}
+        product={product}
         productName={product.name}
-        ctaLabel={resolvedCtaText}
-        onClick={handleStickyCtaClick}
-        href={resolvedCtaHref}
-        openInNewTab={shouldOpenInNewTab}
-        rel={resolvedCtaRel}
+        priceLabel={showPrices ? homeProps.pricing?.priceLabel ?? null : null}
+        price={showPrices ? homeProps.pricing?.price ?? null : null}
+        originalPrice={showPrices ? homeProps.pricing?.originalPrice ?? null : null}
+        brandLogoPath={brandLogoPath}
+        mainImageSource={stickyImageSource ?? undefined}
+        waitlistEnabled={isPreRelease}
+        onWaitlistClick={waitlist.open}
+        checkoutCta={normalizedCta}
+        onCheckoutClick={handleStickyCheckoutClick}
       />
 
       <GhlWaitlistModal open={waitlist.isOpen} onClose={waitlist.close} />

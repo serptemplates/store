@@ -6,6 +6,7 @@
   "description": "Pdf Downloader gives creators and teams a dependable way to save Pdf documents instantly for offline reading. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pdf with consistent quality and predictable results.\n\nIt supports PDF documents from various sources, Batch processing for document collections, and Auto metadata extraction and indexing, so you can move quickly from download to delivery without tedious rework. Use it to archive Pdf assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Pdf Downloader | Download Pdf Documents",
   "seo_description": "Download Pdf documents for offline reading. Fast and reliable document downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/pdf-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pdf-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/pdf-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/pdf-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "PDF documents from various sources",
     "Batch processing for document collections",
@@ -48,7 +51,7 @@
     "Smart organization"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

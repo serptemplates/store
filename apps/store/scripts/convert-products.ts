@@ -3,6 +3,8 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 
+import stripJsonComments from "strip-json-comments";
+
 import {
   FAQ_FIELD_ORDER,
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
@@ -19,6 +21,34 @@ import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "../lib/products/category
 import { getProductsDirectory } from "../lib/products/product";
 
 const PRODUCT_FILE_EXTENSION = ".json";
+
+const COMMENT_SECTIONS = [
+  {
+    comment: "// ----- Primary link destinations -----",
+    keys: [
+      "serply_link",
+      "store_serp_co_product_page_url",
+      "apps_serp_co_product_page_url",
+      "serp_co_product_page_url",
+      "reddit_url",
+      "success_url",
+      "cancel_url",
+    ],
+  },
+  {
+    comment: "// ----- Supporting link collections -----",
+    keys: [
+      "github_repo_url",
+      "github_repo_tags",
+      "chrome_webstore_link",
+      "firefox_addon_store_link",
+      "edge_addons_store_link",
+      "opera_addons_store_link",
+      "producthunt_link",
+      "resource_links",
+    ],
+  },
+] as const;
 
 const REQUIRED_PRODUCT_FIELDS = [
   "name",
@@ -319,12 +349,46 @@ async function readJsonFile(filePath: string): Promise<{ raw: string; data: unkn
   let parsed: unknown;
 
   try {
-    parsed = JSON.parse(raw);
+    parsed = JSON.parse(stripJsonComments(raw));
   } catch (error) {
     throw new Error(`JSON parse error - ${(error as Error).message}`);
   }
 
   return { raw, data: parsed };
+}
+
+type CommentSection = {
+  comment: string;
+  keys: readonly string[];
+};
+
+function insertSectionComments(source: string): string {
+  return COMMENT_SECTIONS.reduce((acc, section) => addSectionComment(acc, section), source);
+}
+
+function addSectionComment(source: string, section: CommentSection): string {
+  const markerKey = section.keys.find((key) => source.includes(`"${key}":`));
+  if (!markerKey) {
+    return source;
+  }
+
+  const marker = `"${markerKey}":`;
+  const markerIndex = source.indexOf(marker);
+  if (markerIndex === -1) {
+    return source;
+  }
+
+  const lineStart = source.lastIndexOf("\n", markerIndex);
+  const insertPosition = lineStart === -1 ? 0 : lineStart + 1;
+  const indentationMatch = source.slice(insertPosition, markerIndex).match(/^\s*/);
+  const indentation = indentationMatch ? indentationMatch[0] : "";
+  const commentLine = `${indentation}${section.comment}\n`;
+
+  if (source.slice(insertPosition, insertPosition + commentLine.length) === commentLine) {
+    return source;
+  }
+
+  return `${source.slice(0, insertPosition)}${commentLine}${source.slice(insertPosition)}`;
 }
 
 async function convertSingleProduct(
@@ -363,7 +427,9 @@ async function convertSingleProduct(
     const warnings = collectWarnings(data, product, source.slug);
     const normalized = normalizeProduct(product);
     const outputPath = source.jsonPath;
-    const nextContent = `${JSON.stringify(normalized, null, 2)}\n`;
+    const formattedJson = JSON.stringify(normalized, null, 2);
+    const withComments = insertSectionComments(formattedJson);
+    const nextContent = `${withComments}\n`;
     const hasChanges = nextContent !== raw;
 
     if (options.dryRun || options.check) {

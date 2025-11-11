@@ -59,6 +59,7 @@ const baseProduct: ProductData = {
   popular: false,
   brand: "SERP Apps",
   permission_justifications: [],
+  resource_links: [],
 };
 
 describe("productToHomeTemplate", () => {
@@ -169,6 +170,19 @@ describe("productToHomeTemplate", () => {
     expect(templateWithBlank.pricing?.subheading).toBeUndefined();
   });
 
+  it("hides price text while keeping CTA when showPrices is false", () => {
+    const template = productToHomeTemplate(baseProduct, [], { showPrices: false });
+
+    expect(template.pricing?.enabled).toBe(true);
+    expect(template.pricing?.price).toBeUndefined();
+    expect(template.pricing?.originalPrice).toBeUndefined();
+    expect(template.pricing?.priceLabel).toBeUndefined();
+    expect(template.pricing?.priceNote).toBeUndefined();
+    expect(template.pricing?.ctaText).toBeTruthy();
+    expect(template.pricing?.ctaHref).toContain("/checkout/");
+    expect(template.pricing?.productName).toBe(baseProduct.name);
+  });
+
   // Removed: legacy buy_button_destination no longer supported
 
   it("falls back to apps product page when links are missing or unsupported", () => {
@@ -245,12 +259,30 @@ describe("productToHomeTemplate", () => {
 
     expect(template.resourceLinks).toEqual([
       { label: "SERP", href: "https://serp.co/products/sample-product/" },
-      { label: "Reddit Discussion", href: "https://www.reddit.com/r/sample/comments/abc" },
-      { label: "GitHub Repository", href: "https://github.com/serpapps/sample-product" },
+      { label: "Reddit", href: "https://www.reddit.com/r/sample/comments/abc" },
+      { label: "GitHub", href: "https://github.com/serpapps/sample-product" },
       { label: "Chrome Web Store", href: "https://chromewebstore.google.com/detail/demo/abcdef123456" },
       { label: "Firefox Add-ons", href: "https://addons.mozilla.org/en-US/firefox/addon/demo" },
       { label: "Microsoft Edge Add-ons", href: "https://microsoftedge.microsoft.com/addons/detail/demo" },
       { label: "Product Hunt", href: "https://www.producthunt.com/products/sample-product" },
+    ]);
+  });
+
+  it("includes custom resource_links entries when provided", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      resource_links: [
+        { label: "Docs", href: "https://serp.co/docs/sample" },
+        { label: "Support", href: "https://serp.ly/support" },
+      ],
+    };
+
+    const template = productToHomeTemplate(product, []);
+
+    expect(template.resourceLinks).toEqual([
+      { label: "SERP", href: "https://serp.co/products/sample-product/" },
+      { label: "Docs", href: "https://serp.co/docs/sample" },
+      { label: "Support", href: "https://serp.ly/support" },
     ]);
   });
 

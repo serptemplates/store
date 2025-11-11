@@ -6,6 +6,7 @@
   "description": "Kajabi Video Downloader lets you own the lessons you already paid for. It recognises Kajabi’s hosted videos along with Vimeo and Wistia embeds inside lessons, queues as many modules as you need, and converts every stream into organised MP4 files you can keep forever.\n\nQueue a module, and the extension will pull each lesson sequentially, respecting throttle limits, merging adaptive streams, and storing subtitles alongside the video. Smart file naming mirrors your course structure so your library is sorted the moment downloads finish.\n\nEverything runs in Chrome, Edge, Firefox, Brave, or Opera using your existing Kajabi login, with processing kept entirely on your device for privacy-conscious archiving.",
   "seo_title": "Kajabi Video Downloader | Download Kajabi Videos",
   "seo_description": "Download Kajabi videos easily for offline viewing. Fast, reliable Kajabi video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/kajabi-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kajabi-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/kajabi-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/kajabi-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects Kajabi-hosted lessons plus Vimeo and Wistia embeds inside modules",
     "Queue-based downloader processes multiple lessons sequentially with throttle protection",
@@ -39,7 +42,7 @@
     "Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with queue management and subtitle capture included. No free trial; refunds are not available.",

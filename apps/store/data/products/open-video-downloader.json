@@ -6,6 +6,7 @@
   "description": "Open Video Downloader gives creators, educators, and archivists a reliable way to capture Open.video streams for offline viewing or reference. It detects players on open.video pages, course portals, and embedded blog posts, then fetches every available rendition so you can grab the exact quality you need.\n\nAuthentication cookies, signed URLs, and segmented HLS playlists are handled under the hood—no command-line tooling or manual manifest wrangling required. Queue multiple episodes or live event replays, keep an eye on segment progress, and let the extension merge the stream into a single MP4 while you focus on the rest of your workflow.",
   "seo_title": "Open Video Downloader | Download Open.video Streams",
   "seo_description": "Download Open.video streams, private embeds, and playlists in high quality with the Open Video Downloader extension.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/open-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/open-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/open-video-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/open-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects Open.video players on open.video and embedded third-party sites automatically",
     "Forwards session cookies to download members-only or invite-only streams you can already view",
@@ -31,7 +34,7 @@
     "Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Join the waitlist to be notified the moment Open Video Downloader ships.",

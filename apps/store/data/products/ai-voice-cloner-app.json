@@ -6,6 +6,7 @@
   "description": "AI Voice Cloner App turns short audio samples into production-ready voice models in minutes. Feed it 3 to 30 seconds of clean speech and the neural engine analyses pitch, cadence, and inflection before letting you type any script and hear it back in the cloned voice.\n\nFlexible input options let you drag and drop WAV, MP3, FLAC, or record directly inside the desktop interface. A guided workflow trims your best segments, selects Fast, Balanced, or High Quality presets, and generates speech 5 to 10 times faster than real time with adjustable speed, pitch, and emphasis controls.\n\nEverything runs under a privacy-first architecture. Voice models, projects, and exports stay on your machine by default, with optional cloud acceleration, password-protected archives, invisible watermarks, and consent verification tools when you need them.\n\nHigh-quality source audio is essential—studio-style recordings produce near-human realism while noisy clips reduce accuracy. Use the app for ethical, disclosed projects such as creative production, accessibility, localization, and personal voice preservation.",
   "seo_title": "AI Voice Cloner App | Fast local voice cloning in minutes",
   "seo_description": "Clone voices offline with 3-30 second samples, real-time text-to-speech controls, watermarking, and privacy-first storage on your own device.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/ai-voice-cloner-app",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-voice-cloner-app",
   "apps_serp_co_product_page_url": "https://apps.serp.co/ai-voice-cloner-app",
@@ -49,8 +50,10 @@
     "https://youtu.be/84xVF-Ww_10"
   ],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/ai-voice-cloner",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Create voice clones from 3-30 second samples with neural voice analysis",
     "Import WAV, MP3, FLAC, M4A, or record directly inside the desktop app",
@@ -64,7 +67,7 @@
     "Export high-quality MP3, WAV, or OGG without relying on cloud services"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features and commercial rights. No refunds.",

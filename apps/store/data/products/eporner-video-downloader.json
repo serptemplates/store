@@ -6,6 +6,7 @@
   "description": "Eporner Video Downloader is tuned for the site’s shifting layouts and age gates so you can grab exactly the MP4 you want without guesswork. It recognises standard pages, HD hubs, and embedded players, then lists every resolution with preview art, title, and file size so you always download the right clip.\n\nKick off the download from the popup, watch the on-page progress bar report percentage, speed, and ETA, and wait for the desktop notification that confirms the file saved with the video title. It handles one video at a time for reliability, merging adaptive streams in the background and keeping all processing on your machine for private archiving.",
   "seo_title": "Eporner Video Downloader | Save Eporner videos as MP4 files",
   "seo_description": "Capture Eporner videos in any available quality with layout-aware detection, realtime progress, and fully local MP4 processing.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/eporner-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/eporner-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/eporner-video-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/eporner-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects every Eporner layout, including HD hubs and embedded players",
     "Lists all MP4 renditions with resolution, runtime, thumbnail, and file size",
@@ -30,7 +33,7 @@
     "Runs in Chrome, Edge, Firefox, Brave, and Opera with licence and settings stored locally"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with site-specific updates. No free tier or refunds.",

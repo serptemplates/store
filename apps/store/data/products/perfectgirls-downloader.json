@@ -6,6 +6,7 @@
   "description": "PerfectGirls Downloader helps teams and viewers save permitted PerfectGirls videos and image sets in one workflow. It captures the source files directly, preserving quality and metadata without manual effort.\n\nUse it to maintain research archives, prep highlight clips for editing, or keep private collections accessible when you're away from a stable connection.",
   "seo_title": "PerfectGirls Downloader | Download PerfectGirls Videos",
   "seo_description": "Download PerfectGirls videos and galleries you are authorized to view. Reliable PerfectGirls downloader with batch support.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/perfectgirls-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/perfectgirls-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/perfectgirls-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Save PerfectGirls videos and galleries without compression",
     "Maintain creator folders, filenames, and timestamps",
@@ -29,7 +32,7 @@
     "Compatible with Windows, macOS, Linux, and major browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

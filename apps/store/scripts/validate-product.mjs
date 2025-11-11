@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+import stripJsonComments from "strip-json-comments";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +16,8 @@ if (!fs.existsSync(productsDir)) {
   process.exit(1);
 }
 
-const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
+const schemaRaw = fs.readFileSync(schemaPath, "utf8");
+const schema = JSON.parse(stripJsonComments(schemaRaw));
 const ajv = new Ajv2020({ allErrors: true, strict: false, allowUnionTypes: true });
 addFormats(ajv);
 
@@ -36,7 +38,7 @@ for (const file of productFiles) {
   const raw = fs.readFileSync(filePath, "utf8");
   let data;
   try {
-    data = JSON.parse(raw);
+    data = JSON.parse(stripJsonComments(raw));
   } catch (error) {
     hasErrors = true;
     console.error(`\n❌ ${file} failed to parse as JSON: ${(error instanceof Error && error.message) || error}`);

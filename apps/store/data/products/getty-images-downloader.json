@@ -6,6 +6,7 @@
   "description": "Getty Images Downloader gives creators and teams a dependable way to save Getty Images videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Getty with consistent quality and predictable results.\n\nIt supports Premium stock photos in full resolution, Batch processing, and RAW and professional image formats, so you can move quickly from download to delivery without tedious rework. Use it to archive Getty assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Getty Images Downloader | Download Getty Images Videos",
   "seo_description": "Download Getty Images videos easily for offline viewing. Fast, reliable Getty Images video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/getty-images-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/getty-images-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/getty-images-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/getty-images-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Premium stock photos in full resolution",
     "Batch processing",
@@ -48,7 +51,7 @@
     "Smart Bandwidth optimization"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

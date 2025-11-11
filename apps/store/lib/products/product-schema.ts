@@ -162,6 +162,11 @@ const screenshotSchema = z.object({
   caption: optionalTrimmedString(),
 });
 
+const externalLinkSchema = z.object({
+  label: trimmedString(),
+  href: trimmedString().url(),
+});
+
 const reviewSchema = z.object({
   name: trimmedString(),
   review: trimmedString(),
@@ -335,6 +340,7 @@ export const productSchemaShape = {
   edge_addons_store_link: optionalHost(["microsoftedge.microsoft.com"]),
   opera_addons_store_link: optionalHost(["addons.opera.com"]),
   producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
+  resource_links: optionalArray(externalLinkSchema),
   features: optionalArray(z.string().trim()),
   pricing: pricingSchema,
   order_bump: z.any().optional().transform(() => undefined),
@@ -410,6 +416,7 @@ export const PRODUCT_FIELD_ORDER = [
   "edge_addons_store_link",
   "opera_addons_store_link",
   "producthunt_link",
+  "resource_links",
   "features",
   "pricing",
   "faqs",

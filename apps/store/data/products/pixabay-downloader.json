@@ -6,6 +6,7 @@
   "description": "Pixabay Downloader gives creators and teams a dependable way to save Pixabay images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pixabay with consistent quality and predictable results.\n\nIt supports High-quality royalty-free images and videos, Batch processing, and Various media formats, so you can move quickly from download to delivery without tedious rework. Use it to archive Pixabay assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Pixabay Downloader | Download Pixabay Images",
   "seo_description": "Download Pixabay images and graphics for offline use. Fast and reliable Pixabay content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/pixabay-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pixabay-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/pixabay-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/pixabay-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "High-quality royalty-free images and videos",
     "Batch processing",
@@ -48,7 +51,7 @@
     "Free usage tracking and license compliance"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

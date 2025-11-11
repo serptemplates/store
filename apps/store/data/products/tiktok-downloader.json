@@ -6,6 +6,7 @@
   "description": "TikTok Downloader adds a download button directly onto videos in your For You feed, Following feed, profiles, and direct links. Click once and it saves the MP4 that TikTok already serves—no copying URLs, switching tabs, or risking shady sites—so you can keep inspiration, references, and deliverables offline.\n\nThe extension uses your logged-in session to detect playable videos, labels what can or cannot be saved, and downloads exactly what TikTok streams (watermarks included when TikTok requires them) while you keep scrolling.",
   "seo_title": "Tiktok Downloader | Download Tiktok Videos",
   "seo_description": "Download Tiktok videos easily for offline viewing. Fast, reliable Tiktok video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/tiktok-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
@@ -26,9 +27,11 @@
     "how-to-download-tiktok-videos",
     "how-to-download-tiktok-audio-music-audio-etc-from-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/tiktok-video-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
+  "resource_links": [],
   "features": [
     "Injects download buttons into For You, Following, profile, and video pages",
     "Uses your TikTok session to request video files securely and reliably",
@@ -38,7 +41,7 @@
     "Stores licence status locally with no analytics or credential harvesting"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with in-feed download buttons and ongoing updates. Sales are final.",

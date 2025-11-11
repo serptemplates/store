@@ -6,6 +6,7 @@
   "description": "Soundgasm Downloader gives creators and teams a dependable way to save Soundgasm audio tracks instantly for offline listening. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Soundgasm with consistent quality and predictable results.\n\nIt supports Audio content and voice recordings, Various audio formats and qualities, and Batch user libraries/series downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Soundgasm assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Soundgasm Downloader | Download Soundgasm Audio",
   "seo_description": "Download Soundgasm audio tracks for offline listening. Fast and reliable Soundgasm audio downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/soundgasm-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/soundgasm-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/soundgasm-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/soundgasm-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Audio content and voice recordings",
     "Various audio formats and qualities",
@@ -49,7 +52,7 @@
     "Creator following and update notifications"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

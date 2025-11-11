@@ -6,6 +6,7 @@
   "description": "Udemy Video Downloader keeps entire courses available offline by using your authenticated session to queue lectures, videos, captions, and resources automatically. It mirrors Udemy’s course structure so self‑learners and training teams can build organised archives without juggling ffmpeg scripts or unreliable web tools.",
   "seo_title": "Udemy Video Downloader | Download Udemy Videos",
   "seo_description": "Download Udemy videos easily for offline viewing. Fast, reliable Udemy video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/udemy-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/udemy-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/udemy-video-downloader",
@@ -30,9 +31,11 @@
   "related_posts": [
     "how-to-download-udemy-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/udemy-video-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/udemy-downloader/ecbbfcaojpjlnpeabmdmggbffdlghjjk",
+  "resource_links": [],
   "features": [
     "Uses your Udemy session cookies to authenticate against purchased courses",
     "Queues sections or individual lectures with automatic retry and throttle handling",
@@ -43,7 +46,7 @@
     "Stores licence details locally with no analytics or external tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with full-course queues, caption downloads, and resource syncing included. Sales are final.",

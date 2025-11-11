@@ -6,6 +6,7 @@
   "description": "Wistia Video Downloader scans any page you visit, lists every Wistia video it finds—playlist items included—and lets you save them as MP4s in a couple clicks. It handles embedded players on landing pages, documentation, and course portals, giving marketing and training teams a quick way to keep important assets offline.",
   "seo_title": "Wistia Video Downloader | Download Wistia Videos",
   "seo_description": "Download Wistia videos easily for offline viewing. Fast, reliable Wistia video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/wistia-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/wistia-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/wistia-video-downloader",
@@ -26,9 +27,11 @@
   "related_posts": [
     "download-wistia-videos-network-requests"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/wistia-video-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/wistia-video-downloader/enlffdifedcjihdhejdgbihipfehgibl",
+  "resource_links": [],
   "features": [
     "Detects Wistia embeds on any website, including playlists and channels",
     "Lists every video in a playlist with titles, thumbnails, and quality options",
@@ -38,7 +41,7 @@
     "Stores licence data locally and never routes downloads through third-party servers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with playlist detection, HLS fallback, and progress tracking. Sales are final.",

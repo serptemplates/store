@@ -6,6 +6,7 @@
   "description": "Tumblr Video Downloader gives creators and teams a dependable way to save Tumblr videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Tumblr with consistent quality and predictable results.\n\nIt supports Tumblr videos and GIFs in original quality, Blog archives and tag-based content, and Batch entire user blogs/reblogs downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Tumblr assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Tumblr Video Downloader | Download Tumblr Videos",
   "seo_description": "Download Tumblr videos easily for offline viewing. Fast, reliable Tumblr video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/tumblr-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tumblr-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/tumblr-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/tumblr-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Tumblr videos and GIFs in original quality",
     "Blog archives and tag-based content",
@@ -48,7 +51,7 @@
     "Smart content curation and discovery features"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

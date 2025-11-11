@@ -6,6 +6,7 @@
   "description": "Facebook Video Downloader gives creators and teams a dependable way to save Facebook videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Facebook with consistent quality and predictable results.\n\nIt supports High-quality Facebook downloads quality, Public and private video content, and Batch from pages, groups,/profiles downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Facebook assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Facebook Video Downloader | Facebook Downloader | Download Facebook Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from facebook with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/facebook-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/facebook-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/facebook-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/facebook-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "High-quality Facebook downloads quality",
     "Public and private video content",
@@ -48,7 +51,7 @@
     "Livestream recording and archiving features"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

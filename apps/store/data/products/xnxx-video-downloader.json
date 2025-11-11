@@ -6,6 +6,7 @@
   "description": "XNXX Video Downloader recognises videos on xnxx.com, video.xnxx.com, xnxx3.com, and other mirrors automatically, then gives you a clean list of MP4 qualities to choose from. Pick your resolution, follow the progress bar, and it saves the stream as a tidy MP4 for offline viewing.",
   "seo_title": "XNXX Video Downloader | Download XNXX Videos",
   "seo_description": "Download XNXX videos easily for offline viewing. Fast, reliable XNXX video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/xnxx-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xnxx-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/xnxx-video-downloader",
@@ -18,8 +19,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/xnxx-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Works automatically on xnxx.com, video.xnxx.com, xnxx3.com, and regional mirrors",
     "Filters duplicate quality entries to show a clean MP4 resolution list",
@@ -29,7 +32,7 @@
     "Stores licence data locally with no tracking or external routing of downloads"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with multi-domain detection and quality selection. Sales are final.",

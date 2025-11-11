@@ -6,6 +6,7 @@
   "description": "M3u8 Downloader turns tricky HLS playlists into simple MP4 files. Paste a manifest URL or let the extension auto-detect streams on the page, pick the quality you want, and it will download every segment, forward the right headers, and merge the video in the background without command-line tools.\n\nIt supports master playlists, CMAF/fMP4 segments, and multi-bitrate variants, retries failed chunks automatically, and runs in Chrome, Edge, Firefox, Brave, or Opera while keeping your browser responsive. The result is a source-quality MP4 you can archive, edit, or review offline.",
   "seo_title": "M3u8 Downloader | Download M3u8 Videos",
   "seo_description": "Download M3u8 videos easily for offline viewing. Fast, reliable M3u8 video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/m3u8-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/m3u8-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/m3u8-downloader",
@@ -21,8 +22,10 @@
   "related_posts": [
     "how-to-download-hls-m3u8-streaming-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/m3u8-downloader/releases/tag/v1.0.0",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects HLS (m3u8) streams on any page or accepts direct playlist URLs",
     "Parses master playlists to list every quality variant with bitrate and codec info",
@@ -34,7 +37,7 @@
     "Stores licence data locally with no analytics or remote tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence covering auto-detect, quality selection, header forwarding, and background conversion. Sales are final.",

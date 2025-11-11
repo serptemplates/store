@@ -6,6 +6,7 @@
   "description": "Reddit Downloader lets analysts and community managers archive posts, comment threads, and media directly from Reddit. Capture the context you need without broken links or missing assets.\n\nUse it to document campaigns, track references for articles, or keep moderation evidence stored safely offline with metadata intact.",
   "seo_title": "Reddit Downloader | Download Reddit Threads",
   "seo_description": "Download Reddit posts, comments, and media for research or archiving. Reliable Reddit downloader with organized exports.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/reddit-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/reddit-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/reddit-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Capture Reddit posts, media, and comment threads in one export",
     "Preserve author names, timestamps, and permalink references",
@@ -34,7 +37,7 @@
     "Works across Windows, macOS, Linux, and leading browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17",
     "original_price": "$37.00",
     "note": "Contact us for current licensing options.",
@@ -68,7 +71,7 @@
   "reviews": [
     {
       "name": "Dana Holloway",
-      "review": "We document Reddit discussions for articles. This downloader keeps context and media attached so quotes are reliable.",
+      "review": "We document Reddits for articles. This downloader keeps context and media attached so quotes are reliable.",
       "title": "Essential for reporting teams",
       "rating": 5,
       "date": "2025-02-18"

@@ -6,6 +6,7 @@
   "description": "SERP Downloader is the all-in-one browser extension for people who need the fastest path from “I’m watching it now” to “I have the file saved forever.” It recognises 1,000+ streaming, social, and file-hosting providers, unwraps whatever format they use—HLS, DASH, progressive MP4, WebM, audio-only, or zipped image galleries—and returns clean downloads that match the original quality.\n\nUnder the hood the extension keeps an up-to-date provider manifest, smartly routes each request through the right extractor, and merges segmented media without the user touching a command line. Teams can queue bulk jobs, monitor state from a single dashboard, and store recipes for recurring tasks so the same workflow works for the next platform that pops up.",
   "seo_title": "SERP Video Downloader | Download any type of video, from any provider, anywhere on the web",
   "seo_description": "Download videos, images, and audio from thousands of providers with the universal SERP Downloader browser extension.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/serp-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/serp-video-downloader",
@@ -23,12 +24,14 @@
     "how-to-download-youtube-videos-for-free-with-yt-dlp",
     "how-to-download-vimeo-videos-yt-dlp-at-the-m3u8-stream"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/serp-video-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
     "browser-extension",
     "video-downloader"
   ],
+  "resource_links": [],
   "features": [
     "Detects 1,000+ video, audio, and image providers in any tab without manual toggles",
     "Keeps a continuously updated extractor manifest backed by automated regression tests",
@@ -42,7 +45,7 @@
     "Integrates with yt-dlp and ffmpeg behind the scenes so power users can export CLI commands"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$47.00",
     "original_price": "$97",
     "note": "Join the waitlist for early access, roadmap votes, and launch pricing.",

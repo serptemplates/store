@@ -6,6 +6,7 @@
   "description": "Xfantazy Downloader keeps downloads predictable for editors and viewers who have permission to access Xfantazy content. It captures the source files directly, preserving quality, performer tags, and timestamps.\n\nUse it to organize private libraries, hand off clips to collaborators, or prep travel drives without depending on streaming access.",
   "seo_title": "Xfantazy Downloader | Download Xfantazy Videos",
   "seo_description": "Download Xfantazy videos you are authorized to view. Fast, private Xfantazy downloader with batch support.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/xfantazy-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xfantazy-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/xfantazy-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Download Xfantazy videos you can view without quality loss",
     "Preserve performer tags, titles, and timestamps automatically",
@@ -34,7 +37,7 @@
     "Works across Windows, macOS, Linux, and modern browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

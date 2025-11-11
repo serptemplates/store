@@ -6,6 +6,7 @@
   "description": "Whop Video Downloader adds a download button to courses, drops, and members-only pages so you can save content before access expires. It uses your Whop login to read the Mux stream powering each player, downloads every segment with the proper headers, and merges the video into a standard MP4 for offline study.",
   "seo_title": "Whop Video Downloader | Download Whop Videos",
   "seo_description": "Download Whop videos easily for offline viewing. Fast, reliable Whop video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/whop-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/whop-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/whop-video-downloader",
@@ -44,11 +45,13 @@
   "related_posts": [
     "how-to-download-whop-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/whop-video-downloader",
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/whop-video-downloader/obiiijgnmblffcopbdfpdlmbdkgmblgf",
   "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/whop-video-downloader/",
   "producthunt_link": "https://www.producthunt.com/products/whop-video-downloader",
+  "resource_links": [],
   "features": [
     "Detects Whop video players inside products, member areas, and course modules",
     "Uses your Whop session to access subscriber-only content securely",
@@ -59,7 +62,7 @@
     "Stores licence data locally with no analytics or third-party tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with stream conversion, password handling, and progress tracking. Sales are final.",

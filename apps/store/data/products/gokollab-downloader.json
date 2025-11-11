@@ -6,6 +6,7 @@
   "description": "GoKollab Downloader is a workspace-aware tool that lets teams save training videos, workshop replays, and shared resources before they disappear. It detects native GoKollab uploads alongside embedded players from YouTube, Vimeo, Wistia, and Loom, lining up every available stream so you can capture it as an MP4.\n\nChoose the quality tier you need and the extension handles both direct MP4s and adaptive HLS/DASH streams—collecting segments in the background, merging them into a single file, and reporting progress, speed, and estimated time remaining the whole way. Right-click shortcuts keep captures quick while you stay inside your workspace.\n\nBecause it runs within your authenticated GoKollab session, the downloader automatically honours workspace permissions, works across multiple teams, and keeps your captured assets private on your own device.",
   "seo_title": "Gokollab Downloader | Download Gokollab Content",
   "seo_description": "Download Gokollab content easily for offline use. Fast and reliable Gokollab downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/gokollab-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gokollab-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/gokollab-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/gokollab-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects GoKollab native videos plus YouTube, Vimeo, Wistia, and Loom embeds",
     "Works across workspaces, teams, and knowledge bases using your existing access",
@@ -39,7 +42,7 @@
     "Built on Manifest V3 with permissions limited to GoKollab and supported hosts"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence covering GoKollab workspaces and supported embed providers. No free trial; sales are final.",

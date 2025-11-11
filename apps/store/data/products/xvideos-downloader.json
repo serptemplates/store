@@ -6,6 +6,7 @@
   "description": "XVideos Downloader avoids the usual “403 Forbidden” failures by sending the exact headers XVideos expects on every request. It works on xvideos.com, xvideos.es, and mirror domains, lists the MP4 qualities you can grab, and saves the stream at full speed so you can build a reliable offline library without wrestling with errors.",
   "seo_title": "XVideos Downloader | Download XVideos Videos",
   "seo_description": "Download XVideos videos easily for offline viewing. Fast, reliable XVideos video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/xvideos-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xvideos-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/xvideos-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/xvideos-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Works seamlessly on xvideos.com, xvideos.es, and mirror domains without tweaks",
     "Extracts MP4 source URLs using multiple detection methods for higher reliability",
@@ -30,7 +33,7 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop with local-only storage"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with header management and multi-domain support. Sales are final.",

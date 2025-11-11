@@ -6,6 +6,7 @@
   "description": "Moodle Downloader gives creators and teams a dependable way to download Moodle course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Moodle with consistent quality and predictable results.\n\nIt supports Complete Moodle courses and resources, Course materials, and Maintain course structure and module organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Moodle assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Moodle Downloader | Download Moodle Courses",
   "seo_description": "Download Moodle courses and videos for offline learning. Fast and reliable course content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/moodle-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/moodle-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/moodle-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/moodle-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Complete Moodle courses and resources",
     "Course materials",
@@ -48,7 +51,7 @@
     "Smart academic calendar integration"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

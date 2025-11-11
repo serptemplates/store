@@ -6,6 +6,7 @@
   "description": "ManyVids Downloader helps creators and authorized viewers archive the videos they own. Skip unreliable screen recording—download the original files so quality, captions, and metadata stay intact.\n\nUse it to deliver purchased content to editors, prep client projects, or keep personal collections available without relying on streaming access.",
   "seo_title": "ManyVids Downloader | Download ManyVids Videos",
   "seo_description": "Download ManyVids videos you own in original quality. Secure ManyVids downloader with batch support.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/manyvids-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/manyvids-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/manyvids-downloader",
@@ -19,8 +20,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": null,
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Download ManyVids purchases in their original resolution",
     "Maintain creator folders and custom filenames automatically",
@@ -29,7 +32,7 @@
     "Compatible with Windows, macOS, Linux, and major browsers"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9",
     "original_price": "$17.00",
     "note": "Contact us for current licensing options.",

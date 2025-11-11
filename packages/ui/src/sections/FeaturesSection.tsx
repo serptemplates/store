@@ -25,8 +25,8 @@ export function FeaturesSection({ features }: FeaturesSectionProps) {
           <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
             {features.map((feature, index) => (
               <li key={`feature-${index}`} className="flex flex-col items-start gap-2">
-                <span className="flex items-center gap-2 text-base font-medium text-gray-700 leading-relaxed">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full text-primary">
+                <span className="flex items-start gap-2 text-base font-medium text-gray-700 leading-relaxed">
+                  <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-primary">
                     <CheckCircle className="h-3.5 w-3.5" />
                   </span>
                   {feature.title}

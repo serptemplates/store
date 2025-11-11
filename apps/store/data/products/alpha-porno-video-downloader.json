@@ -6,6 +6,7 @@
   "description": "Alpha Porno Video Downloader zeroes in on alphaporno.com video players so you can save clips for offline viewing in a couple clicks. It scans each page for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide exactly what lands in your downloads folder.\n\nConcurrent downloads mean you can queue multiple clips at once, watch progress bars inline, and keep browsing while the extension finishes its work. A right-click shortcut and compact popup deliver quality selection, speed indicators, and discreet desktop notifications when each file wraps.\n\nLicence activation takes seconds and settings stay local, so nothing leaves your browser beyond a quick licence check. The extension only runs on AlphaPorno domains, keeping the rest of your browsing untouched and your saved copies private.\n\nKeep the source tab open until the merge completes, remember it cannot grab DRM-protected streams, and consider splitting long sessions into batches so your hardware can stitch complex HLS videos without slowing down.",
   "seo_title": "Alpha Porno Video Downloader | Concurrent downloads for alphaporno.com",
   "seo_description": "Capture AlphaPorno videos with multi-quality selection, concurrent downloads, and fully local processing for private offline viewing.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/alpha-porno-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
@@ -17,8 +18,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/alpha-porno-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Purpose-built detection for alphaporno.com MP4 and HLS video streams",
     "Concurrent download queue so you can save multiple clips at once",
@@ -32,7 +35,7 @@
     "Site-scoped permissions limit the extension to alphaporno.com domains only"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with unlimited downloads on alphaporno.com. No trial and no refunds.",

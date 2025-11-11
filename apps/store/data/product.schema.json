@@ -161,6 +161,28 @@
         }
       ]
     },
+    "resource_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "default": []
+    },
     "github_repo_tags": {
       "type": "array",
       "items": {

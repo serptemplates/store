@@ -43,98 +43,76 @@ function buildProduct(overrides: Partial<ProductData>): ProductData {
 }
 
 describe("ProductStickyBar", () => {
-  describe("default variant", () => {
-    it("renders a CTA button that triggers the provided callback", () => {
-      const handleClick = vi.fn();
+  const baseProps: Omit<ProductStickyBarProps, "product"> = {
+    show: true,
+    productName: "Demo Product",
+    priceLabel: "One-time payment",
+    price: "$17.00",
+    originalPrice: null,
+    brandLogoPath: null,
+    mainImageSource: null,
+    waitlistEnabled: false,
+    checkoutCta: {
+      mode: "external",
+      href: "https://example.com/checkout",
+      text: "Buy Now",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      opensInNewTab: true,
+      analytics: { destination: "external" },
+    },
+    onCheckoutClick: () => {},
+  };
 
-      render(
-        <ProductStickyBar
-          variant="default"
-          show
-          productName="Demo Product"
-          ctaLabel="Get it now"
-          onClick={handleClick}
-          href="https://example.com/checkout"
-          openInNewTab
-        />,
-      );
+  vi.stubGlobal("React", React);
 
-      const button = screen.getByRole("link", { name: "GET IT NOW" });
-      button.click();
-      expect(handleClick).toHaveBeenCalled();
-    });
+  it("renders the checkout CTA for live products and triggers the handler", () => {
+    const product = buildProduct({ status: "live" });
+    const handleClick = vi.fn((event: { preventDefault?: () => void }) => event.preventDefault?.());
+
+    render(
+      <ProductStickyBar
+        {...baseProps}
+        product={product}
+        onCheckoutClick={handleClick}
+        checkoutCta={{
+          mode: "external",
+          href: "https://example.com/pay",
+          text: "Buy Now",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          opensInNewTab: true,
+          analytics: { destination: "external" },
+        }}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Buy Now" });
+    link.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    expect(handleClick).toHaveBeenCalled();
   });
 
-  describe("marketplace variant", () => {
-const baseProps: Omit<Extract<ProductStickyBarProps, { variant: "marketplace" }>, "product"> = {
-      variant: "marketplace",
-      show: true,
-      productName: "Demo Product",
-      priceLabel: "One-time payment",
-      price: "$17.00",
-      originalPrice: null,
-      brandLogoPath: null,
-      mainImageSource: null,
-      waitlistEnabled: false,
-      checkoutCta: {
-        mode: "external",
-        href: "https://example.com/checkout",
-        text: "Buy Now",
-        target: "_blank",
-        rel: "noopener noreferrer",
-        opensInNewTab: true,
-        analytics: { destination: "external" },
-      },
-      onCheckoutClick: () => {},
-};
+  it("falls back to the waitlist label when the product is pre-release", () => {
+    const product = buildProduct({ status: "pre_release" });
 
-vi.stubGlobal("React", React);
+    render(
+      <ProductStickyBar
+        {...baseProps}
+        product={product}
+        waitlistEnabled
+        onWaitlistClick={() => {}}
+        checkoutCta={{
+          mode: "pre_release",
+          href: "#waitlist",
+          text: "Get Notified",
+          target: "_self",
+          rel: undefined,
+          opensInNewTab: false,
+          analytics: { destination: "waitlist" },
+        }}
+      />,
+    );
 
-    it("falls back to the waitlist label when the product is pre-release", () => {
-      const product = buildProduct({ status: "pre_release" });
-
-      render(
-        <ProductStickyBar
-          {...baseProps}
-          product={product}
-          waitlistEnabled
-          onWaitlistClick={() => {}}
-          checkoutCta={{
-            mode: "pre_release",
-            href: "#waitlist",
-            text: "Get Notified",
-            target: "_self",
-            rel: undefined,
-            opensInNewTab: false,
-            analytics: { destination: "waitlist" },
-          }}
-        />,
-      );
-
-      expect(screen.getByRole("button", { name: "Get Notified" })).toBeInTheDocument();
-    });
-
-    it("renders the resolved checkout CTA for live products", () => {
-      const product = buildProduct({ status: "live" });
-
-      render(
-        <ProductStickyBar
-          {...baseProps}
-          product={product}
-          waitlistEnabled={false}
-          checkoutCta={{
-            mode: "external",
-            href: "https://example.com/pay",
-            text: "Buy Now",
-            target: "_blank",
-            rel: "noopener noreferrer",
-            opensInNewTab: true,
-            analytics: { destination: "external" },
-          }}
-        />,
-      );
-
-      expect(screen.getByRole("link", { name: "Buy Now" })).toBeInTheDocument();
-    });
+    expect(screen.getByRole("button", { name: "Get Notified" })).toBeInTheDocument();
   });
 });

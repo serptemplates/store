@@ -6,6 +6,7 @@
   "description": "Coursera Downloader makes it easy to keep lecture videos available when your internet isn’t. It detects Coursera’s native player inside courses, specializations, and guided projects, then presents every resolution you can access so you can save the lesson as a standard MP4.\n\nDirect MP4s finish quickly, while adaptive HLS and DASH streams are fetched in segments, merged in the background, and delivered with the original quality intact. Real-time progress, speed, and ETA keep you informed during longer lectures, and right-click shortcuts let you start downloads without leaving the lesson view.\n\nThe extension authenticates through your existing Coursera session, respects enrollment status, and processes everything locally—perfect for building offline study libraries before courses retire or subscriptions change.",
   "seo_title": "Coursera Downloader | Download Coursera Courses",
   "seo_description": "Download Coursera courses and videos for offline learning. Fast and reliable course content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/coursera-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/coursera-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/coursera-downloader",
@@ -29,8 +30,10 @@
     "how-to-download-coursera-videos",
     "how-to-download-hls-m3u8-streaming-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/coursera-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Detects Coursera lecture videos across courses, specializations, and guided projects",
     "Lists every available quality tier with format labels and estimated file sizes",
@@ -43,7 +46,7 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with unlimited Coursera lecture downloads. No free trial; refunds aren’t available.",

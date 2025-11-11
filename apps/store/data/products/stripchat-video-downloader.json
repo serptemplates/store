@@ -6,6 +6,7 @@
   "description": "Stripchat Video Downloader gives creators and teams a dependable way to save Stripchat videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stripchat with consistent quality and predictable results.\n\nIt supports And record live cam performances, Private shows and exclusive content, and Auto quality adjustment and optimization, so you can move quickly from download to delivery without tedious rework. Use it to archive Stripchat assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Stripchat Video Downloader | Stripchat Downloader | Download Stripchat Downloader for Offline Access",
   "seo_description": "Download videos, images, and content from stripchat with our reliable downloader tool. Fast, secure, and easy to use.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/stripchat-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stripchat-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/stripchat-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/stripchat-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "And record live cam performances",
     "Private shows and exclusive content",
@@ -48,7 +51,7 @@
     "Detailed recording logs and history tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "",

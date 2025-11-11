@@ -6,6 +6,7 @@
   "description": "Terabox Downloader gives creators and teams a dependable way to save Terabox content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Terabox with consistent quality and predictable results.\n\nIt supports Files from TeraBox cloud storage, Large file transfers and folders, and Batch shared links/collections downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Terabox assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Terabox Downloader | Download Terabox Content",
   "seo_description": "Download Terabox content easily for offline use. Fast and reliable Terabox downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/terabox-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/terabox-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/terabox-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/terabox-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Files from TeraBox cloud storage",
     "Large file transfers and folders",
@@ -48,7 +51,7 @@
     "Advanced file organization and management"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

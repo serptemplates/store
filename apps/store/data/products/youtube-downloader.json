@@ -6,6 +6,7 @@
   "description": "YouTube Video Downloader plugs into watch pages, Shorts, and embedded players, decrypts YouTube’s adaptive streams, and delivers high-quality MP4 or WebM files you can use offline. It handles encrypted URLs, merges separate video/audio tracks automatically, and keeps a clean queue so creators and researchers can archive content reliably.",
   "seo_title": "Youtube Video Downloader | Download Youtube Videos to MP4s for easy Offline Access to videos",
   "seo_description": "Download YouTube videos to MP4s and content from Youtube for Offline Access",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/youtube-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youtube-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/youtube-downloader",
@@ -43,12 +44,14 @@
     "how-to-download-youtube-videos",
     "how-to-download-youtube-videos-for-free-with-yt-dlp"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/youtube-downloader",
   "github_repo_tags": [
     "youtube-downloader",
     "youtube-video-downloader",
     "youtube-transcript-downloader"
   ],
+  "resource_links": [],
   "features": [
     "Detects YouTube watch pages, Shorts, and embedded players instantly",
     "Download YouTube videos to MP4s",
@@ -61,7 +64,7 @@
     "Stores license activation and preferences locally with zero analytics"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Download instantly • Lifetime updates included • No refunds",

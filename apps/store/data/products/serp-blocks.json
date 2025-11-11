@@ -6,6 +6,7 @@
   "description": "Unleash the power of 1200+ meticulously crafted, theme-ready blocks. Built for Shadcn UI and Tailwind, optimized for NextJS and AstroJS. Copy and paste fully-designed, full-width sections to build landing and marketing pages in minutes.",
   "seo_title": "SERP Blocks – The Largest ShadcnUI Component Library for React, NextJS Built on TailwindCSS - 1200+ Themed ShadcnUI Blocks",
   "seo_description": "Theme-ready UI blocks for Shadcn UI and Tailwind. 1200+ blocks, 40 themes, dark mode, and support for NextJS, Astro, Vue, Svelte, React, and HTML/JS.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/serp-blocks",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
   "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
@@ -46,9 +47,11 @@
     "https://blocks.serp.co/",
     "https://serp.co/products/serp-blocks/reviews/"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/serp-blocks",
   "github_repo_tags": [],
   "producthunt_link": "https://producthunt.com/posts/serp-ui-blocks",
+  "resource_links": [],
   "features": [
     "1200+ themed UI blocks based on ShadcnUI",
     "Built for Shadcn UI and Tailwind",
@@ -70,7 +73,7 @@
     "HSL colors converted to OKLCH"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$97.00",
     "currency": "USD",
     "benefits": []

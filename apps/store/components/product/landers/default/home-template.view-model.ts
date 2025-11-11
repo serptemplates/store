@@ -412,13 +412,15 @@ function buildPricingView({
 }: BuildPricingViewInput): HomeTemplateViewModel["pricing"] {
   const defaultBenefitList = normalizedFeatures.slice(0, 5).map((feature) => feature.title);
   const benefits = pricing?.benefits ?? pricing?.features ?? defaultBenefitList;
+  const showPriceDetails = pricing?.showPriceDetails !== false;
 
   const pricingProps: PricingCtaProps = {
     heading: pricing?.heading ?? `Get ${platform} Downloader Today`,
-    priceLabel: pricing?.priceLabel ?? "One-time purchase",
-    price: pricing?.price ?? "$47",
-    originalPrice: pricing?.originalPrice,
-    priceNote: pricing?.priceNote ?? "",
+    productName: pricing?.productName ?? platform,
+    priceLabel: showPriceDetails ? pricing?.priceLabel ?? "One-time purchase" : undefined,
+    price: showPriceDetails ? pricing?.price ?? "$47" : undefined,
+    originalPrice: showPriceDetails ? pricing?.originalPrice : undefined,
+    priceNote: showPriceDetails ? pricing?.priceNote ?? "" : undefined,
     benefits,
     ctaText: pricing?.ctaText ?? primaryCtaText,
     ctaHref: pricing?.ctaHref ?? primaryCtaHref,

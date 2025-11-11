@@ -15,7 +15,7 @@ const PRICING_FIELD_ORDER = [
   "currency",
   "availability",
   "benefits",
-] as const;
+];
 
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);

@@ -11,6 +11,9 @@ export type SiteConfig = {
   navigation?: {
     links?: Array<{ label: string; href: string }>;
   };
+  storefront?: {
+    showPrices?: boolean;
+  };
   blog?: {
     enabled?: boolean;
   };

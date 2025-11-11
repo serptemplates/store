@@ -48,6 +48,7 @@ describe("generateProductSchemaLD", () => {
         edge_addons_store_link: undefined,
         producthunt_link: undefined,
         permission_justifications: [],
+        resource_links: [],
       } satisfies SchemaProduct,
       url: "https://store.example.com/sample-product",
       storeUrl: "https://store.example.com",

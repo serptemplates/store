@@ -6,6 +6,7 @@
   "description": "Vimeo Video Downloader makes it easy to save showcase links, client review pages, and embedded players—even when they’re protected by passwords or private share settings. Enter the password, choose the quality, and the extension downloads the stream (and merges separate audio/video when needed) into a single MP4 so you can edit or archive offline.",
   "seo_title": "Vimeo Video Downloader | Download Vimeo Videos",
   "seo_description": "Download Vimeo videos easily for offline viewing. Fast, reliable Vimeo video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/vimeo-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vimeo-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/vimeo-video-downloader",
@@ -73,6 +74,7 @@
     "downloading-password-protected-vimeo-videos-with-yt-dlp",
     "downloading-long-vimeo-videos-dash-streams-with-yt-dlp"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/vimeo-video-downloader",
   "github_repo_tags": [
     "vimeo-downloader",
@@ -82,6 +84,7 @@
   ],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/vimeo-video-downloader/dhgiccbhamhpghhoaajjiikjlegbfhdj",
   "producthunt_link": "https://www.producthunt.com/products/vimeo-video-downloader",
+  "resource_links": [],
   "features": [
     "Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites",
     "Prompts for video passwords and respects your logged-in Vimeo session",
@@ -92,7 +95,7 @@
     "Stores licence data locally with no analytics or credential harvesting"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Download immediately \\u2022 Lifetime updates included \\u2022 No refunds",

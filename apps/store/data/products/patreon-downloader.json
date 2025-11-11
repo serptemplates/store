@@ -6,6 +6,7 @@
   "description": "Patreon Downloader gives creators and teams a dependable way to save Patreon content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Patreon with consistent quality and predictable results.\n\nIt supports Patreon creator content and exclusive posts, Subscriber-only and tier-based content, and Batch creator libraries/post history downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Patreon assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Patreon Downloader | Download Patreon Content",
   "seo_description": "Download Patreon content easily for offline use. Fast and reliable Patreon downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/patreon-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/patreon-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/patreon-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/patreon-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "One-click download from any video page",
     "100% privacy-friendly",
@@ -48,7 +51,7 @@
     "Ad-free experience"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

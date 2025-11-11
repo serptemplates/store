@@ -6,6 +6,7 @@
   "description": "Vk Video Downloader gives creators and teams a dependable way to save Vk videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Vk with consistent quality and predictable results.\n\nIt supports VK videos and social media content, Public and private group videos, and Batch user walls/community content downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Vk assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Vk Video Downloader | Download Vk Videos",
   "seo_description": "Download Vk videos easily for offline viewing. Fast, reliable Vk video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/vk-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vk-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/vk-video-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/vk-video-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "VK videos and social media content",
     "Public and private group videos",
@@ -48,7 +51,7 @@
     "Smart content recommendation and organization"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

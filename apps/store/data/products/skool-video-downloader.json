@@ -3,9 +3,10 @@
   "name": "Skool Video Downloader",
   "tagline": "Save Skool videos instantly for offline viewing.",
   "slug": "skool-video-downloader",
-  "description": "Skool Video Downloader makes course lessons, community uploads, and classroom recordings available offline before access changes. It uses your active Skool login to detect videos, lists every resolution the platform provides, and converts the stream into a smooth MP4 without leaving the browser.\n\nQueue a lesson, let the downloader fetch each segment with your authentication headers, and it will merge everything in the background while you continue studying. The result is a private MP4 library that mirrors what you can watch inside Skool.",
+  "description": "Skool Video Downloader makes course lessons, community uploads, and classroom recordings available offline before access changes. It uses your active Skool login to detect videos, lists every resolution the platform provides, and converts the stream into a smooth MP4 without leaving the browser.  Queue a lesson, let the downloader fetch each segment with your authentication headers, and it will merge everything in the background while you continue studying. The result is a private MP4 library that mirrors what you can watch inside Skool.",
   "seo_title": "Skool Video Downloader | Download Skool Videos",
   "seo_description": "Download Skool videos easily for offline viewing. Fast, reliable Skool video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/skool-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/skool-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/skool-video-downloader",
@@ -53,6 +54,7 @@
     "how-to-download-skool-videos-and-entire-course",
     "download-skool-videos-m3u8-token"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/skool-downloader",
   "github_repo_tags": [
     "skool-downloader",
@@ -61,6 +63,7 @@
   ],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/skool-video-downloader-by/adjbknblejbhfmcefnhgkdboanoboimj",
   "producthunt_link": "https://www.producthunt.com/products/skool-com-downloader",
+  "resource_links": [],
   "features": [
     "Detects Skool course lessons, community posts, and live session recordings",
     "Uses your logged-in session to download member-only content securely",
@@ -70,7 +73,7 @@
     "Stores licence data and quality preferences locally with no analytics"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$37.00",
     "original_price": "$47",
     "note": "Download instantly • Lifetime updates included • No refunds",
@@ -192,39 +195,39 @@
   "permission_justifications": [
     {
       "permission": "downloads",
-      "justification": "Saves the finished MP4 to your downloads folder and keeps the progress tracker\naccurate for each lesson."
+      "justification": "Saves the finished MP4 to your downloads folder and keeps the progress tracker accurate for each lesson."
     },
     {
       "permission": "storage",
-      "justification": "Stores licence activation, preferred quality, and retry behaviour locally so\nthe downloader stays ready between sessions."
+      "justification": "Stores licence activation, preferred quality, and retry behaviour locally so the downloader stays ready between sessions."
     },
     {
       "permission": "activeTab",
-      "justification": "Detects Skool lesson players and community videos on the tab you are viewing\nand injects the download controls there."
+      "justification": "Detects Skool lesson players and community videos on the tab you are viewing and injects the download controls there."
     },
     {
       "permission": "tabs",
-      "justification": "Allows downloads to continue if you refresh or switch lessons and restores the\nstatus window when you return."
+      "justification": "Allows downloads to continue if you refresh or switch lessons and restores the status window when you return."
     },
     {
       "permission": "scripting",
-      "justification": "Extracts stream manifests, quality variants, and authentication headers from\nthe page so the downloader can fetch the correct segments."
+      "justification": "Extracts stream manifests, quality variants, and authentication headers from the page so the downloader can fetch the correct segments."
     },
     {
       "permission": "notifications",
-      "justification": "Sends completion or error alerts so you know when a recording finishes downloading\nwithout monitoring the UI."
+      "justification": "Sends completion or error alerts so you know when a recording finishes downloading without monitoring the UI."
     },
     {
       "permission": "contextMenus",
-      "justification": "Adds a “Download with Skool Video Downloader” entry to the right-click menu for\nquick access inside lessons."
+      "justification": "Adds a “Download with Skool Video Downloader” entry to the right-click menu for quick access inside lessons."
     },
     {
       "permission": "offscreen",
-      "justification": "Merges HLS segments into MP4 files in the background, keeping your lesson tab\nresponsive during conversion."
+      "justification": "Merges HLS segments into MP4 files in the background, keeping your lesson tab responsive during conversion."
     },
     {
       "permission": "host_permissions",
-      "justification": "Grants limited access to skool.com and related video hosts so the extension only\nactivates on pages that serve Skool content."
+      "justification": "Grants limited access to skool.com and related video hosts so the extension only activates on pages that serve Skool content."
     }
   ],
   "brand": "SERP Apps"

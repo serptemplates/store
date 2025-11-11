@@ -6,6 +6,7 @@
   "description": "Stocksy Downloader gives creators and teams a dependable way to save Stocksy images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stocksy with consistent quality and predictable results.\n\nIt supports Premium stock photos from Stocksy, Authentic and diverse photography, and Batch photographer collections/searches downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Stocksy assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Stocksy Downloader | Download Stocksy Images",
   "seo_description": "Download Stocksy images and graphics for offline use. Fast and reliable Stocksy content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/stocksy-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stocksy-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/stocksy-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/stocksy-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Premium stock photos from Stocksy",
     "Authentic and diverse photography",
@@ -48,7 +51,7 @@
     "Photographer discovery and curation features"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

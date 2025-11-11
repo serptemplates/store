@@ -6,6 +6,7 @@
   "description": "Erome Downloader is built specifically for Erome’s player so you can save clips before creators remove them. The extension scans each post with multiple detection methods—HTML5 tags, metadata, and script analysis—to surface every MP4 or HLS source and label it clearly with resolution, format, and estimated size.\n\nChoose the rendition you want, click download, and a persistent progress panel tracks percentage, speed, and time remaining while background workers assemble HLS segments into a single MP4. A cancel button lets you stop mid-stream without leaving half-finished files, and desktop notifications confirm the moment the video is ready.\n\nAll processing stays local: licence data, preferences, and downloads never leave your browser, and permissions are scoped to Erome domains only. Right-click shortcuts and inline controls make it simple to archive the videos you care about before they disappear.\n\nRun it in Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, or Linux—just keep the tab open until the download finishes for the cleanest files.",
   "seo_title": "Erome Downloader | Capture Erome videos as MP4 files",
   "seo_description": "Detect every Erome video source, label quality options, and save reliable MP4 copies with cancel support and local processing.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/erome-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/erome-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Triple-source detection catches HTML5, metadata, and script-based video URLs",
     "Quality picker lists every MP4 and HLS option with resolution and estimated size",
@@ -39,7 +42,7 @@
     "Built on Manifest V3 for up-to-date extension security"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$9.00",
     "original_price": "$17.00",
     "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",

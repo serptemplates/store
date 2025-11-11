@@ -6,6 +6,7 @@
   "description": "Thumbnail Downloader gives creators and teams a dependable way to save Thumbnail images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Thumbnail with consistent quality and predictable results.\n\nIt supports Video thumbnails from various platforms, High-res thumbnail extraction, and Batch thumbnails from playlists/channels downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Thumbnail assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Thumbnail Downloader | Download Thumbnail Images",
   "seo_description": "Download Thumbnail images and graphics for offline use. Fast and reliable Thumbnail content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/thumbnail-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thumbnail-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/thumbnail-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/thumbnail-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Video thumbnails from various platforms",
     "High-res thumbnail extraction",
@@ -48,7 +51,7 @@
     "Thumbnail analysis and recommendation tools"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

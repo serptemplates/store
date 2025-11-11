@@ -6,6 +6,7 @@
   "description": "Thinkific Downloader gives creators and teams a dependable way to download Thinkific course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Thinkific with consistent quality and predictable results.\n\nIt supports Complete Thinkific courses and learning paths, Multimedia content, and Maintain course hierarchy and chapter organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Thinkific assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Thinkific Downloader | Download Thinkific Courses",
   "seo_description": "Download Thinkific courses and videos for offline learning. Fast and reliable course content downloader.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/thinkific-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thinkific-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/thinkific-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/thinkific-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Complete Thinkific courses and learning paths",
     "Multimedia content",
@@ -49,7 +52,7 @@
     "Smart content organization and categorization"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

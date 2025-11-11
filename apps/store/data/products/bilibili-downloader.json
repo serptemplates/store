@@ -6,6 +6,7 @@
   "description": "Bilibili Downloader gives creators and teams a dependable way to save Bilibili videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Bilibili with consistent quality and predictable results.\n\nIt supports Bilibili videos and anime content, Danmaku comments and subtitles, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Bilibili assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Bilibili Downloader | Download Bilibili Videos",
   "seo_description": "Download Bilibili videos easily for offline viewing. Fast, reliable Bilibili video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/bilibili-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/bilibili-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/bilibili-downloader",
@@ -24,8 +25,10 @@
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/bilibili-downloader",
   "github_repo_tags": [],
+  "resource_links": [],
   "features": [
     "Bilibili videos and anime content",
     "Danmaku comments and subtitles",
@@ -49,7 +52,7 @@
     "Multi-language subtitle support and extraction"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "",

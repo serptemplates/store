@@ -6,6 +6,7 @@
   "description": "Loom Video Downloader helps remote teams and creators save recordings before links expire. It detects Loom share pages, embedded players, and workspace libraries, prompts for passwords when required, and converts every recording into a standard MP4 you can archive, edit, or watch offline.\n\nWhether Loom delivers the video as a direct MP4 or an adaptive HLS/DASH stream, the downloader queues the job, fetches segments in the background, merges them without freezing your browser, and keeps you informed with live progress, speed, and ETA. Queue multiple recordings, cancel any job midstream, and keep your content accessible even after access changes.\n\nEverything runs locally in Chrome, Edge, Firefox, Brave, or Opera using your existing Loom account, so private recordings stay private while you build the library your team relies on.",
   "seo_title": "Loom Video Downloader | Download Loom Videos",
   "seo_description": "Download Loom videos easily for offline viewing. Fast, reliable Loom video downloader with high-quality downloads.",
+  // ----- Primary link destinations -----
   "serply_link": "https://serp.ly/loom-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/loom-video-downloader",
   "apps_serp_co_product_page_url": "https://apps.serp.co/loom-video-downloader",
@@ -51,6 +52,7 @@
   "related_posts": [
     "how-to-download-loom-videos"
   ],
+  // ----- Supporting link collections -----
   "github_repo_url": "https://github.com/serpapps/loom-video-downloader",
   "github_repo_tags": [
     "loom-downloader",
@@ -59,6 +61,7 @@
   ],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/loom-video-downloader/oopljffmklejoikiemiedeangcchfmlf",
   "producthunt_link": "https://www.producthunt.com/products/loom-video-downloader",
+  "resource_links": [],
   "features": [
     "Detects Loom share links, embedded players, and workspace libraries automatically",
     "Prompts for passwords on restricted recordings without storing credentials",
@@ -70,7 +73,7 @@
     "Stores licence data and preferences locally with zero analytics or tracking"
   ],
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence with password handling, queue processing, and adaptive stream conversion included. Sales are final.",
