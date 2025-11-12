@@ -685,7 +685,7 @@
             "type": "array",
             "contains": {
               "type": "string",
-              "enum": ["downloader"]
+              "enum": ["downloader", "Downloader", "DOWNLOADER"]
             }
           }
         },
