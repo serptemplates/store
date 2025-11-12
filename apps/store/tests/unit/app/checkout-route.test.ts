@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
 import { GET } from "@/app/checkout/[slug]/route";
 
@@ -21,9 +21,16 @@ vi.mock("@/lib/payments/stripe", () => ({
 }));
 
 describe("GET /checkout/[slug]", () => {
+  const originalOptionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
+
   beforeEach(() => {
     vi.clearAllMocks();
     createSessionMock.mockReset();
+    process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID = "price_optional_bundle";
+  });
+
+  afterEach(() => {
+    process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID = originalOptionalBundlePriceId;
   });
 
   it("injects Dub attribution metadata and redirects to Stripe", async () => {
@@ -52,8 +59,11 @@ describe("GET /checkout/[slug]", () => {
         tagIds: ["serp-apps"],
       },
     } as any);
-    resolvePriceForEnvironmentMock.mockResolvedValue({
+    resolvePriceForEnvironmentMock.mockResolvedValueOnce({
       id: "price_test_789",
+    } as any);
+    resolvePriceForEnvironmentMock.mockResolvedValueOnce({
+      id: "price_optional_test_456",
     } as any);
 
     createSessionMock.mockResolvedValue({
@@ -76,10 +86,27 @@ describe("GET /checkout/[slug]", () => {
     expect(params).toMatchObject({
       mode: "payment",
       client_reference_id: "dub_id_affiliate-123",
+      allow_promotion_codes: true,
       line_items: [
         {
           price: "price_test_789",
           quantity: 2,
+          adjustable_quantity: {
+            enabled: true,
+            minimum: 0,
+            maximum: 99,
+          },
+        },
+      ],
+      optional_items: [
+        {
+          price: "price_optional_test_456",
+          quantity: 1,
+          adjustable_quantity: {
+            enabled: true,
+            minimum: 0,
+            maximum: 1,
+          },
         },
       ],
       cancel_url: "https://apps.serp.co/checkout/cancel",

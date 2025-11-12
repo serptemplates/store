@@ -351,23 +351,6 @@
     },
     "faqs": {
       "type": "array",
-      "minItems": 1,
-      "contains": {
-        "type": "object",
-        "required": [
-          "question",
-          "answer"
-        ],
-        "properties": {
-          "question": {
-            "const": "Is this legal?"
-          },
-          "answer": {
-            "const": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
-          }
-        },
-        "additionalProperties": false
-      },
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -695,6 +678,44 @@
     }
   },
   "allOf": [
+    {
+      "if": {
+        "properties": {
+          "categories": {
+            "type": "array",
+            "contains": {
+              "type": "string",
+              "enum": ["downloader"]
+            }
+          }
+        },
+        "required": ["categories"]
+      },
+      "then": {
+        "required": ["faqs"],
+        "properties": {
+          "faqs": {
+            "minItems": 1,
+            "contains": {
+              "type": "object",
+              "required": [
+                "question",
+                "answer"
+              ],
+              "properties": {
+                "question": {
+                  "const": "Is this legal?"
+                },
+                "answer": {
+                  "const": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    },
     {
       "if": {
         "properties": { "status": { "const": "live" } }

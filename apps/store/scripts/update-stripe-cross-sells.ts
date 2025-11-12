@@ -9,27 +9,30 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import { getAllProducts } from "../lib/products/product";
 
-const API_VERSION = "2025-06-30.basil" as unknown as Stripe.LatestApiVersion;
+const API_VERSION = "2025-06-30.basil; checkout_cross_sells_beta=v1" as unknown as Stripe.LatestApiVersion;
 const REPO_ROOT = path.resolve(__dirname, "../../..");
 
 type CrossSellConfig = {
-  allBundleProductId?: string; // e.g., SERP Downloaders Bundle (all-downloaders)
-  adultBundleProductId?: string; // e.g., SERP Adult Downloaders Bundle
+  downloaderProductId?: string;
 };
+
+const DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID = "prod_TPQDdWiCCy0HK2";
 
 function resolveCrossSellConfig(mode: StripeMode): CrossSellConfig {
   if (mode === "live") {
     return {
-      allBundleProductId:
-        process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_LIVE ||
-        "prod_TF3OkFaJi31aur", // fallback to current all-downloaders bundle
-      adultBundleProductId: process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_LIVE,
+      downloaderProductId:
+        process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_LIVE
+        ?? process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_LIVE
+        ?? DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID,
     };
   }
 
   return {
-    allBundleProductId: process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_TEST,
-    adultBundleProductId: process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_TEST,
+    downloaderProductId:
+      process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_TEST
+      ?? process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_TEST
+      ?? process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_TEST,
   };
 }
 
@@ -153,15 +156,11 @@ async function updateStripeCrossSells() {
 
     productsProcessed += 1;
 
-    // Determine if this product is marked as Adult via categories
-    const isAdult = (product.categories || []).some((c) => c?.toLowerCase() === "adult");
-
     for (const client of clients) {
       const cfg = resolveCrossSellConfig(client.mode);
-      const target = isAdult ? cfg.adultBundleProductId : cfg.allBundleProductId;
+      const target = cfg.downloaderProductId;
       if (!target) {
-        const reason = isAdult ? "no adult bundle configured" : "no all-downloaders bundle configured";
-        console.log(`⚪️  [${client.mode}] ${slug}: skipping (${reason}).`);
+        console.log(`⚪️  [${client.mode}] ${slug}: skipping (no cross-sell target configured).`);
         continue;
       }
 

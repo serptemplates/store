@@ -1,6 +1,6 @@
 {
   // PRODUCT INFO
-  "platform": "Shadcn UI",
+  "platform": "SERP Blocks",
   "name": "SERP Blocks",
   "tagline": "Elevate Your UI with Themed Blocks",
   "slug": "serp-blocks",
@@ -63,10 +63,6 @@
     {
       "question": "Do you provide tutorials?",
       "answer": "Not yet, but we're working on it! In the meantime, we've done our best to make it intuitive and we're building our documentation page."
-    },
-    {
-      "question": "Is this legal?",
-      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [],

@@ -114,7 +114,7 @@ describe("scripts/convert-products", () => {
       license: {
         entitlements: ["personal-use"],
       },
-      categories: ["utilities"],
+      categories: ["Downloader", "Utilities"],
       order_bump: {
         legacy: true,
       },
@@ -164,6 +164,52 @@ describe("scripts/convert-products", () => {
     expect(faqs).toEqual([
       { question: "Does it work?", answer: "Yes, immediately." },
       { question: LEGAL_FAQ_TEMPLATE.question, answer: LEGAL_FAQ_TEMPLATE.answer },
+    ]);
+  });
+
+  it("omits downloader-specific legal FAQ for non-downloader products", async () => {
+    const slug = "ai-tool";
+    await writeProduct(slug, {
+      name: "AI Tool",
+      slug,
+      description: "Generate on-brand assets instantly.",
+      tagline: "AI powered",
+      seo_title: "AI Tool",
+      seo_description: "Generate assets with AI.",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
+      serply_link: `https://serp.ly/${slug}`,
+      store_serp_co_product_page_url: `https://store.serp.co/product-details/product/${slug}`,
+      apps_serp_co_product_page_url: `https://apps.serp.co/${slug}`,
+      success_url: "https://apps.serp.co/checkout/success",
+      cancel_url: `https://apps.serp.co/checkout?product=${slug}`,
+      faqs: [
+        {
+          question: "Does support cover prompts?",
+          answer: "Yes, every plan includes prompt reviews.",
+        },
+      ],
+      categories: ["Artificial Intelligence"],
+      pricing: {
+        price: "$47",
+      },
+    });
+
+    const { convertProducts } = await import("@/scripts/convert-products");
+    const summary = await convertProducts();
+
+    expect(summary.errors).toBe(0);
+
+    const output = await fs.readFile(productPath(slug), "utf8");
+    const parsed = JSON.parse(stripJsonComments(output)) as Record<string, unknown>;
+    const faqs = parsed.faqs as Array<Record<string, string>>;
+
+    expect(faqs).toEqual([
+      {
+        question: "Does support cover prompts?",
+        answer: "Yes, every plan includes prompt reviews.",
+      },
     ]);
   });
 

@@ -505,6 +505,27 @@ export const LEGAL_FAQ_TEMPLATE = {
 
 const LEGAL_FAQ_NORMALIZED_QUESTION = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
 
+type LegalFaqContext = {
+  name?: string | null;
+  slug?: string | null;
+  categories?: readonly string[] | null;
+  keywords?: readonly string[] | null;
+};
+
+export function isDownloaderProduct(product: LegalFaqContext): boolean {
+  const categories = Array.isArray(product.categories) ? product.categories : [];
+  return categories.some((category) => {
+    if (typeof category !== "string") {
+      return false;
+    }
+    return category.trim().toLowerCase() === "downloader";
+  });
+}
+
+export function requiresDownloaderLegalFaq(product: LegalFaqContext): boolean {
+  return isDownloaderProduct(product);
+}
+
 export const productSchema = z
   .object(productSchemaShape)
   .strict()
@@ -526,24 +547,27 @@ export const productSchema = z
       });
     }
 
+    const requiresLegalFaq = requiresDownloaderLegalFaq(data);
     const faqs = Array.isArray(data.faqs) ? data.faqs : [];
-    if (faqs.length === 0) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["faqs"],
-        message: `Products must include the \"${LEGAL_FAQ_TEMPLATE.question}\" FAQ entry.`,
-      });
-    } else {
-      const hasLegalFaq = faqs.some((faq) => {
-        const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
-        return question === LEGAL_FAQ_NORMALIZED_QUESTION;
-      });
-      if (!hasLegalFaq) {
+    if (requiresLegalFaq) {
+      if (faqs.length === 0) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["faqs"],
-          message: `FAQ entries must include the \"${LEGAL_FAQ_TEMPLATE.question}\" disclaimer.`,
+          message: `Products must include the \"${LEGAL_FAQ_TEMPLATE.question}\" FAQ entry.`,
         });
+      } else {
+        const hasLegalFaq = faqs.some((faq) => {
+          const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
+          return question === LEGAL_FAQ_NORMALIZED_QUESTION;
+        });
+        if (!hasLegalFaq) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["faqs"],
+            message: `FAQ entries must include the \"${LEGAL_FAQ_TEMPLATE.question}\" disclaimer.`,
+          });
+        }
       }
     }
     // Badge exclusivity rules: only one of (pre_release via status, new_release, popular)

@@ -125,4 +125,31 @@ describe("productSchema", () => {
 
     expect(result.success).toBe(true);
   });
+
+  it("requires the downloader legal FAQ only when category includes 'Downloader'", () => {
+    const missingFaqs = productSchema.safeParse({
+      ...buildBaseProduct(),
+      categories: ["Downloader"],
+      faqs: [],
+    });
+
+    expect(missingFaqs.success).toBe(false);
+    if (!missingFaqs.success) {
+      const issue = missingFaqs.error.issues.find((entry) => entry.path.join(".") === "faqs");
+      expect(issue?.message).toMatch(/must include the "Is this legal\?" faq entry/i);
+    }
+
+    const allowedFaqs = productSchema.safeParse({
+      ...buildBaseProduct(),
+      categories: ["UI Components"],
+      faqs: [
+        {
+          question: "Does it support dark mode?",
+          answer: "Yes, every block ships with light/dark variants.",
+        },
+      ],
+    });
+
+    expect(allowedFaqs.success).toBe(true);
+  });
 });

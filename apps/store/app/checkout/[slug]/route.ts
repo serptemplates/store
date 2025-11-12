@@ -2,9 +2,20 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+import logger from "@/lib/logger";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getStripeClient, resolvePriceForEnvironment } from "@/lib/payments/stripe";
 import { getProductData } from "@/lib/products/product";
+
+type CheckoutOptionalItem = {
+  price: string;
+  quantity: number;
+  adjustable_quantity?: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity;
+};
+
+type CheckoutSessionCreateParamsWithOptionalItems = Stripe.Checkout.SessionCreateParams & {
+  optional_items?: CheckoutOptionalItem[];
+};
 
 function json(body: unknown, status = 200) {
   return NextResponse.json(body, { status });
@@ -97,12 +108,50 @@ export async function GET(
     productImage: offer.productImage ?? null,
   });
 
-  const params: Stripe.Checkout.SessionCreateParams = {
+  const adjustableQuantity: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity = {
+    enabled: true,
+    minimum: 0,
+    maximum: Math.max(quantity, 99),
+  };
+
+  const optionalItems: CheckoutOptionalItem[] = [];
+  const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
+  if (optionalBundlePriceId) {
+    try {
+      const optionalBundlePrice = await resolvePriceForEnvironment(
+        {
+          id: "optional_downloader_bundle",
+          priceId: optionalBundlePriceId,
+        },
+        { syncWithLiveProduct: true },
+      );
+
+      optionalItems.push({
+        price: optionalBundlePrice.id,
+        quantity: 1,
+        adjustable_quantity: {
+          enabled: true,
+          minimum: 0,
+          maximum: 1,
+        },
+      });
+    } catch (error) {
+      logger.warn("checkout.optional_bundle_price_unavailable", {
+        slug,
+        optionalBundlePriceId,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+
+  const params: CheckoutSessionCreateParamsWithOptionalItems = {
     mode: offer.mode,
+    allow_promotion_codes: true,
     line_items: [
       {
         price: resolvedPrice.id,
         quantity,
+        adjustable_quantity: adjustableQuantity,
       },
     ],
     success_url: offer.successUrl,
@@ -113,6 +162,10 @@ export async function GET(
     },
     customer_creation: "always",
   };
+
+  if (optionalItems.length > 0) {
+    params.optional_items = optionalItems;
+  }
 
   if (customerEmail) {
     params.customer_email = customerEmail;

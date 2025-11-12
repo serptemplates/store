@@ -16,6 +16,7 @@ import {
   SCREENSHOT_FIELD_ORDER,
   STRIPE_FIELD_ORDER,
   TRADEMARK_METADATA_FIELD_ORDER,
+  requiresDownloaderLegalFaq,
   type ProductData,
   productSchema,
 } from "../lib/products/product-schema";
@@ -279,6 +280,24 @@ function ensureLegalFaq(product: ProductData): ProductData {
     const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
     return question === LEGAL_FAQ_NORMALIZED_QUESTION;
   });
+
+  const requiresLegalFaq = requiresDownloaderLegalFaq(product);
+
+  if (!requiresLegalFaq) {
+    if (index === -1) {
+      return {
+        ...product,
+        faqs,
+      };
+    }
+
+    const nextFaqs = [...faqs];
+    nextFaqs.splice(index, 1);
+    return {
+      ...product,
+      faqs: nextFaqs,
+    };
+  }
 
   if (index === -1) {
     return {
