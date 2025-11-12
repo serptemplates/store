@@ -18,6 +18,13 @@ export type SiteConfig = {
     enabled?: boolean;
   };
   excludeSlugs?: string[];
+  policy?: {
+    trademark?: {
+      disclaimerTemplate?: string;
+      domainSuffix?: string;
+      fallbackLegalEntity?: string | null;
+    };
+  };
 };
 
 const defaultConfigPath = path.join(process.cwd(), "data", "site.config.json");

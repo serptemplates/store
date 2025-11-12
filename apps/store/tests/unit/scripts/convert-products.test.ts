@@ -5,6 +5,7 @@ import path from "node:path";
 import stripJsonComments from "strip-json-comments";
 
 import {
+  LEGAL_FAQ_TEMPLATE,
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
   PRICING_FIELD_ORDER,
   PRODUCT_FIELD_ORDER,
@@ -50,6 +51,9 @@ describe("scripts/convert-products", () => {
       seo_title: "Sample Product Title",
       name: "Sample Product",
       slug: "sample-product",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       seo_description: "A concise marketing description.",
       serply_link: "https://serp.ly/sample-product",
       apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
@@ -155,6 +159,12 @@ describe("scripts/convert-products", () => {
     expect(Object.keys(permissions[0])).toEqual(
       PERMISSION_JUSTIFICATION_FIELD_ORDER.filter((field) => permissions[0][field] !== undefined),
     );
+
+    const faqs = parsed.faqs as Array<Record<string, string>>;
+    expect(faqs).toEqual([
+      { question: "Does it work?", answer: "Yes, immediately." },
+      { question: LEGAL_FAQ_TEMPLATE.question, answer: LEGAL_FAQ_TEMPLATE.answer },
+    ]);
   });
 
   it("supports dry-run checks without writing files", async () => {
@@ -162,6 +172,9 @@ describe("scripts/convert-products", () => {
     await writeProduct(slug, {
       name: "Dry Run Product",
       slug,
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       tagline: "Preview only",
       description: "Dry run description.",
       seo_title: "Dry Run Title",
@@ -192,6 +205,9 @@ describe("scripts/convert-products", () => {
     const slug = "needs-format";
     await writeProduct(slug, {
       slug,
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       name: "Needs Format",
       description: "Out of order fields.",
       seo_description: "Needs format",

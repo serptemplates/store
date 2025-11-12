@@ -7,6 +7,9 @@ const baseProduct = (): ProductData => ({
   platform: "Sample",
   seo_title: " Sample Product Title ",
   seo_description: "  Sample description for SEO.  ",
+  trademark_metadata: {
+    uses_trademarked_brand: false,
+  },
   store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
   apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
@@ -82,5 +85,53 @@ describe("buildProductMetadata", () => {
     const twitter = metadata.twitter as Record<string, unknown> | undefined;
     expect(twitter && "card" in twitter ? twitter.card : undefined).toBe("summary");
     expect(twitter && "images" in twitter ? twitter.images : undefined).toBeUndefined();
+  });
+
+  it("adds the unofficial qualifier when the title references a trademarked brand", () => {
+    const metadata = buildProductMetadata({
+      ...baseProduct(),
+      slug: "youtube-downloader",
+      seo_title: "YouTube Video Downloader",
+      name: "YouTube Video Downloader",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "YouTube",
+        legal_entity: "YouTube",
+      },
+    });
+
+    expect(metadata.title).toBe("YouTube Video Downloader (Unofficial)");
+  });
+
+  it("standardizes the prefix before the first pipe for trademarked products", () => {
+    const metadata = buildProductMetadata({
+      ...baseProduct(),
+      slug: "onlyfans-downloader",
+      seo_title: "OnlyFans Downloader | Download private content",
+      name: "OnlyFans Downloader",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "OnlyFans",
+        legal_entity: "Fenix International Limited",
+      },
+    });
+
+    expect(metadata.title).toBe("OnlyFans Downloader (Unofficial) | Download private content");
+    expect((metadata.description ?? "").startsWith("OnlyFans Downloader (Unofficial). Authorized-use only")).toBe(true);
+  });
+
+  it("avoids the suffix for generic products", () => {
+    const metadata = buildProductMetadata({
+      ...baseProduct(),
+      slug: "m3u8-downloader",
+      seo_title: "M3U8 Downloader",
+      name: "M3U8 Downloader",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
+    });
+
+    expect(metadata.title).toBe("M3U8 Downloader");
+    expect(metadata.description).toBe("Sample description for SEO.");
   });
 });

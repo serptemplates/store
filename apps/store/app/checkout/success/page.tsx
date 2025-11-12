@@ -4,7 +4,6 @@ import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { SuccessContent } from "./SuccessContent";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import { getSiteConfig } from "@/lib/site-config";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 function SuccessFallback() {
   return (
@@ -20,9 +19,6 @@ function SuccessFallback() {
 export default function SuccessPage() {
   const siteConfig = getSiteConfig();
   const navProps = buildPrimaryNavProps({ siteConfig });
-  const footerSiteName = siteConfig.site?.name ?? "SERP";
-  const footerSiteUrl =
-    siteConfig.site?.domain ? `https://${siteConfig.site.domain}` : "https://serp.co";
 
   return (
     <>
@@ -30,7 +26,6 @@ export default function SuccessPage() {
       <Suspense fallback={<SuccessFallback />}>
         <SuccessContent />
       </Suspense>
-      <FooterComposite site={{ name: footerSiteName, url: footerSiteUrl }} />
     </>
   );
 }

@@ -393,12 +393,6 @@ export function PricingCta({
                 {ctaExtra}
               </div>
 
-              {/* Terms/Disclaimer - only show if custom terms provided */}
-              {terms && (
-                <TypographySmall className="text-center leading-relaxed text-gray-600">
-                  {terms}
-                </TypographySmall>
-              )}
               </div>
 
               {shouldRenderOrderBump && orderBump && (
@@ -448,6 +442,19 @@ export function PricingCta({
             </div>
           </div>
         </div>
+
+        {/* Terms / Disclaimer */}
+        {terms ? (
+          <div className="mt-8 flex w-full justify-center">
+            <div className="max-w-4xl px-4 text-center">
+              {typeof terms === "string" ? (
+                <TypographySmall className="leading-relaxed text-gray-600">{terms}</TypographySmall>
+              ) : (
+                terms
+              )}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

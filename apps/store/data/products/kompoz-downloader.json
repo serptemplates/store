@@ -1,34 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "Kompoz",
   "name": "Kompoz Downloader",
   "tagline": "Archive Kompoz stems and mixes for offline production.",
   "slug": "kompoz-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Kompoz Downloader keeps collaboration sessions moving by saving Kompoz stems, mixes, and discussions directly to your local workspace. Pull reference takes without manually exporting each track one-by-one.\n\nUse it to back up sessions, prep offline mixing environments, or share approved stems with clients while keeping everything organized by project.",
   "seo_title": "Kompoz Downloader | Download Kompoz Stems",
   "seo_description": "Download Kompoz stems and mixes for offline production. Reliable Kompoz downloader for music collaborators.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/kompoz-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kompoz-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/kompoz-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/kompoz-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=kompoz-downloader",
   "status": "pre_release",
-  "featured_image": "/media/products/kompoz-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/kompoz-downloader/kompoz-homepage.webp",
-      "alt": "Kompoz Downloader website homepage"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  // ----- Supporting link collections -----
-  "github_repo_url": null,
-  "github_repo_tags": [],
-  "resource_links": [],
   "features": [
     "Download stems, mixes, and attachments directly from Kompoz projects",
     "Preserve track naming and folder structure automatically",
@@ -36,16 +18,6 @@
     "Local-first design keeps creative work private and secure",
     "Works across Windows, macOS, Linux, and modern browsers"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$17",
-    "original_price": "$37.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "Does Kompoz Downloader support private projects?",
@@ -66,6 +38,10 @@
     {
       "question": "Does it work with large WAV files?",
       "answer": "Yes. It handles large-format files and automatically resumes if your connection blips."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -111,6 +87,45 @@
     "kompoz downloader",
     "kompoz download tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/kompoz-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/kompoz-downloader/kompoz-homepage.webp",
+      "alt": "Kompoz Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/kompoz-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kompoz-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/kompoz-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/kompoz-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=kompoz-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17",
+    "original_price": "$37.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -123,11 +138,5 @@
       "purchase-kompoz-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

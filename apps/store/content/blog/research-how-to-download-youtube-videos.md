@@ -738,10 +738,3 @@ yt-dlp --wait-for-video 60 --live-from-start "https://www.youtube.com/watch?v=LI
 yt-dlp --download-sections "*0-3600" "https://www.youtube.com/watch?v=LIVE_VIDEO_ID"
 ```
 
-## See Also
-
-- [DASH Streaming Protocol](../streaming/dash.md)
-- [HLS Streaming Protocol](../streaming/hls.md)  
-- [MP4 Container Format](../containers/mp4.md)
-- [WebM Container Format](../containers/webm.md)
-- [H.264 Video Codec](../codecs/h264.md)

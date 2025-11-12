@@ -11,7 +11,6 @@ import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
@@ -125,7 +124,6 @@ export default function BlogIndexPage() {
         </section>
       </main>
 
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

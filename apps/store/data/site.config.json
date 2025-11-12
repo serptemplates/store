@@ -20,6 +20,13 @@
   "blog": {
     "enabled": true
   },
+  "policy": {
+    "trademark": {
+      "disclaimerTemplate": "{{productName}} is an independent product not affiliated with or endorsed by {{brandName}}{{legalEntitySegment}} or any subsidiaries or affiliates. All trademarks are property of their respective owners and use of them does not imply affiliation or endorsement.",
+      "domainSuffix": ".com",
+      "fallbackLegalEntity": null
+    }
+  },
   "excludeSlugs": [
     "serp-affiliates",
     "serp-affiliates-course",

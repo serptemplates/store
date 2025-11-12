@@ -16,6 +16,9 @@ vi.mock("@/lib/analytics/product", () => ({
 
 const baseProduct: ProductData = {
   slug: "sample-product",
+  trademark_metadata: {
+    uses_trademarked_brand: false,
+  },
   seo_title: "Sample Product",
   seo_description: "Sample description",
   store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",

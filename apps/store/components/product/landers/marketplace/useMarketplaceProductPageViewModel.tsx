@@ -35,10 +35,6 @@ export type MarketplaceProductPageViewModel = {
       onPrimaryAction: () => void;
       primaryLabel: string;
     };
-    footerSite: {
-      name: string;
-      url: string;
-    };
   };
   stickyBar: {
     show: boolean;
@@ -115,12 +111,6 @@ export function useMarketplaceProductPageViewModel(
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl;
 
-  const footerSite = useMemo(() => {
-    const rawName = siteConfig.site?.name ?? "SERP";
-    const normalizedName = rawName.replace(/\bApps\b/gi, "").trim() || "SERP";
-    return { name: normalizedName, url: "https://serp.co" };
-  }, [siteConfig]);
-
   const waitlistEnabled = product.status === "pre_release";
 
   const primaryButtonLabel = resolvePrimaryButtonLabel({
@@ -160,7 +150,6 @@ export function useMarketplaceProductPageViewModel(
         onPrimaryAction: handleHeroClick,
         primaryLabel: primaryButtonLabel,
       },
-      footerSite,
     },
     stickyBar: {
       show: showStickyBar,

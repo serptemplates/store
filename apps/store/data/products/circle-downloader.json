@@ -1,39 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Circle",
   "name": "Circle Downloader",
   "tagline": "Save Circle content instantly to your device.",
   "slug": "circle-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Circle",
+    "legal_entity": "CircleCo, Inc."
+  },
   "description": "Circle Downloader keeps community lessons and cohort recordings alive long after the posts disappear. It recognises both native Circle uploads and embedded players from YouTube, Vimeo, Wistia, and Loom, then lets you save them as clean MP4 files without juggling separate tools.\n\nThe extension lists every quality rendition, labels the stream type, and remembers your preferred resolution for the next download. You can run up to three downloads at the same time, keep the global progress manager pinned while you browse, and queue additional videos that start automatically when a slot opens up.\n\nEverything happens with your existing Circle login inside the browser. Adaptive streams download chunk by chunk with retries and merge in the background, while direct MP4 uploads land instantly in the folder you choose. Notifications confirm when files are ready so you can archive resources, flight-proof course material, or revisit cohort calls offline.",
   "seo_title": "Circle Downloader | Save Circle community and embed videos offline",
   "seo_description": "Capture Circle community uploads plus YouTube, Vimeo, Wistia, and Loom embeds as MP4 files with queues, quality controls, and on-device processing.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/circle-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/circle-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/circle-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/circle-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=circle-downloader",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/circle-downloader/main/images/featured.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg",
-      "alt": "Circle Downloader website preview"
-    }
-  ],
-  "product_videos": [
-    "https://www.youtube.com/watch?v=_8XKKHj0eLs"
-  ],
-  "related_videos": [],
-  "related_posts": [
-    "how-to-download-circle-so-videos-free"
-  ],
-  // ----- Supporting link collections -----
-  "github_repo_url": "https://github.com/serpapps/circle-downloader",
-  "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/circle-downloader/afjjgeafaiahjlcgnflgeojbjobglblg",
-  "resource_links": [],
   "features": [
     "Detects Circle native uploads plus YouTube, Vimeo, Wistia, and Loom embeds",
     "Presents every available quality with stream type labels and size estimates",
@@ -46,21 +25,6 @@
     "Desktop notifications alert you when each archive is ready",
     "Saves files with clean titles into the folder you choose for offline study"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with updates for new Circle player changes. No trial and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/circle-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Archive paid cohorts and workshops before the community closes",
-      "Keep embedded trainings in one MP4 library instead of juggling multiple tools",
-      "Download on your schedule for offline study during travel or limited internet"
-    ]
-  },
   "faqs": [
     {
       "question": "Which video platforms does Circle Downloader support?",
@@ -85,6 +49,10 @@
     {
       "question": "Which browsers and operating systems are supported?",
       "answer": "It runs on Chrome, Edge, Firefox, Brave, and Opera across Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -135,30 +103,6 @@
     "offline circle lessons",
     "chrome circle extension"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1S99wl06JrOmKRCmy32X7AjP",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6G979StrlTXK"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-circle-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "circle-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -201,5 +145,72 @@
       "justification": "Grants controlled access to circle.so/circle.com domains and media CDNs, ensuring\nthe extension only activates inside Circle communities."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/circle-downloader/main/images/featured.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/circle-downloader.jpg",
+      "alt": "Circle Downloader website preview"
+    }
+  ],
+  "product_videos": [
+    "https://www.youtube.com/watch?v=_8XKKHj0eLs"
+  ],
+  "related_videos": [],
+  "related_posts": [
+    "how-to-download-circle-so-videos-free"
+  ],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/circle-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/circle-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/circle-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/circle-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=circle-downloader",
+  "github_repo_url": "https://github.com/serpapps/circle-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/circle-downloader/afjjgeafaiahjlcgnflgeojbjobglblg",
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with updates for new Circle player changes. No trial and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/circle-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Archive paid cohorts and workshops before the community closes",
+      "Keep embedded trainings in one MP4 library instead of juggling multiple tools",
+      "Download on your schedule for offline study during travel or limited internet"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1S99wl06JrOmKRCmy32X7AjP",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6G979StrlTXK"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-circle-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "circle-downloader"
+    ]
+  }
 }

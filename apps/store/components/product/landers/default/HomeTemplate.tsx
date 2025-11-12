@@ -15,17 +15,24 @@ import { ProductResourceLinks } from "./sections/ProductResourceLinks";
 import { buildHomeTemplateViewModel } from "./home-template.view-model";
 import { mapPermissionItemsToFaq } from "@/components/product/shared/mapPermissionItemsToFaq";
 import { ProductCategoryPills } from "@/components/product/shared/ProductCategoryPills";
+import { TrademarkDisclaimer } from "@repo/ui/components/trademark-disclaimer";
 
 export function HomeTemplate(props: HomeTemplateProps) {
+  const { trademarkNotice, ...rest } = props;
   const viewModel = buildHomeTemplateViewModel({
-    ...props,
+    ...rest,
     heroVideoLinkIcon: <FaYoutube className="text-red-500" />,
   });
 
-  const { ui } = props;
+  const trimmedTrademarkNotice = trademarkNotice?.trim() ?? "";
+  const renderTrademarkDisclaimer = (variant: "card" | "inline" = "card") =>
+    trimmedTrademarkNotice ? (
+      <TrademarkDisclaimer text={trimmedTrademarkNotice} variant={variant} align="center" />
+    ) : null;
+
+  const { ui } = rest;
   const {
     Navbar,
-    Footer,
     Badge,
     Card,
     CardHeader,
@@ -88,6 +95,7 @@ export function HomeTemplate(props: HomeTemplateProps) {
               <ProductCategoryPills categories={viewModel.categories} max={3} className="justify-center" />
             ) : null
           }
+          footnote={renderTrademarkDisclaimer("card")}
         />
 
         {viewModel.aboutSection ? (
@@ -119,7 +127,12 @@ export function HomeTemplate(props: HomeTemplateProps) {
         ) : null}
 
         {/* Pricing CTA (configurable per site) */}
-        {viewModel.pricing.enabled ? <PricingCta {...viewModel.pricing.props} /> : null}
+        {viewModel.pricing.enabled ? (
+          <PricingCta
+            {...viewModel.pricing.props}
+            terms={viewModel.pricing.props.terms ?? renderTrademarkDisclaimer("card")}
+          />
+        ) : null}
 
         {/* Team Section */}
         <AboutSection team={teamMembers} />
@@ -151,8 +164,6 @@ export function HomeTemplate(props: HomeTemplateProps) {
             CardDescription={CardDescription}
           />
         )}
-
-        <Footer />
       </main>
     </>
   );

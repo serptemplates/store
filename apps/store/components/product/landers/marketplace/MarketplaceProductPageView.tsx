@@ -1,7 +1,5 @@
 "use client";
 
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
-
 import type { SiteConfig } from "@/lib/site-config";
 import type { ProductData } from "@/lib/products/product-schema";
 
@@ -80,7 +78,6 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
             primaryLabel={viewModel.layout.header.primaryLabel}
           />
         }
-        footer={<FooterComposite site={viewModel.layout.footerSite} />}
       >
         <ProductStickyBar
           show={viewModel.stickyBar.show}

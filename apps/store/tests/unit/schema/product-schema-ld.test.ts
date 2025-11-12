@@ -7,6 +7,9 @@ describe("generateProductSchemaLD", () => {
     const schema = generateProductSchemaLD({
       product: {
         slug: "sample-product",
+        trademark_metadata: {
+          uses_trademarked_brand: false,
+        },
         seo_title: "Sample Product",
         seo_description: "Sample description",
         name: "Sample Product",

@@ -1,4 +1,5 @@
 import type { ProductData } from "./product-schema";
+import { LEGAL_FAQ_TEMPLATE } from "./product-schema";
 
 export type ProductCopy = {
   subtitle: string;
@@ -95,10 +96,14 @@ export function buildFaqEntries(product: ProductData): ProductFaqEntry[] {
           return null;
         }
 
+        const normalizedQuestion = question.toLowerCase();
+        const legalQuestion = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
+        const resolvedAnswer = normalizedQuestion === legalQuestion ? LEGAL_FAQ_TEMPLATE.answer : answer;
+
         return {
           id: createAccordionItemId(question, index, "faq"),
           question,
-          answer,
+          answer: resolvedAnswer,
         };
       })
       .filter((entry): entry is ProductFaqEntry => Boolean(entry)) ?? []

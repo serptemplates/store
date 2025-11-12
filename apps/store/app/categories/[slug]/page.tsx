@@ -16,7 +16,6 @@ import {
 import { isPreRelease } from "@/lib/products/release-status";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema";
 
 const ProductsFilter = dynamic(
@@ -180,7 +179,6 @@ export default async function CategoryLandingPage({
         )}
       </main>
 
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

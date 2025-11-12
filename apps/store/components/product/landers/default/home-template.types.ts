@@ -26,7 +26,6 @@ export type ResolvedHomeCta = {
 
 export type HomeTemplateUi = {
   Navbar: GenericComponent;
-  Footer: GenericComponent;
   Button: GenericComponent;
   Card: GenericComponent;
   CardHeader: GenericComponent;
@@ -96,4 +95,5 @@ export type HomeTemplateProps = {
     href: string;
   }>;
   categories?: string[];
+  trademarkNotice?: string | null;
 };

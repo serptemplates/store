@@ -1,35 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Gohighlevel",
   "name": "Gohighlevel Downloader",
   "tagline": "Save Gohighlevel content instantly to your device.",
   "slug": "gohighlevel-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "GoHighLevel",
+    "legal_entity": "HighLevel Inc."
+  },
   "description": "GoHighLevel Downloader is the all-in-one extension for agencies and students who need reliable copies of GoHighLevel trainings. It recognises native lessons, classroom recordings, community posts, and embedded videos from YouTube, Vimeo, Wistia, and Loom—even on white-label domains—and presents every available quality with clear labels.\n\nChoose the rendition you want and the extension handles the rest: direct MP4s save instantly, while adaptive HLS or DASH streams download chunk by chunk and merge into a clean MP4 with progress, speed, and ETA visible the entire time. Right-click shortcuts and inline controls let you start downloads without leaving the lesson you are reviewing.\n\nBecause everything runs inside your authenticated browser session, the tool follows GoHighLevel’s sub-account permissions, keeps content you paid for private, and stores licence data locally. It’s the fastest path to build offline training libraries for agency teams, travel days, or when access might change.",
   "seo_title": "Gohighlevel Downloader | Download videos from GoHighLevel Course Areas",
   "seo_description": "Download Gohighlevel course content and videos easily for offline use. Fast and reliable Gohighlevel downloader.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/gohighlevel-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gohighlevel-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/gohighlevel-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/gohighlevel-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/gohighlevel-downloader/main/images/gohighlevel-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg",
-      "alt": "Gohighlevel Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  // ----- Supporting link collections -----
-  "github_repo_url": "https://github.com/serpapps/gohighlevel-downloader",
-  "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/gohighlevel-downloader/lcnajelpdoefgoilcihnpkofabpafjgd",
-  "resource_links": [],
   "features": [
     "Detects GoHighLevel native videos plus YouTube, Vimeo, Wistia, Loom, and custom embeds",
     "Works across agency sub-accounts, client workspaces, and white-label domains",
@@ -42,21 +25,6 @@
     "Stores licence data and preferences locally with no analytics or tracking",
     "Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence covering GoHighLevel lessons, classrooms, communities, and embedded videos. No free trial and all sales are final.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Archive paid GoHighLevel trainings before subscriptions or client access changes",
-      "Consolidate native and embedded lessons into one organised MP4 library",
-      "Keep downloads private with 100% on-device processing and licence storage"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a GoHighLevel lesson?",
@@ -85,6 +53,10 @@
     {
       "question": "Is my data private?",
       "answer": "Absolutely. Downloads happen inside your browser session and licence information stays on your machine. No passwords or viewing history are transmitted."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -134,30 +106,6 @@
     "gohighlevel classroom saver",
     "agency training backup"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1S99wu06JrOmKRCmfKo5Bl2z",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Hd3ZrTOyXTp"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-gohighlevel-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "gohighlevel-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": false,
@@ -200,5 +148,68 @@
       "justification": "Covers gohighlevel.com, agency subdomains, white-label URLs, and third-party embed\nhosts so authorised videos remain detectable."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/gohighlevel-downloader/main/images/gohighlevel-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/gohighlevel-downloader.jpg",
+      "alt": "Gohighlevel Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/gohighlevel-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gohighlevel-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/gohighlevel-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/gohighlevel-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
+  "github_repo_url": "https://github.com/serpapps/gohighlevel-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/gohighlevel-downloader/lcnajelpdoefgoilcihnpkofabpafjgd",
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence covering GoHighLevel lessons, classrooms, communities, and embedded videos. No free trial and all sales are final.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Archive paid GoHighLevel trainings before subscriptions or client access changes",
+      "Consolidate native and embedded lessons into one organised MP4 library",
+      "Keep downloads private with 100% on-device processing and licence storage"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1S99wu06JrOmKRCmfKo5Bl2z",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Hd3ZrTOyXTp"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-gohighlevel-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "gohighlevel-downloader"
+    ]
+  }
 }

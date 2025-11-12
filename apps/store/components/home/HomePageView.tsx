@@ -5,7 +5,6 @@ import { getAllProducts } from "@/lib/products/product"
 import { getSiteConfig } from "@/lib/site-config"
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar"
 import { buildPrimaryNavProps } from "@/lib/navigation"
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema"
 import { isPreRelease } from "@/lib/products/release-status"
 import { buildProductFilterItems } from "@/lib/products/filter-items"
@@ -155,8 +154,6 @@ export function HomePageView() {
 
           <ProductsFilter products={filterItems} />
         </main>
-
-        <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
       </div>
     </>
   )

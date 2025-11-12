@@ -22,7 +22,12 @@
   "pricing": {
     "benefits": []
   },
-  "faqs": [],
+  "faqs": [
+    {
+      "question": "Is this legal?",
+      "answer": "This tool is provided for lawful, authorized use only. We are not attorneys, and this information is not legal advice—always download content you own or have permission to access, respect platform rate limits, and use a reputable VPN for privacy and IP protection."
+    }
+  ],
   "reviews": [],
   "supported_operating_systems": [],
   "supported_regions": [],

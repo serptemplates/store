@@ -1115,25 +1115,19 @@ function getOptimalRecordingOptions() {
 
 ## Related Tools
 
-- [Stream Downloader](https://apps.serp.co/stream-downloader) - Universal streaming video downloader
-- [Loom Video Downloader](https://apps.serp.co/loom-video-downloader) - Download Loom recordings (uses WebRTC)
-- [Skool Video Downloader](https://apps.serp.co/skool-video-downloader) - Download Skool platform videos
-- [Telegram Video Downloader](https://apps.serp.co/telegram-video-downloader) - Download Telegram video calls
-- [Twitch Video Downloader](https://apps.serp.co/twitch-video-downloader) - Download Twitch streams
-- [Kick Clip Downloader](https://apps.serp.co/kick-clip-downloader) - Download Kick.com clips
+ - Universal streaming video downloader
+ - Download Skool platform videos
+ - Download Telegram video calls
+ - Download Twitch streams
+ - Download Kick.com clips
 
 ## Platform-Specific WebRTC Tools
 
 Many video conferencing and streaming platforms use WebRTC:
-- [Teachable Video Downloader](https://apps.serp.co/teachable-video-downloader) - For online courses
-- [Kajabi Video Downloader](https://apps.serp.co/kajabi-video-downloader) - Educational content
-- [Thinkific Downloader](https://apps.serp.co/thinkific-downloader) - Course videos
+ - For online courses
+ - Educational content
+ - Course videos
 
-## See Also
-
-- [How to Download HLS/M3U8 Streaming Videos](https://apps.serp.co/blog/how-to-download-hls-m3u8-streaming-videos) - Traditional HTTP streaming
-- [How to Download DASH Streaming Videos](https://apps.serp.co/blog/how-to-download-dash-streaming-videos) - Adaptive bitrate streaming
-- [How to Download RTMP Live Streams](https://apps.serp.co/blog/how-to-download-rtmp-live-streams) - Live stream ingestion
 
 ## YouTube Tutorial
 

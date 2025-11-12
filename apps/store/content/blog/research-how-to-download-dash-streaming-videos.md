@@ -664,18 +664,13 @@ async function downloadSegmentWithRetry(url, maxRetries = 3) {
 
 ## Related Tools
 
-- [Stream Downloader](https://apps.serp.co/stream-downloader) - Universal streaming video downloader
-- [YouTube Downloader](https://apps.serp.co/youtube-downloader) - Download YouTube videos using DASH
-- [Netflix Downloader](https://apps.serp.co/netflix-downloader) - Download Netflix content
-- [Vimeo Video Downloader](https://apps.serp.co/vimeo-video-downloader) - Download Vimeo videos
-- [Udemy Video Downloader](https://apps.serp.co/udemy-video-downloader) - Download course videos
-- [Coursera Downloader](https://apps.serp.co/coursera-downloader) - Download Coursera lectures
+ - Universal streaming video downloader
+ - Download YouTube videos using DASH
+ - Download Netflix content
+ - Download Vimeo videos
+ - Download course videos
+ - Download Coursera lectures
 
-## See Also
-
-- [How to Download HLS/M3U8 Streaming Videos](https://apps.serp.co/blog/how-to-download-hls-m3u8-streaming-videos) - Alternative adaptive streaming
-- [How to Download RTMP Live Streams](https://apps.serp.co/blog/how-to-download-rtmp-live-streams) - Live stream ingestion protocol
-- [How to Download WebRTC Video Streams](https://apps.serp.co/blog/how-to-download-webrtc-video-streams) - Real-time communication
 
 ## YouTube Tutorial
 

@@ -13,6 +13,11 @@ describe("buildProductFilterItem", () => {
       status: "live",
       new_release: true,
       popular: false,
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "YouTube",
+        legal_entity: "Google LLC",
+      },
       pricing: {
         cta_href: "https://apps.serp.co/checkout/youtube-downloader",
         benefits: [],

@@ -1,34 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Pinterest",
   "name": "Pinterest Downloader",
   "tagline": "Save Pinterest images and content instantly to your device.",
   "slug": "pinterest-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Pinterest",
+    "legal_entity": "Pinterest, Inc."
+  },
   "description": "Pinterest Downloader gives creators and teams a dependable way to save Pinterest images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Pinterest with consistent quality and predictable results.\n\nIt supports Pinterest images and board collections, High-res image downloads, and Batch entire boards/user profiles downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Pinterest assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Pinterest Downloader | Download Pinterest Images",
   "seo_description": "Download Pinterest images and graphics for offline use. Fast and reliable Pinterest content downloader.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/pinterest-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pinterest-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/pinterest-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/pinterest-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=pinterest-downloader",
   "status": "pre_release",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pinterest-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/pinterest-downloader/main/images/pinterest-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pinterest-downloader.jpg",
-      "alt": "Pinterest Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  // ----- Supporting link collections -----
-  "github_repo_url": "https://github.com/serpapps/pinterest-downloader",
-  "github_repo_tags": [],
-  "resource_links": [],
   "features": [
     "Pinterest images and board collections",
     "High-res image downloads",
@@ -50,16 +34,6 @@
     "Creative project integration features",
     "Trending content discovery and recommendations"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "How do I use the Pinterest downloader?",
@@ -92,6 +66,10 @@
     {
       "question": "Is my data kept private?",
       "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -138,6 +116,45 @@
   "keywords": [
     "pinterest downloader"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pinterest-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/pinterest-downloader/main/images/pinterest-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pinterest-downloader.jpg",
+      "alt": "Pinterest Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/pinterest-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pinterest-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/pinterest-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/pinterest-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=pinterest-downloader",
+  "github_repo_url": "https://github.com/serpapps/pinterest-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -156,11 +173,5 @@
       "purchase-pinterest-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

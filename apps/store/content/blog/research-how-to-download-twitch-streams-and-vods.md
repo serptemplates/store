@@ -723,9 +723,3 @@ yt-dlp --cookies cookies.txt "https://www.twitch.tv/videos/123456789"
 yt-dlp --proxy "socks5://127.0.0.1:1080" "https://www.twitch.tv/videos/123456789"
 ```
 
-## See Also
-
-- [HLS Streaming Protocol](../streaming/hls.md)
-- [YouTube Platform](./youtube.md)
-- [RTMP Streaming Protocol](../streaming/rtmp.md)
-- [MP4 Container Format](../containers/mp4.md)

@@ -1,0 +1,11 @@
+name: Route Health Check (placeholder)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  route-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder
+        run: echo "Route health check placeholder"

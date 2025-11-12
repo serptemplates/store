@@ -1,34 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Xhamster",
   "name": "Xhamster Video Downloader",
   "tagline": "Save Xhamster videos instantly for offline viewing.",
   "slug": "xhamster-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "XHamster",
+    "legal_entity": "Hammy Media Ltd"
+  },
   "description": "XHamster Video Downloader detects videos on xhamster.com and every regional mirror automatically, then lets you pick the resolution and save a clean MP4. It filters duplicate quality options, works the same on each domain, and shows a progress bar while it downloads so you can build an offline collection without fighting ads or pop-ups.",
   "seo_title": "Xhamster Video Downloader | Download Xhamster Videos",
   "seo_description": "Download Xhamster videos easily for offline viewing. Fast, reliable Xhamster video downloader with high-quality downloads.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/xhamster-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xhamster-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/xhamster-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/xhamster-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=xhamster-video-downloader",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
-      "alt": "Xhamster Video Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  // ----- Supporting link collections -----
-  "github_repo_url": "https://github.com/serpapps/xhamster-video-downloader",
-  "github_repo_tags": [],
-  "resource_links": [],
   "features": [
     "Works automatically on xhamster.com, xhamster.one, xhamster.desi, xhms.pro, and other mirrors",
     "Detects video players and filters duplicate quality entries for a clean selection list",
@@ -37,21 +21,6 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
     "Stores licence data locally with no analytics or external routing of downloads"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "Lifetime licence with multi-domain support and quality selection. Sales are final.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/xhamster-video-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Save favourites from any XHamster mirror before they disappear",
-      "Choose the exact MP4 quality you need without manual URL hunting",
-      "Keep downloads private with 100% on-device processing"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a video from any XHamster domain?",
@@ -76,6 +45,10 @@
     {
       "question": "Is my activity private?",
       "answer": "Everything happens on your device. The extension only checks your licence and never uploads viewing history or downloaded files."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -125,30 +98,6 @@
     "xhamster offline videos",
     "xhamster quality selector"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1SO0f606JrOmKRCmituaSiHm",
-    "metadata": {
-      "stripe_product_id": "prod_SrFXX6huXVaXb9"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-xhamster-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "xhamster-video-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -179,5 +128,67 @@
       "justification": "Supports tab querying and messaging required to coordinate downloads and open supporting pages.\n\nUsage highlights:\n- `popup.js:44, 265` sends messages to content scripts and opens new tabs as needed.\n- `background-enhanced.js:34, 343, 511` exchanges messages with tabs to control download flows."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
+      "alt": "Xhamster Video Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/xhamster-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xhamster-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/xhamster-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/xhamster-video-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=xhamster-video-downloader",
+  "github_repo_url": "https://github.com/serpapps/xhamster-video-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with multi-domain support and quality selection. Sales are final.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/xhamster-video-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Save favourites from any XHamster mirror before they disappear",
+      "Choose the exact MP4 quality you need without manual URL hunting",
+      "Keep downloads private with 100% on-device processing"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1SO0f606JrOmKRCmituaSiHm",
+    "metadata": {
+      "stripe_product_id": "prod_SrFXX6huXVaXb9"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-xhamster-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "xhamster-video-downloader"
+    ]
+  }
 }

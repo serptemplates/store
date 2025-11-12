@@ -948,10 +948,3 @@ ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 \
        -row-mt 1 multithread.webm
 ```
 
-## See Also
-
-- [H.264 Video Codec](./h264.md)
-- [H.265 Video Codec](./h265.md)
-- [AV1 Video Codec](./av1.md)
-- [WebM Container Format](../containers/webm.md)
-- [YouTube Platform](../platforms/youtube.md)

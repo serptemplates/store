@@ -62,7 +62,3 @@ yt-dlp "https://d3c33hcgiwev3.cloudfront.net/kZolKy_nEemnrA4AsaAhFA.processed/fu
 
 ## Related 
 
-- [Repository](https://github.com/serpapps/coursera-downloader)
-- [How to Download Coursera Videos](https://gist.github.com/devinschumacher/c5b806b64108b6ffea25c91076d1567e)
-- [Coursera Downloader Product Page](https://apps.serp.co/coursera-downloader)
-- [Coursera downloader launch](https://gist.github.com/devinschumacher/5258f96225c4b1a45f1c13502c445298)

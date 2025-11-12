@@ -1,62 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Beeg",
   "name": "Beeg Video Downloader",
   "tagline": "Save Beeg videos instantly for offline viewing.",
   "slug": "beeg-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Beeg",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
   "description": "Beeg Video Downloader automates the HLS-to-MP4 conversion that keeps most Beeg videos locked to streaming. It detects the player as soon as it loads, captures the hidden playlists, and gives you a clean list of quality options so you can archive clips in the resolution you prefer.\n\nA guided popup displays bitrate, estimated file size, and stream type before you download. Once you start, an inline progress manager tracks segment speed, percentage, and ETA while background workers stitch the MP4 together with retries whenever a chunk fails.\n\nThe extension keeps everything local—licence details, quality presets, and downloaded files never leave your browser. Desktop notifications and a right-click shortcut make saving multiple videos at once as simple as queuing them and returning when the alerts fire.\n\nActivation requires a one-time licence and it is worth letting each tab stay open until processing completes. HLS conversion takes a little CPU time, but you get lossless MP4 copies without juggling developer tools or command-line scripts.",
   "seo_title": "Beeg Video Downloader | Turn Beeg HLS streams into MP4 files",
   "seo_description": "Capture Beeg videos as offline MP4s with quality selection, realtime progress tracking, and resilient retries inside a Chromium extension.",
-  // ----- Primary link destinations -----
-  "serply_link": "https://serp.ly/beeg-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
   "status": "live",
-  "featured_image": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
-      "alt": "Beeg Video Downloader website preview"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-2.webp",
-      "alt": "Beeg Video Downloader app interface showing download options"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-3.webp",
-      "alt": "Beeg Video Downloader queue with multiple videos ready to save"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-4.webp",
-      "alt": "Beeg Video Downloader quality selection controls"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-5.webp",
-      "alt": "Beeg Video Downloader embedded video detection prompt"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-6.webp",
-      "alt": "Beeg Video Downloader download progress indicators"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-7.webp",
-      "alt": "Beeg Video Downloader browser extension popup"
-    },
-    {
-      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-8.webp",
-      "alt": "Beeg Video Downloader settings panel overview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  // ----- Supporting link collections -----
-  "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
-  "github_repo_tags": [],
-  "resource_links": [],
   "features": [
     "Purpose-built HLS detection for beeg.com and subdomains",
     "Quality picker showing resolution, bitrate, and estimated file size",
@@ -69,21 +25,6 @@
     "Local storage of licence and preferences with no tracking scripts",
     "Browser support covering Chrome, Edge, Firefox, Brave, and Opera"
   ],
-  "pricing": {
-    "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Skip manual HLS extraction and save straight to MP4 with one click",
-      "Queue several Beeg videos at once while the extension handles retries",
-      "Keep downloads private thanks to on-device processing and storage"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a Beeg video with this extension?",
@@ -108,6 +49,10 @@
     {
       "question": "Which browsers are supported?",
       "answer": "Beeg Video Downloader ships for Google Chrome, Microsoft Edge, Mozilla Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -158,30 +103,6 @@
     "chrome adult video downloader",
     "offline beeg saver"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
-    "metadata": {
-      "stripe_product_id": "prod_SrFXkM8CAB2Ds8"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-beeg-video-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "beeg-video-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": false,
@@ -224,5 +145,95 @@
       "justification": "Limits privileged access to beeg.com and its CDNs, ensuring the extension only\nactivates on supported domains."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
+      "alt": "Beeg Video Downloader website preview"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-2.webp",
+      "alt": "Beeg Video Downloader app interface showing download options"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-3.webp",
+      "alt": "Beeg Video Downloader queue with multiple videos ready to save"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-4.webp",
+      "alt": "Beeg Video Downloader quality selection controls"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-5.webp",
+      "alt": "Beeg Video Downloader embedded video detection prompt"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-6.webp",
+      "alt": "Beeg Video Downloader download progress indicators"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-7.webp",
+      "alt": "Beeg Video Downloader browser extension popup"
+    },
+    {
+      "url": "/media/products/beeg-video-downloader/beeg-video-downloader-8.webp",
+      "alt": "Beeg Video Downloader settings panel overview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/beeg-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
+  "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Skip manual HLS extraction and save straight to MP4 with one click",
+      "Queue several Beeg videos at once while the extension handles retries",
+      "Keep downloads private thanks to on-device processing and storage"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
+    "metadata": {
+      "stripe_product_id": "prod_SrFXkM8CAB2Ds8"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-beeg-video-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "beeg-video-downloader"
+    ]
+  }
 }

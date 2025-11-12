@@ -8,6 +8,7 @@ import type { FaqItem } from "@/components/product/landers/marketplace/sections/
 import type { ProductPermissionEntry } from "@/lib/products/view-model";
 import type { PermissionDisplayItem } from "@/components/product/shared/mapPermissionItemsToFaq";
 import type { HomeTemplateProps } from "./home-template.types";
+import { LEGAL_FAQ_TEMPLATE } from "@/lib/products/product-schema";
 
 type HeroMediaItem = HeroMediaProps["items"][number];
 
@@ -273,15 +274,15 @@ function buildDefaultFaqs(platform: string): FaqItem[] {
         "Availability depends on the owner's settings and plan limits. Owners can disable downloads, and some free-plan limitations may apply.",
     },
     {
-      id: createFaqItemId(`legal-download-${normalizedPlatform}`, 2),
-      question: `Is it legal to download ${normalizedPlatform} videos?`,
-      answer:
-        "Only download videos when you have rights or explicit permission from the owner. Downloading protected content without consent can violate copyright and terms.",
+      id: createFaqItemId("is-this-legal", 2),
+      question: LEGAL_FAQ_TEMPLATE.question,
+      answer: LEGAL_FAQ_TEMPLATE.answer,
     },
   ];
 }
 
 function buildFaqItems(faqs: FAQ[] | undefined, platform: string): FaqItem[] {
+  const legalQuestion = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
   const normalizedFaqs =
     faqs
       ?.map((faq, index) => {
@@ -290,10 +291,11 @@ function buildFaqItems(faqs: FAQ[] | undefined, platform: string): FaqItem[] {
         if (!question || !answer) {
           return null;
         }
+        const normalizedQuestion = question.toLowerCase();
         return {
           id: createFaqItemId(question, index),
           question,
-          answer,
+          answer: normalizedQuestion === legalQuestion ? LEGAL_FAQ_TEMPLATE.answer : answer,
         };
       })
       .filter((value): value is FaqItem => Boolean(value)) ?? [];

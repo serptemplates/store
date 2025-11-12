@@ -49,7 +49,7 @@ export function ProductStickyBar({
   return (
     <div className="fixed inset-x-0 top-0 z-40 bg-white/95 shadow-lg backdrop-blur transition-transform dark:bg-gray-900/95">
       <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-3">
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+        <div className="flex w-full flex-col gap-2 sm:ml-auto sm:w-auto sm:flex-row sm:items-center sm:gap-3 sm:justify-end">
           {waitlistEnabled ? (
             <button
               type="button"

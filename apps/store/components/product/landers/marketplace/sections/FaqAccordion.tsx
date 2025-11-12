@@ -54,7 +54,10 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
                 aria-labelledby={`${item.id}-trigger`}
                 className={cn("pl-6 pr-4 text-[14px] font-normal leading-[1.6] text-[#334155] sm:pl-8", isOpen ? "pb-4 pt-0" : "hidden")}
               >
-                <div className="border-t border-[#e6e8eb] pt-4 whitespace-pre-line">{item.answer}</div>
+                <div
+                  className="border-t border-[#e6e8eb] pt-4 text-[14px] leading-[1.7] text-[#334155] [&_a]:text-primary [&_a]:underline-offset-2 [&_a:hover]:underline [&_p]:mt-3 [&_p:first-child]:mt-0 [&_ul]:mt-3 [&_li]:list-disc [&_li]:ml-4"
+                  dangerouslySetInnerHTML={{ __html: item.answer }}
+                />
               </div>
             </div>
           );
