@@ -18,11 +18,13 @@ echo "########################################"
 pnpm test:unit
 
 AXE_DEV_SERVER_PID=""
-AXE_DEV_SERVER_LOG=$(mktemp /tmp/axe-dev-server.XXXXXX.log)
+AXE_DEV_SERVER_LOG="/tmp/axe-dev-server-$$.log"
+>"$AXE_DEV_SERVER_LOG"
 axe_cleanup() {
   if [ -n "$AXE_DEV_SERVER_PID" ]; then
     kill "$AXE_DEV_SERVER_PID" >/dev/null 2>&1 || true
   fi
+  rm -f "$AXE_DEV_SERVER_LOG" >/dev/null 2>&1 || true
 }
 trap axe_cleanup EXIT HUP INT TERM
 

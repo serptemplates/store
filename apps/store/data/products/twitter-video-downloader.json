@@ -10,8 +10,8 @@
     "legal_entity": "X Corp."
   },
   "description": "Twitter Video Downloader gives creators and teams a dependable way to save Twitter videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Twitter with consistent quality and predictable results.\n\nIt supports Twitter videos and GIFs in original quality, Batch from user timelines/threads downloads, and Video metadata, so you can move quickly from download to delivery without tedious rework. Use it to archive Twitter assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
-  "seo_title": "Twitter Video Downloader | Download Twitter Videos",
-  "seo_description": "Download Twitter videos easily for offline viewing. Fast, reliable Twitter video downloader with high-quality downloads.",
+  "seo_title": "Twitter Video Downloader (Unofficial) | Download Twitter Videos",
+  "seo_description": "Twitter Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Twitter videos easily for offline viewing. Fast, reliable Twitter video downloader with high-quality downloads.",
   "status": "pre_release",
   "features": [
     "Twitter videos and GIFs in original quality",
