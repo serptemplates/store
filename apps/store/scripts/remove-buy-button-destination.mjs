@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import stripJsonComments from "strip-json-comments";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,7 +22,8 @@ function main() {
     const filePath = path.join(PRODUCTS_DIR, entry.name);
     let json;
     try {
-      json = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      const raw = fs.readFileSync(filePath, "utf8");
+      json = JSON.parse(stripJsonComments(raw));
     } catch (err) {
       console.warn(`Skipping invalid JSON: ${filePath}`);
       continue;

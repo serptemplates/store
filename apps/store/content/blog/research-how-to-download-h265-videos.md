@@ -811,10 +811,3 @@ ffmpeg -i input.mp4 -c:v libx265 -preset ultrafast -crf 25 fast.mp4
 ffmpeg -i input.mp4 -c:v libx265 -preset fast -tune fastdecode -crf 25 lowpower.mp4
 ```
 
-## See Also
-
-- [H.264 Video Codec](./h264.md)
-- [VP9 Video Codec](./vp9.md)
-- [AV1 Video Codec](./av1.md)
-- [MP4 Container Format](../containers/mp4.md)
-- [MKV Container Format](../containers/mkv.md)

@@ -775,10 +775,3 @@ ffmpeg -i corrupted.mkv -c copy -fflags +genpts recovered.mkv
 mkvmerge -o repaired.mkv corrupted.mkv
 ```
 
-## See Also
-
-- [WebM Container Format](./webm.md)
-- [MP4 Container Format](./mp4.md)
-- [H.264 Video Codec](../codecs/h264.md)
-- [H.265 Video Codec](../codecs/h265.md)
-- [VP9 Video Codec](../codecs/vp9.md)

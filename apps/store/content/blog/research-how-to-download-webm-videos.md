@@ -733,9 +733,3 @@ ffprobe -v quiet -show_entries format=bit_rate,duration,size \
         -of json video.webm
 ```
 
-## See Also
-
-- [VP9 Video Codec](../codecs/vp9.md)
-- [Opus Audio Codec](../codecs/opus.md)
-- [MP4 Container Format](./mp4.md)
-- [YouTube Platform](../platforms/youtube.md)

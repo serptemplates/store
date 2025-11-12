@@ -1,19 +1,135 @@
 {
+  // PRODUCT INFO
   "platform": "Sprout",
   "name": "Sprout Video Downloader",
   "tagline": "Save Sprout videos instantly for offline viewing.",
   "slug": "sprout-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Sprout",
+    "legal_entity": "SproutVideo, LLC"
+  },
   "description": "Sprout Video Downloader captures videos hosted on sproutvideo.com as well as embedded players inside private portals, courses, and documentation. It detects the player, lists every available quality, and converts hosted streams into MP4 files you can store offline without juggling ffmpeg or manual URL scraping.\n\nStay logged in to your SproutVideo account, choose the resolution you need, and the extension forwards authentication headers, downloads each segment, and merges them quietly in the background while you continue working.",
   "seo_title": "Sprout Video Downloader | Download Sprout Videos",
   "seo_description": "Download Sprout videos easily for offline viewing. Fast, reliable Sprout video downloader with high-quality downloads.",
-  "serply_link": "https://serp.ly/sprout-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/sprout-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/sprout-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/sprout-video-downloader/",
-  "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1oekx0x/sprout_video_downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=sprout-video-downloader",
   "status": "live",
+  "features": [
+    "Detects SproutVideo players on sproutvideo.com and embedded on third-party sites",
+    "Uses your active session to access gated or private videos securely",
+    "Converts HLS playlists into MP4 files while preserving source quality",
+    "Lists all available resolutions with estimated file sizes and remembers your choice",
+    "Displays segment counts, progress, and speed so you know exactly what’s happening",
+    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
+    "Stores licence data locally with no analytics or remote tracking"
+  ],
+  "faqs": [
+    {
+      "question": "How do I download a SproutVideo recording with this extension?",
+      "answer": "Open the page containing the SproutVideo player, click the downloader icon, pick your desired resolution, and keep the tab open while the segment counter completes. The MP4 will save automatically."
+    },
+    {
+      "question": "Does it work with embedded players on course or membership sites?",
+      "answer": "Yes. The extension detects embedded SproutVideo players anywhere on the web and handles them exactly like the main site."
+    },
+    {
+      "question": "Will it download private or password-protected videos?",
+      "answer": "If you can watch the video while logged into SproutVideo or the host site, the downloader uses that session to access and save the stream. It does not bypass access you do not already have."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Are captions or transcripts included?",
+      "answer": "The downloader focuses on video and audio. Captions, transcripts, or attachments should be saved separately from within SproutVideo."
+    },
+    {
+      "question": "What happens if I refresh the page mid-download?",
+      "answer": "Progress persists. As long as the original tab remains open, the downloader resumes from the last segment and finishes the MP4."
+    },
+    {
+      "question": "Is my data private?",
+      "answer": "All detection and conversion happen locally on your computer. Only licence verification touches remote servers, and no viewing history is collected."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Avery McLean",
+      "review": "Our training portal uses SproutVideo embeds. This extension detects them instantly and delivers perfect MP4s for offline study.",
+      "title": "Embedded course videos now portable",
+      "rating": 5,
+      "date": "2025-02-18"
+    },
+    {
+      "name": "Simone Laurent",
+      "review": "Logged in with my client account and every private video downloaded without extra setup. Segment progress kept me informed the whole time.",
+      "title": "Handles protected content smoothly",
+      "rating": 4.9,
+      "date": "2025-03-04"
+    },
+    {
+      "name": "Trent Howard",
+      "review": "Even long webinars merge cleanly. I can queue the next lesson as soon as the bar hits 100%.",
+      "title": "Reliable conversions",
+      "rating": 4.8,
+      "date": "2025-01-30"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "sprout video downloader",
+    "download sproutvideo embeds",
+    "sproutvideo mp4 converter",
+    "archive sproutvideo lessons",
+    "offline sproutvideo access"
+  ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Saves the merged MP4 to your downloads folder and keeps the progress tracker\nin sync for each recording."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects SproutVideo players on the current tab—whether on sproutvideo.com or\nembedded elsewhere—and injects the download controls."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Allows downloads to continue if you refresh or open another lesson and restores\nthe status window when you return."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Extracts stream manifests, variant data, and authentication headers from the\nplayer so the downloader can fetch the correct segments."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Merges HLS segments into MP4 files in the background, preventing the browser\nUI from freezing during long downloads."
+    }
+  ],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/sprout-video-downloader.jpg",
   "featured_image_gif": null,
   "screenshots": [
@@ -67,21 +183,22 @@
   ],
   "related_videos": [],
   "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/sprout-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/sprout-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/sprout-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/sprout-video-downloader/",
+  "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1oekx0x/sprout_video_downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=sprout-video-downloader",
   "github_repo_url": "https://github.com/serpapps/sprout-video-downloader",
   "github_repo_tags": [],
   "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/sprout-video-downloader/",
   "producthunt_link": "https://www.producthunt.com/products/sprout-video-downloader",
-  "features": [
-    "Detects SproutVideo players on sproutvideo.com and embedded on third-party sites",
-    "Uses your active session to access gated or private videos securely",
-    "Converts HLS playlists into MP4 files while preserving source quality",
-    "Lists all available resolutions with estimated file sizes and remembers your choice",
-    "Displays segment counts, progress, and speed so you know exactly what’s happening",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no analytics or remote tracking"
-  ],
+  "resource_links": [],
+  // PAYMENT DATA
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Lifetime licence covering embed detection, authentication forwarding, and stream conversion. Sales are final.",
@@ -95,82 +212,6 @@
       "Maintain privacy with all processing performed locally on your device"
     ]
   },
-  "faqs": [
-    {
-      "question": "How do I download a SproutVideo recording with this extension?",
-      "answer": "Open the page containing the SproutVideo player, click the downloader icon, pick your desired resolution, and keep the tab open while the segment counter completes. The MP4 will save automatically."
-    },
-    {
-      "question": "Does it work with embedded players on course or membership sites?",
-      "answer": "Yes. The extension detects embedded SproutVideo players anywhere on the web and handles them exactly like the main site."
-    },
-    {
-      "question": "Will it download private or password-protected videos?",
-      "answer": "If you can watch the video while logged into SproutVideo or the host site, the downloader uses that session to access and save the stream. It does not bypass access you do not already have."
-    },
-    {
-      "question": "Which browsers are supported?",
-      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
-    },
-    {
-      "question": "Are captions or transcripts included?",
-      "answer": "The downloader focuses on video and audio. Captions, transcripts, or attachments should be saved separately from within SproutVideo."
-    },
-    {
-      "question": "What happens if I refresh the page mid-download?",
-      "answer": "Progress persists. As long as the original tab remains open, the downloader resumes from the last segment and finishes the MP4."
-    },
-    {
-      "question": "Is my data private?",
-      "answer": "All detection and conversion happen locally on your computer. Only licence verification touches remote servers, and no viewing history is collected."
-    }
-  ],
-  "reviews": [
-    {
-      "name": "Avery McLean",
-      "review": "Our training portal uses SproutVideo embeds. This extension detects them instantly and delivers perfect MP4s for offline study.",
-      "title": "Embedded course videos now portable",
-      "rating": 5,
-      "date": "2025-02-18"
-    },
-    {
-      "name": "Simone Laurent",
-      "review": "Logged in with my client account and every private video downloaded without extra setup. Segment progress kept me informed the whole time.",
-      "title": "Handles protected content smoothly",
-      "rating": 4.9,
-      "date": "2025-03-04"
-    },
-    {
-      "name": "Trent Howard",
-      "review": "Even long webinars merge cleanly. I can queue the next lesson as soon as the bar hits 100%.",
-      "title": "Reliable conversions",
-      "rating": 4.8,
-      "date": "2025-01-30"
-    }
-  ],
-  "supported_operating_systems": [
-    "windows",
-    "mac",
-    "linux",
-    "chrome",
-    "firefox",
-    "edge",
-    "opera"
-  ],
-  "supported_regions": [
-    "Worldwide"
-  ],
-  "categories": [
-    "Downloader",
-    "Video Downloader"
-  ],
-  "keywords": [
-    "sprout video downloader",
-    "download sproutvideo embeds",
-    "sproutvideo mp4 converter",
-    "archive sproutvideo lessons",
-    "offline sproutvideo access"
-  ],
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -194,32 +235,5 @@
     "entitlements": [
       "sprout-video-downloader"
     ]
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": true,
-  "popular": false,
-  "permission_justifications": [
-    {
-      "permission": "downloads",
-      "justification": "Saves the merged MP4 to your downloads folder and keeps the progress tracker\nin sync for each recording."
-    },
-    {
-      "permission": "activeTab",
-      "justification": "Detects SproutVideo players on the current tab—whether on sproutvideo.com or\nembedded elsewhere—and injects the download controls."
-    },
-    {
-      "permission": "tabs",
-      "justification": "Allows downloads to continue if you refresh or open another lesson and restores\nthe status window when you return."
-    },
-    {
-      "permission": "scripting",
-      "justification": "Extracts stream manifests, variant data, and authentication headers from the\nplayer so the downloader can fetch the correct segments."
-    },
-    {
-      "permission": "offscreen",
-      "justification": "Merges HLS segments into MP4 files in the background, preventing the browser\nUI from freezing during long downloads."
-    }
-  ],
-  "brand": "SERP Apps"
+  }
 }

@@ -7,7 +7,6 @@ import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
 
@@ -90,7 +89,6 @@ export default function VideosPage() {
         <Script id="videos-itemlist" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
         <VideoLibraryShell videos={sortedItems} />
       </main>
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </>
   );
 }

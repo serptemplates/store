@@ -1,31 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Unsplash",
   "name": "Unsplash Downloader",
   "tagline": "Save Unsplash images and content instantly to your device.",
   "slug": "unsplash-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Unsplash",
+    "legal_entity": "Unsplash Inc."
+  },
   "description": "Unsplash Downloader gives creators and teams a dependable way to save Unsplash images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Unsplash with consistent quality and predictable results.\n\nIt supports High-res professional photography, Batch photographer portfolios/collections downloads, and RAW and edited photo formats, so you can move quickly from download to delivery without tedious rework. Use it to archive Unsplash assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Unsplash Downloader | Download Unsplash Images",
   "seo_description": "Download Unsplash images and graphics for offline use. Fast and reliable Unsplash content downloader.",
-  "serply_link": "https://serp.ly/unsplash-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/unsplash-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/unsplash-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/unsplash-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=unsplash-downloader",
   "status": "pre_release",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/unsplash-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/unsplash-downloader/main/images/unsplash-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/unsplash-downloader.jpg",
-      "alt": "Unsplash Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/unsplash-downloader",
-  "github_repo_tags": [],
   "features": [
     "High-res professional photography",
     "Batch photographer portfolios/collections downloads",
@@ -45,16 +32,6 @@
     "Backup & restore capabilities for photo archives",
     "Creative Commons license management and tracking"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "How do I use the Unsplash downloader?",
@@ -87,6 +64,10 @@
     {
       "question": "Is my data kept private?",
       "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -133,6 +114,45 @@
   "keywords": [
     "unsplash downloader"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/unsplash-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/unsplash-downloader/main/images/unsplash-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/unsplash-downloader.jpg",
+      "alt": "Unsplash Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/unsplash-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/unsplash-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/unsplash-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/unsplash-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=unsplash-downloader",
+  "github_repo_url": "https://github.com/serpapps/unsplash-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -151,11 +171,5 @@
       "purchase-unsplash-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

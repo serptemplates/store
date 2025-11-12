@@ -1,26 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "Open Video",
   "name": "Open Video Downloader",
   "tagline": "Capture Open.video streams and embeds without losing quality.",
   "slug": "open-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Open Video Downloader gives creators, educators, and archivists a reliable way to capture Open.video streams for offline viewing or reference. It detects players on open.video pages, course portals, and embedded blog posts, then fetches every available rendition so you can grab the exact quality you need.\n\nAuthentication cookies, signed URLs, and segmented HLS playlists are handled under the hood—no command-line tooling or manual manifest wrangling required. Queue multiple episodes or live event replays, keep an eye on segment progress, and let the extension merge the stream into a single MP4 while you focus on the rest of your workflow.",
   "seo_title": "Open Video Downloader | Download Open.video Streams",
   "seo_description": "Download Open.video streams, private embeds, and playlists in high quality with the Open Video Downloader extension.",
-  "serply_link": "https://serp.ly/open-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/open-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/open-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/open-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=open-video-downloader",
   "status": "pre_release",
-  "featured_image": null,
-  "featured_image_gif": null,
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/open-video-downloader",
-  "github_repo_tags": [],
   "features": [
     "Detects Open.video players on open.video and embedded third-party sites automatically",
     "Forwards session cookies to download members-only or invite-only streams you can already view",
@@ -30,20 +20,6 @@
     "Preserves metadata like titles, channel names, and publish dates for organized archives",
     "Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Join the waitlist to be notified the moment Open Video Downloader ships.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "PreOrder",
-    "benefits": [
-      "Archive Open.video lectures and livestreams before access windows expire",
-      "Keep reference clips handy for offline editing, compliance, or training reviews",
-      "Skip terminal commands—everything runs locally inside the extension"
-    ]
-  },
   "faqs": [
     {
       "question": "Will Open Video Downloader work with private Open.video channels?",
@@ -64,6 +40,10 @@
     {
       "question": "Are captions or subtitles included?",
       "answer": "The first release focuses on video and audio capture. Subtitle export is on the roadmap and will arrive in a future update."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -112,19 +92,6 @@
     "archive open video livestream",
     "save open video content"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-open-video-downloader"
-    ],
-    "workflow_ids": []
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": false,
@@ -147,5 +114,50 @@
       "justification": "Extracts playlist manifests, rendition data, and signed URLs required to fetch the protected media segments."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": null,
+  "featured_image_gif": null,
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/open-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/open-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/open-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/open-video-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=open-video-downloader",
+  "github_repo_url": "https://github.com/serpapps/open-video-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Join the waitlist to be notified the moment Open Video Downloader ships.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "PreOrder",
+    "benefits": [
+      "Archive Open.video lectures and livestreams before access windows expire",
+      "Keep reference clips handy for offline editing, compliance, or training reviews",
+      "Skip terminal commands—everything runs locally inside the extension"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-open-video-downloader"
+    ],
+    "workflow_ids": []
+  }
 }

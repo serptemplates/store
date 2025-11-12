@@ -6,6 +6,7 @@ import { DubAnalytics } from "@/components/analytics/DubAnalytics";
 import { getSiteConfig } from "@/lib/site-config";
 import { Providers } from "./providers";
 import { inter } from "./fonts";
+import Footer2 from "@repo/ui/composites/Footer2";
 
 const STORE_TITLE = "SERP Apps";
 const STORE_DESCRIPTION = "Browse the full catalog of SERP products.";
@@ -42,7 +43,16 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { gtmId } = getSiteConfig();
+  const siteConfig = getSiteConfig();
+  const { gtmId } = siteConfig;
+  const rawSiteName = siteConfig.site?.name ?? "SERP Apps";
+  const normalizedSiteName = rawSiteName.replace(/\bApps\b/gi, "").trim() || rawSiteName;
+  const domain = siteConfig.site?.domain?.trim();
+  const siteUrl = domain
+    ? /^https?:\/\//i.test(domain)
+      ? domain
+      : `https://${domain.replace(/^\/+/, "")}`
+    : "https://serp.co";
 
   return (
     <html lang="en">
@@ -73,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {gtmId && <DelayedGTM gtmId={gtmId} />}
             {/* Dub Analytics for affiliate and click tracking */}
             <DubAnalytics />
+            <Footer2 site={{ name: normalizedSiteName, url: siteUrl }} />
           </PostHogAnalytics>
         </Providers>
       </body>

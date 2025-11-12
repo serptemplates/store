@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { cn } from "../lib/utils";
 import SocialProofBanner from "../social-proof-banner";
@@ -9,6 +9,7 @@ import { TypographyH2, TypographyLarge, TypographyP, TypographySmall } from "@re
 export type PricingCtaProps = {
   heading?: string;
   subheading?: string;
+  productName?: string;
   priceLabel?: string;
   price?: string; // e.g., "$16/month"
   originalPrice?: string; // e.g., "$97"
@@ -63,6 +64,7 @@ export function PricingCta({
   terms,
   benefits,
   features,
+  productName,
   className,
   id,
   orderBump,
@@ -82,6 +84,7 @@ export function PricingCta({
   const showPriceDetails = Boolean(
     price || priceLabel || originalPrice || priceNote
   );
+  const fallbackProductName = productName?.trim() || heading?.trim() || "SERP Apps";
 
   const socialProofConfig = {
     userCount: 1938,
@@ -121,6 +124,33 @@ export function PricingCta({
   const normalizedCtaText = (ctaText || '').trim();
   const ctaAriaLabel = /get it now/i.test(normalizedCtaText) ? 'Buy Now' : undefined;
 
+  const computedHref = ctaHref ?? "#";
+  const isCtaBusy = Boolean(ctaDisabled || ctaLoading);
+
+  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (isCtaBusy) {
+      event.preventDefault();
+      return;
+    }
+
+    if (onCtaClick) {
+      event.preventDefault();
+      onCtaClick();
+    }
+  };
+
+  const handleHoverIn = (element: HTMLAnchorElement | null) => {
+    if (!element || isCtaBusy) return;
+    element.style.transform = "translateY(-2px)";
+    element.style.boxShadow = "0 5px 0 1px #000000";
+  };
+
+  const handleHoverOut = (element: HTMLAnchorElement | null) => {
+    if (!element) return;
+    element.style.transform = "translateY(0)";
+    element.style.boxShadow = "0 3px 0 1px #000000";
+  };
+
   return (
     <section
       id={id}
@@ -131,14 +161,6 @@ export function PricingCta({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left side content - Hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-center px-4 order-2 lg:order-1">
-            <TypographyH2 className="mb-3">
-              {heading || "Get Instant Access"}
-            </TypographyH2>
-            <TypographyP className="mb-6 max-w-xl lg:mb-8">
-              {subheading ||
-                "Start using our product immediately after checkout. No waiting, no delays."}
-            </TypographyP>
-
             {/* Key Value Props - Hidden on mobile, shown on lg+ */}
             <div className="hidden lg:block space-y-4 mb-8">
               <div className="flex items-start gap-3">
@@ -242,51 +264,46 @@ export function PricingCta({
                   border: "1px solid #e5e5e5",
                 }}
               >
-              {/* Product Title - Mobile Only */}
-              <div className="text-center mb-4 lg:hidden">
-                <TypographyH2>
-                  {heading || "Get Instant Access"}
-                </TypographyH2>
-                <TypographyP className="mt-2">
-                  {subheading ||
-                    "Start using our product immediately after checkout. No waiting, no delays."}
-                </TypographyP>
+              {/* Pricing / Product Identifier */}
+              <div className="text-center mb-4">
+                {showPriceDetails ? (
+                  <>
+                    {originalPrice && (
+                      <div className="mb-1 text-2xl font-normal text-slate-600 line-through sm:text-3xl">
+                        {originalPrice}
+                      </div>
+                    )}
+                    {price && (
+                      <div
+                        className="font-bold text-5xl sm:text-6xl"
+                        style={{
+                          lineHeight: "0.9",
+                          color: "#000000",
+                          fontFamily:
+                            "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                          letterSpacing: "-0.02em",
+                        }}
+                      >
+                        {price}
+                      </div>
+                    )}
+                    {priceLabel && (
+                      <TypographySmall className="mt-2 italic text-gray-600">
+                        {priceLabel}
+                      </TypographySmall>
+                    )}
+                    {priceNote && (
+                      <TypographySmall className="text-gray-600">
+                        {priceNote}
+                      </TypographySmall>
+                    )}
+                  </>
+                ) : (
+                  <TypographyH2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                    {fallbackProductName}
+                  </TypographyH2>
+                )}
               </div>
-
-              {/* Pricing */}
-              {showPriceDetails && (
-                <div className="text-center mb-4">
-                  {originalPrice && (
-                    <div className="mb-1 text-2xl font-normal text-slate-600 line-through sm:text-3xl">
-                      {originalPrice}
-                    </div>
-                  )}
-                  {price && (
-                    <div
-                      className="font-bold text-5xl sm:text-6xl"
-                      style={{
-                        lineHeight: "0.9",
-                        color: "#000000",
-                        fontFamily:
-                          "system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
-                        letterSpacing: "-0.02em",
-                      }}
-                    >
-                      {price}
-                    </div>
-                  )}
-                  {priceLabel && (
-                    <TypographySmall className="mt-2 italic text-gray-600">
-                      {priceLabel}
-                    </TypographySmall>
-                  )}
-                  {priceNote && (
-                    <TypographySmall className="text-gray-600">
-                      {priceNote}
-                    </TypographySmall>
-                  )}
-                </div>
-              )}
 
               {/* Discount Badge */}
               {discountPercentage > 0 && (
@@ -332,96 +349,50 @@ export function PricingCta({
               {/* Additional info if provided */}
               {/* CTA Button */}
               <div className="mb-5">
-                {onCtaClick ? (
-                  <button
-                    type="button"
-                    onClick={onCtaClick}
-                    disabled={ctaDisabled || ctaLoading}
-                    className="w-full font-bold transition-all text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
-                    style={{
-                      backgroundImage: "linear-gradient(#ffe252, #fed300)",
-                      color: "#000000",
-                      fontWeight: "700",
-                      borderRadius: "101px",
-                      borderTop: "none",
-                      borderLeft: "none",
-                      borderRight: "none",
-                      borderBottom: "5px solid #d0ad00",
-                      boxShadow: "0 3px 0 1px #000000",
-                      fontFamily:
-                        '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                      letterSpacing: "0px",
-                      lineHeight: "1.3em",
-                      cursor: "pointer",
-                      position: "relative",
-                      zIndex: 2,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 5px 0 1px #000000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 3px 0 1px #000000";
-                    }}
-                  >
-                    {ctaLoading ? (
-                      <>
-                        <Loader2 className="inline h-5 w-5 animate-spin mr-2" />
-                        Processing...
-                      </>
-                    ) : (
-                      ctaText
-                    )}
-                  </button>
-                ) : (
-                  <a
-                    href={ctaHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={ctaAriaLabel}
-                    className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
-                    style={{
-                      backgroundImage: "linear-gradient(#ffe252, #fed300)",
-                      color: "#000000",
-                      fontWeight: "700",
-                      borderRadius: "101px",
-                      borderTop: "none",
-                      borderLeft: "none",
-                      borderRight: "none",
-                      borderBottom: "5px solid #d0ad00",
-                      boxShadow: "0 3px 0 1px #000000",
-                      fontFamily:
-                        '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
-                      letterSpacing: "0px",
-                      lineHeight: "1.3em",
-                      textDecoration: "none",
-                      cursor: "pointer",
-                      position: "relative",
-                      zIndex: 2,
-                      display: "inline-block",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 5px 0 1px #000000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 3px 0 1px #000000";
-                    }}
-                  >
-                    {ctaText}
-                  </a>
-                )}
+                <a
+                  href={computedHref}
+                  target={onCtaClick ? undefined : "_blank"}
+                  rel={onCtaClick ? undefined : "noopener noreferrer"}
+                  aria-label={ctaAriaLabel}
+                  aria-disabled={isCtaBusy ? "true" : undefined}
+                  onClick={handleAnchorClick}
+                  className="block w-full font-bold transition-all text-center text-base sm:text-lg py-5 px-8 sm:py-6 sm:px-10 lg:py-[30px] lg:px-[45px]"
+                  style={{
+                    backgroundImage: "linear-gradient(#ffe252, #fed300)",
+                    color: "#000000",
+                    fontWeight: "700",
+                    borderRadius: "101px",
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderBottom: "5px solid #d0ad00",
+                    boxShadow: "0 3px 0 1px #000000",
+                    fontFamily:
+                      '"Circular Std Font", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+                    letterSpacing: "0px",
+                    lineHeight: "1.3em",
+                    textDecoration: "none",
+                    cursor: isCtaBusy ? "not-allowed" : "pointer",
+                    position: "relative",
+                    zIndex: 2,
+                    display: "inline-block",
+                    opacity: isCtaBusy ? 0.7 : 1,
+                  }}
+                  onMouseEnter={(e) => handleHoverIn(e.currentTarget)}
+                  onMouseLeave={(e) => handleHoverOut(e.currentTarget)}
+                >
+                  {ctaLoading ? (
+                    <>
+                      <Loader2 className="inline h-5 w-5 animate-spin mr-2" />
+                      Processing...
+                    </>
+                  ) : (
+                    ctaText
+                  )}
+                </a>
                 {ctaExtra}
               </div>
 
-              {/* Terms/Disclaimer - only show if custom terms provided */}
-              {terms && (
-                <TypographySmall className="text-center leading-relaxed text-gray-600">
-                  {terms}
-                </TypographySmall>
-              )}
               </div>
 
               {shouldRenderOrderBump && orderBump && (
@@ -471,6 +442,19 @@ export function PricingCta({
             </div>
           </div>
         </div>
+
+        {/* Terms / Disclaimer */}
+        {terms ? (
+          <div className="mt-8 flex w-full justify-center">
+            <div className="max-w-4xl px-4 text-center">
+              {typeof terms === "string" ? (
+                <TypographySmall className="leading-relaxed text-gray-600">{terms}</TypographySmall>
+              ) : (
+                terms
+              )}
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );

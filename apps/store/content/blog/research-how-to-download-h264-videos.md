@@ -659,10 +659,3 @@ ffmpeg -i input.mp4 -c:v libx264 -preset medium -crf 23 -profile:v high -level 4
        -f dash output.mpd
 ```
 
-## See Also
-
-- [H.265 (HEVC) Video Codec](./h265.md)
-- [VP9 Video Codec](./vp9.md)
-- [MP4 Container Format](../containers/mp4.md)
-- [WebM Container Format](../containers/webm.md)
-- [AAC Audio Codec](./aac.md)

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { productSchema } from "@/lib/products/product-schema";
+import { LEGAL_FAQ_TEMPLATE, productSchema } from "@/lib/products/product-schema";
 
 function buildBaseProduct(): Record<string, unknown> {
   return {
@@ -8,6 +8,9 @@ function buildBaseProduct(): Record<string, unknown> {
     name: "Example Product",
     tagline: "Example tagline",
     slug: "example-product",
+    trademark_metadata: {
+      uses_trademarked_brand: false,
+    },
     description: "Example description",
     seo_title: "Example SEO Title",
     seo_description: "Example SEO Description",
@@ -19,21 +22,15 @@ function buildBaseProduct(): Record<string, unknown> {
     pricing: {
       price: "$19.00",
     },
+    faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
   };
 }
 
 describe("productSchema", () => {
   it("rejects unknown properties to prevent stale fields", () => {
     const result = productSchema.safeParse({
+      ...buildBaseProduct(),
       slug: "example",
-      seo_title: "Example Product",
-      seo_description: "Example description",
-      store_serp_co_product_page_url: "https://store.serp.co/product-details/product/example",
-      apps_serp_co_product_page_url: "https://apps.serp.co/example",
-      serp_co_product_page_url: "https://serp.co/products/example/",
-      serply_link: "https://serp.ly/example",
-      success_url: "https://apps.serp.co/checkout/success?product=example&session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "https://apps.serp.co/checkout?product=example",
       name: "Example",
       tagline: "Example",
       description: "Example",
@@ -89,6 +86,40 @@ describe("productSchema", () => {
       pricing: {
         price: (base as any).pricing?.price,
         cta_href: "https://apps.serp.co/checkout/example-product",
+      },
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("requires trademark metadata when a known brand alias is detected", () => {
+    const result = productSchema.safeParse({
+      ...buildBaseProduct(),
+      name: "OnlyFans Downloader",
+      slug: "onlyfans-downloader",
+      seo_title: "OnlyFans Downloader",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const issue = result.error.issues.find((entry) => entry.path.join(".") === "trademark_metadata.uses_trademarked_brand");
+      expect(issue?.message).toMatch(/detected trademarked brand/i);
+    }
+  });
+
+  it("allows trademarked products once metadata is populated", () => {
+    const result = productSchema.safeParse({
+      ...buildBaseProduct(),
+      name: "OnlyFans Downloader",
+      slug: "onlyfans-downloader",
+      seo_title: "OnlyFans Downloader",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "OnlyFans",
+        legal_entity: "Fenix International Limited",
       },
     });
 

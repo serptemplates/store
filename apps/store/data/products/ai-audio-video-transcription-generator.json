@@ -1,26 +1,23 @@
 {
+  // PRODUCT INFO
   "platform": "AI Transcription",
   "name": "AI Audio & Video Transcription Generator",
   "tagline": "Turn audio and video into clean transcripts with one click.",
   "slug": "ai-audio-video-transcription-generator",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "AI Audio & Video Transcription Generator converts recordings into accurate, ready‑to‑use text. Upload an audio or video file, pick a language, and get clean transcripts you can edit, search, and share. Perfect for creators, teams, and marketers documenting calls, webinars, podcasts, and training.",
   "seo_title": "AI Audio & Video Transcription Generator",
   "seo_description": "Transcribe audio and video into accurate, editable text for docs, captions, and summaries.",
-  "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-audio-video-transcription-generator",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
-  "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
   "status": "pre_release",
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
-  "github_repo_tags": [],
   "features": [],
-  "faqs": [],
+  "faqs": [
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
   "reviews": [],
   "supported_operating_systems": [],
   "supported_regions": [
@@ -34,6 +31,28 @@
     "speech to text",
     "captions"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-audio-video-transcription-generator",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
+  "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
+  "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -45,11 +64,5 @@
     "entitlements": [
       "ai-audio-video-transcription-generator"
     ]
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

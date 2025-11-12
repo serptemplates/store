@@ -223,10 +223,16 @@ function resolvePosts(product: ProductData, posts: BlogPostMeta[]): BlogPostMeta
     .sort((a, b) => (orderIndex.get(a.slug)! - orderIndex.get(b.slug)!));
 }
 
+type ProductToHomeTemplateOptions = {
+  showPrices?: boolean;
+};
+
 export function productToHomeTemplate(
   product: ProductData,
-  posts: BlogPostMeta[] = []
+  posts: BlogPostMeta[] = [],
+  options: ProductToHomeTemplateOptions = {},
 ): Omit<HomeTemplateProps, "ui"> {
+  const showPrices = options.showPrices ?? true;
   const platform = derivePlatform(product);
   const badgeText = getReleaseBadgeText(product);
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
@@ -288,6 +294,27 @@ export function productToHomeTemplate(
     }
   }
 
+  const pricingBlock = {
+    enabled: true,
+    heading: product.name,
+    productName: product.name,
+    subheading: pricingSubheading,
+    priceLabel: showPrices ? product.pricing?.label : undefined,
+    price: showPrices ? formattedPrice : undefined,
+    originalPrice: showPrices ? derivedOriginalPrice : undefined,
+    priceNote: showPrices ? product.pricing?.note : undefined,
+    benefits:
+      product.pricing?.benefits && product.pricing.benefits.length > 0
+        ? product.pricing.benefits
+        : product.features && product.features.length > 0
+        ? product.features.slice(0, 8) // Take first 8 features for the pricing section
+        : defaultPricingBenefits,
+    ctaText: resolvedCta.text,
+    ctaHref: resolvedCta.href,
+    id: "pricing",
+    showPriceDetails: showPrices,
+  } satisfies NonNullable<HomeTemplateProps["pricing"]>;
+
   return {
     platform,
     videoUrl,
@@ -316,24 +343,7 @@ export function productToHomeTemplate(
     })(),
     permissionItems,
     categories: deriveProductCategories(product),
-    pricing: {
-      enabled: true,
-      heading: product.name,
-      subheading: pricingSubheading,
-      priceLabel: product.pricing?.label,
-      price: formattedPrice,
-      originalPrice: derivedOriginalPrice,
-      priceNote: product.pricing?.note,
-      benefits:
-        product.pricing?.benefits && product.pricing.benefits.length > 0
-          ? product.pricing.benefits
-          : product.features && product.features.length > 0
-          ? product.features.slice(0, 8) // Take first 8 features for the pricing section
-          : defaultPricingBenefits,
-      ctaText: resolvedCta.text,
-      ctaHref: resolvedCta.href,
-      id: "pricing",
-  },
+    pricing: pricingBlock,
   cta: {
     mode: resolvedCta.mode,
     href: resolvedCta.href,

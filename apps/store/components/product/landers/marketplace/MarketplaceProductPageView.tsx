@@ -1,7 +1,5 @@
 "use client";
 
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
-
 import type { SiteConfig } from "@/lib/site-config";
 import type { ProductData } from "@/lib/products/product-schema";
 
@@ -33,7 +31,8 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
   const viewModel = useMarketplaceProductPageViewModel(product, siteConfig);
   const permissionFaqItems = mapPermissionItemsToFaq(viewModel.sections.permissionItems);
   // Reuse product adapter to normalize screenshots for carousel display
-  const homeTemplate = productToHomeTemplate(product, []);
+  const showPrices = siteConfig.storefront?.showPrices !== false;
+  const homeTemplate = productToHomeTemplate(product, [], { showPrices });
   const screenshots = homeTemplate.screenshots ?? [];
 
   return (
@@ -79,18 +78,10 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
             primaryLabel={viewModel.layout.header.primaryLabel}
           />
         }
-        footer={<FooterComposite site={viewModel.layout.footerSite} />}
       >
         <ProductStickyBar
-          variant="marketplace"
           show={viewModel.stickyBar.show}
-          productName={viewModel.stickyBar.productName}
           product={viewModel.stickyBar.product}
-          priceLabel={viewModel.stickyBar.priceLabel}
-          price={viewModel.stickyBar.price}
-          originalPrice={viewModel.stickyBar.originalPrice}
-          brandLogoPath={viewModel.stickyBar.brandLogoPath ?? undefined}
-          mainImageSource={viewModel.stickyBar.mainImageSource ?? undefined}
           waitlistEnabled={viewModel.stickyBar.waitlistEnabled}
           onWaitlistClick={viewModel.stickyBar.onWaitlistClick}
           checkoutCta={viewModel.stickyBar.checkoutCta}

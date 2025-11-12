@@ -900,10 +900,3 @@ function optimizeTikTokQuality(videoElement) {
 }
 ```
 
-## See Also
-
-- [Instagram Platform](./instagram.md)
-- [YouTube Platform](./youtube.md)
-- [Twitter Platform](./twitter.md)
-- [MP4 Container Format](../containers/mp4.md)
-- [H.264 Video Codec](../codecs/h264.md)

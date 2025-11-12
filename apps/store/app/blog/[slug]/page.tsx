@@ -14,7 +14,6 @@ import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 import { Badge } from "@repo/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 
@@ -249,8 +248,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </footer>
         </article>
       </main>
-
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
     </>
   );

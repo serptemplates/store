@@ -2,6 +2,7 @@ import Script from "next/script"
 
 import type { ProductData } from "@/lib/products/product-schema"
 import { isPreRelease } from "@/lib/products/release-status"
+import { resolveSeoProductName } from "@/lib/products/unofficial-branding"
 import { canonicalizeStoreOrigin, getDefaultStoreUrl } from "@/lib/canonical-url"
 
 import {
@@ -92,8 +93,10 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const productUrl = url
   const productId = `${productUrl.replace(/#.*$/, "")}#product`
   const currency = product.pricing?.currency?.trim()?.toUpperCase() || "USD"
+  const seoProductName = resolveSeoProductName(product)
+  const productForSeo = product.name === seoProductName ? product : { ...product, name: seoProductName }
 
-  const schemaProduct = createSchemaProduct(product, {
+  const schemaProduct = createSchemaProduct(productForSeo, {
     price: product.pricing?.price ?? null,
     isDigital: true,
   })
@@ -116,7 +119,7 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
       { name: "Home", url: "/" },
-      { name: product.name, url: productSlugPath },
+      { name: seoProductName, url: productSlugPath },
     ],
     storeUrl,
   })
@@ -129,10 +132,10 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   })
 
   const websiteSchema = buildWebsiteSchema(storeUrl)
-  const videoSchemas = buildVideoSchemas(product, storeUrl)
+  const videoSchemas = buildVideoSchemas(productForSeo, storeUrl)
   const translatedResultsSchema = generateTranslatedResultsSchema({
     url: productUrl,
-    name: product.name,
+    name: seoProductName,
     productId,
     storeUrl,
     storeName: STORE_NAME,

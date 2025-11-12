@@ -665,10 +665,3 @@ const server = new AVIStreamingServer(8080);
 server.start();
 ```
 
-## See Also
-
-- [MP4 Container Format](./mp4.md)
-- [WebM Container Format](./webm.md)
-- [DivX Codec](../legacy/divx.md)
-- [XviD Codec](../legacy/xvid.md)
-- [H.264 Video Codec](../codecs/h264.md)

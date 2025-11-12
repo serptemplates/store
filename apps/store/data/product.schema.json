@@ -7,6 +7,7 @@
   "additionalProperties": false,
   "required": [
     "slug",
+    "trademark_metadata",
     "seo_title",
     "seo_description",
     "store_serp_co_product_page_url",
@@ -23,6 +24,61 @@
       "type": "string",
       "minLength": 1,
       "pattern": "^[a-z0-9-]+$"
+    },
+    "trademark_metadata": {
+      "type": "object",
+      "description": "Trademark configuration used for disclosure copy and metadata.",
+      "additionalProperties": false,
+      "properties": {
+        "uses_trademarked_brand": {
+          "type": "boolean",
+          "description": "Indicates whether the product references another company's trademarked brand name and thus requires an 'Unofficial' disclaimer.",
+          "default": false
+        },
+        "trade_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The public-facing trademark or trade name referenced by the product."
+        },
+        "legal_entity": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The legal entity that owns the trademarked brand."
+        }
+      },
+      "required": [
+        "uses_trademarked_brand"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "uses_trademarked_brand": { "const": true }
+            }
+          },
+          "then": {
+            "required": ["trade_name", "legal_entity"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "uses_trademarked_brand": { "const": false }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                { "required": ["trade_name"] },
+                { "required": ["legal_entity"] }
+              ]
+            }
+          }
+        }
+      ],
+      "default": {
+        "uses_trademarked_brand": false
+      }
     },
     "platform": {
       "type": "string",
@@ -161,6 +217,28 @@
         }
       ]
     },
+    "resource_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "default": []
+    },
     "github_repo_tags": {
       "type": "array",
       "items": {
@@ -273,6 +351,23 @@
     },
     "faqs": {
       "type": "array",
+      "minItems": 1,
+      "contains": {
+        "type": "object",
+        "required": [
+          "question",
+          "answer"
+        ],
+        "properties": {
+          "question": {
+            "const": "Is this legal?"
+          },
+          "answer": {
+            "const": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+          }
+        },
+        "additionalProperties": false
+      },
       "items": {
         "type": "object",
         "additionalProperties": false,

@@ -1,26 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "PerfectGirls",
   "name": "PerfectGirls Downloader",
   "tagline": "Download PerfectGirls videos and galleries for offline use.",
   "slug": "perfectgirls-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "PerfectGirls Downloader helps teams and viewers save permitted PerfectGirls videos and image sets in one workflow. It captures the source files directly, preserving quality and metadata without manual effort.\n\nUse it to maintain research archives, prep highlight clips for editing, or keep private collections accessible when you're away from a stable connection.",
   "seo_title": "PerfectGirls Downloader | Download PerfectGirls Videos",
   "seo_description": "Download PerfectGirls videos and galleries you are authorized to view. Reliable PerfectGirls downloader with batch support.",
-  "serply_link": "https://serp.ly/perfectgirls-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/perfectgirls-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/perfectgirls-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/perfectgirls-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=perfectgirls-downloader",
   "status": "pre_release",
-  "featured_image": null,
-  "featured_image_gif": null,
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": null,
-  "github_repo_tags": [],
   "features": [
     "Save PerfectGirls videos and galleries without compression",
     "Maintain creator folders, filenames, and timestamps",
@@ -28,16 +18,6 @@
     "Local-first design keeps sensitive content on your hardware",
     "Compatible with Windows, macOS, Linux, and major browsers"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "Can PerfectGirls Downloader handle both videos and images?",
@@ -58,6 +38,10 @@
     {
       "question": "Do you keep logs of what I download?",
       "answer": "No. All downloads stay local and we do not capture telemetry or analytics."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -104,6 +88,40 @@
     "perfectgirls downloader",
     "perfectgirls download tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": null,
+  "featured_image_gif": null,
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/perfectgirls-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/perfectgirls-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/perfectgirls-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/perfectgirls-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=perfectgirls-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9",
+    "original_price": "$17.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -116,11 +134,5 @@
       "purchase-perfectgirls-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

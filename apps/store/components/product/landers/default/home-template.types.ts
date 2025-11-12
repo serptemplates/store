@@ -26,7 +26,6 @@ export type ResolvedHomeCta = {
 
 export type HomeTemplateUi = {
   Navbar: GenericComponent;
-  Footer: GenericComponent;
   Button: GenericComponent;
   Card: GenericComponent;
   CardHeader: GenericComponent;
@@ -81,6 +80,7 @@ export type HomeTemplateProps = {
     ctaLoading?: PricingCtaProps["ctaLoading"];
     ctaDisabled?: PricingCtaProps["ctaDisabled"];
     terms?: PricingCtaProps["terms"];
+    showPriceDetails?: boolean;
   };
   breadcrumbs?: Array<{ label: string; href?: string }>;
   showPosts?: boolean;
@@ -95,4 +95,5 @@ export type HomeTemplateProps = {
     href: string;
   }>;
   categories?: string[];
+  trademarkNotice?: string | null;
 };

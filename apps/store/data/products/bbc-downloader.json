@@ -1,31 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "BBC",
   "name": "BBC Downloader",
   "tagline": "Download BBC videos instantly.",
   "slug": "bbc-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "BBC Downloader gives creators and teams a dependable way to save BBC videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from BBC with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "BBC Downloader | Download BBC Videos",
   "seo_description": "Download BBC videos for offline use. Fast, private BBC downloader.",
-  "serply_link": "https://serp.ly/bbc-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/bbc-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/bbc-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/bbc-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=bbc-downloader",
   "status": "pre_release",
-  "featured_image": "/media/products/bbc-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/bbc-downloader/bbc-homepage.webp",
-      "alt": "BBC Downloader website homepage"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": null,
-  "github_repo_tags": [],
   "features": [
     "One-click downloads from BBC",
     "Preserves original quality and metadata",
@@ -33,16 +18,6 @@
     "Local-first workflows with no tracking",
     "Works on Windows, macOS, and Linux"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17",
-    "original_price": "$37.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "How do I use BBC Downloader?",
@@ -63,6 +38,10 @@
     {
       "question": "Is my data tracked?",
       "answer": "No. Downloads stay on your device and we don't capture usage analytics or content copies."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -108,6 +87,45 @@
     "bbc downloader",
     "bbc download"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/bbc-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/bbc-downloader/bbc-homepage.webp",
+      "alt": "BBC Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/bbc-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/bbc-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/bbc-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/bbc-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=bbc-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17",
+    "original_price": "$37.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -120,11 +138,5 @@
       "purchase-bbc-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

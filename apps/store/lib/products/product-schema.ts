@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "./category-constants";
+import { inferTrademarkedBrand } from "./trademarked-brands";
 
 const trimmedString = () => z.string().trim().min(1);
 
@@ -162,6 +163,11 @@ const screenshotSchema = z.object({
   caption: optionalTrimmedString(),
 });
 
+const externalLinkSchema = z.object({
+  label: trimmedString(),
+  href: trimmedString().url(),
+});
+
 const reviewSchema = z.object({
   name: trimmedString(),
   review: trimmedString(),
@@ -305,11 +311,58 @@ const permissionJustificationSchema = z.object({
   learn_more_url: trimmedString().url().optional(),
 });
 
+const trademarkMetadataSchema = z
+  .object({
+    uses_trademarked_brand: z.boolean().default(false),
+    trade_name: optionalTrimmedString(),
+    legal_entity: optionalTrimmedString(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.uses_trademarked_brand) {
+      if (!data.trade_name || data.trade_name.trim().length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["trade_name"],
+          message: "Provide trade_name when uses_trademarked_brand is true",
+        });
+      }
+      if (!data.legal_entity || data.legal_entity.trim().length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["legal_entity"],
+          message: "Provide legal_entity when uses_trademarked_brand is true",
+        });
+      }
+    } else {
+      if (data.trade_name && data.trade_name.trim().length > 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["trade_name"],
+          message: "Remove trade_name when uses_trademarked_brand is false",
+        });
+      }
+      if (data.legal_entity && data.legal_entity.trim().length > 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["legal_entity"],
+          message: "Remove legal_entity when uses_trademarked_brand is false",
+        });
+      }
+    }
+  });
+
+export const TRADEMARK_METADATA_FIELD_ORDER = [
+  "uses_trademarked_brand",
+  "trade_name",
+  "legal_entity",
+] as const;
+
 export const productSchemaShape = {
   platform: z.string().trim().optional(),
   name: trimmedString(),
   tagline: trimmedString(),
   slug: slugSchema(),
+  trademark_metadata: trademarkMetadataSchema,
   description: trimmedString(),
   seo_title: trimmedString(),
   seo_description: trimmedString(),
@@ -335,6 +388,7 @@ export const productSchemaShape = {
   edge_addons_store_link: optionalHost(["microsoftedge.microsoft.com"]),
   opera_addons_store_link: optionalHost(["addons.opera.com"]),
   producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
+  resource_links: optionalArray(externalLinkSchema),
   features: optionalArray(z.string().trim()),
   pricing: pricingSchema,
   order_bump: z.any().optional().transform(() => undefined),
@@ -386,42 +440,18 @@ export const PRODUCT_FIELD_ORDER = [
   "name",
   "tagline",
   "slug",
+  "trademark_metadata",
   "description",
   "seo_title",
   "seo_description",
-  "serply_link",
-  "store_serp_co_product_page_url",
-  "apps_serp_co_product_page_url",
-  "serp_co_product_page_url",
-  "reddit_url",
-  "success_url",
-  "cancel_url",
   "status",
-  "featured_image",
-  "featured_image_gif",
-  "screenshots",
-  "product_videos",
-  "related_videos",
-  "related_posts",
-  "github_repo_url",
-  "github_repo_tags",
-  "chrome_webstore_link",
-  "firefox_addon_store_link",
-  "edge_addons_store_link",
-  "opera_addons_store_link",
-  "producthunt_link",
   "features",
-  "pricing",
   "faqs",
   "reviews",
   "supported_operating_systems",
   "supported_regions",
   "categories",
   "keywords",
-  "return_policy",
-  "stripe",
-  "ghl",
-  "license",
   "layout_type",
   "featured",
   "waitlist_url",
@@ -430,12 +460,92 @@ export const PRODUCT_FIELD_ORDER = [
   "permission_justifications",
   "brand",
   "sku",
+  "featured_image",
+  "featured_image_gif",
+  "screenshots",
+  "product_videos",
+  "related_videos",
+  "related_posts",
+  "serply_link",
+  "store_serp_co_product_page_url",
+  "apps_serp_co_product_page_url",
+  "serp_co_product_page_url",
+  "reddit_url",
+  "success_url",
+  "cancel_url",
+  "github_repo_url",
+  "github_repo_tags",
+  "chrome_webstore_link",
+  "firefox_addon_store_link",
+  "edge_addons_store_link",
+  "opera_addons_store_link",
+  "producthunt_link",
+  "resource_links",
+  "pricing",
+  "return_policy",
+  "stripe",
+  "ghl",
+  "license",
 ] as const;
+
+export const LEGAL_FAQ_TEMPLATE = {
+  question: "Is this legal?",
+  answer:
+    [
+      "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>",
+      "<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>",
+      "<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>",
+      "<ol>",
+      "<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>",
+      "<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>",
+      "<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>",
+      "</ol>",
+    ].join("\n"),
+} as const;
+
+const LEGAL_FAQ_NORMALIZED_QUESTION = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
 
 export const productSchema = z
   .object(productSchemaShape)
   .strict()
   .superRefine((data, ctx) => {
+    const detectedBrand = inferTrademarkedBrand({
+      name: data.name,
+      platform: data.platform,
+      slug: data.slug,
+      seo_title: data.seo_title,
+      seo_description: data.seo_description,
+      keywords: data.keywords,
+    });
+
+    if (detectedBrand && !data.trademark_metadata?.uses_trademarked_brand) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["trademark_metadata", "uses_trademarked_brand"],
+        message: `Detected trademarked brand "${detectedBrand}". Set trademark_metadata.uses_trademarked_brand=true and provide trade_name/legal_entity details.`,
+      });
+    }
+
+    const faqs = Array.isArray(data.faqs) ? data.faqs : [];
+    if (faqs.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["faqs"],
+        message: `Products must include the \"${LEGAL_FAQ_TEMPLATE.question}\" FAQ entry.`,
+      });
+    } else {
+      const hasLegalFaq = faqs.some((faq) => {
+        const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
+        return question === LEGAL_FAQ_NORMALIZED_QUESTION;
+      });
+      if (!hasLegalFaq) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["faqs"],
+          message: `FAQ entries must include the \"${LEGAL_FAQ_TEMPLATE.question}\" disclaimer.`,
+        });
+      }
+    }
     // Badge exclusivity rules: only one of (pre_release via status, new_release, popular)
     const isPreRelease = data.status === "pre_release";
     const isNew = Boolean((data as { new_release?: boolean }).new_release);

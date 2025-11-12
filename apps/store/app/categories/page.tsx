@@ -8,7 +8,6 @@ import { buildCategoryIndex } from "@/lib/products/categories";
 import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 const CATEGORY_BLURB = "Browse every category we support and jump directly into the downloaders that match your workflow.";
 
@@ -78,7 +77,6 @@ export default function CategoriesIndexPage() {
         </section>
       </main>
 
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

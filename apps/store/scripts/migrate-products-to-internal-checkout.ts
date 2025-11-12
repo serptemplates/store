@@ -4,6 +4,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import stripJsonComments from "strip-json-comments";
+
 import { getProductsDirectory } from "../lib/products/product";
 import type { ProductData } from "../lib/products/product-schema";
 import { convertProducts } from "./convert-products";
@@ -23,7 +25,7 @@ async function migrate() {
     const raw = await fs.readFile(filePath, "utf8");
     let data: Mutable<ProductData>;
     try {
-      data = JSON.parse(raw) as Mutable<ProductData>;
+      data = JSON.parse(stripJsonComments(raw)) as Mutable<ProductData>;
     } catch {
       console.warn(`Skipping invalid JSON: ${filePath}`);
       continue;

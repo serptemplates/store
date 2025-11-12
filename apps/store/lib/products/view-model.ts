@@ -1,4 +1,5 @@
 import type { ProductData } from "./product-schema";
+import { LEGAL_FAQ_TEMPLATE } from "./product-schema";
 
 export type ProductCopy = {
   subtitle: string;
@@ -95,10 +96,14 @@ export function buildFaqEntries(product: ProductData): ProductFaqEntry[] {
           return null;
         }
 
+        const normalizedQuestion = question.toLowerCase();
+        const legalQuestion = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
+        const resolvedAnswer = normalizedQuestion === legalQuestion ? LEGAL_FAQ_TEMPLATE.answer : answer;
+
         return {
           id: createAccordionItemId(question, index, "faq"),
           question,
-          answer,
+          answer: resolvedAnswer,
         };
       })
       .filter((entry): entry is ProductFaqEntry => Boolean(entry)) ?? []
@@ -141,6 +146,7 @@ export function buildProductMetadata(product: ProductData): ProductMetadata {
 
 export function buildProductResourceLinks(product: ProductData): ProductResourceLink[] {
   const links: ProductResourceLink[] = [];
+  const seen = new Set<string>();
 
   const appendLink = (value: unknown, label: string) => {
     if (typeof value !== "string") {
@@ -148,21 +154,32 @@ export function buildProductResourceLinks(product: ProductData): ProductResource
     }
 
     const trimmed = value.trim();
-    if (!trimmed) {
+    if (!trimmed || seen.has(`${label}:::${trimmed}`)) {
       return;
     }
 
+    seen.add(`${label}:::${trimmed}`);
     links.push({ label, href: trimmed });
   };
 
   appendLink(product.serp_co_product_page_url, "SERP");
-  appendLink(product.reddit_url, "Reddit Discussion");
-  appendLink(product.github_repo_url, "GitHub Repository");
+  appendLink(product.reddit_url, "Reddit");
+  appendLink(product.github_repo_url, "GitHub");
   appendLink(product.chrome_webstore_link, "Chrome Web Store");
   appendLink(product.firefox_addon_store_link, "Firefox Add-ons");
   appendLink(product.edge_addons_store_link, "Microsoft Edge Add-ons");
   appendLink(product.opera_addons_store_link, "Opera Add-ons");
   appendLink(product.producthunt_link, "Product Hunt");
+
+  if (Array.isArray(product.resource_links)) {
+    product.resource_links.forEach((link) => {
+      const label = typeof link?.label === "string" ? link.label.trim() : "";
+      const href = typeof link?.href === "string" ? link.href.trim() : "";
+      if (label && href) {
+        appendLink(href, label);
+      }
+    });
+  }
 
   return links;
 }

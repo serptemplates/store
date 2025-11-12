@@ -598,9 +598,3 @@ function debugSkoolDetection() {
 }
 ```
 
-## See Also
-
-- [HLS Streaming Protocol](../streaming/hls.md)
-- [MP4 Container Format](../containers/mp4.md)
-- [Vimeo Platform](./vimeo.md)
-- [Loom Platform](./loom.md)

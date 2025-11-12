@@ -1,19 +1,150 @@
 {
+  // PRODUCT INFO
   "platform": "Vimeo",
   "name": "Vimeo Video Downloader",
   "tagline": "Save Vimeo videos instantly for offline viewing.",
   "slug": "vimeo-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Vimeo",
+    "legal_entity": "Vimeo.com, Inc."
+  },
   "description": "Vimeo Video Downloader makes it easy to save showcase links, client review pages, and embedded players—even when they’re protected by passwords or private share settings. Enter the password, choose the quality, and the extension downloads the stream (and merges separate audio/video when needed) into a single MP4 so you can edit or archive offline.",
   "seo_title": "Vimeo Video Downloader | Download Vimeo Videos",
   "seo_description": "Download Vimeo videos easily for offline viewing. Fast, reliable Vimeo video downloader with high-quality downloads.",
-  "serply_link": "https://serp.ly/vimeo-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vimeo-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/vimeo-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/vimeo-video-downloader/",
-  "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1oexd2g/vimeo_video_downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=vimeo-video-downloader",
   "status": "live",
+  "features": [
+    "Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites",
+    "Prompts for video passwords and respects your logged-in Vimeo session",
+    "Converts HLS/DASH streams into MP4, merging separate audio and video automatically",
+    "Supports up to three simultaneous downloads with individual progress tracking",
+    "Captures video metadata (title, owner) to simplify project organisation",
+    "Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms",
+    "Stores licence data locally with no analytics or credential harvesting"
+  ],
+  "faqs": [
+    {
+      "question": "How do I download a password-protected Vimeo video?",
+      "answer": "Open the video, click the downloader icon, enter the same password you use in the Vimeo player, choose your quality, and let the download finish. The MP4 will save automatically."
+    },
+    {
+      "question": "Can I download private or team videos?",
+      "answer": "Yes, as long as you’re logged into Vimeo and have permission to view the video. The extension uses your session to access the file and never bypasses permissions."
+    },
+    {
+      "question": "Does it work on embedded Vimeo players?",
+      "answer": "Absolutely. Whether the player lives on vimeo.com or is embedded on a client portal or portfolio site, the extension detects it and offers the same download workflow."
+    },
+    {
+      "question": "How many videos can I download at once?",
+      "answer": "You can run up to three simultaneous downloads. Each shows its own progress bar so you can monitor status at a glance."
+    },
+    {
+      "question": "Will captions or subtitles download too?",
+      "answer": "The downloader focuses on video and audio. Subtitles or caption files should be saved separately from within Vimeo if you need them."
+    },
+    {
+      "question": "Which browsers are supported?",
+      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Linnea Barrett",
+      "review": "Clients send protected Vimeo review pages. I enter the password once and the MP4 lands ready for edit notes.",
+      "title": "Passworded client links solved",
+      "rating": 5,
+      "date": "2025-02-16"
+    },
+    {
+      "name": "Jamil Ortega",
+      "review": "Our course portal embeds Vimeo players. This detects them instantly and merges audio/video perfectly.",
+      "title": "Embedded videos finally accessible",
+      "rating": 4.9,
+      "date": "2025-03-03"
+    },
+    {
+      "name": "Jaya Daniels",
+      "review": "Three downloads at a time keeps our archive jobs moving, and progress bars make status crystal clear.",
+      "title": "Reliable for agency archives",
+      "rating": 4.8,
+      "date": "2025-01-28"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "vimeo video downloader",
+    "download private vimeo",
+    "vimeo password video mp4",
+    "download embedded vimeo",
+    "vimeo offline archive",
+    "how to cancel vimeo",
+    "what is vimeo pro",
+    "how to change privacy settings on vimeo"
+  ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Streams the final MP4 (or merged audio/video) to your downloads folder and keeps\nprogress accurate for each item."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores licence activation, password prompts, and queue preferences locally so\nthe downloader stays configured between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects Vimeo players on the tab you’re viewing—whether on vimeo.com or embedded\nelsewhere—and injects download controls."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Monitors navigation so the extension can refresh download options as you move\nbetween videos, showcases, or embeds."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Reads video configuration data, manifests, and stream URLs from the player in\norder to retrieve the correct quality variants."
+    },
+    {
+      "permission": "notifications",
+      "justification": "Sends prompts, success, and error alerts so you stay informed without watching\nthe popup."
+    },
+    {
+      "permission": "contextMenus",
+      "justification": "Adds a convenient “Download with Vimeo Video Downloader” option to the right-click\nmenu for embedded players."
+    },
+    {
+      "permission": "cookies",
+      "justification": "Uses your existing Vimeo session cookies to authenticate private, password-protected,\nor team videos directly in your browser."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Limits privileged access to vimeo.com, player.vimeo.com, and Vimeo CDN hosts\nso the extension only touches official endpoints required for downloading."
+    }
+  ],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
   "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/vimeo-video-downloader.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/vimeo-video-downloader/main/images/vimeo-video-downloader.gif",
   "screenshots": [
@@ -73,6 +204,14 @@
     "downloading-password-protected-vimeo-videos-with-yt-dlp",
     "downloading-long-vimeo-videos-dash-streams-with-yt-dlp"
   ],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/vimeo-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vimeo-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/vimeo-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/vimeo-video-downloader/",
+  "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1oexd2g/vimeo_video_downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=vimeo-video-downloader",
   "github_repo_url": "https://github.com/serpapps/vimeo-video-downloader",
   "github_repo_tags": [
     "vimeo-downloader",
@@ -82,17 +221,10 @@
   ],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/vimeo-video-downloader/dhgiccbhamhpghhoaajjiikjlegbfhdj",
   "producthunt_link": "https://www.producthunt.com/products/vimeo-video-downloader",
-  "features": [
-    "Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites",
-    "Prompts for video passwords and respects your logged-in Vimeo session",
-    "Converts HLS/DASH streams into MP4, merging separate audio and video automatically",
-    "Supports up to three simultaneous downloads with individual progress tracking",
-    "Captures video metadata (title, owner) to simplify project organisation",
-    "Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms",
-    "Stores licence data locally with no analytics or credential harvesting"
-  ],
+  "resource_links": [],
+  // PAYMENT DATA
   "pricing": {
-    "label": "One-time payment",
+    "label": "One-time",
     "price": "$17.00",
     "original_price": "$37.00",
     "note": "Download immediately \\u2022 Lifetime updates included \\u2022 No refunds",
@@ -106,81 +238,6 @@
       "Keep downloads private with on-device processing and no analytics"
     ]
   },
-  "faqs": [
-    {
-      "question": "How do I download a password-protected Vimeo video?",
-      "answer": "Open the video, click the downloader icon, enter the same password you use in the Vimeo player, choose your quality, and let the download finish. The MP4 will save automatically."
-    },
-    {
-      "question": "Can I download private or team videos?",
-      "answer": "Yes, as long as you’re logged into Vimeo and have permission to view the video. The extension uses your session to access the file and never bypasses permissions."
-    },
-    {
-      "question": "Does it work on embedded Vimeo players?",
-      "answer": "Absolutely. Whether the player lives on vimeo.com or is embedded on a client portal or portfolio site, the extension detects it and offers the same download workflow."
-    },
-    {
-      "question": "How many videos can I download at once?",
-      "answer": "You can run up to three simultaneous downloads. Each shows its own progress bar so you can monitor status at a glance."
-    },
-    {
-      "question": "Will captions or subtitles download too?",
-      "answer": "The downloader focuses on video and audio. Subtitles or caption files should be saved separately from within Vimeo if you need them."
-    },
-    {
-      "question": "Which browsers are supported?",
-      "answer": "Builds are available for Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktops."
-    }
-  ],
-  "reviews": [
-    {
-      "name": "Linnea Barrett",
-      "review": "Clients send protected Vimeo review pages. I enter the password once and the MP4 lands ready for edit notes.",
-      "title": "Passworded client links solved",
-      "rating": 5,
-      "date": "2025-02-16"
-    },
-    {
-      "name": "Jamil Ortega",
-      "review": "Our course portal embeds Vimeo players. This detects them instantly and merges audio/video perfectly.",
-      "title": "Embedded videos finally accessible",
-      "rating": 4.9,
-      "date": "2025-03-03"
-    },
-    {
-      "name": "Jaya Daniels",
-      "review": "Three downloads at a time keeps our archive jobs moving, and progress bars make status crystal clear.",
-      "title": "Reliable for agency archives",
-      "rating": 4.8,
-      "date": "2025-01-28"
-    }
-  ],
-  "supported_operating_systems": [
-    "windows",
-    "mac",
-    "linux",
-    "chrome",
-    "firefox",
-    "edge",
-    "opera"
-  ],
-  "supported_regions": [
-    "Worldwide"
-  ],
-  "categories": [
-    "Downloader",
-    "Video Downloader"
-  ],
-  "keywords": [
-    "vimeo video downloader",
-    "download private vimeo",
-    "vimeo password video mp4",
-    "download embedded vimeo",
-    "vimeo offline archive",
-    "how to cancel vimeo",
-    "what is vimeo pro",
-    "how to change privacy settings on vimeo"
-  ],
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -204,48 +261,5 @@
     "entitlements": [
       "vimeo-video-downloader"
     ]
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [
-    {
-      "permission": "downloads",
-      "justification": "Streams the final MP4 (or merged audio/video) to your downloads folder and keeps\nprogress accurate for each item."
-    },
-    {
-      "permission": "storage",
-      "justification": "Stores licence activation, password prompts, and queue preferences locally so\nthe downloader stays configured between sessions."
-    },
-    {
-      "permission": "activeTab",
-      "justification": "Detects Vimeo players on the tab you’re viewing—whether on vimeo.com or embedded\nelsewhere—and injects download controls."
-    },
-    {
-      "permission": "tabs",
-      "justification": "Monitors navigation so the extension can refresh download options as you move\nbetween videos, showcases, or embeds."
-    },
-    {
-      "permission": "scripting",
-      "justification": "Reads video configuration data, manifests, and stream URLs from the player in\norder to retrieve the correct quality variants."
-    },
-    {
-      "permission": "notifications",
-      "justification": "Sends prompts, success, and error alerts so you stay informed without watching\nthe popup."
-    },
-    {
-      "permission": "contextMenus",
-      "justification": "Adds a convenient “Download with Vimeo Video Downloader” option to the right-click\nmenu for embedded players."
-    },
-    {
-      "permission": "cookies",
-      "justification": "Uses your existing Vimeo session cookies to authenticate private, password-protected,\nor team videos directly in your browser."
-    },
-    {
-      "permission": "host_permissions",
-      "justification": "Limits privileged access to vimeo.com, player.vimeo.com, and Vimeo CDN hosts\nso the extension only touches official endpoints required for downloading."
-    }
-  ],
-  "brand": "SERP Apps"
+  }
 }

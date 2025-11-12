@@ -6,6 +6,7 @@ import { generateProductSchemaLD, generateBreadcrumbSchema, createSchemaProduct,
 import { generateWebApplicationSchema, type SoftwareApplicationOptions } from "@/schema/software-app-schema";
 import type { ProductData } from "@/lib/products/product-schema";
 import { isPreRelease } from "@/lib/products/release-status";
+import { resolveSeoProductName } from "@/lib/products/unofficial-branding";
 import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
@@ -101,7 +102,10 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const supportedRegions = (product.supported_regions ?? [])
     .map((region) => region.trim())
     .filter((region) => region.length > 0);
-  const schemaProduct = createSchemaProduct(product, {
+  const seoProductName = resolveSeoProductName(product);
+  const productForSeo = product.name === seoProductName ? product : { ...product, name: seoProductName };
+
+  const schemaProduct = createSchemaProduct(productForSeo, {
     price: normalizedPrice,
     images: normalizedImages,
     isDigital: true,
@@ -135,7 +139,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
       { name: "Home", url: "/" },
-      { name: product.name, url: productRelativeUrl },
+      { name: seoProductName, url: productRelativeUrl },
     ],
     storeUrl: normalizedStoreUrl,
   });
@@ -146,7 +150,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
 
   const softwareAppSchema = {
     ...generateWebApplicationSchema({
-      name: product.name,
+      name: seoProductName,
       description: product.description || product.tagline || "",
       applicationCategory,
       operatingSystem: operatingSystems,
@@ -277,7 +281,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
 
   const translatedResultsSchema = generateTranslatedResultsSchema({
     url: productUrl,
-    name: product.name,
+    name: seoProductName,
     productId,
     storeUrl: normalizedStoreUrl,
     storeName: siteConfig?.site?.name?.trim() || "SERP Apps",

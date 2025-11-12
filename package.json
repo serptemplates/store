@@ -30,6 +30,7 @@
     "test:unit": "pnpm --filter @apps/store test:unit",
     "test:all": "pnpm --filter @apps/store test:all",
     "test:smoke": "pnpm --filter @apps/store test:smoke",
+    "test:routes": "tsx scripts/route-health-check.ts",
     "ci:unit": "pnpm --filter @apps/store test:unit && pnpm --filter @apps/store validate:products"
   },
   "dependencies": {
@@ -55,8 +56,11 @@
     "vaul": "^0.9.9"
   },
   "devDependencies": {
+    "fast-xml-parser": "^5.3.1",
     "globals": "^16.4.0",
     "husky": "^9.0.0",
+    "linkinator": "^7.5.0",
+    "sitemap-crawler": "^1.0.0",
     "tsx": "^4.20.6"
   }
 }

@@ -1,0 +1,113 @@
+{
+  "companies": [
+    {
+      "slug": "onlyfans-downloader",
+      "name": "Onlyfans Downloader",
+      "oneLiner": "Save Onlyfans content instantly to your device.",
+      "excerpt": "Download, organize, and back up videos, photos, and entire profiles in a single click — all while keeping your privacy fully protected. Built with zero tracking, zero analytics, and no third-party data collection – just fast, reliable, and ",
+      "serplyLink": "https://serp.ly/onlyfans-downloader",
+      "videoId": "rCp66iA-j3s",
+      "screenshots": [
+        "/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-modal.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-detection.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-automatic-download-organization.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-creator-selection.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-button-overlay.jpg",
+        "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-progress.jpg"
+      ],
+      "content": "### Overview\nDownload, organize, and back up videos, photos, and entire profiles in a single click — all while keeping your privacy fully protected. Built with zero tracking, zero analytics, and no third-party data collection – just fast, reliable, and organized downloads automatically sorted by creator and categorized by media type, giving you total control over your content with this browser extension that works on all major browsers.\n\n### Screenshots\n- /media/products/onlyfans-downloader/onlyfans-downloader-1.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-modal.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-detection.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-automatic-download-organization.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-creator-selection.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-button-overlay.jpg\n- /media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-progress.jpg\n\n### Product Videos\n- https://youtu.be/rCp66iA-j3s\n\n### Features\n- Single & bulk downloading supported\n- Media auto detection\n- Download progress indicators\n- One-click downloads\n- No watermarks added\n- No ads\n- Regular Updates\n- 100% privacy-friendly\n- Zero data tracking\n- Media download customization\n- Supports photos & videos\n\n### FAQ\n**How do I use the Onlyfans downloader?**\nInstall the browser extension, navigate to Onlyfans, find the content or profile you want to download, and click a button.\n\n**What quality options are available?**\nThe downloader supports all available quality levels from Onlyfans, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.\n\n**Does this work with all Onlyfans content?**\nThe downloader works with almost all publicly accessible content on Onlyfans. Some restricted or DRM-protected content may not be downloadable.\n\n**Will downloads continue if my internet connection drops?**\nIf your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.\n\n**Is there a download limit?**\nThere are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.\n\n**How do I organize my downloaded content?**\nDownloaded files are automatically saved & organized by creator & media type into subfolders, and saved to your already selected default download location in your browser settings. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.\n\n**Does this work on all browsers?**\nThe extension works on major desktop browsers including Chrome, Firefox, Edge, Opera, etc. Make sure your browser is up to date for the best compatibility.\n\n**Is my data kept private?**\nYes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.\n\n### Supported Operating Systems / Browsers\nwindows, mac, linux, chrome, firefox, edge, opera\n\n### Resource Links\n- **Firefox Store**: https://addons.mozilla.org/en-US/firefox/addon/onlyfans-video-downloader/\n- **SERP Extensions**: https://extensions.serp.co/extensions/serp/onlyfans-downloader/\n- **Open Collective**: https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader\n\n### Related\n- **serp_co_product_page_url**: https://serp.co/products/onlyfans-downloader/\n- **apps_serp_co_product_page_url**: https://apps.serp.co/onlyfans-downloader\n- **serply_link**: https://serp.ly/onlyfans-downloader\n\n### Raw Product JSON\n```json\n{\n  \"platform\": \"Onlyfans\",\n  \"name\": \"Onlyfans Downloader\",\n  \"tagline\": \"Save Onlyfans content instantly to your device.\",\n  \"slug\": \"onlyfans-downloader\",\n  \"trademark_metadata\": {\n    \"uses_trademarked_brand\": true,\n    \"trade_name\": \"OnlyFans\",\n    \"legal_name\": \"OnlyFans\"\n  },\n  \"description\": \"Download, organize, and back up videos, photos, and entire profiles in a single click — all while keeping your privacy fully protected. Built with zero tracking, zero analytics, and no third-party data collection – just fast, reliable, and organized downloads automatically sorted by creator and categorized by media type, giving you total control over your content with this browser extension that works on all major browsers.\",\n  \"seo_title\": \"Onlyfans Downloader | Download Onlyfans Profile Media in Bulk - Videos, Images & Content\",\n  \"seo_description\": \"Download Onlyfans Media in Bulk from profiles for offline use including images and videos. Fast and reliable Onlyfans downloader\",\n  \"serply_link\": \"https://serp.ly/onlyfans-downloader\",\n  \"store_serp_co_product_page_url\": \"https://store.serp.co/product-details/product/onlyfans-downloader\",\n  \"apps_serp_co_product_page_url\": \"https://apps.serp.co/onlyfans-downloader\",\n  \"serp_co_product_page_url\": \"https://serp.co/products/onlyfans-downloader/\",\n  \"reddit_url\": \"https://www.reddit.com/r/serpdownloaders/comments/1okjpfr/onlyfans_downloader_browser_extension_chrome/\",\n  \"success_url\": \"https://apps.serp.co/checkout/success\",\n  \"cancel_url\": \"https://apps.serp.co/checkout?product=onlyfans-downloader\",\n  \"status\": \"live\",\n  \"featured_image\": \"/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg\",\n  \"featured_image_gif\": null,\n  \"screenshots\": [\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-modal.jpg\",\n      \"alt\": \"Onlyfans Downloader media modal view\"\n    },\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-detection.jpg\",\n      \"alt\": \"Onlyfans Downloader automatic media detection\"\n    },\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-automatic-download-organization.jpg\",\n      \"alt\": \"Onlyfans Downloader automatic download organization\"\n    },\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-creator-selection.jpg\",\n      \"alt\": \"Onlyfans Downloader creator selection controls\"\n    },\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-button-overlay.jpg\",\n      \"alt\": \"Onlyfans Downloader download button overlay\"\n    },\n    {\n      \"url\": \"/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-progress.jpg\",\n      \"alt\": \"Onlyfans Downloader download progress indicator\"\n    }\n  ],\n  \"product_videos\": [\n    \"https://youtu.be/rCp66iA-j3s\"\n  ],\n  \"related_videos\": [\n    \"https://www.youtube.com/watch?v=hToCX2VST_A\",\n    \"https://youtu.be/43virGMRbvE\",\n    \"https://youtu.be/gI7xgzIQ-HY\"\n  ],\n  \"related_posts\": [\n    \"how-to-download-onlyfans-profiles-videos-images\"\n  ],\n  \"github_repo_url\": \"https://github.com/serpapps/onlyfans-downloader\",\n  \"github_repo_tags\": [],\n  \"producthunt_link\": \"https://www.producthunt.com/products/onlyfans-downloader-2\",\n  \"resource_links\": [\n    {\n      \"label\": \"Firefox Store\",\n      \"href\": \"https://addons.mozilla.org/en-US/firefox/addon/onlyfans-video-downloader/\"\n    },\n    {\n      \"label\": \"SERP Extensions\",\n      \"href\": \"https://extensions.serp.co/extensions/serp/onlyfans-downloader/\"\n    },\n    {\n      \"label\": \"Open Collective\",\n      \"href\": \"https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader\"\n    }\n  ],\n  \"features\": [\n    \"Single & bulk downloading supported\",\n    \"Media auto detection\",\n    \"Download progress indicators\",\n    \"One-click downloads\",\n    \"No watermarks added\",\n    \"No ads\",\n    \"Regular Updates\",\n    \"100% privacy-friendly\",\n    \"Zero data tracking\",\n    \"Media download customization\",\n    \"Supports photos & videos\"\n  ],\n  \"pricing\": {\n    \"label\": \"One-time\",\n    \"price\": \"$27.00\",\n    \"original_price\": \"$37.00\",\n    \"note\": \"\",\n    \"cta_text\": \"Get it Now\",\n    \"cta_href\": \"https://apps.serp.co/checkout/onlyfans-downloader\",\n    \"currency\": \"USD\",\n    \"availability\": \"InStock\",\n    \"benefits\": []\n  },\n  \"faqs\": [\n    {\n      \"question\": \"How do I use the Onlyfans downloader?\",\n      \"answer\": \"Install the browser extension, navigate to Onlyfans, find the content or profile you want to download, and click a button.\"\n    },\n    {\n      \"question\": \"What quality options are available?\",\n      \"answer\": \"The downloader supports all available quality levels from Onlyfans, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading.\"\n    },\n    {\n      \"question\": \"Does this work with all Onlyfans content?\",\n      \"answer\": \"The downloader works with almost all publicly accessible content on Onlyfans. Some restricted or DRM-protected content may not be downloadable.\"\n    },\n    {\n      \"question\": \"Will downloads continue if my internet connection drops?\",\n      \"answer\": \"If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare.\"\n    },\n    {\n      \"question\": \"Is there a download limit?\",\n      \"answer\": \"There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time.\"\n    },\n    {\n      \"question\": \"How do I organize my downloaded content?\",\n      \"answer\": \"Downloaded files are automatically saved & organized by creator & media type into subfolders, and saved to your already selected default download location in your browser settings. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you.\"\n    },\n    {\n      \"question\": \"Does this work on all browsers?\",\n      \"answer\": \"The extension works on major desktop browsers including Chrome, Firefox, Edge, Opera, etc. Make sure your browser is up to date for the best compatibility.\"\n    },\n    {\n      \"question\": \"Is my data kept private?\",\n      \"answer\": \"Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy.\"\n    }\n  ],\n  \"reviews\": [\n    {\n      \"name\": \"Alex Martinez\",\n      \"review\": \"I manage content libraries and Onlyfans Downloader lets me pull everything from Onlyfans in minutes. The speeds are great and files stay organized.\",\n      \"title\": \"Saves hours every week with Onlyfans Downloader\",\n      \"rating\": 5,\n      \"date\": \"2025-02-12\"\n    },\n    {\n      \"name\": \"Jamie Nguyen\",\n      \"review\": \"Downloading from Onlyfans used to be hit or miss. This downloader is stable, fast, and the quality is always on point.\",\n      \"title\": \"Rock solid Onlyfans downloads\",\n      \"rating\": 4.9,\n      \"date\": \"2025-03-03\"\n    },\n    {\n      \"name\": \"Priya Patel\",\n      \"review\": \"We archive Onlyfans assets for clients and the download in Onlyfans Downloader keep our workflows smooth. Totally worth the price.\",\n      \"title\": \"Ideal for organizing Onlyfans content\",\n      \"rating\": 4.8,\n      \"date\": \"2025-01-28\"\n    }\n  ],\n  \"supported_operating_systems\": [\n    \"windows\",\n    \"mac\",\n    \"linux\",\n    \"chrome\",\n    \"firefox\",\n    \"edge\",\n    \"opera\"\n  ],\n  \"supported_regions\": [\n    \"Worldwide\"\n  ],\n  \"categories\": [\n    \"Downloader\",\n    \"Adult\",\n    \"Social Media\",\n    \"Video Downloader\"\n  ],\n  \"keywords\": [\n    \"onlyfans downloader\"\n  ],\n  \"return_policy\": {\n    \"days\": 0,\n    \"fees\": \"Non-refundable purchase\",\n    \"method\": \"No returns accepted\",\n    \"policy_category\": \"https://schema.org/MerchantReturnNotPermitted\",\n    \"url\": \"https://github.com/serpapps/legal/blob/main/refund-policy.md\"\n  },\n  \"stripe\": {\n    \"price_id\": \"price_1SRotl06JrOmKRCmY0T4Yy2P\",\n    \"metadata\": {\n      \"stripe_product_id\": \"prod_Sv6HHbpO7I9vt0\"\n    }\n  },\n  \"ghl\": {\n    \"tag_ids\": [\n      \"purchase-onlyfans-downloader\"\n    ],\n    \"workflow_ids\": []\n  },\n  \"license\": {\n    \"entitlements\": [\n      \"onlyfans-downloader\"\n    ]\n  },\n  \"layout_type\": \"landing\",\n  \"featured\": false,\n  \"new_release\": false,\n  \"popular\": false,\n  \"permission_justifications\": [\n    {\n      \"permission\": \"storage\",\n      \"justification\": \"Stores creator selections, download queue state, and dynamic rules locally so your preferences and progress persist between browser sessions.\"\n    },\n    {\n      \"permission\": \"cookies\",\n      \"justification\": \"Reads the OnlyFans auth_id cookie to verify you're logged in and authenticate API requests for downloading your content.\"\n    },\n    {\n      \"permission\": \"downloads\",\n      \"justification\": \"Saves downloaded videos and photos to your Downloads/OnlyFans folder and manages the download progress for each media file.\"\n    },\n    {\n      \"permission\": \"tabs\",\n      \"justification\": \"Opens OnlyFans in a new tab when you need to sign in or sign out of your account.\"\n    }\n  ],\n  \"brand\": \"SERP Apps\"\n}\n```",
+      "metadata": {
+        "screenshots": [
+          "/media/products/onlyfans-downloader/onlyfans-downloader-1.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-modal.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-media-detection.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-automatic-download-organization.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-creator-selection.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-button-overlay.jpg",
+          "/media/products/onlyfans-downloader/screenshot-onlyfans-downloader-download-progress.jpg"
+        ],
+        "product_videos": [
+          "https://youtu.be/rCp66iA-j3s"
+        ],
+        "features": [
+          "Single & bulk downloading supported",
+          "Media auto detection",
+          "Download progress indicators",
+          "One-click downloads",
+          "No watermarks added",
+          "No ads",
+          "Regular Updates",
+          "100% privacy-friendly",
+          "Zero data tracking",
+          "Media download customization",
+          "Supports photos & videos"
+        ],
+        "faqs": [
+          {
+            "question": "How do I use the Onlyfans downloader?",
+            "answer": "Install the browser extension, navigate to Onlyfans, find the content or profile you want to download, and click a button."
+          },
+          {
+            "question": "What quality options are available?",
+            "answer": "The downloader supports all available quality levels from Onlyfans, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+          },
+          {
+            "question": "Does this work with all Onlyfans content?",
+            "answer": "The downloader works with almost all publicly accessible content on Onlyfans. Some restricted or DRM-protected content may not be downloadable."
+          },
+          {
+            "question": "Will downloads continue if my internet connection drops?",
+            "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+          },
+          {
+            "question": "Is there a download limit?",
+            "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+          },
+          {
+            "question": "How do I organize my downloaded content?",
+            "answer": "Downloaded files are automatically saved & organized by creator & media type into subfolders, and saved to your already selected default download location in your browser settings. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
+          },
+          {
+            "question": "Does this work on all browsers?",
+            "answer": "The extension works on major desktop browsers including Chrome, Firefox, Edge, Opera, etc. Make sure your browser is up to date for the best compatibility."
+          },
+          {
+            "question": "Is my data kept private?",
+            "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+          }
+        ],
+        "supported_operating_systems": [
+          "windows",
+          "mac",
+          "linux",
+          "chrome",
+          "firefox",
+          "edge",
+          "opera"
+        ],
+        "resource_links": [
+          {
+            "label": "Firefox Store",
+            "href": "https://addons.mozilla.org/en-US/firefox/addon/onlyfans-video-downloader/"
+          },
+          {
+            "label": "SERP Extensions",
+            "href": "https://extensions.serp.co/extensions/serp/onlyfans-downloader/"
+          },
+          {
+            "label": "Open Collective",
+            "href": "https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader"
+          }
+        ],
+        "permissions_justifications": {},
+        "serp_co_product_page_url": "https://serp.co/products/onlyfans-downloader/",
+        "apps_serp_co_product_page_url": "https://apps.serp.co/onlyfans-downloader",
+        "serply_link": "https://serp.ly/onlyfans-downloader"
+      }
+    }
+  ],
+  "categories": [],
+  "companyCategories": [],
+  "companyTags": []
+}

@@ -1,34 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Tiktok",
   "name": "Tiktok Downloader",
   "tagline": "Save Tiktok videos instantly for offline viewing.",
   "slug": "tiktok-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "TikTok",
+    "legal_entity": "Bytedance Ltd."
+  },
   "description": "TikTok Downloader adds a download button directly onto videos in your For You feed, Following feed, profiles, and direct links. Click once and it saves the MP4 that TikTok already serves—no copying URLs, switching tabs, or risking shady sites—so you can keep inspiration, references, and deliverables offline.\n\nThe extension uses your logged-in session to detect playable videos, labels what can or cannot be saved, and downloads exactly what TikTok streams (watermarks included when TikTok requires them) while you keep scrolling.",
   "seo_title": "Tiktok Downloader | Download Tiktok Videos",
   "seo_description": "Download Tiktok videos easily for offline viewing. Fast, reliable Tiktok video downloader with high-quality downloads.",
-  "serply_link": "https://serp.ly/tiktok-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg",
-      "alt": "Tiktok Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [
-    "how-to-download-tiktok-videos",
-    "how-to-download-tiktok-audio-music-audio-etc-from-videos"
-  ],
-  "github_repo_url": "https://github.com/serpapps/tiktok-video-downloader",
-  "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
   "features": [
     "Injects download buttons into For You, Following, profile, and video pages",
     "Uses your TikTok session to request video files securely and reliably",
@@ -37,21 +21,6 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop via Manifest V3",
     "Stores licence status locally with no analytics or credential harvesting"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with in-feed download buttons and ongoing updates. Sales are final.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Capture TikTok inspiration as you scroll without leaving the site",
-      "Keep offline copies for edits, reports, or travel with zero extra steps",
-      "Download safely inside your browser using your legitimate account"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a TikTok video with this extension?",
@@ -80,6 +49,10 @@
     {
       "question": "Is my account data private?",
       "answer": "All detection and downloading happen locally. The extension never stores or transmits your credentials and only checks your licence status."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -129,30 +102,6 @@
     "tiktok chrome download button",
     "offline tiktok library"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
-    "metadata": {
-      "stripe_product_id": "prod_SqnavySFXhLMCk"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-tiktok-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "tiktok-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -191,5 +140,70 @@
       "justification": "Grants access to tiktok.com and related subdomains so the extension can observe\nvideos only on official TikTok pages."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tiktok-downloader.jpg",
+      "alt": "Tiktok Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [
+    "how-to-download-tiktok-videos",
+    "how-to-download-tiktok-audio-music-audio-etc-from-videos"
+  ],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/tiktok-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
+  "github_repo_url": "https://github.com/serpapps/tiktok-video-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with in-feed download buttons and ongoing updates. Sales are final.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Capture TikTok inspiration as you scroll without leaving the site",
+      "Keep offline copies for edits, reports, or travel with zero extra steps",
+      "Download safely inside your browser using your legitimate account"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
+    "metadata": {
+      "stripe_product_id": "prod_SqnavySFXhLMCk"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-tiktok-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "tiktok-downloader"
+    ]
+  }
 }

@@ -789,9 +789,3 @@ function detectVimeoLiveStreams() {
 }
 ```
 
-## See Also
-
-- [HLS Streaming Protocol](../streaming/hls.md)
-- [DASH Streaming Protocol](../streaming/dash.md)
-- [MP4 Container Format](../containers/mp4.md)
-- [YouTube Platform](./youtube.md)
