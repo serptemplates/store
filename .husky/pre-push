@@ -18,6 +18,11 @@ echo "########################################"
 pnpm test:unit
 
 echo "########################################"
+echo "→ Running axe accessibility checks..."
+echo "########################################"
+pnpm --filter @apps/store test:axe
+
+echo "########################################"
 echo "→ Running smoke tests..."
 echo "########################################"
 pnpm test:smoke

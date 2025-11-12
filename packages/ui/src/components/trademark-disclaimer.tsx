@@ -23,7 +23,7 @@ export function TrademarkDisclaimer({ text, variant = "card", align = "center", 
 
   const sizeClasses = variant === "inline" ? "text-[11px]" : "text-sm";
   const toneClasses =
-    variant === "card" ? "text-muted-foreground italic dark:text-muted-foreground/90" : "text-muted-foreground";
+    variant === "card" ? "text-muted-foreground italic dark:text-muted-foreground" : "text-muted-foreground";
   const chromeClasses =
     variant === "card"
       ? "px-3 py-2"
