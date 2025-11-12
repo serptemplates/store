@@ -86,4 +86,37 @@ describe("unofficial branding helpers", () => {
 
     expect(resolveSeoDescription(product)).toBe("Purely generic copy.");
   });
+
+  it("does not duplicate compliance lines when they already exist in the description", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      seo_description:
+        "OnlyFans Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Already sanitized copy.",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "OnlyFans",
+        legal_entity: "OnlyFans Inc.",
+      },
+    };
+
+    expect(resolveSeoDescription(product)).toBe(
+      "OnlyFans Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Already sanitized copy.",
+    );
+  });
+
+  it("strips orphaned authorized-use statements before reapplying compliance copy", () => {
+    const product: ProductData = {
+      ...baseProduct,
+      seo_description: "Authorized-use only — download content you own or have permission to access. Safe downloads guaranteed.",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "OnlyFans",
+        legal_entity: "OnlyFans Inc.",
+      },
+    };
+
+    expect(resolveSeoDescription(product)).toBe(
+      "OnlyFans Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Safe downloads guaranteed.",
+    );
+  });
 });

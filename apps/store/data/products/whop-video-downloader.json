@@ -11,7 +11,7 @@
   },
   "description": "Whop Video Downloader adds a download button to courses, drops, and members-only pages so you can save content before access expires. It uses your Whop login to read the Mux stream powering each player, downloads every segment with the proper headers, and merges the video into a standard MP4 for offline study.",
   "seo_title": "Whop Video Downloader (Unofficial) | Download Whop Videos",
-  "seo_description": "Whop Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Whop Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Whop Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Whop videos easily for offline viewing. Fast, reliable Whop video downloader with high-quality downloads.",
+  "seo_description": "Whop Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Whop videos easily for offline viewing. Fast, reliable Whop video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Detects Whop video players inside products, member areas, and course modules",

@@ -11,7 +11,7 @@
   },
   "description": "YouPorn Video Downloader analyses each video page, pulls every quality option YouPorn exposes, and saves the stream as an MP4—whether it’s a direct file or an HLS playlist. Just pick your resolution, let the extension handle headers and conversion, and the finished video lands in your downloads folder ready for offline viewing.",
   "seo_title": "Youporn Video Downloader (Unofficial) | Download Youporn Videos",
-  "seo_description": "Youporn Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Youporn Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Youporn Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Youporn videos easily for offline viewing. Fast, reliable Youporn video downloader with high-quality downloads.",
+  "seo_description": "Youporn Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Youporn videos easily for offline viewing. Fast, reliable Youporn video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Parses YouPorn pages to uncover full quality lists, including hidden HD variants",

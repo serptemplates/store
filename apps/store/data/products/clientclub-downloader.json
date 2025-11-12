@@ -11,7 +11,7 @@
   },
   "description": "ClientClub Downloader keeps agency training and community lessons within reach even after access expires. It recognises native ClientClub uploads alongside embedded videos from YouTube, Vimeo, Wistia, Loom, and GoHighLevel, presenting everything inside one popup so you can grab the exact lesson you need.\n\nPick the rendition you prefer, queue up to three downloads at once, and let the global progress panel track stage, speed, and ETA while background workers merge adaptive streams into MP4s. The extension relies on your existing ClientClub session, stores settings locally, and sends a desktop alert the moment a file is ready for offline study.",
   "seo_title": "Clientclub Downloader (Unofficial) | Archive ClientClub and embedded lessons offline",
-  "seo_description": "Clientclub Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Clientclub Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Clientclub Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download ClientClub trainings plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds as MP4 files with queues, quality controls, and secure local processing.",
+  "seo_description": "Clientclub Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download ClientClub trainings plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds as MP4 files with queues, quality controls, and secure local processing.",
   "status": "live",
   "features": [
     "Detects ClientClub uploads plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds",

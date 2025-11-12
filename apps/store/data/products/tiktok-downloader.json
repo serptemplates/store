@@ -11,7 +11,7 @@
   },
   "description": "TikTok Downloader adds a download button directly onto videos in your For You feed, Following feed, profiles, and direct links. Click once and it saves the MP4 that TikTok already serves—no copying URLs, switching tabs, or risking shady sites—so you can keep inspiration, references, and deliverables offline.\n\nThe extension uses your logged-in session to detect playable videos, labels what can or cannot be saved, and downloads exactly what TikTok streams (watermarks included when TikTok requires them) while you keep scrolling.",
   "seo_title": "Tiktok Downloader (Unofficial) | Download Tiktok Videos",
-  "seo_description": "Tiktok Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Tiktok Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Tiktok Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Tiktok videos easily for offline viewing. Fast, reliable Tiktok video downloader with high-quality downloads.",
+  "seo_description": "Tiktok Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Tiktok videos easily for offline viewing. Fast, reliable Tiktok video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Injects download buttons into For You, Following, profile, and video pages",

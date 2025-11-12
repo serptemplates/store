@@ -11,7 +11,7 @@
   },
   "description": "123rf Downloader helps designers and teams download and archive 123rf royalty‑free images, vectors and high‑resolution assets for offline use and editing. It supports batch exports for project collections, preserves metadata and keyword tags, and can export license and usage information to help with compliance tracking.\n\nThe tool offers resume-on-failure, an image viewer, and CLI integration for inclusion in design workflows. Use it to assemble project libraries, prepare client deliverables, or back up purchased/free assets while respecting 123rf licensing terms and usage restrictions.",
   "seo_title": "123rf Downloader (Unofficial) | Download 123rf Images",
-  "seo_description": "123rf Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. 123rf Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. 123rf Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download 123rf images and graphics for offline use. Fast and reliable 123rf content downloader.",
+  "seo_description": "123rf Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download 123rf images and graphics for offline use. Fast and reliable 123rf content downloader.",
   "status": "pre_release",
   "features": [
     "Royalty-free stock images and vectors",

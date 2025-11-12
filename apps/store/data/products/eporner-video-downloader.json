@@ -11,7 +11,7 @@
   },
   "description": "Eporner Video Downloader is tuned for the site’s shifting layouts and age gates so you can grab exactly the MP4 you want without guesswork. It recognises standard pages, HD hubs, and embedded players, then lists every resolution with preview art, title, and file size so you always download the right clip.\n\nKick off the download from the popup, watch the on-page progress bar report percentage, speed, and ETA, and wait for the desktop notification that confirms the file saved with the video title. It handles one video at a time for reliability, merging adaptive streams in the background and keeping all processing on your machine for private archiving.",
   "seo_title": "Eporner Video Downloader (Unofficial) | Save Eporner videos as MP4 files",
-  "seo_description": "Eporner Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Eporner Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Eporner Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture Eporner videos in any available quality with layout-aware detection, realtime progress, and fully local MP4 processing.",
+  "seo_description": "Eporner Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture Eporner videos in any available quality with layout-aware detection, realtime progress, and fully local MP4 processing.",
   "status": "live",
   "features": [
     "Detects every Eporner layout, including HD hubs and embedded players",
