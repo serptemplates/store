@@ -72,7 +72,7 @@ describeFn("staging smoke: homepage", () => {
 
     await warmAndReload(page, `${BASE_URL}/`);
 
-    await expect(page.getByRole("link", { name: "SERP Apps" })).toBeVisible();
+    await expect(page.getByRole("navigation").getByRole("link", { name: "SERP Apps" })).toBeVisible();
 
     const blockingConsoleErrors = filterBlockingErrors(consoleMessages);
 
