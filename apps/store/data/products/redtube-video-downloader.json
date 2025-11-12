@@ -10,8 +10,8 @@
     "legal_entity": "Licensing IP International S.à r.l."
   },
   "description": "Redtube Video Downloader captures scenes from redtube.com, regional sites, and embedded players, converting them into MP4 files you can watch offline. It detects every available resolution, handles HLS streams behind the page, and keeps downloads moving even when you minimise the tab.\n\nChoose the quality you want, let the extension pull the stream segments, and it merges them in the background while you browse. The result is a clean MP4 saved locally with no ads, buffering, or tracking.",
-  "seo_title": "Redtube Video Downloader | Download Redtube Videos",
-  "seo_description": "Download Redtube videos easily for offline viewing. Fast, reliable Redtube video downloader with high-quality downloads.",
+  "seo_title": "Redtube Video Downloader (Unofficial) | Download Redtube Videos",
+  "seo_description": "Redtube Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Redtube videos easily for offline viewing. Fast, reliable Redtube video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Detects Redtube main site, regional domains, and embed.redtube.com players",

@@ -10,8 +10,8 @@
     "legal_entity": "SproutVideo, LLC"
   },
   "description": "Sprout Video Downloader captures videos hosted on sproutvideo.com as well as embedded players inside private portals, courses, and documentation. It detects the player, lists every available quality, and converts hosted streams into MP4 files you can store offline without juggling ffmpeg or manual URL scraping.\n\nStay logged in to your SproutVideo account, choose the resolution you need, and the extension forwards authentication headers, downloads each segment, and merges them quietly in the background while you continue working.",
-  "seo_title": "Sprout Video Downloader | Download Sprout Videos",
-  "seo_description": "Download Sprout videos easily for offline viewing. Fast, reliable Sprout video downloader with high-quality downloads.",
+  "seo_title": "Sprout Video Downloader (Unofficial) | Download Sprout Videos",
+  "seo_description": "Sprout Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Sprout videos easily for offline viewing. Fast, reliable Sprout video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Detects SproutVideo players on sproutvideo.com and embedded on third-party sites",

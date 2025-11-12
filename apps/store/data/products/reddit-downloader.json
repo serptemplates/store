@@ -10,8 +10,8 @@
     "legal_entity": "Reddit, Inc."
   },
   "description": "Reddit Downloader lets analysts and community managers archive posts, comment threads, and media directly from Reddit. Capture the context you need without broken links or missing assets.\n\nUse it to document campaigns, track references for articles, or keep moderation evidence stored safely offline with metadata intact.",
-  "seo_title": "Reddit Downloader | Download Reddit Threads",
-  "seo_description": "Download Reddit posts, comments, and media for research or archiving. Reliable Reddit downloader with organized exports.",
+  "seo_title": "Reddit Downloader (Unofficial) | Download Reddit Threads",
+  "seo_description": "Reddit Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Reddit posts, comments, and media for research or archiving. Reliable Reddit downloader with organized exports.",
   "status": "pre_release",
   "features": [
     "Capture Reddit posts, media, and comment threads in one export",

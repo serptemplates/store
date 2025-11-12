@@ -19,6 +19,7 @@ import {
   type ProductData,
   productSchema,
 } from "../lib/products/product-schema";
+import { resolveSeoDescription, resolveSeoTitle } from "../lib/products/unofficial-branding";
 import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "../lib/products/category-constants";
 import { getProductsDirectory } from "../lib/products/product";
 
@@ -257,6 +258,19 @@ function ensureLegalFaqArray(value: unknown): Array<Record<string, unknown>> {
   };
 
   return faqs as Array<Record<string, unknown>>;
+}
+
+function applyUnofficialBranding(product: ProductData): ProductData {
+  const titleBase = product.seo_title?.trim() || product.name.trim();
+  const descriptionBase = product.seo_description?.trim() || undefined;
+  const updatedTitle = resolveSeoTitle(product, titleBase);
+  const updatedDescription = resolveSeoDescription(product, descriptionBase);
+
+  return {
+    ...product,
+    seo_title: updatedTitle,
+    seo_description: updatedDescription,
+  };
 }
 
 function ensureLegalFaq(product: ProductData): ProductData {
@@ -563,7 +577,7 @@ async function convertSingleProduct(
       throw new Error(formatZodError(parsed.error));
     }
 
-    const product = parsed.data;
+    const product = applyUnofficialBranding(parsed.data);
     const warnings = collectWarnings(data, product, source.slug);
     const normalized = normalizeProduct(product);
     const outputPath = source.jsonPath;

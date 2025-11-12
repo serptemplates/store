@@ -48,6 +48,43 @@ export function resolveSeoProductName(product: ProductData): string {
 
 const AUTHORIZED_USE_LINE = "Authorized-use only — download content you own or have permission to access.";
 
+function stripExistingCompliance(base: string, complianceLine: string, productLabel: string): string {
+  let remaining = base.trim();
+  if (!remaining) {
+    return remaining;
+  }
+
+  const variants = [
+    complianceLine,
+    `${productLabel} (Unofficial).`,
+    AUTHORIZED_USE_LINE,
+  ]
+    .map((variant) => variant.trim())
+    .filter(Boolean);
+
+  const lowerVariants = variants.map((variant) => variant.toLowerCase());
+
+  let changed = true;
+  while (remaining && changed) {
+    changed = false;
+    for (let index = 0; index < variants.length; index += 1) {
+      const variant = variants[index];
+      const lowerVariant = lowerVariants[index];
+      if (!variant) {
+        continue;
+      }
+
+      const candidate = remaining.slice(0, variant.length).toLowerCase();
+      if (candidate === lowerVariant) {
+        remaining = remaining.slice(variant.length).trimStart();
+        changed = true;
+      }
+    }
+  }
+
+  return remaining;
+}
+
 export function resolveSeoDescription(product: ProductData, baseDescription?: string): string {
   const normalizedBase =
     baseDescription?.trim() ||
@@ -62,5 +99,7 @@ export function resolveSeoDescription(product: ProductData, baseDescription?: st
   const productLabel = product.name?.trim() || "This tool";
   const complianceLine = `${productLabel} (Unofficial). ${AUTHORIZED_USE_LINE}`.trim();
 
-  return normalizedBase ? `${complianceLine} ${normalizedBase}` : complianceLine;
+  const sanitizedBase = normalizedBase ? stripExistingCompliance(normalizedBase, complianceLine, productLabel) : "";
+
+  return sanitizedBase ? `${complianceLine} ${sanitizedBase}` : complianceLine;
 }
