@@ -11,7 +11,7 @@
   },
   "description": "Udemy Video Downloader keeps entire courses available offline by using your authenticated session to queue lectures, videos, captions, and resources automatically. It mirrors Udemy’s course structure so self‑learners and training teams can build organised archives without juggling ffmpeg scripts or unreliable web tools.",
   "seo_title": "Udemy Video Downloader (Unofficial) | Download Udemy Videos",
-  "seo_description": "Udemy Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Udemy videos easily for offline viewing. Fast, reliable Udemy video downloader with high-quality downloads.",
+  "seo_description": "Udemy Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Udemy Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Udemy videos easily for offline viewing. Fast, reliable Udemy video downloader with high-quality downloads.",
   "status": "pre_release",
   "features": [
     "Uses your Udemy session cookies to authenticate against purchased courses",

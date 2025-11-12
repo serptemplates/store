@@ -11,7 +11,7 @@
   },
   "description": "Loom Video Downloader helps remote teams and creators save recordings before links expire. It detects Loom share pages, embedded players, and workspace libraries, prompts for passwords when required, and converts every recording into a standard MP4 you can archive, edit, or watch offline.\n\nWhether Loom delivers the video as a direct MP4 or an adaptive HLS/DASH stream, the downloader queues the job, fetches segments in the background, merges them without freezing your browser, and keeps you informed with live progress, speed, and ETA. Queue multiple recordings, cancel any job midstream, and keep your content accessible even after access changes.\n\nEverything runs locally in Chrome, Edge, Firefox, Brave, or Opera using your existing Loom account, so private recordings stay private while you build the library your team relies on.",
   "seo_title": "Loom Video Downloader (Unofficial) | Download Loom Videos",
-  "seo_description": "Loom Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Loom videos easily for offline viewing. Fast, reliable Loom video downloader with high-quality downloads.",
+  "seo_description": "Loom Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Loom Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Loom videos easily for offline viewing. Fast, reliable Loom video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Detects Loom share links, embedded players, and workspace libraries automatically",

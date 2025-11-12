@@ -11,7 +11,7 @@
   },
   "description": "Coursera Downloader makes it easy to keep lecture videos available when your internet isn’t. It detects Coursera’s native player inside courses, specializations, and guided projects, then presents every resolution you can access so you can save the lesson as a standard MP4.\n\nDirect MP4s finish quickly, while adaptive HLS and DASH streams are fetched in segments, merged in the background, and delivered with the original quality intact. Real-time progress, speed, and ETA keep you informed during longer lectures, and right-click shortcuts let you start downloads without leaving the lesson view.\n\nThe extension authenticates through your existing Coursera session, respects enrollment status, and processes everything locally—perfect for building offline study libraries before courses retire or subscriptions change.",
   "seo_title": "Coursera Downloader (Unofficial) | Download Coursera Courses",
-  "seo_description": "Coursera Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Coursera courses and videos for offline learning. Fast and reliable course content downloader.",
+  "seo_description": "Coursera Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Coursera Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Coursera courses and videos for offline learning. Fast and reliable course content downloader.",
   "status": "pre_release",
   "features": [
     "Detects Coursera lecture videos across courses, specializations, and guided projects",

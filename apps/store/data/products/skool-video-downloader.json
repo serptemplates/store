@@ -11,7 +11,7 @@
   },
   "description": "Skool Video Downloader makes course lessons, community uploads, and classroom recordings available offline before access changes. It uses your active Skool login to detect videos, lists every resolution the platform provides, and converts the stream into a smooth MP4 without leaving the browser.  Queue a lesson, let the downloader fetch each segment with your authentication headers, and it will merge everything in the background while you continue studying. The result is a private MP4 library that mirrors what you can watch inside Skool.",
   "seo_title": "Skool Video Downloader (Unofficial) | Download Skool Videos",
-  "seo_description": "Skool Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Skool videos easily for offline viewing. Fast, reliable Skool video downloader with high-quality downloads.",
+  "seo_description": "Skool Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Skool Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Skool videos easily for offline viewing. Fast, reliable Skool video downloader with high-quality downloads.",
   "status": "live",
   "features": [
     "Detects Skool course lessons, community posts, and live session recordings",
