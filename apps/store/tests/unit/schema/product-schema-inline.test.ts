@@ -41,6 +41,9 @@ const rawProduct = {
   supported_operating_systems: ["Chrome", "Firefox", "Edge"],
   supported_regions: ["Worldwide"],
   faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
+  stripe: {
+    price_id: "price_1TEST1234567890",
+  },
 } as const;
 
 const productData = productSchema.parse(rawProduct);

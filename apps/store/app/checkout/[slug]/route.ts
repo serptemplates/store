@@ -115,32 +115,56 @@ export async function GET(
   };
 
   const optionalItems: CheckoutOptionalItem[] = [];
-  const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
-  if (optionalBundlePriceId) {
-    try {
-      const optionalBundlePrice = await resolvePriceForEnvironment(
-        {
-          id: "optional_downloader_bundle",
-          priceId: optionalBundlePriceId,
-        },
-        { syncWithLiveProduct: true },
-      );
+  
+  // Load optional items from offer config
+  if (offer.optionalItems && offer.optionalItems.length > 0) {
+    for (const optionalItem of offer.optionalItems) {
+      try {
+        // Always fetch the product from live Stripe to get its default price
+        // This ensures we can reference live products even when running in test mode
+        const liveStripe = getStripeClient("live");
+        const product = await liveStripe.products.retrieve(optionalItem.product_id);
+        
+        if (!product.default_price) {
+          logger.warn("checkout.optional_item_no_default_price", {
+            slug,
+            productId: optionalItem.product_id,
+          });
+          continue;
+        }
+        
+        const priceId = typeof product.default_price === 'string' 
+          ? product.default_price 
+          : product.default_price.id;
 
-      optionalItems.push({
-        price: optionalBundlePrice.id,
-        quantity: 1,
-        adjustable_quantity: {
-          enabled: true,
-          minimum: 0,
-          maximum: 1,
-        },
-      });
-    } catch (error) {
-      logger.warn("checkout.optional_bundle_price_unavailable", {
-        slug,
-        optionalBundlePriceId,
-        error: error instanceof Error ? error.message : String(error),
-      });
+        // resolvePriceForEnvironment will auto-create test versions if needed
+        const optionalPrice = await resolvePriceForEnvironment(
+          {
+            id: optionalItem.product_id,
+            priceId: priceId,
+            productName: product.name,
+            productDescription: product.description || undefined,
+            productImage: product.images?.[0] || undefined,
+          },
+          { syncWithLiveProduct: true },
+        );
+
+        optionalItems.push({
+          price: optionalPrice.id,
+          quantity: optionalItem.quantity ?? 1,
+          adjustable_quantity: {
+            enabled: true,
+            minimum: 0,
+            maximum: 1,
+          },
+        });
+      } catch (error) {
+        logger.warn("checkout.optional_item_price_unavailable", {
+          slug,
+          productId: optionalItem.product_id,
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { GET } from "@/app/checkout/[slug]/route";
 
 const createSessionMock = vi.fn();
+const retrieveProductMock = vi.fn();
 
 vi.mock("@/lib/products/offer-config", () => ({
   getOfferConfig: vi.fn(),
@@ -14,23 +15,29 @@ vi.mock("@/lib/products/product", () => ({
 }));
 
 vi.mock("@/lib/payments/stripe", () => ({
-  getStripeClient: vi.fn(() => ({
-    checkout: { sessions: { create: createSessionMock } },
-  })),
+  getStripeClient: vi.fn((mode?: string) => {
+    // Return different mocks for live vs test mode
+    if (mode === "live") {
+      return {
+        products: { retrieve: retrieveProductMock },
+      };
+    }
+    return {
+      checkout: { sessions: { create: createSessionMock } },
+    };
+  }),
   resolvePriceForEnvironment: vi.fn(),
 }));
 
 describe("GET /checkout/[slug]", () => {
-  const originalOptionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
-
   beforeEach(() => {
     vi.clearAllMocks();
     createSessionMock.mockReset();
-    process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID = "price_optional_bundle";
+    retrieveProductMock.mockReset();
   });
 
   afterEach(() => {
-    process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID = originalOptionalBundlePriceId;
+    vi.clearAllMocks();
   });
 
   it("injects Dub attribution metadata and redirects to Stripe", async () => {
@@ -55,10 +62,26 @@ describe("GET /checkout/[slug]", () => {
       metadata: {
         existing: "value",
       },
+      optionalItems: [
+        {
+          product_id: "prod_optional_bundle",
+          quantity: 1,
+        },
+      ],
       ghl: {
         tagIds: ["serp-apps"],
       },
     } as any);
+    
+    // Mock product retrieval for optional items
+    retrieveProductMock.mockResolvedValueOnce({
+      id: "prod_optional_bundle",
+      name: "Optional Bundle",
+      default_price: "price_optional_live_123",
+      images: [],
+    } as any);
+    
+    // Mock price resolution for main item and optional item
     resolvePriceForEnvironmentMock.mockResolvedValueOnce({
       id: "price_test_789",
     } as any);

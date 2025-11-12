@@ -614,6 +614,27 @@
             "type": "string"
           },
           "default": {}
+        },
+        "optional_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "product_id"
+            ],
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^prod_"
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
         }
       }
     },

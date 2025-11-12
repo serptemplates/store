@@ -23,6 +23,9 @@ function buildBaseProduct(): Record<string, unknown> {
       price: "$19.00",
     },
     faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
+    stripe: {
+      price_id: "price_1EXAMPLE1234567890",
+    },
   };
 }
 
@@ -84,7 +87,7 @@ describe("productSchema", () => {
       ...base,
       status: "live",
       pricing: {
-        price: (base as any).pricing?.price,
+        price: (base.pricing as { price?: string })?.price,
         cta_href: "https://apps.serp.co/checkout/example-product",
       },
     });

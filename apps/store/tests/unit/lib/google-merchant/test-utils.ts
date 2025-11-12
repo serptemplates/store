@@ -97,5 +97,12 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
     }
   }
 
+  // Add price_id for live products
+  if (input.status === "live" && !input.stripe) {
+    input.stripe = {
+      price_id: "price_1DEMO1234567890",
+    };
+  }
+
   return productSchema.parse(input);
 }

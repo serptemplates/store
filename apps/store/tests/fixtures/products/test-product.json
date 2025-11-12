@@ -44,5 +44,8 @@
   "new_release": false,
   "popular": false,
   "permission_justifications": [],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  "stripe": {
+    "price_id": "price_1TEST1234567890"
+  }
 }

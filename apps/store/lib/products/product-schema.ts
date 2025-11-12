@@ -227,8 +227,13 @@ const cancelUrlSchema = trimmedString()
     }
   });
 
+const optionalItemSchema = z.object({
+  product_id: stripeIdSchema(["prod_"]),
+  quantity: z.number().int().min(1).default(1).optional(),
+});
+
 const stripeSchemaShape = {
-  price_id: stripeIdSchema(["price_"]),
+  price_id: stripeIdSchema(["price_"]).optional(),
   test_price_id: stripeIdSchema(["price_"]).optional(),
   mode: z.enum(["payment", "subscription"]).optional(),
   metadata: z
@@ -241,6 +246,15 @@ const stripeSchemaShape = {
       },
       z.record(trimmedString()).default({}),
     ),
+  optional_items: z.preprocess(
+    (value) => {
+      if (value === null || value === undefined) {
+        return undefined;
+      }
+      return value;
+    },
+    z.array(optionalItemSchema).optional(),
+  ),
 } satisfies Record<string, z.ZodTypeAny>;
 
 const stripeSchema = z.object(stripeSchemaShape);
@@ -606,6 +620,14 @@ export const productSchema = z
           message: "Live products must define an internal checkout CTA (pricing.cta_href → /checkout/:slug).",
         });
       }
+
+      if (!data.stripe?.price_id) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["stripe", "price_id"],
+          message: "Live products must have a stripe.price_id.",
+        });
+      }
     }
   })
   .transform(({ order_bump: _legacyOrderBump, ...rest }) => rest);
@@ -620,4 +642,4 @@ export const PERMISSION_JUSTIFICATION_FIELD_ORDER = [
   "justification",
   "learn_more_url",
 ] as const;
-export const STRIPE_FIELD_ORDER = ["price_id", "test_price_id", "mode", "metadata"] as const;
+export const STRIPE_FIELD_ORDER = ["price_id", "test_price_id", "mode", "metadata", "optional_items"] as const;
