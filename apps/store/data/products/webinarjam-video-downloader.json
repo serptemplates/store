@@ -60,6 +60,9 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "stripe": {
+    "metadata": {}
+  },
   "license": {
     "entitlements": [
       "webinarjam-video-downloader"

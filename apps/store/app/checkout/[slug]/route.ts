@@ -4,6 +4,7 @@ import Stripe from "stripe";
 
 import logger from "@/lib/logger";
 import { getOfferConfig } from "@/lib/products/offer-config";
+import type { OfferConfig } from "@/lib/products/offer-config";
 import { getStripeClient, resolvePriceForEnvironment } from "@/lib/payments/stripe";
 import { getProductData } from "@/lib/products/product";
 
@@ -11,6 +12,12 @@ type CheckoutOptionalItem = {
   price: string;
   quantity: number;
   adjustable_quantity?: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity;
+};
+
+type OfferOptionalItem = {
+  product_id: string;
+  price_id?: string;
+  quantity?: number;
 };
 
 type CheckoutSessionCreateParamsWithOptionalItems = Stripe.Checkout.SessionCreateParams & {
@@ -60,7 +67,7 @@ export async function GET(
   }
 
   // Look up offer config from product data
-  const offer = getOfferConfig(slug);
+  const offer = getOfferConfig(slug) as OfferConfig | null;
   if (!offer) {
     return json({ error: `Unknown or unconfigured product slug: ${slug}` }, 404);
   }
@@ -118,30 +125,37 @@ export async function GET(
   
   // Load optional items from offer config
   if (offer.optionalItems && offer.optionalItems.length > 0) {
-    for (const optionalItem of offer.optionalItems) {
+    for (const optionalItem of offer.optionalItems as OfferOptionalItem[]) {
       try {
-        // Always fetch the product from live Stripe to get its default price
-        // This ensures we can reference live products even when running in test mode
+        // Always fetch the product from live Stripe so we can attach names/descriptions
+        // for metadata and to ensure the product exists.
         const liveStripe = getStripeClient("live");
         const product = await liveStripe.products.retrieve(optionalItem.product_id);
-        
-        if (!product.default_price) {
+
+        // Determine which price id to use. If the product JSON explicitly sets a
+        // `price_id`, prefer that override. Otherwise fall back to the product's
+        // default_price set in Stripe.
+  // Prefer per-offer price_id, then product.default_price. If neither is
+  // available for an optional item, skip adding the optional item (no fallback).
+  const priceIdFromOffer = optionalItem.price_id as string | undefined;
+
+        const priceIdToResolve = priceIdFromOffer ??
+          (typeof product.default_price === "string" ? product.default_price : product.default_price?.id);
+
+        if (!priceIdToResolve) {
           logger.warn("checkout.optional_item_no_default_price", {
             slug,
             productId: optionalItem.product_id,
           });
           continue;
         }
-        
-        const priceId = typeof product.default_price === 'string' 
-          ? product.default_price 
-          : product.default_price.id;
 
-        // resolvePriceForEnvironment will auto-create test versions if needed
+        // resolvePriceForEnvironment will auto-create test versions if needed.
+        // We `syncWithLiveProduct` here so the optional bundle is kept in sync.
         const optionalPrice = await resolvePriceForEnvironment(
           {
             id: optionalItem.product_id,
-            priceId: priceId,
+            priceId: priceIdToResolve,
             productName: product.name,
             productDescription: product.description || undefined,
             productImage: product.images?.[0] || undefined,

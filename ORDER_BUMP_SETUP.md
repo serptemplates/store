@@ -1,14 +1,23 @@
 # Order Bump Setup Checklist
 
-The optional items (order bump) feature is **fully implemented** in code. Just need to activate it with one environment variable.
+The optional items (order bump) feature is **fully implemented** in code. Activate it by specifying optional items per-offer or in the product JSON — do not use environment variables for per-product price configuration.
 
 ## Quick Summary
 
-```
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_1XXX...
-```
+Optional items are configured on the offer or in the product JSON. Example (in a product or offer config):
 
-Set this variable → Feature activates immediately. No code changes needed.
+```json
+{
+   "optional_items": [
+      {
+         "product_id": "prod_optional_bundle",
+         "price_id": "price_live_override_97",
+         "quantity": 1
+      }
+   ]
+}
+```
+Set the `price_id` on the offer for the optional item (preferred). If missing, the route will attempt to use the product's `default_price`.
 
 ---
 
@@ -34,45 +43,28 @@ Set this variable → Feature activates immediately. No code changes needed.
 
 ---
 
-### ✅ Step 2: Add to Local .env
+### ✅ Step 2: Configure optional items on the offer or product
 
-Open `.env` (or create if missing) in repo root:
+Edit your product JSON or the offer config to include `optional_items`.
 
-```bash
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_XXXXXXXXXXXXXXXX
-```
-
-Replace `price_XXXXXXXXXXXXXXXX` with actual price ID from Step 1.
+If you want to override the price for the optional item, set `price_id` in the offer's optional item config. Otherwise ensure the product has a `default_price` configured in Stripe.
 
 ---
 
-### ✅ Step 3: Add to Vercel (Staging)
-
-1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Select your project
-3. Settings → Environment Variables
-4. Click "Add New"
-   - **Name**: `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`
-   - **Value**: `price_XXXXXXXXXXXXXXXX` (from Step 1)
-   - **Environments**: Select "Preview" (or staging deployment)
-5. Click Save
+### ✅ Step 3: Test locally and on staging
+1. Ensure your offer or product JSON contains the expected `optional_items` and price ids.
+2. Start the dev server and confirm a checkout session includes the optional items.
+3. On staging, ensure the product has a live price id (or the `price_id` override in the offer) and run a test payment.
 
 ---
 
 ### ✅ Step 4: Test Locally
 
 ```bash
-# Make sure .env has the variable from Step 2
-cat .env | grep STRIPE_OPTIONAL
-
-# Start dev server
+# Verify your product JSON or offer config contains the expected `optional_items` and price IDs
 pnpm dev
-
-# Open product page
 open http://localhost:3000/instagram-downloader
-
-# Click "Get it Now"
-# Look for "SERP Blocks $97" as optional item in Stripe Checkout
+# Click "Get it Now" and verify Stripe Checkout shows the optional item when configured
 ```
 
 ---
@@ -105,12 +97,24 @@ All should pass with no new warnings/errors.
 ---
 
 ### ✅ Step 7: Deploy to Production (When Ready)
+2. Redeploy.
 
-1. Add same environment variable to Vercel production environment
-   - **Name**: `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`
-   - **Value**: `price_XXXXXXXXXXXXXXXX` (use LIVE Stripe price ID, not test)
-   - **Environments**: Production
-2. Redeploy
+## CI Enforcement & Migration
+
+The repo includes automated validation to protect against misconfigured optional items:
+
+- `pnpm --filter @apps/store run validate:content` will fail if a live product defines `optional_items` that reference a repo product which has no price id (unless the referenced product is `pre_release`).
+- Use the migration helper below to see which products would be changed, or to apply the fixes:
+
+```bash
+# Dry run (preview changes):
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items
+# Apply changes (overwrites product JSON files):
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items -- --apply
+```
+
+This ensures `validate:content` will prevent deployments that could cause optional items to silently disappear in Stripe Checkout due to missing price IDs.
+   - Using Vercel CLI: `vercel env rm STRIPE_OPTIONAL_BUNDLE_PRICE_ID production` (repeat for preview/staging as needed).
 
 ---
 
@@ -120,7 +124,7 @@ When customer goes through checkout:
 
 1. **Load product page** → `/instagram-downloader`
 2. **Click CTA button** → GET `/checkout/instagram-downloader`
-3. **Checkout route reads env var** → `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`
+3. **Checkout route determines optional items** from `offer.optionalItems` or the product's `default_price` (no env var).
 4. **Resolves price** (auto-syncs live→test if needed)
 5. **Creates Stripe session** with both line items:
    - Main: Instagram Downloader
@@ -153,11 +157,9 @@ No code changes needed. Just the environment variable.
 
 ### Optional item not showing in checkout
 
-1. **Check if env var is set**:
-   ```bash
-   echo $STRIPE_OPTIONAL_BUNDLE_PRICE_ID
-   ```
-   Should output: `price_1XXX...`
+1. **Check that the offer or product JSON defines the optional item**:
+   - Confirm `offer.optionalItems` exists and contains the expected `product_id` and (optionally) `price_id`.
+   - If using product-level configuration, confirm the product has a `default_price` set in Stripe.
 
 2. **Check if price exists in Stripe**:
    - Go to Stripe Dashboard
@@ -165,7 +167,7 @@ No code changes needed. Just the environment variable.
    - Should show SERP Blocks product
 
 3. **Check logs**:
-   - If price unavailable, you'll see warning: `checkout.optional_bundle_price_unavailable`
+   - If price unavailable, you'll see warning: `checkout.optional_item_price_unavailable`
    - Main checkout still works (graceful degradation)
 
 ### Test payment not including optional item

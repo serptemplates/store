@@ -4,55 +4,31 @@
 
 The optional items (order bump) feature is **fully implemented** in the codebase. It allows customers to add complementary products during Stripe Checkout using Stripe's native `optional_items` feature.
 
-**Status**: Ready for activation with a single environment variable.
+**Status**: Ready; activate by configuring optional items on the offer or in product JSON — do not store per-product optional item IDs in environment variables.
 
----
 
 ## How It Works
 
 ### 1. Checkout Route Handler
 **File**: `apps/store/app/checkout/[slug]/route.ts`
 
-The GET endpoint that creates Stripe Checkout Sessions reads `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`:
+The GET endpoint builds optional items from per-offer `optionalItems` or product's `default_price`. Example approach:
 
 ```typescript
 const optionalItems: CheckoutOptionalItem[] = [];
-const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
 
-if (optionalBundlePriceId) {
-  try {
-    const optionalBundlePrice = await resolvePriceForEnvironment(
-      {
-        id: "optional_downloader_bundle",
-        priceId: optionalBundlePriceId,
-      },
-      { syncWithLiveProduct: true },
-    );
-
-    optionalItems.push({
-      price: optionalBundlePrice.id,
-      quantity: 1,
-      adjustable_quantity: {
-        enabled: true,
-        minimum: 0,
-        maximum: 1,
-      },
-    });
-  } catch (error) {
-    logger.warn("checkout.optional_bundle_price_unavailable", {
-      slug,
-      optionalBundlePriceId,
-      error: error instanceof Error ? error.message : String(error),
-    });
-  }
+for (const optionalItem of (offer.optionalItems || [])) {
+  const liveStripe = getStripeClient("live");
+  const product = await liveStripe.products.retrieve(optionalItem.product_id);
+  const priceIdFromOffer = optionalItem.price_id;
+  const priceIdToResolve = priceIdFromOffer ?? (typeof product.default_price === "string" ? product.default_price : product.default_price?.id);
+  if (!priceIdToResolve) continue; // Skip optional item if no price is defined
+  const optionalPrice = await resolvePriceForEnvironment({ id: optionalItem.product_id, priceId: priceIdToResolve, productName: product.name });
+  optionalItems.push({ price: optionalPrice.id, quantity: optionalItem.quantity ?? 1, adjustable_quantity: { enabled: true, minimum: 0, maximum: 1 } });
 }
 ```
 
 **Key behaviors**:
-- Reads env var `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`
-- If set, resolves the price using `resolvePriceForEnvironment()` (handles test/live auto-sync)
-- Adds it to the checkout session with quantity=1 and adjustable_quantity enabled (min: 0, max: 1)
-- Graceful error handling: logs warning if price unavailable, continues without failing
 
 ### 2. Checkout Session Creation
 **Location**: Same file, lines 147-167
@@ -102,9 +78,6 @@ type CheckoutSessionCreateParamsWithOptionalItems = Stripe.Checkout.SessionCreat
 
 ### 3. Stripe Checkout Presentation
 Stripe's hosted checkout automatically:
-- Displays optional items as "Add to order" UI elements
-- Allows customers to add/remove without affecting main purchase
-- Includes in the final invoice/receipt
 
 ### 4. Webhook Processing
 **File**: `apps/store/lib/payments/stripe-webhook/events/checkout-session-completed.ts`
@@ -134,49 +107,31 @@ async function collectLineItemTagData(
 ```
 
 **Key behaviors**:
-- Fetches ALL line items from completed session (includes optional items)
-- Expands price and product metadata
-- Collects tags and product slugs from both main product and any optional items
-- Passes to downstream systems (GHL, license creation, order records)
 
 ### 5. Order & License Processing
 
 After checkout completion, the order handler:
-- Creates database records with all line items
-- Generates licenses for applicable products
-- Syncs with GoHighLevel (GHL) for sales ops
-- Records metadata for analytics
 
 The system treats optional items as regular line items in the fulfillment pipeline.
 
----
 
-## Environment Variable Configuration
+## Optional Items Configuration
 
-### Required Variable
+Optional items must be configured on an offer or within the product JSON. There is no env-var activation. Prefer setting the optional item's `price_id` per-offer so you can set a specific price for the product in this offer. If the optional offer item has no `price_id`, the route attempts to resolve `product.default_price` from Stripe.
+
+Examples:
+
+
+```json
+{
+  "optional_items": [{
+    "product_id": "prod_optional_bundle",
+    "price_id": "price_live_override_97",
+    "quantity": 1
+  }]
+}
 ```
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_1XXX...
-```
 
-### Where to Set
-
-**Local development** (`.env`):
-```bash
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_test_xxxxx
-```
-
-**Vercel staging** (Environment Variables section):
-1. Open project settings in Vercel dashboard
-2. Go to Environment Variables
-3. Add new variable:
-   - Name: `STRIPE_OPTIONAL_BUNDLE_PRICE_ID`
-   - Value: The Stripe price ID (format: `price_1XXX...`)
-   - Environments: Staging (or whatever deployment)
-
-**Vercel production** (same process, different environment):
-```
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_live_xxxxx
-```
 
 ### Obtaining the Price ID
 
@@ -201,7 +156,6 @@ STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_live_xxxxx
      -d "currency=usd"
    ```
 
----
 
 ## Testing
 
@@ -209,9 +163,6 @@ STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_live_xxxxx
 **File**: `apps/store/tests/unit/app/checkout-route.test.ts`
 
 Test case "injects Dub attribution metadata and redirects to Stripe" verifies:
-- Optional items are included in session params
-- Price is resolved correctly for test/live environments
-- Adjustable quantity constraints are applied
 
 ```typescript
 expect(params).toMatchObject({
@@ -261,17 +212,16 @@ expect(params).toMatchObject({
      - Main product (e.g., Instagram Downloader - $17)
      - Optional item (SERP Blocks - $97)
 
----
 
 ## Error Handling
 
 ### If Optional Price Unavailable
 
-If `STRIPE_OPTIONAL_BUNDLE_PRICE_ID` is set but the price doesn't exist:
+If an optional item's `price_id` or product `default_price` is configured but the price can't be resolved in the current Stripe environment:
 
 ```typescript
 } catch (error) {
-  logger.warn("checkout.optional_bundle_price_unavailable", {
+  logger.warn("checkout.optional_item_price_unavailable", {
     slug,
     optionalBundlePriceId,
     error: error instanceof Error ? error.message : String(error),
@@ -280,31 +230,23 @@ If `STRIPE_OPTIONAL_BUNDLE_PRICE_ID` is set but the price doesn't exist:
 ```
 
 **Behavior**:
-- Logs warning to observability (not an error)
-- Continues with checkout WITHOUT optional items
-- Main purchase still completes successfully
-- User doesn't see the optional item but checkout isn't blocked
 
 This graceful degradation ensures checkout never breaks due to optional items misconfiguration.
 
----
 
 ## Legacy Code Cleanup
 
 ### Deprecated Fields
 The `order_bump` field in product JSON is **legacy and ignored**:
 
-- **File**: `apps/store/lib/products/product-schema.ts` (line 394)
   ```typescript
   order_bump: z.any().optional().transform(() => undefined),
   ```
 
-- **Cleanup in schema transform** (line 611):
   ```typescript
   .transform(({ order_bump: _legacyOrderBump, ...rest }) => rest);
   ```
 
-- **Test verification**: `apps/store/tests/unit/lib/product-schema.test.ts`
   ```typescript
   it("ignores legacy order_bump fields without failing validation", () => {
     // Confirms order_bump is safely stripped
@@ -327,11 +269,7 @@ export type PricingCtaOrderBump = {
 ```
 
 This was the **previous product page-level order bump display**. Now replaced by:
-- Stripe's native optional items in hosted checkout
-- No UI component needed on product pages
-- Configuration in Stripe Dashboard instead of code
 
----
 
 ## Architecture Diagram
 
@@ -343,7 +281,7 @@ Click CTA Button → GET /checkout/instagram-downloader
 Checkout Route Handler
 ├─ Load product & offer config
 ├─ Resolve main product price (auto-sync test/live)
-├─ Read STRIPE_OPTIONAL_BUNDLE_PRICE_ID env var
+├─ Determine optional items defined on the offer and use `price_id` or product `default_price`
 ├─ If set:
 │  ├─ Resolve optional bundle price
 │  └─ Add to optionalItems array
@@ -366,7 +304,6 @@ Checkout Route Handler
     └─ Send confirmation
 ```
 
----
 
 ## Files Involved
 
@@ -381,12 +318,11 @@ Checkout Route Handler
 | `apps/store/lib/products/product-schema.ts` | Legacy cleanup | ✅ Complete |
 | `packages/ui/src/sections/PricingCta.tsx` | Old order bump UI | ℹ️ Deprecated but functional |
 
----
 
 ## Next Steps
 
 1. **Find Stripe price ID** for $97 SERP Blocks product in Stripe Dashboard
-2. **Set environment variable** `STRIPE_OPTIONAL_BUNDLE_PRICE_ID` in:
+2. **Configure optional items in offer/product**
    - Local `.env`
    - Vercel staging environment
    - Vercel production environment (when ready)
@@ -402,16 +338,23 @@ Checkout Route Handler
    pnpm test:unit
    pnpm validate:products
    ```
+   
+## CI & Migration
+
+We validate optional items on `validate:content`. If a live product defines `optional_items` that reference a repository product without a price id (unless the referenced product is `pre_release`), `validate:content` will fail.
+
+To preview or fix issues automatically, use the migration script:
+
+```
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items -- --apply
+```
 5. **Deploy and monitor**
    - Check logs for any `checkout.optional_bundle_price_unavailable` warnings
    - Monitor customer feedback on optional items UX
 
----
 
 ## Stripe Documentation
 
 Relevant Stripe docs for reference:
-- [Stripe Checkout Optional Items](https://docs.stripe.com/payments/checkout/optional-items)
-- [Stripe Checkout Sessions API](https://docs.stripe.com/api/checkout/sessions)
-- [Stripe Line Items](https://docs.stripe.com/api/checkout/sessions/line_items)
 

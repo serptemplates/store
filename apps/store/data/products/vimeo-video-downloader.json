@@ -249,7 +249,12 @@
     "price_id": "price_1S2fcZ06JrOmKRCmTwbmGNxm",
     "metadata": {
       "stripe_product_id": "prod_SgReFRh1TixiX4"
-    }
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [

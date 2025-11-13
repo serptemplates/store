@@ -10,8 +10,8 @@
 | 10-18 | Type definitions | Define `CheckoutOptionalItem` and `CheckoutSessionCreateParamsWithOptionalItems` |
 | 40-210 | `GET()` function | Main async handler for checkout route |
 | 117 | `optionalItems: CheckoutOptionalItem[] = []` | Initialize optional items array |
-| 118 | `const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID` | **← Read env var here** |
-| 119-141 | `if (optionalBundlePriceId) { ... }` | Resolve price and add to array |
+| 118 | `// optional items are configured via per-offer `optionalItems` or product `default_price` (no env fallback)` | Per-offer/product price ids are used |
+| 119-141 | `for each optional item in offer.optionalItems: ...` | Resolve price and add to array |
 | 121-127 | `resolvePriceForEnvironment()` call | Handles test/live price sync |
 | 129-137 | `optionalItems.push()` | Add SERP Blocks to optional items |
 | 139-145 | Error handling | Gracefully handle price resolution failures |
@@ -60,7 +60,7 @@
 
 | Line Range | Code | Purpose |
 |-----------|------|---------|
-| 24-34 | Test setup | Mock `STRIPE_OPTIONAL_BUNDLE_PRICE_ID = "price_optional_bundle"` |
+| 24-34 | Test setup | Mock `offer.optionalItems` and product `default_price` values for the optional items |
 | 45-53 | Mock setup | Set return values for price resolution |
 | 87-98 | Test execution | Call GET handler with mocked Stripe |
 | 101-110 | **Verification** | Assert `optional_items` included in params with correct structure |
@@ -120,20 +120,11 @@ app/checkout/[slug]/route.ts::GET()
   │  })
   │  → Returns: { id: "price_instagram_test_789" }
   │
-  ├─ Read env var: process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID
-  │  → "price_serp_blocks_live_9700"
-  │
-  ├─ IF env var exists:
-  │  ├─ resolvePriceForEnvironment({                  [Optional item price]
-  │  │    priceId: "price_serp_blocks_live_9700"
-  │  │  })
-  │  │  → Returns: { id: "price_serp_blocks_test_456" }
-  │  │
-  │  └─ optionalItems.push({
-  │       price: "price_serp_blocks_test_456",
-  │       quantity: 1,
-  │       adjustable_quantity: {...}
-  │     })
+  ├─ Determine optional items from `offer.optionalItems` or `product.default_price` (no env var fallback)
+  │  → For each optional item defined on the offer, the route:
+  │    ├─ picks a price id (prefer `optionalItem.price_id`, otherwise `product.default_price`)
+  │    ├─ resolves the price via `resolvePriceForEnvironment()` (auto-syncs live→test)
+  │    └─ optionalItems.push({ price: resolvedPrice.id, quantity: optionalItem.quantity, adjustable_quantity: {...} })
   │
   ├─ Build session params:
   │  {
@@ -195,58 +186,38 @@ stripe-webhook/events/checkout-session-completed.ts::handleCheckoutSessionComple
 
 ## Critical Code Path
 
-The one if-statement that activates the feature:
+The route determines optional items from `offer.optionalItems` or `product.default_price` (no env var):
 
 ```typescript
-// Line 118-119
-const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
-if (optionalBundlePriceId) {  // ← THIS DECIDES EVERYTHING
-  // Lines 120-141: Resolve price and add to optional_items
-}
-// Lines 166-167: Inject into session if array has items
-if (optionalItems.length > 0) {
-  params.optional_items = optionalItems;  // ← THIS SENDS TO STRIPE
-}
+// For each optional item defined on the offer:
+//  - pick priceId = optionalItem.price_id || product.default_price
+//  - resolve the price for the environment via `resolvePriceForEnvironment()`
+//  - optionalItems.push({ price: resolvedPrice.id, quantity, adjustable_quantity: {...} })
+// Finally, if optionalItems.length > 0, set params.optional_items = optionalItems
 ```
 
 **Decision tree**:
 
 ```
-STRIPE_OPTIONAL_BUNDLE_PRICE_ID env var?
+Is offer.optionalItems defined?
 │
-├─ YES (e.g., "price_1XXX...")
-│  ├─ Price exists in Stripe?
-│  │  ├─ YES → Add to optional_items → Pass to Stripe → Feature active ✅
-│  │  └─ NO → Log warning → Continue without optional items → Graceful ⚠️
-│  │
-│  └─ Result: Optional item shows in checkout (if price valid)
+├─ YES → For each optional item, pick price id: `optionalItem.price_id || product.default_price`
+│  ├─ If priceId resolved and Stripe can resolve it for the environment: add to optional_items
++│  ├─ If not resolvable: log warning and skip optional item. Continue with main product checkout.
 │
-└─ NO (not set)
-   └─ optional_items stays [] → Not passed to Stripe → Feature inactive
-      └─ Result: Normal checkout, no optional items
+└─ NO → no optional items included in checkout
 ```
 
 ---
 
-## Environment Variable Only Control
+## Optional Items Configuration (per-offer / product)
 
-Everything is keyed off one variable:
+Optional items are configured per-offer or in product JSON. Follow these options:
 
-```bash
-# Local development
-echo "STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_test_123" >> .env
+- Offer-level override (recommended): add `optional_items` to the offer with product_id and `price_id` set.
+- Product-level fallback: ensure the product has a `default_price` configured in Stripe.
 
-# Vercel staging
-UI: Settings → Environment Variables → Add:
-    Name: STRIPE_OPTIONAL_BUNDLE_PRICE_ID
-    Value: price_test_123
-    Environments: Preview
-
-# Vercel production
-Same process, use price_live_123 (live Stripe price)
-```
-
-No code changes needed. Just set the variable.
+Optional items are configured via product JSON or per-offer `optionalItems`. Do not configure per-product optional item price IDs via environment variables.
 
 ---
 
@@ -267,12 +238,13 @@ No code changes needed. Just set the variable.
 
 ## Activation Checklist
 
-- [ ] Find SERP Blocks Stripe price ID (test mode: `price_test_...`, live mode: `price_live_...`)
-- [ ] Add to local `.env`: `STRIPE_OPTIONAL_BUNDLE_PRICE_ID=price_test_...`
-- [ ] Add to Vercel staging environment variables
-- [ ] Test locally: `pnpm dev` → navigate to product → verify optional item
-- [ ] Test on staging: Wait for Vercel rebuild → navigate → verify
-- [ ] Run validation: `pnpm lint && pnpm typecheck && pnpm test:unit`
-- [ ] Add to Vercel production environment variables (with live price ID)
-- [ ] Monitor logs for `checkout.optional_bundle_price_unavailable` warnings
+
+## CI Enforcement
+
+This repo runs `validate:content` as part of linting and CI. It includes a check that ensures any live product's `optional_items` reference only repo-tracked products with a price id (unless the referenced product is `pre_release`). Use the migration script below to preview or apply fixes:
+
+```
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items
+pnpm --filter @apps/store run migrate:remove-invalid-optional-items -- --apply
+```
 

@@ -63,42 +63,41 @@ export async function GET(
   // Returns: { id: "price_1XXX...", ... }
 
   // ✅ KEY STEP: Handle Optional Items
-  // Step 2g: Check if optional bundle price is configured
+  // Step 2g: Build optional items from offer.optionalItems or product.default_price
   const optionalItems: CheckoutOptionalItem[] = [];
-  const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
-  
-  if (optionalBundlePriceId) {  // If env var is set
+  for (const optionalItem of offer.optionalItems ?? []) {
     try {
-      // Resolve the optional bundle price
-      const optionalBundlePrice = await resolvePriceForEnvironment({
-        id: "optional_downloader_bundle",
-        priceId: optionalBundlePriceId,  // e.g., "price_1XXX..."
-        // Syncs with live product if needed
-        syncWithLiveProduct: true,
-      });
-
-      // Add to optional items array
-      optionalItems.push({
-        price: optionalBundlePrice.id,      // e.g., "price_1XXX..."
-        quantity: 1,
-        adjustable_quantity: {
-          enabled: true,
-          minimum: 0,
-          maximum: 1,
+      const liveStripe = getStripeClient("live");
+      const product = await liveStripe.products.retrieve(optionalItem.product_id);
+      const priceIdFromOffer = optionalItem.price_id as string | undefined;
+      const priceIdToResolve = priceIdFromOffer ?? (typeof product.default_price === "string" ? product.default_price : product.default_price?.id);
+      if (!priceIdToResolve) {
+        // No per-offer override and the product has no default price; skip optional item
+        continue;
+      }
+      const optionalPrice = await resolvePriceForEnvironment(
+        {
+          id: optionalItem.product_id,
+          priceId: priceIdToResolve,
+          productName: product.name,
+          productDescription: product.description || undefined,
+          productImage: product.images?.[0] || undefined,
         },
+        { syncWithLiveProduct: true },
+      );
+      optionalItems.push({
+        price: optionalPrice.id,
+        quantity: optionalItem.quantity ?? 1,
+        adjustable_quantity: { enabled: true, minimum: 0, maximum: 1 },
       });
-      // Now optionalItems = [{ price: "price_1XXX...", ... }]
     } catch (error) {
-      // If price doesn't exist: log warning, continue without optional items
-      logger.warn("checkout.optional_bundle_price_unavailable", {
+      logger.warn("checkout.optional_item_price_unavailable", {
         slug,
-        optionalBundlePriceId,
-        error: error.message,
+        productId: optionalItem.product_id,
+        error: error instanceof Error ? error.message : String(error),
       });
-      // optionalItems remains []
     }
   }
-  // If STRIPE_OPTIONAL_BUNDLE_PRICE_ID not set: optionalItems stays []
 
   // Step 2h: Build Stripe Checkout Session params
   const params: CheckoutSessionCreateParamsWithOptionalItems = {
@@ -312,51 +311,37 @@ export async function handleCheckoutSessionCompleted(
 
 ---
 
-## Environment Variable Decision Tree
+## Optional Items Decision Tree
 
 ```
-Does STRIPE_OPTIONAL_BUNDLE_PRICE_ID exist in env?
+Determine optional items from `offer.optionalItems` or `product.default_price`:
 │
-├─ YES (e.g., "price_1XXX...")
-│  │
-│  └─ Can Stripe resolve the price?
-│     │
-│     ├─ YES
-│     │  └─ Add to optionalItems array
-│     │     └─ Pass to stripe.checkout.sessions.create()
-│     │        └─ Stripe Checkout shows optional item UI
-│     │           └─ Customer can add/remove
-│     │              └─ Webhook processes correctly
-│     │
-│     └─ NO (404, invalid, etc.)
-│        └─ Log warning: "checkout.optional_bundle_price_unavailable"
-│           └─ Continue without optional items
-│              └─ Main checkout still works
-│
-└─ NO (not set / undefined)
-   └─ optionalItems stays empty []
-      └─ Only line_items sent to Stripe
-         └─ No optional item appears in checkout
-            └─ Normal checkout flow
+├─ Offer defines optionalItems?
+│  ├─ YES → For each optional item:
+│  │  ├─ Does optionalItem specify `price_id`? If yes, pick that.
+│  │  ├─ Else: does the product have a `default_price`? If yes, use that.
+│  │  ├─ Can Stripe resolve this price for the environment?
+│  │  │  ├─ YES → Add to optionalItems array → Pass to stripe.checkout.sessions.create()
++│  │  │  └─ NO → Log warning (e.g., `checkout.optional_item_price_unavailable`) and skip item
+│  │  └─ Continue to next optional item
+│  └─ NO → optionalItems stays empty (no optional items included)
 ```
 
 ---
 
 ## Summary
 
-**The key decision point** is line 118 in `route.ts`:
+**The key decision point** is whether the offer includes `optionalItems`. The route follows this logic:
 
 ```typescript
-const optionalBundlePriceId = process.env.STRIPE_OPTIONAL_BUNDLE_PRICE_ID;
-
-if (optionalBundlePriceId) {  // ← ONE IF STATEMENT
-  // ... resolve price and add to optional_items
+for (const optionalItem of offer.optionalItems ?? []) {
+  // Pick price id: optionalItem.price_id || product.default_price
+  // Attempt to resolve price for the environment and add to optionalItems array if successful
 }
 ```
 
-- **If env var exists** → Optional items activated automatically
-- **If env var missing** → Optional items disabled (no error)
-- **If price can't be resolved** → Graceful degradation (log warning, continue)
-
-No code changes. Just set the environment variable and the feature activates.
+Notes:
+- Per-offer `price_id` is preferred — use it to override the optional price for that offer.
+- If no override exists, the route will attempt to use `product.default_price`.
+- If a price cannot be resolved for an optional item, it is skipped (the main product is still check-out-able).
 

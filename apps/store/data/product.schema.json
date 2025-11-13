@@ -587,9 +587,6 @@
     "stripe": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "price_id"
-      ],
       "properties": {
         "price_id": {
           "type": "string",
@@ -755,6 +752,18 @@
             }
           }
         ]
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "live" } }
+      },
+      "then": {
+        "properties": {
+          "stripe": {
+            "required": ["price_id"]
+          }
+        }
       }
     },
     {
