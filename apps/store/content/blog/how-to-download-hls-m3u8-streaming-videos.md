@@ -423,18 +423,13 @@ HLS/M3U8 is a robust and widely-adopted streaming protocol that provides excelle
 
 ## Related Tools
 
-- [M3U8 Downloader](https://apps.serp.co/m3u8-downloader) - Specialized tool for downloading HLS/M3U8 streams
-- [Stream Downloader](https://apps.serp.co/stream-downloader) - Universal streaming video downloader
-- [YouTube Downloader](https://apps.serp.co/youtube-downloader) - Download from YouTube which uses adaptive streaming
-- [Vimeo Video Downloader](https://apps.serp.co/vimeo-video-downloader) - Download Vimeo videos that use HLS
-- [Twitch Video Downloader](https://apps.serp.co/twitch-video-downloader) - Download Twitch streams and VODs
-- [Dailymotion Downloader](https://apps.serp.co/dailymotion-downloader) - Download from Dailymotion
+ - Specialized tool for downloading HLS/M3U8 streams
+ - Universal streaming video downloader
+ - Download from YouTube which uses adaptive streaming
+ - Download Vimeo videos that use HLS
+ - Download Twitch streams and VODs
+ - Download from Dailymotion
 
-## See Also
-
-- [How to Download RTMP Live Streams](https://apps.serp.co/blog/how-to-download-rtmp-live-streams) - Learn about RTMP protocol
-- [How to Download DASH Streaming Videos](https://apps.serp.co/blog/how-to-download-dash-streaming-videos) - Alternative adaptive streaming
-- [How to Download WebRTC Video Streams](https://apps.serp.co/blog/how-to-download-webrtc-video-streams) - Real-time communication protocol
 
 ## YouTube Tutorial
 

@@ -679,9 +679,3 @@ ffmpeg -i corrupted.flv -c copy -avoid_negative_ts make_zero repaired.flv
 ffmpeg -i corrupted.flv -c copy -t 00:10:00 partial.flv
 ```
 
-## See Also
-
-- [RTMP Streaming Protocol](../streaming/rtmp.md)
-- [MP4 Container Format](./mp4.md)
-- [H.264 Video Codec](../codecs/h264.md)
-- [WebM Container Format](./webm.md)

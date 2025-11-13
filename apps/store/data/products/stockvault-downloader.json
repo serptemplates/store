@@ -1,31 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Stockvault",
   "name": "Stockvault Downloader",
   "tagline": "Save Stockvault images and content instantly to your device.",
   "slug": "stockvault-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Stockvault",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
   "description": "Stockvault Downloader gives creators and teams a dependable way to save Stockvault images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Stockvault with consistent quality and predictable results.\n\nIt supports Free stock graphics and design resources, Vectors, photos, and design elements, and Batch category collections/searches downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Stockvault assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
-  "seo_title": "Stockvault Downloader | Download Stockvault Images",
-  "seo_description": "Download Stockvault images and graphics for offline use. Fast and reliable Stockvault content downloader.",
-  "serply_link": "https://serp.ly/stockvault-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stockvault-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/stockvault-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/stockvault-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=stockvault-downloader",
+  "seo_title": "Stockvault Downloader (Unofficial) | Download Stockvault Images",
+  "seo_description": "Stockvault Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Stockvault images and graphics for offline use. Fast and reliable Stockvault content downloader.",
   "status": "pre_release",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stockvault-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/stockvault-downloader/main/images/stockvault-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stockvault-downloader.jpg",
-      "alt": "Stockvault Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/stockvault-downloader",
-  "github_repo_tags": [],
   "features": [
     "Free stock graphics and design resources",
     "Vectors, photos, and design elements",
@@ -47,16 +34,6 @@
     "Free resource discovery and recommendation",
     "Workflow integration"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "How do I use the Stockvault downloader?",
@@ -89,6 +66,10 @@
     {
       "question": "Is my data kept private?",
       "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -135,6 +116,45 @@
   "keywords": [
     "stockvault downloader"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stockvault-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/stockvault-downloader/main/images/stockvault-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stockvault-downloader.jpg",
+      "alt": "Stockvault Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/stockvault-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stockvault-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/stockvault-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/stockvault-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=stockvault-downloader",
+  "github_repo_url": "https://github.com/serpapps/stockvault-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "",
+    "cta_text": "Get it Now",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -146,18 +166,17 @@
     "price_id": "price_1S99g906JrOmKRCmGb7sOQ2q",
     "metadata": {
       "stripe_product_id": "prod_Sv6HzuwEQfZ23m"
-    }
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-stockvault-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

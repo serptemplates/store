@@ -1,31 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "123movies",
   "name": "123movies Downloader",
   "tagline": "Save 123movies videos instantly for offline viewing.",
   "slug": "123movies-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "123movies",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
   "description": "123movies Downloader is a purpose-built Chrome extension that tracks down the hidden HLS streams powering 123movies mirrors and turns them into clean MP4 files. It recognises the moment a video starts playing, captures the source, and keeps quality identical to what you see online so buffering and pop-ups never ruin the copy you save.\n\nDownloads run in resilient chunks with automatic retries, making two-hour films as reliable as quick clips. A clear status bar walks through scanning, fetching, and merging so you always know whether the stream is still downloading or already processing the final MP4.\n\nActivation is handled with a simple email and lifetime licence key. After unlocking, just open a mirror, press play, and click Process Stream to watch the extension assemble a finished MP4 directly in your browser’s downloads folder without touching external servers.\n\nKeep the tab open while it works, remember that DRM-protected platforms stay off limits, and consider a dedicated browser profile if you prefer running high-permission extensions in their own space.",
-  "seo_title": "123movies Downloader | Reliable MP4 saves from 123movies mirrors",
-  "seo_description": "Capture 123movies streams as MP4 files with automatic retries, mirror support, and fully local processing for private offline viewing.",
-  "serply_link": "https://serp.ly/123movies-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123movies-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/123movies-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
+  "seo_title": "123movies Downloader (Unofficial) | Reliable MP4 saves from 123movies mirrors",
+  "seo_description": "123movies Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture 123movies streams as MP4 files with automatic retries, mirror support, and fully local processing for private offline viewing.",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123movies-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/123movies-downloader/main/images/featured.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123movies-downloader.jpg",
-      "alt": "123movies Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/123movies-downloader",
-  "github_repo_tags": [],
   "features": [
     "Automatic detection of 123movies HLS streams across changing mirror domains",
     "Chunk-based downloading with smart retries to finish full-length movies",
@@ -38,21 +25,6 @@
     "Host permissions tuned to follow redirects and surface hidden video sources",
     "Recommended browser profile isolation for safer high-permission usage"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with ongoing mirror compatibility updates and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/123movies-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Lifetime updates keep pace with new 123movies mirror domains",
-      "Faster than manual tools like ffmpeg or screen recording workflows",
-      "Saves perfect MP4 copies for flights, edits, and offline archives"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I save a movie with 123movies Downloader?",
@@ -77,6 +49,10 @@
     {
       "question": "Is there a free trial or refund policy?",
       "answer": "The licence is a one-time $17 purchase with no free tier and no refunds. Updates for new mirror domains are included for existing customers."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -127,30 +103,6 @@
     "chrome video downloader",
     "offline movie saver"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1S99wh06JrOmKRCmkF8J8XUh",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Czh24RpPTaL"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-123movies-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "123movies-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -185,5 +137,72 @@
       "justification": "Covers the rotating network of 123movies mirror domains, ensuring the\ndownloader can run wherever the site relocates."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123movies-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/123movies-downloader/main/images/featured.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/123movies-downloader.jpg",
+      "alt": "123movies Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/123movies-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123movies-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/123movies-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
+  "github_repo_url": "https://github.com/serpapps/123movies-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with ongoing mirror compatibility updates and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/123movies-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Lifetime updates keep pace with new 123movies mirror domains",
+      "Faster than manual tools like ffmpeg or screen recording workflows",
+      "Saves perfect MP4 copies for flights, edits, and offline archives"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1S99wh06JrOmKRCmkF8J8XUh",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Czh24RpPTaL"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-123movies-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "123movies-downloader"
+    ]
+  }
 }

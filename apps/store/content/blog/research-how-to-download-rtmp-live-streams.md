@@ -730,18 +730,13 @@ ffmpeg -i "rtmp://example.com/live/stream" -vn -acodec copy audio.aac
 
 ## Related Tools
 
-- [Stream Downloader](https://apps.serp.co/stream-downloader) - Universal streaming video downloader
-- [Twitch Video Downloader](https://apps.serp.co/twitch-video-downloader) - Download Twitch streams and VODs
-- [YouTube Downloader](https://apps.serp.co/youtube-downloader) - Download YouTube videos and live streams
-- [Facebook Video Downloader](https://apps.serp.co/facebook-video-downloader) - Download Facebook videos
-- [Instagram Downloader](https://apps.serp.co/instagram-downloader) - Download Instagram live streams
-- [Kick Clip Downloader](https://apps.serp.co/kick-clip-downloader) - Download Kick.com streams
+ - Universal streaming video downloader
+ - Download Twitch streams and VODs
+ - Download YouTube videos and live streams
+ - Download Facebook videos
+ - Download Instagram live streams
+ - Download Kick.com streams
 
-## See Also
-
-- [How to Download HLS/M3U8 Streaming Videos](https://apps.serp.co/blog/how-to-download-hls-m3u8-streaming-videos) - Learn about HLS protocol
-- [How to Download DASH Streaming Videos](https://apps.serp.co/blog/how-to-download-dash-streaming-videos) - Alternative adaptive streaming
-- [How to Download WebRTC Video Streams](https://apps.serp.co/blog/how-to-download-webrtc-video-streams) - Real-time communication protocol
 
 ## YouTube Tutorial
 

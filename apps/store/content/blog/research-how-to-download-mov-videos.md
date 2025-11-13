@@ -640,9 +640,3 @@ ffmpeg -i corrupted.mov -c copy -movflags +faststart repaired.mov
 ffmpeg -i corrupted.mov -c copy -avoid_negative_ts make_zero recovered.mov
 ```
 
-## See Also
-
-- [MP4 Container Format](./mp4.md)
-- [H.264 Video Codec](../codecs/h264.md)
-- [AVI Container Format](./avi.md)
-- [WebM Container Format](./webm.md)

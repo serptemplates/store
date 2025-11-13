@@ -12,7 +12,6 @@ import {
 } from "@/lib/products/view-model";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import { useProductPageExperience } from "@/components/product/hooks/useProductPageExperience";
-import { getBrandLogoPath } from "@/lib/products/brand-logos";
 import type { ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import type { MetadataRow, LegalLink } from "./MarketplaceMetadataList";
 import { buildMetadataRows } from "./MarketplaceMetadataList";
@@ -36,20 +35,10 @@ export type MarketplaceProductPageViewModel = {
       onPrimaryAction: () => void;
       primaryLabel: string;
     };
-    footerSite: {
-      name: string;
-      url: string;
-    };
   };
   stickyBar: {
     show: boolean;
     product: ProductData;
-    productName: string;
-    priceLabel: string | null;
-    price: string | null;
-    originalPrice: string | null;
-    brandLogoPath: string | null;
-    mainImageSource?: string | null;
     waitlistEnabled: boolean;
     onWaitlistClick: () => void;
     checkoutCta: ResolvedHomeCta | null;
@@ -85,7 +74,11 @@ export function useMarketplaceProductPageViewModel(
   product: ProductData,
   siteConfig: SiteConfig,
 ): MarketplaceProductPageViewModel {
-  const homeTemplate = useMemo(() => productToHomeTemplate(product, []), [product]);
+  const showPrices = siteConfig.storefront?.showPrices !== false;
+  const homeTemplate = useMemo(
+    () => productToHomeTemplate(product, [], { showPrices }),
+    [product, showPrices],
+  );
 
   const { resolvedCta, handleCtaClick, waitlist } = useProductPageExperience(
     product,
@@ -118,15 +111,7 @@ export function useMarketplaceProductPageViewModel(
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl;
 
-  const footerSite = useMemo(() => {
-    const rawName = siteConfig.site?.name ?? "SERP";
-    const normalizedName = rawName.replace(/\bApps\b/gi, "").trim() || "SERP";
-    return { name: normalizedName, url: "https://serp.co" };
-  }, [siteConfig]);
-
   const waitlistEnabled = product.status === "pre_release";
-  const brandLogoPath = getBrandLogoPath(product.slug ?? "");
-  const stickyImageSource = brandLogoPath || product.featured_image || null;
 
   const primaryButtonLabel = resolvePrimaryButtonLabel({
     resolvedCta,
@@ -160,22 +145,15 @@ export function useMarketplaceProductPageViewModel(
         name: product.name ?? product.platform ?? "Marketplace app",
         subtitle: copy.subtitle,
         categories: metadata.categories,
-        iconUrl: brandLogoPath || null,
+        iconUrl: product.featured_image || null,
         iconInitials: getInitials(product.platform ?? product.name),
         onPrimaryAction: handleHeroClick,
         primaryLabel: primaryButtonLabel,
       },
-      footerSite,
     },
     stickyBar: {
       show: showStickyBar,
       product,
-      productName: product.name ?? "Product",
-      priceLabel: null,
-      price: product.pricing?.price ?? null,
-      originalPrice: product.pricing?.original_price ?? null,
-      brandLogoPath: brandLogoPath ?? null,
-      mainImageSource: stickyImageSource,
       waitlistEnabled,
       onWaitlistClick: waitlist.open,
       checkoutCta: resolvedCta,

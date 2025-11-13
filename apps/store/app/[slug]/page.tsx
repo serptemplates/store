@@ -8,6 +8,7 @@ import { getSiteConfig } from "@/lib/site-config";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import { getProductVideoEntries } from "@/lib/products/video";
 import { buildProductMetadata } from "@/lib/products/metadata";
+import { formatTrademarkDisclaimer } from "@/lib/products/trademark";
 
 // Lazy load heavy page components
 const ClientHome = dynamic(() => import("../ClientHome"), {
@@ -56,6 +57,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       siteConfig={siteConfig}
       navProps={navProps}
       videoEntries={videoEntries}
+      trademarkNotice={formatTrademarkDisclaimer(product)}
     />
   );
 }

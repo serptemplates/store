@@ -1,24 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Alpha Porno",
   "name": "Alpha Porno Video Downloader",
   "tagline": "Save Alpha Porno videos instantly for offline viewing.",
   "slug": "alpha-porno-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "AlphaPorno",
+    "legal_entity": "Venidia Enterprises LTD"
+  },
   "description": "Alpha Porno Video Downloader zeroes in on alphaporno.com video players so you can save clips for offline viewing in a couple clicks. It scans each page for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide exactly what lands in your downloads folder.\n\nConcurrent downloads mean you can queue multiple clips at once, watch progress bars inline, and keep browsing while the extension finishes its work. A right-click shortcut and compact popup deliver quality selection, speed indicators, and discreet desktop notifications when each file wraps.\n\nLicence activation takes seconds and settings stay local, so nothing leaves your browser beyond a quick licence check. The extension only runs on AlphaPorno domains, keeping the rest of your browsing untouched and your saved copies private.\n\nKeep the source tab open until the merge completes, remember it cannot grab DRM-protected streams, and consider splitting long sessions into batches so your hardware can stitch complex HLS videos without slowing down.",
-  "seo_title": "Alpha Porno Video Downloader | Concurrent downloads for alphaporno.com",
-  "seo_description": "Capture AlphaPorno videos with multi-quality selection, concurrent downloads, and fully local processing for private offline viewing.",
-  "serply_link": "https://serp.ly/alpha-porno-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/alpha-porno-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=alpha-porno-video-downloader",
+  "seo_title": "Alpha Porno Video Downloader (Unofficial) | Concurrent downloads for alphaporno.com",
+  "seo_description": "Alpha Porno Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture AlphaPorno videos with multi-quality selection, concurrent downloads, and fully local processing for private offline viewing.",
   "status": "live",
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/alpha-porno-downloader",
-  "github_repo_tags": [],
   "features": [
     "Purpose-built detection for alphaporno.com MP4 and HLS video streams",
     "Concurrent download queue so you can save multiple clips at once",
@@ -31,21 +25,6 @@
     "Smart retry logic handles dynamic pages and reconnects when mirrors shift",
     "Site-scoped permissions limit the extension to alphaporno.com domains only"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "Lifetime licence with unlimited downloads on alphaporno.com. No trial and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/alpha-porno-video-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Save multiple AlphaPorno videos simultaneously without manual babysitting",
-      "Skip developer tools and complicated scripts to find hidden stream URLs",
-      "Keep your offline library private thanks to 100% local processing"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I start a download with Alpha Porno Video Downloader?",
@@ -70,6 +49,10 @@
     {
       "question": "Which browsers are supported?",
       "answer": "The extension runs on Google Chrome, Microsoft Edge, Mozilla Firefox, Brave, and Opera across Windows, macOS, and Linux desktops."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -120,31 +103,6 @@
     "chrome alphaporno extension",
     "offline alphaporno saver"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
-    "metadata": {
-      "stripe_product_id": "prod_TAg09llcKpydjr"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-alpha-porno-downloader",
-      "purchase-adult-downloaders"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "alpha-porno-video-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -187,5 +145,66 @@
       "justification": "Limits access to alphaporno.com and its video CDNs, ensuring the extension only\nactivates on supported domains."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/alpha-porno-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/alpha-porno-video-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=alpha-porno-video-downloader",
+  "github_repo_url": "https://github.com/serpapps/alpha-porno-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with unlimited downloads on alphaporno.com. No trial and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/alpha-porno-video-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Save multiple AlphaPorno videos simultaneously without manual babysitting",
+      "Skip developer tools and complicated scripts to find hidden stream URLs",
+      "Keep your offline library private thanks to 100% local processing"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
+    "metadata": {
+      "stripe_product_id": "prod_TAg09llcKpydjr"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-alpha-porno-downloader",
+      "purchase-adult-downloaders"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "alpha-porno-video-downloader"
+    ]
+  }
 }

@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState, type MouseEvent } from "react"
 
 import { HomeTemplate } from "./HomeTemplate"
 import { Button, Card, CardContent, CardHeader, CardTitle, Badge, Input } from "@repo/ui"
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer"
 
 import { ProductStructuredDataScripts } from "@/components/product/ProductStructuredDataScripts"
 import { ProductStructuredData } from "@/schema/structured-data-components"
@@ -30,9 +29,10 @@ export type ClientHomeProps = {
   siteConfig: SiteConfig
   navProps: PrimaryNavProps
   videoEntries: ProductVideoEntry[]
+  trademarkNotice?: string | null
 }
 
-export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries }: ClientHomeProps) {
+export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntries, trademarkNotice }: ClientHomeProps) {
   const resolvedPosts = useMemo(() => {
     const desired = product.related_posts ?? []
     if (!desired.length) {
@@ -44,7 +44,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       .sort((a, b) => (order.get(a.slug)! - order.get(b.slug)!))
   }, [posts, product.related_posts])
 
-  const homeProps = productToHomeTemplate(product, resolvedPosts)
+  const showPrices = siteConfig.storefront?.showPrices !== false
+  const homeProps = productToHomeTemplate(product, resolvedPosts, { showPrices })
   const derivedCategories =
     Array.isArray(homeProps.categories) && homeProps.categories.length > 0
       ? homeProps.categories
@@ -72,7 +73,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   // Set up Dub-aware checkout handler
   // This intercepts buy button clicks to create programmatic checkout sessions
   // with proper Dub attribution metadata when stripe.price_id is available
-  const shouldOpenInNewTab = resolvedCta.opensInNewTab
   const isInternalCheckoutRoute = (() => {
     if (typeof resolvedCta.href !== "string") return false
     if (resolvedCta.href.startsWith("/checkout/")) return true
@@ -83,34 +83,44 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       return false
     }
   })()
-  const renderedCheckoutHref = (() => {
-    if (!isInternalCheckoutRoute || typeof resolvedCta.href !== "string") return resolvedCta.href
-    // If we’re on localhost and the CTA points to apps.serp.co/checkout, convert to a local relative path for easier testing
+
+  const [clientCheckoutHref, setClientCheckoutHref] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!isInternalCheckoutRoute || typeof resolvedCta.href !== "string") {
+      setClientCheckoutHref(null)
+      return
+    }
+
+    let nextHref = resolvedCta.href
+
     try {
-      // window only exists client-side; on SSR just return the absolute href
-      if (typeof window === 'undefined') return resolvedCta.href
       const host = window.location.hostname
-      const isLocal = host === 'localhost' || host === '127.0.0.1'
-      const u = new URL(resolvedCta.href, window.location.origin)
-      if (isLocal && u.pathname.startsWith('/checkout/')) {
-        return `${u.pathname}${u.search ?? ''}`
+      const isLocal = host === "localhost" || host === "127.0.0.1"
+      const url = new URL(resolvedCta.href, window.location.origin)
+      if (isLocal && url.pathname.startsWith("/checkout/")) {
+        nextHref = `${url.pathname}${url.search ?? ""}`
       }
-    } catch {}
-    return resolvedCta.href
-  })()
+    } catch {
+      nextHref = resolvedCta.href
+    }
+
+    setClientCheckoutHref((prev) => (prev === nextHref ? prev : nextHref))
+  }, [isInternalCheckoutRoute, resolvedCta.href])
   // If CTA is explicitly the internal checkout route, render it (optionally localhost-normalized)
   // Otherwise, use "#" when we have a price ID (intercept to add Dub metadata)
-  const resolvedCtaHref = isInternalCheckoutRoute ? renderedCheckoutHref : resolvedCta.href
+  const resolvedCtaHref = isInternalCheckoutRoute ? clientCheckoutHref ?? resolvedCta.href : resolvedCta.href
   const resolvedCtaText = resolvedCta.text
   const resolvedCtaRel = resolvedCta.rel
+  const normalizedCta = useMemo(
+    () => ({ ...resolvedCta, href: resolvedCtaHref }),
+    [resolvedCta, resolvedCtaHref],
+  )
   const videoSection = videosToDisplay.length > 0 ? <ProductVideosSection videos={videosToDisplay} /> : null
 
   const showPosts = siteConfig.blog?.enabled !== false
 
   const Navbar = useCallback(() => <PrimaryNavbar {...navProps} />, [navProps])
-
-  const footerSite = useMemo(() => ({ name: "SERP", url: "https://serp.co" }), [])
-  const Footer = useCallback(() => <FooterComposite site={footerSite} />, [footerSite])
 
   const productImages = useMemo(() => {
     const candidates = [
@@ -147,9 +157,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     handleCtaClick("pricing")
   }, [handleCtaClick])
 
-  const handleStickyCtaClick = useCallback(() => {
-    handleCtaClick("sticky_bar")
-  }, [handleCtaClick])
+  const handleStickyCheckoutClick = useCallback(
+    (event?: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+      event?.preventDefault?.()
+      handleCtaClick("sticky_bar")
+    },
+    [handleCtaClick],
+  )
 
   const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
@@ -183,19 +197,20 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       )}
 
       <HomeTemplate
-        ui={{ Navbar, Footer, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
+        ui={{ Navbar, Button, Card, CardHeader, CardTitle, CardContent, Badge, Input }}
         {...homeProps}
         categories={derivedCategories}
+        trademarkNotice={trademarkNotice}
         showPosts={showPosts}
         posts={showPosts ? homeProps.posts : []}
         postsTitle={showPosts ? homeProps.postsTitle : undefined}
-        cta={{ ...resolvedCta, href: resolvedCtaHref }}
-        ctaMode={resolvedCta.mode}
-        ctaHref={resolvedCtaHref}
+        cta={normalizedCta}
+        ctaMode={normalizedCta.mode}
+        ctaHref={normalizedCta.href}
         ctaText={resolvedCtaText}
-        ctaTarget={resolvedCta.target}
+        ctaTarget={normalizedCta.target}
         ctaRel={resolvedCtaRel}
-        ctaOpensInNewTab={resolvedCta.opensInNewTab}
+        ctaOpensInNewTab={normalizedCta.opensInNewTab}
         onPrimaryCtaClick={handlePrimaryCtaClick}
         breadcrumbs={[
           { label: "Home", href: "/" },
@@ -211,7 +226,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
                 onCtaClick: handlePrimaryCtaClick,
                 ctaLoading: false,
                 ctaDisabled: false,
-                ctaHref: resolvedCtaHref,
+                ctaHref: normalizedCta.href,
                 ctaText: homeProps.pricing?.ctaText ?? resolvedCtaText,
                 ctaExtra: null,
               }
@@ -220,14 +235,12 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       />
 
       <ProductStickyBar
-        variant="default"
         show={showStickyBar}
-        productName={product.name}
-        ctaLabel={resolvedCtaText}
-        onClick={handleStickyCtaClick}
-        href={resolvedCtaHref}
-        openInNewTab={shouldOpenInNewTab}
-        rel={resolvedCtaRel}
+        product={product}
+        waitlistEnabled={isPreRelease}
+        onWaitlistClick={waitlist.open}
+        checkoutCta={normalizedCta}
+        onCheckoutClick={handleStickyCheckoutClick}
       />
 
       <GhlWaitlistModal open={waitlist.isOpen} onClose={waitlist.close} />

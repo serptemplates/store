@@ -1,24 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "AI Images",
   "name": "AI Bulk Image Generator",
   "tagline": "Generate entire image sets from one prompt.",
   "slug": "ai-bulk-image-generator",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "AI Bulk Image Generator creates consistent image batches for ads, posts, and product pages. Provide a prompt or template and generate variations at scale with sizes, formats, and background options ready for publishing.",
   "seo_title": "AI Bulk Image Generator",
   "seo_description": "Create image batches from prompts and templates for ads, posts, and product pages.",
-  "serply_link": "https://serp.ly/ai-bulk-image-generator",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
-  "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
   "status": "pre_release",
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/ai-bulk-image-generator",
-  "github_repo_tags": [],
   "features": [],
   "faqs": [],
   "reviews": [],
@@ -34,6 +26,28 @@
     "ai generator",
     "creative"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/ai-bulk-image-generator",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
+  "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
+  "github_repo_url": "https://github.com/serpapps/ai-bulk-image-generator",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -45,11 +59,5 @@
     "entitlements": [
       "ai-bulk-image-generator"
     ]
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

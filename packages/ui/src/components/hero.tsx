@@ -26,9 +26,10 @@ type HeroProps = {
   links?: HeroLink[];
   media?: HeroMediaProps["items"];
   eyebrow?: ReactNode;
+  footnote?: ReactNode;
 };
 
-const Hero = ({ title, description, highlight, links, media, eyebrow }: HeroProps) => {
+const Hero = ({ title, description, highlight, links, media, eyebrow, footnote }: HeroProps) => {
   const mediaRef = useRef<HeroMediaHandle>(null);
 
   const processedMedia = useMemo(() => {
@@ -94,6 +95,11 @@ const Hero = ({ title, description, highlight, links, media, eyebrow }: HeroProp
           )}
         </div>
       </div>
+      {footnote ? (
+        <div className="container relative pb-10">
+          <div className="mx-auto mt-8 max-w-4xl px-4 text-center">{footnote}</div>
+        </div>
+      ) : null}
     </section>
   );
 };

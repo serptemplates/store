@@ -457,9 +457,3 @@ curl -b cookies.txt \
 - MP4 usually embedded in page data
 - May require API access or scraping
 
-## See Also
-
-- [H.264 Video Codec](../codecs/h264.md)
-- [AAC Audio Codec](../codecs/aac.md)
-- [WebM Container Format](../containers/webm.md)
-- [HLS Streaming Protocol](../streaming/hls.md)

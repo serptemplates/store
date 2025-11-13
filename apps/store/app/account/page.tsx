@@ -11,7 +11,6 @@ import { getSiteConfig } from "@/lib/site-config";
 import { getAllProducts } from "@/lib/products/product";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
-import { Footer as FooterComposite } from "@repo/ui/composites/Footer";
 
 export const dynamic = "force-dynamic";
 
@@ -122,7 +121,6 @@ export default async function AccountPage({
         </div>
       </main>
 
-      <FooterComposite site={{ name: "SERP", url: "https://serp.co" }} />
     </div>
   );
 }

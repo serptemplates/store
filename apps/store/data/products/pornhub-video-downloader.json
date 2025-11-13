@@ -1,30 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Pornhub",
   "name": "Pornhub Video Downloader",
   "tagline": "Save Pornhub videos instantly for offline viewing.",
   "slug": "pornhub-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Pornhub",
+    "legal_entity": "Licensing IP International S.à r.l."
+  },
   "description": "Pornhub Video Downloader saves scenes from Pornhub, Pornhub Premium, and Thumbzilla as clean MP4 files. It detects free and subscriber-only players, lists every available resolution, and converts adaptive streams in the background so you can watch offline without buffering or ads.\n\nStay logged in, pick your quality, and the extension handles headers, chunk downloads, and merging automatically. Progress stays visible even if you reload the page, and your downloads finish quietly in Chrome, Edge, Firefox, Brave, or Opera.",
-  "seo_title": "Pornhub Video Downloader | Download Pornhub Videos",
-  "seo_description": "Download Pornhub videos easily for offline viewing. Fast, reliable Pornhub video downloader with high-quality downloads.",
-  "serply_link": "https://serp.ly/pornhub-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pornhub-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/pornhub-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/pornhub-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=pornhub-video-downloader",
+  "seo_title": "Pornhub Video Downloader (Unofficial) | Download Pornhub Videos",
+  "seo_description": "Pornhub Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Pornhub videos easily for offline viewing. Fast, reliable Pornhub video downloader with high-quality downloads.",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
-      "alt": "Pornhub Video Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/pornhub-video-downloader",
-  "github_repo_tags": [],
   "features": [
     "Detects Pornhub, Pornhub Premium, and Thumbzilla players automatically",
     "Uses your Premium session to access subscriber-only streams securely",
@@ -34,21 +22,6 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
     "Stores licence data locally with no analytics or external tracking"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "Lifetime licence covering free and Premium downloads with stream conversion. Sales are final.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/pornhub-video-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Save favourite scenes from Pornhub, Premium, and Thumbzilla without quality loss",
-      "Build private offline collections free from ads, buffering, or link removals",
-      "Keep downloads discreet with all processing handled locally"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a Pornhub video with this extension?",
@@ -77,6 +50,10 @@
     {
       "question": "Is my activity private?",
       "answer": "All conversion happens locally and no analytics are collected. Only the final MP4 touches your filesystem so your viewing remains private."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -126,30 +103,6 @@
     "thumbzilla downloader",
     "offline pornhub collection"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1SO0eY06JrOmKRCmCf4EluDt",
-    "metadata": {
-      "stripe_product_id": "prod_Sqsjylj8Z89k1v"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-pornhub-video-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "pornhub-video-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": true,
@@ -192,5 +145,71 @@
       "justification": "Grants controlled access to pornhub.com, premium domains, and thumbzilla.com\nso the extension can fetch streams only from supported sites."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
+      "alt": "Pornhub Video Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/pornhub-video-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pornhub-video-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/pornhub-video-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/pornhub-video-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=pornhub-video-downloader",
+  "github_repo_url": "https://github.com/serpapps/pornhub-video-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence covering free and Premium downloads with stream conversion. Sales are final.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/pornhub-video-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Save favourite scenes from Pornhub, Premium, and Thumbzilla without quality loss",
+      "Build private offline collections free from ads, buffering, or link removals",
+      "Keep downloads discreet with all processing handled locally"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1SO0eY06JrOmKRCmCf4EluDt",
+    "metadata": {
+      "stripe_product_id": "prod_Sqsjylj8Z89k1v"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-pornhub-video-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "pornhub-video-downloader"
+    ]
+  }
 }

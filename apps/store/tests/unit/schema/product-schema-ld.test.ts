@@ -7,6 +7,9 @@ describe("generateProductSchemaLD", () => {
     const schema = generateProductSchemaLD({
       product: {
         slug: "sample-product",
+        trademark_metadata: {
+          uses_trademarked_brand: false,
+        },
         seo_title: "Sample Product",
         seo_description: "Sample description",
         name: "Sample Product",
@@ -48,6 +51,7 @@ describe("generateProductSchemaLD", () => {
         edge_addons_store_link: undefined,
         producthunt_link: undefined,
         permission_justifications: [],
+        resource_links: [],
       } satisfies SchemaProduct,
       url: "https://store.example.com/sample-product",
       storeUrl: "https://store.example.com",

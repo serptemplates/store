@@ -1,31 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "Xfantazy",
   "name": "Xfantazy Downloader",
   "tagline": "Save Xfantazy videos in their original resolution.",
   "slug": "xfantazy-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Xfantazy Downloader keeps downloads predictable for editors and viewers who have permission to access Xfantazy content. It captures the source files directly, preserving quality, performer tags, and timestamps.\n\nUse it to organize private libraries, hand off clips to collaborators, or prep travel drives without depending on streaming access.",
   "seo_title": "Xfantazy Downloader | Download Xfantazy Videos",
   "seo_description": "Download Xfantazy videos you are authorized to view. Fast, private Xfantazy downloader with batch support.",
-  "serply_link": "https://serp.ly/xfantazy-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xfantazy-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/xfantazy-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/xfantazy-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=xfantazy-downloader",
   "status": "pre_release",
-  "featured_image": "/media/products/xfantazy-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/xfantazy-downloader/xfantazy-homepage.webp",
-      "alt": "Xfantazy Downloader website homepage"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": null,
-  "github_repo_tags": [],
   "features": [
     "Download Xfantazy videos you can view without quality loss",
     "Preserve performer tags, titles, and timestamps automatically",
@@ -33,16 +18,6 @@
     "Local-first workflow keeps sensitive content on your storage",
     "Works across Windows, macOS, Linux, and modern browsers"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "Does Xfantazy Downloader work with premium content?",
@@ -63,6 +38,10 @@
     {
       "question": "Can I export metadata?",
       "answer": "Performer tags and video data are stored alongside the file so you can reference them later."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -109,6 +88,45 @@
     "xfantazy downloader",
     "xfantazy download tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/xfantazy-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/xfantazy-downloader/xfantazy-homepage.webp",
+      "alt": "Xfantazy Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/xfantazy-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xfantazy-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/xfantazy-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/xfantazy-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=xfantazy-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9",
+    "original_price": "$17.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -116,16 +134,13 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "stripe": {
+    "metadata": {}
+  },
   "ghl": {
     "tag_ids": [
       "purchase-xfantazy-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

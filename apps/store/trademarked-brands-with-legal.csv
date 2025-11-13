@@ -1,0 +1,88 @@
+trade_name,legal_entity,product_name,file
+123movies,Unknown / no verifiable registrant,123movies Downloader,123movies-downloader.json
+123RF,Inmagine Pte Ltd,123rf Downloader,123rf-downloader.json
+Adobe,Adobe Inc.,Adobe Stock Downloader,adobe-stock-downloader.json
+Alamy,Alamy Limited,Alamy Downloader,alamy-downloader.json
+Amazon,"Amazon Technologies, Inc.",Amazon Video Downloader,amazon-video-downloader.json
+Beeg,Unknown / no verifiable registrant,Beeg Video Downloader,beeg-video-downloader.json
+Bilibili,"Shanghai Hode Information Technology Co., Ltd.",Bilibili Downloader,bilibili-downloader.json
+BongaCams,Proweb Progressive Development Ltd,Bongacams Downloader,bongacams-downloader.json
+CamSoda,"Secure Live Media, LLC",Camsoda Downloader,camsoda-downloader.json
+Canva,Canva Pty Ltd,Canva Downloader,canva-downloader.json
+Chaturbate,"Multi Media, LLC",Chaturbate Downloader,chaturbate-downloader.json
+Circle,"CircleCo, Inc.",Circle Downloader,circle-downloader.json
+Coursera,"Coursera, Inc.",Coursera Downloader,coursera-downloader.json
+Dailymotion,Dailymotion SA,Dailymotion Downloader,dailymotion-downloader.json
+Depositphotos,"Depositphotos, Inc.",Depositphotos Downloader,depositphotos-downloader.json
+DeviantArt,"DeviantArt, Inc.",Deviantart Downloader,deviantart-downloader.json
+Dreamstime,"Dreamstime.com, LLC",Dreamstime Downloader,dreamstime-downloader.json
+Eporner,Marcin Wanat,Eporner Video Downloader,eporner-video-downloader.json
+Erome,Unknown / no verifiable registrant,Erome Downloader,erome-downloader.json
+Facebook,"Meta Platforms, Inc.",Facebook Video Downloader,facebook-video-downloader.json
+Flickr,"SmugMug, Inc.",Flickr Downloader,flickr-downloader.json
+Freepik,"Freepik Company, S.L.",Freepik Downloader,freepik-downloader.json
+Getty Images,"Getty Images (US), Inc.",Getty Images Downloader,getty-images-downloader.json
+Giphy,"Giphy, Inc. (a Shutterstock company)",Giphy Downloader,giphy-downloader.json
+GoHighLevel,HighLevel Inc.,Gohighlevel Downloader,gohighlevel-downloader.json
+Gokollab,HighLevel Inc.,Gokollab Downloader,gokollab-downloader.json
+Hulu,"Hulu, LLC",Hulu Downloader,hulu-downloader.json
+Instagram,"Instagram, LLC",Instagram Downloader,instagram-downloader.json
+Internet Archive,Internet Archive,Internet Archive Downloader,internet-archive-downloader.json
+iStock,iStockphoto LP,Istock Downloader,istock-downloader.json
+iStock,iStockphoto LP,iStockphoto Downloader,istockphoto-downloader.json
+Kajabi,"Kajabi, LLC",Kajabi Video Downloader,kajabi-video-downloader.json
+Khan Academy,"Khan Academy, Inc.",Khan Academy Downloader,khan-academy-downloader.json
+Kick,Kick Streaming Pty Ltd,Kick Clip Downloader,kick-clip-downloader.json
+LearnDash,"Liquid Web, LLC",Learndash Downloader,learndash-downloader.json
+LearnWorlds,LearnWorlds (CY) Ltd,Learnworlds Downloader,learnworlds-downloader.json
+LinkedIn,LinkedIn Corporation,Linkedin Learning Downloader,linkedin-learning-downloader.json
+LiveJasmin,Byborg IP S.à r.l.,Livejasmin Downloader,livejasmin-downloader.json
+Loom,"Loom, Inc.",Loom Video Downloader,loom-video-downloader.json
+Moodle,Moodle Pty Ltd,Moodle Downloader,moodle-downloader.json
+MyFreeCams,"MFCXY, Inc.",Myfreecams Downloader,myfreecams-downloader.json
+Netflix,Unknown / no verifiable registrant,Netflix Downloader,netflix-downloader.json
+OnlyFans,Fenix International Limited,Onlyfans Downloader,onlyfans-downloader.json
+Patreon,"Patreon, Inc.",Patreon Downloader,patreon-downloader.json
+Pexels,Pexels GmbH,Pexels Video Downloader,pexels-video-downloader.json
+Pinterest,"Pinterest, Inc.",Pinterest Downloader,pinterest-downloader.json
+Pixabay,Pixabay GmbH,Pixabay Downloader,pixabay-downloader.json
+Podia,"Podia Labs, Inc.",Podia Downloader,podia-downloader.json
+Pornhub,Licensing IP International S.à r.l.,Pornhub Video Downloader,pornhub-video-downloader.json
+Rawpixel,Rawpixel Ltd,Rawpixel Downloader,rawpixel-downloader.json
+Reddit,"Reddit, Inc.",Reddit Downloader,reddit-downloader.json
+Redgifs,Vergil LLC,Redgifs Downloader,redgifs-downloader.json
+Redtube,Licensing IP International S.à r.l.,Redtube Video Downloader,redtube-video-downloader.json
+Scribd,"Scribd, Inc.",Scribd Downloader,scribd-downloader.json
+Shutterstock,"Shutterstock, Inc.",Shutterstock Downloader,shutterstock-downloader.json
+Skillshare,"Skillshare, Inc.",Skillshare Downloader,skillshare-downloader.json
+Skool,"Skool, Inc.",Skool Video Downloader,skool-video-downloader.json
+Snapchat,Snap Inc.,Snapchat Video Downloader,snapchat-video-downloader.json
+SoundCloud,SoundCloud Global Limited & Co. KG,Soundcloud Downloader,soundcloud-downloader.json
+SpankBang,Unknown / no verifiable registrant,SpankBang Video Downloader,spankbang-video-downloader.json
+Sprout,"SproutVideo, LLC",Sprout Video Downloader,sprout-video-downloader.json
+Stocksy,Stocksy United,Stocksy Downloader,stocksy-downloader.json
+Stockvault,Unknown / no verifiable registrant,Stockvault Downloader,stockvault-downloader.json
+Storyblocks,"Footage Firm, Inc. (d/b/a Storyblocks)",Storyblocks Downloader,storyblocks-downloader.json
+Stripchat,Unknown / complex multi-entity structure,Stripchat Video Downloader,stripchat-video-downloader.json
+Teachable,"Teachable, Inc.",Teachable Video Downloader,teachable-video-downloader.json
+Telegram,Telegram FZ-LLC,Telegram Video Downloader,telegram-video-downloader.json
+Terabox,Flextech Inc.,Terabox Downloader,terabox-downloader.json
+Thinkific,Thinkific Labs Inc.,Thinkific Downloader,thinkific-downloader.json
+TikTok,Bytedance Ltd.,Tiktok Downloader,tiktok-downloader.json
+TNAFlix,Unknown / TNAFlix Network,TNAFlix Video Downloader,tnaflix-video-downloader.json
+Tubi,"Tubi, Inc.",Tubi Downloader,tubi-downloader.json
+Tumblr,"Tumblr, Inc.",Tumblr Video Downloader,tumblr-video-downloader.json
+Twitch,"Twitch Interactive, Inc.",Twitch Video Downloader,twitch-video-downloader.json
+Twitter,X Corp.,Twitter Video Downloader,twitter-video-downloader.json
+Udemy,"Udemy, Inc.",Udemy Video Downloader,udemy-video-downloader.json
+Unsplash,Unsplash Inc.,Unsplash Downloader,unsplash-downloader.json
+VectorStock,VectorStock Limited,Vectorstock Downloader,vectorstock-downloader.json
+Vimeo,"Vimeo.com, Inc.",Vimeo Video Downloader,vimeo-video-downloader.json
+VK,VK Company Limited,Vk Video Downloader,vk-video-downloader.json
+Whop,"Whop, Inc.",Whop Video Downloader,whop-video-downloader.json
+Wistia,"Wistia, Inc.",Wistia Video Downloader,wistia-video-downloader.json
+XHamster,Hammy Media Ltd,Xhamster Video Downloader,xhamster-video-downloader.json
+XNXX,WGCZ a.s.,XNXX Video Downloader,xnxx-video-downloader.json
+XVideos,"WebGroup Czech Republic, a.s. (WGCZ)",XVideos Downloader,xvideos-downloader.json
+YouPorn,Licensing IP International S.à r.l.,Youporn Video Downloader,youporn-video-downloader.json
+YouTube,Google LLC,Youtube Downloader,youtube-downloader.json

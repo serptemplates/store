@@ -11,10 +11,20 @@ export type SiteConfig = {
   navigation?: {
     links?: Array<{ label: string; href: string }>;
   };
+  storefront?: {
+    showPrices?: boolean;
+  };
   blog?: {
     enabled?: boolean;
   };
   excludeSlugs?: string[];
+  policy?: {
+    trademark?: {
+      disclaimerTemplate?: string;
+      domainSuffix?: string;
+      fallbackLegalEntity?: string | null;
+    };
+  };
 };
 
 const defaultConfigPath = path.join(process.cwd(), "data", "site.config.json");

@@ -14,6 +14,8 @@ const NAV_LINKS: PrimaryNavLink[] = [
       { label: "Help Center", href: "https://serpcompany.tawk.help/", external: true },
       { label: "Tickets", href: "https://serpcompany.tawk.help/#tickets", external: true },
       { label: "Chat Support", href: "https://tawk.to/serpcompany", external: true },
+      { label: "Terms of Service", href: "/legal/terms" },
+      { label: "DMCA Policy", href: "/legal/dmca" },
     ],
   },
   { label: "Account", href: "/account" },

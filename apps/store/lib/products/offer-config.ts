@@ -37,6 +37,11 @@ const ghlConfigSchema = z
   })
   .optional();
 
+const optionalItemConfigSchema = z.object({
+  product_id: z.string(),
+  quantity: z.number().int().min(1).default(1).optional(),
+});
+
 const offerConfigSchema = z.object({
   id: z.string(),
   stripePriceId: z.string(),
@@ -47,6 +52,7 @@ const offerConfigSchema = z.object({
   productName: z.string().optional(),
   productDescription: z.string().optional(),
   productImage: z.string().url().optional(),
+  optionalItems: z.array(optionalItemConfigSchema).optional(),
   ghl: ghlConfigSchema,
 });
 
@@ -150,6 +156,12 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       productName: product.name,
       productDescription: product.tagline ?? product.seo_description,
       productImage: productImageUrl,
+      optionalItems: stripeConfig.optional_items && stripeConfig.optional_items.length > 0
+        ? stripeConfig.optional_items.map(item => ({
+            product_id: item.product_id,
+            quantity: item.quantity ?? 1,
+          }))
+        : undefined,
       ghl: product.ghl
         ? {
             pipelineId: product.ghl.pipeline_id ?? undefined,

@@ -1,31 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "Fansly",
   "name": "Fansly Downloader",
   "tagline": "Save approved Fansly media for private libraries.",
   "slug": "fansly-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Fansly Downloader helps creators and authorized viewers archive Fansly photos and videos they have permission to access. Instead of juggling unstable browser extensions, it keeps downloads fast, consistent, and organized.\n\nUse it to backup subscriber content, deliver media to clients, or keep personal archives available when you're working offline while respecting creator rights.",
   "seo_title": "Fansly Downloader | Download Fansly Media",
   "seo_description": "Download approved Fansly photos and videos for personal archiving. Fast, private Fansly downloader for authorized users.",
-  "serply_link": "https://serp.ly/fansly-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/fansly-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/fansly-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/fansly-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=fansly-downloader",
   "status": "pre_release",
-  "featured_image": "/media/products/fansly-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/fansly-downloader/fansly-homepage.webp",
-      "alt": "Fansly Downloader website homepage"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": null,
-  "github_repo_tags": [],
   "features": [
     "Download media you are authorized to view in original quality",
     "Preserve file naming and folder organization for each creator",
@@ -33,16 +18,6 @@
     "Local-first workflows ensure sensitive content stays on your device",
     "Works on Windows, macOS, Linux, and major browsers"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Secure Your Copy",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "Does Fansly Downloader require my account login?",
@@ -63,6 +38,10 @@
     {
       "question": "Does it support videos and photos?",
       "answer": "Yes. Video, photo, and gallery media download in their original resolutions."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -110,6 +89,45 @@
     "fansly downloader",
     "fansly download tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/fansly-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/fansly-downloader/fansly-homepage.webp",
+      "alt": "Fansly Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/fansly-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/fansly-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/fansly-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/fansly-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=fansly-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9",
+    "original_price": "$17.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Secure Your Copy",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -117,16 +135,13 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "stripe": {
+    "metadata": {}
+  },
   "ghl": {
     "tag_ids": [
       "purchase-fansly-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

@@ -1,4 +1,32 @@
-import { productSchema, type ProductData } from "@/lib/products/product-schema";
+import { LEGAL_FAQ_TEMPLATE, productSchema, type ProductData } from "@/lib/products/product-schema";
+
+const LEGAL_FAQ_NORMALIZED_QUESTION = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
+
+function ensureLegalFaqEntries(faqs: ProductData["faqs"]): ProductData["faqs"] {
+  const list = Array.isArray(faqs) ? faqs.slice() : [];
+  const index = list.findIndex((faq) => {
+    const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
+    return question === LEGAL_FAQ_NORMALIZED_QUESTION;
+  });
+
+  if (index === -1) {
+    list.push({ ...LEGAL_FAQ_TEMPLATE });
+    return list;
+  }
+
+  const current = list[index] ?? {};
+  if (current.question === LEGAL_FAQ_TEMPLATE.question && current.answer === LEGAL_FAQ_TEMPLATE.answer) {
+    return list;
+  }
+
+  list[index] = {
+    ...current,
+    question: LEGAL_FAQ_TEMPLATE.question,
+    answer: LEGAL_FAQ_TEMPLATE.answer,
+  };
+
+  return list;
+}
 
 type PricingOverrides = Partial<NonNullable<ProductData["pricing"]>>;
 type ProductOverrides = Partial<Omit<ProductData, "pricing" | "categories" | "screenshots">> & {
@@ -12,6 +40,9 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
 
   const input: Record<string, unknown> = {
     slug: "demo-product",
+    trademark_metadata: {
+      uses_trademarked_brand: false,
+    },
     platform: "Web",
     seo_title: "Demo Product Title",
     seo_description: "Demo SEO description",
@@ -35,6 +66,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
       benefits: [],
       ...pricingOverrides,
     },
+    faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
     success_url: "https://apps.serp.co/checkout/success?product=demo-product&session_id={CHECKOUT_SESSION_ID}",
     cancel_url: "https://apps.serp.co/checkout?product=demo-product",
     categories: categories ?? ["AI Tools"],
@@ -46,6 +78,8 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
       ],
     ...rest,
   };
+
+  input.faqs = ensureLegalFaqEntries(input.faqs as ProductData["faqs"]);
 
   if (pricingOverrides) {
     const pricing = input.pricing as Record<string, unknown>;
@@ -61,6 +95,13 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
         delete pricing[key as string];
       }
     }
+  }
+
+  // Add price_id for live products
+  if (input.status === "live" && !input.stripe) {
+    input.stripe = {
+      price_id: "price_1DEMO1234567890",
+    };
   }
 
   return productSchema.parse(input);

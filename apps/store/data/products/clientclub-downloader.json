@@ -1,26 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Clientclub",
   "name": "Clientclub Downloader",
   "tagline": "Save Clientclub content instantly to your device.",
   "slug": "clientclub-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "ClientClub",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
   "description": "ClientClub Downloader keeps agency training and community lessons within reach even after access expires. It recognises native ClientClub uploads alongside embedded videos from YouTube, Vimeo, Wistia, Loom, and GoHighLevel, presenting everything inside one popup so you can grab the exact lesson you need.\n\nPick the rendition you prefer, queue up to three downloads at once, and let the global progress panel track stage, speed, and ETA while background workers merge adaptive streams into MP4s. The extension relies on your existing ClientClub session, stores settings locally, and sends a desktop alert the moment a file is ready for offline study.",
-  "seo_title": "Clientclub Downloader | Archive ClientClub and embedded lessons offline",
-  "seo_description": "Download ClientClub trainings plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds as MP4 files with queues, quality controls, and secure local processing.",
-  "serply_link": "https://serp.ly/clientclub-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/clientclub-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/clientclub-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
+  "seo_title": "Clientclub Downloader (Unofficial) | Archive ClientClub and embedded lessons offline",
+  "seo_description": "Clientclub Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download ClientClub trainings plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds as MP4 files with queues, quality controls, and secure local processing.",
   "status": "live",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpdownloaders/clientclub-downloader/main/images/featured.gif",
-  "screenshots": [],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/clientclub-downloader",
-  "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
   "features": [
     "Detects ClientClub uploads plus YouTube, Vimeo, Wistia, Loom, and GoHighLevel embeds",
     "Queue up to three simultaneous downloads with automatic rollover for additional lessons",
@@ -29,21 +21,6 @@
     "Background merging converts HLS and DASH streams into a single MP4 without re-encoding",
     "Uses your existing ClientClub login while keeping licence data stored locally"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with ongoing compatibility updates. No free trial and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/clientclub-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Preserve ClientClub trainings before memberships or portals change",
-      "Consolidate embedded lessons into one MP4 archive without juggling tools",
-      "Study offline during travel or limited connectivity without buffering"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download a ClientClub lesson with this extension?",
@@ -64,6 +41,10 @@
     {
       "question": "Is there a free version or refund policy?",
       "answer": "A paid licence is required and all sales are final. Updates for new ClientClub player changes are included for active customers."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -114,30 +95,6 @@
     "chrome clientclub extension",
     "agency training downloader"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpdownloaders/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Gg3oBtdLifN"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-clientclub-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "clientclub-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": false,
@@ -180,5 +137,67 @@
       "justification": "Restricts privileged access to clientclub.com and related training CDNs, keeping\nthe extension scoped to relevant pages."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image_gif": "https://raw.githubusercontent.com/serpdownloaders/clientclub-downloader/main/images/featured.gif",
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/clientclub-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/clientclub-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/clientclub-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
+  "github_repo_url": "https://github.com/serpapps/clientclub-downloader",
+  "github_repo_tags": [],
+  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime licence with ongoing compatibility updates. No free trial and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/clientclub-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Preserve ClientClub trainings before memberships or portals change",
+      "Consolidate embedded lessons into one MP4 archive without juggling tools",
+      "Study offline during travel or limited connectivity without buffering"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpdownloaders/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Gg3oBtdLifN"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-clientclub-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "clientclub-downloader"
+    ]
+  }
 }

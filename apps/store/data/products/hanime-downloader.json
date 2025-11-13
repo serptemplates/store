@@ -1,31 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "hanime.tv",
   "name": "Hanime Downloader",
   "tagline": "Capture hanime.tv streams in original quality.",
   "slug": "hanime-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Hanime Downloader gives collectors a private way to save hanime.tv videos they have permission to view. Instead of juggling unreliable recorders, it pulls the original stream files so quality stays crisp end-to-end.\n\nUse it to archive niche titles, prep viewing libraries for travel, or back up purchases you want available without depending on internet access.",
   "seo_title": "Hanime Downloader | Download Hanime Videos",
   "seo_description": "Download hanime.tv videos you are permitted to view. Fast, private Hanime downloader tailored for collectors.",
-  "serply_link": "https://serp.ly/hanime-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hanime-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/hanime-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/hanime-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=hanime-downloader",
   "status": "pre_release",
-  "featured_image": "/media/products/hanime-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/hanime-downloader/hanime-homepage.webp",
-      "alt": "Hanime Downloader website homepage"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": null,
-  "github_repo_tags": [],
   "features": [
     "Save hanime.tv videos you are authorized to watch",
     "Maintain original resolution, subtitles, and metadata",
@@ -33,16 +18,6 @@
     "Local-first workflow keeps sensitive libraries offline",
     "Works across Windows, macOS, Linux, and modern browsers"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
   "faqs": [
     {
       "question": "Does Hanime Downloader bypass paywalls?",
@@ -63,6 +38,10 @@
     {
       "question": "What formats are supported?",
       "answer": "Files save in the original stream container, so you keep the exact quality provided by hanime.tv."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -109,6 +88,45 @@
     "hanime downloader",
     "hanime download tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/hanime-downloader/featured.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/hanime-downloader/hanime-homepage.webp",
+      "alt": "Hanime Downloader website homepage"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/hanime-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hanime-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/hanime-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/hanime-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=hanime-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9",
+    "original_price": "$17.00",
+    "note": "Contact us for current licensing options.",
+    "cta_text": "Get Notified 🔔",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -116,16 +134,13 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "stripe": {
+    "metadata": {}
+  },
   "ghl": {
     "tag_ids": [
       "purchase-hanime-downloader"
     ],
     "workflow_ids": []
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": false,
-  "popular": false,
-  "permission_justifications": [],
-  "brand": "SERP Apps"
+  }
 }

@@ -3,6 +3,7 @@ import path from "path"
 import { pathToFileURL } from "url"
 import Stripe from "stripe"
 import dotenv from "dotenv"
+import stripJsonComments from "strip-json-comments"
 import { productSchema, type ProductData } from "../lib/products/product-schema"
 import { isPreRelease } from "../lib/products/release-status"
 import {
@@ -368,7 +369,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
 
     let parsed: unknown
     try {
-      parsed = JSON.parse(raw)
+      parsed = JSON.parse(stripJsonComments(raw))
     } catch (error) {
       errors.push(`❌ ${fileLabel}: JSON parse error - ${(error as Error).message}`)
       continue

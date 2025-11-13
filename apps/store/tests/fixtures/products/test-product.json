@@ -3,6 +3,9 @@
   "name": "Test Product",
   "tagline": "The best test product.",
   "slug": "test-product",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "Detailed description of the test product.",
   "seo_title": "Test Product",
   "seo_description": "Test product description.",
@@ -25,7 +28,12 @@
     "cta_href": "https://apps.serp.co/checkout/test-product",
     "benefits": []
   },
-  "faqs": [],
+  "faqs": [
+    {
+      "question": "Is this legal?",
+      "answer": "This tool is provided for lawful, authorized use only. We are not attorneys, and this information is not legal advice—always download content you own or have permission to access, respect platform rate limits, and use a reputable VPN for privacy and IP protection."
+    }
+  ],
   "reviews": [],
   "supported_operating_systems": [],
   "supported_regions": [],
@@ -36,5 +44,8 @@
   "new_release": false,
   "popular": false,
   "permission_justifications": [],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  "stripe": {
+    "price_id": "price_1TEST1234567890"
+  }
 }

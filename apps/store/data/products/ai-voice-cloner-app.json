@@ -1,56 +1,16 @@
 {
+  // PRODUCT INFO
   "platform": "AI",
   "name": "AI Voice Cloner App",
   "tagline": "Turn text into natural-sounding speech and clone voices on your own computer with coding needed.",
   "slug": "ai-voice-cloner-app",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
   "description": "AI Voice Cloner App turns short audio samples into production-ready voice models in minutes. Feed it 3 to 30 seconds of clean speech and the neural engine analyses pitch, cadence, and inflection before letting you type any script and hear it back in the cloned voice.\n\nFlexible input options let you drag and drop WAV, MP3, FLAC, or record directly inside the desktop interface. A guided workflow trims your best segments, selects Fast, Balanced, or High Quality presets, and generates speech 5 to 10 times faster than real time with adjustable speed, pitch, and emphasis controls.\n\nEverything runs under a privacy-first architecture. Voice models, projects, and exports stay on your machine by default, with optional cloud acceleration, password-protected archives, invisible watermarks, and consent verification tools when you need them.\n\nHigh-quality source audio is essential—studio-style recordings produce near-human realism while noisy clips reduce accuracy. Use the app for ethical, disclosed projects such as creative production, accessibility, localization, and personal voice preservation.",
   "seo_title": "AI Voice Cloner App | Fast local voice cloning in minutes",
   "seo_description": "Clone voices offline with 3-30 second samples, real-time text-to-speech controls, watermarking, and privacy-first storage on your own device.",
-  "serply_link": "https://serp.ly/ai-voice-cloner-app",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-voice-cloner-app",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-voice-cloner-app",
-  "serp_co_product_page_url": "https://serp.co/products/ai-voice-cloner-app/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=ai-voice-cloner-app",
   "status": "live",
-  "featured_image": null,
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app.png",
-      "alt": "AI Voice Cloner App interface screenshot 1"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app2.png",
-      "alt": "AI Voice Cloner App interface screenshot 2"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app3.png",
-      "alt": "AI Voice Cloner App interface screenshot 3"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app4.png",
-      "alt": "AI Voice Cloner App interface screenshot 4"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app5.png",
-      "alt": "AI Voice Cloner App interface screenshot 5"
-    },
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app6.png",
-      "alt": "AI Voice Cloner App interface screenshot 6"
-    }
-  ],
-  "product_videos": [
-    "https://youtu.be/-N_H8Aejhh4"
-  ],
-  "related_videos": [
-    "https://youtu.be/N9kgW3dSfDU",
-    "https://youtu.be/84xVF-Ww_10"
-  ],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/ai-voice-cloner",
-  "github_repo_tags": [],
   "features": [
     "Create voice clones from 3-30 second samples with neural voice analysis",
     "Import WAV, MP3, FLAC, M4A, or record directly inside the desktop app",
@@ -63,21 +23,6 @@
     "Works on Windows, macOS, and Linux with CPU or NVIDIA GPU acceleration",
     "Export high-quality MP3, WAV, or OGG without relying on cloud services"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features and commercial rights. No refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/ai-voice-cloner-app",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Train new voice models in under 10 minutes with clean audio samples",
-      "Own 100% of your projects thanks to local-first storage and processing",
-      "Produce broadcast-ready voiceovers without recurring character fees"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I create my first voice clone?",
@@ -145,6 +90,92 @@
     "offline voice cloning",
     "ai voiceover tool"
   ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "microphone",
+      "justification": "Enables direct recording inside the app so you can capture clean source samples\nwithout leaving the cloning workflow."
+    },
+    {
+      "permission": "file_system",
+      "justification": "Required to save voice models, project files, and exported audio in your chosen\nfolders and to reopen them later."
+    },
+    {
+      "permission": "internet",
+      "justification": "Optional connection used for cloud acceleration, licence validation, and downloading\nmodel updates when you request them."
+    },
+    {
+      "permission": "audio_output",
+      "justification": "Lets the desktop app preview generated speech so you can review pronunciation,\npacing, and emphasis before exporting."
+    }
+  ],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": null,
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app.png",
+      "alt": "AI Voice Cloner App interface screenshot 1"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app2.png",
+      "alt": "AI Voice Cloner App interface screenshot 2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app3.png",
+      "alt": "AI Voice Cloner App interface screenshot 3"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app4.png",
+      "alt": "AI Voice Cloner App interface screenshot 4"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app5.png",
+      "alt": "AI Voice Cloner App interface screenshot 5"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app6.png",
+      "alt": "AI Voice Cloner App interface screenshot 6"
+    }
+  ],
+  "product_videos": [
+    "https://youtu.be/-N_H8Aejhh4"
+  ],
+  "related_videos": [
+    "https://youtu.be/N9kgW3dSfDU",
+    "https://youtu.be/84xVF-Ww_10"
+  ],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/ai-voice-cloner-app",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-voice-cloner-app",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-voice-cloner-app",
+  "serp_co_product_page_url": "https://serp.co/products/ai-voice-cloner-app/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=ai-voice-cloner-app",
+  "github_repo_url": "https://github.com/serpapps/ai-voice-cloner",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "$37.00",
+    "note": "Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features and commercial rights. No refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/ai-voice-cloner-app",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Train new voice models in under 10 minutes with clean audio samples",
+      "Own 100% of your projects thanks to local-first storage and processing",
+      "Produce broadcast-ready voiceovers without recurring character fees"
+    ]
+  },
   "return_policy": {
     "days": 0,
     "fees": "Non-refundable purchase",
@@ -168,28 +199,5 @@
     "entitlements": [
       "ai-voice-cloner-app"
     ]
-  },
-  "layout_type": "landing",
-  "featured": false,
-  "new_release": true,
-  "popular": false,
-  "permission_justifications": [
-    {
-      "permission": "microphone",
-      "justification": "Enables direct recording inside the app so you can capture clean source samples\nwithout leaving the cloning workflow."
-    },
-    {
-      "permission": "file_system",
-      "justification": "Required to save voice models, project files, and exported audio in your chosen\nfolders and to reopen them later."
-    },
-    {
-      "permission": "internet",
-      "justification": "Optional connection used for cloud acceleration, licence validation, and downloading\nmodel updates when you request them."
-    },
-    {
-      "permission": "audio_output",
-      "justification": "Lets the desktop app preview generated speech so you can review pronunciation,\npacing, and emphasis before exporting."
-    }
-  ],
-  "brand": "SERP Apps"
+  }
 }

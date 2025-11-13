@@ -1,5 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
+import stripJsonComments from "strip-json-comments";
+
 import { productSchema, type ProductData } from "./product-schema";
 import { isExcludedSlug } from "@/lib/site-config";
 
@@ -74,7 +76,8 @@ function assertValidProductSlug(slug: string, allowedSlugs?: readonly string[]):
 
 function readProductFile(filePath: string) {
   const raw = fs.readFileSync(filePath, "utf8");
-  const parsed = JSON.parse(raw);
+  const sanitized = stripJsonComments(raw);
+  const parsed = JSON.parse(sanitized);
   return productSchema.parse(parsed);
 }
 

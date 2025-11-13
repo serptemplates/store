@@ -31,7 +31,7 @@ test.describe("Homepage smoke", () => {
     await page.reload({ waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle");
 
-    await expect(page.getByRole("link", { name: "SERP Apps" })).toBeVisible();
+    await expect(page.getByRole("navigation").getByRole("link", { name: "SERP Apps" })).toBeVisible();
 
     // Filter out known third-party errors (Tawk.to, etc.)
     const blockingConsoleErrors = consoleMessages.filter(({ type, text, location }) => {

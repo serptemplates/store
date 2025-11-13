@@ -3,8 +3,11 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 
+import stripJsonComments from "strip-json-comments";
+
 import {
   FAQ_FIELD_ORDER,
+  LEGAL_FAQ_TEMPLATE,
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
   PRICING_FIELD_ORDER,
   PRODUCT_FIELD_ORDER,
@@ -12,18 +15,90 @@ import {
   REVIEW_FIELD_ORDER,
   SCREENSHOT_FIELD_ORDER,
   STRIPE_FIELD_ORDER,
+  TRADEMARK_METADATA_FIELD_ORDER,
+  requiresDownloaderLegalFaq,
   type ProductData,
   productSchema,
 } from "../lib/products/product-schema";
+import { resolveSeoDescription, resolveSeoTitle } from "../lib/products/unofficial-branding";
 import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "../lib/products/category-constants";
 import { getProductsDirectory } from "../lib/products/product";
 
 const PRODUCT_FILE_EXTENSION = ".json";
+const LEGAL_FAQ_NORMALIZED_QUESTION = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
+
+const COMMENT_SECTIONS = [
+  {
+    comment: "// PRODUCT INFO",
+    keys: [
+      "platform",
+      "name",
+      "tagline",
+      "slug",
+      "trademark_metadata",
+      "description",
+      "seo_title",
+      "seo_description",
+      "status",
+      "features",
+      "faqs",
+      "reviews",
+      "supported_operating_systems",
+      "supported_regions",
+      "categories",
+      "keywords",
+      "layout_type",
+      "featured",
+      "waitlist_url",
+      "new_release",
+      "popular",
+      "permission_justifications",
+      "brand",
+      "sku",
+    ],
+  },
+  {
+    comment: "// PRODUCT MEDIA",
+    keys: [
+      "featured_image",
+      "featured_image_gif",
+      "screenshots",
+      "product_videos",
+      "related_videos",
+      "related_posts",
+    ],
+  },
+  {
+    comment: "// PRODUCT PAGE LINKS",
+    keys: [
+      "serply_link",
+      "store_serp_co_product_page_url",
+      "apps_serp_co_product_page_url",
+      "serp_co_product_page_url",
+      "reddit_url",
+      "success_url",
+      "cancel_url",
+      "github_repo_url",
+      "github_repo_tags",
+      "chrome_webstore_link",
+      "firefox_addon_store_link",
+      "edge_addons_store_link",
+      "opera_addons_store_link",
+      "producthunt_link",
+      "resource_links",
+    ],
+  },
+  {
+    comment: "// PAYMENT DATA",
+    keys: ["pricing", "return_policy", "stripe", "ghl", "license"],
+  },
+] as const;
 
 const REQUIRED_PRODUCT_FIELDS = [
   "name",
   "tagline",
   "slug",
+  "trademark_metadata",
   "description",
   "seo_title",
   "seo_description",
@@ -157,11 +232,107 @@ function normalizeGhl(ghl: NonNullable<ProductData["ghl"]>): Record<string, unkn
   return ordered;
 }
 
+function ensureLegalFaqArray(value: unknown): Array<Record<string, unknown>> {
+  const faqs = Array.isArray(value) ? value.slice() : [];
+  const index = faqs.findIndex((faq) => {
+    if (!isRecord(faq)) return false;
+    const question = typeof faq.question === "string" ? faq.question.trim().toLowerCase() : "";
+    return question === LEGAL_FAQ_NORMALIZED_QUESTION;
+  });
+
+  if (index === -1) {
+    faqs.push({ ...LEGAL_FAQ_TEMPLATE });
+    return faqs as Array<Record<string, unknown>>;
+  }
+
+  const entry = isRecord(faqs[index]) ? (faqs[index] as Record<string, unknown>) : {};
+  const currentQuestion = entry.question;
+  const currentAnswer = entry.answer;
+  if (currentQuestion === LEGAL_FAQ_TEMPLATE.question && currentAnswer === LEGAL_FAQ_TEMPLATE.answer) {
+    return faqs as Array<Record<string, unknown>>;
+  }
+
+  faqs[index] = {
+    ...entry,
+    question: LEGAL_FAQ_TEMPLATE.question,
+    answer: LEGAL_FAQ_TEMPLATE.answer,
+  };
+
+  return faqs as Array<Record<string, unknown>>;
+}
+
+function applyUnofficialBranding(product: ProductData): ProductData {
+  const titleBase = product.seo_title?.trim() || product.name.trim();
+  const descriptionBase = product.seo_description?.trim() || undefined;
+  const updatedTitle = resolveSeoTitle(product, titleBase);
+  const updatedDescription = resolveSeoDescription(product, descriptionBase);
+
+  return {
+    ...product,
+    seo_title: updatedTitle,
+    seo_description: updatedDescription,
+  };
+}
+
+function ensureLegalFaq(product: ProductData): ProductData {
+  const faqs = Array.isArray(product.faqs) ? product.faqs : [];
+  const index = faqs.findIndex((faq) => {
+    const question = typeof faq?.question === "string" ? faq.question.trim().toLowerCase() : "";
+    return question === LEGAL_FAQ_NORMALIZED_QUESTION;
+  });
+
+  const requiresLegalFaq = requiresDownloaderLegalFaq(product);
+
+  if (!requiresLegalFaq) {
+    if (index === -1) {
+      return {
+        ...product,
+        faqs,
+      };
+    }
+
+    const nextFaqs = [...faqs];
+    nextFaqs.splice(index, 1);
+    return {
+      ...product,
+      faqs: nextFaqs,
+    };
+  }
+
+  if (index === -1) {
+    return {
+      ...product,
+      faqs: [...faqs, { ...LEGAL_FAQ_TEMPLATE }],
+    };
+  }
+
+  const current = faqs[index] ?? {};
+  if (
+    current.question === LEGAL_FAQ_TEMPLATE.question
+    && current.answer === LEGAL_FAQ_TEMPLATE.answer
+  ) {
+    return product;
+  }
+
+  const nextFaqs = [...faqs];
+  nextFaqs[index] = {
+    ...current,
+    question: LEGAL_FAQ_TEMPLATE.question,
+    answer: LEGAL_FAQ_TEMPLATE.answer,
+  };
+
+  return {
+    ...product,
+    faqs: nextFaqs,
+  };
+}
+
 function normalizeProduct(product: ProductData): Record<string, unknown> {
+  const prepared = ensureLegalFaq(product);
   const normalized: Record<string, unknown> = {};
 
   for (const key of PRODUCT_FIELD_ORDER) {
-    const value = product[key as keyof ProductData];
+    const value = prepared[key as keyof ProductData];
     if (value === undefined) {
       continue;
     }
@@ -209,6 +380,11 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
         normalized[key] = permissions.map((entry) =>
           orderObject(entry as Record<string, unknown>, PERMISSION_JUSTIFICATION_FIELD_ORDER),
         );
+        break;
+      }
+      case "trademark_metadata": {
+        const metadata = value as ProductData["trademark_metadata"];
+        normalized[key] = orderObject(metadata as Record<string, unknown>, TRADEMARK_METADATA_FIELD_ORDER);
         break;
       }
       case "pricing": {
@@ -277,6 +453,32 @@ function collectWarnings(raw: Record<string, unknown>, product: ProductData, sou
     warnings.push(`Missing required fields: ${missingRequired.join(", ")}`);
   }
 
+  const rawTrademarkMetadata = raw.trademark_metadata;
+  if (rawTrademarkMetadata && !isRecord(rawTrademarkMetadata)) {
+    warnings.push("trademark_metadata must be an object");
+  } else if (isRecord(rawTrademarkMetadata)) {
+    const usesTrademarkedBrand = rawTrademarkMetadata.uses_trademarked_brand;
+    if (typeof usesTrademarkedBrand !== "boolean") {
+      warnings.push("trademark_metadata.uses_trademarked_brand must be a boolean");
+    } else if (usesTrademarkedBrand) {
+      const tradeName = rawTrademarkMetadata.trade_name;
+      const legalEntity = rawTrademarkMetadata.legal_entity;
+      if (typeof tradeName !== "string" || tradeName.trim().length === 0) {
+        warnings.push("trade_name is required when uses_trademarked_brand is true");
+      }
+      if (typeof legalEntity !== "string" || legalEntity.trim().length === 0) {
+        warnings.push("legal_entity is required when uses_trademarked_brand is true");
+      }
+    } else {
+      if (typeof rawTrademarkMetadata.trade_name === "string" && rawTrademarkMetadata.trade_name.trim().length > 0) {
+        warnings.push("trade_name should be omitted when uses_trademarked_brand is false");
+      }
+      if (typeof rawTrademarkMetadata.legal_entity === "string" && rawTrademarkMetadata.legal_entity.trim().length > 0) {
+        warnings.push("legal_entity should be omitted when uses_trademarked_brand is false");
+      }
+    }
+  }
+
   if (product.slug !== sourceSlug) {
     warnings.push(`Slug mismatch (file "${sourceSlug}" vs schema "${product.slug}")`);
   }
@@ -319,12 +521,46 @@ async function readJsonFile(filePath: string): Promise<{ raw: string; data: unkn
   let parsed: unknown;
 
   try {
-    parsed = JSON.parse(raw);
+    parsed = JSON.parse(stripJsonComments(raw));
   } catch (error) {
     throw new Error(`JSON parse error - ${(error as Error).message}`);
   }
 
   return { raw, data: parsed };
+}
+
+type CommentSection = {
+  comment: string;
+  keys: readonly string[];
+};
+
+function insertSectionComments(source: string): string {
+  return COMMENT_SECTIONS.reduce((acc, section) => addSectionComment(acc, section), source);
+}
+
+function addSectionComment(source: string, section: CommentSection): string {
+  const markerKey = section.keys.find((key) => source.includes(`"${key}":`));
+  if (!markerKey) {
+    return source;
+  }
+
+  const marker = `"${markerKey}":`;
+  const markerIndex = source.indexOf(marker);
+  if (markerIndex === -1) {
+    return source;
+  }
+
+  const lineStart = source.lastIndexOf("\n", markerIndex);
+  const insertPosition = lineStart === -1 ? 0 : lineStart + 1;
+  const indentationMatch = source.slice(insertPosition, markerIndex).match(/^\s*/);
+  const indentation = indentationMatch ? indentationMatch[0] : "";
+  const commentLine = `${indentation}${section.comment}\n`;
+
+  if (source.slice(insertPosition, insertPosition + commentLine.length) === commentLine) {
+    return source;
+  }
+
+  return `${source.slice(0, insertPosition)}${commentLine}${source.slice(insertPosition)}`;
 }
 
 async function convertSingleProduct(
@@ -351,6 +587,7 @@ async function convertSingleProduct(
           return synonyms[lower] ?? v;
         });
       }
+      copy.faqs = ensureLegalFaqArray(copy.faqs);
       return copy;
     })();
 
@@ -359,11 +596,13 @@ async function convertSingleProduct(
       throw new Error(formatZodError(parsed.error));
     }
 
-    const product = parsed.data;
+    const product = applyUnofficialBranding(parsed.data);
     const warnings = collectWarnings(data, product, source.slug);
     const normalized = normalizeProduct(product);
     const outputPath = source.jsonPath;
-    const nextContent = `${JSON.stringify(normalized, null, 2)}\n`;
+    const formattedJson = JSON.stringify(normalized, null, 2);
+    const withComments = insertSectionComments(formattedJson);
+    const nextContent = `${withComments}\n`;
     const hasChanges = nextContent !== raw;
 
     if (options.dryRun || options.check) {

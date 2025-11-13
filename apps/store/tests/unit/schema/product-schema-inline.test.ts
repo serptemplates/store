@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
 
 import { createSchemaProduct, generateProductSchemaLD, generateTranslatedResultsSchema } from "@/schema";
-import { productSchema } from "@/lib/products/product-schema";
+import { LEGAL_FAQ_TEMPLATE, productSchema } from "@/lib/products/product-schema";
 
 const rawProduct = {
   platform: "Web",
   name: "Test Product",
   tagline: "Test Product Tagline",
   slug: "test-product",
+  trademark_metadata: {
+    uses_trademarked_brand: false,
+  },
   description: "Download automation for every platform.",
   seo_title: "Test Product | SERP Apps",
   seo_description: "Download automation for every platform.",
@@ -37,6 +40,10 @@ const rawProduct = {
   ],
   supported_operating_systems: ["Chrome", "Firefox", "Edge"],
   supported_regions: ["Worldwide"],
+  faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
+  stripe: {
+    price_id: "price_1TEST1234567890",
+  },
 } as const;
 
 const productData = productSchema.parse(rawProduct);

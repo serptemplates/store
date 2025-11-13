@@ -1,31 +1,18 @@
 {
+  // PRODUCT INFO
   "platform": "Erome",
   "name": "Erome Downloader",
   "tagline": "Save Erome content instantly to your device.",
   "slug": "erome-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Erome",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
   "description": "Erome Downloader is built specifically for Erome’s player so you can save clips before creators remove them. The extension scans each post with multiple detection methods—HTML5 tags, metadata, and script analysis—to surface every MP4 or HLS source and label it clearly with resolution, format, and estimated size.\n\nChoose the rendition you want, click download, and a persistent progress panel tracks percentage, speed, and time remaining while background workers assemble HLS segments into a single MP4. A cancel button lets you stop mid-stream without leaving half-finished files, and desktop notifications confirm the moment the video is ready.\n\nAll processing stays local: licence data, preferences, and downloads never leave your browser, and permissions are scoped to Erome domains only. Right-click shortcuts and inline controls make it simple to archive the videos you care about before they disappear.\n\nRun it in Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, or Linux—just keep the tab open until the download finishes for the cleanest files.",
-  "seo_title": "Erome Downloader | Capture Erome videos as MP4 files",
-  "seo_description": "Detect every Erome video source, label quality options, and save reliable MP4 copies with cancel support and local processing.",
-  "serply_link": "https://serp.ly/erome-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
-  "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
+  "seo_title": "Erome Downloader (Unofficial) | Capture Erome videos as MP4 files",
+  "seo_description": "Erome Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Detect every Erome video source, label quality options, and save reliable MP4 copies with cancel support and local processing.",
   "status": "live",
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
-      "alt": "Erome Downloader website preview"
-    }
-  ],
-  "product_videos": [],
-  "related_videos": [],
-  "related_posts": [],
-  "github_repo_url": "https://github.com/serpapps/erome-downloader",
-  "github_repo_tags": [],
   "features": [
     "Triple-source detection catches HTML5, metadata, and script-based video URLs",
     "Quality picker lists every MP4 and HLS option with resolution and estimated size",
@@ -38,21 +25,6 @@
     "Works across Chrome, Edge, Firefox, Brave, and Opera on desktop",
     "Built on Manifest V3 for up-to-date extension security"
   ],
-  "pricing": {
-    "label": "One-time payment",
-    "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/erome-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Preserve Erome videos before posts or profiles disappear",
-      "Skip manual URL hunting thanks to automatic quality detection",
-      "Keep archives private with 100% on-device processing"
-    ]
-  },
   "faqs": [
     {
       "question": "How do I download an Erome video with this extension?",
@@ -81,6 +53,10 @@
     {
       "question": "Is my data private?",
       "answer": "Absolutely. All extraction, assembly, and storage happen locally. Only licence verification touches external servers, and no download history is collected."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
     }
   ],
   "reviews": [
@@ -130,30 +106,6 @@
     "offline erome saver",
     "erome hls downloader"
   ],
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
-  "stripe": {
-    "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Gl659Drkqem"
-    }
-  },
-  "ghl": {
-    "tag_ids": [
-      "purchase-erome-downloader"
-    ],
-    "workflow_ids": []
-  },
-  "license": {
-    "entitlements": [
-      "erome-downloader"
-    ]
-  },
   "layout_type": "landing",
   "featured": false,
   "new_release": false,
@@ -200,5 +152,72 @@
       "justification": "Restricts privileged access to erome.com and related CDNs so the extension only\nactivates where it is needed."
     }
   ],
-  "brand": "SERP Apps"
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
+  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
+      "alt": "Erome Downloader website preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/erome-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
+  "github_repo_url": "https://github.com/serpapps/erome-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$9.00",
+    "original_price": "$17.00",
+    "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/erome-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": [
+      "Preserve Erome videos before posts or profiles disappear",
+      "Skip manual URL hunting thanks to automatic quality detection",
+      "Keep archives private with 100% on-device processing"
+    ]
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "stripe": {
+    "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
+    "metadata": {
+      "stripe_product_id": "prod_Sv6Gl659Drkqem"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TPQDdWiCCy0HK2"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-erome-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "erome-downloader"
+    ]
+  }
 }

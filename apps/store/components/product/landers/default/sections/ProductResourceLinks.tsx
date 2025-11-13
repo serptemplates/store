@@ -22,7 +22,7 @@ export function ProductResourceLinks({ title = "Links", links }: ProductResource
           <h2 className="text-center text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             {title}
           </h2>
-          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {links.map((link) => (
               <li key={`${link.label}-${link.href}`}>
                 <a

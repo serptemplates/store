@@ -2,8 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import stripJsonComments from "strip-json-comments";
 
 import {
+  LEGAL_FAQ_TEMPLATE,
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
   PRICING_FIELD_ORDER,
   PRODUCT_FIELD_ORDER,
@@ -49,6 +51,9 @@ describe("scripts/convert-products", () => {
       seo_title: "Sample Product Title",
       name: "Sample Product",
       slug: "sample-product",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       seo_description: "A concise marketing description.",
       serply_link: "https://serp.ly/sample-product",
       apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
@@ -109,7 +114,7 @@ describe("scripts/convert-products", () => {
       license: {
         entitlements: ["personal-use"],
       },
-      categories: ["utilities"],
+      categories: ["Downloader", "Utilities"],
       order_bump: {
         legacy: true,
       },
@@ -129,7 +134,7 @@ describe("scripts/convert-products", () => {
     expect(outcome.warnings).toEqual(["Unrecognised fields: order_bump"]);
 
     const output = await fs.readFile(productPath("sample-product"), "utf8");
-    const parsed = JSON.parse(output) as Record<string, unknown>;
+    const parsed = JSON.parse(stripJsonComments(output)) as Record<string, unknown>;
 
     const productKeys = Object.keys(parsed);
     const expectedOrder = PRODUCT_FIELD_ORDER.filter((field) => parsed[field] !== undefined);
@@ -154,6 +159,58 @@ describe("scripts/convert-products", () => {
     expect(Object.keys(permissions[0])).toEqual(
       PERMISSION_JUSTIFICATION_FIELD_ORDER.filter((field) => permissions[0][field] !== undefined),
     );
+
+    const faqs = parsed.faqs as Array<Record<string, string>>;
+    expect(faqs).toEqual([
+      { question: "Does it work?", answer: "Yes, immediately." },
+      { question: LEGAL_FAQ_TEMPLATE.question, answer: LEGAL_FAQ_TEMPLATE.answer },
+    ]);
+  });
+
+  it("omits downloader-specific legal FAQ for non-downloader products", async () => {
+    const slug = "ai-tool";
+    await writeProduct(slug, {
+      name: "AI Tool",
+      slug,
+      description: "Generate on-brand assets instantly.",
+      tagline: "AI powered",
+      seo_title: "AI Tool",
+      seo_description: "Generate assets with AI.",
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
+      serply_link: `https://serp.ly/${slug}`,
+      store_serp_co_product_page_url: `https://store.serp.co/product-details/product/${slug}`,
+      apps_serp_co_product_page_url: `https://apps.serp.co/${slug}`,
+      success_url: "https://apps.serp.co/checkout/success",
+      cancel_url: `https://apps.serp.co/checkout?product=${slug}`,
+      faqs: [
+        {
+          question: "Does support cover prompts?",
+          answer: "Yes, every plan includes prompt reviews.",
+        },
+      ],
+      categories: ["Artificial Intelligence"],
+      pricing: {
+        price: "$47",
+      },
+    });
+
+    const { convertProducts } = await import("@/scripts/convert-products");
+    const summary = await convertProducts();
+
+    expect(summary.errors).toBe(0);
+
+    const output = await fs.readFile(productPath(slug), "utf8");
+    const parsed = JSON.parse(stripJsonComments(output)) as Record<string, unknown>;
+    const faqs = parsed.faqs as Array<Record<string, string>>;
+
+    expect(faqs).toEqual([
+      {
+        question: "Does support cover prompts?",
+        answer: "Yes, every plan includes prompt reviews.",
+      },
+    ]);
   });
 
   it("supports dry-run checks without writing files", async () => {
@@ -161,6 +218,9 @@ describe("scripts/convert-products", () => {
     await writeProduct(slug, {
       name: "Dry Run Product",
       slug,
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       tagline: "Preview only",
       description: "Dry run description.",
       seo_title: "Dry Run Title",
@@ -191,6 +251,9 @@ describe("scripts/convert-products", () => {
     const slug = "needs-format";
     await writeProduct(slug, {
       slug,
+      trademark_metadata: {
+        uses_trademarked_brand: false,
+      },
       name: "Needs Format",
       description: "Out of order fields.",
       seo_description: "Needs format",

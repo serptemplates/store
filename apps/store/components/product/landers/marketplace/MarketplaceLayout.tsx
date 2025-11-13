@@ -5,14 +5,12 @@ import { cn } from "@repo/ui/lib/utils";
 type MarketplaceLayoutProps = {
   header: React.ReactNode;
   children: React.ReactNode;
-  footer?: React.ReactNode;
   className?: string;
 };
 
 export function MarketplaceLayout({
   header,
   children,
-  footer,
   className,
 }: MarketplaceLayoutProps) {
   return (
@@ -29,7 +27,6 @@ export function MarketplaceLayout({
         <div className="mt-12 lg:mt-16">{children}</div>
       </main>
 
-      {footer ? footer : null}
     </div>
   );
 }

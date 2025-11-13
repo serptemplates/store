@@ -20,7 +20,7 @@ This guide walks you through the **exact working method** to download those vide
 
 To follow along, you'll need:
 
-- [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) installed  
+ installed  
   (via `brew install yt-dlp` or `pip install -U yt-dlp`)
 - A valid `.m3u8` link with a signature token (see below)
 - Basic shell access (macOS, Linux, WSL, or terminal)

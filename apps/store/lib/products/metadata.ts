@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ProductData } from "./product-schema";
+import { resolveSeoTitle, resolveSeoDescription } from "./unofficial-branding";
 
 const STORE_URL = "https://apps.serp.co";
 
@@ -9,8 +10,9 @@ function buildCanonicalUrl(slug: string): string {
 }
 
 export function buildProductMetadata(product: ProductData): Metadata {
-  const title = product.seo_title?.trim() || product.name.trim();
-  const description = product.seo_description?.trim() || product.tagline.trim();
+  const baseTitle = product.seo_title?.trim() || product.name.trim();
+  const title = resolveSeoTitle(product, baseTitle);
+  const description = resolveSeoDescription(product);
   const canonical = buildCanonicalUrl(product.slug);
 
   const imageCandidates = [product.featured_image, product.featured_image_gif].filter(

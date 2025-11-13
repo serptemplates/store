@@ -14,6 +14,7 @@ export * from "./sections/PostsSection";
 export * from "./sections/PricingCta";
 export * from "./sections/SocialProofScreenshots";
 export * from "./sections/TestimonialsSection";
+export * from "./components/trademark-disclaimer";
 export * from "./sections/AboutSection";
 export * from "./avatar";
 export * from "./marquee";
