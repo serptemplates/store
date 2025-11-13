@@ -4,6 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import stripJsonComments from "strip-json-comments";
 const PRICING_FIELD_ORDER = [
   "label",
   "subheading",
@@ -147,7 +148,7 @@ async function main() {
     let product;
 
     try {
-      product = JSON.parse(raw);
+      product = JSON.parse(stripJsonComments(raw));
     } catch (error) {
       console.error(`❌  ${file}: failed to parse JSON (${error instanceof Error ? error.message : String(error)}).`);
       process.exitCode = 1;
