@@ -10,10 +10,17 @@ try {
     encoding: "utf8",
   });
   if (out && out.trim().length > 0) {
-    console.error("Found references to STRIPE_OPTIONAL_BUNDLE_PRICE_ID in the repository:\n");
-    console.error(out);
-    console.error("Please remove environment-based optional item configuration and use product/offer JSON or per-offer price_id.");
-    process.exit(1);
+    const lines = out.trim().split('\n');
+    // Exclude matches in this script itself to avoid false-positives
+    const filtered = lines.filter((l) => !l.includes('apps/store/scripts/validate-no-optional-env.mjs'));
+    if (filtered.length > 0) {
+      console.error("Found references to STRIPE_OPTIONAL_BUNDLE_PRICE_ID in the repository:\n");
+      console.error(filtered.join('\n'));
+      console.error("Please remove environment-based optional item configuration and use product/offer JSON or per-offer price_id.");
+      process.exit(1);
+    }
+    console.log("No references found for STRIPE_OPTIONAL_BUNDLE_PRICE_ID — good.");
+    process.exit(0);
   } else {
     console.log("No references found for STRIPE_OPTIONAL_BUNDLE_PRICE_ID — good.");
     process.exit(0);
