@@ -624,8 +624,7 @@
     "stripe": {
       "live_price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
       "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD"
-    },
-    "compare_at_amount": 4700
+    }
   },
   "patreon-downloader": {
     "slug": "patreon-downloader",
