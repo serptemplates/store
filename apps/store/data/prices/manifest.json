@@ -620,10 +620,10 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
-      "test_price_id": "price_1SRoyD06JrOmKRCmfEePRiQu"
+      "live_price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD"
     },
     "compare_at_amount": 4700
   },

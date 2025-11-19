@@ -232,7 +232,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$27.00",
+    "price": "$37.00",
     "note": "",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader",
@@ -250,8 +250,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
-      "test_price_id": "price_1SRoyD06JrOmKRCmfEePRiQu",
+      "price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD",
       "metadata": {
         "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
       },
@@ -263,8 +263,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
-    "test_price_id": "price_1SRoyD06JrOmKRCmfEePRiQu",
+    "price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+    "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD",
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     },

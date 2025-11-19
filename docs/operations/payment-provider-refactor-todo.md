@@ -172,7 +172,7 @@ Implementation notes:
    - Inspect the provider dashboard (e.g., Whop listing page) to confirm metadata such as title, price, and fulfillment notes look correct.
    - Replay or send a test webhook into `apps/store/app/api/payments/<provider>/webhook` (currently returns 501 for placeholders) and capture the payload we will normalize once the full adapter lands.
    - Confirm GHL + fulfillment flows still work for Stripe-based SKUs (run `pnpm validate:products` + manual checkout) before rolling back any aliases.
-5. **Document** – If a permanent provider switch is shipping, update the relevant SOP entry (e.g., `docs/operations/onlyfans-downloader-price-update.md`) with the new provider + account alias so future personnel know where the SKU lives.
+5. **Document** – If a permanent provider switch is shipping, update the relevant SOP entry (e.g., `docs/runbooks/how-to-update-price-stripe.md` or a provider-specific appendix) with the new provider + account alias so future personnel know where the SKU lives.
 
 #### Stripe multi-account workflow (ready today)
 The existing site can already point different SKUs at different Stripe accounts. To flip a product to another account alias:
