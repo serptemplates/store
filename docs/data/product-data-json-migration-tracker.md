@@ -79,4 +79,4 @@ Use this checklist to track JSON migration updates across code, tests, scripts, 
 - [x] Full catalog converted with `pnpm --filter @apps/store convert:products` (178 products).
 - [x] Fixture parity: `another-product.json`, `excluded-product.json`, and `test-product.json` generated via CLI.
 - [x] Post-conversion validation: lint, typecheck, unit tests, and `pnpm --filter @apps/store validate:products` all pass.
-- [x] Downstream scripts checked: `pnpm --filter @apps/store stripe:sync-payment-links` (live run) and `pnpm --filter @apps/store export:offers`.
+- [x] Downstream scripts checked: `pnpm --filter @apps/store stripe:sync-payment-links` (live run).

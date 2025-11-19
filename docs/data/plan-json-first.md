@@ -191,7 +191,7 @@ Review these after each migration milestone to confirm behaviour:
 - [x] Batch-convert remaining products with the CLI; after each batch rerun lint/typecheck/unit suites.
   - `pnpm --filter @apps/store convert:products` now emits canonical JSON for all 178 products; post-conversion we reran lint/typecheck/unit suites to confirm stability.
 - [x] Execute critical automation scripts (Stripe syncs, offer exports) in dry-run/live-safe modes to confirm parity.
-  - `validate:products`, `stripe:sync-payment-links` (live execution earlier this session), and `export:offers` all succeeded against the JSON-first catalog. Stripe sync still lacks a dry-run flag—follow up with payments before future large-scale runs.
+  - `validate:products` and `stripe:sync-payment-links` (live execution earlier this session) succeeded against the JSON-first catalog. Stripe sync still lacks a dry-run flag—follow up with payments before future large-scale runs.
 - [x] Track batch progress with a checklist; halt to investigate any regressions before proceeding.
   - Added tracker entries documenting the Stage 5 rollout and corrected the OnlyFans pricing copy to match Stripe (`apps/store/data/products/onlyfans-downloader.*`).
 - [x] Update all fixtures to JSON and ensure tests reference the shared loaders.
