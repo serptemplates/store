@@ -110,8 +110,9 @@ function updateProductFile(args: CliArgs): PreviousIds {
 
   const raw = fs.readFileSync(productPath, "utf8");
   const productData = JSON.parse(stripJsonComments(raw));
-  const previousPriceId: string | undefined = productData?.stripe?.price_id;
-  const previousTestPriceId: string | undefined = productData?.stripe?.test_price_id;
+  const previousPriceId: string | undefined = productData?.payment?.stripe?.price_id ?? productData?.stripe?.price_id;
+  const previousTestPriceId: string | undefined =
+    productData?.payment?.stripe?.test_price_id ?? productData?.stripe?.test_price_id;
 
   productData.pricing = productData.pricing ?? {};
   productData.pricing.price = formatCurrency(args.priceCents, args.currency);
@@ -121,7 +122,19 @@ function updateProductFile(args: CliArgs): PreviousIds {
     delete productData.pricing.original_price;
   }
 
-  productData.stripe = productData.stripe ?? {};
+  productData.payment = productData.payment ?? { provider: "stripe" };
+  if (!productData.payment.provider) {
+    productData.payment.provider = "stripe";
+  }
+  productData.payment.stripe = productData.payment.stripe ?? {};
+  productData.payment.stripe.price_id = args.priceId;
+  if (args.testPriceId) {
+    productData.payment.stripe.test_price_id = args.testPriceId;
+  }
+
+  if (!productData.stripe || typeof productData.stripe !== "object") {
+    productData.stripe = {};
+  }
   productData.stripe.price_id = args.priceId;
   if (args.testPriceId) {
     productData.stripe.test_price_id = args.testPriceId;
@@ -131,32 +144,52 @@ function updateProductFile(args: CliArgs): PreviousIds {
   return { priceId: previousPriceId, testPriceId: previousTestPriceId };
 }
 
-function updateManifest(args: CliArgs, previousIds: PreviousIds) {
+function updateManifest(args: CliArgs) {
   const manifestPath = path.join(appRoot, "data", "prices", "manifest.json");
-  const manifestRaw = fs.readFileSync(manifestPath, "utf8");
-  const manifestData = JSON.parse(manifestRaw) as Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>;
-
-  const targetIds = [args.priceId, args.testPriceId].filter((value): value is string => Boolean(value));
-  const previousSet = [previousIds.priceId, previousIds.testPriceId].filter((value): value is string => Boolean(value));
-
-  for (const oldId of previousSet) {
-    if (!targetIds.includes(oldId) && manifestData[oldId]) {
-      delete manifestData[oldId];
+  const manifestRaw = fs.existsSync(manifestPath) ? fs.readFileSync(manifestPath, "utf8") : "{}";
+  const manifestData = JSON.parse(manifestRaw) as Record<
+    string,
+    {
+      slug: string;
+      provider: string;
+      account?: string;
+      mode?: string;
+      currency: string;
+      unit_amount: number;
+      compare_at_amount?: number;
+      stripe?: { live_price_id?: string; test_price_id?: string };
     }
+  >;
+
+  const existing = manifestData[args.slug] ?? {
+    slug: args.slug,
+    provider: "stripe",
+    currency: args.currency,
+    unit_amount: args.priceCents,
+  };
+
+  existing.slug = args.slug;
+  existing.provider = "stripe";
+  existing.currency = args.currency;
+  existing.unit_amount = args.priceCents;
+  if (args.compareAtCents !== undefined) {
+    existing.compare_at_amount = args.compareAtCents;
+  } else if (existing.compare_at_amount !== undefined) {
+    delete existing.compare_at_amount;
   }
 
-  for (const id of targetIds) {
-    manifestData[id] = {
-      unit_amount: args.priceCents,
-      currency: args.currency,
-      ...(args.compareAtCents !== undefined ? { compare_at_amount: args.compareAtCents } : {}),
-    };
+  existing.stripe = existing.stripe ?? {};
+  existing.stripe.live_price_id = args.priceId;
+  if (args.testPriceId) {
+    existing.stripe.test_price_id = args.testPriceId;
   }
+
+  manifestData[args.slug] = existing;
 
   const sortedEntries = Object.keys(manifestData)
     .sort()
     .reduce<Record<string, unknown>>((acc, key) => {
-      acc[key] = manifestData[key as keyof typeof manifestData];
+      acc[key] = manifestData[key];
       return acc;
     }, {});
 
@@ -168,7 +201,7 @@ async function main() {
   console.log(`Updating price for ${args.slug} → ${formatCurrency(args.priceCents, args.currency)}`);
 
   const previousIds = updateProductFile(args);
-  updateManifest(args, previousIds);
+  updateManifest(args);
 
   console.log("▶ Formatting updated product JSON");
   runCommand("pnpm", ["--filter", "@apps/store", "convert:products", "--slug", args.slug]);
@@ -178,10 +211,10 @@ async function main() {
 
   console.log("✔ Price update completed. Remember to run lint/typecheck/tests + Playwright checks.");
   if (previousIds.priceId && previousIds.priceId !== args.priceId) {
-    console.log(`ℹ Removed previous price ID ${previousIds.priceId} from manifest.`);
+    console.log(`ℹ Updated live price ID (previously ${previousIds.priceId}).`);
   }
   if (args.testPriceId && previousIds.testPriceId && previousIds.testPriceId !== args.testPriceId) {
-    console.log(`ℹ Removed previous test price ID ${previousIds.testPriceId} from manifest.`);
+    console.log(`ℹ Updated test price ID (previously ${previousIds.testPriceId}).`);
   }
 }
 

@@ -166,6 +166,36 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/tiktok-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=tiktok-downloader",
+    "ghl_tag": "purchase-tiktok-downloader",
+    "ghlTag": "purchase-tiktok-downloader",
+    "landerId": "tiktok-downloader",
+    "license_entitlements": "tiktok-downloader",
+    "licenseEntitlements": "tiktok-downloader",
+    "offerId": "tiktok-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Tiktok Downloader",
+    "product_page_url": "https://apps.serp.co/tiktok-downloader",
+    "product_slug": "tiktok-downloader",
+    "productName": "Tiktok Downloader",
+    "productPageUrl": "https://apps.serp.co/tiktok-downloader",
+    "productSlug": "tiktok-downloader",
+    "purchase_url": "https://serp.ly/tiktok-downloader",
+    "purchaseUrl": "https://serp.ly/tiktok-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
+    "serply_link": "https://serp.ly/tiktok-downloader",
+    "serplyLink": "https://serp.ly/tiktok-downloader",
+    "slug": "tiktok-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/tiktok-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -188,6 +218,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
+      "metadata": {
+        "stripe_product_id": "prod_SqnavySFXhLMCk"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",

@@ -111,6 +111,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/motherless-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/motherless-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=motherless-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=motherless-downloader",
+    "ghl_tag": "purchase-motherless-downloader",
+    "ghlTag": "purchase-motherless-downloader",
+    "landerId": "motherless-downloader",
+    "offerId": "motherless-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Motherless Downloader",
+    "product_page_url": "https://apps.serp.co/motherless-downloader",
+    "product_slug": "motherless-downloader",
+    "productName": "Motherless Downloader",
+    "productPageUrl": "https://apps.serp.co/motherless-downloader",
+    "productSlug": "motherless-downloader",
+    "purchase_url": "https://serp.ly/motherless-downloader",
+    "purchaseUrl": "https://serp.ly/motherless-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/motherless-downloader/",
+    "serply_link": "https://serp.ly/motherless-downloader",
+    "serplyLink": "https://serp.ly/motherless-downloader",
+    "slug": "motherless-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/motherless-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/motherless-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -128,6 +156,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

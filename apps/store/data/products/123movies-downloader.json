@@ -160,6 +160,36 @@
   "github_repo_url": "https://github.com/serpapps/123movies-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/123movies-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/123movies-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=123movies-downloader",
+    "ghl_tag": "purchase-123movies-downloader",
+    "ghlTag": "purchase-123movies-downloader",
+    "landerId": "123movies-downloader",
+    "license_entitlements": "123movies-downloader",
+    "licenseEntitlements": "123movies-downloader",
+    "offerId": "123movies-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "123movies Downloader",
+    "product_page_url": "https://apps.serp.co/123movies-downloader",
+    "product_slug": "123movies-downloader",
+    "productName": "123movies Downloader",
+    "productPageUrl": "https://apps.serp.co/123movies-downloader",
+    "productSlug": "123movies-downloader",
+    "purchase_url": "https://serp.ly/123movies-downloader",
+    "purchaseUrl": "https://serp.ly/123movies-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
+    "serply_link": "https://serp.ly/123movies-downloader",
+    "serplyLink": "https://serp.ly/123movies-downloader",
+    "slug": "123movies-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123movies-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/123movies-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -182,6 +212,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wh06JrOmKRCmkF8J8XUh",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Czh24RpPTaL"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wh06JrOmKRCmkF8J8XUh",

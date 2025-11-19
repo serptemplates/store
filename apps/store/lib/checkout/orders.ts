@@ -11,6 +11,12 @@ interface OrderRow {
   stripe_session_id: string | null;
   stripe_payment_intent_id: string | null;
   stripe_charge_id: string | null;
+  payment_provider: string | null;
+  provider_account_alias: string | null;
+  provider_session_id: string | null;
+  provider_payment_id: string | null;
+  provider_charge_id: string | null;
+  provider_mode: string | null;
   amount_total: number | null;
   currency: string | null;
   offer_id: string | null;
@@ -43,6 +49,29 @@ function normalizeSourceOptional(value: string | null | undefined): CheckoutSour
   return value ? normalizeSource(value) : null;
 }
 
+function normalizeProvider(value: string | null | undefined): OrderRecord["paymentProvider"] {
+  if (!value) {
+    return null;
+  }
+
+  if (value === "ghl") {
+    return "ghl";
+  }
+
+  if (value === "paypal" || value === "legacy_paypal") {
+    return "legacy_paypal";
+  }
+
+  return value as OrderRecord["paymentProvider"];
+}
+
+function normalizeProviderMode(value: string | null | undefined): OrderRecord["providerMode"] {
+  if (value === "live" || value === "test") {
+    return value;
+  }
+  return null;
+}
+
 function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
   if (!row) {
     return null;
@@ -69,6 +98,12 @@ function mapOrderRow(row?: OrderRow | null): OrderRecord | null {
     stripeSessionId: row.stripe_session_id,
     stripePaymentIntentId: row.stripe_payment_intent_id,
     stripeChargeId: row.stripe_charge_id,
+    paymentProvider: normalizeProvider(row.payment_provider ?? row.source ?? null),
+    providerAccountAlias: row.provider_account_alias ?? null,
+    providerSessionId: row.provider_session_id ?? row.stripe_session_id,
+    providerPaymentId: row.provider_payment_id ?? row.stripe_payment_intent_id,
+    providerChargeId: row.provider_charge_id ?? row.stripe_charge_id,
+    providerMode: normalizeProviderMode(row.provider_mode),
     offerId: row.offer_id,
     landerId: row.lander_id,
     customerEmail: row.customer_email,
@@ -97,6 +132,10 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
   const source = input.source === "legacy_paypal"
     ? "paypal"
     : input.source ?? "stripe";
+  const paymentProvider = input.paymentProvider ?? source;
+  const providerSessionId = input.providerSessionId ?? input.stripeSessionId ?? null;
+  const providerPaymentId = input.providerPaymentId ?? input.stripePaymentIntentId ?? null;
+  const providerChargeId = input.providerChargeId ?? input.stripeChargeId ?? null;
 
   await query`
     INSERT INTO orders (
@@ -105,6 +144,12 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
       stripe_session_id,
       stripe_payment_intent_id,
       stripe_charge_id,
+      payment_provider,
+      provider_account_alias,
+      provider_session_id,
+      provider_payment_id,
+      provider_charge_id,
+      provider_mode,
       amount_total,
       currency,
       offer_id,
@@ -121,6 +166,12 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
       ${input.stripeSessionId ?? null},
       ${input.stripePaymentIntentId ?? null},
       ${input.stripeChargeId ?? null},
+      ${paymentProvider ?? null},
+      ${input.providerAccountAlias ?? null},
+      ${providerSessionId ?? null},
+      ${providerPaymentId ?? null},
+      ${providerChargeId ?? null},
+      ${input.providerMode ?? null},
       ${input.amountTotal ?? null},
       ${input.currency ?? null},
       ${input.offerId ?? null},
@@ -146,6 +197,12 @@ export async function upsertOrder(input: CheckoutOrderUpsert): Promise<void> {
       payment_status = COALESCE(EXCLUDED.payment_status, orders.payment_status),
       payment_method = COALESCE(EXCLUDED.payment_method, orders.payment_method),
       source = EXCLUDED.source,
+      payment_provider = COALESCE(EXCLUDED.payment_provider, orders.payment_provider),
+      provider_account_alias = COALESCE(EXCLUDED.provider_account_alias, orders.provider_account_alias),
+      provider_session_id = COALESCE(EXCLUDED.provider_session_id, orders.provider_session_id),
+      provider_payment_id = COALESCE(EXCLUDED.provider_payment_id, orders.provider_payment_id),
+      provider_charge_id = COALESCE(EXCLUDED.provider_charge_id, orders.provider_charge_id),
+      provider_mode = COALESCE(EXCLUDED.provider_mode, orders.provider_mode),
       updated_at = NOW();
   `;
 }
@@ -169,6 +226,12 @@ export async function findOrdersByEmailAndSource(
       o.stripe_session_id,
       o.stripe_payment_intent_id,
       o.stripe_charge_id,
+      o.payment_provider,
+      o.provider_account_alias,
+      o.provider_session_id,
+      o.provider_payment_id,
+      o.provider_charge_id,
+      o.provider_mode,
       o.amount_total,
       o.currency,
       o.offer_id,
@@ -231,6 +294,10 @@ export async function updateOrderMetadata(
     const result = await query`
       UPDATE orders
       SET metadata = COALESCE(orders.metadata, '{}'::jsonb) || ${metadataJson}::jsonb,
+          payment_provider = COALESCE(payment_provider, 'stripe'),
+          provider_payment_id = COALESCE(provider_payment_id, stripe_payment_intent_id),
+          provider_session_id = COALESCE(provider_session_id, stripe_session_id),
+          provider_charge_id = COALESCE(provider_charge_id, stripe_charge_id),
           updated_at = NOW()
       WHERE stripe_payment_intent_id = ${lookupKey.stripePaymentIntentId}
       RETURNING id;
@@ -245,6 +312,8 @@ export async function updateOrderMetadata(
     const result = await query`
       UPDATE orders
       SET metadata = COALESCE(orders.metadata, '{}'::jsonb) || ${metadataJson}::jsonb,
+          payment_provider = COALESCE(payment_provider, 'stripe'),
+          provider_session_id = COALESCE(provider_session_id, stripe_session_id),
           updated_at = NOW()
       WHERE stripe_session_id = ${lookupKey.stripeSessionId}
       RETURNING id;
@@ -270,6 +339,12 @@ export async function findOrderByPaymentIntentId(paymentIntentId: string): Promi
       o.stripe_session_id,
       o.stripe_payment_intent_id,
       o.stripe_charge_id,
+      o.payment_provider,
+      o.provider_account_alias,
+      o.provider_session_id,
+      o.provider_payment_id,
+      o.provider_charge_id,
+      o.provider_mode,
       o.amount_total,
       o.currency,
       o.offer_id,
@@ -320,6 +395,12 @@ export async function findLatestGhlOrder(params: {
       o.stripe_session_id,
       o.stripe_payment_intent_id,
       o.stripe_charge_id,
+      o.payment_provider,
+      o.provider_account_alias,
+      o.provider_session_id,
+      o.provider_payment_id,
+      o.provider_charge_id,
+      o.provider_mode,
       o.amount_total,
       o.currency,
       o.offer_id,
@@ -369,6 +450,12 @@ export async function findRecentOrdersByEmail(email: string, limit = 20): Promis
       o.stripe_session_id,
       o.stripe_payment_intent_id,
       o.stripe_charge_id,
+      o.payment_provider,
+      o.provider_account_alias,
+      o.provider_session_id,
+      o.provider_payment_id,
+      o.provider_charge_id,
+      o.provider_mode,
       o.amount_total,
       o.currency,
       o.offer_id,
@@ -418,6 +505,12 @@ export async function findRefundedOrders(options?: { limit?: number; skipIfMetad
       o.stripe_session_id,
       o.stripe_payment_intent_id,
       o.stripe_charge_id,
+      o.payment_provider,
+      o.provider_account_alias,
+      o.provider_session_id,
+      o.provider_payment_id,
+      o.provider_charge_id,
+      o.provider_mode,
       o.amount_total,
       o.currency,
       o.offer_id,

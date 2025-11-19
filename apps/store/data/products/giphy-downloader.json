@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/giphy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/giphy-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/giphy-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=giphy-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=giphy-downloader",
+    "ghl_tag": "purchase-giphy-downloader",
+    "ghlTag": "purchase-giphy-downloader",
+    "landerId": "giphy-downloader",
+    "offerId": "giphy-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Giphy Downloader",
+    "product_page_url": "https://apps.serp.co/giphy-downloader",
+    "product_slug": "giphy-downloader",
+    "productName": "Giphy Downloader",
+    "productPageUrl": "https://apps.serp.co/giphy-downloader",
+    "productSlug": "giphy-downloader",
+    "purchase_url": "https://serp.ly/giphy-downloader",
+    "purchaseUrl": "https://serp.ly/giphy-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/giphy-downloader/",
+    "serply_link": "https://serp.ly/giphy-downloader",
+    "serplyLink": "https://serp.ly/giphy-downloader",
+    "slug": "giphy-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/giphy-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/giphy-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wu06JrOmKRCmq1ANhFue",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HENVA7q2HeS"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wu06JrOmKRCmq1ANhFue",

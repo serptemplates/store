@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/moodle-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/moodle-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/moodle-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=moodle-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=moodle-downloader",
+    "ghl_tag": "purchase-moodle-downloader",
+    "ghlTag": "purchase-moodle-downloader",
+    "landerId": "moodle-downloader",
+    "offerId": "moodle-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Moodle Downloader",
+    "product_page_url": "https://apps.serp.co/moodle-downloader",
+    "product_slug": "moodle-downloader",
+    "productName": "Moodle Downloader",
+    "productPageUrl": "https://apps.serp.co/moodle-downloader",
+    "productSlug": "moodle-downloader",
+    "purchase_url": "https://serp.ly/moodle-downloader",
+    "purchaseUrl": "https://serp.ly/moodle-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/moodle-downloader/",
+    "serply_link": "https://serp.ly/moodle-downloader",
+    "serplyLink": "https://serp.ly/moodle-downloader",
+    "slug": "moodle-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/moodle-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/moodle-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99fx06JrOmKRCmleYZfn4W",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HjTufnmO8Ix"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99fx06JrOmKRCmleYZfn4W",

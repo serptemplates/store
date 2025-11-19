@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/deviantart-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/deviantart-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/deviantart-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=deviantart-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=deviantart-downloader",
+    "ghl_tag": "purchase-deviantart-downloader",
+    "ghlTag": "purchase-deviantart-downloader",
+    "landerId": "deviantart-downloader",
+    "offerId": "deviantart-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Deviantart Downloader",
+    "product_page_url": "https://apps.serp.co/deviantart-downloader",
+    "product_slug": "deviantart-downloader",
+    "productName": "Deviantart Downloader",
+    "productPageUrl": "https://apps.serp.co/deviantart-downloader",
+    "productSlug": "deviantart-downloader",
+    "purchase_url": "https://serp.ly/deviantart-downloader",
+    "purchaseUrl": "https://serp.ly/deviantart-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/deviantart-downloader/",
+    "serply_link": "https://serp.ly/deviantart-downloader",
+    "serplyLink": "https://serp.ly/deviantart-downloader",
+    "slug": "deviantart-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/deviantart-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/deviantart-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wp06JrOmKRCmxPZvi7YP",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6GiUbl5MtRp2"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wp06JrOmKRCmxPZvi7YP",

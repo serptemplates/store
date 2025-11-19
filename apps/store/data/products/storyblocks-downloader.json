@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/storyblocks-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/storyblocks-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/storyblocks-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=storyblocks-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=storyblocks-downloader",
+    "ghl_tag": "purchase-storyblocks-downloader",
+    "ghlTag": "purchase-storyblocks-downloader",
+    "landerId": "storyblocks-downloader",
+    "offerId": "storyblocks-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Storyblocks Downloader",
+    "product_page_url": "https://apps.serp.co/storyblocks-downloader",
+    "product_slug": "storyblocks-downloader",
+    "productName": "Storyblocks Downloader",
+    "productPageUrl": "https://apps.serp.co/storyblocks-downloader",
+    "productSlug": "storyblocks-downloader",
+    "purchase_url": "https://serp.ly/storyblocks-downloader",
+    "purchaseUrl": "https://serp.ly/storyblocks-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/storyblocks-downloader/",
+    "serply_link": "https://serp.ly/storyblocks-downloader",
+    "serplyLink": "https://serp.ly/storyblocks-downloader",
+    "slug": "storyblocks-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/storyblocks-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/storyblocks-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gA06JrOmKRCmt3y1AyVP",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HlVQLlci5ux"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gA06JrOmKRCmt3y1AyVP",

@@ -5,7 +5,7 @@ import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
 import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
-import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
+import { findPriceEntry, findManifestEntryBySlug, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getReleaseBadgeText } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
 import { buildPermissionEntries, buildProductResourceLinks } from "./view-model";
@@ -248,7 +248,10 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
-  const priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  if (!priceManifestEntry) {
+    priceManifestEntry = findManifestEntryBySlug(product.slug);
+  }
   const currentPriceValue = priceManifestEntry
     ? priceManifestEntry.unitAmount / 100
     : parsePriceToNumber(product.pricing?.price);

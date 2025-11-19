@@ -17,23 +17,36 @@ export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentInt
     failureMetadata.lastPaymentError = paymentIntent.last_payment_error.message;
   }
 
-  if (sessionRecord) {
-    await updateCheckoutSessionStatus(sessionRecord.stripeSessionId, "failed", {
-      paymentIntentId: paymentIntent.id,
-      metadata: failureMetadata,
-    });
-  }
-
+  const providerMode = typeof paymentIntent.livemode === "boolean" ? (paymentIntent.livemode ? "live" : "test") : null;
   const stripeChargeId =
     typeof paymentIntent.latest_charge === "string"
       ? paymentIntent.latest_charge
       : paymentIntent.latest_charge?.id ?? null;
+
+  if (sessionRecord) {
+    await updateCheckoutSessionStatus(sessionRecord.stripeSessionId, "failed", {
+      paymentIntentId: paymentIntent.id,
+      metadata: failureMetadata,
+      paymentProvider: sessionRecord.paymentProvider ?? "stripe",
+      providerAccountAlias: sessionRecord.providerAccountAlias ?? null,
+      providerSessionId: sessionRecord.providerSessionId ?? sessionRecord.stripeSessionId,
+      providerPaymentId: paymentIntent.id,
+      providerChargeId: stripeChargeId,
+      providerMode,
+    });
+  }
 
   await upsertOrder({
     checkoutSessionId: sessionRecord?.id ?? null,
     stripeSessionId: sessionRecord?.stripeSessionId ?? null,
     stripePaymentIntentId: paymentIntent.id,
     stripeChargeId,
+    paymentProvider: sessionRecord?.paymentProvider ?? "stripe",
+    providerAccountAlias: sessionRecord?.providerAccountAlias ?? null,
+    providerSessionId: sessionRecord?.providerSessionId ?? sessionRecord?.stripeSessionId ?? null,
+    providerPaymentId: paymentIntent.id,
+    providerChargeId: stripeChargeId,
+    providerMode,
     offerId: sessionRecord?.offerId ?? metadata.offerId ?? null,
     landerId: sessionRecord?.landerId ?? metadata.landerId ?? null,
     customerEmail:

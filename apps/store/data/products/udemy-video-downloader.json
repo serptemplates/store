@@ -163,6 +163,34 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/udemy-downloader/ecbbfcaojpjlnpeabmdmggbffdlghjjk",
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/udemy-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/udemy-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=udemy-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=udemy-video-downloader",
+    "ghl_tag": "purchase-udemy-video-downloader",
+    "ghlTag": "purchase-udemy-video-downloader",
+    "landerId": "udemy-video-downloader",
+    "offerId": "udemy-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Udemy Video Downloader",
+    "product_page_url": "https://apps.serp.co/udemy-video-downloader",
+    "product_slug": "udemy-video-downloader",
+    "productName": "Udemy Video Downloader",
+    "productPageUrl": "https://apps.serp.co/udemy-video-downloader",
+    "productSlug": "udemy-video-downloader",
+    "purchase_url": "https://serp.ly/udemy-video-downloader",
+    "purchaseUrl": "https://serp.ly/udemy-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/udemy-video-downloader/",
+    "serply_link": "https://serp.ly/udemy-video-downloader",
+    "serplyLink": "https://serp.ly/udemy-video-downloader",
+    "slug": "udemy-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/udemy-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/udemy-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -184,6 +212,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gH06JrOmKRCmSnepXJPa",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6pwoyYNJYNSU"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gH06JrOmKRCmSnepXJPa",

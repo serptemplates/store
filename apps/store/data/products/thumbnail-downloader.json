@@ -141,6 +141,34 @@
   "github_repo_url": "https://github.com/serpapps/thumbnail-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/thumbnail-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/thumbnail-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=thumbnail-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=thumbnail-downloader",
+    "ghl_tag": "purchase-thumbnail-downloader",
+    "ghlTag": "purchase-thumbnail-downloader",
+    "landerId": "thumbnail-downloader",
+    "offerId": "thumbnail-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Thumbnail Downloader",
+    "product_page_url": "https://apps.serp.co/thumbnail-downloader",
+    "product_slug": "thumbnail-downloader",
+    "productName": "Thumbnail Downloader",
+    "productPageUrl": "https://apps.serp.co/thumbnail-downloader",
+    "productSlug": "thumbnail-downloader",
+    "purchase_url": "https://serp.ly/thumbnail-downloader",
+    "purchaseUrl": "https://serp.ly/thumbnail-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/thumbnail-downloader/",
+    "serply_link": "https://serp.ly/thumbnail-downloader",
+    "serplyLink": "https://serp.ly/thumbnail-downloader",
+    "slug": "thumbnail-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thumbnail-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/thumbnail-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -158,6 +186,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gE06JrOmKRCmHWXd57yx",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HPWKdkZ86q4"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gE06JrOmKRCmHWXd57yx",

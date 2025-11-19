@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/porntube-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/porntube-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=porntube-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=porntube-downloader",
+    "ghl_tag": "purchase-porntube-downloader",
+    "ghlTag": "purchase-porntube-downloader",
+    "landerId": "porntube-downloader",
+    "offerId": "porntube-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "PornTube Downloader",
+    "product_page_url": "https://apps.serp.co/porntube-downloader",
+    "product_slug": "porntube-downloader",
+    "productName": "PornTube Downloader",
+    "productPageUrl": "https://apps.serp.co/porntube-downloader",
+    "productSlug": "porntube-downloader",
+    "purchase_url": "https://serp.ly/porntube-downloader",
+    "purchaseUrl": "https://serp.ly/porntube-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/porntube-downloader/",
+    "serply_link": "https://serp.ly/porntube-downloader",
+    "serplyLink": "https://serp.ly/porntube-downloader",
+    "slug": "porntube-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/porntube-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/porntube-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

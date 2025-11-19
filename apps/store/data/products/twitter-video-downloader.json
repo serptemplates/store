@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/twitter-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/twitter-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/twitter-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=twitter-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=twitter-video-downloader",
+    "ghl_tag": "purchase-twitter-video-downloader",
+    "ghlTag": "purchase-twitter-video-downloader",
+    "landerId": "twitter-video-downloader",
+    "offerId": "twitter-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Twitter Video Downloader",
+    "product_page_url": "https://apps.serp.co/twitter-video-downloader",
+    "product_slug": "twitter-video-downloader",
+    "productName": "Twitter Video Downloader",
+    "productPageUrl": "https://apps.serp.co/twitter-video-downloader",
+    "productSlug": "twitter-video-downloader",
+    "purchase_url": "https://serp.ly/twitter-video-downloader",
+    "purchaseUrl": "https://serp.ly/twitter-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/twitter-video-downloader/",
+    "serply_link": "https://serp.ly/twitter-video-downloader",
+    "serplyLink": "https://serp.ly/twitter-video-downloader",
+    "slug": "twitter-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/twitter-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/twitter-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gH06JrOmKRCme009G5ob",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6IYwfGjAx4BQ"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gH06JrOmKRCme009G5ob",

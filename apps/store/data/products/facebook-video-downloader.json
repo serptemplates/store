@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/facebook-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/facebook-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/facebook-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=facebook-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=facebook-video-downloader",
+    "ghl_tag": "purchase-facebook-video-downloader",
+    "ghlTag": "purchase-facebook-video-downloader",
+    "landerId": "facebook-video-downloader",
+    "offerId": "facebook-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Facebook Video Downloader",
+    "product_page_url": "https://apps.serp.co/facebook-video-downloader",
+    "product_slug": "facebook-video-downloader",
+    "productName": "Facebook Video Downloader",
+    "productPageUrl": "https://apps.serp.co/facebook-video-downloader",
+    "productSlug": "facebook-video-downloader",
+    "purchase_url": "https://serp.ly/facebook-video-downloader",
+    "purchaseUrl": "https://serp.ly/facebook-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/facebook-video-downloader/",
+    "serply_link": "https://serp.ly/facebook-video-downloader",
+    "serplyLink": "https://serp.ly/facebook-video-downloader",
+    "slug": "facebook-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/facebook-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/facebook-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wr06JrOmKRCmnHmBidFY",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Gxbj0G8PsfX"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wr06JrOmKRCmnHmBidFY",

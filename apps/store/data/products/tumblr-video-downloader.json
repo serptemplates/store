@@ -145,6 +145,34 @@
   "github_repo_url": "https://github.com/serpapps/tumblr-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/tumblr-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/tumblr-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=tumblr-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=tumblr-video-downloader",
+    "ghl_tag": "purchase-tumblr-video-downloader",
+    "ghlTag": "purchase-tumblr-video-downloader",
+    "landerId": "tumblr-video-downloader",
+    "offerId": "tumblr-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Tumblr Video Downloader",
+    "product_page_url": "https://apps.serp.co/tumblr-video-downloader",
+    "product_slug": "tumblr-video-downloader",
+    "productName": "Tumblr Video Downloader",
+    "productPageUrl": "https://apps.serp.co/tumblr-video-downloader",
+    "productSlug": "tumblr-video-downloader",
+    "purchase_url": "https://serp.ly/tumblr-video-downloader",
+    "purchaseUrl": "https://serp.ly/tumblr-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/tumblr-video-downloader/",
+    "serply_link": "https://serp.ly/tumblr-video-downloader",
+    "serplyLink": "https://serp.ly/tumblr-video-downloader",
+    "slug": "tumblr-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tumblr-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/tumblr-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -162,6 +190,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gG06JrOmKRCmVRscTagt",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Iw8vE3Ctg9j"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gG06JrOmKRCmVRscTagt",

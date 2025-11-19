@@ -137,6 +137,34 @@
   "github_repo_url": "https://github.com/serpapps/erothots-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/erothots-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/erothots-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=erothots-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=erothots-downloader",
+    "ghl_tag": "purchase-erothots-downloader",
+    "ghlTag": "purchase-erothots-downloader",
+    "landerId": "erothots-downloader",
+    "offerId": "erothots-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Erothots Downloader",
+    "product_page_url": "https://apps.serp.co/erothots-downloader",
+    "product_slug": "erothots-downloader",
+    "productName": "Erothots Downloader",
+    "productPageUrl": "https://apps.serp.co/erothots-downloader",
+    "productSlug": "erothots-downloader",
+    "purchase_url": "https://serp.ly/erothots-downloader",
+    "purchaseUrl": "https://serp.ly/erothots-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/erothots-downloader/",
+    "serply_link": "https://serp.ly/erothots-downloader",
+    "serplyLink": "https://serp.ly/erothots-downloader",
+    "slug": "erothots-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erothots-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/erothots-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -154,6 +182,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0eF06JrOmKRCmHQMdaVib",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6GQD10gRgLZL"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0eF06JrOmKRCmHQMdaVib",

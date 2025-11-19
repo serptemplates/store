@@ -115,6 +115,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/einthusan-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/einthusan-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=einthusan-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=einthusan-downloader",
+    "ghl_tag": "purchase-einthusan-downloader",
+    "ghlTag": "purchase-einthusan-downloader",
+    "landerId": "einthusan-downloader",
+    "offerId": "einthusan-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Einthusan Downloader",
+    "product_page_url": "https://apps.serp.co/einthusan-downloader",
+    "product_slug": "einthusan-downloader",
+    "productName": "Einthusan Downloader",
+    "productPageUrl": "https://apps.serp.co/einthusan-downloader",
+    "productSlug": "einthusan-downloader",
+    "purchase_url": "https://serp.ly/einthusan-downloader",
+    "purchaseUrl": "https://serp.ly/einthusan-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/einthusan-downloader/",
+    "serply_link": "https://serp.ly/einthusan-downloader",
+    "serplyLink": "https://serp.ly/einthusan-downloader",
+    "slug": "einthusan-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/einthusan-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/einthusan-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -132,6 +160,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

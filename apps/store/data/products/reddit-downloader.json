@@ -117,6 +117,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/reddit-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/reddit-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=reddit-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=reddit-downloader",
+    "ghl_tag": "purchase-reddit-downloader",
+    "ghlTag": "purchase-reddit-downloader",
+    "landerId": "reddit-downloader",
+    "offerId": "reddit-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Reddit Downloader",
+    "product_page_url": "https://apps.serp.co/reddit-downloader",
+    "product_slug": "reddit-downloader",
+    "productName": "Reddit Downloader",
+    "productPageUrl": "https://apps.serp.co/reddit-downloader",
+    "productSlug": "reddit-downloader",
+    "purchase_url": "https://serp.ly/reddit-downloader",
+    "purchaseUrl": "https://serp.ly/reddit-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/reddit-downloader/",
+    "serply_link": "https://serp.ly/reddit-downloader",
+    "serplyLink": "https://serp.ly/reddit-downloader",
+    "slug": "reddit-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/reddit-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/reddit-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -134,6 +162,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

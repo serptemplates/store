@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/pixabay-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/pixabay-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/pixabay-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=pixabay-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=pixabay-downloader",
+    "ghl_tag": "purchase-pixabay-downloader",
+    "ghlTag": "purchase-pixabay-downloader",
+    "landerId": "pixabay-downloader",
+    "offerId": "pixabay-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Pixabay Downloader",
+    "product_page_url": "https://apps.serp.co/pixabay-downloader",
+    "product_slug": "pixabay-downloader",
+    "productName": "Pixabay Downloader",
+    "productPageUrl": "https://apps.serp.co/pixabay-downloader",
+    "productSlug": "pixabay-downloader",
+    "purchase_url": "https://serp.ly/pixabay-downloader",
+    "purchaseUrl": "https://serp.ly/pixabay-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/pixabay-downloader/",
+    "serply_link": "https://serp.ly/pixabay-downloader",
+    "serplyLink": "https://serp.ly/pixabay-downloader",
+    "slug": "pixabay-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pixabay-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/pixabay-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g106JrOmKRCmhuWBP77A",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HlYh52Z9mCt"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g106JrOmKRCmhuWBP77A",

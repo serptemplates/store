@@ -110,6 +110,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/dash-stream-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/dash-stream-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=dash-stream-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=dash-stream-video-downloader",
+    "ghl_tag": "purchase-dash-stream-video-downloader",
+    "ghlTag": "purchase-dash-stream-video-downloader",
+    "landerId": "dash-stream-video-downloader",
+    "offerId": "dash-stream-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "DASH Stream Downloader",
+    "product_page_url": "https://apps.serp.co/dash-stream-video-downloader",
+    "product_slug": "dash-stream-video-downloader",
+    "productName": "DASH Stream Downloader",
+    "productPageUrl": "https://apps.serp.co/dash-stream-video-downloader",
+    "productSlug": "dash-stream-video-downloader",
+    "purchase_url": "https://serp.ly/dash-stream-video-downloader",
+    "purchaseUrl": "https://serp.ly/dash-stream-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/dash-stream-video-downloader/",
+    "serply_link": "https://serp.ly/dash-stream-video-downloader",
+    "serplyLink": "https://serp.ly/dash-stream-video-downloader",
+    "slug": "dash-stream-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dash-stream-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/dash-stream-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -127,6 +155,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

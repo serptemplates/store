@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/teachable-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/teachable-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/teachable-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=teachable-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=teachable-video-downloader",
+    "ghl_tag": "purchase-teachable-video-downloader",
+    "ghlTag": "purchase-teachable-video-downloader",
+    "landerId": "teachable-video-downloader",
+    "offerId": "teachable-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Teachable Video Downloader",
+    "product_page_url": "https://apps.serp.co/teachable-video-downloader",
+    "product_slug": "teachable-video-downloader",
+    "productName": "Teachable Video Downloader",
+    "productPageUrl": "https://apps.serp.co/teachable-video-downloader",
+    "productSlug": "teachable-video-downloader",
+    "purchase_url": "https://serp.ly/teachable-video-downloader",
+    "purchaseUrl": "https://serp.ly/teachable-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/teachable-video-downloader/",
+    "serply_link": "https://serp.ly/teachable-video-downloader",
+    "serplyLink": "https://serp.ly/teachable-video-downloader",
+    "slug": "teachable-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/teachable-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/teachable-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gB06JrOmKRCmO2gulXc5",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6H2Dscvp1wGR"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gB06JrOmKRCmO2gulXc5",

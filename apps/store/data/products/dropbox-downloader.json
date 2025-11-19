@@ -115,6 +115,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/dropbox-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/dropbox-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=dropbox-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=dropbox-downloader",
+    "ghl_tag": "purchase-dropbox-downloader",
+    "ghlTag": "purchase-dropbox-downloader",
+    "landerId": "dropbox-downloader",
+    "offerId": "dropbox-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Dropbox Downloader",
+    "product_page_url": "https://apps.serp.co/dropbox-downloader",
+    "product_slug": "dropbox-downloader",
+    "productName": "Dropbox Downloader",
+    "productPageUrl": "https://apps.serp.co/dropbox-downloader",
+    "productSlug": "dropbox-downloader",
+    "purchase_url": "https://serp.ly/dropbox-downloader",
+    "purchaseUrl": "https://serp.ly/dropbox-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/dropbox-downloader/",
+    "serply_link": "https://serp.ly/dropbox-downloader",
+    "serplyLink": "https://serp.ly/dropbox-downloader",
+    "slug": "dropbox-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dropbox-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/dropbox-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -132,6 +160,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

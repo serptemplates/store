@@ -7,10 +7,16 @@ import process from "node:process";
 
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import { normalizeStripeAccountAlias } from "../config/payment-accounts";
+import { getOptionalStripeSecretKey, type StripeMode } from "../lib/payments/stripe-environment";
 import { getAllProducts } from "../lib/products/product";
 
 const API_VERSION = "2025-06-30.basil; checkout_cross_sells_beta=v1" as unknown as Stripe.LatestApiVersion;
 const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+type CliArgs = {
+  accountAlias: string;
+};
 
 type CrossSellConfig = {
   downloaderProductId?: string;
@@ -18,22 +24,40 @@ type CrossSellConfig = {
 
 const DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID = "prod_TPQDdWiCCy0HK2";
 
-function resolveCrossSellConfig(mode: StripeMode): CrossSellConfig {
-  if (mode === "live") {
-    return {
-      downloaderProductId:
-        process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_LIVE
-        ?? process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_LIVE
-        ?? DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID,
-    };
+const CROSS_SELL_ENV_BASES = [
+  "STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID",
+  "STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID",
+  "STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID",
+];
+
+function buildEnvCandidates(base: string, aliasToken: string, mode: StripeMode): string[] {
+  const suffix = mode === "live" ? "LIVE" : "TEST";
+  return [
+    `${base}__${aliasToken}__${suffix}`,
+    `${base}__${aliasToken}`,
+    `${base}_${suffix}`,
+    base,
+  ];
+}
+
+function resolveCrossSellConfig(mode: StripeMode, accountAlias: string): CrossSellConfig {
+  const aliasToken = accountAlias.replace(/[^a-z0-9]/gi, "_").toUpperCase();
+
+  for (const base of CROSS_SELL_ENV_BASES) {
+    const candidates = buildEnvCandidates(base, aliasToken, mode);
+    for (const candidate of candidates) {
+      const value = process.env[candidate];
+      if (typeof value === "string" && value.trim().length > 0) {
+        return { downloaderProductId: value.trim() };
+      }
+    }
   }
 
-  return {
-    downloaderProductId:
-      process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_TEST
-      ?? process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_TEST
-      ?? process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_TEST,
-  };
+  if (mode === "live") {
+    return { downloaderProductId: DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID };
+  }
+
+  return { downloaderProductId: undefined };
 }
 
 function loadEnvFiles() {
@@ -53,52 +77,41 @@ function loadEnvFiles() {
 
 loadEnvFiles();
 
-type StripeMode = "live" | "test";
 type StripeClient = { mode: StripeMode; stripe: Stripe };
-
-function resolveStripeSecret(mode: StripeMode): string | undefined {
-  if (mode === "live") {
-    if (process.env.STRIPE_SECRET_KEY_LIVE && process.env.STRIPE_SECRET_KEY_LIVE.startsWith("sk_live_")) {
-      return process.env.STRIPE_SECRET_KEY_LIVE;
+function parseCliArgs(argv: string[]): CliArgs {
+  let alias: string | undefined;
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (!arg.startsWith("--")) continue;
+    const [rawKey, rawValue] = arg.includes("=") ? arg.split("=", 2) : [arg, undefined];
+    const key = rawKey.slice(2);
+    const value = rawValue ?? argv[i + 1];
+    if (rawValue === undefined && (i + 1 >= argv.length || argv[i + 1].startsWith("--"))) {
+      continue;
     }
-    if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_live_")) {
-      return process.env.STRIPE_SECRET_KEY;
-    }
-    return undefined;
-  }
-
-  const candidates = [
-    process.env.STRIPE_SECRET_KEY_TEST,
-    process.env.STRIPE_TEST_SECRET_KEY,
-    process.env.STRIPE_SECRET_KEY,
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate && candidate.startsWith("sk_test_")) {
-      return candidate;
+    if (key === "account") {
+      alias = value;
+      if (rawValue === undefined) i += 1;
     }
   }
 
-  return undefined;
+  return { accountAlias: normalizeStripeAccountAlias(alias) };
 }
 
-function createStripeClients(): StripeClient[] {
+function createStripeClients(accountAlias: string): StripeClient[] {
   const clients: StripeClient[] = [];
-  const liveSecret = resolveStripeSecret("live");
-  const testSecret = resolveStripeSecret("test");
+  const modes: StripeMode[] = ["live", "test"];
 
-  if (liveSecret) {
-    clients.push({ mode: "live", stripe: new Stripe(liveSecret, { apiVersion: API_VERSION }) });
-  }
-
-  if (testSecret) {
-    clients.push({ mode: "test", stripe: new Stripe(testSecret, { apiVersion: API_VERSION }) });
+  for (const mode of modes) {
+    const secret = getOptionalStripeSecretKey({ mode, accountAlias });
+    if (!secret) {
+      continue;
+    }
+    clients.push({ mode, stripe: new Stripe(secret, { apiVersion: API_VERSION }) });
   }
 
   if (clients.length === 0) {
-    throw new Error(
-      "No Stripe secret keys found. Set STRIPE_SECRET_KEY_LIVE / STRIPE_SECRET_KEY_TEST or equivalent environment variables.",
-    );
+    throw new Error(`No Stripe secret keys found for account alias "${accountAlias}". Check your env configuration.`);
   }
 
   return clients;
@@ -126,13 +139,15 @@ function shouldUpdateProduct(slug: string, name: string | undefined, status?: st
 }
 
 async function updateStripeCrossSells() {
+  const { accountAlias } = parseCliArgs(process.argv.slice(2));
   const products = getAllProducts();
   if (products.length === 0) {
     console.log("No product records found. Nothing to update.");
     return;
   }
 
-  const clients = createStripeClients();
+  console.log(`Using Stripe account alias: ${accountAlias}`);
+  const clients = createStripeClients(accountAlias);
   let productsProcessed = 0;
   let updatesAttempted = 0;
   let updatesApplied = 0;
@@ -157,7 +172,7 @@ async function updateStripeCrossSells() {
     productsProcessed += 1;
 
     for (const client of clients) {
-      const cfg = resolveCrossSellConfig(client.mode);
+      const cfg = resolveCrossSellConfig(client.mode, accountAlias);
       const target = cfg.downloaderProductId;
       if (!target) {
         console.log(`⚪️  [${client.mode}] ${slug}: skipping (no cross-sell target configured).`);

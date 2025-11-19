@@ -196,6 +196,36 @@
   "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/beeg-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=beeg-video-downloader",
+    "ghl_tag": "purchase-beeg-video-downloader",
+    "ghlTag": "purchase-beeg-video-downloader",
+    "landerId": "beeg-video-downloader",
+    "license_entitlements": "beeg-video-downloader",
+    "licenseEntitlements": "beeg-video-downloader",
+    "offerId": "beeg-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Beeg Video Downloader",
+    "product_page_url": "https://apps.serp.co/beeg-video-downloader",
+    "product_slug": "beeg-video-downloader",
+    "productName": "Beeg Video Downloader",
+    "productPageUrl": "https://apps.serp.co/beeg-video-downloader",
+    "productSlug": "beeg-video-downloader",
+    "purchase_url": "https://serp.ly/beeg-video-downloader",
+    "purchaseUrl": "https://serp.ly/beeg-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
+    "serply_link": "https://serp.ly/beeg-video-downloader",
+    "serplyLink": "https://serp.ly/beeg-video-downloader",
+    "slug": "beeg-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/beeg-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -218,6 +248,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
+      "metadata": {
+        "stripe_product_id": "prod_SrFXkM8CAB2Ds8"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",

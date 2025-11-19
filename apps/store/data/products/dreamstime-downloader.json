@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/dreamstime-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/dreamstime-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/dreamstime-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=dreamstime-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=dreamstime-downloader",
+    "ghl_tag": "purchase-dreamstime-downloader",
+    "ghlTag": "purchase-dreamstime-downloader",
+    "landerId": "dreamstime-downloader",
+    "offerId": "dreamstime-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Dreamstime Downloader",
+    "product_page_url": "https://apps.serp.co/dreamstime-downloader",
+    "product_slug": "dreamstime-downloader",
+    "productName": "Dreamstime Downloader",
+    "productPageUrl": "https://apps.serp.co/dreamstime-downloader",
+    "productSlug": "dreamstime-downloader",
+    "purchase_url": "https://serp.ly/dreamstime-downloader",
+    "purchaseUrl": "https://serp.ly/dreamstime-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/dreamstime-downloader/",
+    "serply_link": "https://serp.ly/dreamstime-downloader",
+    "serplyLink": "https://serp.ly/dreamstime-downloader",
+    "slug": "dreamstime-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dreamstime-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/dreamstime-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wq06JrOmKRCmT1rrKjcd",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6GEMnA4OrbWe"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wq06JrOmKRCmT1rrKjcd",

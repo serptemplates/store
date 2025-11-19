@@ -11,7 +11,7 @@
 | Surface | Why it matters | Current reference |
 | --- | --- | --- |
 | Product JSON used at runtime | UI, checkout API, feeds read this canonical document | `apps/store/data/products/onlyfans-downloader.json:71-80` for `pricing.*`, `168-172` for `stripe.price_id` |
-| Price manifest | `findPriceEntry()` (`apps/store/lib/products/product-adapter.ts:268-303`) and Google Merchant (`apps/store/lib/google-merchant/merchant-product.ts:1-99`) source amounts from `apps/store/data/prices/manifest.json` |
+| Price manifest | `findPriceEntry()` (`apps/store/lib/products/product-adapter.ts:268-303`) and Google Merchant (`apps/store/lib/google-merchant/merchant-product.ts:1-99`) read `apps/store/data/prices/manifest.json` (now keyed by slug with provider + price IDs) |
 | Internal checkout route | `/checkout/<slug>` resolves the manifest entry server-side when creating the Stripe session (`apps/store/app/checkout/[slug]/route.ts`) |
 | Tests & partner docs | Dub integration docs reference the live Stripe price ID (`docs/architecture/dub-partner-attribution.md`) |
 | Ops references | Stripe exports + ops tables reference the price manifest (`apps/store/data/prices/manifest.json`) |
@@ -59,7 +59,7 @@ Keep this table handy while editing; every row needs to be touched or re-generat
    - `--compare-cents` is optional; include it only if you want a strike-through/compare-at price. Omit the flag to drop the original price copy entirely.
    - The script performs these steps automatically:
      - Updates `apps/store/data/products/onlyfans-downloader.json` (pricing strings + Stripe ID).
-     - Patches `apps/store/data/prices/manifest.json`, removing the previous ID if present.
+     - Patches `apps/store/data/prices/manifest.json`, updating the `onlyfans-downloader` entry with the new live/test IDs.
      - Runs `pnpm --filter @apps/store convert:products` and `pnpm --filter @apps/store validate:products` so the canonical JSON stays normalized.
 
 2. **Housekeeping**

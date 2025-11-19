@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/instagram-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/instagram-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/instagram-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=instagram-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=instagram-downloader",
+    "ghl_tag": "purchase-instagram-downloader",
+    "ghlTag": "purchase-instagram-downloader",
+    "landerId": "instagram-downloader",
+    "offerId": "instagram-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Instagram Downloader",
+    "product_page_url": "https://apps.serp.co/instagram-downloader",
+    "product_slug": "instagram-downloader",
+    "productName": "Instagram Downloader",
+    "productPageUrl": "https://apps.serp.co/instagram-downloader",
+    "productSlug": "instagram-downloader",
+    "purchase_url": "https://serp.ly/instagram-downloader",
+    "purchaseUrl": "https://serp.ly/instagram-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/instagram-downloader/",
+    "serply_link": "https://serp.ly/instagram-downloader",
+    "serplyLink": "https://serp.ly/instagram-downloader",
+    "slug": "instagram-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/instagram-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/instagram-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wv06JrOmKRCm5BKNZ3Kj",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HurnDKF4TUS"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wv06JrOmKRCm5BKNZ3Kj",

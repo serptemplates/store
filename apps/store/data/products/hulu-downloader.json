@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/hulu-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/hulu-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/hulu-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=hulu-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=hulu-downloader",
+    "ghl_tag": "purchase-hulu-downloader",
+    "ghlTag": "purchase-hulu-downloader",
+    "landerId": "hulu-downloader",
+    "offerId": "hulu-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Hulu Downloader",
+    "product_page_url": "https://apps.serp.co/hulu-downloader",
+    "product_slug": "hulu-downloader",
+    "productName": "Hulu Downloader",
+    "productPageUrl": "https://apps.serp.co/hulu-downloader",
+    "productSlug": "hulu-downloader",
+    "purchase_url": "https://serp.ly/hulu-downloader",
+    "purchaseUrl": "https://serp.ly/hulu-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/hulu-downloader/",
+    "serply_link": "https://serp.ly/hulu-downloader",
+    "serplyLink": "https://serp.ly/hulu-downloader",
+    "slug": "hulu-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hulu-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/hulu-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wv06JrOmKRCmOtYb8mCE",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6H0Q1x2ohW8n"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wv06JrOmKRCmOtYb8mCE",

@@ -2,22 +2,32 @@
 
 ## Quick Reference Map
 
-### 🎯 Main Checkout Handler
+### 🎯 Checkout Entry Point
 **File**: `apps/store/app/checkout/[slug]/route.ts`
 
 | Line Range | Code | Purpose |
 |-----------|------|---------|
-| 10-18 | Type definitions | Define `CheckoutOptionalItem` and `CheckoutSessionCreateParamsWithOptionalItems` |
-| 40-210 | `GET()` function | Main async handler for checkout route |
-| 117 | `optionalItems: CheckoutOptionalItem[] = []` | Initialize optional items array |
-| 118 | `// optional items are configured via per-offer `optionalItems` or product `default_price` (no env fallback)` | Per-offer/product price ids are used |
-| 119-141 | `for each optional item in offer.optionalItems: ...` | Resolve price and add to array |
-| 121-127 | `resolvePriceForEnvironment()` call | Handles test/live price sync |
-| 129-137 | `optionalItems.push()` | Add SERP Blocks to optional items |
-| 139-145 | Error handling | Gracefully handle price resolution failures |
-| 147-167 | Session params building | Create Stripe session parameters |
-| 166-167 | `if (optionalItems.length > 0) { params.optional_items = optionalItems }` | **← Inject optional items into Stripe session** |
-| 195-197 | `stripe.checkout.sessions.create(params)` | **← Send to Stripe API** |
+| 1-70 | Imports/helpers | Load offer + product metadata |
+| 71-170 | `GET()` function | Validates slug, builds metadata, reads Dub cookie |
+| ~150 | `createCheckoutSessionForOffer({...})` | Delegates to payment router (no Stripe-specific code) |
+| ~175 | `NextResponse.redirect(...)` | Redirect user to provider checkout URL |
+
+The route no longer touches optional items directly; it hands the entire offer + metadata payload to the payment router, which then selects the correct provider adapter.
+
+### 🧭 Payment Router & Stripe Adapter
+
+- `apps/store/lib/payments/payment-router.ts` selects a provider adapter (Stripe today, stubs for others) and normalizes request parameters.
+- `apps/store/lib/payments/providers/base.ts` defines the shared `CheckoutRequest`, `CheckoutResponse`, and adapter interfaces.
+- **Stripe implementation** lives in `apps/store/lib/payments/providers/stripe/checkout.ts`:
+
+| Line Range | Code | Purpose |
+|-----------|------|---------|
+| 1-30 | Imports/type aliases | Adapter wiring |
+| 33-83 | `buildOptionalItems()` | Fetches products from live Stripe, resolves overrides/default prices, syncs to test |
+| 86-147 | `stripeCheckoutAdapter.createCheckout()` | Builds session params, injects optional items, mirrors metadata |
+| 114-147 | `stripe.checkout.sessions.create(params)` | Sends request with `optional_items` attached |
+
+This module contains all optional-item specific logic (price resolution, adjustable quantity, error logging) that used to live in the route.
 
 ---
 
@@ -56,31 +66,8 @@
 ---
 
 ### ✅ Unit Tests
-**File**: `apps/store/tests/unit/app/checkout-route.test.ts`
-
-| Line Range | Code | Purpose |
-|-----------|------|---------|
-| 24-34 | Test setup | Mock `offer.optionalItems` and product `default_price` values for the optional items |
-| 45-53 | Mock setup | Set return values for price resolution |
-| 87-98 | Test execution | Call GET handler with mocked Stripe |
-| 101-110 | **Verification** | Assert `optional_items` included in params with correct structure |
-
-**Example assertion**:
-```typescript
-expect(params).toMatchObject({
-  optional_items: [
-    {
-      price: "price_optional_test_456",
-      quantity: 1,
-      adjustable_quantity: {
-        enabled: true,
-        minimum: 0,
-        maximum: 1,
-      },
-    },
-  ],
-});
-```
+- Route-level tests: `apps/store/tests/unit/app/checkout-route.test.ts` now verify metadata + router invocation.
+- Adapter tests: `apps/store/tests/unit/lib/payments/providers/stripe/checkout.test.ts` cover optional item resolution, account alias propagation, and session creation parameters.
 
 ---
 
@@ -247,4 +234,3 @@ This repo runs `validate:content` as part of linting and CI. It includes a check
 pnpm --filter @apps/store run migrate:remove-invalid-optional-items
 pnpm --filter @apps/store run migrate:remove-invalid-optional-items -- --apply
 ```
-

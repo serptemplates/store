@@ -117,6 +117,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/fansly-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/fansly-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=fansly-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=fansly-downloader",
+    "ghl_tag": "purchase-fansly-downloader",
+    "ghlTag": "purchase-fansly-downloader",
+    "landerId": "fansly-downloader",
+    "offerId": "fansly-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Fansly Downloader",
+    "product_page_url": "https://apps.serp.co/fansly-downloader",
+    "product_slug": "fansly-downloader",
+    "productName": "Fansly Downloader",
+    "productPageUrl": "https://apps.serp.co/fansly-downloader",
+    "productSlug": "fansly-downloader",
+    "purchase_url": "https://serp.ly/fansly-downloader",
+    "purchaseUrl": "https://serp.ly/fansly-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/fansly-downloader/",
+    "serply_link": "https://serp.ly/fansly-downloader",
+    "serplyLink": "https://serp.ly/fansly-downloader",
+    "slug": "fansly-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/fansly-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/fansly-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -134,6 +162,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

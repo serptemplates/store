@@ -115,6 +115,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/sendvid-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/sendvid-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=sendvid-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=sendvid-downloader",
+    "ghl_tag": "purchase-sendvid-downloader",
+    "ghlTag": "purchase-sendvid-downloader",
+    "landerId": "sendvid-downloader",
+    "offerId": "sendvid-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Sendvid Downloader",
+    "product_page_url": "https://apps.serp.co/sendvid-downloader",
+    "product_slug": "sendvid-downloader",
+    "productName": "Sendvid Downloader",
+    "productPageUrl": "https://apps.serp.co/sendvid-downloader",
+    "productSlug": "sendvid-downloader",
+    "purchase_url": "https://serp.ly/sendvid-downloader",
+    "purchaseUrl": "https://serp.ly/sendvid-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/sendvid-downloader/",
+    "serply_link": "https://serp.ly/sendvid-downloader",
+    "serplyLink": "https://serp.ly/sendvid-downloader",
+    "slug": "sendvid-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/sendvid-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/sendvid-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -132,6 +160,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

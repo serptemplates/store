@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/skillshare-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/skillshare-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/skillshare-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=skillshare-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=skillshare-downloader",
+    "ghl_tag": "purchase-skillshare-downloader",
+    "ghlTag": "purchase-skillshare-downloader",
+    "landerId": "skillshare-downloader",
+    "offerId": "skillshare-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Skillshare Downloader",
+    "product_page_url": "https://apps.serp.co/skillshare-downloader",
+    "product_slug": "skillshare-downloader",
+    "productName": "Skillshare Downloader",
+    "productPageUrl": "https://apps.serp.co/skillshare-downloader",
+    "productSlug": "skillshare-downloader",
+    "purchase_url": "https://serp.ly/skillshare-downloader",
+    "purchaseUrl": "https://serp.ly/skillshare-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/skillshare-downloader/",
+    "serply_link": "https://serp.ly/skillshare-downloader",
+    "serplyLink": "https://serp.ly/skillshare-downloader",
+    "slug": "skillshare-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/skillshare-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/skillshare-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g706JrOmKRCmWGVr96N6",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HHLNAQEaguS"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g706JrOmKRCmWGVr96N6",

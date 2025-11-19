@@ -52,6 +52,34 @@
   "github_repo_url": "https://github.com/serpapps/webinarjam-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/webinarjam-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/webinarjam-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=webinarjam-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=webinarjam-video-downloader",
+    "landerId": "webinarjam-video-downloader",
+    "license_entitlements": "webinarjam-video-downloader",
+    "licenseEntitlements": "webinarjam-video-downloader",
+    "offerId": "webinarjam-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Webinarjam Video Downloader",
+    "product_page_url": "https://apps.serp.co/webinarjam-video-downloader",
+    "product_slug": "webinarjam-video-downloader",
+    "productName": "Webinarjam Video Downloader",
+    "productPageUrl": "https://apps.serp.co/webinarjam-video-downloader",
+    "productSlug": "webinarjam-video-downloader",
+    "purchase_url": "https://serp.ly/webinarjam-video-downloader",
+    "purchaseUrl": "https://serp.ly/webinarjam-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/webinarjam-video-downloader/",
+    "serply_link": "https://serp.ly/webinarjam-video-downloader",
+    "serplyLink": "https://serp.ly/webinarjam-video-downloader",
+    "slug": "webinarjam-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/webinarjam-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/webinarjam-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "return_policy": {
     "days": 0,
@@ -59,6 +87,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

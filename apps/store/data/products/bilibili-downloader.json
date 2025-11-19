@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/bilibili-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/bilibili-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/bilibili-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=bilibili-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=bilibili-downloader",
+    "ghl_tag": "purchase-bilibili-downloader",
+    "ghlTag": "purchase-bilibili-downloader",
+    "landerId": "bilibili-downloader",
+    "offerId": "bilibili-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Bilibili Downloader",
+    "product_page_url": "https://apps.serp.co/bilibili-downloader",
+    "product_slug": "bilibili-downloader",
+    "productName": "Bilibili Downloader",
+    "productPageUrl": "https://apps.serp.co/bilibili-downloader",
+    "productSlug": "bilibili-downloader",
+    "purchase_url": "https://serp.ly/bilibili-downloader",
+    "purchaseUrl": "https://serp.ly/bilibili-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/bilibili-downloader/",
+    "serply_link": "https://serp.ly/bilibili-downloader",
+    "serplyLink": "https://serp.ly/bilibili-downloader",
+    "slug": "bilibili-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/bilibili-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/bilibili-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wj06JrOmKRCmXQNer2ho",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Go0jcavriZb"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wj06JrOmKRCmXQNer2ho",

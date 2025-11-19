@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/stockvault-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/stockvault-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/stockvault-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=stockvault-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=stockvault-downloader",
+    "ghl_tag": "purchase-stockvault-downloader",
+    "ghlTag": "purchase-stockvault-downloader",
+    "landerId": "stockvault-downloader",
+    "offerId": "stockvault-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Stockvault Downloader",
+    "product_page_url": "https://apps.serp.co/stockvault-downloader",
+    "product_slug": "stockvault-downloader",
+    "productName": "Stockvault Downloader",
+    "productPageUrl": "https://apps.serp.co/stockvault-downloader",
+    "productSlug": "stockvault-downloader",
+    "purchase_url": "https://serp.ly/stockvault-downloader",
+    "purchaseUrl": "https://serp.ly/stockvault-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/stockvault-downloader/",
+    "serply_link": "https://serp.ly/stockvault-downloader",
+    "serplyLink": "https://serp.ly/stockvault-downloader",
+    "slug": "stockvault-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stockvault-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/stockvault-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g906JrOmKRCmGb7sOQ2q",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HzuwEQfZ23m"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g906JrOmKRCmGb7sOQ2q",
