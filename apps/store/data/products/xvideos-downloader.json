@@ -146,6 +146,36 @@
   "github_repo_url": "https://github.com/serpapps/xvideos-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/xvideos-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/xvideos-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=xvideos-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=xvideos-downloader",
+    "ghl_tag": "purchase-xvideos-downloader",
+    "ghlTag": "purchase-xvideos-downloader",
+    "landerId": "xvideos-downloader",
+    "license_entitlements": "xvideos-downloader",
+    "licenseEntitlements": "xvideos-downloader",
+    "offerId": "xvideos-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "XVideos Downloader",
+    "product_page_url": "https://apps.serp.co/xvideos-downloader",
+    "product_slug": "xvideos-downloader",
+    "productName": "XVideos Downloader",
+    "productPageUrl": "https://apps.serp.co/xvideos-downloader",
+    "productSlug": "xvideos-downloader",
+    "purchase_url": "https://serp.ly/xvideos-downloader",
+    "purchaseUrl": "https://serp.ly/xvideos-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/xvideos-downloader/",
+    "serply_link": "https://serp.ly/xvideos-downloader",
+    "serplyLink": "https://serp.ly/xvideos-downloader",
+    "slug": "xvideos-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xvideos-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/xvideos-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -168,6 +198,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",
+      "metadata": {
+        "stripe_product_id": "prod_SrGW6pAdy73l9t"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",

@@ -8,6 +8,7 @@ import stripJsonComments from "strip-json-comments";
 import {
   FAQ_FIELD_ORDER,
   LEGAL_FAQ_TEMPLATE,
+  PAYMENT_FIELD_ORDER,
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
   PRICING_FIELD_ORDER,
   PRODUCT_FIELD_ORDER,
@@ -16,6 +17,12 @@ import {
   SCREENSHOT_FIELD_ORDER,
   STRIPE_FIELD_ORDER,
   TRADEMARK_METADATA_FIELD_ORDER,
+  WHOP_FIELD_ORDER,
+  EASY_PAY_DIRECT_FIELD_ORDER,
+  LEMONSQUEEZY_FIELD_ORDER,
+  WHOP_ENVIRONMENT_FIELD_ORDER,
+  EASY_PAY_DIRECT_ENVIRONMENT_FIELD_ORDER,
+  LEMONSQUEEZY_ENVIRONMENT_FIELD_ORDER,
   requiresDownloaderLegalFaq,
   type ProductData,
   productSchema,
@@ -90,7 +97,7 @@ const COMMENT_SECTIONS = [
   },
   {
     comment: "// PAYMENT DATA",
-    keys: ["pricing", "return_policy", "stripe", "ghl", "license"],
+    keys: ["pricing", "return_policy", "payment", "stripe", "ghl", "license"],
   },
 ] as const;
 
@@ -195,6 +202,128 @@ function orderPlainRecord(input: Record<string, unknown>): Record<string, unknow
   return orderObject(input, []);
 }
 
+function normalizeMetadataValue(value: unknown): string | undefined {
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed.length > 0 ? trimmed : undefined;
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  if (Array.isArray(value)) {
+    const flattened = value
+      .map((entry) => {
+        if (typeof entry === "string") {
+          const trimmed = entry.trim();
+          return trimmed.length > 0 ? trimmed : null;
+        }
+        if (typeof entry === "number" || typeof entry === "boolean") {
+          return String(entry);
+        }
+        return null;
+      })
+      .filter((entry): entry is string => Boolean(entry));
+
+    if (flattened.length === 0) {
+      return undefined;
+    }
+
+    return flattened.join(",");
+  }
+
+  try {
+    const serialized = JSON.stringify(value);
+    if (!serialized || serialized === "{}" || serialized === "[]") {
+      return undefined;
+    }
+    return serialized;
+  } catch {
+    return undefined;
+  }
+}
+
+function assignMetadataValue(target: Record<string, string>, key: string, value: unknown) {
+  const normalized = normalizeMetadataValue(value);
+  if (normalized !== undefined) {
+    target[key] = normalized;
+  }
+}
+
+function normalizeCheckoutMetadataRecord(source: Record<string, unknown> | undefined): Record<string, string> {
+  if (!isRecord(source)) {
+    return {};
+  }
+
+  const normalized: Record<string, string> = {};
+  for (const [key, value] of Object.entries(source)) {
+    assignMetadataValue(normalized, key, value);
+  }
+  return normalized;
+}
+
+function buildBaseCheckoutMetadata(product: ProductData): Record<string, string> {
+  const base: Record<string, string> = {};
+  const slug = normalizeMetadataValue(product.slug);
+  const productName = normalizeMetadataValue(product.name);
+  if (slug) {
+    base.productSlug = slug;
+  }
+
+  if (productName) {
+    base.productName = productName;
+  }
+
+  const ghlTags = Array.isArray(product.ghl?.tag_ids)
+    ? product.ghl!.tag_ids.filter((tag): tag is string => typeof tag === "string" && tag.trim().length > 0)
+    : [];
+
+  if (ghlTags.length > 0) {
+    base.ghlTag = ghlTags[0].trim();
+  }
+
+  const entitlements = Array.isArray(product.license?.entitlements)
+    ? product.license!.entitlements.filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
+    : [];
+
+  if (entitlements.length > 0) {
+    const serializedEntitlements = entitlements.join(",");
+    base.licenseEntitlements = serializedEntitlements;
+  }
+
+  const provider = product.payment?.provider ?? (product.stripe ? "stripe" : undefined);
+  if (provider) {
+    base.paymentProvider = provider;
+  }
+
+  const accountAlias = typeof product.payment?.account === "string" ? product.payment.account.trim() : undefined;
+  if (accountAlias) {
+    base.paymentProviderAccount = accountAlias;
+  }
+
+  return base;
+}
+
+function normalizeCheckoutMetadata(product: ProductData): Record<string, string> {
+  const base = buildBaseCheckoutMetadata(product);
+  const userDefined = normalizeCheckoutMetadataRecord(product.checkout_metadata);
+  const merged = { ...base, ...userDefined };
+  delete merged.ghlTagIds;
+  delete (merged as Record<string, unknown>)["ghl_tag_ids"];
+  delete merged.paymentProviderAccountAlias;
+  delete (merged as Record<string, unknown>)["payment_provider_account_alias"];
+  delete merged.paymentProviderMode;
+  delete (merged as Record<string, unknown>)["payment_provider_mode"];
+  delete merged.stripeProductId;
+  delete (merged as Record<string, unknown>)["stripe_product_id"];
+  return orderPlainRecord(merged) as Record<string, string>;
+}
+
 function normalizeStripe(stripe: NonNullable<ProductData["stripe"]>): Record<string, unknown> {
   const ordered = orderObject(stripe as Record<string, unknown>, STRIPE_FIELD_ORDER);
   const metadata = ordered.metadata;
@@ -204,6 +333,119 @@ function normalizeStripe(stripe: NonNullable<ProductData["stripe"]>): Record<str
   }
 
   return ordered;
+}
+
+function normalizeProviderEnvironment(
+  environment: Record<string, unknown>,
+  order: readonly string[],
+): Record<string, unknown> {
+  return orderObject(environment, order);
+}
+
+function normalizeProviderSection(
+  section: Record<string, unknown>,
+  sectionOrder: readonly string[],
+  environmentOrder: readonly string[],
+): Record<string, unknown> {
+  const ordered = orderObject(section, sectionOrder);
+  if (isRecord(ordered.metadata)) {
+    ordered.metadata = orderPlainRecord(ordered.metadata);
+  }
+
+  if (isRecord(ordered.live)) {
+    ordered.live = normalizeProviderEnvironment(
+      ordered.live as Record<string, unknown>,
+      environmentOrder,
+    );
+  }
+
+  if (isRecord(ordered.test)) {
+    ordered.test = normalizeProviderEnvironment(
+      ordered.test as Record<string, unknown>,
+      environmentOrder,
+    );
+  }
+
+  return ordered;
+}
+
+function normalizeWhop(whop: NonNullable<NonNullable<ProductData["payment"]>["whop"]>): Record<string, unknown> {
+  return normalizeProviderSection(
+    whop as Record<string, unknown>,
+    WHOP_FIELD_ORDER,
+    WHOP_ENVIRONMENT_FIELD_ORDER,
+  );
+}
+
+function normalizeEasyPayDirect(
+  easyPayDirect: NonNullable<NonNullable<ProductData["payment"]>["easy_pay_direct"]>,
+): Record<string, unknown> {
+  return normalizeProviderSection(
+    easyPayDirect as Record<string, unknown>,
+    EASY_PAY_DIRECT_FIELD_ORDER,
+    EASY_PAY_DIRECT_ENVIRONMENT_FIELD_ORDER,
+  );
+}
+
+function normalizeLemonSqueezy(
+  lemonSqueezy: NonNullable<NonNullable<ProductData["payment"]>["lemonsqueezy"]>,
+): Record<string, unknown> {
+  return normalizeProviderSection(
+    lemonSqueezy as Record<string, unknown>,
+    LEMONSQUEEZY_FIELD_ORDER,
+    LEMONSQUEEZY_ENVIRONMENT_FIELD_ORDER,
+  );
+}
+
+function normalizePayment(payment: NonNullable<ProductData["payment"]>): Record<string, unknown> {
+  const ordered = orderObject(payment as Record<string, unknown>, PAYMENT_FIELD_ORDER);
+  const paymentMetadata = ordered.metadata;
+  if (isRecord(paymentMetadata)) {
+    ordered.metadata = orderPlainRecord(paymentMetadata);
+  }
+
+  if (isRecord(ordered.stripe)) {
+    ordered.stripe = normalizeStripe(ordered.stripe as Record<string, unknown> as NonNullable<ProductData["stripe"]>);
+  }
+
+  if (isRecord(ordered.whop)) {
+    ordered.whop = normalizeWhop(
+      ordered.whop as Record<string, unknown> as NonNullable<NonNullable<ProductData["payment"]>["whop"]>,
+    );
+  }
+
+  if (isRecord(ordered.easy_pay_direct)) {
+    ordered.easy_pay_direct = normalizeEasyPayDirect(
+      ordered.easy_pay_direct as Record<string, unknown> as NonNullable<NonNullable<ProductData["payment"]>["easy_pay_direct"]>,
+    );
+  }
+
+  if (isRecord(ordered.lemonsqueezy)) {
+    ordered.lemonsqueezy = normalizeLemonSqueezy(
+      ordered.lemonsqueezy as Record<string, unknown> as NonNullable<NonNullable<ProductData["payment"]>["lemonsqueezy"]>,
+    );
+  }
+
+  return ordered;
+}
+
+function derivePaymentSection(product: ProductData): ProductData["payment"] | undefined {
+  const existing = product.payment;
+  if (existing) {
+    if (existing.provider === "stripe" && !existing.stripe && product.stripe) {
+      return { ...existing, stripe: product.stripe };
+    }
+    return existing;
+  }
+
+  if (product.stripe) {
+    return {
+      provider: "stripe",
+      stripe: product.stripe,
+    };
+  }
+
+  return undefined;
 }
 
 function normalizeGhl(ghl: NonNullable<ProductData["ghl"]>): Record<string, unknown> {
@@ -328,7 +570,22 @@ function ensureLegalFaq(product: ProductData): ProductData {
 }
 
 function normalizeProduct(product: ProductData): Record<string, unknown> {
-  const prepared = ensureLegalFaq(product);
+  const withFaq = ensureLegalFaq(product);
+  const paymentSection = derivePaymentSection(withFaq);
+  const prepared: ProductData = {
+    ...withFaq,
+    ...(paymentSection ? { payment: paymentSection } : {}),
+  };
+
+  if (paymentSection?.provider === "stripe" && paymentSection.stripe) {
+    prepared.stripe = paymentSection.stripe;
+  }
+
+  const normalizedCheckoutMetadata = normalizeCheckoutMetadata(prepared);
+  if (Object.keys(normalizedCheckoutMetadata).length > 0) {
+    prepared.checkout_metadata = normalizedCheckoutMetadata;
+  }
+
   const normalized: Record<string, unknown> = {};
 
   for (const key of PRODUCT_FIELD_ORDER) {
@@ -417,6 +674,11 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
         if (out.length > 0) {
           normalized[key] = out;
         }
+        break;
+      }
+      case "payment": {
+        const payment = value as NonNullable<ProductData["payment"]>;
+        normalized[key] = normalizePayment(payment);
         break;
       }
       case "stripe": {

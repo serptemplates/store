@@ -1,0 +1,122 @@
+{
+  // PRODUCT INFO
+  "platform": "Demo Checkout",
+  "name": "Demo Payment Adapter (PayPal)",
+  "tagline": "Sandbox SKU for iterating on the PayPal adapter pipeline.",
+  "slug": "demo-payment-adapter-paypal",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "A placeholder SKU dedicated to PayPal adapter development so we can wire credentials, metadata, and webhooks without touching production listings.",
+  "seo_title": "Demo PayPal Adapter | Internal Checkout Test Product",
+  "seo_description": "Internal-only checkout product that exercises the PayPal adapter plus provider-agnostic metadata flow.",
+  "status": "draft",
+  "features": [
+    "Validates PayPal provider plumbing",
+    "Keeps metadata + fulfillment identical to Stripe",
+    "Lets us test alternate credentials safely",
+    "Drives webhook + GHL sync verification"
+  ],
+  "faqs": [
+    {
+      "question": "Is this sku public?",
+      "answer": "No. It only exists for adapter development so we can prove out PayPal flows in isolation."
+    },
+    {
+      "question": "Why PayPal?",
+      "answer": "This gives us a controlled JSON manifest entry to map required PayPal credentials and webhook metadata just like our Stripe demo products."
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [],
+  "categories": [
+    "Utilities"
+  ],
+  "keywords": [
+    "demo",
+    "payment",
+    "paypal"
+  ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  "sku": "DEMO-PAYPAL-ADAPTER",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+      "alt": "Placeholder screenshot for PayPal demo product"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/demo-payment-adapter-paypal",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter-paypal",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
+  "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-paypal/",
+  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-paypal",
+  "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-paypal",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  "checkout_metadata": {
+    "ghlTag": "purchase-demo-payment-adapter-paypal",
+    "licenseEntitlements": "demo-payment-adapter-paypal",
+    "paymentProvider": "paypal",
+    "paymentProviderAccount": "serpapps",
+    "productName": "Demo Payment Adapter (PayPal)",
+    "productSlug": "demo-payment-adapter-paypal"
+  },
+  // PAYMENT DATA
+  "pricing": {
+    "label": "Internal",
+    "price": "$17.00",
+    "cta_text": "Start PayPal Test Checkout",
+    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-paypal",
+    "currency": "USD",
+    "benefits": []
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Not a customer-facing SKU",
+    "method": "N/A",
+    "policy_category": "https://schema.org/SoftwareApplication",
+    "url": "https://github.com/serpapps/legal"
+  },
+  "payment": {
+    "provider": "paypal",
+    "account": "serpapps",
+    "mode": "payment",
+    "metadata": {
+      "paypal_brand_name": "SERP Apps",
+      "paypal_currency": "USD",
+      "paypal_description": "Demo Payment Adapter (PayPal)",
+      "paypal_live_amount_cents": "1700",
+      "paypal_live_plan_id": "paypal-live-plan-id-placeholder",
+      "paypal_live_product_id": "paypal-live-product-id-placeholder",
+      "paypal_test_amount_cents": "1700",
+      "paypal_test_plan_id": "paypal-test-plan-id-placeholder",
+      "paypal_test_product_id": "paypal-test-product-id-placeholder",
+      "paypal_webhook_id_alias": "PAYPAL_WEBHOOK_ID__serpapps"
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-demo-payment-adapter-paypal"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "demo-payment-adapter-paypal"
+    ]
+  }
+}

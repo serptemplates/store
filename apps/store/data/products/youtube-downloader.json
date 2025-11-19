@@ -186,6 +186,36 @@
     "youtube-transcript-downloader"
   ],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/youtube-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/youtube-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=youtube-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=youtube-downloader",
+    "ghl_tag": "purchase-youtube-downloader",
+    "ghlTag": "purchase-youtube-downloader",
+    "landerId": "youtube-downloader",
+    "license_entitlements": "youtube-downloader",
+    "licenseEntitlements": "youtube-downloader",
+    "offerId": "youtube-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Youtube Downloader",
+    "product_page_url": "https://apps.serp.co/youtube-downloader",
+    "product_slug": "youtube-downloader",
+    "productName": "Youtube Downloader",
+    "productPageUrl": "https://apps.serp.co/youtube-downloader",
+    "productSlug": "youtube-downloader",
+    "purchase_url": "https://serp.ly/youtube-downloader",
+    "purchaseUrl": "https://serp.ly/youtube-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/youtube-downloader/",
+    "serply_link": "https://serp.ly/youtube-downloader",
+    "serplyLink": "https://serp.ly/youtube-downloader",
+    "slug": "youtube-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youtube-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/youtube-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -208,6 +238,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99xB06JrOmKRCmCyZM0ENF",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6I9QH5ZJMOSn"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99xB06JrOmKRCmCyZM0ENF",

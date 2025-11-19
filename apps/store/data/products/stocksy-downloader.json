@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/stocksy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/stocksy-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/stocksy-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=stocksy-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=stocksy-downloader",
+    "ghl_tag": "purchase-stocksy-downloader",
+    "ghlTag": "purchase-stocksy-downloader",
+    "landerId": "stocksy-downloader",
+    "offerId": "stocksy-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Stocksy Downloader",
+    "product_page_url": "https://apps.serp.co/stocksy-downloader",
+    "product_slug": "stocksy-downloader",
+    "productName": "Stocksy Downloader",
+    "productPageUrl": "https://apps.serp.co/stocksy-downloader",
+    "productSlug": "stocksy-downloader",
+    "purchase_url": "https://serp.ly/stocksy-downloader",
+    "purchaseUrl": "https://serp.ly/stocksy-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/stocksy-downloader/",
+    "serply_link": "https://serp.ly/stocksy-downloader",
+    "serplyLink": "https://serp.ly/stocksy-downloader",
+    "slug": "stocksy-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stocksy-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/stocksy-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g906JrOmKRCmaZzHAMEw",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HBmlo3YNTe9"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g906JrOmKRCmaZzHAMEw",

@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/thinkific-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/thinkific-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/thinkific-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=thinkific-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=thinkific-downloader",
+    "ghl_tag": "purchase-thinkific-downloader",
+    "ghlTag": "purchase-thinkific-downloader",
+    "landerId": "thinkific-downloader",
+    "offerId": "thinkific-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Thinkific Downloader",
+    "product_page_url": "https://apps.serp.co/thinkific-downloader",
+    "product_slug": "thinkific-downloader",
+    "productName": "Thinkific Downloader",
+    "productPageUrl": "https://apps.serp.co/thinkific-downloader",
+    "productSlug": "thinkific-downloader",
+    "purchase_url": "https://serp.ly/thinkific-downloader",
+    "purchaseUrl": "https://serp.ly/thinkific-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/thinkific-downloader/",
+    "serply_link": "https://serp.ly/thinkific-downloader",
+    "serplyLink": "https://serp.ly/thinkific-downloader",
+    "slug": "thinkific-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thinkific-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/thinkific-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gE06JrOmKRCmEfjsFume",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Ip7FMh0twtd"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gE06JrOmKRCmEfjsFume",

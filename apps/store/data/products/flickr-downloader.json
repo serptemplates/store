@@ -145,6 +145,34 @@
   "github_repo_url": "https://github.com/serpapps/flickr-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/flickr-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/flickr-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=flickr-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=flickr-downloader",
+    "ghl_tag": "purchase-flickr-downloader",
+    "ghlTag": "purchase-flickr-downloader",
+    "landerId": "flickr-downloader",
+    "offerId": "flickr-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Flickr Downloader",
+    "product_page_url": "https://apps.serp.co/flickr-downloader",
+    "product_slug": "flickr-downloader",
+    "productName": "Flickr Downloader",
+    "productPageUrl": "https://apps.serp.co/flickr-downloader",
+    "productSlug": "flickr-downloader",
+    "purchase_url": "https://serp.ly/flickr-downloader",
+    "purchaseUrl": "https://serp.ly/flickr-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/flickr-downloader/",
+    "serply_link": "https://serp.ly/flickr-downloader",
+    "serplyLink": "https://serp.ly/flickr-downloader",
+    "slug": "flickr-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/flickr-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/flickr-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -162,6 +190,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99ws06JrOmKRCmFvK8ceNO",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6G6tvX60K1Or"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99ws06JrOmKRCmFvK8ceNO",

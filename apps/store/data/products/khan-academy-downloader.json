@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/khan-academy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/khan-academy-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/khan-academy-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=khan-academy-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=khan-academy-downloader",
+    "ghl_tag": "purchase-khan-academy-downloader",
+    "ghlTag": "purchase-khan-academy-downloader",
+    "landerId": "khan-academy-downloader",
+    "offerId": "khan-academy-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Khan Academy Downloader",
+    "product_page_url": "https://apps.serp.co/khan-academy-downloader",
+    "product_slug": "khan-academy-downloader",
+    "productName": "Khan Academy Downloader",
+    "productPageUrl": "https://apps.serp.co/khan-academy-downloader",
+    "productSlug": "khan-academy-downloader",
+    "purchase_url": "https://serp.ly/khan-academy-downloader",
+    "purchaseUrl": "https://serp.ly/khan-academy-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/khan-academy-downloader/",
+    "serply_link": "https://serp.ly/khan-academy-downloader",
+    "serplyLink": "https://serp.ly/khan-academy-downloader",
+    "slug": "khan-academy-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/khan-academy-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/khan-academy-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wx06JrOmKRCmqkFPnN9s",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HO7CKmlA65g"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wx06JrOmKRCmqkFPnN9s",

@@ -143,6 +143,36 @@
   "github_repo_url": "https://github.com/serpapps/rawpixel-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/rawpixel-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/rawpixel-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=rawpixel-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=rawpixel-downloader",
+    "ghl_tag": "purchase-rawpixel-downloader",
+    "ghlTag": "purchase-rawpixel-downloader",
+    "landerId": "rawpixel-downloader",
+    "license_entitlements": "rawpixel-downloader",
+    "licenseEntitlements": "rawpixel-downloader",
+    "offerId": "rawpixel-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Rawpixel Downloader",
+    "product_page_url": "https://apps.serp.co/rawpixel-downloader",
+    "product_slug": "rawpixel-downloader",
+    "productName": "Rawpixel Downloader",
+    "productPageUrl": "https://apps.serp.co/rawpixel-downloader",
+    "productSlug": "rawpixel-downloader",
+    "purchase_url": "https://serp.ly/rawpixel-downloader",
+    "purchaseUrl": "https://serp.ly/rawpixel-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/rawpixel-downloader/",
+    "serply_link": "https://serp.ly/rawpixel-downloader",
+    "serplyLink": "https://serp.ly/rawpixel-downloader",
+    "slug": "rawpixel-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/rawpixel-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/rawpixel-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +191,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g206JrOmKRCm0DpSeCzS",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HPS9K1S5ny3"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g206JrOmKRCm0DpSeCzS",

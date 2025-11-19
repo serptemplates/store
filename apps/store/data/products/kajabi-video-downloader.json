@@ -171,6 +171,36 @@
   "github_repo_url": "https://github.com/serpapps/kajabi-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/kajabi-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/kajabi-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=kajabi-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=kajabi-video-downloader",
+    "ghl_tag": "purchase-kajabi-downloader",
+    "ghlTag": "purchase-kajabi-downloader",
+    "landerId": "kajabi-video-downloader",
+    "license_entitlements": "kajabi-video-downloader",
+    "licenseEntitlements": "kajabi-video-downloader",
+    "offerId": "kajabi-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Kajabi Video Downloader",
+    "product_page_url": "https://apps.serp.co/kajabi-video-downloader",
+    "product_slug": "kajabi-video-downloader",
+    "productName": "Kajabi Video Downloader",
+    "productPageUrl": "https://apps.serp.co/kajabi-video-downloader",
+    "productSlug": "kajabi-video-downloader",
+    "purchase_url": "https://serp.ly/kajabi-video-downloader",
+    "purchaseUrl": "https://serp.ly/kajabi-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/kajabi-video-downloader/",
+    "serply_link": "https://serp.ly/kajabi-video-downloader",
+    "serplyLink": "https://serp.ly/kajabi-video-downloader",
+    "slug": "kajabi-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kajabi-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/kajabi-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -193,6 +223,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wx06JrOmKRCmFaiTWpCK",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HARVDc80PK1"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wx06JrOmKRCmFaiTWpCK",

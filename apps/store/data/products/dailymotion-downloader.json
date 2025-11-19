@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/dailymotion-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/dailymotion-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/dailymotion-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=dailymotion-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=dailymotion-downloader",
+    "ghl_tag": "purchase-dailymotion-downloader",
+    "ghlTag": "purchase-dailymotion-downloader",
+    "landerId": "dailymotion-downloader",
+    "offerId": "dailymotion-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Dailymotion Downloader",
+    "product_page_url": "https://apps.serp.co/dailymotion-downloader",
+    "product_slug": "dailymotion-downloader",
+    "productName": "Dailymotion Downloader",
+    "productPageUrl": "https://apps.serp.co/dailymotion-downloader",
+    "productSlug": "dailymotion-downloader",
+    "purchase_url": "https://serp.ly/dailymotion-downloader",
+    "purchaseUrl": "https://serp.ly/dailymotion-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/dailymotion-downloader/",
+    "serply_link": "https://serp.ly/dailymotion-downloader",
+    "serplyLink": "https://serp.ly/dailymotion-downloader",
+    "slug": "dailymotion-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dailymotion-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/dailymotion-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wo06JrOmKRCmtEGHbI2T",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Gc2uzEQtuWs"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wo06JrOmKRCmtEGHbI2T",

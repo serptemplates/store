@@ -111,6 +111,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/rule34-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/rule34-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=rule34-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=rule34-video-downloader",
+    "ghl_tag": "purchase-rule34-video-downloader",
+    "ghlTag": "purchase-rule34-video-downloader",
+    "landerId": "rule34-video-downloader",
+    "offerId": "rule34-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Rule34 Video Downloader",
+    "product_page_url": "https://apps.serp.co/rule34-video-downloader",
+    "product_slug": "rule34-video-downloader",
+    "productName": "Rule34 Video Downloader",
+    "productPageUrl": "https://apps.serp.co/rule34-video-downloader",
+    "productSlug": "rule34-video-downloader",
+    "purchase_url": "https://serp.ly/rule34-video-downloader",
+    "purchaseUrl": "https://serp.ly/rule34-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/rule34-video-downloader/",
+    "serply_link": "https://serp.ly/rule34-video-downloader",
+    "serplyLink": "https://serp.ly/rule34-video-downloader",
+    "slug": "rule34-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/rule34-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/rule34-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -128,6 +156,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

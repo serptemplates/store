@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/edx-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/edx-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=edx-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=edx-downloader",
+    "ghl_tag": "purchase-edx-downloader",
+    "ghlTag": "purchase-edx-downloader",
+    "landerId": "edx-downloader",
+    "offerId": "edx-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "edX Downloader",
+    "product_page_url": "https://apps.serp.co/edx-downloader",
+    "product_slug": "edx-downloader",
+    "productName": "edX Downloader",
+    "productPageUrl": "https://apps.serp.co/edx-downloader",
+    "productSlug": "edx-downloader",
+    "purchase_url": "https://serp.ly/edx-downloader",
+    "purchaseUrl": "https://serp.ly/edx-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/edx-downloader/",
+    "serply_link": "https://serp.ly/edx-downloader",
+    "serplyLink": "https://serp.ly/edx-downloader",
+    "slug": "edx-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/edx-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/edx-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

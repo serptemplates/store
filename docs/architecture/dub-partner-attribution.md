@@ -128,7 +128,7 @@ For this solution to work, products must have `stripe.price_id` and an internal 
 ```json
 {
   "stripe": {
-    "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
+    "price_id": "<stripe_price_id>",
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }

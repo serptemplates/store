@@ -1,21 +1,14 @@
 import type Stripe from "stripe";
 
-import {
-  findCheckoutSessionByStripeSessionId,
-  updateCheckoutSessionStatus,
-  updateOrderMetadata,
-  upsertCheckoutSession,
-  upsertOrder,
-} from "@/lib/checkout";
+import { findCheckoutSessionByStripeSessionId } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
-import { createLicenseForOrder } from "@/lib/license-service";
-import { GhlRequestError } from "@/lib/ghl-client";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/notifications/ops";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
-import { syncOrderWithGhlWithRetry } from "@/lib/payments/stripe-webhook/helpers/ghl-sync";
+import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
+import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/order-fulfillment";
 import { getStripeClient } from "@/lib/payments/stripe";
 
 const OPS_ALERT_THRESHOLD = 3;
@@ -37,43 +30,6 @@ function appendUniqueString(target: string[], value: unknown) {
   }
 }
 
-function parseSerializedStringList(value: unknown): string[] {
-  if (typeof value !== "string") {
-    return [];
-  }
-
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return [];
-  }
-
-  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
-    try {
-      const parsed = JSON.parse(trimmed);
-      if (Array.isArray(parsed)) {
-        const results: string[] = [];
-        for (const entry of parsed) {
-          if (typeof entry === "string") {
-            const normalized = entry.trim();
-            if (normalized) {
-              results.push(normalized);
-            }
-          }
-        }
-        if (results.length > 0) {
-          return results;
-        }
-      }
-    } catch {
-      // Fall through to delimiter parsing
-    }
-  }
-
-  return trimmed
-    .split(/[,\s]+/)
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 0);
-}
 
 function collectTagCandidatesFromMetadata(metadata: Record<string, unknown> | null | undefined): string[] {
   if (!metadata) {
@@ -83,14 +39,6 @@ function collectTagCandidatesFromMetadata(metadata: Record<string, unknown> | nu
   const candidates: string[] = [];
   appendUniqueString(candidates, metadata["ghl_tag"]);
   appendUniqueString(candidates, metadata["ghlTag"]);
-
-  for (const entry of parseSerializedStringList(metadata["ghl_tag_ids"])) {
-    appendUniqueString(candidates, entry);
-  }
-
-  for (const entry of parseSerializedStringList(metadata["ghlTagIds"])) {
-    appendUniqueString(candidates, entry);
-  }
 
   return candidates;
 }
@@ -162,39 +110,12 @@ async function collectLineItemTagData(
   return { tagIds, productSlugs };
 }
 
-function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {
-  const tierValue = typeof metadata?.licenseTier === "string" ? metadata?.licenseTier : offerId;
-  const entitlementsRaw = metadata?.licenseEntitlements;
-  const entitlementsSet = new Set<string>();
-
-  if (Array.isArray(entitlementsRaw)) {
-    for (const item of entitlementsRaw) {
-      if (item != null) {
-        entitlementsSet.add(String(item));
-      }
-    }
-  }
-
-  if (offerId) {
-    entitlementsSet.add(offerId);
-  }
-
-  const entitlements = Array.from(entitlementsSet);
-
-  const featuresRaw = metadata?.licenseFeatures;
-  const features = featuresRaw && typeof featuresRaw === "object" && !Array.isArray(featuresRaw)
-    ? (featuresRaw as Record<string, unknown>)
-    : {};
-
-  return {
-    tier: tierValue ?? null,
-    entitlements,
-    features,
-  };
-}
-
-export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session, eventId?: string) {
-  const metadata = normalizeMetadata(session.metadata);
+export async function handleCheckoutSessionCompleted(
+  session: Stripe.Checkout.Session,
+  eventId?: string,
+  context?: { accountAlias?: string | null },
+) {
+  const metadata = ensureMetadataCaseVariants(normalizeMetadata(session.metadata));
 
   const coerceMetadataString = (value: unknown): string | null => {
     if (typeof value !== "string") {
@@ -228,6 +149,7 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
     typeof session.livemode === "boolean"
       ? session.livemode ? "live" : "test"
       : metadata.payment_link_mode ?? metadata.paymentLinkMode ?? null;
+  const providerMode = typeof session.livemode === "boolean" ? (session.livemode ? "live" : "test") : null;
   if (checkoutMode) {
     metadata.checkout_mode = checkoutMode;
     metadata.checkoutMode = checkoutMode;
@@ -372,14 +294,6 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
   appendTagId(metadata.ghl_tag);
   appendTagId(metadata.ghlTag);
 
-  for (const entry of parseSerializedStringList(metadata.ghl_tag_ids)) {
-    appendTagId(entry);
-  }
-
-  for (const entry of parseSerializedStringList(metadata.ghlTagIds)) {
-    appendTagId(entry);
-  }
-
   for (const entry of lineItemTagData.tagIds) {
     appendTagId(entry);
   }
@@ -419,9 +333,6 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
   }
 
   if (resolvedGhlTagIds.length > 0) {
-    const serializedTagIds = resolvedGhlTagIds.join(",");
-    metadata.ghlTagIds = serializedTagIds;
-    metadata.ghl_tag_ids = serializedTagIds;
     metadata.ghl_tag = resolvedGhlTagIds[0];
     metadata.ghlTag = resolvedGhlTagIds[0];
     ghlTagValue = resolvedGhlTagIds[0];
@@ -447,183 +358,11 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
         }).format(session.amount_total / 100)
       : null;
 
-  const checkoutSessionId = await upsertCheckoutSession({
-    stripeSessionId: session.id,
-    offerId,
-    landerId,
-    paymentIntentId,
-    customerEmail,
-    metadata,
-    status: "completed",
-    source: "stripe",
-  });
-
-  await upsertOrder({
-    checkoutSessionId,
-    stripeSessionId: session.id,
-    stripePaymentIntentId: paymentIntentId,
-    offerId,
-    landerId,
-    customerEmail,
-    customerName: session.customer_details?.name ?? null,
-    amountTotal: session.amount_total ?? null,
-    currency: session.currency ?? null,
-    metadata,
-    paymentStatus: session.payment_status ?? null,
-    paymentMethod: session.payment_method_types?.[0] ?? null,
-    source: "stripe",
-  });
-
-  let licenseResult: Awaited<ReturnType<typeof createLicenseForOrder>> = null;
-  let licenseTier: string | null = null;
-  let licenseEntitlements: string[] | null = null;
-  let licenseFeatures: Record<string, unknown> | null = null;
-
-  if (customerEmail) {
-    const { tier, entitlements, features } = extractLicenseConfig(offerConfig?.metadata, offerId);
-    licenseTier = tier ?? null;
-    licenseEntitlements = entitlements.length > 0 ? entitlements : null;
-    licenseFeatures = Object.keys(features).length > 0 ? features : null;
-
-    const amountMajorUnits =
-      typeof session.amount_total === "number" ? Number((session.amount_total / 100).toFixed(2)) : null;
-    const currencyCode = typeof session.currency === "string" ? session.currency.toLowerCase() : null;
-
-    const licenseMetadata: Record<string, unknown> = {
-      orderId: session.id,
-      paymentIntentId,
-      stripeSessionId: session.id,
-      offerId,
-      amount: amountMajorUnits,
-      currency: currencyCode,
-    };
-
-    if (metadata.productSlug) {
-      licenseMetadata.productSlug = metadata.productSlug;
-      licenseMetadata.product_slug = metadata.productSlug;
-    }
-
-    if (metadata.ghlTag) {
-      licenseMetadata.ghlTag = metadata.ghlTag;
-    }
-
-    if (metadata.ghl_tag) {
-      licenseMetadata.ghl_tag = metadata.ghl_tag;
-    }
-
-    if (metadata.ghlTagIds) {
-      licenseMetadata.ghlTagIds = metadata.ghlTagIds;
-    }
-
-    if (metadata.ghl_tag_ids) {
-      licenseMetadata.ghl_tag_ids = metadata.ghl_tag_ids;
-    }
-
-    if (metadata.stripeProductId) {
-      licenseMetadata.stripeProductId = metadata.stripeProductId;
-      licenseMetadata.stripe_product_id = metadata.stripeProductId;
-    }
-
-    if (metadata.stripe_product_id) {
-      licenseMetadata.stripe_product_id = metadata.stripe_product_id;
-    }
-
-    if (metadata.stripePriceId) {
-      licenseMetadata.stripePriceId = metadata.stripePriceId;
-    }
-
-    if (metadata.stripe_price_id) {
-      licenseMetadata.stripe_price_id = metadata.stripe_price_id;
-    }
-
-    if (session.customer_details?.name) {
-      licenseMetadata.customerName = session.customer_details.name;
-    }
-
-    if (session.client_reference_id) {
-      licenseMetadata.clientReferenceId = session.client_reference_id;
-    }
-
-    try {
-      licenseResult = await createLicenseForOrder({
-        id: eventId ?? session.id,
-        provider: "stripe",
-        providerObjectId: paymentIntentId ?? session.id,
-        userEmail: customerEmail,
-        tier,
-        entitlements,
-        features,
-        metadata: licenseMetadata,
-        status: session.payment_status ?? "completed",
-        eventType: "checkout.completed",
-        amount: amountMajorUnits,
-        currency: currencyCode,
-        rawEvent: {
-          eventId: eventId ?? null,
-          checkoutSessionId: session.id,
-          paymentIntentId,
-        },
-      });
-
-      if (licenseResult?.licenseKey) {
-        const now = new Date().toISOString();
-        const licenseMetadataUpdate = {
-          license: {
-            action: licenseResult.action ?? null,
-            licenseId: licenseResult.licenseId ?? null,
-            licenseKey: licenseResult.licenseKey ?? null,
-            updatedAt: now,
-          },
-        };
-
-        const updated = await updateOrderMetadata(
-          {
-            stripePaymentIntentId: paymentIntentId,
-            stripeSessionId: session.id,
-          },
-          licenseMetadataUpdate,
-        );
-
-        if (!updated) {
-          logger.warn("license_service.metadata_update_failed", {
-            provider: "stripe",
-            id: eventId ?? session.id,
-            paymentIntentId,
-            sessionId: session.id,
-          });
-        }
-      }
-    } catch (error) {
-      logger.error("license_service.create_throw", {
-        provider: "stripe",
-        id: eventId ?? session.id,
-        error: error instanceof Error ? error.message : String(error),
-      });
-    }
-  }
-
-  if (licenseResult?.licenseKey) {
-    metadata.licenseKey = licenseResult.licenseKey;
-  }
-
-  if (licenseResult?.licenseId) {
-    metadata.licenseId = licenseResult.licenseId;
-  }
-
   const existingSessionRecord = await findCheckoutSessionByStripeSessionId(session.id);
   const existingMetadata = (existingSessionRecord?.metadata ?? {}) as Record<string, unknown>;
   const ghlSyncedAtValue =
     typeof existingMetadata["ghlSyncedAt"] === "string" ? (existingMetadata["ghlSyncedAt"] as string) : undefined;
   const alreadySynced = Boolean(ghlSyncedAtValue);
-
-  if (alreadySynced) {
-    logger.debug("ghl.sync_already_completed", {
-      offerId,
-      stripeSessionId: session.id,
-      ghlSyncedAt: existingMetadata.ghlSyncedAt,
-    });
-    return;
-  }
 
   const productPageUrl =
     offerConfig?.metadata?.productPageUrl
@@ -673,121 +412,97 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
       ?? offerConfig?.cancelUrl
       ?? null;
 
-  try {
-    if (!offerConfig?.ghl) {
-      logger.debug("ghl.sync_skipped", {
-        offerId,
-        reason: "missing_configuration",
-      });
+  const providerAccountAlias =
+    context?.accountAlias
+      ?? getMetadataString(metadata, "paymentProviderAccount")
+      ?? getMetadataString(metadata, "paymentProviderAccountAlias")
+      ?? null;
 
-      if (paymentIntentId) {
-        await recordWebhookLog({
-          paymentIntentId,
-          stripeSessionId: session.id,
-          eventType: "checkout.session.completed",
-          offerId,
-          landerId,
-          status: "success",
-          metadata: {
-            outcome: "skipped",
-            skipReason: "missing_configuration",
-          },
-        });
-      }
-      return;
-    }
+  const normalizedOrder: NormalizedOrder = {
+    provider: "stripe",
+    providerAccountAlias,
+    providerMode,
+    providerSessionId: session.id ?? null,
+    providerPaymentId: paymentIntentId ?? null,
+    sessionId: session.id,
+    paymentIntentId,
+    offerId,
+    landerId,
+    productSlug: metadata.product_slug ?? metadata.productSlug ?? offerId,
+    productName: metadata.productName ?? metadata.product_name ?? offerConfig?.productName ?? offerId,
+    customerEmail: customerEmail ?? null,
+    customerName: session.customer_details?.name ?? null,
+    customerPhone,
+    clientReferenceId: session.client_reference_id ?? null,
+    metadata,
+    amountTotal: session.amount_total ?? null,
+    amountFormatted: amountFormatted ?? undefined,
+    currency: session.currency ?? null,
+    paymentStatus: session.payment_status ?? null,
+    paymentMethod: session.payment_method_types?.[0] ?? null,
+    resolvedGhlTagIds,
+    urls: {
+      productPageUrl: productPageUrl ?? undefined,
+      purchaseUrl: purchaseUrl ?? undefined,
+      storeProductPageUrl: storeProductPageUrl ?? undefined,
+      appsProductPageUrl: appsProductPageUrl ?? undefined,
+      serplyLink: serplyLink ?? undefined,
+      successUrl: successUrl ?? undefined,
+      cancelUrl: cancelUrl ?? undefined,
+    },
+    tosAccepted: metadata.tosAccepted === "true" ? true : metadata.tosAccepted === "false" ? false : null,
+    skipSideEffects: alreadySynced,
+  };
 
-    if (!customerEmail) {
-      logger.error("ghl.sync_failed", {
-        offerId,
-        reason: "missing_customer_email",
+  const fulfillmentResult = await processFulfilledOrder(normalizedOrder);
+  const licenseEntitlements =
+    fulfillmentResult.licenseConfig.entitlements.length > 0 ? fulfillmentResult.licenseConfig.entitlements : null;
+
+  const baseSkipReason = !offerConfig?.ghl
+    ? "missing_configuration"
+    : alreadySynced
+    ? "already_synced"
+    : undefined;
+
+  if (paymentIntentId) {
+    if (fulfillmentResult.ghlResult.status === "error") {
+      const message =
+        fulfillmentResult.ghlResult.error?.message ?? "Failed to sync order with GHL";
+      const logResult = await recordWebhookLog({
         paymentIntentId,
-      });
-
-      await updateCheckoutSessionStatus(session.id, "completed", {
+        stripeSessionId: session.id,
+        eventType: "checkout.session.completed",
+        offerId,
+        landerId,
+        status: "error",
+        message,
         metadata: {
-          ghlSyncError: "missing_customer_email",
+          errorName: fulfillmentResult.ghlResult.error instanceof Error ? fulfillmentResult.ghlResult.error.name : undefined,
         },
       });
 
-      if (paymentIntentId) {
-        await recordWebhookLog({
-          paymentIntentId,
-          stripeSessionId: session.id,
-          eventType: "checkout.session.completed",
+      if (logResult?.status === "error" && logResult.attempts >= OPS_ALERT_THRESHOLD) {
+        await sendOpsAlert("GHL sync failed after multiple attempts", {
           offerId,
           landerId,
-          status: "error",
-          message: "Missing customer email; unable to sync to GHL",
-          metadata: {
-            reason: "missing_customer_email",
-          },
+          paymentIntentId,
+          attempts: logResult.attempts,
+          message,
         });
       }
-      return;
-    }
-
-    const ghlConfigForSync = offerConfig?.ghl
-      ? {
-          ...offerConfig.ghl,
-          ...(resolvedGhlTagIds.length > 0 ? { tagIds: resolvedGhlTagIds } : {}),
-        }
-      : offerConfig?.ghl;
-
-    const syncResult = await syncOrderWithGhlWithRetry(ghlConfigForSync, {
-      offerId,
-      offerName: offerConfig?.productName ?? metadata.productName ?? offerId,
-      customerEmail,
-      customerName: session.customer_details?.name ?? null,
-      customerPhone,
-      stripeSessionId: session.id,
-      stripePaymentIntentId: paymentIntentId,
-      amountTotal: session.amount_total ?? null,
-      amountFormatted,
-      currency: session.currency ?? null,
-      landerId,
-      metadata,
-      productPageUrl,
-      purchaseUrl,
-      storeProductPageUrl: storeProductPageUrl ?? productPageUrl,
-      appsProductPageUrl: appsProductPageUrl ?? productPageUrl,
-      serplyLink,
-      successUrl,
-      cancelUrl,
-      tosAccepted: metadata.tosAccepted === "true" ? true : metadata.tosAccepted === "false" ? false : undefined,
-      provider: "stripe",
-      licenseKey: licenseResult?.licenseKey ?? undefined,
-      licenseId: licenseResult?.licenseId ?? undefined,
-      licenseAction: licenseResult?.action ?? undefined,
-      licenseEntitlements: licenseEntitlements ?? undefined,
-      licenseTier: licenseTier ?? undefined,
-      licenseFeatures: licenseFeatures ?? undefined,
-    });
-
-    if (syncResult) {
-      const metadataUpdate: Record<string, string> = {
-        ghlSyncedAt: new Date().toISOString(),
-        ghlSyncError: "",
-      };
-
-      if (syncResult.contactId) {
-        metadataUpdate.ghlContactId = syncResult.contactId;
-      }
-
-      await updateCheckoutSessionStatus(session.id, "completed", {
-        metadata: metadataUpdate,
-      });
-    }
-
-    if (paymentIntentId) {
+    } else {
       const outcomeMetadata: Record<string, unknown> = {
-        contactId: syncResult?.contactId,
-        opportunityCreated: syncResult?.opportunityCreated ?? false,
-        outcome: syncResult ? "synced" : "skipped",
+        contactId: fulfillmentResult.ghlResult.result?.contactId,
+        opportunityCreated: fulfillmentResult.ghlResult.result?.opportunityCreated ?? false,
+        outcome: fulfillmentResult.ghlResult.status,
       };
+      const skipReason =
+        fulfillmentResult.ghlResult.status === "skipped"
+          ? baseSkipReason ?? "provider_skipped"
+          : baseSkipReason;
 
-      if (!offerConfig?.ghl) {
-        outcomeMetadata.skipReason = "missing_configuration";
+      if (skipReason) {
+        outcomeMetadata.skipReason = skipReason;
       }
 
       await recordWebhookLog({
@@ -800,52 +515,32 @@ export async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Se
         metadata: outcomeMetadata,
       });
     }
-  } catch (error) {
-    const message =
-      error && typeof error === "object" && "message" in error ? String(error.message) : String(error);
+  }
 
-    const errorDetails = error instanceof GhlRequestError
-      ? { message: error.message, name: error.name, status: error.status, body: error.body }
-      : error instanceof Error
-      ? { message: error.message, name: error.name }
-      : error;
+  if (alreadySynced) {
+    logger.debug("ghl.sync_already_completed", {
+      offerId,
+      stripeSessionId: session.id,
+      ghlSyncedAt: existingMetadata.ghlSyncedAt,
+    });
+    return;
+  }
 
+  if (!offerConfig?.ghl) {
+    logger.debug("ghl.sync_skipped", {
+      offerId,
+      reason: "missing_configuration",
+    });
+    return;
+  }
+
+  if (!customerEmail) {
     logger.error("ghl.sync_failed", {
       offerId,
+      reason: "missing_customer_email",
       paymentIntentId,
-      error: errorDetails,
     });
-
-    let logResult: Awaited<ReturnType<typeof recordWebhookLog>> = null;
-    if (paymentIntentId) {
-      logResult = await recordWebhookLog({
-        paymentIntentId,
-        stripeSessionId: session.id,
-        eventType: "checkout.session.completed",
-        offerId,
-        landerId,
-        status: "error",
-        message,
-        metadata: {
-          errorName: error instanceof Error ? error.name : undefined,
-        },
-      });
-    }
-    await updateCheckoutSessionStatus(session.id, "completed", {
-      metadata: {
-        ghlSyncError: message,
-      },
-    });
-
-    if (logResult?.status === "error" && logResult.attempts >= OPS_ALERT_THRESHOLD) {
-      await sendOpsAlert("GHL sync failed after multiple attempts", {
-        offerId,
-        landerId,
-        paymentIntentId,
-        attempts: logResult.attempts,
-        message,
-      });
-    }
+    return;
   }
 
   // Best-effort Stripe Entitlements grant (guarded by flag)

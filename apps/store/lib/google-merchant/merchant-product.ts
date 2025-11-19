@@ -1,4 +1,4 @@
-import { findPriceEntry } from "@/lib/pricing/price-manifest";
+import { findPriceEntry, findManifestEntryBySlug } from "@/lib/pricing/price-manifest";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
 import type { ProductData } from "../products/product-schema";
 
@@ -65,7 +65,9 @@ function parsePrice(value: string | null | undefined): number | null {
 }
 
 export function extractPrice(product: ProductData): { value: string; currency: string } {
-  const manifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const manifestEntry =
+    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findManifestEntryBySlug(product.slug);
   if (manifestEntry) {
     return {
       value: (manifestEntry.unitAmount / 100).toFixed(2),
@@ -80,7 +82,9 @@ export function extractPrice(product: ProductData): { value: string; currency: s
 }
 
 export function extractSalePrice(product: ProductData): { value: string; currency: string } | null {
-  const manifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  const manifestEntry =
+    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findManifestEntryBySlug(product.slug);
   if (manifestEntry?.compareAtAmount != null && manifestEntry.compareAtAmount > manifestEntry.unitAmount) {
     return {
       value: (manifestEntry.unitAmount / 100).toFixed(2),

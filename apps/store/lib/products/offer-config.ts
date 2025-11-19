@@ -1,8 +1,11 @@
 import { z } from "zod";
 
 import { getProductData } from "@/lib/products/product";
-import type { ProductData } from "@/lib/products/product-schema";
+import type { ProductData, ProductPayment } from "@/lib/products/product-schema";
+import { paymentSchema } from "@/lib/products/product-schema";
 import { isStripeTestMode } from "@/lib/payments/stripe-environment";
+import { resolveStripePaymentDetails } from "@/lib/products/payment";
+import type { PaymentProviderId, StripePaymentDetails } from "@/lib/products/payment";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "./asset-paths";
 
 const CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}";
@@ -39,12 +42,15 @@ const ghlConfigSchema = z
 
 const optionalItemConfigSchema = z.object({
   product_id: z.string(),
+  price_id: z.string().optional(),
   quantity: z.number().int().min(1).default(1).optional(),
 });
 
+const offerPaymentSchema = paymentSchema;
+
 const offerConfigSchema = z.object({
   id: z.string(),
-  stripePriceId: z.string(),
+  stripePriceId: z.string().optional(),
   successUrl: z.string().url(),
   cancelUrl: z.string().url(),
   mode: z.enum(["payment", "subscription"]).default("payment"),
@@ -54,6 +60,7 @@ const offerConfigSchema = z.object({
   productImage: z.string().url().optional(),
   optionalItems: z.array(optionalItemConfigSchema).optional(),
   ghl: ghlConfigSchema,
+  payment: offerPaymentSchema,
 });
 
 export type OfferConfig = z.infer<typeof offerConfigSchema>;
@@ -61,39 +68,125 @@ export type OfferConfig = z.infer<typeof offerConfigSchema>;
 /**
  * Derives offer configuration directly from the product content definition.
  */
+function mergeMetadata(...records: Array<Record<string, unknown> | undefined>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const record of records) {
+    if (!record) continue;
+    for (const [key, value] of Object.entries(record)) {
+      if (value == null) continue;
+      if (typeof value === "string") {
+        out[key] = value;
+      } else if (Array.isArray(value)) {
+        out[key] = value.map((v) => (typeof v === "string" ? v : String(v))).join(",");
+      } else if (typeof value === "number" || typeof value === "boolean") {
+        out[key] = String(value);
+      } else {
+        try {
+          out[key] = JSON.stringify(value);
+        } catch {
+          out[key] = String(value);
+        }
+      }
+    }
+  }
+  return out;
+}
+
+function buildPaymentConfig(
+  product: ProductData,
+  stripeDetails: StripePaymentDetails | null,
+): ProductPayment | undefined {
+  if (product.payment) {
+    return product.payment;
+  }
+
+  if (!stripeDetails && !product.stripe) {
+    return undefined;
+  }
+
+  const optionalItems = stripeDetails?.optionalItems ?? product.stripe?.optional_items;
+
+  const mergedMetadata = mergeMetadata(
+    product.checkout_metadata,
+    stripeDetails?.metadata ?? {},
+    product.stripe?.metadata ?? {},
+  );
+
+  return {
+    provider: "stripe",
+    account: stripeDetails?.account ?? undefined,
+    mode: stripeDetails?.mode ?? product.stripe?.mode ?? "payment",
+    success_url: stripeDetails?.successUrl ?? product.success_url ?? undefined,
+    cancel_url: stripeDetails?.cancelUrl ?? product.cancel_url ?? undefined,
+    metadata: mergedMetadata,
+    stripe: {
+      price_id: stripeDetails?.priceId ?? product.stripe?.price_id,
+      test_price_id: stripeDetails?.testPriceId ?? product.stripe?.test_price_id,
+      mode: stripeDetails?.mode ?? product.stripe?.mode,
+      metadata: mergeMetadata(product.checkout_metadata, stripeDetails?.metadata ?? {}, product.stripe?.metadata ?? {}),
+      optional_items: optionalItems,
+    },
+  };
+}
+
+function resolveStripePriceId(
+  isTest: boolean,
+  product: ProductData,
+  payment: ProductPayment | undefined,
+  stripeDetails: StripePaymentDetails | null,
+): string | null {
+  const livePrice =
+    payment?.stripe?.price_id ?? stripeDetails?.priceId ?? product.stripe?.price_id ?? null;
+  const testPrice =
+    payment?.stripe?.test_price_id ?? stripeDetails?.testPriceId ?? product.stripe?.test_price_id ?? null;
+
+  if (isTest && testPrice) {
+    return testPrice;
+  }
+  return livePrice;
+}
+
+function normalizeOptionalItemsFromPayment(
+  payment: ProductPayment | undefined,
+): Array<{ product_id: string; price_id?: string; quantity?: number }> | undefined {
+  const items = payment?.stripe?.optional_items;
+  if (!items || items.length === 0) {
+    return undefined;
+  }
+  return items.map((item) => ({
+    product_id: item.product_id,
+    price_id: item.price_id ?? undefined,
+    quantity: item.quantity ?? 1,
+  }));
+}
+
 export function getOfferConfig(offerId: string): OfferConfig | null {
   try {
     const product = getProductData(offerId);
-    const stripeConfig = product.stripe;
+    const stripeDetails = resolveStripePaymentDetails(product);
+    const paymentConfig = buildPaymentConfig(product, stripeDetails);
 
-    if (!stripeConfig) {
+    const isTest = isStripeTestMode();
+    const provider: PaymentProviderId = paymentConfig?.provider ?? "stripe";
+
+    const priceId = resolveStripePriceId(isTest, product, paymentConfig, stripeDetails);
+    if (provider === "stripe" && !priceId) {
       return null;
     }
 
-    const isTest = isStripeTestMode();
-
-    // Use the appropriate price ID based on environment
-    // The resolvePriceForEnvironment function will handle auto-cloning from live to test
-    let priceId = stripeConfig.price_id;
-
-    if (isTest && stripeConfig.test_price_id) {
-      // Use explicitly configured test price if available
-      priceId = stripeConfig.test_price_id;
-    }
-    // Otherwise, use the live price ID and let resolvePriceForEnvironment handle it
-
-    // Adjust URLs for localhost
     const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
     const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://apps.serp.co";
     const baseUrl = configuredSiteUrl ?? defaultBaseUrl;
 
+    const configuredSuccessUrl =
+      paymentConfig?.success_url ?? stripeDetails?.successUrl ?? product.success_url ?? undefined;
     const rawSuccessUrl = isTest
       ? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
-      : product.success_url ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
+      : configuredSuccessUrl ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;
     const successUrl = ensureSuccessUrlHasSessionPlaceholder(rawSuccessUrl);
     const cancelUrl = isTest
       ? `${baseUrl}/checkout?canceled=true`
-      : product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
+      : paymentConfig?.cancel_url ?? stripeDetails?.cancelUrl ?? product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
 
     const normalizedImage = normalizeProductAssetPath(product.featured_image);
     const productImageUrl = normalizedImage
@@ -102,8 +195,6 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         : toAbsoluteProductAssetUrl(normalizedImage, baseUrl)
       : undefined;
 
-    // Collect license metadata (entitlements/features) from product content
-    // Normalize entitlements to string[] if provided
     const rawEntitlements = (product as ProductData)?.license?.entitlements as unknown;
     const licenseEntitlements: string[] | undefined = Array.isArray(rawEntitlements)
       ? (rawEntitlements as string[]).filter((s) => typeof s === "string" && s.trim().length > 0)
@@ -111,35 +202,8 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       ? [rawEntitlements.trim()]
       : undefined;
 
-    // Helper to coerce arbitrary values into Stripe-safe string metadata
-    const toMetadataRecord = (input: Record<string, unknown>): Record<string, string> => {
-      const out: Record<string, string> = {};
-      for (const [key, value] of Object.entries(input)) {
-        if (value == null) continue;
-        if (typeof value === "string") {
-          out[key] = value;
-        } else if (Array.isArray(value)) {
-          out[key] = value.map((v) => (typeof v === "string" ? v : String(v))).join(",");
-        } else if (typeof value === "number" || typeof value === "boolean") {
-          out[key] = String(value);
-        } else {
-          try {
-            out[key] = JSON.stringify(value);
-          } catch {
-            out[key] = String(value);
-          }
-        }
-      }
-      return out;
-    };
-
-    return offerConfigSchema.parse({
-      id: product.slug,
-      stripePriceId: priceId,
-      successUrl,
-      cancelUrl,
-      mode: stripeConfig.mode ?? "payment",
-      metadata: toMetadataRecord({
+    const metadata = mergeMetadata(
+      {
         productSlug: product.slug,
         productName: product.name,
         productPageUrl: product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url,
@@ -149,19 +213,27 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         serply_link: product.serply_link,
         success_url: successUrl,
         cancel_url: cancelUrl,
-        environment: isTest ? 'test' : 'live',
+        environment: isTest ? "test" : "live",
         ...(licenseEntitlements ? { licenseEntitlements } : {}),
-        ...(stripeConfig.metadata ?? {}),
-      }),
+      },
+      product.checkout_metadata,
+      stripeDetails?.metadata ?? {},
+      paymentConfig?.metadata ?? {},
+    );
+
+    const normalizedOptionalItems = normalizeOptionalItemsFromPayment(paymentConfig);
+
+    return offerConfigSchema.parse({
+      id: product.slug,
+      stripePriceId: priceId ?? undefined,
+      successUrl,
+      cancelUrl,
+      mode: paymentConfig?.mode ?? stripeDetails?.mode ?? "payment",
+      metadata,
       productName: product.name,
       productDescription: product.tagline ?? product.seo_description,
       productImage: productImageUrl,
-      optionalItems: stripeConfig.optional_items && stripeConfig.optional_items.length > 0
-        ? stripeConfig.optional_items.map(item => ({
-            product_id: item.product_id,
-            quantity: item.quantity ?? 1,
-          }))
-        : undefined,
+      optionalItems: normalizedOptionalItems,
       ghl: product.ghl
         ? {
             pipelineId: product.ghl.pipeline_id ?? undefined,
@@ -178,6 +250,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
             opportunityCustomFieldIds: product.ghl.opportunity_custom_field_ids,
           }
         : undefined,
+      payment: paymentConfig,
     });
   } catch {
     return null;

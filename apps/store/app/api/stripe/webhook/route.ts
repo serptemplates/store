@@ -3,22 +3,44 @@ import { NextResponse } from "next/server";
 
 import type Stripe from "stripe";
 
+import { PAYMENT_ACCOUNTS } from "@/config/payment-accounts";
 import { getStripeClient } from "@/lib/payments/stripe";
-import { getOptionalStripeWebhookSecret } from "@/lib/payments/stripe-environment";
+import {
+  getOptionalStripeWebhookSecret,
+  type StripeMode,
+} from "@/lib/payments/stripe-environment";
 import logger from "@/lib/logger";
 import { handleStripeEvent } from "@/lib/payments/stripe-webhook";
 
-const primarySecret = getOptionalStripeWebhookSecret();
-const liveSecret = getOptionalStripeWebhookSecret("live");
-const testSecret = getOptionalStripeWebhookSecret("test");
+type WebhookSecretEntry = {
+  secret: string;
+  accountAlias: string | null;
+  mode: StripeMode;
+};
 
-const webhookSecrets = Array.from(
-  new Set(
-    [primarySecret, liveSecret, testSecret].filter(
-      (value): value is string => Boolean(value),
-    ),
-  ),
-);
+const webhookSecretEntries: WebhookSecretEntry[] = [];
+
+function addSecretEntry(secret: string | undefined, accountAlias: string | null, mode: StripeMode) {
+  if (!secret) {
+    return;
+  }
+  if (webhookSecretEntries.some((entry) => entry.secret === secret)) {
+    return;
+  }
+  webhookSecretEntries.push({
+    secret,
+    accountAlias,
+    mode,
+  });
+}
+
+addSecretEntry(getOptionalStripeWebhookSecret("live"), null, "live");
+addSecretEntry(getOptionalStripeWebhookSecret("test"), null, "test");
+
+for (const alias of Object.keys(PAYMENT_ACCOUNTS.stripe)) {
+  addSecretEntry(getOptionalStripeWebhookSecret({ mode: "live", accountAlias: alias }), alias, "live");
+  addSecretEntry(getOptionalStripeWebhookSecret({ mode: "test", accountAlias: alias }), alias, "test");
+}
 
 function jsonResponse(body: Record<string, unknown>, status = 200) {
   return NextResponse.json(body, { status });
@@ -27,7 +49,7 @@ function jsonResponse(body: Record<string, unknown>, status = 200) {
 export async function POST(req: NextRequest) {
   const stripe = getStripeClient();
 
-  if (webhookSecrets.length === 0) {
+  if (webhookSecretEntries.length === 0) {
     return jsonResponse({ error: "Stripe webhook secret not configured" }, 500);
   }
 
@@ -43,9 +65,12 @@ export async function POST(req: NextRequest) {
 
   let lastError: unknown;
 
-  for (const secret of webhookSecrets) {
+  let matchedEntry: WebhookSecretEntry | null = null;
+
+  for (const entry of webhookSecretEntries) {
     try {
-      event = stripe.webhooks.constructEvent(rawBody, signature, secret);
+      event = stripe.webhooks.constructEvent(rawBody, signature, entry.secret);
+      matchedEntry = entry;
       break;
     } catch (error) {
       lastError = error;
@@ -63,7 +88,9 @@ export async function POST(req: NextRequest) {
   const resolvedEvent = event;
 
   try {
-    await handleStripeEvent(resolvedEvent);
+    await handleStripeEvent(resolvedEvent, {
+      accountAlias: matchedEntry?.accountAlias ?? null,
+    });
   } catch (error) {
     logger.error("webhook.event_processing_failed", {
       eventId: resolvedEvent.id,

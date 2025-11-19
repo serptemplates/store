@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/vectorstock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/vectorstock-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/vectorstock-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=vectorstock-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=vectorstock-downloader",
+    "ghl_tag": "purchase-vectorstock-downloader",
+    "ghlTag": "purchase-vectorstock-downloader",
+    "landerId": "vectorstock-downloader",
+    "offerId": "vectorstock-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Vectorstock Downloader",
+    "product_page_url": "https://apps.serp.co/vectorstock-downloader",
+    "product_slug": "vectorstock-downloader",
+    "productName": "Vectorstock Downloader",
+    "productPageUrl": "https://apps.serp.co/vectorstock-downloader",
+    "productSlug": "vectorstock-downloader",
+    "purchase_url": "https://serp.ly/vectorstock-downloader",
+    "purchaseUrl": "https://serp.ly/vectorstock-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/vectorstock-downloader/",
+    "serply_link": "https://serp.ly/vectorstock-downloader",
+    "serplyLink": "https://serp.ly/vectorstock-downloader",
+    "slug": "vectorstock-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vectorstock-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/vectorstock-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gI06JrOmKRCmTvjSmEWB",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6IjJtdp20ckj"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gI06JrOmKRCmTvjSmEWB",

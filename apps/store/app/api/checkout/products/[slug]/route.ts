@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
+import { findPriceEntry, findManifestEntryBySlug, formatAmountFromCents } from "@/lib/pricing/price-manifest";
 import { getProductData } from "@/lib/products/product";
 
 function parsePrice(value?: string | null): number | undefined {
@@ -39,7 +39,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  const priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  if (!priceEntry) {
+    priceEntry = findManifestEntryBySlug(product.slug);
+  }
   const priceNumber = priceEntry ? priceEntry.unitAmount / 100 : parsePrice(product.pricing?.price);
   const priceDisplay = priceEntry
     ? formatAmountFromCents(priceEntry.unitAmount, priceEntry.currency)

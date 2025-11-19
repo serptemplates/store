@@ -1,0 +1,213 @@
+{
+  // PRODUCT INFO
+  "platform": "Demo Checkout",
+  "name": "Demo Payment Adapter",
+  "tagline": "Sandbox product for testing checkout provider changes.",
+  "slug": "demo-payment-adapter",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "A placeholder product used to validate the new payment-provider adapter flow end to end without touching production catalog data. It mirrors the same metadata structure as our real listings so that we can safely swap payment processors, Stripe accounts, and checkout metadata in isolation.",
+  "seo_title": "Demo Payment Adapter | Internal Checkout Test Product",
+  "seo_description": "Internal-only checkout product that exercises the payment-provider adapter pipeline, manifest synchronization, and webhook flows.",
+  "status": "draft",
+  "features": [
+    "Exercises payment-provider routing",
+    "Validates webhook + fulfillment plumbing",
+    "Lets us swap Stripe accounts per product",
+    "Supports future providers like Whop or LemonSqueezy"
+  ],
+  "faqs": [
+    {
+      "question": "Can customers buy this product?",
+      "answer": "No. This SKU only exists for internal testing so we can verify new payment flows without touching production listings."
+    },
+    {
+      "question": "Why does this exist?",
+      "answer": "It gives us a clean sandbox object in the manifest with realistic metadata, which helps us demo CLI workflows and provider switches."
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [],
+  "categories": [
+    "Utilities"
+  ],
+  "keywords": [
+    "demo",
+    "payment",
+    "adapter"
+  ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  "sku": "DEMO-PAYMENT-ADAPTER",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+  "featured_image_gif": null,
+  "screenshots": [
+    {
+      "url": "/media/products/serp-blocks/serp-blocks-screenshot-1.webp",
+      "alt": "Placeholder screenshot for demo product"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/demo-payment-adapter",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter",
+  "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter/",
+  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter",
+  "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter",
+    "appsProductPageUrl": "https://apps.serp.co/demo-payment-adapter",
+    "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter",
+    "cancelUrl": "https://apps.serp.co/checkout?product=demo-payment-adapter",
+    "demo_environment": "primary-stripe",
+    "demo_owner": "store-payments",
+    "ghl_tag": "purchase-demo-payment-adapter",
+    "ghlTag": "purchase-demo-payment-adapter",
+    "landerId": "demo-payment-adapter",
+    "license_entitlements": "demo-payment-adapter",
+    "licenseEntitlements": "demo-payment-adapter",
+    "offerId": "demo-payment-adapter",
+    "payment_provider": "stripe",
+    "payment_provider_account": "primary",
+    "paymentProvider": "stripe",
+    "paymentProviderAccount": "primary",
+    "product_name": "Demo Payment Adapter",
+    "product_page_url": "https://apps.serp.co/demo-payment-adapter",
+    "product_slug": "demo-payment-adapter",
+    "productName": "Demo Payment Adapter",
+    "productPageUrl": "https://apps.serp.co/demo-payment-adapter",
+    "productSlug": "demo-payment-adapter",
+    "purchase_url": "https://serp.ly/demo-payment-adapter",
+    "purchaseUrl": "https://serp.ly/demo-payment-adapter",
+    "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter/",
+    "serply_link": "https://serp.ly/demo-payment-adapter",
+    "serplyLink": "https://serp.ly/demo-payment-adapter",
+    "slug": "demo-payment-adapter",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/demo-payment-adapter",
+    "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter",
+    "successUrl": "https://apps.serp.co/checkout/success?product=demo-payment-adapter"
+  },
+  // PAYMENT DATA
+  "pricing": {
+    "label": "Internal",
+    "price": "$1.00",
+    "cta_text": "Start Test Checkout",
+    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter",
+    "currency": "USD",
+    "benefits": []
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Not a customer-facing SKU",
+    "method": "N/A",
+    "policy_category": "https://schema.org/SoftwareApplication",
+    "url": "https://github.com/serpapps/legal"
+  },
+  "payment": {
+    "provider": "stripe",
+    "account": "primary",
+    "mode": "payment",
+    "stripe": {
+      "price_id": "price_1SV4MW06JrOmKRCmZY0Q70o9",
+      "test_price_id": "price_1SV4NC06JrOmKRCmxC8sehN7",
+      "metadata": {
+        "stripe_product_id": "prod_TRyJyIFPwaPuBf"
+      },
+      "optional_items": []
+    },
+    "whop": {
+      "api_key_alias": "demo_whop",
+      "webhook_secret_alias": "demo_whop_webhook",
+      "metadata": {
+        "notes": "demo placeholder"
+      },
+      "live": {
+        "listing_id": "whop_listing_demo_live",
+        "plan_id": "whop_plan_demo_live",
+        "offer_id": "whop_offer_demo_live",
+        "product_id": "whop_product_demo_live",
+        "checkout_url": "https://whop.com/demo-payment-adapter-live"
+      },
+      "test": {
+        "listing_id": "whop_listing_demo_test",
+        "plan_id": "whop_plan_demo_test",
+        "offer_id": "whop_offer_demo_test",
+        "product_id": "whop_product_demo_test",
+        "checkout_url": "https://whop.com/demo-payment-adapter-test"
+      }
+    },
+    "easy_pay_direct": {
+      "api_key_alias": "demo_epd",
+      "webhook_secret_alias": "demo_epd_webhook",
+      "metadata": {
+        "notes": "demo placeholder"
+      },
+      "live": {
+        "product_id": "epd_product_demo_live",
+        "campaign_id": "epd_campaign_demo_live",
+        "offer_id": "epd_offer_demo_live",
+        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-live"
+      },
+      "test": {
+        "product_id": "epd_product_demo_test",
+        "campaign_id": "epd_campaign_demo_test",
+        "offer_id": "epd_offer_demo_test",
+        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-test"
+      }
+    },
+    "lemonsqueezy": {
+      "api_key_alias": "demo_lemonsqueezy",
+      "webhook_secret_alias": "demo_lemonsqueezy_webhook",
+      "metadata": {
+        "notes": "demo placeholder"
+      },
+      "live": {
+        "store_id": "lemonsqueezy_store_demo_live",
+        "product_id": "lemonsqueezy_product_demo_live",
+        "variant_id": "lemonsqueezy_variant_demo_live",
+        "price_id": "lemonsqueezy_price_demo_live",
+        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-live"
+      },
+      "test": {
+        "store_id": "lemonsqueezy_store_demo_test",
+        "product_id": "lemonsqueezy_product_demo_test",
+        "variant_id": "lemonsqueezy_variant_demo_test",
+        "price_id": "lemonsqueezy_price_demo_test",
+        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-test"
+      }
+    }
+  },
+  "stripe": {
+    "price_id": "price_1SV4MW06JrOmKRCmZY0Q70o9",
+    "test_price_id": "price_1SV4NC06JrOmKRCmxC8sehN7",
+    "metadata": {
+      "stripe_product_id": "prod_TRyJyIFPwaPuBf"
+    },
+    "optional_items": []
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-demo-payment-adapter"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "demo-payment-adapter"
+    ]
+  }
+}

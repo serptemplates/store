@@ -142,6 +142,34 @@
   "github_repo_url": "https://github.com/serpapps/patreon-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/patreon-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/patreon-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=patreon-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=patreon-downloader",
+    "ghl_tag": "purchase-patreon-downloader",
+    "ghlTag": "purchase-patreon-downloader",
+    "landerId": "patreon-downloader",
+    "offerId": "patreon-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Patreon Downloader",
+    "product_page_url": "https://apps.serp.co/patreon-downloader",
+    "product_slug": "patreon-downloader",
+    "productName": "Patreon Downloader",
+    "productPageUrl": "https://apps.serp.co/patreon-downloader",
+    "productSlug": "patreon-downloader",
+    "purchase_url": "https://serp.ly/patreon-downloader",
+    "purchaseUrl": "https://serp.ly/patreon-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/patreon-downloader/",
+    "serply_link": "https://serp.ly/patreon-downloader",
+    "serplyLink": "https://serp.ly/patreon-downloader",
+    "slug": "patreon-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/patreon-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/patreon-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -159,6 +187,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99g006JrOmKRCmQ5WBiQuN",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HwV7bdL3BDn"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99g006JrOmKRCmQ5WBiQuN",

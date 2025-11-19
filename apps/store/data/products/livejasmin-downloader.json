@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/livejasmin-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/livejasmin-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/livejasmin-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=livejasmin-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=livejasmin-downloader",
+    "ghl_tag": "purchase-livejasmin-downloader",
+    "ghlTag": "purchase-livejasmin-downloader",
+    "landerId": "livejasmin-downloader",
+    "offerId": "livejasmin-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Livejasmin Downloader",
+    "product_page_url": "https://apps.serp.co/livejasmin-downloader",
+    "product_slug": "livejasmin-downloader",
+    "productName": "Livejasmin Downloader",
+    "productPageUrl": "https://apps.serp.co/livejasmin-downloader",
+    "productSlug": "livejasmin-downloader",
+    "purchase_url": "https://serp.ly/livejasmin-downloader",
+    "purchaseUrl": "https://serp.ly/livejasmin-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/livejasmin-downloader/",
+    "serply_link": "https://serp.ly/livejasmin-downloader",
+    "serplyLink": "https://serp.ly/livejasmin-downloader",
+    "slug": "livejasmin-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/livejasmin-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/livejasmin-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0eK06JrOmKRCm1aHybhIL",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Hc8d1H8bDcV"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0eK06JrOmKRCm1aHybhIL",

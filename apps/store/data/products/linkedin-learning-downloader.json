@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/linkedin-learning-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/linkedin-learning-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/linkedin-learning-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
+    "ghl_tag": "purchase-linkedin-learning-downloader",
+    "ghlTag": "purchase-linkedin-learning-downloader",
+    "landerId": "linkedin-learning-downloader",
+    "offerId": "linkedin-learning-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Linkedin Learning Downloader",
+    "product_page_url": "https://apps.serp.co/linkedin-learning-downloader",
+    "product_slug": "linkedin-learning-downloader",
+    "productName": "Linkedin Learning Downloader",
+    "productPageUrl": "https://apps.serp.co/linkedin-learning-downloader",
+    "productSlug": "linkedin-learning-downloader",
+    "purchase_url": "https://serp.ly/linkedin-learning-downloader",
+    "purchaseUrl": "https://serp.ly/linkedin-learning-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/linkedin-learning-downloader/",
+    "serply_link": "https://serp.ly/linkedin-learning-downloader",
+    "serplyLink": "https://serp.ly/linkedin-learning-downloader",
+    "slug": "linkedin-learning-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/linkedin-learning-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/linkedin-learning-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99fw06JrOmKRCm59JPeRdR",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HSdCX0irIOM"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99fw06JrOmKRCm59JPeRdR",

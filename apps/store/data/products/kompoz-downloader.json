@@ -115,6 +115,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/kompoz-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/kompoz-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=kompoz-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=kompoz-downloader",
+    "ghl_tag": "purchase-kompoz-downloader",
+    "ghlTag": "purchase-kompoz-downloader",
+    "landerId": "kompoz-downloader",
+    "offerId": "kompoz-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Kompoz Downloader",
+    "product_page_url": "https://apps.serp.co/kompoz-downloader",
+    "product_slug": "kompoz-downloader",
+    "productName": "Kompoz Downloader",
+    "productPageUrl": "https://apps.serp.co/kompoz-downloader",
+    "productSlug": "kompoz-downloader",
+    "purchase_url": "https://serp.ly/kompoz-downloader",
+    "purchaseUrl": "https://serp.ly/kompoz-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/kompoz-downloader/",
+    "serply_link": "https://serp.ly/kompoz-downloader",
+    "serplyLink": "https://serp.ly/kompoz-downloader",
+    "slug": "kompoz-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kompoz-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/kompoz-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -132,6 +160,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

@@ -13,10 +13,10 @@ import {
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-import { processCheckoutSession, processGhlPayment } from "./actions";
+import { processCheckoutSession, processGhlPayment, processPayPalCheckout } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
 
-type CheckoutVariant = "stripe" | "ghl" | "external";
+type CheckoutVariant = "stripe" | "ghl" | "paypal" | "external";
 
 type CtaDefinition = {
   label: string;
@@ -69,6 +69,15 @@ const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
     title: "Thank you for your purchase!",
     description:
       "Your order is confirmed. Watch the video below for your next steps.",
+    ctas: [
+      { label: "Open Your Account", href: "/account" },
+      { label: "Need Help?", href: "/support", variant: "outline" },
+    ],
+  },
+  paypal: {
+    title: "Thank you for your purchase!",
+    description:
+      "We captured your PayPal order and are provisioning your account now.",
     ctas: [
       { label: "Open Your Account", href: "/account" },
       { label: "Need Help?", href: "/support", variant: "outline" },
@@ -134,15 +143,19 @@ function resolveVariant({
   provider,
   sessionId,
   source,
+  paypalToken,
 }: {
   provider: string | null;
   sessionId: string | null;
   source: string | null;
+  paypalToken: string | null;
 }): CheckoutVariant {
   const normalizedProvider = provider?.toLowerCase().trim();
 
   if (normalizedProvider === "stripe") return "stripe";
   if (normalizedProvider === "ghl") return "ghl";
+  if (normalizedProvider === "paypal") return "paypal";
+  if (paypalToken) return "paypal";
 
   if (sessionId) return "stripe";
   if (source && source.startsWith("ghl")) return "ghl";
@@ -226,6 +239,9 @@ export function SuccessContent() {
   const ghlPaymentId = searchParams.get("payment_id") ?? searchParams.get("transaction_id");
   const ghlProductSlug = searchParams.get("product") ?? searchParams.get("offer");
   const slugParam = searchParams.get("slug");
+  const paypalToken = searchParams.get("token");
+  const paypalAccountAlias = searchParams.get("paypal_account");
+  const paypalModeParam = searchParams.get("paypal_mode");
 
   const variant = useMemo<CheckoutVariant>(
     () =>
@@ -233,8 +249,9 @@ export function SuccessContent() {
         provider: providerParam,
         sessionId,
         source,
+        paypalToken,
       }),
-    [providerParam, sessionId, source],
+    [providerParam, sessionId, source, paypalToken],
   );
 
   const [processing, setProcessing] = useState(() => {
@@ -243,6 +260,9 @@ export function SuccessContent() {
     }
     if (variant === "ghl") {
       return true;
+    }
+    if (variant === "paypal") {
+      return Boolean(paypalToken);
     }
     return false;
   });
@@ -314,6 +334,26 @@ export function SuccessContent() {
       };
     }
 
+    if (variant === "paypal" && paypalToken) {
+      setProcessing(true);
+      processPayPalCheckout({
+        orderId: paypalToken,
+        accountAlias: paypalAccountAlias,
+        mode: paypalModeParam === "live" ? "live" : paypalModeParam === "test" ? "test" : null,
+      })
+        .then(applyOrderResult)
+        .catch(handleError)
+        .finally(() => {
+          if (!cancelled) {
+            setProcessing(false);
+          }
+        });
+
+      return () => {
+        cancelled = true;
+      };
+    }
+
     if (variant === "ghl") {
       setProcessing(true);
       processGhlPayment({ paymentId: ghlPaymentId, productSlug: ghlProductSlug })
@@ -335,7 +375,7 @@ export function SuccessContent() {
     return () => {
       cancelled = true;
     };
-  }, [variant, sessionId, ghlPaymentId, ghlProductSlug]);
+  }, [variant, sessionId, ghlPaymentId, ghlProductSlug, paypalToken, paypalAccountAlias, paypalModeParam]);
 
   useEffect(() => {
     if (typeof window === "undefined") {

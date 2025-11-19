@@ -487,6 +487,13 @@
     "sku": {
       "type": "string"
     },
+    "checkout_metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "pricing": {
       "type": "object",
       "additionalProperties": false,
@@ -581,6 +588,60 @@
               "minItems": 1
             }
           ]
+        }
+      }
+    },
+    "payment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": [
+            "stripe",
+            "whop",
+            "easy_pay_direct",
+            "lemonsqueezy",
+            "paypal"
+          ],
+          "default": "stripe"
+        },
+        "account": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "payment",
+            "subscription"
+          ]
+        },
+        "success_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancel_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "stripe": {
+          "$ref": "#/properties/stripe"
+        },
+        "whop": {
+          "$ref": "#/$defs/whop"
+        },
+        "easy_pay_direct": {
+          "$ref": "#/$defs/easy_pay_direct"
+        },
+        "lemonsqueezy": {
+          "$ref": "#/$defs/lemonsqueezy"
         }
       }
     },
@@ -690,6 +751,216 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "whop": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_key_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "webhook_secret_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "live": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "listing_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "plan_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "test": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "listing_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "plan_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    },
+    "easy_pay_direct": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_key_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "webhook_secret_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "live": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "campaign_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "test": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "campaign_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    },
+    "lemonsqueezy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "api_key_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "webhook_secret_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "live": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "store_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "variant_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "price_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "test": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "store_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "product_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "variant_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "price_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "checkout_url": {
+              "type": "string",
+              "format": "uri"
+            }
           }
         }
       }

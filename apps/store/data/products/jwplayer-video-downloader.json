@@ -131,6 +131,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/jwplayer-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/jwplayer-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=jwplayer-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=jwplayer-video-downloader",
+    "ghl_tag": "purchase-jwplayer-video-downloader",
+    "ghlTag": "purchase-jwplayer-video-downloader",
+    "landerId": "jwplayer-video-downloader",
+    "offerId": "jwplayer-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "JW Player Video Downloader",
+    "product_page_url": "https://apps.serp.co/jwplayer-video-downloader",
+    "product_slug": "jwplayer-video-downloader",
+    "productName": "JW Player Video Downloader",
+    "productPageUrl": "https://apps.serp.co/jwplayer-video-downloader",
+    "productSlug": "jwplayer-video-downloader",
+    "purchase_url": "https://serp.ly/jwplayer-video-downloader",
+    "purchaseUrl": "https://serp.ly/jwplayer-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/jwplayer-video-downloader/",
+    "serply_link": "https://serp.ly/jwplayer-video-downloader",
+    "serplyLink": "https://serp.ly/jwplayer-video-downloader",
+    "slug": "jwplayer-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/jwplayer-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/jwplayer-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -152,6 +180,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

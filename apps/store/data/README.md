@@ -15,8 +15,48 @@
 
 - **Identity & SEO** – `platform`, `slug`, `name`, `tagline`, `description`, `seo_title`, `seo_description`, and canonical URLs (`serply_link`, `apps_serp_co_product_page_url`, `store_serp_co_product_page_url`, optional `serp_co_product_page_url`). URL hosts are locked down so broken redirects fail validation early.
 - **Marketing surfaces** – `features`, `pricing`, `screenshots`, `product_videos`, `related_videos`, `related_posts`, `faqs`, `reviews`, and optional badges (`featured`, `new_release`, `popular`). Currency codes are auto-uppercased and constrained to ISO 4217; review ratings must sit between 0–5.
-- **Commerce & fulfilment** – `pricing` (CTA + copy), `stripe`, `ghl`, `license`, `return_policy`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays.
+- **Commerce & fulfilment** – `pricing` (CTA + copy), `checkout_metadata` (provider-agnostic key/value overrides that flow into every checkout payload), `payment` (provider + account routing), `stripe`, `ghl`, `license`, `return_policy`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays.
 - **Navigation & taxonomy** – `categories`, `keywords`, `supported_operating_systems`, `supported_regions`, `github_repo_tags`, plus optional `brand`, `sku`, and `waitlist_url`.
+
+## Checkout metadata contract
+
+- `checkout_metadata` is now auto-populated by `convert:products`. Every SKU automatically receives camelCase keys for the slug (`productSlug`), product title, marketing URLs (`productPageUrl`, `purchaseUrl`, etc.), license entitlements, payment-provider routing (`paymentProvider`, `paymentProviderAccount`), and the primary GHL tag (`ghlTag`). File-level overrides still win—additions you place inside `checkout_metadata` will overwrite the defaults supplied by the converter, and the runtime automatically mirrors camelCase values into snake_case when older integrations expect them.
+- Keep any required downstream metadata (GoHighLevel location IDs, internal CRM identifiers, Dub/Affiliate hints, etc.) in this object so switching Stripe accounts or entire payment providers never requires re-entering values in a vendor dashboard. Values must be strings; if you need to store structured data, JSON-stringify it before committing.
+- Stripe always shows the built-in coupon/promotion field because `allow_promotion_codes` is enabled in the adapter. There is no product-level toggle today—if we need one later we can wire a `checkout_metadata.allowCouponBox=false` flag into the adapters.
+- Stripe “Optional Items” (Stripe’s terminology for Additional Items/optional line items) stay configured under `payment.stripe.optional_items`. Those definitions pull their metadata from the same `checkout_metadata` map, so make sure any shared fields (e.g., `ghl_tag`, `product_slug`) live here rather than in Stripe’s dashboard UI.
+
+### PayPal provider metadata (temporary contract)
+
+Until we persist product pricing directly in the manifest, PayPal adapters read the following keys from `payment.metadata`:
+
+- `paypal_currency` – three-letter ISO currency code used for every order.
+- `paypal_live_amount_cents` / `paypal_test_amount_cents` – integer strings representing the order amount (e.g., `"1700"` for $17.00). The adapter picks the correct key based on whether the runtime is using live or sandbox credentials.
+- Optional overrides:
+  - `paypal_brand_name` – overrides the PayPal-branded merchant name (defaults to the checkout metadata `productName`).
+  - `paypal_description` – overrides the line-item description.
+  - `paypal_live_product_id`, `paypal_live_plan_id`, `paypal_test_product_id`, `paypal_test_plan_id` – recorded for reference if you provision products/plans ahead of time.
+
+Make sure the PayPal REST app alias (`serpapps` today) has client IDs, secrets, and webhook IDs for both modes. Environment variables should follow the pattern `PAYPAL_CLIENT_ID__<alias>__{live,test}`, `PAYPAL_CLIENT_SECRET__<alias>__{live,test}`, and `PAYPAL_WEBHOOK_ID__<alias>__{live,test}`.
+
+### PayPal product bootstrapper
+
+Use `pnpm --filter @apps/store paypal:create-products -- --alias serpapps --input ./paypal-products.json` to create PayPal catalog products + billing plans for both sandbox and live accounts. The input file must be a JSON array:
+
+```json
+[
+  {
+    "slug": "onlyfans-downloader",
+    "name": "OnlyFans Downloader",
+    "description": "Download private posts",
+    "amount_cents": 1700,
+    "currency": "USD",
+    "interval_unit": "MONTH",
+    "interval_count": 1
+  }
+]
+```
+
+For each entry the script will create the product + plan in every mode (`--mode live`, `--mode test`, or both) using the provided alias credentials. The generated IDs are written to `paypal-products-output-<timestamp>.json` so you can paste them into `payment.paypal.metadata` (`paypal_live_product_id`, `paypal_live_plan_id`, etc.).
 
 ## Blog + Video linking
 
@@ -76,7 +116,7 @@ Practical example:
 
 ## Price manifest
 
-- Canonical Stripe amounts live in `data/prices/manifest.json`. Each entry maps a Stripe price ID (and optional compare-at amount) to a currency + unit amount in cents.
+- Canonical amounts live in `data/prices/manifest.json`, keyed by product slug. Each entry records the payment provider, account alias, resolved currency/unit amount, and provider-specific identifiers (e.g. Stripe live/test price IDs).
 - The manifest is consumed by the landers, checkout helpers, and Google Merchant feed; all display pricing now resolves from this file instead of the YAML copy.
-- Regenerate the manifest with `pnpm --filter @apps/store validate:products`. When `STRIPE_SECRET_KEY` is configured the script will fetch fresh amounts before validation.
-- If a price ID is missing from the manifest, the app falls back to the product JSON `pricing.price` string—useful while we backfill entries—but add the mapping to keep Stripe and the landers in sync.
+- Regenerate the manifest with `pnpm --filter @apps/store validate:products`. When `STRIPE_SECRET_KEY` is configured the script fetches fresh price data before writing.
+- If a product is missing from the manifest, the app falls back to the product JSON `pricing.price` string—handy while backfilling—but keep the manifest up to date so Stripe and the landers stay in sync.

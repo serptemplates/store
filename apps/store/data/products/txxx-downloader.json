@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/txxx-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/txxx-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=txxx-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=txxx-downloader",
+    "ghl_tag": "purchase-txxx-downloader",
+    "ghlTag": "purchase-txxx-downloader",
+    "landerId": "txxx-downloader",
+    "offerId": "txxx-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "TXXX Downloader",
+    "product_page_url": "https://apps.serp.co/txxx-downloader",
+    "product_slug": "txxx-downloader",
+    "productName": "TXXX Downloader",
+    "productPageUrl": "https://apps.serp.co/txxx-downloader",
+    "productSlug": "txxx-downloader",
+    "purchase_url": "https://serp.ly/txxx-downloader",
+    "purchaseUrl": "https://serp.ly/txxx-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/txxx-downloader/",
+    "serply_link": "https://serp.ly/txxx-downloader",
+    "serplyLink": "https://serp.ly/txxx-downloader",
+    "slug": "txxx-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/txxx-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/txxx-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

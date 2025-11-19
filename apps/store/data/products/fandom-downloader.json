@@ -114,6 +114,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/fandom-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/fandom-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=fandom-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=fandom-downloader",
+    "ghl_tag": "purchase-fandom-downloader",
+    "ghlTag": "purchase-fandom-downloader",
+    "landerId": "fandom-downloader",
+    "offerId": "fandom-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Fandom Downloader",
+    "product_page_url": "https://apps.serp.co/fandom-downloader",
+    "product_slug": "fandom-downloader",
+    "productName": "Fandom Downloader",
+    "productPageUrl": "https://apps.serp.co/fandom-downloader",
+    "productSlug": "fandom-downloader",
+    "purchase_url": "https://serp.ly/fandom-downloader",
+    "purchaseUrl": "https://serp.ly/fandom-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/fandom-downloader/",
+    "serply_link": "https://serp.ly/fandom-downloader",
+    "serplyLink": "https://serp.ly/fandom-downloader",
+    "slug": "fandom-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/fandom-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/fandom-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -131,6 +159,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}
