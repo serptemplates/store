@@ -16,7 +16,6 @@ Owner: Platform Content Team
 - ✅ `pnpm --filter @apps/store test:unit`
 - ✅ `pnpm --filter @apps/store validate:products`
 - ✅ `pnpm --filter @apps/store stripe:sync-payment-links` (live execution; updated 95 links)
-- ✅ `pnpm --filter @apps/store export:offers`
 
 ## Developer feedback requests
 Please review the generated JSON files under `apps/store/data/products/*.json` (pilot slugs listed above) and share feedback on:
