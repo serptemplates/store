@@ -39,7 +39,7 @@ Keep this table handy while editing; every row needs to be touched or re-generat
 ## 3. Create the new Stripe Price
 
 1. In Stripe, open **Products → OnlyFans Downloader (`prod_Sv6HHbpO7I9vt0`)**.
-2. Create a **new one-time USD price** for your target amount (e.g. `$37.00`). Stripe prices are immutable, so you must mint a new ID every time.
+2. Create a **new one-time USD price** for your target amount (e.g. `$27.00`). Stripe prices are immutable, so you must mint a new ID every time.
 3. Disable/Archive the old price(s) so no one selects them accidentally.
 4. Record the new price ID—you’ll feed it into the CLI in the next section.
 
@@ -51,7 +51,7 @@ Keep this table handy while editing; every row needs to be touched or re-generat
 
 1. Run the helper from the repo root:
    ```bash
-   pnpm --filter @apps/store update:price -- --slug onlyfans-downloader --price-cents 3700 --price-id price_1SUyu906JrOmKRCmr1ym4isD --test-price-id price_1SUzfT06JrOmKRCm1y08eODD --compare-cents 4700
+   pnpm --filter @apps/store update:price -- --slug onlyfans-downloader --price-cents 2700 --price-id price_1SRotl06JrOmKRCmY0T4Yy2P --test-price-id price_1SRoyD06JrOmKRCmfEePRiQu
    ```
    - `--price-cents` is the live amount in cents (required).
    - `--price-id` is the new Stripe price ID (required).
@@ -97,7 +97,7 @@ pnpm run merchant:upload -- --slug=onlyfans-downloader --dry-run
 2. **Runtime sanity checks:**
    - `pnpm --filter @apps/store dev`  
      Visit `http://localhost:3000/onlyfans-downloader` and confirm:
-       - Hero pricing now shows `$27` with the correct compare-at.
+       - Hero pricing now shows `$27` (no compare-at price unless you explicitly add one).
        - `GET /api/checkout/products/onlyfans-downloader` returns `price: 27` and `priceDisplay: "$27.00"`.
    - Run the Dub regression helper to confirm the checkout session uses the new price:  
      ```bash
