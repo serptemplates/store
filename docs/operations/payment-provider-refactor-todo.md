@@ -40,10 +40,10 @@ The remaining checklist items below assume this baseline.
 > - Do not delete or rename existing `stripe` fields in product JSON/schemas until the new `payment` structure is live; add optional fields first, verify, then migrate.
 > - When scripting manifest/product migrations, ensure commands accept `--dry-run` and back up files so we can roll back if needed.
 > - Defer any permanent Stripe metadata changes (e.g., cross-account tag updates) until the new account registry is validated; use sandbox/test accounts during development.
-> - Temporary Neon database `neondb_payment_provider_refactor` now exists on the same cluster (created via the Vercel-provisioned credentials). Point local env vars at it while working on Steps 5+:
->   - Pooled: `postgresql://neondb_owner:npg_0mgzU2sFDdJW@ep-frosty-rain-adjuzwyq-pooler.c-2.us-east-1.aws.neon.tech/neondb_payment_provider_refactor?sslmode=require`
->   - Unpooled: `postgresql://neondb_owner:npg_0mgzU2sFDdJW@ep-frosty-rain-adjuzwyq.c-2.us-east-1.aws.neon.tech/neondb_payment_provider_refactor?sslmode=require`
->   - Swap `DATABASE_URL` + `DATABASE_URL_UNPOOLED` (or shell exports) to these strings to keep the work fully reversible; deleting or ignoring the temp DB leaves prod/staging untouched.
+- Temporary Neon database `neondb_payment_provider_refactor` now exists on the same cluster (created via the Vercel-provisioned credentials). Point local env vars at it while working on Steps 5+:
+  - Pooled: copy the pooled connection string from Neon (set it as `DATABASE_URL`).
+  - Unpooled: copy the direct connection string from Neon (set it as `DATABASE_URL_UNPOOLED`).
+  - Keeping these values in local envs makes the work fully reversible; deleting or ignoring the temp DB leaves prod/staging untouched.
 
 ### 1. Product & schema updates
 - [x] Update `apps/store/lib/products/product-schema.ts` to add a `payment` object with:
@@ -199,7 +199,7 @@ The existing site can already point different SKUs at different Stripe accounts.
 - Optional but recommended: any metadata currently living only in Stripe (internal IDs, compare-at amounts, success URLs) should be mirrored here so the Stripe dashboard is no longer the source of truth.
 
 ### 9. PayPal adapter prerequisites & credential checklist
-- [x] **Credentials** – Live + sandbox REST apps exist for alias `serpapps`; Client IDs/Secrets are stored in `.env.local` as `PAYPAL_CLIENT_ID__serpapps__{live,test}` / `PAYPAL_CLIENT_SECRET__serpapps__{live,test}`. Live webhook ID (`whsec_5apgKqmUBxZiasHOlswzjbdAvaEAMJjz`) still needs to be mirrored into `PAYPAL_WEBHOOK_ID__serpapps__live`, and a sandbox webhook must be created to populate `PAYPAL_WEBHOOK_ID__serpapps__test`.
+- [x] **Credentials** – Live + sandbox REST apps exist for alias `serpapps`; Client IDs/Secrets are stored in `.env.local` as `PAYPAL_CLIENT_ID__serpapps__{live,test}` / `PAYPAL_CLIENT_SECRET__serpapps__{live,test}`. Webhook IDs should *only* live in env vars (e.g., `PAYPAL_WEBHOOK_ID__serpapps__{live,test}`) after creating the endpoints inside PayPal Developer—never copy the raw `whsec_*` values into docs or source control.
 - [ ] **Account registry** – Mirror the Stripe registry pattern so PayPal adapters resolve credentials via alias. Each entry maps `{ alias, label, env: { clientId, clientSecret, webhookId } }`.
 - [x] **Product data** – `apps/store/data/products/demo-payment-adapter-paypal.json` is the canonical template. Every PayPal-backed SKU needs:
   - `payment.provider = "paypal"`, `payment.account = "<alias>"`, and metadata keys for client alias, webhook alias, checkout URLs, and plan/product IDs.

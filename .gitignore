@@ -78,10 +78,8 @@ mcp-debug-tools/
 .env.vercel
 .env.vercel.preview
 .env.vercel.prod
-.env.vercel.prod
 .env.preview
 .env.production
-.env.vercel.prod
 .env*.remote
 screenshots/
 .env.backup
