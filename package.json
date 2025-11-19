@@ -61,6 +61,7 @@
     "husky": "^9.0.0",
     "linkinator": "^7.5.0",
     "sitemap-crawler": "^1.0.0",
+    "strip-json-comments": "^5.0.3",
     "tsx": "^4.20.6"
   }
 }

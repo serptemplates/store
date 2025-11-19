@@ -84,6 +84,9 @@ importers:
       sitemap-crawler:
         specifier: ^1.0.0
         version: 1.0.0
+      strip-json-comments:
+        specifier: ^5.0.3
+        version: 5.0.3
       tsx:
         specifier: ^4.20.6
         version: 4.20.6
@@ -2756,8 +2759,8 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
 
-  chromedriver@142.0.1:
-    resolution: {integrity: sha512-Cgm5rPQ1aNdkoA4wiwJiKweQErbv+8w5xnN5SA5EIAxN0bcZzWrbcFtwlaKG3DUcJJYQKKArLe4vg+s85wmhfQ==}
+  chromedriver@142.0.2:
+    resolution: {integrity: sha512-FmItmTE56bg2DVSbAC4SEuSzaOpqM7Mv3Kfha+EC7ecT67r4xHZErp+apESfOXkFeo7ry8Z7SG4KWaETFWxMNQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -6828,7 +6831,7 @@ snapshots:
     dependencies:
       '@axe-core/webdriverjs': 4.10.2(selenium-webdriver@4.22.0(bufferutil@4.0.9))
       axe-core: 4.10.3
-      chromedriver: 142.0.1
+      chromedriver: 142.0.2
       colors: 1.4.0
       commander: 9.5.0
       dotenv: 16.6.1
@@ -9299,7 +9302,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  chromedriver@142.0.1:
+  chromedriver@142.0.2:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.12.2
