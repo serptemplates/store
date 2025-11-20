@@ -61,7 +61,7 @@ export async function ensureAccountForPurchase(context: PurchaseAccountContext) 
     return { account, verification: null };
   }
 
-  await sendVerificationEmail({
+  const emailResult = await sendVerificationEmail({
     email: account.email,
     code: verification.code,
     token: verification.token,
@@ -69,6 +69,14 @@ export async function ensureAccountForPurchase(context: PurchaseAccountContext) 
     offerId: context.offerId ?? null,
     customerName: account.name,
   });
+
+  if (!emailResult.ok) {
+    logger.error("account.verification_email_failed", {
+      email: account.email,
+      offerId: context.offerId,
+      reason: emailResult.error,
+    });
+  }
 
   return { account, verification };
 }
@@ -86,7 +94,7 @@ export async function requestAccountVerification(email: string, options?: { offe
     throw new Error("Unable to generate verification token");
   }
 
-  await sendVerificationEmail({
+  const emailResult = await sendVerificationEmail({
     email: account.email,
     code: verification.code,
     token: verification.token,
@@ -94,6 +102,16 @@ export async function requestAccountVerification(email: string, options?: { offe
     offerId: options?.offerId ?? null,
     customerName: account.name,
   });
+
+  if (!emailResult.ok) {
+    logger.error("account.verification_email_failed", {
+      email: account.email,
+      offerId: options?.offerId ?? null,
+      reason: emailResult.error,
+    });
+
+    throw new Error(emailResult.error);
+  }
 
   return {
     account,

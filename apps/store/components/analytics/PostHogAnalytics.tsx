@@ -7,13 +7,15 @@ import { wireGlobalErrorListeners } from "@/lib/analytics/posthog";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
+const POSTHOG_DISABLED = process.env.NEXT_PUBLIC_POSTHOG_DISABLED === "true";
+
+const hasValidKey = typeof POSTHOG_KEY === "string" && POSTHOG_KEY.startsWith("phc_");
+const isPostHogEnabled = hasValidKey && !POSTHOG_DISABLED;
 
 interface AnalyticsWindow extends Window {
   __POSTHOG_INITIALIZED__?: boolean;
   posthog?: typeof posthog;
 }
-
-const isPostHogEnabled = typeof POSTHOG_KEY === "string" && POSTHOG_KEY.length > 0;
 
 function initializePostHog() {
   if (!isPostHogEnabled || typeof window === "undefined") {
@@ -32,6 +34,9 @@ function initializePostHog() {
     autocapture: false,
     disable_surveys: true,
     disable_surveys_automatic_display: true,
+    // PostHog types don’t yet expose this flag; we want to avoid feature flag requests.
+    // @ts-expect-error unsupported in current type definitions
+    disable_feature_flags: true,
     advanced_disable_feature_flags: true,
     advanced_disable_feature_flags_on_first_load: true,
     session_recording: {
