@@ -20,6 +20,11 @@ STRIPE_WEBHOOK_SECRET_TEST=whsec_test_xxx_replace_me
 # STRIPE_WEBHOOK_SECRET_STAGING=whsec_staging_xxx_replace_me
 
 ########################################
+# GitHub Packages (private @serpcompany/* packages)
+########################################
+NPM_TOKEN=ghp_xxx_replace_me
+
+########################################
 # Shared across all environments
 ########################################
 SITE_CONFIG_PATH=../sites/apps.serp.co/site.config.json

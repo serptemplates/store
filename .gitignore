@@ -86,4 +86,3 @@ mcp-debug-tools/
 screenshots/
 .env.backup
 .env*
-.npmrc
