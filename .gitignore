@@ -86,3 +86,4 @@ mcp-debug-tools/
 screenshots/
 .env.backup
 .env*
+tmp/*.sh
