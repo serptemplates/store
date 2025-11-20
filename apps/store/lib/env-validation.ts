@@ -52,6 +52,34 @@ const ENV_CONFIGS: EnvConfig[] = [
     description: "Full site URL (https://yourdomain.com)",
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
+
+  // Email delivery (required for verification emails in production)
+  {
+    name: "SMTP_HOST",
+    required: false,
+    description: "SMTP host for sending verification emails",
+  },
+  {
+    name: "SMTP_PORT",
+    required: false,
+    description: "SMTP port for sending verification emails",
+    validate: (value) => !Number.isNaN(Number(value)) && Number(value) > 0,
+  },
+  {
+    name: "SMTP_USER",
+    required: false,
+    description: "SMTP username for sending verification emails",
+  },
+  {
+    name: "SMTP_PASS",
+    required: false,
+    description: "SMTP password for sending verification emails",
+  },
+  {
+    name: "ACCOUNT_EMAIL_SENDER",
+    required: false,
+    description: "From address used for account verification emails",
+  },
   
   // Monitoring (optional)
   {
@@ -127,6 +155,15 @@ export function validateEnvironment(): ValidationResult {
   const runtimeEnv = getRuntimeEnvironment();
   const stripeMode = getStripeMode();
 
+  const emailVars = [
+    "SMTP_HOST",
+    "SMTP_PORT",
+    "SMTP_USER",
+    "SMTP_PASS",
+    "ACCOUNT_EMAIL_SENDER",
+  ];
+  const missingEmailVars = emailVars.filter((name) => !process.env[name]);
+
   if (!getOptionalStripeSecretKey(stripeMode)) {
     errors.push(
       stripeMode === "live"
@@ -148,6 +185,16 @@ export function validateEnvironment(): ValidationResult {
       stripeMode === "live"
         ? "Missing Stripe live webhook secret. Set STRIPE_WEBHOOK_SECRET_LIVE or provide a live secret in STRIPE_WEBHOOK_SECRET."
         : "Missing Stripe test webhook secret. Set STRIPE_WEBHOOK_SECRET_TEST or ensure STRIPE_WEBHOOK_SECRET points to your test endpoint.",
+    );
+  }
+
+  if (runtimeEnv === "production") {
+    if (missingEmailVars.length > 0) {
+      errors.push(`Missing SMTP configuration for verification emails: ${missingEmailVars.join(", ")}`);
+    }
+  } else if (missingEmailVars.length > 0) {
+    warnings.push(
+      `SMTP configuration incomplete (missing ${missingEmailVars.join(", ")}). Verification emails will not send without these.`,
     );
   }
 
@@ -217,5 +264,12 @@ export function getEnvironmentInfo(): Record<string, string | boolean> {
       process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID
     ),
     monitoringConfigured: !!process.env.SLACK_ALERT_WEBHOOK_URL,
+    emailDeliveryConfigured: Boolean(
+      process.env.SMTP_HOST &&
+      process.env.SMTP_PORT &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS &&
+      process.env.ACCOUNT_EMAIL_SENDER,
+    ),
   };
 }
