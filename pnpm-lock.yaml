@@ -108,6 +108,9 @@ importers:
       '@next/third-parties':
         specifier: ^15.5.5
         version: 15.5.5(next@15.1.0(@opentelemetry/api@1.9.0)(@playwright/test@1.55.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+      '@repo/payments':
+        specifier: npm:@serpcompany/payments@0.2.2
+        version: '@serpcompany/payments@0.2.2(stripe@15.12.0)'
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -1805,6 +1808,11 @@ packages:
   '@sentry/utils@6.19.7':
     resolution: {integrity: sha512-z95ECmE3i9pbWoXQrD/7PgkBAzJYR+iXtPuTkpBjDKs86O3mT+PXOT3BAn79w2wkn7/i3vOGD2xVr1uiMl26dA==}
     engines: {node: '>=6'}
+
+  '@serpcompany/payments@0.2.2':
+    resolution: {integrity: sha512-NH0ZNm5nly0pa56sVHhHPhprfcG2eS9SA5MFg5xkWmaPtxPiKIn++5yJBscrMU5hqfkzvmxUz79lHaDSzWopQw==, tarball: https://npm.pkg.github.com/download/@serpcompany/payments/0.2.2/e671dfe5da8dd8cf7bb51ce30bf6d442b83d66f5}
+    peerDependencies:
+      stripe: ^15.0.0
 
   '@shikijs/core@1.29.2':
     resolution: {integrity: sha512-vju0lY9r27jJfOY4Z7+Rt/nIOjzJpZ3y+nYpqtUZInVoXQ/TJZcfGnNOGnKjFdVZb8qexiCuSlZRKcGfhhTTZQ==}
@@ -8145,6 +8153,10 @@ snapshots:
     dependencies:
       '@sentry/types': 6.19.7
       tslib: 1.14.1
+
+  '@serpcompany/payments@0.2.2(stripe@15.12.0)':
+    dependencies:
+      stripe: 15.12.0
 
   '@shikijs/core@1.29.2':
     dependencies:

@@ -123,7 +123,7 @@
     "mode": "payment",
     "stripe": {
       "price_id": "price_1SV5IyDP7AOTRcvmLcgKF6lo",
-      "test_price_id": "price_1SV5IADP7AOTRcvmNd4L1ZIi",
+      "test_price_id": "price_1SVQZQ06JrOmKRCmXk6J6BhE",
       "metadata": {
         "stripe_product_id": "prod_TRzHsRcr0mBCRx"
       },
@@ -193,7 +193,7 @@
   },
   "stripe": {
     "price_id": "price_1SV5IyDP7AOTRcvmLcgKF6lo",
-    "test_price_id": "price_1SV5IADP7AOTRcvmNd4L1ZIi",
+    "test_price_id": "price_1SVQZQ06JrOmKRCmXk6J6BhE",
     "metadata": {
       "stripe_product_id": "prod_TRzHsRcr0mBCRx"
     },
