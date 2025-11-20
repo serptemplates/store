@@ -13,7 +13,7 @@ const bundleAnalyzer = withBundleAnalyzer({
 const isStaticExport = process.env.STATIC_EXPORT === "1";
 
 const nextConfig = {
-  transpilePackages: ["@repo/ui", "@repo/payments"],
+  transpilePackages: ["@repo/ui", "@repo/payments", "@serpcompany/payments"],
 
   // Enable compression
   compress: true,

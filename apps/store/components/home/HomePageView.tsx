@@ -24,7 +24,8 @@ const STORE_ORIGIN = "https://apps.serp.co"
 const heroDescription = "Browse the full catalog of SERP products."
 
 export function HomePageView() {
-  const products = getAllProducts()
+  // Only show products meant for public surfaces: live or pre-release.
+  const products = getAllProducts().filter((product) => product.status === "live" || product.status === "pre_release")
   const siteConfig = getSiteConfig()
   const navProps = buildPrimaryNavProps({ products, siteConfig })
 

@@ -4,6 +4,7 @@ export type ReleaseStatus = ProductData["status"];
 
 const BADGE_TEXT: Record<ReleaseStatus, string> = {
   draft: "DRAFT",
+  demo: "DEMO",
   pre_release: "PRE-RELEASE",
   live: "LIVE",
 };
@@ -27,7 +28,8 @@ export function isLive(value: ProductData | ReleaseStatus | undefined): boolean 
 }
 
 export function isDraft(value: ProductData | ReleaseStatus | undefined): boolean {
-  return getReleaseStatus(value) === "draft";
+  const status = getReleaseStatus(value);
+  return status === "draft" || status === "demo";
 }
 
 export function getReleaseBadgeText(value: ProductData | ReleaseStatus | undefined): string {
