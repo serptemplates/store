@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/hdzog-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/hdzog-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=hdzog-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=hdzog-downloader",
+    "ghl_tag": "purchase-hdzog-downloader",
+    "ghlTag": "purchase-hdzog-downloader",
+    "landerId": "hdzog-downloader",
+    "offerId": "hdzog-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "HDZog Downloader",
+    "product_page_url": "https://apps.serp.co/hdzog-downloader",
+    "product_slug": "hdzog-downloader",
+    "productName": "HDZog Downloader",
+    "productPageUrl": "https://apps.serp.co/hdzog-downloader",
+    "productSlug": "hdzog-downloader",
+    "purchase_url": "https://serp.ly/hdzog-downloader",
+    "purchaseUrl": "https://serp.ly/hdzog-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/hdzog-downloader/",
+    "serply_link": "https://serp.ly/hdzog-downloader",
+    "serplyLink": "https://serp.ly/hdzog-downloader",
+    "slug": "hdzog-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hdzog-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/hdzog-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

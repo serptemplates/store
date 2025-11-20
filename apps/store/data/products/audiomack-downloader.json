@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/audiomack-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/audiomack-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=audiomack-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=audiomack-downloader",
+    "ghl_tag": "purchase-audiomack-downloader",
+    "ghlTag": "purchase-audiomack-downloader",
+    "landerId": "audiomack-downloader",
+    "offerId": "audiomack-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Audiomack Downloader",
+    "product_page_url": "https://apps.serp.co/audiomack-downloader",
+    "product_slug": "audiomack-downloader",
+    "productName": "Audiomack Downloader",
+    "productPageUrl": "https://apps.serp.co/audiomack-downloader",
+    "productSlug": "audiomack-downloader",
+    "purchase_url": "https://serp.ly/audiomack-downloader",
+    "purchaseUrl": "https://serp.ly/audiomack-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/audiomack-downloader/",
+    "serply_link": "https://serp.ly/audiomack-downloader",
+    "serplyLink": "https://serp.ly/audiomack-downloader",
+    "slug": "audiomack-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/audiomack-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/audiomack-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

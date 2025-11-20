@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/vk-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/vk-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/vk-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=vk-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=vk-video-downloader",
+    "ghl_tag": "purchase-vk-video-downloader",
+    "ghlTag": "purchase-vk-video-downloader",
+    "landerId": "vk-video-downloader",
+    "offerId": "vk-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Vk Video Downloader",
+    "product_page_url": "https://apps.serp.co/vk-video-downloader",
+    "product_slug": "vk-video-downloader",
+    "productName": "Vk Video Downloader",
+    "productPageUrl": "https://apps.serp.co/vk-video-downloader",
+    "productSlug": "vk-video-downloader",
+    "purchase_url": "https://serp.ly/vk-video-downloader",
+    "purchaseUrl": "https://serp.ly/vk-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/vk-video-downloader/",
+    "serply_link": "https://serp.ly/vk-video-downloader",
+    "serplyLink": "https://serp.ly/vk-video-downloader",
+    "slug": "vk-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/vk-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/vk-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gJ06JrOmKRCmzNGM97WE",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6IUkORD1jr0m"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gJ06JrOmKRCmzNGM97WE",

@@ -206,6 +206,36 @@
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/loom-video-downloader/oopljffmklejoikiemiedeangcchfmlf",
   "producthunt_link": "https://www.producthunt.com/products/loom-video-downloader",
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/loom-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/loom-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=loom-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=loom-video-downloader",
+    "ghl_tag": "purchase-loom-video-downloader",
+    "ghlTag": "purchase-loom-video-downloader",
+    "landerId": "loom-video-downloader",
+    "license_entitlements": "loom-video-downloader",
+    "licenseEntitlements": "loom-video-downloader",
+    "offerId": "loom-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Loom Video Downloader",
+    "product_page_url": "https://apps.serp.co/loom-video-downloader",
+    "product_slug": "loom-video-downloader",
+    "productName": "Loom Video Downloader",
+    "productPageUrl": "https://apps.serp.co/loom-video-downloader",
+    "productSlug": "loom-video-downloader",
+    "purchase_url": "https://serp.ly/loom-video-downloader",
+    "purchaseUrl": "https://serp.ly/loom-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/loom-video-downloader/",
+    "serply_link": "https://serp.ly/loom-video-downloader",
+    "serplyLink": "https://serp.ly/loom-video-downloader",
+    "slug": "loom-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/loom-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/loom-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -228,6 +258,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S9BFJ06JrOmKRCmdpVOP8Em",
+      "metadata": {
+        "stripe_product_id": "prod_SgQFDAZHJBdiRX"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S9BFJ06JrOmKRCmdpVOP8Em",

@@ -155,6 +155,12 @@ async function runMigrations() {
       id UUID PRIMARY KEY,
       stripe_session_id TEXT UNIQUE NOT NULL,
       stripe_payment_intent_id TEXT,
+      payment_provider TEXT,
+      provider_account_alias TEXT,
+      provider_session_id TEXT,
+      provider_payment_id TEXT,
+      provider_charge_id TEXT,
+      provider_mode TEXT,
       offer_id TEXT NOT NULL,
       lander_id TEXT,
       customer_email TEXT,
@@ -179,6 +185,12 @@ async function runMigrations() {
       stripe_session_id TEXT,
       stripe_payment_intent_id TEXT UNIQUE,
       stripe_charge_id TEXT,
+      payment_provider TEXT,
+      provider_account_alias TEXT,
+      provider_session_id TEXT,
+      provider_payment_id TEXT,
+      provider_charge_id TEXT,
+      provider_mode TEXT,
       amount_total BIGINT,
       currency TEXT,
       offer_id TEXT,
@@ -249,6 +261,62 @@ async function runMigrations() {
     ALTER TABLE orders
       ADD CONSTRAINT orders_source_check
       CHECK (source IN ('stripe', 'paypal', 'ghl'));
+  `;
+
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS payment_provider TEXT;`;
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS provider_account_alias TEXT;`;
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS provider_session_id TEXT;`;
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS provider_payment_id TEXT;`;
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS provider_charge_id TEXT;`;
+  await client.sql`ALTER TABLE checkout_sessions ADD COLUMN IF NOT EXISTS provider_mode TEXT;`;
+
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_provider TEXT;`;
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS provider_account_alias TEXT;`;
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS provider_session_id TEXT;`;
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS provider_payment_id TEXT;`;
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS provider_charge_id TEXT;`;
+  await client.sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS provider_mode TEXT;`;
+
+  await client.sql`
+    UPDATE checkout_sessions
+       SET payment_provider = COALESCE(payment_provider, CASE source WHEN 'paypal' THEN 'paypal' WHEN 'ghl' THEN 'ghl' ELSE 'stripe' END)
+     WHERE payment_provider IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE checkout_sessions
+       SET provider_session_id = COALESCE(provider_session_id, stripe_session_id)
+     WHERE provider_session_id IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE checkout_sessions
+       SET provider_payment_id = COALESCE(provider_payment_id, stripe_payment_intent_id)
+     WHERE provider_payment_id IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE orders
+       SET payment_provider = COALESCE(payment_provider, CASE source WHEN 'paypal' THEN 'paypal' WHEN 'ghl' THEN 'ghl' ELSE 'stripe' END)
+     WHERE payment_provider IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE orders
+       SET provider_session_id = COALESCE(provider_session_id, stripe_session_id)
+     WHERE provider_session_id IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE orders
+       SET provider_payment_id = COALESCE(provider_payment_id, stripe_payment_intent_id)
+     WHERE provider_payment_id IS NULL;
+  `;
+
+  await client.sql`
+    UPDATE orders
+       SET provider_charge_id = COALESCE(provider_charge_id, stripe_charge_id)
+     WHERE provider_charge_id IS NULL;
   `;
 }
 

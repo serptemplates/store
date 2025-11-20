@@ -1,263 +1,27 @@
 import { z } from "zod";
 import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "./category-constants";
 import { inferTrademarkedBrand } from "./trademarked-brands";
-
-const trimmedString = () => z.string().trim().min(1);
-
-const optionalTrimmedString = () =>
-  z.preprocess(
-    (value) => {
-      if (value === null || value === undefined) {
-        return undefined;
-      }
-      if (typeof value !== "string") {
-        return value;
-      }
-      const trimmed = value.trim();
-      return trimmed.length === 0 ? undefined : trimmed;
-    },
-    z.string().trim().optional(),
-  );
-
-const enforceHost = (hosts: string | string[]) => {
-  const allowedHosts = Array.isArray(hosts) ? hosts : [hosts];
-  return trimmedString()
-    .url()
-    .superRefine((value, ctx) => {
-      try {
-        const parsed = new URL(value);
-        if (!allowedHosts.includes(parsed.hostname)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: `URL must use host ${allowedHosts.join(", ")}`,
-          });
-        }
-      } catch (error) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Invalid URL",
-        });
-      }
-    });
-};
-
-const optionalHost = (hosts: string | string[]) =>
-  z.preprocess(
-    (value) => {
-      if (value === null || value === undefined) {
-        return undefined;
-      }
-      if (typeof value === "string" && value.trim().length === 0) {
-        return undefined;
-      }
-      return value;
-    },
-    enforceHost(hosts).optional(),
-  );
-
-const optionalExternalUrl = z.preprocess(
-  (value) => {
-    if (value === null || value === undefined) {
-      return undefined;
-    }
-    if (typeof value !== "string") {
-      return value;
-    }
-    const trimmed = value.trim();
-    return trimmed.length === 0 ? undefined : trimmed;
-  },
-  z.string().url().optional(),
-);
-
-const slugSchema = () =>
-  z
-    .string()
-    .trim()
-    .regex(/^[a-z0-9-]+$/, {
-      message: "Slug must use lowercase letters, numbers, and hyphens only",
-    });
-
-const optionalArray = <T extends z.ZodTypeAny>(schema: T) =>
-  z.preprocess(
-    (value) => {
-      if (value === null || value === undefined) {
-        return undefined;
-      }
-      return value;
-    },
-    z.array(schema).optional().default([]),
-  );
-
-const optionalIsoDate = z.preprocess(
-  (value) => {
-    if (value === null || value === undefined) {
-      return undefined;
-    }
-    if (typeof value !== "string") {
-      return value;
-    }
-    const trimmed = value.trim();
-    return trimmed.length === 0 ? undefined : trimmed;
-  },
-  z
-    .string()
-    .superRefine((value, ctx) => {
-      if (Number.isNaN(Date.parse(value))) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Expected an ISO 8601 date string",
-        });
-      }
-    })
-    .optional(),
-);
-
-const isoCurrencyCode = z.preprocess(
-  (value) => {
-    if (value === null || value === undefined) {
-      return undefined;
-    }
-    if (typeof value === "string") {
-      const trimmed = value.trim();
-      if (trimmed.length === 0) {
-        return undefined;
-      }
-      return trimmed.toUpperCase();
-    }
-    return value;
-  },
-  z
-    .string()
-    .regex(/^[A-Z]{3}$/, {
-      message: "Currency must be an ISO 4217 alpha code (e.g. USD)",
-    })
-    .optional(),
-);
-
-const stripeIdSchema = (prefixes: string[]) =>
-  trimmedString().superRefine((value, ctx) => {
-    if (!prefixes.some((prefix) => value.startsWith(prefix))) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `Expected an identifier starting with ${prefixes.join(" or ")}`,
-      });
-    }
-  });
-
-const assetPathSchema = trimmedString().superRefine((value, ctx) => {
-  if (/^https?:\/\//i.test(value)) {
-    return;
-  }
-  if (value.startsWith("/")) {
-    return;
-  }
-  ctx.addIssue({
-    code: z.ZodIssueCode.custom,
-    message: "Expected an absolute URL or root-relative path",
-  });
-});
-
-const screenshotSchema = z.object({
-  url: assetPathSchema,
-  alt: optionalTrimmedString(),
-  caption: optionalTrimmedString(),
-});
-
-const externalLinkSchema = z.object({
-  label: trimmedString(),
-  href: trimmedString().url(),
-});
-
-const reviewSchema = z.object({
-  name: trimmedString(),
-  review: trimmedString(),
-  title: optionalTrimmedString(),
-  rating: z.number().min(0).max(5),
-  date: optionalIsoDate,
-});
-
-const faqSchema = z.object({
-  question: trimmedString(),
-  answer: trimmedString(),
-});
-
-const successUrlSchema = trimmedString().superRefine((value, ctx) => {
-  const sanitized = value.replaceAll("{CHECKOUT_SESSION_ID}", "checkout_session_id");
-
-  try {
-    const parsed = new URL(sanitized);
-    if (!["http:", "https:"].includes(parsed.protocol)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "URL must use http or https",
-      });
-      return;
-    }
-
-    if (!["apps.serp.co", "localhost"].includes(parsed.hostname)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "success_url must point to apps.serp.co (or localhost for development)",
-      });
-    }
-  } catch (error) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Invalid URL",
-    });
-  }
-});
-
-const cancelUrlSchema = trimmedString()
-  .url()
-  .superRefine((value, ctx) => {
-    try {
-      const parsed = new URL(value);
-      if (!["apps.serp.co", "localhost"].includes(parsed.hostname)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "cancel_url must point to apps.serp.co (or localhost for development)",
-        });
-      }
-    } catch (error) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Invalid URL",
-      });
-    }
-  });
-
-const optionalItemSchema = z.object({
-  product_id: stripeIdSchema(["prod_"]),
-  quantity: z.number().int().min(1).default(1).optional(),
-});
-
-const stripeSchemaShape = {
-  price_id: stripeIdSchema(["price_"]).optional(),
-  test_price_id: stripeIdSchema(["price_"]).optional(),
-  mode: z.enum(["payment", "subscription"]).optional(),
-  metadata: z
-    .preprocess(
-      (value) => {
-        if (value === null || value === undefined) {
-          return {};
-        }
-        return value;
-      },
-      z.record(trimmedString()).default({}),
-    ),
-  optional_items: z.preprocess(
-    (value) => {
-      if (value === null || value === undefined) {
-        return undefined;
-      }
-      return value;
-    },
-    z.array(optionalItemSchema).optional(),
-  ),
-} satisfies Record<string, z.ZodTypeAny>;
-
-const stripeSchema = z.object(stripeSchemaShape);
+import {
+  assetPathSchema,
+  cancelUrlSchema,
+  enforceHost,
+  externalLinkSchema,
+  faqSchema,
+  isoCurrencyCode,
+  optionalArray,
+  optionalExternalUrl,
+  optionalIsoDate,
+  optionalHost,
+  optionalRemoteUrl,
+  optionalTrimmedString,
+  reviewSchema,
+  screenshotSchema,
+  slugSchema,
+  stripeIdSchema,
+  successUrlSchema,
+  trimmedString,
+} from "./schema/helpers";
+import { paymentSchema, resolveStripePriceId, stripeSchema } from "./schema/payment";
 
 const ghlCustomFieldSchema = z.record(trimmedString());
 
@@ -436,6 +200,8 @@ export const productSchemaShape = {
   ),
   keywords: optionalArray(z.string().trim()),
   return_policy: returnPolicySchema,
+  checkout_metadata: z.record(trimmedString()).optional(),
+  payment: paymentSchema,
   stripe: stripeSchema.optional(),
   ghl: ghlSchema,
   license: licenseSchema,
@@ -495,8 +261,10 @@ export const PRODUCT_FIELD_ORDER = [
   "opera_addons_store_link",
   "producthunt_link",
   "resource_links",
+  "checkout_metadata",
   "pricing",
   "return_policy",
+  "payment",
   "stripe",
   "ghl",
   "license",
@@ -621,11 +389,12 @@ export const productSchema = z
         });
       }
 
-      if (!data.stripe?.price_id) {
+      const activeStripePriceId = resolveStripePriceId({ payment: data.payment, stripe: data.stripe });
+      if (!activeStripePriceId) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["stripe", "price_id"],
-          message: "Live products must have a stripe.price_id.",
+          path: data.payment ? ["payment", "stripe", "price_id"] : ["stripe", "price_id"],
+          message: "Live products must define a Stripe price (payment.stripe.price_id).",
         });
       }
     }
@@ -642,4 +411,20 @@ export const PERMISSION_JUSTIFICATION_FIELD_ORDER = [
   "justification",
   "learn_more_url",
 ] as const;
-export const STRIPE_FIELD_ORDER = ["price_id", "test_price_id", "mode", "metadata", "optional_items"] as const;
+
+export {
+  paymentSchema,
+  resolveStripePriceId,
+  PAYMENT_FIELD_ORDER,
+  STRIPE_FIELD_ORDER,
+  WHOP_FIELD_ORDER,
+  EASY_PAY_DIRECT_FIELD_ORDER,
+  LEMONSQUEEZY_FIELD_ORDER,
+  WHOP_ENVIRONMENT_FIELD_ORDER,
+  EASY_PAY_DIRECT_ENVIRONMENT_FIELD_ORDER,
+  LEMONSQUEEZY_ENVIRONMENT_FIELD_ORDER,
+  PAYMENT_PROVIDER_IDS,
+  PAYMENT_PROVIDERS,
+} from "./schema/payment";
+
+export type { ProductPayment, PaymentProviderId } from "./schema/payment";

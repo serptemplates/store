@@ -5,6 +5,12 @@ import Stripe from "stripe"
 import dotenv from "dotenv"
 import stripJsonComments from "strip-json-comments"
 import { productSchema, type ProductData } from "../lib/products/product-schema"
+import { resolveStripePaymentDetails } from "../lib/products/payment"
+import {
+  PAYMENT_ACCOUNTS,
+  getEnvVarCandidates,
+  type PaymentMode,
+} from "../config/payment-accounts"
 import { isPreRelease } from "../lib/products/release-status"
 import {
   getProductsDataRoot,
@@ -28,6 +34,7 @@ for (const root of envSearchRoots) {
 }
 
 const STRIPE_API_VERSION = "2024-04-10"
+const STRIPE_MODES: PaymentMode[] = ["live", "test"]
 
 const ZERO_DECIMAL_CURRENCIES = new Set([
   "BIF",
@@ -48,7 +55,73 @@ const ZERO_DECIMAL_CURRENCIES = new Set([
   "XPF",
 ])
 
-type StripeClientConfig = { stripe: Stripe }
+function readEnvValue(names: readonly string[] | undefined): string | null {
+  if (!names) {
+    return null
+  }
+  for (const name of names) {
+    if (!name) {
+      continue
+    }
+    const value = process.env[name]
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim()
+    }
+  }
+  return null
+}
+
+function resolveStripeSecretKeyForAlias(alias: string, mode: PaymentMode): string | null {
+  const { values } = getEnvVarCandidates(alias, "secretKey", mode)
+  return readEnvValue(values)
+}
+
+type StripeClientConfig = { stripe: Stripe; alias: string; mode: PaymentMode }
+
+type StripePriceLookup = {
+  unit_amount: number
+  currency: string
+  compare_at_amount?: number
+}
+
+type StripeManifestDetails = {
+  live_price_id?: string
+  test_price_id?: string
+}
+
+type ProviderEnvironmentManifest = {
+  listing_id?: string
+  plan_id?: string
+  offer_id?: string
+  product_id?: string
+  price_id?: string
+  variant_id?: string
+  checkout_url?: string
+  campaign_id?: string
+  store_id?: string
+}
+
+type ProviderManifestSection = {
+  api_key_alias?: string
+  webhook_secret_alias?: string
+  metadata?: Record<string, string>
+  live?: ProviderEnvironmentManifest
+  test?: ProviderEnvironmentManifest
+}
+
+type ProductPriceManifestEntry = {
+  slug: string
+  provider: string
+  account?: string
+  mode?: "payment" | "subscription"
+  currency: string
+  unit_amount: number
+  compare_at_amount?: number
+  stripe?: StripeManifestDetails
+  whop?: ProviderManifestSection
+  easy_pay_direct?: ProviderManifestSection
+  lemonsqueezy?: ProviderManifestSection
+}
 
 const BADGE_FLAGS: Array<"pre_release" | "new_release" | "popular"> = [
   "pre_release",
@@ -182,15 +255,26 @@ async function checkAssetReference(reference: AssetReference): Promise<AssetChec
 
 function createStripeClients(): StripeClientConfig[] {
   const clients: StripeClientConfig[] = []
-  const liveSecret = process.env.STRIPE_SECRET_KEY
-  const testSecret = process.env.STRIPE_SECRET_KEY_TEST
+  const seen = new Set<string>()
 
-  if (liveSecret) {
-    clients.push({ stripe: new Stripe(liveSecret, { apiVersion: STRIPE_API_VERSION }) })
-  }
-
-  if (testSecret) {
-    clients.push({ stripe: new Stripe(testSecret, { apiVersion: STRIPE_API_VERSION }) })
+  const aliases = Object.keys(PAYMENT_ACCOUNTS.stripe)
+  for (const alias of aliases) {
+    for (const mode of STRIPE_MODES) {
+      const secret = resolveStripeSecretKeyForAlias(alias, mode)
+      if (!secret) {
+        continue
+      }
+      const dedupeKey = `${mode}:${secret}`
+      if (seen.has(dedupeKey)) {
+        continue
+      }
+      seen.add(dedupeKey)
+      clients.push({
+        alias,
+        mode,
+        stripe: new Stripe(secret, { apiVersion: STRIPE_API_VERSION }),
+      })
+    }
   }
 
   return clients
@@ -249,17 +333,7 @@ function parseCompareAtAmount(price: Stripe.Price): number | undefined {
   return undefined
 }
 
-function formatStripeAmount(unitAmount: number, currency: string): string {
-  const normalizedCurrency = currency.toUpperCase()
-  const divisor = ZERO_DECIMAL_CURRENCIES.has(normalizedCurrency) ? 1 : 100
-
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: normalizedCurrency,
-  }).format(unitAmount / divisor)
-}
-
-async function writePriceManifest(priceIds: Set<string>): Promise<Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>> {
+async function fetchStripePriceDetails(priceIds: Set<string>): Promise<Record<string, StripePriceLookup>> {
   if (priceIds.size === 0) {
     return {}
   }
@@ -270,7 +344,7 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
     return {}
   }
 
-  const manifestEntries: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }> = {}
+  const manifestEntries: Record<string, StripePriceLookup> = {}
 
   for (const priceId of priceIds) {
     if (!priceId || !priceId.startsWith("price_")) {
@@ -300,16 +374,61 @@ async function writePriceManifest(priceIds: Set<string>): Promise<Record<string,
     }
   }
 
-  if (Object.keys(manifestEntries).length === 0) {
-    console.warn("⚠️  Price manifest not updated because no Stripe prices could be resolved.")
+  return manifestEntries
+}
+
+async function writePriceManifest(entriesBySlug: Record<string, ProductPriceManifestEntry>): Promise<Record<string, ProductPriceManifestEntry>> {
+  const slugs = Object.keys(entriesBySlug)
+  if (slugs.length === 0) {
     return {}
+  }
+
+  const priceIds = new Set<string>()
+  for (const entry of Object.values(entriesBySlug)) {
+    if (entry.provider !== "stripe") {
+      continue
+    }
+    if (entry.stripe?.live_price_id) {
+      priceIds.add(entry.stripe.live_price_id)
+    }
+    if (entry.stripe?.test_price_id) {
+      priceIds.add(entry.stripe.test_price_id)
+    }
+  }
+
+  const priceDetails = await fetchStripePriceDetails(priceIds)
+
+  for (const entry of Object.values(entriesBySlug)) {
+    if (entry.provider !== "stripe") {
+      continue
+    }
+
+    const liveId = entry.stripe?.live_price_id
+    const fallbackId = liveId ?? entry.stripe?.test_price_id
+    const resolved = (liveId && priceDetails[liveId]) || (fallbackId && priceDetails[fallbackId])
+
+    if (!resolved) {
+      console.warn(`⚠️  Unable to resolve Stripe price for ${entry.slug}.`)
+      continue
+    }
+
+    entry.unit_amount = resolved.unit_amount
+    entry.currency = resolved.currency
+    if (resolved.compare_at_amount != null) {
+      entry.compare_at_amount = resolved.compare_at_amount
+    } else if (entry.compare_at_amount != null) {
+      delete entry.compare_at_amount
+    }
   }
 
   const manifestDir = path.join(getProductsDataRoot(), "prices")
   await fs.mkdir(manifestDir, { recursive: true })
 
-  const sortedEntries = Object.fromEntries(Object.entries(manifestEntries).sort(([a], [b]) => a.localeCompare(b)))
+  const sortedEntries = Object.fromEntries(
+    Object.entries(entriesBySlug).sort(([a], [b]) => a.localeCompare(b)),
+  )
   await fs.writeFile(path.join(manifestDir, "manifest.json"), `${JSON.stringify(sortedEntries, null, 2)}\n`)
+
   return sortedEntries
 }
 
@@ -322,7 +441,7 @@ export type ValidateProductsResult = {
   warnings: string[]
   errors: string[]
   validatedCount: number
-  priceManifest: Record<string, { unit_amount: number; currency: string; compare_at_amount?: number }>
+  priceManifest: Record<string, ProductPriceManifestEntry>
   assetFailures: ProductAssetCheckFailure[]
 }
 
@@ -335,14 +454,8 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
 
   const errors: string[] = []
   const warnings: string[] = []
-  const referencedStripePriceIds = new Set<string>()
+  const manifestEntriesBySlug: Record<string, ProductPriceManifestEntry> = {}
   const assetFailures: ProductAssetCheckFailure[] = []
-
-  const recordPriceId = (candidate?: unknown) => {
-    if (typeof candidate === "string" && candidate.startsWith("price_")) {
-      referencedStripePriceIds.add(candidate)
-    }
-  }
 
   const slugsFromFiles = new Set(
     productFiles.map((file) => file.replace(/\.json$/i, "")).filter((slug) => slug.trim().length > 0),
@@ -403,8 +516,33 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
       }
     }
 
-    recordPriceId(product.stripe?.price_id)
-    recordPriceId(product.stripe?.test_price_id)
+    const stripeDetails = resolveStripePaymentDetails(product)
+    if (stripeDetails && (stripeDetails.priceId || stripeDetails.testPriceId)) {
+      const entry: ProductPriceManifestEntry = {
+        slug: product.slug,
+        provider: stripeDetails.provider,
+        account: stripeDetails.account ?? undefined,
+        mode: stripeDetails.mode,
+        currency: product.pricing?.currency?.toLowerCase?.() ?? "usd",
+        unit_amount: 0,
+        stripe: {
+          live_price_id: stripeDetails.priceId ?? undefined,
+          test_price_id: stripeDetails.testPriceId ?? undefined,
+        },
+      }
+
+      if (product.payment?.whop) {
+        entry.whop = cloneProviderSection(product.payment.whop)
+      }
+      if (product.payment?.easy_pay_direct) {
+        entry.easy_pay_direct = cloneProviderSection(product.payment.easy_pay_direct)
+      }
+      if (product.payment?.lemonsqueezy) {
+        entry.lemonsqueezy = cloneProviderSection(product.payment.lemonsqueezy)
+      }
+
+      manifestEntriesBySlug[product.slug] = entry
+    }
 
     const activeBadges = BADGE_FLAGS.filter((flag) => {
       if (flag === "pre_release") {
@@ -426,7 +564,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
     }
   }
 
-  const priceManifest = skipPriceManifest ? {} : await writePriceManifest(referencedStripePriceIds)
+  const priceManifest = skipPriceManifest ? {} : await writePriceManifest(manifestEntriesBySlug)
 
   return {
     warnings,
@@ -490,4 +628,10 @@ const invokedDirectly =
 
 if (invokedDirectly) {
   runCli()
+}
+function cloneProviderSection<T>(section: T | undefined): T | undefined {
+  if (!section) {
+    return undefined
+  }
+  return JSON.parse(JSON.stringify(section)) as T
 }

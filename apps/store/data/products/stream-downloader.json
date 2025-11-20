@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/stream-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/stream-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/stream-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=stream-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=stream-downloader",
+    "ghl_tag": "purchase-stream-downloader",
+    "ghlTag": "purchase-stream-downloader",
+    "landerId": "stream-downloader",
+    "offerId": "stream-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Stream Downloader",
+    "product_page_url": "https://apps.serp.co/stream-downloader",
+    "product_slug": "stream-downloader",
+    "productName": "Stream Downloader",
+    "productPageUrl": "https://apps.serp.co/stream-downloader",
+    "productSlug": "stream-downloader",
+    "purchase_url": "https://serp.ly/stream-downloader",
+    "purchaseUrl": "https://serp.ly/stream-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/stream-downloader/",
+    "serply_link": "https://serp.ly/stream-downloader",
+    "serplyLink": "https://serp.ly/stream-downloader",
+    "slug": "stream-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/stream-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/stream-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gA06JrOmKRCmwsTNavsX",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HYumVhrKaBc"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gA06JrOmKRCmwsTNavsX",

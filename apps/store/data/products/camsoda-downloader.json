@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/camsoda-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/camsoda-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/camsoda-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=camsoda-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=camsoda-downloader",
+    "ghl_tag": "purchase-camsoda-downloader",
+    "ghlTag": "purchase-camsoda-downloader",
+    "landerId": "camsoda-downloader",
+    "offerId": "camsoda-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Camsoda Downloader",
+    "product_page_url": "https://apps.serp.co/camsoda-downloader",
+    "product_slug": "camsoda-downloader",
+    "productName": "Camsoda Downloader",
+    "productPageUrl": "https://apps.serp.co/camsoda-downloader",
+    "productSlug": "camsoda-downloader",
+    "purchase_url": "https://serp.ly/camsoda-downloader",
+    "purchaseUrl": "https://serp.ly/camsoda-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/camsoda-downloader/",
+    "serply_link": "https://serp.ly/camsoda-downloader",
+    "serplyLink": "https://serp.ly/camsoda-downloader",
+    "slug": "camsoda-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/camsoda-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/camsoda-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0dw06JrOmKRCmsbGc9scj",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6GHj9F6PuSPW"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0dw06JrOmKRCmsbGc9scj",

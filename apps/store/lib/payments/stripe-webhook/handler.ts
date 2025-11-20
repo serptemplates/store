@@ -11,10 +11,17 @@ import { handleChargeDisputeCreated } from "./events/charge-dispute-created";
 import { handleChargeDisputeClosed } from "./events/charge-dispute-closed";
 import { handleUnhandledStripeEvent } from "./events/unhandled-event";
 
-export async function handleStripeEvent(event: Stripe.Event) {
+export async function handleStripeEvent(
+  event: Stripe.Event,
+  options?: { accountAlias?: string | null },
+) {
   switch (event.type) {
     case "checkout.session.completed":
-      await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session, event.id);
+      await handleCheckoutSessionCompleted(
+        event.data.object as Stripe.Checkout.Session,
+        event.id,
+        { accountAlias: options?.accountAlias ?? null },
+      );
       break;
     case "payment_intent.succeeded":
       await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent);

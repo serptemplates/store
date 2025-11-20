@@ -171,6 +171,36 @@
   "github_repo_url": "https://github.com/serpapps/gokollab-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/gokollab-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/gokollab-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=gokollab-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=gokollab-downloader",
+    "ghl_tag": "purchase-gokollab-downloader",
+    "ghlTag": "purchase-gokollab-downloader",
+    "landerId": "gokollab-downloader",
+    "license_entitlements": "gokollab-downloader",
+    "licenseEntitlements": "gokollab-downloader",
+    "offerId": "gokollab-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Gokollab Downloader",
+    "product_page_url": "https://apps.serp.co/gokollab-downloader",
+    "product_slug": "gokollab-downloader",
+    "productName": "Gokollab Downloader",
+    "productPageUrl": "https://apps.serp.co/gokollab-downloader",
+    "productSlug": "gokollab-downloader",
+    "purchase_url": "https://serp.ly/gokollab-downloader",
+    "purchaseUrl": "https://serp.ly/gokollab-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/gokollab-downloader/",
+    "serply_link": "https://serp.ly/gokollab-downloader",
+    "serplyLink": "https://serp.ly/gokollab-downloader",
+    "slug": "gokollab-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gokollab-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/gokollab-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -193,6 +223,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wv06JrOmKRCmyCPZfee1",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6H8u0mXBxVHl"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wv06JrOmKRCmyCPZfee1",

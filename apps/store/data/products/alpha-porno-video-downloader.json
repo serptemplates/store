@@ -161,6 +161,36 @@
   "github_repo_url": "https://github.com/serpapps/alpha-porno-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/alpha-porno-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=alpha-porno-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=alpha-porno-video-downloader",
+    "ghl_tag": "purchase-alpha-porno-downloader",
+    "ghlTag": "purchase-alpha-porno-downloader",
+    "landerId": "alpha-porno-video-downloader",
+    "license_entitlements": "alpha-porno-video-downloader",
+    "licenseEntitlements": "alpha-porno-video-downloader",
+    "offerId": "alpha-porno-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Alpha Porno Video Downloader",
+    "product_page_url": "https://apps.serp.co/alpha-porno-video-downloader",
+    "product_slug": "alpha-porno-video-downloader",
+    "productName": "Alpha Porno Video Downloader",
+    "productPageUrl": "https://apps.serp.co/alpha-porno-video-downloader",
+    "productSlug": "alpha-porno-video-downloader",
+    "purchase_url": "https://serp.ly/alpha-porno-downloader",
+    "purchaseUrl": "https://serp.ly/alpha-porno-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/alpha-porno-video-downloader/",
+    "serply_link": "https://serp.ly/alpha-porno-downloader",
+    "serplyLink": "https://serp.ly/alpha-porno-downloader",
+    "slug": "alpha-porno-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/alpha-porno-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -184,6 +214,20 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
+      "metadata": {
+        "stripe_product_id": "prod_TAg09llcKpydjr"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
+  },
   "stripe": {
     "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
     "metadata": {
@@ -197,8 +241,7 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-alpha-porno-downloader",
-      "purchase-adult-downloaders"
+      "purchase-alpha-porno-downloader"
     ],
     "workflow_ids": []
   },

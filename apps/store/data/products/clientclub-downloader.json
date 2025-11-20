@@ -155,6 +155,36 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/clientclub-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/clientclub-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=clientclub-downloader",
+    "ghl_tag": "purchase-clientclub-downloader",
+    "ghlTag": "purchase-clientclub-downloader",
+    "landerId": "clientclub-downloader",
+    "license_entitlements": "clientclub-downloader",
+    "licenseEntitlements": "clientclub-downloader",
+    "offerId": "clientclub-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Clientclub Downloader",
+    "product_page_url": "https://apps.serp.co/clientclub-downloader",
+    "product_slug": "clientclub-downloader",
+    "productName": "Clientclub Downloader",
+    "productPageUrl": "https://apps.serp.co/clientclub-downloader",
+    "productSlug": "clientclub-downloader",
+    "purchase_url": "https://serp.ly/clientclub-downloader",
+    "purchaseUrl": "https://serp.ly/clientclub-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
+    "serply_link": "https://serp.ly/clientclub-downloader",
+    "serplyLink": "https://serp.ly/clientclub-downloader",
+    "slug": "clientclub-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/clientclub-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/clientclub-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -177,6 +207,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpdownloaders/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Gg3oBtdLifN"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",

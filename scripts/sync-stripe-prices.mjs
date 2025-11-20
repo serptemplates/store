@@ -160,7 +160,10 @@ async function main() {
       continue;
     }
 
-    const stripe = isRecord(product.stripe) ? product.stripe : null;
+    const paymentStripe = isRecord(product.payment) && isRecord(product.payment.stripe)
+      ? product.payment.stripe
+      : null;
+    const stripe = paymentStripe ?? (isRecord(product.stripe) ? product.stripe : null);
     if (!stripe) {
       console.log(`ℹ️  ${file}: no stripe block, skipping.`);
       continue;

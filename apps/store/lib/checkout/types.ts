@@ -1,4 +1,9 @@
+import type { PaymentProviderId } from "@/lib/products/payment";
+
 export type CheckoutSource = "stripe" | "ghl" | "legacy_paypal";
+
+export type CheckoutProvider = PaymentProviderId | CheckoutSource;
+export type CheckoutProviderMode = "live" | "test" | null;
 
 export type CheckoutSessionStatus = "pending" | "completed" | "failed" | "abandoned";
 
@@ -6,6 +11,12 @@ export interface CheckoutSessionRecord {
   id: string;
   stripeSessionId: string;
   stripePaymentIntentId: string | null;
+  paymentProvider: CheckoutProvider | null;
+  providerAccountAlias: string | null;
+  providerSessionId: string | null;
+  providerPaymentId: string | null;
+  providerChargeId: string | null;
+  providerMode: CheckoutProviderMode;
   offerId: string;
   landerId: string | null;
   customerEmail: string | null;
@@ -21,6 +32,12 @@ export interface CheckoutSessionUpsert {
   offerId: string;
   landerId?: string | null;
   paymentIntentId?: string | null;
+  paymentProvider?: CheckoutProvider | null;
+  providerAccountAlias?: string | null;
+  providerSessionId?: string | null;
+  providerPaymentId?: string | null;
+  providerChargeId?: string | null;
+  providerMode?: CheckoutProviderMode;
   customerEmail?: string | null;
   metadata?: Record<string, unknown> | null;
   status?: CheckoutSessionStatus;
@@ -32,6 +49,12 @@ export interface CheckoutOrderUpsert {
   stripeSessionId?: string | null;
   stripePaymentIntentId?: string | null;
   stripeChargeId?: string | null;
+  paymentProvider?: CheckoutProvider | null;
+  providerAccountAlias?: string | null;
+  providerSessionId?: string | null;
+  providerPaymentId?: string | null;
+  providerChargeId?: string | null;
+  providerMode?: CheckoutProviderMode;
   offerId?: string | null;
   landerId?: string | null;
   customerEmail?: string | null;
@@ -50,6 +73,12 @@ export interface OrderRecord {
   stripeSessionId: string | null;
   stripePaymentIntentId: string | null;
   stripeChargeId: string | null;
+  paymentProvider: CheckoutProvider | null;
+  providerAccountAlias: string | null;
+  providerSessionId: string | null;
+  providerPaymentId: string | null;
+  providerChargeId: string | null;
+  providerMode: CheckoutProviderMode;
   offerId: string | null;
   landerId: string | null;
   customerEmail: string | null;

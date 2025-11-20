@@ -7,12 +7,16 @@ import {
   isStripeTestMode,
   requireStripeSecretKey,
   type StripeMode,
+  type StripeModeInput,
 } from "@/lib/payments/stripe-environment";
+import { normalizeStripeAccountAlias } from "@/config/payment-accounts";
 
 const apiVersion: Stripe.StripeConfig["apiVersion"] = "2024-04-10";
 
-const clientCache: Partial<Record<StripeMode, Stripe>> = {};
-let autoClientCache: { mode: StripeMode; client: Stripe } | null = null;
+type StripeClientCacheKey = `${string}:${StripeMode}`;
+
+const clientCache: Partial<Record<StripeClientCacheKey, Stripe>> = {};
+let autoClientCache: { mode: StripeMode; client: Stripe; accountAlias: string } | null = null;
 
 type ProductCloneTarget = {
   name: string;
@@ -34,30 +38,65 @@ type PriceCloneTarget = {
   nickname: string;
 };
 
-function getOrCreateClient(mode: StripeMode): Stripe {
-  if (clientCache[mode]) {
-    return clientCache[mode]!;
+type StripeClientInput = StripeMode | "auto" | { mode?: StripeModeInput; accountAlias?: string | null };
+
+function buildCacheKey(mode: StripeMode, accountAlias: string): StripeClientCacheKey {
+  return `${accountAlias}:${mode}`;
+}
+
+function normalizeClientOptions(input: StripeClientInput = "auto"): {
+  mode: StripeMode;
+  accountAlias: string;
+} {
+  if (typeof input === "string") {
+    return {
+      mode: getStripeMode(input),
+      accountAlias: normalizeStripeAccountAlias(undefined),
+    };
   }
 
-  const client = new Stripe(requireStripeSecretKey(mode), { apiVersion });
-  clientCache[mode] = client;
+  if (typeof input === "object") {
+    return {
+      mode: getStripeMode(input.mode ?? "auto"),
+      accountAlias: normalizeStripeAccountAlias(input.accountAlias ?? undefined),
+    };
+  }
+
+  return {
+    mode: getStripeMode("auto"),
+    accountAlias: normalizeStripeAccountAlias(undefined),
+  };
+}
+
+function getOrCreateClient(mode: StripeMode, accountAlias: string): Stripe {
+  const cacheKey = buildCacheKey(mode, accountAlias);
+  if (clientCache[cacheKey]) {
+    return clientCache[cacheKey]!;
+  }
+
+  const client = new Stripe(requireStripeSecretKey({ mode, accountAlias }), { apiVersion });
+  clientCache[cacheKey] = client;
   return client;
 }
 
-export function getStripeClient(mode: "auto" | StripeMode = "auto"): Stripe {
-  const resolvedMode = mode === "auto" ? getStripeMode() : mode;
+export function getStripeClient(input: StripeClientInput = "auto"): Stripe {
+  const normalizedInput = input ?? "auto";
+  const { mode, accountAlias } = normalizeClientOptions(normalizedInput);
+  const isAutoMode =
+    (typeof normalizedInput === "string" && normalizedInput === "auto") ||
+    (typeof normalizedInput === "object" && (normalizedInput.mode ?? "auto") === "auto");
 
-  if (mode === "auto") {
-    if (autoClientCache && autoClientCache.mode === resolvedMode) {
+  if (isAutoMode) {
+    if (autoClientCache && autoClientCache.mode === mode && autoClientCache.accountAlias === accountAlias) {
       return autoClientCache.client;
     }
 
-    const client = getOrCreateClient(resolvedMode);
-    autoClientCache = { mode: resolvedMode, client };
+    const client = getOrCreateClient(mode, accountAlias);
+    autoClientCache = { mode, client, accountAlias };
     return client;
   }
 
-  return getOrCreateClient(resolvedMode);
+  return getOrCreateClient(mode, accountAlias);
 }
 
 export function isUsingTestKeys(): boolean {
@@ -281,8 +320,11 @@ async function resolveProductObject(
   return value as Stripe.Product;
 }
 
-async function ensureTestPriceExists(offer: ResolvePriceInput): Promise<Stripe.Price> {
-  const testClient = getStripeClient("test");
+async function ensureTestPriceExists(
+  offer: ResolvePriceInput,
+  options?: { accountAlias?: string | null },
+): Promise<Stripe.Price> {
+  const testClient = getStripeClient({ mode: "test", accountAlias: options?.accountAlias ?? undefined });
 
   try {
     return await testClient.prices.retrieve(offer.priceId, { expand: ["product"] });
@@ -295,14 +337,14 @@ async function ensureTestPriceExists(offer: ResolvePriceInput): Promise<Stripe.P
     }
   }
 
-  if (!getOptionalStripeSecretKey("live")) {
+  if (!getOptionalStripeSecretKey({ mode: "live", accountAlias: options?.accountAlias ?? undefined })) {
     throw new Error(
       `Stripe test price ${offer.priceId} is missing and no live Stripe secret key is configured for cloning. ` +
         `Add a test price or set STRIPE_SECRET_KEY_LIVE (or STRIPE_SECRET_KEY with an sk_live_* value) alongside STRIPE_SECRET_KEY_TEST.`,
     );
   }
 
-  const liveClient = getStripeClient("live");
+  const liveClient = getStripeClient({ mode: "live", accountAlias: options?.accountAlias ?? undefined });
   const livePrice = await liveClient.prices.retrieve(offer.priceId, { expand: ["product"] });
 
   const lookupKey = livePrice.lookup_key ?? `slug:${offer.id}`;
@@ -428,14 +470,18 @@ async function ensureTestPriceExists(offer: ResolvePriceInput): Promise<Stripe.P
   return await testClient.prices.retrieve(createdPrice.id, { expand: ["product"] });
 }
 
-async function syncTestPriceWithLive(offer: ResolvePriceInput, testPrice: Stripe.Price): Promise<Stripe.Price> {
-  const liveKey = getOptionalStripeSecretKey("live");
+async function syncTestPriceWithLive(
+  offer: ResolvePriceInput,
+  testPrice: Stripe.Price,
+  options?: { accountAlias?: string | null },
+): Promise<Stripe.Price> {
+  const liveKey = getOptionalStripeSecretKey({ mode: "live", accountAlias: options?.accountAlias ?? undefined });
   if (!liveKey) {
     return testPrice;
   }
 
-  const testClient = getStripeClient("test");
-  const liveClient = getStripeClient("live");
+  const testClient = getStripeClient({ mode: "test", accountAlias: options?.accountAlias ?? undefined });
+  const liveClient = getStripeClient({ mode: "live", accountAlias: options?.accountAlias ?? undefined });
 
   let livePrice: Stripe.Price | null = null;
   try {
@@ -491,26 +537,36 @@ async function syncTestPriceWithLive(offer: ResolvePriceInput, testPrice: Stripe
   return testPrice;
 }
 
+type ResolvePriceOptions = {
+  syncWithLiveProduct?: boolean;
+  accountAlias?: string | null;
+  mode?: StripeModeInput;
+};
+
 export async function resolvePriceForEnvironment(
   offer: ResolvePriceInput,
-  options?: { syncWithLiveProduct?: boolean },
+  options?: ResolvePriceOptions,
 ): Promise<Stripe.Price> {
-  const client = getStripeClient();
+  const stripeModeInput = options?.mode ?? "auto";
+  const accountAlias = options?.accountAlias ?? undefined;
+  const client = getStripeClient({ mode: stripeModeInput, accountAlias });
+  const isTestMode =
+    stripeModeInput === "test" ? true : stripeModeInput === "live" ? false : isUsingTestKeys();
 
   try {
     const price = await client.prices.retrieve(offer.priceId, { expand: ["product"] });
-    if (options?.syncWithLiveProduct && isUsingTestKeys()) {
-      return await syncTestPriceWithLive(offer, price);
+    if (options?.syncWithLiveProduct && isTestMode) {
+      return await syncTestPriceWithLive(offer, price, { accountAlias });
     }
     return price;
   } catch (error) {
-    if (!isUsingTestKeys()) {
+    if (!isTestMode) {
       throw error;
     }
 
-    const clonedPrice = await ensureTestPriceExists(offer);
+    const clonedPrice = await ensureTestPriceExists(offer, { accountAlias });
     if (options?.syncWithLiveProduct) {
-      return await syncTestPriceWithLive(offer, clonedPrice);
+      return await syncTestPriceWithLive(offer, clonedPrice, { accountAlias });
     }
     return clonedPrice;
   }

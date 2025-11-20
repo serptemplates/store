@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/myfreecams-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/myfreecams-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/myfreecams-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=myfreecams-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=myfreecams-downloader",
+    "ghl_tag": "purchase-myfreecams-downloader",
+    "ghlTag": "purchase-myfreecams-downloader",
+    "landerId": "myfreecams-downloader",
+    "offerId": "myfreecams-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Myfreecams Downloader",
+    "product_page_url": "https://apps.serp.co/myfreecams-downloader",
+    "product_slug": "myfreecams-downloader",
+    "productName": "Myfreecams Downloader",
+    "productPageUrl": "https://apps.serp.co/myfreecams-downloader",
+    "productSlug": "myfreecams-downloader",
+    "purchase_url": "https://serp.ly/myfreecams-downloader",
+    "purchaseUrl": "https://serp.ly/myfreecams-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/myfreecams-downloader/",
+    "serply_link": "https://serp.ly/myfreecams-downloader",
+    "serplyLink": "https://serp.ly/myfreecams-downloader",
+    "slug": "myfreecams-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/myfreecams-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/myfreecams-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0eP06JrOmKRCmTkV0DsPx",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HGhVctJPtsW"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0eP06JrOmKRCmTkV0DsPx",

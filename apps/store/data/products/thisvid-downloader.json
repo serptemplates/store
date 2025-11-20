@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/thisvid-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/thisvid-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=thisvid-downloader",
+    "ghl_tag": "purchase-thisvid-downloader",
+    "ghlTag": "purchase-thisvid-downloader",
+    "landerId": "thisvid-downloader",
+    "offerId": "thisvid-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "ThisVid Downloader",
+    "product_page_url": "https://apps.serp.co/thisvid-downloader",
+    "product_slug": "thisvid-downloader",
+    "productName": "ThisVid Downloader",
+    "productPageUrl": "https://apps.serp.co/thisvid-downloader",
+    "productSlug": "thisvid-downloader",
+    "purchase_url": "https://serp.ly/thisvid-downloader",
+    "purchaseUrl": "https://serp.ly/thisvid-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
+    "serply_link": "https://serp.ly/thisvid-downloader",
+    "serplyLink": "https://serp.ly/thisvid-downloader",
+    "slug": "thisvid-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thisvid-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/thisvid-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/pornoxo-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/pornoxo-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=pornoxo-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=pornoxo-downloader",
+    "ghl_tag": "purchase-pornoxo-downloader",
+    "ghlTag": "purchase-pornoxo-downloader",
+    "landerId": "pornoxo-downloader",
+    "offerId": "pornoxo-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Pornoxo Downloader",
+    "product_page_url": "https://apps.serp.co/pornoxo-downloader",
+    "product_slug": "pornoxo-downloader",
+    "productName": "Pornoxo Downloader",
+    "productPageUrl": "https://apps.serp.co/pornoxo-downloader",
+    "productSlug": "pornoxo-downloader",
+    "purchase_url": "https://serp.ly/pornoxo-downloader",
+    "purchaseUrl": "https://serp.ly/pornoxo-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/pornoxo-downloader/",
+    "serply_link": "https://serp.ly/pornoxo-downloader",
+    "serplyLink": "https://serp.ly/pornoxo-downloader",
+    "slug": "pornoxo-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/pornoxo-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/pornoxo-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

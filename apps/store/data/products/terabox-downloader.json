@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/terabox-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/terabox-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/terabox-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=terabox-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=terabox-downloader",
+    "ghl_tag": "purchase-terabox-downloader",
+    "ghlTag": "purchase-terabox-downloader",
+    "landerId": "terabox-downloader",
+    "offerId": "terabox-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Terabox Downloader",
+    "product_page_url": "https://apps.serp.co/terabox-downloader",
+    "product_slug": "terabox-downloader",
+    "productName": "Terabox Downloader",
+    "productPageUrl": "https://apps.serp.co/terabox-downloader",
+    "productSlug": "terabox-downloader",
+    "purchase_url": "https://serp.ly/terabox-downloader",
+    "purchaseUrl": "https://serp.ly/terabox-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/terabox-downloader/",
+    "serply_link": "https://serp.ly/terabox-downloader",
+    "serplyLink": "https://serp.ly/terabox-downloader",
+    "slug": "terabox-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/terabox-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/terabox-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99gC06JrOmKRCmY3kTiBht",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6Hbj1WFUcL4I"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99gC06JrOmKRCmY3kTiBht",

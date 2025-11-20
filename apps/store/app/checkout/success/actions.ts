@@ -4,18 +4,21 @@ import type Stripe from "stripe";
 
 import { getStripeClient } from "@/lib/payments/stripe";
 import {
+  capturePayPalOrder,
+  resolvePayPalModeForRuntime,
+  type PayPalMode,
+} from "@/lib/payments/paypal/api";
+import {
   findCheckoutSessionByStripeSessionId,
-  upsertCheckoutSession,
-  upsertOrder,
   findOrderByPaymentIntentId,
   findLatestGhlOrder,
 } from "@/lib/checkout";
-import { createLicenseForOrder } from "@/lib/license-service";
-import { updateOrderMetadata } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
-import { ensureAccountForPurchase } from "@/lib/account/service";
 import { getProductData } from "@/lib/products/product";
+import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/order-fulfillment";
 import logger from "@/lib/logger";
+import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
+import { handlePayPalWebhookEvent } from "@/lib/payments/providers/paypal/webhook";
 
 type ProcessedOrderDetails = {
   sessionId: string;
@@ -33,37 +36,11 @@ type ProcessCheckoutResult = {
   order?: ProcessedOrderDetails;
 };
 
-function extractLicenseConfig(metadata: Record<string, unknown> | undefined, offerId: string | null) {
-  const tierValue = typeof metadata?.licenseTier === "string" ? metadata?.licenseTier : offerId;
-  const entitlementsRaw = metadata?.licenseEntitlements;
-  const entitlementsSet = new Set<string>();
-
-  if (Array.isArray(entitlementsRaw)) {
-    for (const item of entitlementsRaw) {
-      if (item != null) {
-        entitlementsSet.add(String(item));
-      }
-    }
-  }
-
-  if (offerId) {
-    entitlementsSet.add(offerId);
-  }
-
-  const entitlements = Array.from(entitlementsSet);
-
-  const featuresRaw = metadata?.licenseFeatures;
-  const features =
-    featuresRaw && typeof featuresRaw === "object" && !Array.isArray(featuresRaw)
-      ? (featuresRaw as Record<string, unknown>)
-      : {};
-
-  return {
-    tier: tierValue ?? null,
-    entitlements,
-    features,
-  };
-}
+type PayPalProcessInput = {
+  orderId: string;
+  accountAlias?: string | null;
+  mode?: PayPalMode | null;
+};
 
 function coerceMetadataString(value: unknown): string | null {
   if (typeof value !== "string") {
@@ -98,7 +75,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     const existingSession = await findCheckoutSessionByStripeSessionId(sessionId);
     const alreadyProcessed = existingSession?.metadata?.processedAt;
 
-    const metadata = (session.metadata ?? {}) as Record<string, unknown>;
+    const metadata = ensureMetadataCaseVariants((session.metadata ?? {}) as Record<string, unknown>);
 
     const metadataOfferId = coerceMetadataString(metadata.offerId);
     const metadataProductSlugCamel = coerceMetadataString(metadata.productSlug);
@@ -139,16 +116,9 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       };
     }
 
-    // Ensure account exists and send verification email if needed
-    await ensureAccountForPurchase({
-      email: customerEmail,
-      name: session.customer_details?.name ?? null,
-      offerId,
-    });
-
-    const augmentedMetadata: Record<string, unknown> = {
+    const augmentedMetadata: Record<string, unknown> = ensureMetadataCaseVariants({
       ...metadata,
-    };
+    });
 
     // Populate payment description fields similar to webhook path
     const coerce = (v: unknown) => (typeof v === "string" ? v.trim() : "");
@@ -217,126 +187,45 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       }
     }
 
-    // Store the order
-    const checkoutSessionId = await upsertCheckoutSession({
-      stripeSessionId: sessionId,
-      offerId,
-      landerId,
-      paymentIntentId,
-      customerEmail,
-      metadata: { ...augmentedMetadata, processedAt: new Date().toISOString() },
-      status: "completed",
-      source: "stripe",
-    });
+    augmentedMetadata.processedAt = new Date().toISOString();
 
-    await upsertOrder({
-      checkoutSessionId,
-      stripeSessionId: sessionId,
-      stripePaymentIntentId: paymentIntentId,
+    const providerAccountAlias =
+      getMetadataString(augmentedMetadata, "paymentProviderAccount")
+        ?? getMetadataString(augmentedMetadata, "paymentProviderAccountAlias")
+        ?? null;
+
+    const providerMode = typeof session.livemode === "boolean"
+      ? session.livemode ? "live" : "test"
+      : null;
+
+    const normalizedOrder: NormalizedOrder = {
+      provider: "stripe",
+      providerAccountAlias,
+      providerMode,
+      providerSessionId: session.id,
+      providerPaymentId: paymentIntentId,
+      sessionId,
+      paymentIntentId,
       offerId,
       landerId,
+      productSlug: productSlug ?? offerId,
+      productName: productNameValue ?? offerId,
       customerEmail,
       customerName: session.customer_details?.name ?? null,
+      customerPhone: session.customer_details?.phone ?? null,
+      clientReferenceId: session.client_reference_id ?? null,
+      metadata: augmentedMetadata,
       amountTotal: session.amount_total ?? null,
       currency: session.currency ?? null,
-      metadata: augmentedMetadata,
       paymentStatus: session.payment_status ?? null,
       paymentMethod: session.payment_method_types?.[0] ?? null,
-      source: "stripe",
-    });
+      resolvedGhlTagIds: resolveGhlTagIds(augmentedMetadata),
+      urls: resolveOrderUrls(augmentedMetadata),
+      tosAccepted: augmentedMetadata.tosAccepted === "true" ? true : augmentedMetadata.tosAccepted === "false" ? false : null,
+      skipSideEffects: Boolean(alreadyProcessed),
+    };
 
-    // Create license if not already processed
-    if (!alreadyProcessed) {
-      const offerConfig = getOfferConfig(offerId);
-      const { tier, entitlements, features } = extractLicenseConfig(offerConfig?.metadata, offerId);
-
-      const amountMajorUnits =
-        typeof session.amount_total === "number"
-          ? Number((session.amount_total / 100).toFixed(2))
-          : null;
-      const currencyCode = typeof session.currency === "string" ? session.currency.toLowerCase() : null;
-
-      const licenseMetadata: Record<string, unknown> = {
-        orderId: sessionId,
-        paymentIntentId,
-        stripeSessionId: sessionId,
-        offerId,
-        amount: amountMajorUnits,
-        currency: currencyCode,
-      };
-
-      if (productSlug) {
-        licenseMetadata.productSlug = productSlug;
-      }
-
-      if (session.customer_details?.name) {
-        licenseMetadata.customerName = session.customer_details.name;
-      }
-
-      if (session.client_reference_id) {
-        licenseMetadata.clientReferenceId = session.client_reference_id;
-      }
-
-      try {
-        const licenseResult = await createLicenseForOrder({
-          id: sessionId,
-          provider: "stripe",
-          providerObjectId: paymentIntentId ?? sessionId,
-          userEmail: customerEmail,
-          tier,
-          entitlements,
-          features,
-          metadata: licenseMetadata,
-          status: session.payment_status ?? "completed",
-          eventType: "checkout.completed",
-          amount: amountMajorUnits,
-          currency: currencyCode,
-          rawEvent: {
-            checkoutSessionId: sessionId,
-            paymentIntentId,
-            source: "success_page_fallback",
-          },
-        });
-
-        if (licenseResult?.licenseKey) {
-          const now = new Date().toISOString();
-          const licenseMetadataUpdate = {
-            license: {
-              action: licenseResult.action ?? null,
-              licenseId: licenseResult.licenseId ?? null,
-              licenseKey: licenseResult.licenseKey ?? null,
-              updatedAt: now,
-            },
-          };
-
-          const updated = await updateOrderMetadata(
-            {
-              stripePaymentIntentId: paymentIntentId,
-              stripeSessionId: sessionId,
-            },
-            licenseMetadataUpdate
-          );
-
-          if (!updated) {
-            logger.warn("checkout.success.metadata_update_failed", {
-              sessionId,
-              paymentIntentId,
-            });
-          }
-
-          logger.info("checkout.success.processed", {
-            sessionId,
-            offerId,
-            hasLicense: true,
-          });
-        }
-      } catch (error) {
-        logger.error("checkout.success.license_error", {
-          sessionId,
-          error: error instanceof Error ? error.message : String(error),
-        });
-      }
-    }
+    await processFulfilledOrder(normalizedOrder);
 
     const orderAmount =
       typeof session.amount_total === "number"
@@ -432,6 +321,59 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
   }
 }
 
+export async function processPayPalCheckout(input: PayPalProcessInput): Promise<ProcessCheckoutResult> {
+  if (!input.orderId) {
+    return { success: false, message: "Missing PayPal order token" };
+  }
+
+  const mode: PayPalMode = input.mode === "live" || input.mode === "test" ? input.mode : resolvePayPalModeForRuntime();
+
+  try {
+    const capture = await capturePayPalOrder({
+      orderId: input.orderId,
+      accountAlias: input.accountAlias ?? null,
+      mode,
+    });
+
+    const normalizedOrder = await handlePayPalWebhookEvent(
+      {
+        id: `paypal-local-${input.orderId}`,
+        event_type: "PAYPAL.CHECKOUT.SUCCESS",
+        resource: capture as Record<string, unknown>,
+      },
+      {
+        accountAlias: input.accountAlias ?? null,
+        mode,
+      },
+    );
+
+    return {
+      success: true,
+      order: {
+        sessionId: normalizedOrder.sessionId,
+        amount: normalizedOrder.amountTotal ?? null,
+        currency: normalizedOrder.currency ?? null,
+        items: [
+          {
+            id: normalizedOrder.offerId,
+            name: normalizedOrder.productName ?? normalizedOrder.offerId,
+            price:
+              typeof normalizedOrder.amountTotal === "number" ? normalizedOrder.amountTotal / 100 : 0,
+            quantity: 1,
+          },
+        ],
+        productSlug: normalizedOrder.productSlug ?? normalizedOrder.offerId,
+      },
+    };
+  } catch (error) {
+    logger.error("paypal.success.processing_failed", {
+      orderId: input.orderId,
+      error: error instanceof Error ? { message: error.message, stack: error.stack } : error,
+    });
+    return { success: false, message: "Failed to process PayPal order" };
+  }
+}
+
 type ProcessGhlPaymentParams = {
   paymentId?: string | null;
   productSlug?: string | null;
@@ -475,6 +417,104 @@ function coerceCurrency(code: string | null | undefined): string | null {
 
   const trimmed = code.trim();
   return trimmed ? trimmed.toUpperCase() : null;
+}
+
+function parseSerializedList(value: unknown): string[] {
+  if (typeof value !== "string") {
+    return [];
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return [];
+  }
+
+  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed
+          .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
+          .filter((entry) => entry.length > 0);
+      }
+    } catch {
+      // ignore JSON parse failure
+    }
+  }
+
+  return trimmed
+    .split(/[,\s]+/)
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.length > 0);
+}
+
+function resolveGhlTagIds(metadata: Record<string, unknown>): string[] | undefined {
+  const tags = new Set<string>();
+  const append = (value: unknown) => {
+    if (typeof value !== "string") {
+      return;
+    }
+    const trimmed = value.trim();
+    if (trimmed) {
+      tags.add(trimmed);
+    }
+  };
+
+  append(metadata.ghlTag);
+  append(metadata.ghl_tag);
+
+  return tags.size > 0 ? Array.from(tags) : undefined;
+}
+
+function readMetadataUrl(metadata: Record<string, unknown>, ...keys: string[]): string | null {
+  for (const key of keys) {
+    const value = metadata[key];
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      if (trimmed) {
+        return trimmed;
+      }
+    }
+  }
+  return null;
+}
+
+function resolveOrderUrls(metadata: Record<string, unknown>) {
+  const productPageUrl = readMetadataUrl(
+    metadata,
+    "productPageUrl",
+    "appsProductPageUrl",
+    "apps_serp_co_product_page_url",
+    "store_serp_co_product_page_url",
+  );
+  const purchaseUrl = readMetadataUrl(metadata, "purchaseUrl", "purchase_url", "serply_link");
+  const storeProductPageUrl = readMetadataUrl(metadata, "storeProductPageUrl", "store_serp_co_product_page_url");
+  const appsProductPageUrl = readMetadataUrl(metadata, "appsProductPageUrl", "apps_serp_co_product_page_url");
+  const serplyLink = readMetadataUrl(metadata, "serply_link", "serplyLink");
+  const successUrl = readMetadataUrl(metadata, "successUrl", "success_url");
+  const cancelUrl = readMetadataUrl(metadata, "cancelUrl", "cancel_url");
+
+  if (
+    !productPageUrl &&
+    !purchaseUrl &&
+    !storeProductPageUrl &&
+    !appsProductPageUrl &&
+    !serplyLink &&
+    !successUrl &&
+    !cancelUrl
+  ) {
+    return undefined;
+  }
+
+  return {
+    productPageUrl: productPageUrl ?? undefined,
+    purchaseUrl: purchaseUrl ?? undefined,
+    storeProductPageUrl: storeProductPageUrl ?? undefined,
+    appsProductPageUrl: appsProductPageUrl ?? undefined,
+    serplyLink: serplyLink ?? undefined,
+    successUrl: successUrl ?? undefined,
+    cancelUrl: cancelUrl ?? undefined,
+  };
 }
 
 export async function processGhlPayment(params: ProcessGhlPaymentParams): Promise<ProcessCheckoutResult> {

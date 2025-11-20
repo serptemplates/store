@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/imagefap-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/imagefap-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=imagefap-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=imagefap-downloader",
+    "ghl_tag": "purchase-imagefap-downloader",
+    "ghlTag": "purchase-imagefap-downloader",
+    "landerId": "imagefap-downloader",
+    "offerId": "imagefap-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "ImageFap Downloader",
+    "product_page_url": "https://apps.serp.co/imagefap-downloader",
+    "product_slug": "imagefap-downloader",
+    "productName": "ImageFap Downloader",
+    "productPageUrl": "https://apps.serp.co/imagefap-downloader",
+    "productSlug": "imagefap-downloader",
+    "purchase_url": "https://serp.ly/imagefap-downloader",
+    "purchaseUrl": "https://serp.ly/imagefap-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/imagefap-downloader/",
+    "serply_link": "https://serp.ly/imagefap-downloader",
+    "serplyLink": "https://serp.ly/imagefap-downloader",
+    "slug": "imagefap-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/imagefap-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/imagefap-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

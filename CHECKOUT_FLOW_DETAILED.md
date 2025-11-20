@@ -277,11 +277,11 @@ export async function handleCheckoutSessionCompleted(
   }
 
   // Step 5f: Sync with GoHighLevel (CRM)
-  const ghlTagIds = collectTagCandidatesFromMetadata(metadata);
+  const primaryTag = metadata.ghlTag || metadata.ghl_tag || null;
   
   await syncOrderWithGhl({
     contactEmail: session.customer_email,
-    tags: ghlTagIds,  // Includes both main product tags and optional item tags
+    tags: primaryTag ? [primaryTag] : [],
     lineItems: lineItems.data,
   });
   // GHL records the sale with all items purchased
@@ -344,4 +344,3 @@ Notes:
 - Per-offer `price_id` is preferred — use it to override the optional price for that offer.
 - If no override exists, the route will attempt to use `product.default_price`.
 - If a price cannot be resolved for an optional item, it is skipped (the main product is still check-out-able).
-

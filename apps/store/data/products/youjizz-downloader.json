@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/youjizz-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/youjizz-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=youjizz-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=youjizz-downloader",
+    "ghl_tag": "purchase-youjizz-downloader",
+    "ghlTag": "purchase-youjizz-downloader",
+    "landerId": "youjizz-downloader",
+    "offerId": "youjizz-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "YouJizz Downloader",
+    "product_page_url": "https://apps.serp.co/youjizz-downloader",
+    "product_slug": "youjizz-downloader",
+    "productName": "YouJizz Downloader",
+    "productPageUrl": "https://apps.serp.co/youjizz-downloader",
+    "productSlug": "youjizz-downloader",
+    "purchase_url": "https://serp.ly/youjizz-downloader",
+    "purchaseUrl": "https://serp.ly/youjizz-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/youjizz-downloader/",
+    "serply_link": "https://serp.ly/youjizz-downloader",
+    "serplyLink": "https://serp.ly/youjizz-downloader",
+    "slug": "youjizz-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youjizz-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/youjizz-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

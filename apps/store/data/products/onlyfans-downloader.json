@@ -196,10 +196,43 @@
       "href": "https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader"
     }
   ],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/onlyfans-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/onlyfans-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=onlyfans-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=onlyfans-downloader",
+    "compare_at_amount": "$47.00",
+    "ghl_tag": "purchase-onlyfans-downloader",
+    "ghlTag": "purchase-onlyfans-downloader",
+    "internal_id": "68a9acba8f1dfcb9736b861a",
+    "landerId": "onlyfans-downloader",
+    "license_entitlements": "onlyfans-downloader",
+    "licenseEntitlements": "onlyfans-downloader",
+    "location_id": "XM0gbS5U3qNXtUksyJ6o",
+    "offerId": "onlyfans-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Onlyfans Downloader",
+    "product_page_url": "https://apps.serp.co/onlyfans-downloader",
+    "product_slug": "onlyfans-downloader",
+    "productName": "Onlyfans Downloader",
+    "productPageUrl": "https://apps.serp.co/onlyfans-downloader",
+    "productSlug": "onlyfans-downloader",
+    "purchase_url": "https://serp.ly/onlyfans-downloader",
+    "purchaseUrl": "https://serp.ly/onlyfans-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/onlyfans-downloader/",
+    "serply_link": "https://serp.ly/onlyfans-downloader",
+    "serplyLink": "https://serp.ly/onlyfans-downloader",
+    "slug": "onlyfans-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/onlyfans-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/onlyfans-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$27.00",
+    "price": "$37.00",
     "note": "",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader",
@@ -214,9 +247,24 @@
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
   },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
+  },
   "stripe": {
-    "price_id": "price_1SRotl06JrOmKRCmY0T4Yy2P",
-    "test_price_id": "price_1SRoyD06JrOmKRCmfEePRiQu",
+    "price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+    "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD",
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     },

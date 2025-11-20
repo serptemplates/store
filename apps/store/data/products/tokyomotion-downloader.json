@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/tokyomotion-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/tokyomotion-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=tokyomotion-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=tokyomotion-downloader",
+    "ghl_tag": "purchase-tokyomotion-downloader",
+    "ghlTag": "purchase-tokyomotion-downloader",
+    "landerId": "tokyomotion-downloader",
+    "offerId": "tokyomotion-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "TokyoMotion Downloader",
+    "product_page_url": "https://apps.serp.co/tokyomotion-downloader",
+    "product_slug": "tokyomotion-downloader",
+    "productName": "TokyoMotion Downloader",
+    "productPageUrl": "https://apps.serp.co/tokyomotion-downloader",
+    "productSlug": "tokyomotion-downloader",
+    "purchase_url": "https://serp.ly/tokyomotion-downloader",
+    "purchaseUrl": "https://serp.ly/tokyomotion-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/tokyomotion-downloader/",
+    "serply_link": "https://serp.ly/tokyomotion-downloader",
+    "serplyLink": "https://serp.ly/tokyomotion-downloader",
+    "slug": "tokyomotion-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tokyomotion-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/tokyomotion-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

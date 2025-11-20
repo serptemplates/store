@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/xfantazy-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/xfantazy-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=xfantazy-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=xfantazy-downloader",
+    "ghl_tag": "purchase-xfantazy-downloader",
+    "ghlTag": "purchase-xfantazy-downloader",
+    "landerId": "xfantazy-downloader",
+    "offerId": "xfantazy-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Xfantazy Downloader",
+    "product_page_url": "https://apps.serp.co/xfantazy-downloader",
+    "product_slug": "xfantazy-downloader",
+    "productName": "Xfantazy Downloader",
+    "productPageUrl": "https://apps.serp.co/xfantazy-downloader",
+    "productSlug": "xfantazy-downloader",
+    "purchase_url": "https://serp.ly/xfantazy-downloader",
+    "purchaseUrl": "https://serp.ly/xfantazy-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/xfantazy-downloader/",
+    "serply_link": "https://serp.ly/xfantazy-downloader",
+    "serplyLink": "https://serp.ly/xfantazy-downloader",
+    "slug": "xfantazy-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/xfantazy-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/xfantazy-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

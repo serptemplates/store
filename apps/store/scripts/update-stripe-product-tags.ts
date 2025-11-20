@@ -7,10 +7,16 @@ import process from "node:process";
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import fs from "node:fs";
+import { normalizeStripeAccountAlias } from "../config/payment-accounts";
+import { getOptionalStripeSecretKey, type StripeMode } from "../lib/payments/stripe-environment";
 import { getAllProducts } from "../lib/products/product";
 
 const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
 const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+type CliArgs = {
+  accountAlias: string;
+};
 
 function loadEnvFiles() {
   const candidates = [
@@ -29,65 +35,58 @@ function loadEnvFiles() {
 
 loadEnvFiles();
 
-type StripeMode = "live" | "test";
 type StripeClient = { mode: StripeMode; stripe: Stripe };
+function parseCliArgs(argv: string[]): CliArgs {
+  let alias: string | undefined;
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (!arg.startsWith("--")) continue;
+    const [rawKey, rawValue] = arg.includes("=") ? arg.split("=", 2) : [arg, undefined];
+    const key = rawKey.slice(2);
+    const value = rawValue ?? argv[i + 1];
 
-function resolveStripeSecret(mode: StripeMode): string | undefined {
-  if (mode === "live") {
-    if (process.env.STRIPE_SECRET_KEY_LIVE && process.env.STRIPE_SECRET_KEY_LIVE.startsWith("sk_live_")) {
-      return process.env.STRIPE_SECRET_KEY_LIVE;
+    if (rawValue === undefined && (i + 1 >= argv.length || argv[i + 1].startsWith("--"))) {
+      continue;
     }
-    if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_live_")) {
-      return process.env.STRIPE_SECRET_KEY;
-    }
-    return undefined;
-  }
 
-  const candidates = [
-    process.env.STRIPE_SECRET_KEY_TEST,
-    process.env.STRIPE_TEST_SECRET_KEY,
-    process.env.STRIPE_SECRET_KEY,
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate && candidate.startsWith("sk_test_")) {
-      return candidate;
+    if (key === "account") {
+      alias = value;
+      if (rawValue === undefined) i += 1;
     }
   }
 
-  return undefined;
+  return { accountAlias: normalizeStripeAccountAlias(alias) };
 }
 
-function createStripeClients(): StripeClient[] {
+function createStripeClients(accountAlias: string): StripeClient[] {
   const clients: StripeClient[] = [];
-  const liveSecret = resolveStripeSecret("live");
-  const testSecret = resolveStripeSecret("test");
+  const modes: StripeMode[] = ["live", "test"];
 
-  if (liveSecret) {
-    clients.push({ mode: "live", stripe: new Stripe(liveSecret, { apiVersion: API_VERSION }) });
-  }
-
-  if (testSecret) {
-    clients.push({ mode: "test", stripe: new Stripe(testSecret, { apiVersion: API_VERSION }) });
+  for (const mode of modes) {
+    const secret = getOptionalStripeSecretKey({ mode, accountAlias });
+    if (!secret) {
+      continue;
+    }
+    clients.push({ mode, stripe: new Stripe(secret, { apiVersion: API_VERSION }) });
   }
 
   if (clients.length === 0) {
-    throw new Error(
-      "No Stripe secret keys found. Set STRIPE_SECRET_KEY_LIVE / STRIPE_SECRET_KEY_TEST or equivalent environment variables.",
-    );
+    throw new Error(`No Stripe secret keys found for account alias "${accountAlias}". Check your env configuration.`);
   }
 
   return clients;
 }
 
 async function updateStripeProducts() {
+  const { accountAlias } = parseCliArgs(process.argv.slice(2));
   const products = getAllProducts();
   if (products.length === 0) {
     console.log("No product records found. Nothing to update.");
     return;
   }
 
-  const clients = createStripeClients();
+  console.log(`Using Stripe account alias: ${accountAlias}`);
+  const clients = createStripeClients(accountAlias);
   let updatesAttempted = 0;
   let updatesApplied = 0;
   let priceUpdatesAttempted = 0;

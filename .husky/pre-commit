@@ -3,6 +3,11 @@
 set -e
 
 echo "########################################"
+echo "→ Running gitleaks secret scan..."
+echo "########################################"
+pnpm secret:scan
+
+echo "########################################"
 echo "→ Running lints..."
 echo "########################################"
 pnpm lint

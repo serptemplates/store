@@ -143,6 +143,34 @@
   "github_repo_url": "https://github.com/serpapps/learndash-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/learndash-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/learndash-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=learndash-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=learndash-downloader",
+    "ghl_tag": "purchase-learndash-downloader",
+    "ghlTag": "purchase-learndash-downloader",
+    "landerId": "learndash-downloader",
+    "offerId": "learndash-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Learndash Downloader",
+    "product_page_url": "https://apps.serp.co/learndash-downloader",
+    "product_slug": "learndash-downloader",
+    "productName": "Learndash Downloader",
+    "productPageUrl": "https://apps.serp.co/learndash-downloader",
+    "productSlug": "learndash-downloader",
+    "purchase_url": "https://serp.ly/learndash-downloader",
+    "purchaseUrl": "https://serp.ly/learndash-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/learndash-downloader/",
+    "serply_link": "https://serp.ly/learndash-downloader",
+    "serplyLink": "https://serp.ly/learndash-downloader",
+    "slug": "learndash-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/learndash-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/learndash-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -160,6 +188,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99wy06JrOmKRCmGHe9PqqC",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HclNUJPRYHM"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99wy06JrOmKRCmGHe9PqqC",

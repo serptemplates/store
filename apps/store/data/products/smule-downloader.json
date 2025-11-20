@@ -116,6 +116,34 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/smule-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/smule-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=smule-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=smule-downloader",
+    "ghl_tag": "purchase-smule-downloader",
+    "ghlTag": "purchase-smule-downloader",
+    "landerId": "smule-downloader",
+    "offerId": "smule-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Smule Downloader",
+    "product_page_url": "https://apps.serp.co/smule-downloader",
+    "product_slug": "smule-downloader",
+    "productName": "Smule Downloader",
+    "productPageUrl": "https://apps.serp.co/smule-downloader",
+    "productSlug": "smule-downloader",
+    "purchase_url": "https://serp.ly/smule-downloader",
+    "purchaseUrl": "https://serp.ly/smule-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/smule-downloader/",
+    "serply_link": "https://serp.ly/smule-downloader",
+    "serplyLink": "https://serp.ly/smule-downloader",
+    "slug": "smule-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/smule-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/smule-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -133,6 +161,12 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "metadata": {}
+    }
   },
   "stripe": {
     "metadata": {}

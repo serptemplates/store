@@ -8,10 +8,12 @@
  */
 
 import logger from "@/lib/logger";
+import { getEnvVarCandidates, normalizeStripeAccountAlias } from "@/config/payment-accounts";
 
 export type RuntimeEnvironment = "development" | "preview" | "production" | "test";
 export type StripeMode = "live" | "test";
 export type StripeModeInput = "auto" | StripeMode;
+export type StripeCredentialInput = StripeModeInput | { mode?: StripeModeInput; accountAlias?: string | null };
 
 const RUNTIME_ENV_ALIASES: Record<string, RuntimeEnvironment> = {
   development: "development",
@@ -38,6 +40,18 @@ const STRIPE_MODE_ALIASES: Record<string, StripeMode> = {
   development: "test",
   dev: "test",
 };
+
+const SECRET_KEY_PREFIXES: Record<StripeMode, string[]> = {
+  live: ["sk_live_", "rk_live_"],
+  test: ["sk_test_", "rk_test_"],
+};
+
+const PUBLISHABLE_KEY_PREFIXES: Record<StripeMode, string[]> = {
+  live: ["pk_live_"],
+  test: ["pk_test_"],
+};
+
+const warnedAliasFallbacks = new Set<string>();
 
 function normalizeRuntimeEnv(value: string | undefined | null): RuntimeEnvironment | null {
   if (!value) {
@@ -80,6 +94,50 @@ function emitWarning(message: string, context?: Record<string, unknown>) {
     // eslint-disable-next-line no-console
     console.warn(`[stripe] ${message}`, context ?? {});
   }
+}
+
+function getAccountAlias(input?: string | null): string {
+  return normalizeStripeAccountAlias(input ?? undefined);
+}
+
+function warnAliasFallback(requestedAlias: string | null | undefined, fallbackAlias: string) {
+  const key = `${requestedAlias ?? "__default__"}->${fallbackAlias}`;
+  if (warnedAliasFallbacks.has(key)) {
+    return;
+  }
+  warnedAliasFallbacks.add(key);
+  emitWarning("Unknown Stripe account alias; defaulting to fallback.", {
+    requestedAlias: requestedAlias ?? null,
+    fallbackAlias,
+  });
+}
+
+function getEnvCandidatesForField(
+  field: "secretKey" | "publishableKey" | "webhookSecret" | "paymentConfigId",
+  mode: StripeMode,
+  accountAlias?: string | null,
+) {
+  const { values, resolvedAlias, isFallback } = getEnvVarCandidates(accountAlias, field, mode);
+  if (isFallback) {
+    warnAliasFallback(accountAlias ?? null, resolvedAlias);
+  }
+  return values;
+}
+
+function resolveCredentialInput(
+  input?: StripeCredentialInput,
+): { mode: StripeMode; accountAlias: string | null } {
+  if (typeof input === "string" || input === undefined) {
+    return {
+      mode: resolveStripeMode(input ?? "auto"),
+      accountAlias: null,
+    };
+  }
+
+  return {
+    mode: resolveStripeMode(input.mode ?? "auto"),
+    accountAlias: input.accountAlias ? getAccountAlias(input.accountAlias) : null,
+  };
 }
 
 export function getRuntimeEnvironment(): RuntimeEnvironment {
@@ -189,110 +247,78 @@ export function resolveStripeMode(mode: StripeModeInput = "auto"): StripeMode {
   return inferred;
 }
 
-function selectSecretKeyForMode(mode: StripeMode): string | undefined {
+function selectSecretKeyForMode(mode: StripeMode, accountAlias?: string | null): string | undefined {
   if (mode === "live") {
-    if (process.env.STRIPE_SECRET_KEY_LIVE) {
-      return process.env.STRIPE_SECRET_KEY_LIVE;
+    const candidates = getEnvCandidatesForField("secretKey", mode, accountAlias);
+    for (const envName of candidates) {
+      const value = process.env[envName];
+      if (typeof value === "string" && value.trim().length > 0) {
+        const trimmed = value.trim();
+        if (SECRET_KEY_PREFIXES[mode].some((prefix) => trimmed.startsWith(prefix))) {
+          return trimmed;
+        }
+      }
     }
-
-    if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_live_")) {
-      return process.env.STRIPE_SECRET_KEY;
-    }
-
     return undefined;
   }
 
-  if (process.env.STRIPE_SECRET_KEY_TEST) {
-    return process.env.STRIPE_SECRET_KEY_TEST;
-  }
-
-  if (process.env.STRIPE_TEST_SECRET_KEY) {
-    return process.env.STRIPE_TEST_SECRET_KEY;
-  }
-
-  if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith("sk_test_")) {
-    return process.env.STRIPE_SECRET_KEY;
+  const candidates = getEnvCandidatesForField("secretKey", mode, accountAlias);
+  for (const envName of candidates) {
+    const value = process.env[envName];
+    if (typeof value === "string" && value.trim().length > 0) {
+      const trimmed = value.trim();
+      if (SECRET_KEY_PREFIXES[mode].some((prefix) => trimmed.startsWith(prefix))) {
+        return trimmed;
+      }
+    }
   }
 
   return undefined;
 }
 
-function selectPublishableKeyForMode(mode: StripeMode): string | undefined {
-  if (mode === "live") {
-    if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE) {
-      return process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE;
+function selectPublishableKeyForMode(mode: StripeMode, accountAlias?: string | null): string | undefined {
+  const candidates = getEnvCandidatesForField("publishableKey", mode, accountAlias);
+  for (const envName of candidates) {
+    const value = process.env[envName];
+    if (typeof value === "string" && value.trim().length > 0) {
+      const trimmed = value.trim();
+      if (PUBLISHABLE_KEY_PREFIXES[mode].some((prefix) => trimmed.startsWith(prefix))) {
+        return trimmed;
+      }
     }
-
-    if (
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith("pk_live_")
-    ) {
-      return process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    }
-
-    return undefined;
-  }
-
-  if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST) {
-    return process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST;
-  }
-
-  if (
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_")
-  ) {
-    return process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
   }
 
   return undefined;
 }
 
-function selectWebhookSecretForMode(mode: StripeMode): string | undefined {
-  if (mode === "live") {
-    if (process.env.STRIPE_WEBHOOK_SECRET_LIVE) {
-      return process.env.STRIPE_WEBHOOK_SECRET_LIVE;
+function selectWebhookSecretForMode(mode: StripeMode, accountAlias?: string | null): string | undefined {
+  const candidates = getEnvCandidatesForField("webhookSecret", mode, accountAlias);
+  for (const envName of candidates) {
+    const value = process.env[envName];
+    if (typeof value === "string" && value.trim().length > 0) {
+      if (mode === "test" && envName === "STRIPE_WEBHOOK_SECRET") {
+        emitWarning(
+          "Using STRIPE_WEBHOOK_SECRET for test mode. Configure STRIPE_WEBHOOK_SECRET_TEST to avoid ambiguity.",
+        );
+      }
+      return value.trim();
     }
-
-    if (
-      process.env.STRIPE_WEBHOOK_SECRET &&
-      process.env.STRIPE_WEBHOOK_SECRET !== process.env.STRIPE_WEBHOOK_SECRET_TEST
-    ) {
-      return process.env.STRIPE_WEBHOOK_SECRET;
-    }
-
-    return undefined;
   }
-
-  if (process.env.STRIPE_WEBHOOK_SECRET_TEST) {
-    return process.env.STRIPE_WEBHOOK_SECRET_TEST;
-  }
-
-  if (process.env.STRIPE_TEST_WEBHOOK_SECRET) {
-    return process.env.STRIPE_TEST_WEBHOOK_SECRET;
-  }
-
-  if (process.env.STRIPE_WEBHOOK_SECRET && !process.env.STRIPE_WEBHOOK_SECRET_LIVE) {
-    emitWarning(
-      "Using STRIPE_WEBHOOK_SECRET for test mode. Configure STRIPE_WEBHOOK_SECRET_TEST to avoid ambiguity.",
-    );
-    return process.env.STRIPE_WEBHOOK_SECRET;
-  }
-
   return undefined;
 }
 
-export function getOptionalStripeSecretKey(mode: StripeModeInput = "auto"): string | undefined {
-  const resolved = resolveStripeMode(mode);
-  return selectSecretKeyForMode(resolved);
+export function getOptionalStripeSecretKey(input: StripeCredentialInput = "auto"): string | undefined {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  return selectSecretKeyForMode(mode, accountAlias);
 }
 
-export function requireStripeSecretKey(mode: StripeModeInput = "auto"): string {
-  const resolved = resolveStripeMode(mode);
-  const secret = selectSecretKeyForMode(resolved);
+export function requireStripeSecretKey(input: StripeCredentialInput = "auto"): string {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  const secret = selectSecretKeyForMode(mode, accountAlias);
 
   if (!secret) {
     throw new Error(
-      resolved === "live"
+      mode === "live"
         ? "Missing Stripe live secret key. Set STRIPE_SECRET_KEY_LIVE or ensure STRIPE_SECRET_KEY contains an sk_live_* value."
         : "Missing Stripe test secret key. Set STRIPE_SECRET_KEY_TEST with an sk_test_* value."
     );
@@ -301,18 +327,18 @@ export function requireStripeSecretKey(mode: StripeModeInput = "auto"): string {
   return secret;
 }
 
-export function getOptionalStripePublishableKey(mode: StripeModeInput = "auto"): string | undefined {
-  const resolved = resolveStripeMode(mode);
-  return selectPublishableKeyForMode(resolved);
+export function getOptionalStripePublishableKey(input: StripeCredentialInput = "auto"): string | undefined {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  return selectPublishableKeyForMode(mode, accountAlias);
 }
 
-export function requireStripePublishableKey(mode: StripeModeInput = "auto"): string {
-  const resolved = resolveStripeMode(mode);
-  const publishableKey = selectPublishableKeyForMode(resolved);
+export function requireStripePublishableKey(input: StripeCredentialInput = "auto"): string {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  const publishableKey = selectPublishableKeyForMode(mode, accountAlias);
 
   if (!publishableKey) {
     throw new Error(
-      resolved === "live"
+      mode === "live"
         ? "Missing Stripe live publishable key. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE or provide a pk_live_* value in NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY."
         : "Missing Stripe test publishable key. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST with a pk_test_* value."
     );
@@ -321,9 +347,9 @@ export function requireStripePublishableKey(mode: StripeModeInput = "auto"): str
   return publishableKey;
 }
 
-export function getOptionalStripeWebhookSecret(mode: StripeModeInput = "auto"): string | undefined {
-  const resolved = resolveStripeMode(mode);
-  return selectWebhookSecretForMode(resolved);
+export function getOptionalStripeWebhookSecret(input: StripeCredentialInput = "auto"): string | undefined {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  return selectWebhookSecretForMode(mode, accountAlias);
 }
 
 export function getStripeMode(mode: StripeModeInput = "auto"): StripeMode {
@@ -334,15 +360,18 @@ export function isStripeTestMode(): boolean {
   return resolveStripeMode("auto") === "test";
 }
 
-function selectPaymentConfigIdForMode(mode: StripeMode): string | undefined {
-  if (mode === "live") {
-    return process.env.STRIPE_PAYMENT_CONFIG_ID_LIVE ?? process.env.STRIPE_PAYMENT_CONFIG_ID ?? undefined;
+function selectPaymentConfigIdForMode(mode: StripeMode, accountAlias?: string | null): string | undefined {
+  const candidates = getEnvCandidatesForField("paymentConfigId", mode, accountAlias);
+  for (const envName of candidates) {
+    const value = process.env[envName];
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim();
+    }
   }
-
-  return process.env.STRIPE_PAYMENT_CONFIG_ID_TEST ?? undefined;
+  return undefined;
 }
 
-export function getOptionalStripePaymentConfigId(mode: StripeModeInput = "auto"): string | undefined {
-  const resolved = resolveStripeMode(mode);
-  return selectPaymentConfigIdForMode(resolved);
+export function getOptionalStripePaymentConfigId(input: StripeCredentialInput = "auto"): string | undefined {
+  const { mode, accountAlias } = resolveCredentialInput(input);
+  return selectPaymentConfigIdForMode(mode, accountAlias);
 }

@@ -163,6 +163,36 @@
   "github_repo_url": "https://github.com/serpapps/redtube-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/redtube-video-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/redtube-video-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=redtube-video-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=redtube-video-downloader",
+    "ghl_tag": "purchase-redtube-downloader",
+    "ghlTag": "purchase-redtube-downloader",
+    "landerId": "redtube-video-downloader",
+    "license_entitlements": "redtube-video-downloader",
+    "licenseEntitlements": "redtube-video-downloader",
+    "offerId": "redtube-video-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Redtube Video Downloader",
+    "product_page_url": "https://apps.serp.co/redtube-video-downloader",
+    "product_slug": "redtube-video-downloader",
+    "productName": "Redtube Video Downloader",
+    "productPageUrl": "https://apps.serp.co/redtube-video-downloader",
+    "productSlug": "redtube-video-downloader",
+    "purchase_url": "https://serp.ly/redtube-video-downloader",
+    "purchaseUrl": "https://serp.ly/redtube-video-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/redtube-video-downloader/",
+    "serply_link": "https://serp.ly/redtube-video-downloader",
+    "serplyLink": "https://serp.ly/redtube-video-downloader",
+    "slug": "redtube-video-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/redtube-video-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/redtube-video-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -185,6 +215,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SO0ei06JrOmKRCmdxlLiPYl",
+      "metadata": {
+        "stripe_product_id": "prod_SrGTducRH5aPvE"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1SO0ei06JrOmKRCmdxlLiPYl",

@@ -144,6 +144,34 @@
   "github_repo_url": "https://github.com/serpapps/istock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/istock-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/istock-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=istock-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=istock-downloader",
+    "ghl_tag": "purchase-istock-downloader",
+    "ghlTag": "purchase-istock-downloader",
+    "landerId": "istock-downloader",
+    "offerId": "istock-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Istock Downloader",
+    "product_page_url": "https://apps.serp.co/istock-downloader",
+    "product_slug": "istock-downloader",
+    "productName": "Istock Downloader",
+    "productPageUrl": "https://apps.serp.co/istock-downloader",
+    "productSlug": "istock-downloader",
+    "purchase_url": "https://serp.ly/istock-downloader",
+    "purchaseUrl": "https://serp.ly/istock-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/istock-downloader/",
+    "serply_link": "https://serp.ly/istock-downloader",
+    "serplyLink": "https://serp.ly/istock-downloader",
+    "slug": "istock-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/istock-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/istock-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
@@ -161,6 +189,20 @@
     "method": "No returns accepted",
     "policy_category": "https://schema.org/MerchantReturnNotPermitted",
     "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1S99ww06JrOmKRCmNqJ9zTSr",
+      "metadata": {
+        "stripe_product_id": "prod_Sv6HGOIclVxTWP"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TPQDdWiCCy0HK2"
+        }
+      ]
+    }
   },
   "stripe": {
     "price_id": "price_1S99ww06JrOmKRCmNqJ9zTSr",
