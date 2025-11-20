@@ -152,7 +152,7 @@ export const productSchemaShape = {
   // buy_button_destination removed; use pricing.cta_href for CTA targeting
   success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
-  status: z.enum(["draft", "pre_release", "live"]).default("draft"),
+  status: z.enum(["draft", "demo", "pre_release", "live"]).default("draft"),
   featured_image: assetPathSchema.nullable().optional(),
   featured_image_gif: assetPathSchema.nullable().optional(),
   screenshots: optionalArray(screenshotSchema),

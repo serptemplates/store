@@ -1,52 +1,112 @@
-# SERP Apps Store
+# @serpcompany/payments
 
-This repository now focuses exclusively on the `@apps/store` Next.js commerce application and its shared component libraries. Satellite marketing sites and their deployment tooling live in a separate repository.
+Internal payment adapter package for SERP projects. Provides Stripe/PayPal/Whop adapters, credential registry, provider metadata for toggle UIs, and shared helpers.
 
-## Directory Overview
+## Install
 
-- `apps/store` – production storefront deployed to `https://apps.serp.co`
-- `apps/store/content/blog` – markdown content rendered by the blog routes
-- `packages/ui` – shared UI primitives and sections (`src/sections/**`) consumed by the store
+1) Auth to GitHub Packages (project-local `.npmrc` recommended):
+```
+@serpcompany:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+Use a PAT with `read:packages` (and `write:packages` only when publishing).
 
-## Docs
-
-- See `docs/` for architecture, operations, and security notes.
-- Marketplace product lander – enabling and content sources: `docs/architecture/marketplace-lander.md`
-
-## Local Development
-
-```bash
-pnpm install
-pnpm dev
+2) Install:
+```
+pnpm add @serpcompany/payments
 ```
 
-The dev script runs `@apps/store` on port 3000. See `docs/store/README.md` for detailed product management and testing workflows.
-
-## Blog Content
-
-- Store blog posts live under `apps/store/content/blog`
-- Markdown/MDX files are loaded by `apps/store/lib/blog.ts`
-- Front matter supports `draft`, `tags`, `description`, and optional hero images
-
-## Site Configuration
-
-- `apps/store/data/site.config.json` defines the store name, domain, navigation links, and excluded product slugs.
-- The primary navigation renders only branding and links; CTA metadata is ignored to keep the header free of buttons.
-
-## Stripe Price Sync
-
-- CI automatically runs `pnpm sync:stripe-prices` on pushes to `main` and commits price updates when Stripe amounts change.
-- To refresh prices manually, ensure `STRIPE_SECRET_KEY` (or `STRIPE_SECRET_KEY_TEST`) is available in your environment or `.env`, then run:
-
-```bash
-pnpm sync:stripe-prices
+3) If using Next.js, add to `transpilePackages`:
+```js
+// next.config.mjs
+const nextConfig = {
+  transpilePackages: ["@serpcompany/payments"],
+};
+export default nextConfig;
 ```
 
-This updates each product YAML with formatted pricing pulled from Stripe.
+## What’s inside
 
-## Stripe Checkout
+- Adapters: `stripeCheckoutAdapter`, `paypalCheckoutAdapter`, `whopCheckoutAdapter`, placeholder adapters for Easy Pay Direct and LemonSqueezy.
+- Registry helpers: `defaultAdapters`, `getAdapter`, `createCheckoutSession`.
+- Credential registry: `payment-accounts.ts` (env var aliases for Stripe/PayPal).
+- Helpers: `stripe`, `stripe-environment`, `paypal/api`, `metadata` utilities.
+- Provider metadata: `listAvailableProviders()`, `requiredFieldsForProvider(id)` for toggle/config UIs.
+- Logger bridge: `setPaymentsLogger` (defaults to console-safe logging).
 
-For the checkout to work properly, set these environment variables in `.env` (or your local override):
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+## Quick start
+
+```ts
+import {
+  defaultAdapters,
+  getAdapter,
+  type CheckoutRequest,
+} from "@serpcompany/payments";
+import { setPaymentsLogger } from "@serpcompany/payments/logger";
+import appLogger from "./logger"; // your logger
+
+setPaymentsLogger(appLogger);
+
+const adapter = getAdapter("stripe", defaultAdapters);
+
+const request: CheckoutRequest = {
+  slug: "my-offer",
+  mode: "payment",
+  quantity: 1,
+  metadata: { product_slug: "my-offer" },
+  successUrl: "https://example.com/success",
+  cancelUrl: "https://example.com/cancel",
+  price: { id: "price_123", productName: "My Offer" },
+  paymentAccountAlias: "primary",
+  providerConfig: {
+    provider: "stripe",
+    stripe: { price_id: "price_123" },
+  },
+};
+
+const session = await adapter.createCheckout(request);
+// => { provider, redirectUrl, sessionId, providerSessionId }
+```
+
+## Config & env
+
+- Update `src/payment-accounts.ts` if your env var names differ (Stripe/PayPal aliases).
+- Stripe mode, test/live selection, and webhook secrets are resolved via `stripe-environment`.
+- PayPal credentials resolved via `paypal/api` using the registry.
+
+## Provider metadata (for toggle UI)
+
+```ts
+import {
+  listAvailableProviders,
+  requiredFieldsForProvider,
+} from "@serpcompany/payments";
+
+const providers = listAvailableProviders(); // ids, labels, fields
+const stripeFields = requiredFieldsForProvider("stripe");
+```
+
+## Testing
+
+- Stripe adapter has test hooks:
+```ts
+import {
+  setStripeCheckoutDependencies,
+  resetStripeCheckoutDependencies,
+} from "@serpcompany/payments/providers/stripe/checkout";
+
+// In tests, mock getStripeClient/resolvePriceForEnvironment:
+setStripeCheckoutDependencies({ getStripeClient: mockFn, resolvePriceForEnvironment: mockFn });
+// reset after tests
+resetStripeCheckoutDependencies();
+```
+
+## Publishing (maintainers)
+
+- Bump version in `package.json`.
+- Ensure `.npmrc` has write token.
+- `pnpm publish --access public --no-git-checks`
+
+---
+
+Adjust any env aliasing in `payment-accounts.ts` as needed for each project.

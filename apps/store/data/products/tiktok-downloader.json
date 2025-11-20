@@ -223,6 +223,7 @@
     "provider": "stripe",
     "stripe": {
       "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
+      "test_price_id": "price_1SVQli06JrOmKRCmsVUvZc22",
       "metadata": {
         "stripe_product_id": "prod_SqnavySFXhLMCk"
       },
@@ -235,6 +236,7 @@
   },
   "stripe": {
     "price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
+    "test_price_id": "price_1SVQli06JrOmKRCmsVUvZc22",
     "metadata": {
       "stripe_product_id": "prod_SqnavySFXhLMCk"
     },
