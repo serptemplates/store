@@ -114,8 +114,6 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": null,
-  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "https://raw.githubusercontent.com/serpapps/ai-voice-cloner/refs/heads/main/screenshots/ai-voice-cloning-app.png",

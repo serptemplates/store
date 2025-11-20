@@ -9,21 +9,21 @@
     "trade_name": "Beeg",
     "legal_entity": "Unknown / no verifiable registrant"
   },
-  "description": "Beeg Video Downloader automates the HLS-to-MP4 conversion that keeps most Beeg videos locked to streaming. It detects the player as soon as it loads, captures the hidden playlists, and gives you a clean list of quality options so you can archive clips in the resolution you prefer.\n\nA guided popup displays bitrate, estimated file size, and stream type before you download. Once you start, an inline progress manager tracks segment speed, percentage, and ETA while background workers stitch the MP4 together with retries whenever a chunk fails.\n\nThe extension keeps everything local—licence details, quality presets, and downloaded files never leave your browser. Desktop notifications and a right-click shortcut make saving multiple videos at once as simple as queuing them and returning when the alerts fire.\n\nActivation requires a one-time licence and it is worth letting each tab stay open until processing completes. HLS conversion takes a little CPU time, but you get lossless MP4 copies without juggling developer tools or command-line scripts.",
+  "description": "Download videos from Beeg in high quality MP4 format. This browser extension automatically detects Beeg videos and converts streaming content into downloadable files you can watch offline.\n\nChoose from all available video qualities, see file size estimates before downloading, and track download progress with detailed indicators. The extension handles all the technical conversion work in the background, saving clean MP4 files to your downloads folder.\n\nEverything processes locally in your browser for complete privacy. Desktop notifications alert you when downloads finish, and a right-click menu provides quick access to download options. Works across Chrome, Edge, Firefox, Brave, and Opera.",
   "seo_title": "Beeg Video Downloader (Unofficial) | Turn Beeg HLS streams into MP4 files",
   "seo_description": "Beeg Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture Beeg videos as offline MP4s with quality selection, realtime progress tracking, and resilient retries inside a Chromium extension.",
   "status": "live",
   "features": [
-    "Purpose-built HLS detection for beeg.com and subdomains",
-    "Quality picker showing resolution, bitrate, and estimated file size",
-    "Concurrent download support so multiple videos finish in parallel",
-    "Inline progress panel with percentage, speed, and ETA readouts",
-    "Automatic retries for missing HLS segments to prevent corrupt files",
-    "Background offscreen workers merge chunks into a single MP4",
-    "Desktop notifications and sounds for completed jobs or errors",
-    "Right-click context menu shortcut to start downloads instantly",
-    "Local storage of licence and preferences with no tracking scripts",
-    "Browser support covering Chrome, Edge, Firefox, Brave, and Opera"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -148,7 +148,6 @@
   "brand": "SERP Apps",
   // PRODUCT MEDIA
   "featured_image": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
-  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "/media/products/beeg-video-downloader/beeg-video-downloader-1.webp",
@@ -229,8 +228,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
@@ -252,8 +250,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
-      "test_price_id": "price_1SVQle06JrOmKRCmgTjqF46a",
+      "price_id": "price_1RvXEr06JrOmKRCmJZDJjALY",
+      "test_price_id": "price_1SVVWl06JrOmKRCmmJN0RX8q",
       "metadata": {
         "stripe_product_id": "prod_SrFXkM8CAB2Ds8"
       },
@@ -265,8 +263,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0dm06JrOmKRCmQm8RleQG",
-    "test_price_id": "price_1SVQle06JrOmKRCmgTjqF46a",
+    "price_id": "price_1RvXEr06JrOmKRCmJZDJjALY",
+    "test_price_id": "price_1SVVWl06JrOmKRCmmJN0RX8q",
     "metadata": {
       "stripe_product_id": "prod_SrFXkM8CAB2Ds8"
     },

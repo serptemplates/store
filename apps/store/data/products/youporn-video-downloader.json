@@ -9,17 +9,21 @@
     "trade_name": "YouPorn",
     "legal_entity": "Licensing IP International S.à r.l."
   },
-  "description": "YouPorn Video Downloader analyses each video page, pulls every quality option YouPorn exposes, and saves the stream as an MP4—whether it’s a direct file or an HLS playlist. Just pick your resolution, let the extension handle headers and conversion, and the finished video lands in your downloads folder ready for offline viewing.",
+  "description": "Download videos from YouPorn in high-quality MP4 format. This browser extension automatically detects YouPorn videos, shows all available quality options, and saves them to your computer for offline viewing.\n\nThe extension handles both standard video files and streaming content, converting everything to MP4 format. Choose your preferred resolution and the extension takes care of all technical processing automatically, saving finished videos to your downloads folder.\n\nAll processing happens locally in your browser for privacy. Works with Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "Youporn Video Downloader (Unofficial) | Download Youporn Videos",
   "seo_description": "Youporn Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Youporn videos easily for offline viewing. Fast, reliable Youporn video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Parses YouPorn pages to uncover full quality lists, including hidden HD variants",
-    "Downloads direct MP4 files when available and converts HLS streams when necessary",
-    "Labels each option with resolution, format, and estimated size for easy selection",
-    "Shows real-time progress and status, including conversion stages for streaming sources",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop with local-only processing",
-    "Stores licence data locally with no analytics or third-party routing"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -143,7 +147,6 @@
   "brand": "SERP Apps",
   // PRODUCT MEDIA
   "featured_image": "/media/products/youporn-video-downloader/featured.webp",
-  "featured_image_gif": null,
   "screenshots": [
     {
       "url": "/media/products/youporn-video-downloader/youporn-downloader-screenshot1.webp",
@@ -212,8 +215,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with dual MP4/HLS workflow and progress tracking. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/youporn-video-downloader",
@@ -235,8 +237,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0fL06JrOmKRCmmSnOmBwT",
-      "test_price_id": "price_1SVQll06JrOmKRCmY5QLbxKl",
+      "price_id": "price_1RvXMm06JrOmKRCmEXZ7GsiQ",
+      "test_price_id": "price_1SVVWr06JrOmKRCmVTTtRdYh",
       "metadata": {
         "stripe_product_id": "prod_SrFXRIL4LAgGyt"
       },
@@ -248,8 +250,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0fL06JrOmKRCmmSnOmBwT",
-    "test_price_id": "price_1SVQll06JrOmKRCmY5QLbxKl",
+    "price_id": "price_1RvXMm06JrOmKRCmEXZ7GsiQ",
+    "test_price_id": "price_1SVVWr06JrOmKRCmVTTtRdYh",
     "metadata": {
       "stripe_product_id": "prod_SrFXRIL4LAgGyt"
     },

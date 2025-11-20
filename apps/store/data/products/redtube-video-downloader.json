@@ -9,17 +9,21 @@
     "trade_name": "Redtube",
     "legal_entity": "Licensing IP International S.à r.l."
   },
-  "description": "Redtube Video Downloader captures scenes from redtube.com, regional sites, and embedded players, converting them into MP4 files you can watch offline. It detects every available resolution, handles HLS streams behind the page, and keeps downloads moving even when you minimise the tab.\n\nChoose the quality you want, let the extension pull the stream segments, and it merges them in the background while you browse. The result is a clean MP4 saved locally with no ads, buffering, or tracking.",
+  "description": "Download videos from Redtube in MP4 format for offline viewing. This browser extension automatically detects Redtube videos on standard pages, regional domains, and embedded players, showing you all available quality options.\n\nChoose your preferred resolution and the extension saves the video directly to your computer. Clear progress indicators show download status, and all files are saved as standard MP4s you can watch anytime without ads or buffering.\n\nAll processing happens locally in your browser. Works with Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux.",
   "seo_title": "Redtube Video Downloader (Unofficial) | Download Redtube Videos",
   "seo_description": "Redtube Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Redtube videos easily for offline viewing. Fast, reliable Redtube video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects Redtube main site, regional domains, and embed.redtube.com players",
-    "Lists every quality option with file-size estimates and remembers your preference",
-    "Converts HLS streams into MP4 files while preserving source quality",
-    "Keeps progress running even if you reload or switch tabs",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no analytics or external tracking"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -142,14 +146,7 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/redtube-video-downloader/main/images/redtube-video-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/redtube-video-downloader.jpg",
-      "alt": "Redtube Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -196,8 +193,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with stream conversion and progress tracking included. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/redtube-video-downloader",
@@ -219,8 +215,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0ei06JrOmKRCmdxlLiPYl",
-      "test_price_id": "price_1SVQlh06JrOmKRCm5wvBMNMr",
+      "price_id": "price_1S99g406JrOmKRCmqPgLx00x",
+      "test_price_id": "price_1SVVWn06JrOmKRCmX3iy6t7s",
       "metadata": {
         "stripe_product_id": "prod_SrGTducRH5aPvE"
       },
@@ -232,8 +228,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0ei06JrOmKRCmdxlLiPYl",
-    "test_price_id": "price_1SVQlh06JrOmKRCm5wvBMNMr",
+    "price_id": "price_1S99g406JrOmKRCmqPgLx00x",
+    "test_price_id": "price_1SVVWn06JrOmKRCmX3iy6t7s",
     "metadata": {
       "stripe_product_id": "prod_SrGTducRH5aPvE"
     },

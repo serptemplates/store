@@ -123,14 +123,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stripchat-video-downloader.jpg",
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/stripchat-video-downloader/main/images/stripchat-video-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/stripchat-video-downloader.jpg",
-      "alt": "Stripchat Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -193,10 +186,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0ex06JrOmKRCmF7WSkOzL",
-      "metadata": {
-        "stripe_product_id": "prod_Sv6HInaMkSTtJg"
-      },
+      "metadata": {},
       "optional_items": [
         {
           "product_id": "prod_TPQDdWiCCy0HK2"
@@ -205,10 +195,7 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0ex06JrOmKRCmF7WSkOzL",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6HInaMkSTtJg"
-    },
+    "metadata": {},
     "optional_items": [
       {
         "product_id": "prod_TPQDdWiCCy0HK2"

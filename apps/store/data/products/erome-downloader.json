@@ -9,21 +9,21 @@
     "trade_name": "Erome",
     "legal_entity": "Unknown / no verifiable registrant"
   },
-  "description": "Erome Downloader is built specifically for Erome’s player so you can save clips before creators remove them. The extension scans each post with multiple detection methods—HTML5 tags, metadata, and script analysis—to surface every MP4 or HLS source and label it clearly with resolution, format, and estimated size.\n\nChoose the rendition you want, click download, and a persistent progress panel tracks percentage, speed, and time remaining while background workers assemble HLS segments into a single MP4. A cancel button lets you stop mid-stream without leaving half-finished files, and desktop notifications confirm the moment the video is ready.\n\nAll processing stays local: licence data, preferences, and downloads never leave your browser, and permissions are scoped to Erome domains only. Right-click shortcuts and inline controls make it simple to archive the videos you care about before they disappear.\n\nRun it in Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, or Linux—just keep the tab open until the download finishes for the cleanest files.",
+  "description": "Download videos and images from Erome to your computer. This browser extension automatically detects media content on Erome posts, shows available quality options, and saves files locally for offline access.\n\nThe downloader handles both standard MP4 videos and streaming content, converting everything to easy-to-use MP4 files. Progress indicators keep you updated during downloads, and all processing happens in your browser for privacy.\n\nWorks with Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux.",
   "seo_title": "Erome Downloader (Unofficial) | Capture Erome videos as MP4 files",
   "seo_description": "Erome Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Detect every Erome video source, label quality options, and save reliable MP4 copies with cancel support and local processing.",
   "status": "live",
   "features": [
-    "Triple-source detection catches HTML5, metadata, and script-based video URLs",
-    "Quality picker lists every MP4 and HLS option with resolution and estimated size",
-    "Real-time progress window with speed, ETA, and a cancel button",
-    "Background HLS segment merging produces clean MP4 files with no re-encode",
-    "Right-click “Download with Erome Downloader” shortcut for instant saves",
-    "Desktop notifications announce completion or errors so you can multitask",
-    "Licence and preferences stored locally with no analytics or tracking",
-    "Permissions scoped to Erome domains for privacy-first operation",
-    "Works across Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Built on Manifest V3 for up-to-date extension security"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -154,14 +154,8 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erome-downloader/main/images/erome-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/erome-downloader.jpg",
-      "alt": "Erome Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -208,8 +202,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/erome-downloader",
@@ -231,8 +224,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
-      "test_price_id": "price_1SVQlf06JrOmKRCmxK94oWFU",
+      "price_id": "price_1S99wr06JrOmKRCmnjJiTjYy",
+      "test_price_id": "price_1SVVWm06JrOmKRCmGw1Dxe0E",
       "metadata": {
         "stripe_product_id": "prod_Sv6Gl659Drkqem"
       },
@@ -244,8 +237,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0eB06JrOmKRCmpgF7EUXg",
-    "test_price_id": "price_1SVQlf06JrOmKRCmxK94oWFU",
+    "price_id": "price_1S99wr06JrOmKRCmnjJiTjYy",
+    "test_price_id": "price_1SVVWm06JrOmKRCmGw1Dxe0E",
     "metadata": {
       "stripe_product_id": "prod_Sv6Gl659Drkqem"
     },

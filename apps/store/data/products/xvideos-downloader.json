@@ -9,17 +9,21 @@
     "trade_name": "XVideos",
     "legal_entity": "WebGroup Czech Republic, a.s. (WGCZ)"
   },
-  "description": "XVideos Downloader avoids the usual “403 Forbidden” failures by sending the exact headers XVideos expects on every request. It works on xvideos.com, xvideos.es, and mirror domains, lists the MP4 qualities you can grab, and saves the stream at full speed so you can build a reliable offline library without wrestling with errors.",
+  "description": "Download videos from XVideos in MP4 format. This browser extension works on xvideos.com, xvideos.es, and all mirror domains, automatically detecting videos and showing available quality options.\n\nSelect your preferred quality and download videos directly to your computer at full speed. The extension handles all technical details to avoid common download errors, saving reliable MP4 files for offline viewing.\n\nAll processing happens locally in your browser. Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "XVideos Downloader (Unofficial) | Download XVideos Videos",
   "seo_description": "XVideos Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download XVideos videos easily for offline viewing. Fast, reliable XVideos video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Works seamlessly on xvideos.com, xvideos.es, and mirror domains without tweaks",
-    "Extracts MP4 source URLs using multiple detection methods for higher reliability",
-    "Adds the correct headers automatically to avoid 403 or access errors",
-    "Displays a clean quality list and downloads the selected resolution at full speed",
-    "Shows on-page progress with percentage, downloaded size, and cancel controls",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop with local-only storage"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -130,7 +134,6 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": null,
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/xvideos-video-downloader/main/images/xvideos-video-downloader.gif",
   "screenshots": [],
   "product_videos": [],
@@ -179,8 +182,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with header management and multi-domain support. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/xvideos-downloader",
@@ -202,8 +204,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",
-      "test_price_id": "price_1SVQlk06JrOmKRCmdSrTfc5E",
+      "price_id": "price_1S99gL06JrOmKRCmtPCthojb",
+      "test_price_id": "price_1SVVWq06JrOmKRCmwnZ9pa1z",
       "metadata": {
         "stripe_product_id": "prod_SrGW6pAdy73l9t"
       },
@@ -215,8 +217,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0fG06JrOmKRCm3qY3HcGP",
-    "test_price_id": "price_1SVQlk06JrOmKRCmdSrTfc5E",
+    "price_id": "price_1S99gL06JrOmKRCmtPCthojb",
+    "test_price_id": "price_1SVVWq06JrOmKRCmwnZ9pa1z",
     "metadata": {
       "stripe_product_id": "prod_SrGW6pAdy73l9t"
     },
