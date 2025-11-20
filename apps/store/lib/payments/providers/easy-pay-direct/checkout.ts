@@ -1,6 +1,3 @@
-import { createPlaceholderAdapter } from "@/lib/payments/providers/placeholder-adapter";
+import "../../package-logger";
 
-export const easyPayDirectCheckoutAdapter = createPlaceholderAdapter(
-  "easy_pay_direct",
-  "Easy Pay Direct adapter is not implemented yet. Configure payment.provider to use Stripe or Whop until this integration ships.",
-);
+export { easyPayDirectCheckoutAdapter } from "@repo/payments/providers/easy-pay-direct/checkout";

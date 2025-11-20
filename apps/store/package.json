@@ -48,6 +48,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.1",
     "@next/third-parties": "^15.5.5",
+    "@repo/payments": "npm:@serpcompany/payments@0.2.2",
     "@repo/ui": "workspace:*",
     "@stripe/react-stripe-js": "^5.0.0",
     "@stripe/stripe-js": "^8.0.0",

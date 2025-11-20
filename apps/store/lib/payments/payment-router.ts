@@ -1,20 +1,8 @@
+import "@/lib/payments/package-logger";
+import { defaultAdapters, getAdapter as getAdapterFromRegistry } from "@repo/payments";
 import type { CheckoutFeatures, CheckoutResponse, OptionalItemInput } from "@/lib/payments/providers/base";
 import type { PaymentProviderId } from "@/lib/products/payment";
 import type { OfferConfig } from "@/lib/products/offer-config";
-import { stripeCheckoutAdapter } from "@/lib/payments/providers/stripe/checkout";
-import { whopCheckoutAdapter } from "@/lib/payments/providers/whop/checkout";
-import { easyPayDirectCheckoutAdapter } from "@/lib/payments/providers/easy-pay-direct/checkout";
-import { lemonSqueezyCheckoutAdapter } from "@/lib/payments/providers/lemonsqueezy/checkout";
-import { paypalCheckoutAdapter } from "@/lib/payments/providers/paypal/checkout";
-import type { PaymentProviderAdapter } from "@/lib/payments/providers/base";
-
-const ADAPTERS: Partial<Record<PaymentProviderId, PaymentProviderAdapter>> = {
-  stripe: stripeCheckoutAdapter,
-  whop: whopCheckoutAdapter,
-  easy_pay_direct: easyPayDirectCheckoutAdapter,
-  lemonsqueezy: lemonSqueezyCheckoutAdapter,
-  paypal: paypalCheckoutAdapter,
-};
 
 type CheckoutRouterInput = {
   offer: OfferConfig;
@@ -43,17 +31,9 @@ function normalizeOptionalItems(offer: OfferConfig): OptionalItemInput[] | undef
   }));
 }
 
-function getAdapter(provider: PaymentProviderId): PaymentProviderAdapter {
-  const adapter = ADAPTERS[provider];
-  if (adapter) {
-    return adapter;
-  }
-  throw new Error(`Payment provider ${provider} is not supported yet.`);
-}
-
 export async function createCheckoutSessionForOffer(input: CheckoutRouterInput): Promise<CheckoutResponse> {
   const provider = input.offer.payment?.provider ?? "stripe";
-  const adapter = getAdapter(provider);
+  const adapter = getAdapterFromRegistry(provider, defaultAdapters);
   const optionalItems = normalizeOptionalItems(input.offer);
   const stripePriceId = provider === "stripe" ? ensureStripePriceId(input.offer) : undefined;
 
