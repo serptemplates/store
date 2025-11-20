@@ -13,6 +13,10 @@ interface VerificationEmailInput {
   customerName?: string | null;
 }
 
+export type SendVerificationEmailResult =
+  | { ok: true }
+  | { ok: false; error: string };
+
 function getSiteUrl(): string | null {
   return process.env.NEXT_PUBLIC_SITE_URL ?? null;
 }
@@ -83,7 +87,7 @@ function buildEmailText(input: VerificationEmailInput): string {
   return lines.join("\n");
 }
 
-export async function sendVerificationEmail(input: VerificationEmailInput): Promise<boolean> {
+export async function sendVerificationEmail(input: VerificationEmailInput): Promise<SendVerificationEmailResult> {
   const subject = input.offerId
     ? `Confirm your email to access ${input.offerId}`
     : "Verify your email to access your downloads";
@@ -92,44 +96,47 @@ export async function sendVerificationEmail(input: VerificationEmailInput): Prom
   const text = buildEmailText(input);
 
   const smtpConfig = getSmtpConfig();
+  const deliveryErrorMessage = "We couldn't send the verification email. Please try again or contact support.";
 
-  if (!smtpConfig) {
-    logger.info("account_email.smtp_not_configured", {
+  if (!smtpConfig.config) {
+    const missing = smtpConfig.missing.join(", ");
+    logger.error("account_email.smtp_not_configured", {
       email: input.email,
       offerId: input.offerId,
       subject,
+      missing,
     });
-    return false;
+    return { ok: false, error: deliveryErrorMessage };
   }
 
   try {
-    const transporter = await getTransporter(smtpConfig);
+    const transporter = await getTransporter(smtpConfig.config);
 
     await transporter.sendMail({
-      from: smtpConfig.sender,
+      from: smtpConfig.config.sender,
       to: input.email,
       subject,
       html,
       text,
-      replyTo: smtpConfig.replyTo,
+      replyTo: smtpConfig.config.replyTo,
     });
 
     logger.info("account_email.sent", {
       email: input.email,
       offerId: input.offerId,
       provider: "smtp",
-      host: smtpConfig.host,
-      port: smtpConfig.port,
+      host: smtpConfig.config.host,
+      port: smtpConfig.config.port,
     });
-
-    return true;
+    return { ok: true };
   } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
     logger.error("account_email.delivery_failed", {
       email: input.email,
       offerId: input.offerId,
-      error: error instanceof Error ? error.message : String(error),
+      error: reason,
     });
-    return false;
+    return { ok: false, error: deliveryErrorMessage };
   }
 }
 
@@ -146,36 +153,52 @@ type SmtpConfig = {
 let cachedTransporter: MailTransporter | null = null;
 let cachedConfigSignature: string | null = null;
 
-function getSmtpConfig(): SmtpConfig | null {
+function getSmtpConfig(): { config: SmtpConfig | null; missing: string[] } {
   const host = process.env.SMTP_HOST;
   const portRaw = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const sender = process.env.ACCOUNT_EMAIL_SENDER;
 
-  if (!host || !portRaw || !user || !pass || !sender) {
-    return null;
+  const missing = [
+    host ? null : "SMTP_HOST",
+    portRaw ? null : "SMTP_PORT",
+    user ? null : "SMTP_USER",
+    pass ? null : "SMTP_PASS",
+    sender ? null : "ACCOUNT_EMAIL_SENDER",
+  ].filter(Boolean) as string[];
+
+  if (missing.length > 0) {
+    return { config: null, missing };
   }
 
   const port = Number(portRaw);
 
   if (!Number.isFinite(port) || port <= 0) {
     logger.error("account_email.invalid_port", { port: portRaw });
-    return null;
+    return { config: null, missing: ["SMTP_PORT"] };
   }
 
   const replyTo = process.env.ACCOUNT_EMAIL_REPLY_TO;
   const secureEnv = process.env.SMTP_SECURE?.toLowerCase();
   const secure = secureEnv ? secureEnv === "true" || secureEnv === "1" : port === 465;
 
+  const resolvedHost = host as string;
+  const resolvedUser = user as string;
+  const resolvedPass = pass as string;
+  const resolvedSender = sender as string;
+
   return {
-    host,
-    port,
-    secure,
-    user,
-    pass,
-    sender,
-    replyTo: replyTo && replyTo.length > 0 ? replyTo : undefined,
+    config: {
+      host: resolvedHost,
+      port,
+      secure,
+      user: resolvedUser,
+      pass: resolvedPass,
+      sender: resolvedSender,
+      replyTo: replyTo && replyTo.length > 0 ? replyTo : undefined,
+    },
+    missing,
   };
 }
 

@@ -18,6 +18,8 @@ let missingLogged = false;
 let connectionOverride: string | null = null;
 let currentConnectionString: string | null = null;
 
+const DEFAULT_CONNECT_TIMEOUT_SEC = Number(process.env.DB_CONNECT_TIMEOUT_SECONDS ?? 5);
+
 function log(message: string, extra?: Record<string, unknown>) {
   const payload = extra ? ` ${JSON.stringify(extra)}` : "";
   console.info(`[checkout-db] ${message}${payload}`);
@@ -37,10 +39,34 @@ function resolveConnectionStringFromEnv(): string {
   );
 }
 
+function applyDefaultConnectTimeout(connectionString: string): string {
+  const timeout = Math.max(1, DEFAULT_CONNECT_TIMEOUT_SEC);
+
+  try {
+    const url = new URL(connectionString);
+
+    if (!url.searchParams.get("connect_timeout")) {
+      url.searchParams.set("connect_timeout", String(timeout));
+      return url.toString();
+    }
+
+    return connectionString;
+  } catch {
+    // Fallback for non-URL formatted strings
+    if (connectionString.includes("connect_timeout")) {
+      return connectionString;
+    }
+
+    const separator = connectionString.includes("?") ? "&" : "?";
+    return `${connectionString}${separator}connect_timeout=${timeout}`;
+  }
+}
+
 function getEffectiveConnectionString(): string {
   const override = connectionOverride?.trim();
   const fromEnv = resolveConnectionStringFromEnv()?.trim();
-  const next = override && override.length > 0 ? override : fromEnv;
+  const base = override && override.length > 0 ? override : fromEnv;
+  const next = base ? applyDefaultConnectTimeout(base) : base;
 
   if (next !== currentConnectionString) {
     clientPromise = null;
@@ -143,12 +169,55 @@ async function getClient() {
   return clientPromise;
 }
 
+type SqlLike = (strings: TemplateStringsArray, ...values: Primitive[]) => Promise<unknown>;
+
+export async function ensureAccountSchema(client: { sql: SqlLike }) {
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS accounts (
+      id UUID PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      name TEXT,
+      status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'disabled')),
+      verified_at TIMESTAMPTZ,
+      last_login_at TIMESTAMPTZ,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_accounts_status ON accounts (status);
+  `;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS account_verification_tokens (
+      id UUID PRIMARY KEY,
+      account_id UUID REFERENCES accounts(id) ON DELETE CASCADE,
+      token_hash TEXT UNIQUE NOT NULL,
+      code_hash TEXT NOT NULL,
+      expires_at TIMESTAMPTZ NOT NULL,
+      used_at TIMESTAMPTZ,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_account_verification_tokens_account ON account_verification_tokens (account_id);
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_account_verification_tokens_expires ON account_verification_tokens (expires_at);
+  `;
+}
+
 async function runMigrations() {
   const client = await getClient();
 
   if (!client) {
     return;
   }
+
+  await ensureAccountSchema(client);
 
   await client.sql`
     CREATE TABLE IF NOT EXISTS checkout_sessions (
