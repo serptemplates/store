@@ -9,17 +9,21 @@
     "trade_name": "Eporner",
     "legal_entity": "Marcin Wanat"
   },
-  "description": "Eporner Video Downloader is tuned for the site’s shifting layouts and age gates so you can grab exactly the MP4 you want without guesswork. It recognises standard pages, HD hubs, and embedded players, then lists every resolution with preview art, title, and file size so you always download the right clip.\n\nKick off the download from the popup, watch the on-page progress bar report percentage, speed, and ETA, and wait for the desktop notification that confirms the file saved with the video title. It handles one video at a time for reliability, merging adaptive streams in the background and keeping all processing on your machine for private archiving.",
+  "description": "Download videos from Eporner in MP4 format for offline viewing. This browser extension detects videos on Eporner pages and embedded players, letting you choose your preferred quality and save videos directly to your computer.\n\nThe downloader shows all available quality options and provides clear progress indicators during downloads. Works on standard Eporner pages, regional domains, and embedded video players. All processing happens locally in your browser for privacy.\n\nSimple one-click operation with support for Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "Eporner Video Downloader (Unofficial) | Save Eporner videos as MP4 files",
   "seo_description": "Eporner Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture Eporner videos in any available quality with layout-aware detection, realtime progress, and fully local MP4 processing.",
   "status": "live",
   "features": [
-    "Detects every Eporner layout, including HD hubs and embedded players",
-    "Lists all MP4 renditions with resolution, runtime, thumbnail, and file size",
-    "Inline progress panel shows percentage, speed, and estimated time remaining",
-    "Automatic file naming using the video title for tidy archives",
-    "Desktop notifications confirm success or surface errors instantly",
-    "Runs in Chrome, Edge, Firefox, Brave, and Opera with licence and settings stored locally"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -139,8 +143,6 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": null,
-  "featured_image_gif": null,
   "screenshots": [],
   "product_videos": [],
   "related_videos": [],
@@ -188,8 +190,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with site-specific updates. No free tier or refunds.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/eporner-video-downloader",
@@ -211,8 +212,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0e606JrOmKRCmyITfCmZN",
-      "test_price_id": "price_1SVQlf06JrOmKRCm2kHwNpup",
+      "price_id": "price_1RvXID06JrOmKRCmdSqQK07c",
+      "test_price_id": "price_1SVVWm06JrOmKRCm7vB0VYCb",
       "metadata": {
         "stripe_product_id": "prod_SrFXvsPxRa2Ugv"
       },
@@ -224,8 +225,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0e606JrOmKRCmyITfCmZN",
-    "test_price_id": "price_1SVQlf06JrOmKRCm2kHwNpup",
+    "price_id": "price_1RvXID06JrOmKRCmdSqQK07c",
+    "test_price_id": "price_1SVVWm06JrOmKRCm7vB0VYCb",
     "metadata": {
       "stripe_product_id": "prod_SrFXvsPxRa2Ugv"
     },

@@ -9,17 +9,21 @@
     "trade_name": "XHamster",
     "legal_entity": "Hammy Media Ltd"
   },
-  "description": "XHamster Video Downloader detects videos on xhamster.com and every regional mirror automatically, then lets you pick the resolution and save a clean MP4. It filters duplicate quality options, works the same on each domain, and shows a progress bar while it downloads so you can build an offline collection without fighting ads or pop-ups.",
+  "description": "Download videos from XHamster in MP4 format for offline viewing. This browser extension works on XHamster.com and all regional domains, automatically detecting videos and showing available quality options.\n\nSelect your preferred resolution and save videos directly to your computer. The extension filters out duplicate quality options and provides clear progress indicators during downloads. Build your offline collection without dealing with ads or pop-ups.\n\nAll processing is done locally in your browser. Compatible with Chrome, Edge, Firefox, Brave, and Opera.",
   "seo_title": "Xhamster Video Downloader (Unofficial) | Download Xhamster Videos",
   "seo_description": "Xhamster Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Xhamster videos easily for offline viewing. Fast, reliable Xhamster video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Works automatically on xhamster.com, xhamster.one, xhamster.desi, xhms.pro, and other mirrors",
-    "Detects video players and filters duplicate quality entries for a clean selection list",
-    "Downloads MP4 files directly at the resolution you choose with no re-encoding",
-    "Shows on-page progress with file size, percentage, and status updates",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no analytics or external routing of downloads"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -130,14 +134,7 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/xhamster-video-downloader.jpg",
-      "alt": "Xhamster Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -184,8 +181,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with multi-domain support and quality selection. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/xhamster-video-downloader",
@@ -207,8 +203,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0f606JrOmKRCmituaSiHm",
-      "test_price_id": "price_1SVQlk06JrOmKRCm5OZ9cZK2",
+      "price_id": "price_1RvXdF06JrOmKRCmSniyO7DT",
+      "test_price_id": "price_1SVVWp06JrOmKRCmooDlrIFa",
       "metadata": {
         "stripe_product_id": "prod_SrFXX6huXVaXb9"
       },
@@ -220,8 +216,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0f606JrOmKRCmituaSiHm",
-    "test_price_id": "price_1SVQlk06JrOmKRCm5OZ9cZK2",
+    "price_id": "price_1RvXdF06JrOmKRCmSniyO7DT",
+    "test_price_id": "price_1SVVWp06JrOmKRCmooDlrIFa",
     "metadata": {
       "stripe_product_id": "prod_SrFXX6huXVaXb9"
     },

@@ -95,14 +95,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/nhentai-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/nhentai-downloader/nhentai-homepage.webp",
-      "alt": "NHentai Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],

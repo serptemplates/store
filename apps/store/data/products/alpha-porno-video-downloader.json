@@ -9,21 +9,21 @@
     "trade_name": "AlphaPorno",
     "legal_entity": "Venidia Enterprises LTD"
   },
-  "description": "Alpha Porno Video Downloader zeroes in on alphaporno.com video players so you can save clips for offline viewing in a couple clicks. It scans each page for hidden MP4 and HLS manifests, surfaces every quality option, and lets you decide exactly what lands in your downloads folder.\n\nConcurrent downloads mean you can queue multiple clips at once, watch progress bars inline, and keep browsing while the extension finishes its work. A right-click shortcut and compact popup deliver quality selection, speed indicators, and discreet desktop notifications when each file wraps.\n\nLicence activation takes seconds and settings stay local, so nothing leaves your browser beyond a quick licence check. The extension only runs on AlphaPorno domains, keeping the rest of your browsing untouched and your saved copies private.\n\nKeep the source tab open until the merge completes, remember it cannot grab DRM-protected streams, and consider splitting long sessions into batches so your hardware can stitch complex HLS videos without slowing down.",
+  "description": "Save videos from AlphaPorno with a simple browser extension. Choose your preferred video quality, click download, and the extension saves the video directly to your computer for offline viewing.\n\nThe downloader automatically detects videos on AlphaPorno pages and shows you all available quality options. You can download multiple videos at the same time, with progress indicators for each download. A convenient right-click menu lets you start downloads quickly without opening the extension popup.\n\nAll processing happens locally in your browser—your downloads stay private and the extension only activates on AlphaPorno domains. Works with Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux.",
   "seo_title": "Alpha Porno Video Downloader (Unofficial) | Concurrent downloads for alphaporno.com",
   "seo_description": "Alpha Porno Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Capture AlphaPorno videos with multi-quality selection, concurrent downloads, and fully local processing for private offline viewing.",
   "status": "live",
   "features": [
-    "Purpose-built detection for alphaporno.com MP4 and HLS video streams",
-    "Concurrent download queue so you can save multiple clips at once",
-    "Quality picker that lists every available resolution from 480p through 1080p",
-    "One-click right-click overlay to skip the popup and start downloads instantly",
-    "Inline progress bars and desktop notifications for real-time status",
-    "Runs on Chrome, Edge, Firefox, Brave, Opera, and other supported desktop browsers",
-    "Licence and preferences stored locally with no external tracking or analytics",
-    "Offscreen processing merges HLS chunks in the background without freezing tabs",
-    "Smart retry logic handles dynamic pages and reconnects when mirrors shift",
-    "Site-scoped permissions limit the extension to alphaporno.com domains only"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -194,8 +194,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with unlimited downloads on alphaporno.com. No trial and no refunds.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/alpha-porno-video-downloader",
@@ -217,8 +216,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
-      "test_price_id": "price_1SVQld06JrOmKRCmw8z4ZFue",
+      "price_id": "price_1SELi806JrOmKRCmYjc9McRN",
+      "test_price_id": "price_1SVVWk06JrOmKRCmQS2l53DH",
       "metadata": {
         "stripe_product_id": "prod_TAg09llcKpydjr"
       },
@@ -230,8 +229,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0Sc06JrOmKRCmh41epOht",
-    "test_price_id": "price_1SVQld06JrOmKRCmw8z4ZFue",
+    "price_id": "price_1SELi806JrOmKRCmYjc9McRN",
+    "test_price_id": "price_1SVVWk06JrOmKRCmQS2l53DH",
     "metadata": {
       "stripe_product_id": "prod_TAg09llcKpydjr"
     },

@@ -9,18 +9,21 @@
     "trade_name": "Pornhub",
     "legal_entity": "Licensing IP International S.à r.l."
   },
-  "description": "Pornhub Video Downloader saves scenes from Pornhub, Pornhub Premium, and Thumbzilla as clean MP4 files. It detects free and subscriber-only players, lists every available resolution, and converts adaptive streams in the background so you can watch offline without buffering or ads.\n\nStay logged in, pick your quality, and the extension handles headers, chunk downloads, and merging automatically. Progress stays visible even if you reload the page, and your downloads finish quietly in Chrome, Edge, Firefox, Brave, or Opera.",
+  "description": "Download videos from Pornhub, Pornhub Premium, and Thumbzilla in high-quality MP4 format. This browser extension detects videos on all Pornhub sites, shows available quality options, and saves them to your computer for offline viewing.\n\nWorks with both free and premium content when you're logged in to your account. The extension handles all technical processing automatically, converting streaming videos into standard MP4 files. Download progress continues even if you navigate away from the page.\n\nAll downloads process locally in your browser for privacy. Compatible with Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "Pornhub Video Downloader (Unofficial) | Download Pornhub Videos",
   "seo_description": "Pornhub Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Pornhub videos easily for offline viewing. Fast, reliable Pornhub video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects Pornhub, Pornhub Premium, and Thumbzilla players automatically",
-    "Uses your Premium session to access subscriber-only streams securely",
-    "Converts HLS streams into MP4 files while preserving original quality",
-    "Lists every resolution with file-size estimates and remembers your preferred quality",
-    "Keeps progress running even when you switch pages or reload",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no analytics or external tracking"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -147,13 +150,7 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/pornhub-video-downloader.jpg",
-      "alt": "Pornhub Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -200,8 +197,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence covering free and Premium downloads with stream conversion. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/pornhub-video-downloader",
@@ -223,8 +219,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0eY06JrOmKRCmCf4EluDt",
-      "test_price_id": "price_1SVQlh06JrOmKRCmcADn2x69",
+      "price_id": "price_1RvXN806JrOmKRCmg1bHRufg",
+      "test_price_id": "price_1SVVWn06JrOmKRCmaiZzh3K5",
       "metadata": {
         "stripe_product_id": "prod_Sqsjylj8Z89k1v"
       },
@@ -236,8 +232,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0eY06JrOmKRCmCf4EluDt",
-    "test_price_id": "price_1SVQlh06JrOmKRCmcADn2x69",
+    "price_id": "price_1RvXN806JrOmKRCmg1bHRufg",
+    "test_price_id": "price_1SVVWn06JrOmKRCmaiZzh3K5",
     "metadata": {
       "stripe_product_id": "prod_Sqsjylj8Z89k1v"
     },

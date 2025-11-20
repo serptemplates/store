@@ -95,14 +95,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/hentaihaven-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/hentaihaven-downloader/hentaihaven-homepage.webp",
-      "alt": "HentaiHaven Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],

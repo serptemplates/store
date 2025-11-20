@@ -155,6 +155,20 @@ export const assetPathSchema = trimmedString().superRefine((value, ctx) => {
   });
 });
 
+export const optionalAssetPathSchema = () =>
+  z.preprocess(
+    (value) => {
+      if (value === null || value === undefined) {
+        return undefined;
+      }
+      if (typeof value === "string" && value.trim().length === 0) {
+        return undefined;
+      }
+      return value;
+    },
+    assetPathSchema.optional().nullable(),
+  );
+
 export const screenshotSchema = z.object({
   url: assetPathSchema,
   alt: optionalTrimmedString(),

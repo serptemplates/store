@@ -95,14 +95,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/pornve-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/pornve-downloader/pornve-homepage.webp",
-      "alt": "PornVe Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],

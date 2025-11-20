@@ -16,8 +16,7 @@
     "success_url",
     "cancel_url",
     "name",
-    "tagline",
-    "description"
+    "tagline"
   ],
   "properties": {
     "slug": {
@@ -132,20 +131,20 @@
       "type": "string",
       "minLength": 1
     },
-    "featured_image": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "minLength": 1
-    },
-    "featured_image_gif": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "minLength": 1
-    },
+  "featured_image": {
+    "type": [
+      "string",
+      "null"
+    ],
+    "minLength": 0
+  },
+  "featured_image_gif": {
+    "type": [
+      "string",
+      "null"
+    ],
+    "minLength": 0
+  },
     "github_repo_url": {
       "anyOf": [
         {
@@ -256,8 +255,11 @@
       "default": []
     },
     "description": {
-      "type": "string",
-      "minLength": 1
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 0
     },
     "product_videos": {
       "type": "array",

@@ -95,14 +95,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/anyporn-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/anyporn-downloader/anyporn-homepage.webp",
-      "alt": "AnyPorn Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
