@@ -9,17 +9,21 @@
     "trade_name": "SpankBang",
     "legal_entity": "Unknown / no verifiable registrant"
   },
-  "description": "SpankBang Video Downloader grabs MP4 files from spankbang.com, /play/ pages, embeds, and the mobile site in just a couple clicks. It lists every resolution the video offers, downloads straight through your browser, and saves clean copies so you can watch offline without ads or buffering.\n\nChoose the quality, follow the progress bar, and the downloader delivers a finished MP4 with zero re-encoding—no command-line tools or pop-up sites required.",
+  "description": "Download videos from SpankBang in MP4 format. This browser extension works on all SpankBang pages including standard videos, embedded players, and the mobile site, automatically detecting videos and showing available quality options.\n\nSelect your preferred quality and download videos directly to your computer with clear progress indicators. All files are saved as standard MP4s for offline viewing.\n\nSimple, straightforward operation with local processing for privacy. Compatible with Chrome, Edge, Firefox, Brave, and Opera.",
   "seo_title": "SpankBang Video Downloader (Unofficial) | Download SpankBang Videos",
   "seo_description": "SpankBang Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download SpankBang videos easily for offline viewing. Fast, reliable SpankBang video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects SpankBang main pages, /play/ URLs, embed players, and the mobile site",
-    "Lists every MP4 resolution with estimated file sizes and remembers your last choice",
-    "Downloads direct MP4 streams at full speed without re-encoding",
-    "Shows in-page progress with percentage, speed, and cancel controls",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no analytics or third-party trackers"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -138,13 +142,7 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/spankbang-video-downloader.jpg",
-      "alt": "SpankBang Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -191,8 +189,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with multi-page detection and MP4 downloads included. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/spankbang-video-downloader",
@@ -214,8 +211,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0es06JrOmKRCmvhvRUOkH",
-      "test_price_id": "price_1SVQli06JrOmKRCmQ9kKtFvf",
+      "price_id": "price_1S9DXF06JrOmKRCmrbemGM9U",
+      "test_price_id": "price_1SVVWo06JrOmKRCmvZiAfYxi",
       "metadata": {
         "stripe_product_id": "prod_T5OJxcMDHKSqyk"
       },
@@ -227,8 +224,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0es06JrOmKRCmvhvRUOkH",
-    "test_price_id": "price_1SVQli06JrOmKRCmQ9kKtFvf",
+    "price_id": "price_1S9DXF06JrOmKRCmrbemGM9U",
+    "test_price_id": "price_1SVVWo06JrOmKRCmvZiAfYxi",
     "metadata": {
       "stripe_product_id": "prod_T5OJxcMDHKSqyk"
     },

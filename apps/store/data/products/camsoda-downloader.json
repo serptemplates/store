@@ -123,14 +123,8 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/camsoda-downloader.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/camsoda-downloader/main/images/camsoda-downloader.gif",
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/camsoda-downloader.jpg",
-      "alt": "Camsoda Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -193,10 +187,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0dw06JrOmKRCmsbGc9scj",
-      "metadata": {
-        "stripe_product_id": "prod_Sv6GHj9F6PuSPW"
-      },
+      "metadata": {},
       "optional_items": [
         {
           "product_id": "prod_TPQDdWiCCy0HK2"
@@ -205,10 +196,7 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0dw06JrOmKRCmsbGc9scj",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6GHj9F6PuSPW"
-    },
+    "metadata": {},
     "optional_items": [
       {
         "product_id": "prod_TPQDdWiCCy0HK2"

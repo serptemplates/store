@@ -9,17 +9,21 @@
     "trade_name": "XNXX",
     "legal_entity": "WGCZ a.s."
   },
-  "description": "XNXX Video Downloader recognises videos on xnxx.com, video.xnxx.com, xnxx3.com, and other mirrors automatically, then gives you a clean list of MP4 qualities to choose from. Pick your resolution, follow the progress bar, and it saves the stream as a tidy MP4 for offline viewing.",
+  "description": "Download videos from XNXX in MP4 format. This browser extension works across all XNXX domains including xnxx.com, video.xnxx.com, xnxx3.com, and mirror sites, automatically detecting videos and displaying available quality options.\n\nChoose your preferred quality and the extension saves videos directly to your computer as standard MP4 files for offline viewing. Simple operation with clear progress indicators.\n\nAll processing happens locally in your browser for privacy. Works with Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "XNXX Video Downloader (Unofficial) | Download XNXX Videos",
   "seo_description": "XNXX Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download XNXX videos easily for offline viewing. Fast, reliable XNXX video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Works automatically on xnxx.com, video.xnxx.com, xnxx3.com, and regional mirrors",
-    "Filters duplicate quality entries to show a clean MP4 resolution list",
-    "Downloads MP4 files directly at the quality you select with no re-encoding",
-    "Displays on-page progress with percentage, downloaded size, and status updates",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no tracking or external routing of downloads"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -100,7 +104,7 @@
   ],
   "layout_type": "landing",
   "featured": false,
-  "new_release": true,
+  "new_release": false,
   "popular": false,
   "permission_justifications": [
     {
@@ -130,7 +134,6 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image_gif": "https://raw.githubusercontent.com/serpapps/xnxx-video-downloader/main/images/xnxx-video-downloader.gif",
   "screenshots": [],
   "product_videos": [],
   "related_videos": [],
@@ -178,8 +181,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with multi-domain detection and quality selection. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/xnxx-video-downloader",
@@ -201,8 +203,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0fB06JrOmKRCmDKbwSVtx",
-      "test_price_id": "price_1SVQlk06JrOmKRCmP0um3kU0",
+      "price_id": "price_1S9PBd06JrOmKRCmvSxzbjnz",
+      "test_price_id": "price_1SVVWp06JrOmKRCmQxxElP2J",
       "metadata": {
         "stripe_product_id": "prod_SrGYKrazcfgi5G"
       },
@@ -214,8 +216,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0fB06JrOmKRCmDKbwSVtx",
-    "test_price_id": "price_1SVQlk06JrOmKRCmP0um3kU0",
+    "price_id": "price_1S9PBd06JrOmKRCmvSxzbjnz",
+    "test_price_id": "price_1SVVWp06JrOmKRCmQxxElP2J",
     "metadata": {
       "stripe_product_id": "prod_SrGYKrazcfgi5G"
     },

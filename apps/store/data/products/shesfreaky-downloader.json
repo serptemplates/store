@@ -95,14 +95,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/shesfreaky-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/shesfreaky-downloader/shesfreaky-homepage.webp",
-      "alt": "ShesFreaky Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],

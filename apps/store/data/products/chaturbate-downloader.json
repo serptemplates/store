@@ -123,14 +123,7 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "/media/products/chaturbate-downloader/featured.webp",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "/media/products/chaturbate-downloader/chaturbate-homepage.webp",
-      "alt": "Chaturbate Downloader website homepage"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -193,10 +186,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0e106JrOmKRCmcQ8krmTV",
-      "metadata": {
-        "stripe_product_id": "prod_Sv6GzNN1Yu0VFV"
-      },
+      "metadata": {},
       "optional_items": [
         {
           "product_id": "prod_TPQDdWiCCy0HK2"
@@ -205,10 +195,7 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0e106JrOmKRCmcQ8krmTV",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6GzNN1Yu0VFV"
-    },
+    "metadata": {},
     "optional_items": [
       {
         "product_id": "prod_TPQDdWiCCy0HK2"

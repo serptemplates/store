@@ -106,7 +106,6 @@ const REQUIRED_PRODUCT_FIELDS = [
   "tagline",
   "slug",
   "trademark_metadata",
-  "description",
   "seo_title",
   "seo_description",
   "serply_link",

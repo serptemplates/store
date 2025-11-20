@@ -9,17 +9,21 @@
     "trade_name": "TNAFlix",
     "legal_entity": "Unknown / TNAFlix Network"
   },
-  "description": "TNAFlix Video Downloader gives creators and teams a dependable way to save TNAFlix videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from TNAFlix with consistent quality and predictable results.\n\nIt supports High-quality videos with resolution options, Batch download support for multiple selections, and Auto thumbnail and metadata extraction, so you can move quickly from download to delivery without tedious rework. Use it to archive TNAFlix assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
+  "description": "Download videos from TNAFlix in high-quality MP4 format. This browser extension automatically detects TNAFlix videos and lets you save them to your computer for offline viewing.\n\nChoose from multiple quality options, download multiple videos at once, and track progress with clear indicators. The extension saves videos as standard MP4 files complete with thumbnails and metadata.\n\nAll processing happens locally in your browser for privacy. Works with Chrome, Edge, Firefox, Brave, and Opera on desktop platforms.",
   "seo_title": "TNAFlix Video Downloader (Unofficial) | Download TNAFlix Videos",
   "seo_description": "TNAFlix Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download TNAFlix videos easily for offline viewing. Fast, reliable TNAFlix video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects TNAFlix video players across site variations",
-    "Lists available MP4 resolutions sorted best to worst",
-    "Downloads MP4 files directly through the browser without re-encoding",
-    "Shows on-page progress with percentage, size, and status updates",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop",
-    "Stores licence data locally with no tracking or hidden analytics"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking",
+    "Media download customization",
+    "Supports photos & videos"
   ],
   "faqs": [
     {
@@ -134,14 +138,7 @@
   ],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg",
-  "featured_image_gif": null,
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/tnaflix-video-downloader.jpg",
-      "alt": "TNAFlix Video Downloader website preview"
-    }
-  ],
+  "screenshots": [],
   "product_videos": [],
   "related_videos": [],
   "related_posts": [],
@@ -188,8 +185,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9.00",
-    "original_price": "$17.00",
+    "price": "$17.00",
     "note": "Lifetime licence with quality selection and progress tracking included. Sales are final.",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/tnaflix-video-downloader",
@@ -207,8 +203,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0f206JrOmKRCmvTVDdxyX",
-      "test_price_id": "price_1SVQlj06JrOmKRCmpzrGvjcd",
+      "price_id": "price_1S99gF06JrOmKRCmxPX1Ip5o",
+      "test_price_id": "price_1SVVWo06JrOmKRCmPWaZntQW",
       "metadata": {
         "stripe_product_id": "prod_SrGZUcdNEVvNsn"
       },
@@ -220,8 +216,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0f206JrOmKRCmvTVDdxyX",
-    "test_price_id": "price_1SVQlj06JrOmKRCmpzrGvjcd",
+    "price_id": "price_1S99gF06JrOmKRCmxPX1Ip5o",
+    "test_price_id": "price_1SVVWo06JrOmKRCmPWaZntQW",
     "metadata": {
       "stripe_product_id": "prod_SrGZUcdNEVvNsn"
     },

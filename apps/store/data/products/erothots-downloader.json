@@ -121,7 +121,6 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": null,
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/erothots-downloader/main/images/erothots-downloader.gif",
   "screenshots": [],
   "product_videos": [],
@@ -186,10 +185,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SO0eF06JrOmKRCmHQMdaVib",
-      "metadata": {
-        "stripe_product_id": "prod_Sv6GQD10gRgLZL"
-      },
+      "metadata": {},
       "optional_items": [
         {
           "product_id": "prod_TPQDdWiCCy0HK2"
@@ -198,10 +194,7 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SO0eF06JrOmKRCmHQMdaVib",
-    "metadata": {
-      "stripe_product_id": "prod_Sv6GQD10gRgLZL"
-    },
+    "metadata": {},
     "optional_items": [
       {
         "product_id": "prod_TPQDdWiCCy0HK2"
