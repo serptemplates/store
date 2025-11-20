@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Github, Instagram, Twitter, Youtube } from "lucide-react";
+import { Github, Instagram, Twitter, Youtube, Reddit } from "lucide-react";
 import Link from "next/link";
 
 import type { FooterLink, FooterSite } from "./Footer";
@@ -80,6 +80,7 @@ const DEFAULT_SOCIAL_LINKS: SocialLink[] = [
   { label: "Instagram", href: "https://www.instagram.com/serpapps/", icon: Instagram, className: "text-sky-500" },
   { label: "Twitter", href: "https://twitter.com/serpapps", icon: Twitter, className: "text-amber-500" },
   { label: "YouTube", href: "https://www.youtube.com/@serpapps", icon: Youtube, className: "text-red-500" },
+  { label: "Reddit", href: "https://www.reddit.com/r/serpdownloaders/", icon: Reddit, className: "text-red-500" },
 ];
 
 const DEFAULT_PRODUCT_BADGES: ProductBadge[] = [
