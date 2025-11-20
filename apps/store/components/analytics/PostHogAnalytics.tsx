@@ -32,6 +32,9 @@ function initializePostHog() {
     autocapture: false,
     disable_surveys: true,
     disable_surveys_automatic_display: true,
+    // PostHog types don’t yet expose this flag; we want to avoid feature flag requests.
+    // @ts-expect-error unsupported in current type definitions
+    disable_feature_flags: true,
     advanced_disable_feature_flags: true,
     advanced_disable_feature_flags_on_first_load: true,
     session_recording: {
