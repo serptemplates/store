@@ -1,14 +1,13 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
 import type Stripe from "stripe";
 
-import { stripeCheckoutAdapter } from "@/lib/payments/providers/stripe/checkout";
+import {
+  resetStripeCheckoutDependencies,
+  setStripeCheckoutDependencies,
+  stripeCheckoutAdapter,
+} from "@/lib/payments/providers/stripe/checkout";
 import type { CheckoutRequest } from "@/lib/payments/providers/base";
-
-vi.mock("@/lib/payments/stripe", () => ({
-  getStripeClient: vi.fn(),
-  resolvePriceForEnvironment: vi.fn(),
-}));
 
 const mockPrice = (id: string): Stripe.Price =>
   ({
@@ -16,14 +15,22 @@ const mockPrice = (id: string): Stripe.Price =>
   } as unknown as Stripe.Price);
 
 describe("stripeCheckoutAdapter", () => {
+  const getStripeClientMock = vi.fn();
+  const resolvePriceForEnvironmentMock = vi.fn();
+
   beforeEach(() => {
     vi.clearAllMocks();
+    setStripeCheckoutDependencies({
+      getStripeClient: getStripeClientMock,
+      resolvePriceForEnvironment: resolvePriceForEnvironmentMock,
+    });
+  });
+
+  afterEach(() => {
+    resetStripeCheckoutDependencies();
   });
 
   it("creates a checkout session with optional items", async () => {
-    const { getStripeClient, resolvePriceForEnvironment } = await import("@/lib/payments/stripe");
-    const getStripeClientMock = vi.mocked(getStripeClient);
-    const resolvePriceForEnvironmentMock = vi.mocked(resolvePriceForEnvironment);
     const liveClient = {
       products: {
         retrieve: vi.fn().mockResolvedValue({
@@ -120,10 +127,6 @@ describe("stripeCheckoutAdapter", () => {
   });
 
   it("throws when Stripe does not return a checkout URL", async () => {
-    const { getStripeClient, resolvePriceForEnvironment } = await import("@/lib/payments/stripe");
-    const getStripeClientMock = vi.mocked(getStripeClient);
-    const resolvePriceForEnvironmentMock = vi.mocked(resolvePriceForEnvironment);
-
     getStripeClientMock.mockReturnValue({
       checkout: {
         sessions: {
