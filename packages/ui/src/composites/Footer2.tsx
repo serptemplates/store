@@ -43,7 +43,6 @@ export type Footer2Props = {
 
 const DEFAULT_HERO_LINKS: FooterLink[] = [
   { label: "Roadmap", href: "https://github.com/serpapps" },
-  { label: "Changelog", href: "https://github.com/serpapps/store/releases" },
 ];
 
 const DEFAULT_SECTIONS: FooterSection[] = [
@@ -52,9 +51,7 @@ const DEFAULT_SECTIONS: FooterSection[] = [
     links: [
       { label: "Videos", href: "/videos" },
       { label: "Blog", href: "/blog" },
-      { label: "Product Catalog", href: "/categories" },
-      { label: "SERP Tools", href: "https://tools.serp.co", external: true },
-      { label: "SERP Extensions", href: "https://extensions.serp.co", external: true },
+      { label: "Categories", href: "/categories" },
     ],
   },
   {
@@ -63,7 +60,7 @@ const DEFAULT_SECTIONS: FooterSection[] = [
       { label: "Help Center", href: "https://serpcompany.tawk.help/", external: true },
       { label: "Tickets", href: "https://serpcompany.tawk.help/#tickets", external: true },
       { label: "Chat Support", href: "https://tawk.to/serpcompany", external: true },
-      { label: "Contact", href: "mailto:support@serp.co" },
+      { label: "Contact", href: "mailto:conact@serp.co" },
       { label: "Status", href: "https://status.serp.co", external: true },
     ],
   },
@@ -89,6 +86,9 @@ const DEFAULT_PRODUCT_BADGES: ProductBadge[] = [
   { label: "SERP Tools", href: "https://tools.serp.co" },
   { label: "SERP Extensions", href: "https://extensions.serp.co" },
   { label: "SERP Apps", href: "https://apps.serp.co" },
+  { label: "SERP AI", href: "https://serp.ai" },
+  { label: "SERP", href: "https://serp.co" },
+  { label: "SERP Directories", href: "https://directories.serp.co" },
 ];
 
 const DEFAULT_BOTTOM_LEGAL_LINKS: FooterLink[] = [
@@ -100,7 +100,7 @@ const DEFAULT_BOTTOM_LEGAL_LINKS: FooterLink[] = [
 
 export function Footer2({
   site,
-  heroDescription = "Automation-first workflows for creators and teams who need reliable downloaders, monitoring, and privacy tooling. Built with ruthless QA and transparent disclosures.",
+  heroDescription = "",
   heroLinks = DEFAULT_HERO_LINKS,
   sections = DEFAULT_SECTIONS,
   socialLinks = DEFAULT_SOCIAL_LINKS,
