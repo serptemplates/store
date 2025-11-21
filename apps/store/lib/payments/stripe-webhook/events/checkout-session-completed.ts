@@ -75,6 +75,11 @@ async function collectLineItemTagData(
     });
 
     for (const item of lineItems.data ?? []) {
+      const quantity = typeof item.quantity === "number" ? item.quantity : 1;
+      if (quantity <= 0) {
+        continue;
+      }
+
       const price = item.price ?? null;
       if (price?.metadata) {
         for (const tag of collectTagCandidatesFromMetadata(price.metadata)) {
@@ -99,6 +104,7 @@ async function collectLineItemTagData(
           }
         }
       }
+
     }
   } catch (error) {
     logger.warn("stripe.checkout_line_items_fetch_failed", {
@@ -177,11 +183,9 @@ export async function handleCheckoutSessionCompleted(
     metadata.stripeProductId = stripeProductIdValue;
   }
 
-  let ghlTagValue = metadata.ghl_tag ?? metadata.ghlTag ?? null;
-  if (ghlTagValue) {
-    metadata.ghl_tag = ghlTagValue;
-    metadata.ghlTag = ghlTagValue;
-  }
+  const metadataTagCandidates: string[] = [];
+  appendUniqueString(metadataTagCandidates, metadata.ghl_tag);
+  appendUniqueString(metadataTagCandidates, metadata.ghlTag);
 
 
   const tosStatus = session.consent?.terms_of_service ?? null;
@@ -266,77 +270,91 @@ export async function handleCheckoutSessionCompleted(
     metadata.productSlug = offerId;
   }
 
-  if (!metadata.ghl_tag && !metadata.ghlTag) {
-    const fallbackTag =
-      offerConfig?.ghl?.tagIds && offerConfig.ghl.tagIds.length > 0
-        ? offerConfig.ghl.tagIds[0]
-        : (() => {
-            try {
-              const product = getProductData(offerId);
-              return product.ghl?.tag_ids?.[0] ?? null;
-            } catch {
-              return null;
-            }
-          })();
-
-    if (fallbackTag) {
-      metadata.ghl_tag = fallbackTag;
-      metadata.ghlTag = fallbackTag;
-      ghlTagValue = fallbackTag;
-    }
-  }
-
   const lineItemTagData = await collectLineItemTagData(session, stripeModeForLineItems);
-  const resolvedGhlTagIds: string[] = [];
-  const appendTagId = (value: unknown) => appendUniqueString(resolvedGhlTagIds, value);
-
-  appendTagId(ghlTagValue);
-  appendTagId(metadata.ghl_tag);
-  appendTagId(metadata.ghlTag);
+  const lineItemTags: string[] = [];
+  const appendLineItemTag = (value: unknown) => appendUniqueString(lineItemTags, value);
 
   for (const entry of lineItemTagData.tagIds) {
-    appendTagId(entry);
+    appendLineItemTag(entry);
+  }
+
+  const productSlugCandidatesFromLineItems: string[] = [];
+  const appendLineItemProductSlug = (value: unknown) => appendUniqueString(productSlugCandidatesFromLineItems, value);
+
+  for (const slug of lineItemTagData.productSlugs) {
+    appendLineItemProductSlug(slug);
+  }
+
+  const appendProductTags = (slugs: string[], target: string[]) => {
+    for (const slug of slugs) {
+      if (!slug) continue;
+      try {
+        const product = getProductData(slug);
+        const productTags = Array.isArray(product?.ghl?.tag_ids) ? product.ghl.tag_ids : [];
+        for (const tag of productTags) {
+          appendUniqueString(target, tag);
+        }
+      } catch (error) {
+        logger.debug("product.lookup_failed_for_ghl_tags", {
+          slug,
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
+    }
+  };
+
+  appendProductTags(productSlugCandidatesFromLineItems, lineItemTags);
+
+  const fallbackTags: string[] = [];
+  const appendFallbackTag = (value: unknown) => appendUniqueString(fallbackTags, value);
+
+  for (const tag of metadataTagCandidates) {
+    appendFallbackTag(tag);
   }
 
   if (offerConfig?.ghl?.tagIds) {
     for (const entry of offerConfig.ghl.tagIds) {
-      appendTagId(entry);
+      appendFallbackTag(entry);
     }
   }
 
-  const productSlugCandidates: string[] = [];
-  const appendProductSlug = (value: unknown) => appendUniqueString(productSlugCandidates, value);
+  const fallbackProductSlugCandidates: string[] = [];
+  const appendFallbackProductSlug = (value: unknown) => appendUniqueString(fallbackProductSlugCandidates, value);
 
-  appendProductSlug(productSlugValue);
-  appendProductSlug(metadata.product_slug);
-  appendProductSlug(metadata.productSlug);
-  appendProductSlug(offerId);
+  appendFallbackProductSlug(productSlugValue);
+  appendFallbackProductSlug(metadata.product_slug);
+  appendFallbackProductSlug(metadata.productSlug);
+  appendFallbackProductSlug(offerId);
 
-  for (const slug of lineItemTagData.productSlugs) {
-    appendProductSlug(slug);
+  const resolvedGhlTagIds: string[] = [];
+  const appendResolvedTag = (value: unknown) => appendUniqueString(resolvedGhlTagIds, value);
+
+  for (const tag of lineItemTags) {
+    appendResolvedTag(tag);
   }
 
-  for (const slug of productSlugCandidates) {
-    if (!slug) continue;
-    try {
-      const product = getProductData(slug);
-      const productTags = Array.isArray(product?.ghl?.tag_ids) ? product.ghl.tag_ids : [];
-      for (const tag of productTags) {
-        appendTagId(tag);
-      }
-    } catch (error) {
-      logger.debug("product.lookup_failed_for_ghl_tags", {
-        slug,
-        error: error instanceof Error ? error.message : String(error),
-      });
+  if (resolvedGhlTagIds.length === 0) {
+    appendProductTags(fallbackProductSlugCandidates, fallbackTags);
+    for (const tag of fallbackTags) {
+      appendResolvedTag(tag);
     }
   }
 
-  if (resolvedGhlTagIds.length > 0) {
-    metadata.ghl_tag = resolvedGhlTagIds[0];
-    metadata.ghlTag = resolvedGhlTagIds[0];
-    ghlTagValue = resolvedGhlTagIds[0];
+  const primaryGhlTag = resolvedGhlTagIds[0] ?? null;
+  if (primaryGhlTag) {
+    metadata.ghl_tag = primaryGhlTag;
+    metadata.ghlTag = primaryGhlTag;
   }
+
+  logger.debug("stripe.checkout_resolved_tags", {
+    sessionId: session.id,
+    lineItemTagCount: lineItemTags.length,
+    fallbackTagCount: fallbackTags.length,
+    resolvedTagCount: resolvedGhlTagIds.length,
+    resolvedTags: resolvedGhlTagIds,
+    fallbackProductSlugCandidates,
+    lineItemProductSlugs: productSlugCandidatesFromLineItems,
+  });
 
   if (paymentIntentId) {
     await recordWebhookLog({
