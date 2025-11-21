@@ -235,7 +235,7 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$37.00",
+    "price": "$47.00",
     "original_price": "$47",
     "note": "Download instantly • Lifetime updates included • No refunds",
     "cta_text": "Get it Now",
@@ -258,8 +258,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
-      "test_price_id": "price_1SVQlh06JrOmKRCmEBuzAULE",
+      "price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+      "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY",
       "metadata": {
         "stripe_product_id": "prod_SgRUYSKnhuiXX6"
       },
@@ -271,8 +271,8 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
-    "test_price_id": "price_1SVQlh06JrOmKRCmEBuzAULE",
+    "price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+    "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY",
     "metadata": {
       "stripe_product_id": "prod_SgRUYSKnhuiXX6"
     },

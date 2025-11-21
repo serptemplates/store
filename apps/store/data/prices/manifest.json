@@ -706,10 +706,10 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 3700,
+    "unit_amount": 4700,
     "stripe": {
-      "live_price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
-      "test_price_id": "price_1SVQlh06JrOmKRCmEBuzAULE"
+      "live_price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+      "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY"
     }
   },
   "snapchat-video-downloader": {
