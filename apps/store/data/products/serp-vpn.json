@@ -20,7 +20,7 @@
     "Optional per-site rules to keep specific domains always protected",
     "No-logs extension layer — designed for privacy-first workflows",
     "Works alongside existing desktop VPNs without conflict",
-    "Optimised routes for search, scraping, and QA workflows",
+    "Optimized routes for search, scraping, and QA workflows",
     "Zero analytics beacons or invasive trackers inside the extension"
   ],
   "faqs": [
