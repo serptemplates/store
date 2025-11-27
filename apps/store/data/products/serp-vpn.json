@@ -84,7 +84,7 @@
     },
     {
       "permission": "tabs",
-      "justification": "Intended for future use to react to tab changes (for example, to refresh or update tabs when the VPN connection changes). It is not currently used to read page content. You can remove this permission from wxt.config.ts before uploading if you want to minimise the requested scope."
+      "justification": "Intended for future use to react to tab changes (for example, to refresh or update tabs when the VPN connection changes). It is not currently used to read page content. You can remove this permission from wxt.config.ts before uploading if you want to minimize the requested scope."
     },
     {
       "permission": "webRequest",
