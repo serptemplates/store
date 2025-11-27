@@ -81,7 +81,7 @@
     },
     "platform": {
       "type": "string",
-      "minLength": 1
+      "minLength": 0
     },
     "seo_title": {
       "type": "string",
@@ -419,7 +419,8 @@
           "Music",
           "File Storage",
           "Productivity",
-          "Utilities"
+          "Utilities",
+          "Privacy & Security"
         ]
       },
       "default": []

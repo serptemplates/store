@@ -274,7 +274,7 @@ const Item = ({
         fill
         priority={isActive}
         fetchPriority={isActive ? "high" : "auto"}
-        className="object-cover"
+        className="object-contain"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
         quality={90}
       />

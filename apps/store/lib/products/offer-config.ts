@@ -46,6 +46,8 @@ const optionalItemConfigSchema = z.object({
   quantity: z.number().int().min(1).default(1).optional(),
 });
 
+type OptionalItemConfig = z.infer<typeof optionalItemConfigSchema>;
+
 const offerPaymentSchema = paymentSchema;
 
 const offerConfigSchema = z.object({
@@ -90,6 +92,83 @@ function mergeMetadata(...records: Array<Record<string, unknown> | undefined>): 
     }
   }
   return out;
+}
+
+const GLOBAL_OPTIONAL_ITEM_SLUGS = ["serp-vpn"] as const;
+
+function resolveStripeProductIdForEnv(product: ProductData, isTestEnv: boolean): string | null {
+  const stripeConfig = product.payment?.stripe ?? product.stripe;
+  const metadata = stripeConfig?.metadata ?? {};
+
+  const liveId = typeof metadata.stripe_product_id === "string" ? metadata.stripe_product_id.trim() : "";
+  const testId =
+    typeof (metadata as Record<string, unknown>).stripe_test_product_id === "string"
+      ? String((metadata as Record<string, unknown>).stripe_test_product_id).trim()
+      : "";
+
+  const id = isTestEnv && testId ? testId : liveId;
+  return id || null;
+}
+
+function getGlobalOptionalItems(product: ProductData, options: { isTestEnv: boolean }): OptionalItemConfig[] {
+  const items: OptionalItemConfig[] = [];
+
+  for (const slug of GLOBAL_OPTIONAL_ITEM_SLUGS) {
+    if (slug === product.slug) continue;
+
+    try {
+      const optionalProduct = getProductData(slug);
+      const productId = resolveStripeProductIdForEnv(optionalProduct, options.isTestEnv);
+      if (!productId) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `[offer-config] Missing Stripe product ID for global optional item "${slug}" in ${
+            options.isTestEnv ? "test" : "live"
+          } mode`,
+        );
+        continue;
+      }
+
+      items.push({
+        product_id: productId,
+        quantity: 1,
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(
+        `[offer-config] Failed to load global optional item "${slug}":`,
+        error instanceof Error ? error.message : error,
+      );
+    }
+  }
+
+  return items;
+}
+
+function mergeOptionalItems(
+  base: OptionalItemConfig[] | null | undefined,
+  extra: OptionalItemConfig[] | null | undefined,
+): OptionalItemConfig[] | undefined {
+  const merged = [...(base ?? []), ...(extra ?? [])];
+  if (merged.length === 0) {
+    return undefined;
+  }
+
+  const seen = new Set<string>();
+  const result: OptionalItemConfig[] = [];
+
+  for (const item of merged) {
+    if (!item.product_id) continue;
+    if (seen.has(item.product_id)) continue;
+    seen.add(item.product_id);
+    result.push({
+      product_id: item.product_id,
+      price_id: item.price_id,
+      quantity: item.quantity ?? 1,
+    });
+  }
+
+  return result;
 }
 
 function buildPaymentConfig(
@@ -148,25 +227,28 @@ function resolveStripePriceId(
 
 function normalizeOptionalItemsFromPayment(
   payment: ProductPayment | undefined,
-): Array<{ product_id: string; price_id?: string; quantity?: number }> | undefined {
+  product: ProductData,
+  isTestEnv: boolean,
+): OptionalItemConfig[] | undefined {
   const items = payment?.stripe?.optional_items;
-  if (!items || items.length === 0) {
-    return undefined;
-  }
-  return items.map((item) => ({
-    product_id: item.product_id,
-    price_id: item.price_id ?? undefined,
-    quantity: item.quantity ?? 1,
-  }));
+  const base: OptionalItemConfig[] | undefined = items
+    ? items.map((item) => ({
+        product_id: item.product_id,
+        price_id: item.price_id ?? undefined,
+        quantity: item.quantity ?? 1,
+      }))
+    : undefined;
+
+  const global = getGlobalOptionalItems(product, { isTestEnv });
+  return mergeOptionalItems(base, global);
 }
 
 export function getOfferConfig(offerId: string): OfferConfig | null {
   try {
     const product = getProductData(offerId);
     const stripeDetails = resolveStripePaymentDetails(product);
-    const paymentConfig = buildPaymentConfig(product, stripeDetails);
-
     const isTest = isStripeTestMode();
+    const paymentConfig = buildPaymentConfig(product, stripeDetails);
     const provider: PaymentProviderId = paymentConfig?.provider ?? "stripe";
 
     const priceId = resolveStripePriceId(isTest, product, paymentConfig, stripeDetails);
@@ -221,7 +303,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       paymentConfig?.metadata ?? {},
     );
 
-    const normalizedOptionalItems = normalizeOptionalItemsFromPayment(paymentConfig);
+    const normalizedOptionalItems = normalizeOptionalItemsFromPayment(paymentConfig, product, isTest);
 
     return offerConfigSchema.parse({
       id: product.slug,

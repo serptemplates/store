@@ -681,6 +681,17 @@
       "live_price_id": "price_1S99g406JrOmKRCm3s3fJ3xy"
     }
   },
+  "serp-vpn": {
+    "slug": "serp-vpn",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SXy9L06JrOmKRCmXmW5qaTX",
+      "test_price_id": "price_1SXyBP06JrOmKRCmPb1bEUsI"
+    }
+  },
   "shutterstock-downloader": {
     "slug": "shutterstock-downloader",
     "provider": "stripe",
