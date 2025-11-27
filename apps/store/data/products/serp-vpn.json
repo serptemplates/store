@@ -34,7 +34,7 @@
     },
     {
       "question": "Will this slow down my browsing?",
-      "answer": "All VPN connections introduce some latency, but SERP VPN Extension prioritises stable, low-variance routes so search, QA, and normal browsing stay fast enough for daily use."
+      "answer": "All VPN connections introduce some latency, but SERP VPN Extension prioritizes stable, low-variance routes so search, QA, and normal browsing stay fast enough for daily use."
     },
     {
       "question": "How do I know if I am protected?",
