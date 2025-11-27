@@ -179,6 +179,7 @@ export const SECONDARY_CATEGORIES = [
   "File Storage",
   "Productivity",
   "Utilities",
+  "Privacy & Security",
 ] as const;
 
 export const ACCEPTED_CATEGORIES = [
