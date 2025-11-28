@@ -573,10 +573,10 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 3700,
+    "unit_amount": 4700,
     "stripe": {
-      "live_price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
-      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD"
+      "live_price_id": "price_1SYP3106JrOmKRCmO4IOfd7t",
+      "test_price_id": "price_1SYP4S06JrOmKRCmF45WFTDg"
     }
   },
   "patreon-downloader": {
