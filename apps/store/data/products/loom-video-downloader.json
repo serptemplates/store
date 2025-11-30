@@ -14,14 +14,14 @@
   "seo_description": "Loom Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Loom videos easily for offline viewing. Fast, reliable Loom video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects Loom share links, embedded players, and workspace libraries automatically",
-    "Prompts for passwords on restricted recordings without storing credentials",
-    "Converts HLS and DASH streams into MP4 files while preserving source quality",
-    "Queue manager processes multiple recordings sequentially with cancel controls",
-    "Works with existing Loom sessions to save private and team-only videos securely",
-    "Desktop notifications and progress bars keep you informed during long downloads",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux",
-    "Stores licence data and preferences locally with zero analytics or tracking"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking"
   ],
   "faqs": [
     {

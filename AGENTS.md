@@ -58,6 +58,8 @@ Before calling a task finished:
 
 **MANUAL CHECKS:**
 
+**If we made any changes to the UI: **
+
 - Use the playwright MCP to visually inspect any relevant visual changes and expectations in both desktop and mobile view, and use it to get console and network logs to make sure all warnings/errors are clear
 
 > Always prefer to use playwright MCP in HEADLESS MODE as to not disrupt user's computer with browser windows if possible * sometimes headless may not work like in the case of working on browser extensions

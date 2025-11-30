@@ -14,12 +14,14 @@
   "seo_description": "Skool Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Skool videos easily for offline viewing. Fast, reliable Skool video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects Skool course lessons, community posts, and live session recordings",
-    "Uses your logged-in session to download member-only content securely",
-    "Converts Skool HLS streams into MP4 files while preserving quality",
-    "Displays precise segment counts and progress so you know how long remains",
-    "Supports Chrome, Edge, Firefox, Brave, and Opera across desktop platforms",
-    "Stores licence data and quality preferences locally with no analytics"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking"
   ],
   "faqs": [
     {
