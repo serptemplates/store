@@ -34,6 +34,7 @@ const DEFAULT_LEGAL_LINKS: FooterLink[] = [
   {
     label: "Terms of Service",
     href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
+    external: true,
   },
   {
     label: "Refund Policy",
