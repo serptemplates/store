@@ -12,60 +12,41 @@
   "description": "Dailymotion Downloader gives creators and teams a dependable way to save Dailymotion videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Dailymotion with consistent quality and predictable results.\n\nIt supports High-quality Dailymotion downloads, Batch processing for channel and playlist content, and Various video formats and resolutions, so you can move quickly from download to delivery without tedious rework. Use it to archive Dailymotion assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Dailymotion Downloader (Unofficial) | Download Dailymotion Videos",
   "seo_description": "Dailymotion Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Dailymotion videos easily for offline viewing. Fast, reliable Dailymotion video downloader with high-quality downloads.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
-    "High-quality Dailymotion downloads",
-    "Batch processing for channel and playlist content",
-    "Various video formats and resolutions",
-    "Auto metadata extraction and organization",
-    "Resume downloads",
-    "Cross-platform support",
-    "Built-in player with Dailymotion-style controls",
-    "Organize by channel and category",
-    "Duplicate detection and content management",
-    "Video management integration",
-    "Export channel data/video analytics",
-    "Secure local storage",
-    "Regular compatibility updates",
-    "Search capabilities across video libraries",
-    "Bandwidth-efficient downloads",
-    "Live streams and premieres",
-    "Smart content curation and recommendation",
-    "Backup & restore options for video archives",
-    "Multi-language support and subtitle extraction"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking"
   ],
   "faqs": [
     {
-      "question": "How do I use the Dailymotion downloader?",
-      "answer": "Install the browser extension, navigate to Dailymotion, find the content you want to download, and click the download button that appears. The content will be saved to your chosen location."
+      "question": "Can I download private videos?",
+      "answer": "If you can watch the video in your browser (including logged-in or passworded videos you have access to), you can download it. If you cannot view it, you cannot download it."
     },
     {
-      "question": "What quality options are available?",
-      "answer": "The downloader supports all available quality levels from Dailymotion, ranging from standard definition up to 4K or higher where available. You can select your preferred quality before downloading."
+      "question": "How many videos I can download?",
+      "answer": "After purchasing the extension you have lifetime access to it and future upgrades—you can download as many videos as you want."
     },
     {
-      "question": "Does this work with all Dailymotion content?",
-      "answer": "The downloader works with most publicly accessible content on Dailymotion. Some restricted or DRM-protected content may not be downloadable."
+      "question": "Do you track what I download?",
+      "answer": "No. Everything happens locally on your computer and is never sent to our servers."
     },
     {
-      "question": "Will downloads continue if my internet connection drops?",
-      "answer": "If your connection is interrupted, you may need to restart the download. However, for most content, downloads complete quickly enough that interruptions are rare."
+      "question": "Where is the video saved?",
+      "answer": "Videos save to whatever folder your browser uses for downloads (usually your Downloads folder unless you changed it)."
     },
     {
-      "question": "Is there a download limit?",
-      "answer": "There are no artificial download limits imposed by the extension. You can download as much content as your storage space allows, one item at a time."
+      "question": "How long does it take to download?",
+      "answer": "It depends on the video length, resolution, and your connection speed. Short clips finish quickly; long or high-resolution videos take longer."
     },
     {
-      "question": "How do I organize my downloaded content?",
-      "answer": "Downloaded files are saved to your selected folder. You can organize them manually using your computer's file system, creating folders by date, topic, or any system that works for you."
-    },
-    {
-      "question": "Does this work on all browsers?",
-      "answer": "The extension works on major desktop browsers including Chrome, Firefox, and Edge. Make sure your browser is up to date for the best compatibility."
-    },
-    {
-      "question": "Is my data kept private?",
-      "answer": "Yes, the extension operates entirely on your local device. No download history or personal data is sent to external servers, ensuring complete privacy."
+      "question": "Is my data private?",
+      "answer": "All detection and conversion happen locally. Only licence checks touch remote servers, and no viewing history or passwords are stored."
     },
     {
       "question": "Is this legal?",
@@ -109,7 +90,6 @@
   ],
   "categories": [
     "Downloader",
-    "Social Media",
     "Video Downloader"
   ],
   "keywords": [
@@ -122,15 +102,25 @@
   "permission_justifications": [],
   "brand": "SERP Apps",
   // PRODUCT MEDIA
-  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/dailymotion-downloader.jpg",
+  "featured_image": "/media/products/dailymotion-downloader/dailymotion-homepage.jpg",
   "featured_image_gif": "https://raw.githubusercontent.com/serpapps/dailymotion-downloader/main/images/dailymotion-downloader.gif",
   "screenshots": [
     {
-      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/dailymotion-downloader.jpg",
-      "alt": "Dailymotion Downloader website preview"
+      "url": "/media/products/dailymotion-downloader/dailymotion-homepage.jpg",
+      "alt": "Dailymotion Downloader homepage"
+    },
+    {
+      "url": "/media/products/dailymotion-downloader/dailymotion-downloader-screenshot-1.jpg",
+      "alt": "Dailymotion Downloader interface showing video download options"
+    },
+    {
+      "url": "/media/products/dailymotion-downloader/dailymotion-downloader-screenshot-2.jpg",
+      "alt": "Dailymotion Downloader download confirmation view"
     }
   ],
-  "product_videos": [],
+  "product_videos": [
+    "https://www.youtube.com/watch?v=AD4425NNr4o"
+  ],
   "related_videos": [],
   "related_posts": [],
   // PRODUCT PAGE LINKS
@@ -178,6 +168,7 @@
     "original_price": "$37.00",
     "note": "",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/dailymotion-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -193,6 +184,7 @@
     "provider": "stripe",
     "stripe": {
       "price_id": "price_1S99wo06JrOmKRCmtEGHbI2T",
+      "test_price_id": "price_1SLGfS06JrOmKRCmxyqzJI2w",
       "metadata": {
         "stripe_product_id": "prod_Sv6Gc2uzEQtuWs"
       },
@@ -205,6 +197,7 @@
   },
   "stripe": {
     "price_id": "price_1S99wo06JrOmKRCmtEGHbI2T",
+    "test_price_id": "price_1SLGfS06JrOmKRCmxyqzJI2w",
     "metadata": {
       "stripe_product_id": "prod_Sv6Gc2uzEQtuWs"
     },

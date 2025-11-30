@@ -14,13 +14,14 @@
   "seo_description": "Vimeo Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Vimeo videos easily for offline viewing. Fast, reliable Vimeo video downloader with high-quality downloads.",
   "status": "live",
   "features": [
-    "Detects Vimeo players on vimeo.com, player.vimeo.com, and embedded sites",
-    "Prompts for video passwords and respects your logged-in Vimeo session",
-    "Converts HLS/DASH streams into MP4, merging separate audio and video automatically",
-    "Supports up to three simultaneous downloads with individual progress tracking",
-    "Captures video metadata (title, owner) to simplify project organisation",
-    "Works on Chrome, Edge, Firefox, Brave, and Opera across desktop platforms",
-    "Stores licence data locally with no analytics or credential harvesting"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking"
   ],
   "faqs": [
     {

@@ -130,11 +130,7 @@
   "github_repo_tags": [],
   "resource_links": [
     {
-      "label": "Webshare proxy API docs",
-      "href": "https://proxy.webshare.io/api-docs"
-    },
-    {
-      "label": "SERP VPN setup notes",
+      "label": "Gist",
       "href": "https://gist.github.com/devinschumacher/84361cb22134d49fd875eacc2eaa9f37"
     }
   ],
