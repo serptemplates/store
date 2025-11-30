@@ -114,6 +114,19 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const siteConfig = getSiteConfig();
   const allProducts = getAllProducts();
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
+  const productVideos = getProductVideoEntries(product);
+  const sameProductVideos = productVideos.filter((item) => item.slug !== entry.slug);
+  const otherVideos = allProducts
+    .filter((candidate) => candidate.slug !== product.slug)
+    .flatMap((candidate) => getProductVideoEntries(candidate));
+  const seenWatchPaths = new Set([entry.watchPath]);
+  const moreVideos = [...sameProductVideos, ...otherVideos].filter((video) => {
+    if (!video.watchPath || seenWatchPaths.has(video.watchPath)) {
+      return false;
+    }
+    seenWatchPaths.add(video.watchPath);
+    return true;
+  });
   const siteRegions = product.supported_regions
     .map((region) => region.trim())
     .filter((region) => region.length > 0);
@@ -225,7 +238,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 lg:flex-row lg:items-start lg:gap-12">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10">
         <article className="flex-1">
           <header className="mb-6">
             <h1 className="text-3xl font-semibold text-gray-900">{entry.title}</h1>
@@ -262,40 +275,39 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
             </div>
           </div>
         </article>
-
-        <aside className="w-full max-w-md space-y-6 lg:w-80">
+        {moreVideos.length > 0 && (
           <section className="rounded-lg border border-gray-200 bg-gray-50 p-5">
             <h2 className="text-base font-semibold text-gray-900">More videos</h2>
-            <ul className="mt-4 space-y-3">
-              {getProductVideoEntries(product)
-                .filter((item) => item.slug !== entry.slug)
-                .map((video) => (
-                  <li key={video.slug}>
-                    <Link href={video.watchPath} className="group flex gap-3 rounded-lg border border-transparent p-2 transition hover:border-blue-200 hover:bg-white">
-                      <div className="h-16 w-24 flex-shrink-0 overflow-hidden rounded-md bg-gray-200">
-                        {video.thumbnailUrl ? (
-                          <Image
-                            src={video.thumbnailUrl}
-                            alt={video.title}
-                            width={192}
-                            height={108}
-                            className="h-full w-full object-cover"
-                            sizes="(max-width: 640px) 50vw, 192px"
-                            quality={75}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">Video</div>
-                        )}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">{video.title}</span>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-            </ul>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {moreVideos.map((video) => (
+                <Link
+                  key={video.slug}
+                  href={video.watchPath}
+                  className="group flex gap-3 rounded-lg border border-transparent p-3 transition hover:border-blue-200 hover:bg-white"
+                >
+                  <div className="h-20 w-32 flex-shrink-0 overflow-hidden rounded-md bg-gray-200">
+                    {video.thumbnailUrl ? (
+                      <Image
+                        src={video.thumbnailUrl}
+                        alt={video.title}
+                        width={256}
+                        height={160}
+                        className="h-full w-full object-cover"
+                        sizes="(max-width: 640px) 50vw, 256px"
+                        quality={75}
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-xs text-gray-500">Video</div>
+                    )}
+                  </div>
+                  <div className="flex flex-1 flex-col justify-center">
+                    <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">{video.title}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </section>
-        </aside>
+        )}
       </div>
       </main>
     </>

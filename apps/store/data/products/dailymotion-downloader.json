@@ -118,7 +118,9 @@
       "alt": "Dailymotion Downloader download confirmation view"
     }
   ],
-  "product_videos": [],
+  "product_videos": [
+    "https://www.youtube.com/watch?v=AD4425NNr4o"
+  ],
   "related_videos": [],
   "related_posts": [],
   // PRODUCT PAGE LINKS
