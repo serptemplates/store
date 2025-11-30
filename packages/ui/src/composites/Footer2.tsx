@@ -67,10 +67,10 @@ const DEFAULT_SECTIONS: FooterSection[] = [
   {
     title: "Legal",
     links: [
-      { label: "Terms", href: "/legal/terms" },
-      { label: "DMCA", href: "/legal/dmca" },
-      { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
-      { label: "Privacy", href: "https://serp.co/privacy", external: true },
+      { label: "Terms", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
+  { label: "DMCA", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
+  { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
+  { label: "Privacy", href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md", external: true },
     ],
   },
 ];
@@ -93,10 +93,10 @@ const DEFAULT_PRODUCT_BADGES: ProductBadge[] = [
 ];
 
 const DEFAULT_BOTTOM_LEGAL_LINKS: FooterLink[] = [
-  { label: "Terms", href: "/legal/terms" },
-  { label: "DMCA", href: "/legal/dmca" },
+  { label: "Terms", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
+  { label: "DMCA", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
   { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
-  { label: "Privacy", href: "https://serp.co/privacy", external: true },
+  { label: "Privacy", href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md", external: true },
 ];
 
 export function Footer2({
@@ -226,7 +226,7 @@ export function Footer2({
               <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
               <path d="m9 12 2 2 4-4" />
             </svg>
-            <a href="/legal" className="underline-offset-2 hover:underline">
+            <a href="https://github.com/serpapps/legal/blob/main/README.md" className="underline-offset-2 hover:underline">
               {legalBadgeText}
             </a>
           </span>
