@@ -49,6 +49,7 @@ const DEFAULT_LEGAL_LINKS: FooterLink[] = [
   {
     label: "Privacy",
     href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md",
+    external: true,
   },
 ];
 
