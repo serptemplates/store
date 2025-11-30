@@ -33,7 +33,7 @@ const DEFAULT_LEGAL_LINKS: FooterLink[] = [
   },
   {
     label: "Terms of Service",
-    href: "/legal/terms",
+    href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md",
   },
   {
     label: "Refund Policy",
@@ -42,7 +42,11 @@ const DEFAULT_LEGAL_LINKS: FooterLink[] = [
   },
   {
     label: "DMCA",
-    href: "/legal/dmca",
+    href: "https://github.com/serpapps/legal/blob/main/dmca.md",
+  },
+  {
+    label: "Privacy",
+    href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md",
   },
 ];
 
