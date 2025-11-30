@@ -43,6 +43,7 @@ const DEFAULT_LEGAL_LINKS: FooterLink[] = [
   {
     label: "DMCA",
     href: "https://github.com/serpapps/legal/blob/main/dmca.md",
+    external: true,
   },
   {
     label: "Privacy",
