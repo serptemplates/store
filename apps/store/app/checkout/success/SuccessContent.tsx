@@ -112,13 +112,13 @@ const RESOURCE_LINKS: ResourceLink[] = [
   {
     title: "Help Center",
     description: "Search FAQs, troubleshooting articles, and walkthroughs.",
-    href: "https://serpcompany.tawk.help/",
+    href: "https://github.com/orgs/serpapps/discussions",
     icon: MessageCircle,
   },
   {
-    title: "Contact Support",
+    title: "Support",
     description: "Can’t find what you need? Reach our team in a couple clicks.",
-    href: "https://tawk.to/serpcompany",
+    href: "https://serp.ly/support",
     icon: MessageCircle,
   },
 ];
