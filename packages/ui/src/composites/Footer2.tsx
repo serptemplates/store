@@ -57,9 +57,8 @@ const DEFAULT_SECTIONS: FooterSection[] = [
   {
     title: "Help & Support",
     links: [
-      { label: "Help Center", href: "https://serpcompany.tawk.help/", external: true },
-      { label: "Tickets", href: "https://serpcompany.tawk.help/#tickets", external: true },
-      { label: "Chat Support", href: "https://tawk.to/serpcompany", external: true },
+      { label: "Help Center", href: "https://github.com/orgs/serpapps/discussions", external: true },
+      { label: "Chat Support", href: "https://serp.ly/support", external: true },
       { label: "Contact", href: "mailto:conact@serp.co" },
       { label: "Status", href: "https://status.serp.co", external: true },
     ],
