@@ -12,28 +12,16 @@
   "description": "Thinkific Downloader gives creators and teams a dependable way to download Thinkific course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Thinkific with consistent quality and predictable results.\n\nIt supports Complete Thinkific courses and learning paths, Multimedia content, and Maintain course hierarchy and chapter organization, so you can move quickly from download to delivery without tedious rework. Use it to archive Thinkific assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Thinkific Downloader (Unofficial) | Download Thinkific Courses",
   "seo_description": "Thinkific Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Thinkific courses and videos for offline learning. Fast and reliable course content downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
-    "Complete Thinkific courses and learning paths",
-    "Multimedia content",
-    "Maintain course hierarchy and chapter organization",
-    "Premium and membership-gated content",
-    "Auto transcription and subtitle downloading",
-    "Batch processing for multiple course collections",
-    "Resume interrupted transfers with smart recovery",
-    "Course Platformsal CLI tools",
-    "Cross-platform support",
-    "Built-in player with bookmarking features",
-    "Integrates with student information systems",
-    "Export course analytics/completion data",
-    "Search capabilities across educational content",
-    "Local-only storage for privacy",
-    "Regular compatibility updates",
-    "Organize by subject/difficulty level",
-    "Backup & sync",
-    "Offline learning with progress synchronization",
-    "Interactive elements and assignments",
-    "Smart content organization and categorization"
+    "Easy one-click downloads",
+    "Media auto detection",
+    "Download progress indicators",
+    "No watermarks",
+    "No ads",
+    "Regular Updates",
+    "100% privacy-friendly",
+    "Zero data tracking"
   ],
   "faqs": [
     {
@@ -118,7 +106,7 @@
   ],
   "layout_type": "landing",
   "featured": false,
-  "new_release": false,
+  "new_release": true,
   "popular": false,
   "permission_justifications": [],
   "brand": "SERP Apps",
@@ -152,6 +140,7 @@
     "ghl_tag": "purchase-thinkific-downloader",
     "ghlTag": "purchase-thinkific-downloader",
     "landerId": "thinkific-downloader",
+    "licenseEntitlements": "thinkific-downloader",
     "offerId": "thinkific-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -179,6 +168,7 @@
     "original_price": "$37.00",
     "note": "",
     "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/thinkific-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -194,8 +184,10 @@
     "provider": "stripe",
     "stripe": {
       "price_id": "price_1S99gE06JrOmKRCmEfjsFume",
+      "test_price_id": "price_1SLGh006JrOmKRCmilUAsGSp",
       "metadata": {
-        "stripe_product_id": "prod_Sv6Ip7FMh0twtd"
+        "stripe_product_id": "prod_Sv6Ip7FMh0twtd",
+        "stripe_test_product_id": "prod_THqNSI5qXv5yrK"
       },
       "optional_items": [
         {
@@ -206,8 +198,10 @@
   },
   "stripe": {
     "price_id": "price_1S99gE06JrOmKRCmEfjsFume",
+    "test_price_id": "price_1SLGh006JrOmKRCmilUAsGSp",
     "metadata": {
-      "stripe_product_id": "prod_Sv6Ip7FMh0twtd"
+      "stripe_product_id": "prod_Sv6Ip7FMh0twtd",
+      "stripe_test_product_id": "prod_THqNSI5qXv5yrK"
     },
     "optional_items": [
       {
@@ -220,5 +214,10 @@
       "purchase-thinkific-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "thinkific-downloader"
+    ]
   }
 }
