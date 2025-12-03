@@ -110,6 +110,23 @@ const ENV_CONFIGS: EnvConfig[] = [
     description: "Server-side PostHog API host (defaults to https://us.i.posthog.com)",
     validate: (value) => value.startsWith("http://") || value.startsWith("https://"),
   },
+
+  // SERP Auth Cloudflare D1 (optional but enables entitlement upserts)
+  {
+    name: "SERP_AUTH_CF_API_TOKEN",
+    required: false,
+    description: "Cloudflare API token with D1 query access for serp-auth",
+  },
+  {
+    name: "SERP_AUTH_CF_ACCOUNT_ID",
+    required: false,
+    description: "Cloudflare account ID for serp-auth D1",
+  },
+  {
+    name: "SERP_AUTH_CF_D1_DATABASE_ID",
+    required: false,
+    description: "Cloudflare D1 database ID for serp-auth",
+  },
 ];
 
 interface ValidationResult {

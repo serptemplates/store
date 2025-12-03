@@ -10,6 +10,7 @@ import { createLicenseForOrder } from "@/lib/license-service";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import type { PaymentProviderId } from "@/lib/products/payment";
 import { syncOrderWithGhlWithRetry } from "@/lib/payments/stripe-webhook/helpers/ghl-sync";
+import { upsertSerpAuthEntitlements } from "@/lib/serp-auth/d1-client";
 
 type LicenseResult = Awaited<ReturnType<typeof createLicenseForOrder>>;
 type GhlSyncResult = Awaited<ReturnType<typeof syncOrderWithGhlWithRetry>>;
@@ -319,6 +320,31 @@ export async function processFulfilledOrder(order: NormalizedOrder): Promise<Pro
       },
       licenseMetadataUpdate,
     );
+  }
+
+  if (order.customerEmail && (licenseConfig.entitlements?.length ?? 0) > 0) {
+    const serpAuthResult = await upsertSerpAuthEntitlements({
+      email: order.customerEmail,
+      entitlements: licenseConfig.entitlements,
+      context: {
+        orderId: order.sessionId,
+        paymentIntentId: order.paymentIntentId ?? null,
+        provider: order.provider,
+        providerAccountAlias: order.providerAccountAlias ?? null,
+      },
+    });
+
+    if (!serpAuthResult.ok) {
+      logger.warn("serp_auth.entitlements_upsert_skipped_or_failed", {
+        email: order.customerEmail,
+        entitlements: licenseConfig.entitlements,
+        status: serpAuthResult.status,
+        reason: serpAuthResult.reason,
+        orderId: order.sessionId,
+        paymentIntentId: order.paymentIntentId ?? null,
+        provider: order.provider,
+      });
+    }
   }
 
   const ghlOutcome: ProcessFulfilledOrderResult["ghlResult"] = {

@@ -160,7 +160,9 @@
   ],
   "product_videos": [],
   "related_videos": [],
-  "related_posts": [],
+  "related_posts": [
+    "how-to-download-kajabi-videos"
+  ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/kajabi-video-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/kajabi-video-downloader",

@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { Calendar, Clock, User } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeCodeTitles from "rehype-code-titles";
 
@@ -184,6 +185,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               components={mdxComponents}
               options={{
                 mdxOptions: {
+                  remarkPlugins: [remarkGfm],
                   rehypePlugins: [
                     rehypeCodeTitles,
                     [rehypeHighlight, { ignoreMissing: true }],

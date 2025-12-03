@@ -853,7 +853,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gE06JrOmKRCmEfjsFume"
+      "live_price_id": "price_1S99gE06JrOmKRCmEfjsFume",
+      "test_price_id": "price_1SLGh006JrOmKRCmilUAsGSp"
     }
   },
   "thumbnail-downloader": {
