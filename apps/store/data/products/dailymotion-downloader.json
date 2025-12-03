@@ -143,6 +143,7 @@
     "ghl_tag": "purchase-dailymotion-downloader",
     "ghlTag": "purchase-dailymotion-downloader",
     "landerId": "dailymotion-downloader",
+    "licenseEntitlements": "dailymotion-downloader",
     "offerId": "dailymotion-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -214,5 +215,10 @@
       "purchase-dailymotion-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "dailymotion-downloader"
+    ]
   }
 }
