@@ -122,7 +122,9 @@
     "https://www.youtube.com/watch?v=AD4425NNr4o"
   ],
   "related_videos": [],
-  "related_posts": [],
+  "related_posts": [
+    "how-to-download-dailymotion-videos"
+  ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/dailymotion-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dailymotion-downloader",

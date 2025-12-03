@@ -121,7 +121,9 @@
   ],
   "product_videos": [],
   "related_videos": [],
-  "related_posts": [],
+  "related_posts": [
+    "how-to-download-thinkific-videos"
+  ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/thinkific-downloader",
   "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thinkific-downloader",
