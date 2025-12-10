@@ -718,9 +718,9 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 4700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+      "live_price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
       "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY"
     }
   },
