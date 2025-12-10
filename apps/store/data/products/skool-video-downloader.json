@@ -237,8 +237,8 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$47.00",
-    "original_price": "$47",
+    "price": "$37.00",
+    "original_price": "$67.00",
     "note": "Download instantly • Lifetime updates included • No refunds",
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/skool-video-downloader",
@@ -260,7 +260,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+      "price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
       "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY",
       "metadata": {
         "stripe_product_id": "prod_SgRUYSKnhuiXX6"
@@ -273,7 +273,7 @@
     }
   },
   "stripe": {
-    "price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+    "price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
     "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY",
     "metadata": {
       "stripe_product_id": "prod_SgRUYSKnhuiXX6"

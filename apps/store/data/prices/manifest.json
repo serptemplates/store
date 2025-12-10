@@ -574,10 +574,10 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 4700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SYP3106JrOmKRCmO4IOfd7t",
-      "test_price_id": "price_1SYP4S06JrOmKRCmF45WFTDg"
+      "live_price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
+      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD"
     }
   },
   "patreon-downloader": {
@@ -718,9 +718,9 @@
     "provider": "stripe",
     "mode": "payment",
     "currency": "usd",
-    "unit_amount": 4700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SVmIZ06JrOmKRCmbmVgKa26",
+      "live_price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
       "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY"
     }
   },
