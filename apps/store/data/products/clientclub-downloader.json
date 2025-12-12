@@ -211,27 +211,29 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
-      "test_price_id": "price_1SVQle06JrOmKRCmeE0R7zFI",
+      "price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
+      "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q",
       "metadata": {
-        "stripe_product_id": "prod_Sv6Gg3oBtdLifN"
+        "stripe_product_id": "prod_TadNlOW6v3RoQQ",
+        "stripe_test_product_id": "prod_TadN9KYiYPF1OE"
       },
       "optional_items": [
         {
-          "product_id": "prod_TPQDdWiCCy0HK2"
+          "product_id": "prod_TadNFo3sxzkGYb"
         }
       ]
     }
   },
   "stripe": {
-    "price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
-    "test_price_id": "price_1SVQle06JrOmKRCmeE0R7zFI",
+    "price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
+    "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q",
     "metadata": {
-      "stripe_product_id": "prod_Sv6Gg3oBtdLifN"
+      "stripe_product_id": "prod_TadNlOW6v3RoQQ",
+      "stripe_test_product_id": "prod_TadN9KYiYPF1OE"
     },
     "optional_items": [
       {
-        "product_id": "prod_TPQDdWiCCy0HK2"
+        "product_id": "prod_TadNFo3sxzkGYb"
       }
     ]
   },

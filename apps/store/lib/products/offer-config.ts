@@ -118,7 +118,7 @@ function getGlobalOptionalItems(product: ProductData, options: { isTestEnv: bool
 
     try {
       const optionalProduct = getProductData(slug);
-      const productId = resolveStripeProductIdForEnv(optionalProduct, options.isTestEnv);
+      const productId = resolveStripeProductIdForEnv(optionalProduct, false);
       if (!productId) {
         // eslint-disable-next-line no-console
         console.error(

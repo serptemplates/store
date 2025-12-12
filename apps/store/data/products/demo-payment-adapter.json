@@ -121,8 +121,6 @@
     "account": "primary",
     "mode": "payment",
     "stripe": {
-      "price_id": "price_1SV4MW06JrOmKRCmZY0Q70o9",
-      "test_price_id": "price_1SV4NC06JrOmKRCmxC8sehN7",
       "metadata": {
         "stripe_product_id": "prod_TRyJyIFPwaPuBf"
       },
@@ -178,21 +176,17 @@
         "store_id": "lemonsqueezy_store_demo_live",
         "product_id": "lemonsqueezy_product_demo_live",
         "variant_id": "lemonsqueezy_variant_demo_live",
-        "price_id": "lemonsqueezy_price_demo_live",
         "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-live"
       },
       "test": {
         "store_id": "lemonsqueezy_store_demo_test",
         "product_id": "lemonsqueezy_product_demo_test",
         "variant_id": "lemonsqueezy_variant_demo_test",
-        "price_id": "lemonsqueezy_price_demo_test",
         "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-test"
       }
     }
   },
   "stripe": {
-    "price_id": "price_1SV4MW06JrOmKRCmZY0Q70o9",
-    "test_price_id": "price_1SV4NC06JrOmKRCmxC8sehN7",
     "metadata": {
       "stripe_product_id": "prod_TRyJyIFPwaPuBf"
     },
