@@ -22,7 +22,7 @@ type CrossSellConfig = {
   downloaderProductId?: string;
 };
 
-const DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID = "prod_TPQDdWiCCy0HK2";
+const DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID = "prod_TadNFo3sxzkGYb";
 
 const CROSS_SELL_ENV_BASES = [
   "STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID",
