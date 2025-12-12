@@ -82,13 +82,47 @@ export function hasMetadataValue(metadata: MetadataSource, key: string): boolean
   return getMetadataValue(metadata, key) !== undefined;
 }
 
-export function ensureMetadataCaseVariants<T extends Record<string, unknown>>(metadata: T): T {
+type EnsureMetadataCaseVariantsOptions = {
+  maxKeys?: number;
+  skipMirror?: (key: string) => boolean;
+};
+
+export function ensureMetadataCaseVariants<T extends Record<string, unknown>>(
+  metadata: T,
+  options?: EnsureMetadataCaseVariantsOptions,
+): T {
   if (!metadata || typeof metadata !== "object") {
     return metadata;
   }
-  for (const [key, value] of Object.entries(metadata)) {
+  const maxKeys = options?.maxKeys ?? Number.POSITIVE_INFINITY;
+  const skipMirror = options?.skipMirror;
+
+  const container = metadata as Record<string, unknown>;
+  const addedKeys: string[] = [];
+  for (const [key, value] of Object.entries(container)) {
     if (value === undefined) continue;
-    mirrorKey(metadata, key, value);
+    if (skipMirror?.(key)) continue;
+
+    const snake = toSnakeCaseKey(key);
+    if (!Object.prototype.hasOwnProperty.call(container, snake)) {
+      container[snake] = value;
+      addedKeys.push(snake);
+    }
+    const camel = snakeToCamel(snake);
+    if (!Object.prototype.hasOwnProperty.call(container, camel)) {
+      container[camel] = value;
+      addedKeys.push(camel);
+    }
   }
+
+  if (Number.isFinite(maxKeys) && maxKeys > 0) {
+    while (Object.keys(container).length > maxKeys && addedKeys.length > 0) {
+      const keyToRemove = addedKeys.pop();
+      if (keyToRemove && Object.prototype.hasOwnProperty.call(container, keyToRemove)) {
+        delete container[keyToRemove];
+      }
+    }
+  }
+
   return metadata;
 }

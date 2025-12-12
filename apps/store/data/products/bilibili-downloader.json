@@ -193,25 +193,23 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1S99wj06JrOmKRCmXQNer2ho",
       "metadata": {
         "stripe_product_id": "prod_Sv6Go0jcavriZb"
       },
       "optional_items": [
         {
-          "product_id": "prod_TPQDdWiCCy0HK2"
+          "product_id": "prod_TadNFo3sxzkGYb"
         }
       ]
     }
   },
   "stripe": {
-    "price_id": "price_1S99wj06JrOmKRCmXQNer2ho",
     "metadata": {
       "stripe_product_id": "prod_Sv6Go0jcavriZb"
     },
     "optional_items": [
       {
-        "product_id": "prod_TPQDdWiCCy0HK2"
+        "product_id": "prod_TadNFo3sxzkGYb"
       }
     ]
   },

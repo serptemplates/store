@@ -64,6 +64,7 @@ describe("GET /checkout/[slug]", () => {
     const args = createCheckoutSessionForOfferMock.mock.calls[0]?.[0];
     expect(args?.quantity).toBe(2);
     expect(args?.clientReferenceId).toBe("dub_id_affiliate-123");
+    expect(Object.keys(args?.metadata ?? {}).length).toBeLessThanOrEqual(50);
     expect(args?.metadata).toMatchObject({
       product_slug: "onlyfans-downloader",
       productSlug: "onlyfans-downloader",

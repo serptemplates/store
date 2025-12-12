@@ -4,10 +4,10 @@ import stripJsonComments from "strip-json-comments";
 
 /**
  * Add optional_items to all downloader products pointing to the bundle product.
- * This script adds: stripe.optional_items = [{product_id: "prod_TPQDdWiCCy0HK2"}]
+ * This script adds: stripe.optional_items = [{product_id: "prod_TadNFo3sxzkGYb"}]
  */
 
-const OPTIONAL_BUNDLE_PRODUCT_ID = "prod_TPQDdWiCCy0HK2";
+const OPTIONAL_BUNDLE_PRODUCT_ID = "prod_TadNFo3sxzkGYb";
 const PRODUCTS_DIR = path.join(process.cwd(), "data/products");
 
 async function addOptionalBundleToDownloaders() {

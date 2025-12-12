@@ -6,28 +6,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wh06JrOmKRCmkF8J8XUh",
-      "test_price_id": "price_1SVQld06JrOmKRCm1wtY9B8H"
-    }
-  },
-  "123rf-downloader": {
-    "slug": "123rf-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wh06JrOmKRCmViWhNpBg"
-    }
-  },
-  "adobe-stock-downloader": {
-    "slug": "adobe-stock-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wh06JrOmKRCm9efFxcwZ"
+      "live_price_id": "price_1SdS6cDP7AOTRcvm3EeOELFV",
+      "test_price_id": "price_1SdS6dDP7AOTRcvmgxMd5FzK"
     }
   },
   "ai-voice-cloner-app": {
@@ -37,18 +17,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99fd06JrOmKRCmxtuDhI3T",
-      "test_price_id": "price_1SVQld06JrOmKRCmDDCi46Uq"
-    }
-  },
-  "alamy-downloader": {
-    "slug": "alamy-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wi06JrOmKRCmJJfdiHTB"
+      "live_price_id": "price_1SdS6dDP7AOTRcvmV4RfCIfK",
+      "test_price_id": "price_1SdS6eDP7AOTRcvmI0fmxJez"
     }
   },
   "alpha-porno-video-downloader": {
@@ -58,18 +28,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SELi806JrOmKRCmYjc9McRN",
-      "test_price_id": "price_1SVVWk06JrOmKRCmQS2l53DH"
-    }
-  },
-  "amazon-video-downloader": {
-    "slug": "amazon-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 100,
-    "stripe": {
-      "live_price_id": "price_1S99wi06JrOmKRCmRppaSLjK"
+      "live_price_id": "price_1SdS6fDP7AOTRcvmfxMHMZ2L",
+      "test_price_id": "price_1SdS6fDP7AOTRcvmnR4di1JZ"
     }
   },
   "beeg-video-downloader": {
@@ -79,28 +39,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1RvXEr06JrOmKRCmJZDJjALY",
-      "test_price_id": "price_1SVVWl06JrOmKRCmmJN0RX8q"
-    }
-  },
-  "bilibili-downloader": {
-    "slug": "bilibili-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wj06JrOmKRCmXQNer2ho"
-    }
-  },
-  "canva-downloader": {
-    "slug": "canva-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wk06JrOmKRCmiqfoFkqm"
+      "live_price_id": "price_1SdS6gDP7AOTRcvmfBQFutsR",
+      "test_price_id": "price_1SdS6gDP7AOTRcvm9J92EbFY"
     }
   },
   "circle-downloader": {
@@ -110,8 +50,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wl06JrOmKRCmy32X7AjP",
-      "test_price_id": "price_1SVQle06JrOmKRCmmSiOXKYh"
+      "live_price_id": "price_1SdS6hDP7AOTRcvmVNye8iZQ",
+      "test_price_id": "price_1SdS6hDP7AOTRcvmsRFKHHsR"
     }
   },
   "clientclub-downloader": {
@@ -121,18 +61,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wm06JrOmKRCmaau6Xiqv",
-      "test_price_id": "price_1SVQle06JrOmKRCmeE0R7zFI"
-    }
-  },
-  "coursera-downloader": {
-    "slug": "coursera-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wn06JrOmKRCmwkYTxZBx"
+      "live_price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
+      "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q"
     }
   },
   "dailymotion-downloader": {
@@ -142,184 +72,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wo06JrOmKRCmtEGHbI2T",
-      "test_price_id": "price_1SLGfS06JrOmKRCmxyqzJI2w"
-    }
-  },
-  "demo-payment-adapter": {
-    "slug": "demo-payment-adapter",
-    "provider": "stripe",
-    "account": "primary",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 100,
-    "stripe": {
-      "live_price_id": "price_1SV4MW06JrOmKRCmZY0Q70o9",
-      "test_price_id": "price_1SV4NC06JrOmKRCmxC8sehN7"
-    },
-    "whop": {
-      "api_key_alias": "demo_whop",
-      "webhook_secret_alias": "demo_whop_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "listing_id": "whop_listing_demo_live",
-        "plan_id": "whop_plan_demo_live",
-        "offer_id": "whop_offer_demo_live",
-        "product_id": "whop_product_demo_live",
-        "checkout_url": "https://whop.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "listing_id": "whop_listing_demo_test",
-        "plan_id": "whop_plan_demo_test",
-        "offer_id": "whop_offer_demo_test",
-        "product_id": "whop_product_demo_test",
-        "checkout_url": "https://whop.com/demo-payment-adapter-test"
-      }
-    },
-    "easy_pay_direct": {
-      "api_key_alias": "demo_epd",
-      "webhook_secret_alias": "demo_epd_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "product_id": "epd_product_demo_live",
-        "campaign_id": "epd_campaign_demo_live",
-        "offer_id": "epd_offer_demo_live",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "product_id": "epd_product_demo_test",
-        "campaign_id": "epd_campaign_demo_test",
-        "offer_id": "epd_offer_demo_test",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-test"
-      }
-    },
-    "lemonsqueezy": {
-      "api_key_alias": "demo_lemonsqueezy",
-      "webhook_secret_alias": "demo_lemonsqueezy_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "store_id": "lemonsqueezy_store_demo_live",
-        "product_id": "lemonsqueezy_product_demo_live",
-        "variant_id": "lemonsqueezy_variant_demo_live",
-        "price_id": "lemonsqueezy_price_demo_live",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "store_id": "lemonsqueezy_store_demo_test",
-        "product_id": "lemonsqueezy_product_demo_test",
-        "variant_id": "lemonsqueezy_variant_demo_test",
-        "price_id": "lemonsqueezy_price_demo_test",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-test"
-      }
-    }
-  },
-  "demo-payment-adapter-secondary": {
-    "slug": "demo-payment-adapter-secondary",
-    "provider": "stripe",
-    "account": "secondary",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1SV5IyDP7AOTRcvmLcgKF6lo",
-      "test_price_id": "price_1SVQZQ06JrOmKRCmXk6J6BhE"
-    },
-    "whop": {
-      "api_key_alias": "demo_whop",
-      "webhook_secret_alias": "demo_whop_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "listing_id": "whop_listing_demo_live",
-        "plan_id": "whop_plan_demo_live",
-        "offer_id": "whop_offer_demo_live",
-        "product_id": "whop_product_demo_live",
-        "checkout_url": "https://whop.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "listing_id": "whop_listing_demo_test",
-        "plan_id": "whop_plan_demo_test",
-        "offer_id": "whop_offer_demo_test",
-        "product_id": "whop_product_demo_test",
-        "checkout_url": "https://whop.com/demo-payment-adapter-test"
-      }
-    },
-    "easy_pay_direct": {
-      "api_key_alias": "demo_epd",
-      "webhook_secret_alias": "demo_epd_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "product_id": "epd_product_demo_live",
-        "campaign_id": "epd_campaign_demo_live",
-        "offer_id": "epd_offer_demo_live",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "product_id": "epd_product_demo_test",
-        "campaign_id": "epd_campaign_demo_test",
-        "offer_id": "epd_offer_demo_test",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-test"
-      }
-    },
-    "lemonsqueezy": {
-      "api_key_alias": "demo_lemonsqueezy",
-      "webhook_secret_alias": "demo_lemonsqueezy_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
-      "live": {
-        "store_id": "lemonsqueezy_store_demo_live",
-        "product_id": "lemonsqueezy_product_demo_live",
-        "variant_id": "lemonsqueezy_variant_demo_live",
-        "price_id": "lemonsqueezy_price_demo_live",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "store_id": "lemonsqueezy_store_demo_test",
-        "product_id": "lemonsqueezy_product_demo_test",
-        "variant_id": "lemonsqueezy_variant_demo_test",
-        "price_id": "lemonsqueezy_price_demo_test",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-test"
-      }
-    }
-  },
-  "depositphotos-downloader": {
-    "slug": "depositphotos-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wo06JrOmKRCmO7Fe7LYG"
-    }
-  },
-  "deviantart-downloader": {
-    "slug": "deviantart-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wp06JrOmKRCmxPZvi7YP"
-    }
-  },
-  "dreamstime-downloader": {
-    "slug": "dreamstime-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wq06JrOmKRCmT1rrKjcd"
+      "live_price_id": "price_1SdS6jDP7AOTRcvmSPOaz9gI",
+      "test_price_id": "price_1SdS6jDP7AOTRcvmUpRlTPty"
     }
   },
   "eporner-video-downloader": {
@@ -329,8 +83,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1RvXID06JrOmKRCmdSqQK07c",
-      "test_price_id": "price_1SVVWm06JrOmKRCm7vB0VYCb"
+      "live_price_id": "price_1SdS6kDP7AOTRcvmCBBlPeHL",
+      "test_price_id": "price_1SdS6kDP7AOTRcvmHfLTmZKJ"
     }
   },
   "erome-downloader": {
@@ -340,58 +94,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wr06JrOmKRCmnjJiTjYy",
-      "test_price_id": "price_1SVVWm06JrOmKRCmGw1Dxe0E"
-    }
-  },
-  "facebook-video-downloader": {
-    "slug": "facebook-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wr06JrOmKRCmnHmBidFY"
-    }
-  },
-  "flickr-downloader": {
-    "slug": "flickr-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99ws06JrOmKRCmFvK8ceNO"
-    }
-  },
-  "freepik-downloader": {
-    "slug": "freepik-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wt06JrOmKRCmUbw42qU9"
-    }
-  },
-  "getty-images-downloader": {
-    "slug": "getty-images-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wt06JrOmKRCmxzY3jKYL"
-    }
-  },
-  "giphy-downloader": {
-    "slug": "giphy-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wu06JrOmKRCmq1ANhFue"
+      "live_price_id": "price_1SdS6lDP7AOTRcvm2uSqP6Ek",
+      "test_price_id": "price_1SdS6lDP7AOTRcvmMH5MyLFG"
     }
   },
   "gohighlevel-downloader": {
@@ -401,8 +105,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wu06JrOmKRCmfKo5Bl2z",
-      "test_price_id": "price_1SVQlf06JrOmKRCmelKQb6bB"
+      "live_price_id": "price_1SdS6mDP7AOTRcvm7bCMj3gV",
+      "test_price_id": "price_1SdS6mDP7AOTRcvmSEV301HE"
     }
   },
   "gokollab-downloader": {
@@ -412,48 +116,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wv06JrOmKRCmyCPZfee1",
-      "test_price_id": "price_1SVQlg06JrOmKRCmBPfvs2g4"
-    }
-  },
-  "hulu-downloader": {
-    "slug": "hulu-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wv06JrOmKRCmOtYb8mCE"
-    }
-  },
-  "instagram-downloader": {
-    "slug": "instagram-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wv06JrOmKRCm5BKNZ3Kj"
-    }
-  },
-  "internet-archive-downloader": {
-    "slug": "internet-archive-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99ww06JrOmKRCmOPtNc4AC"
-    }
-  },
-  "istock-downloader": {
-    "slug": "istock-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99ww06JrOmKRCmNqJ9zTSr"
+      "live_price_id": "price_1SdS6nDP7AOTRcvmjvQU4RIn",
+      "test_price_id": "price_1SdS6nDP7AOTRcvm7yPEHPHW"
     }
   },
   "kajabi-video-downloader": {
@@ -463,58 +127,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99wx06JrOmKRCmFaiTWpCK",
-      "test_price_id": "price_1SVQlg06JrOmKRCmnSbamkip"
-    }
-  },
-  "khan-academy-downloader": {
-    "slug": "khan-academy-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wx06JrOmKRCmqkFPnN9s"
-    }
-  },
-  "kick-clip-downloader": {
-    "slug": "kick-clip-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wx06JrOmKRCmTvX5yYRV"
-    }
-  },
-  "learndash-downloader": {
-    "slug": "learndash-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wy06JrOmKRCmGHe9PqqC"
-    }
-  },
-  "learnworlds-downloader": {
-    "slug": "learnworlds-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99wz06JrOmKRCmFCzqKyrO"
-    }
-  },
-  "linkedin-learning-downloader": {
-    "slug": "linkedin-learning-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99fw06JrOmKRCm59JPeRdR"
+      "live_price_id": "price_1SdS6oDP7AOTRcvm8lIDw4o9",
+      "test_price_id": "price_1SdS6oDP7AOTRcvmzRFn2zaT"
     }
   },
   "loom-video-downloader": {
@@ -524,8 +138,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S9BFJ06JrOmKRCmdpVOP8Em",
-      "test_price_id": "price_1SVQlg06JrOmKRCmmnlgfR2K"
+      "live_price_id": "price_1SdS6pDP7AOTRcvmC4iRmMQV",
+      "test_price_id": "price_1SdS6pDP7AOTRcvmrC3NdrYn"
     }
   },
   "m3u8-downloader": {
@@ -535,38 +149,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99fx06JrOmKRCm2ECdO0oK",
-      "test_price_id": "price_1SVQlg06JrOmKRCmJqOxe8g0"
-    }
-  },
-  "moodle-downloader": {
-    "slug": "moodle-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99fx06JrOmKRCmleYZfn4W"
-    }
-  },
-  "netflix-downloader": {
-    "slug": "netflix-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99fy06JrOmKRCmPkVYWIwk"
-    }
-  },
-  "nicovideo-downloader": {
-    "slug": "nicovideo-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99fz06JrOmKRCmxFh2vLWI"
+      "live_price_id": "price_1SdS6qDP7AOTRcvmUER2kNTE",
+      "test_price_id": "price_1SdS6qDP7AOTRcvmdBsyuWPv"
     }
   },
   "onlyfans-downloader": {
@@ -576,68 +160,8 @@
     "currency": "usd",
     "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SUyu906JrOmKRCmr1ym4isD",
-      "test_price_id": "price_1SUzfT06JrOmKRCm1y08eODD"
-    }
-  },
-  "patreon-downloader": {
-    "slug": "patreon-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g006JrOmKRCmQ5WBiQuN"
-    }
-  },
-  "pdf-downloader": {
-    "slug": "pdf-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g006JrOmKRCmVzelEW6H"
-    }
-  },
-  "pexels-video-downloader": {
-    "slug": "pexels-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g106JrOmKRCmnvLb6LoL"
-    }
-  },
-  "pinterest-downloader": {
-    "slug": "pinterest-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g106JrOmKRCmu5wfxl1Y"
-    }
-  },
-  "pixabay-downloader": {
-    "slug": "pixabay-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g106JrOmKRCmhuWBP77A"
-    }
-  },
-  "podia-downloader": {
-    "slug": "podia-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g206JrOmKRCmS5hDrXoG"
+      "live_price_id": "price_1SdS6rDP7AOTRcvmnFgg9D3k",
+      "test_price_id": "price_1SdS6rDP7AOTRcvmIKbcqTiL"
     }
   },
   "pornhub-video-downloader": {
@@ -647,18 +171,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1RvXN806JrOmKRCmg1bHRufg",
-      "test_price_id": "price_1SVVWn06JrOmKRCmaiZzh3K5"
-    }
-  },
-  "rawpixel-downloader": {
-    "slug": "rawpixel-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g206JrOmKRCm0DpSeCzS"
+      "live_price_id": "price_1SdS6sDP7AOTRcvmYmPqDT8x",
+      "test_price_id": "price_1SdS6tDP7AOTRcvm8NG8kHAz"
     }
   },
   "redtube-video-downloader": {
@@ -668,18 +182,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99g406JrOmKRCmqPgLx00x",
-      "test_price_id": "price_1SVVWn06JrOmKRCmX3iy6t7s"
-    }
-  },
-  "scribd-downloader": {
-    "slug": "scribd-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g406JrOmKRCm3s3fJ3xy"
+      "live_price_id": "price_1SdS6tDP7AOTRcvmwXwzvGsa",
+      "test_price_id": "price_1SdS6uDP7AOTRcvmoFVpmvJL"
     }
   },
   "serp-vpn": {
@@ -689,28 +193,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SXy9L06JrOmKRCmXmW5qaTX",
-      "test_price_id": "price_1SXyBP06JrOmKRCmPb1bEUsI"
-    }
-  },
-  "shutterstock-downloader": {
-    "slug": "shutterstock-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g606JrOmKRCmsWNWNrdh"
-    }
-  },
-  "skillshare-downloader": {
-    "slug": "skillshare-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g706JrOmKRCmWGVr96N6"
+      "live_price_id": "price_1SdS6uDP7AOTRcvmM8M435bb",
+      "test_price_id": "price_1SdS6vDP7AOTRcvmsfdW0ZIS"
     }
   },
   "skool-video-downloader": {
@@ -720,38 +204,8 @@
     "currency": "usd",
     "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SKxDw06JrOmKRCmxbxexLDR",
-      "test_price_id": "price_1SVmJk06JrOmKRCmwSNyJHPY"
-    }
-  },
-  "snapchat-video-downloader": {
-    "slug": "snapchat-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g706JrOmKRCmt9pwi3AH"
-    }
-  },
-  "soundcloud-downloader": {
-    "slug": "soundcloud-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g806JrOmKRCmTl8grSWH"
-    }
-  },
-  "soundgasm-downloader": {
-    "slug": "soundgasm-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 900,
-    "stripe": {
-      "live_price_id": "price_1SO0en06JrOmKRCmaPpkqn2H"
+      "live_price_id": "price_1SdS6vDP7AOTRcvmvWhwuCTl",
+      "test_price_id": "price_1SdS6wDP7AOTRcvml71rYkfw"
     }
   },
   "spankbang-video-downloader": {
@@ -761,8 +215,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S9DXF06JrOmKRCmrbemGM9U",
-      "test_price_id": "price_1SVVWo06JrOmKRCmvZiAfYxi"
+      "live_price_id": "price_1SdS6wDP7AOTRcvmDlTobsJZ",
+      "test_price_id": "price_1SdS6xDP7AOTRcvmfrLZ9MYG"
     }
   },
   "sprout-video-downloader": {
@@ -772,98 +226,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99g906JrOmKRCmqpFh4LYc",
-      "test_price_id": "price_1SVQli06JrOmKRCm9hWDK7Ze"
-    }
-  },
-  "stocksy-downloader": {
-    "slug": "stocksy-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g906JrOmKRCmaZzHAMEw"
-    }
-  },
-  "stockvault-downloader": {
-    "slug": "stockvault-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99g906JrOmKRCmGb7sOQ2q"
-    }
-  },
-  "storyblocks-downloader": {
-    "slug": "storyblocks-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gA06JrOmKRCmt3y1AyVP"
-    }
-  },
-  "stream-downloader": {
-    "slug": "stream-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gA06JrOmKRCmwsTNavsX"
-    }
-  },
-  "teachable-video-downloader": {
-    "slug": "teachable-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gB06JrOmKRCmO2gulXc5"
-    }
-  },
-  "telegram-video-downloader": {
-    "slug": "telegram-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gC06JrOmKRCm9XooPQNU"
-    }
-  },
-  "terabox-downloader": {
-    "slug": "terabox-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gC06JrOmKRCmY3kTiBht"
-    }
-  },
-  "thinkific-downloader": {
-    "slug": "thinkific-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gE06JrOmKRCmEfjsFume"
-    }
-  },
-  "thumbnail-downloader": {
-    "slug": "thumbnail-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gE06JrOmKRCmHWXd57yx"
+      "live_price_id": "price_1SdS6xDP7AOTRcvmIZf2eWTA",
+      "test_price_id": "price_1SdS6yDP7AOTRcvm4vHxvK06"
     }
   },
   "tiktok-downloader": {
@@ -873,8 +237,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gF06JrOmKRCmcKeM0NSp",
-      "test_price_id": "price_1SVQli06JrOmKRCmsVUvZc22"
+      "live_price_id": "price_1SdS6yDP7AOTRcvm66nWvCXX",
+      "test_price_id": "price_1SdS6zDP7AOTRcvmppjozxYj"
     }
   },
   "tnaflix-video-downloader": {
@@ -884,78 +248,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gF06JrOmKRCmxPX1Ip5o",
-      "test_price_id": "price_1SVVWo06JrOmKRCmPWaZntQW"
-    }
-  },
-  "tubi-downloader": {
-    "slug": "tubi-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gG06JrOmKRCmmZOSX7ah"
-    }
-  },
-  "tumblr-video-downloader": {
-    "slug": "tumblr-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gG06JrOmKRCmVRscTagt"
-    }
-  },
-  "twitch-video-downloader": {
-    "slug": "twitch-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gH06JrOmKRCm3wdakg7Q"
-    }
-  },
-  "twitter-video-downloader": {
-    "slug": "twitter-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gH06JrOmKRCme009G5ob"
-    }
-  },
-  "udemy-video-downloader": {
-    "slug": "udemy-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gH06JrOmKRCmSnepXJPa"
-    }
-  },
-  "unsplash-downloader": {
-    "slug": "unsplash-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gI06JrOmKRCmA9xUhbN6"
-    }
-  },
-  "vectorstock-downloader": {
-    "slug": "vectorstock-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gI06JrOmKRCmTvjSmEWB"
+      "live_price_id": "price_1SdS6zDP7AOTRcvmpg9wZSdY",
+      "test_price_id": "price_1SdS70DP7AOTRcvmM7jjtWpS"
     }
   },
   "vimeo-video-downloader": {
@@ -965,18 +259,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S2fcZ06JrOmKRCmTwbmGNxm",
-      "test_price_id": "price_1SVQlj06JrOmKRCm4dUQYQPV"
-    }
-  },
-  "vk-video-downloader": {
-    "slug": "vk-video-downloader",
-    "provider": "stripe",
-    "mode": "payment",
-    "currency": "usd",
-    "unit_amount": 1700,
-    "stripe": {
-      "live_price_id": "price_1S99gJ06JrOmKRCmzNGM97WE"
+      "live_price_id": "price_1SdS70DP7AOTRcvmE9x9q923",
+      "test_price_id": "price_1SdS71DP7AOTRcvmKDsjOqhR"
     }
   },
   "whop-video-downloader": {
@@ -986,8 +270,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gJ06JrOmKRCmkAYY713T",
-      "test_price_id": "price_1SVQlj06JrOmKRCm8Ax6DuFI"
+      "live_price_id": "price_1SdS71DP7AOTRcvmRHPIpT8y",
+      "test_price_id": "price_1SdS72DP7AOTRcvmW4a5G2Yw"
     }
   },
   "wistia-video-downloader": {
@@ -997,8 +281,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gJ06JrOmKRCmN3MovrlF",
-      "test_price_id": "price_1SVQlk06JrOmKRCmi79LNO3S"
+      "live_price_id": "price_1SdS72DP7AOTRcvm9E8lsXex",
+      "test_price_id": "price_1SdS72DP7AOTRcvm1lIS5aj5"
     }
   },
   "xhamster-video-downloader": {
@@ -1008,8 +292,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1RvXdF06JrOmKRCmSniyO7DT",
-      "test_price_id": "price_1SVVWp06JrOmKRCmooDlrIFa"
+      "live_price_id": "price_1SdS73DP7AOTRcvmCQ4N0uCy",
+      "test_price_id": "price_1SdS73DP7AOTRcvmtWOpMyF7"
     }
   },
   "xnxx-video-downloader": {
@@ -1019,8 +303,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S9PBd06JrOmKRCmvSxzbjnz",
-      "test_price_id": "price_1SVVWp06JrOmKRCmQxxElP2J"
+      "live_price_id": "price_1SdS74DP7AOTRcvmX1KAd6mn",
+      "test_price_id": "price_1SdS75DP7AOTRcvmfMTArQEp"
     }
   },
   "xvideos-downloader": {
@@ -1030,8 +314,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99gL06JrOmKRCmtPCthojb",
-      "test_price_id": "price_1SVVWq06JrOmKRCmwnZ9pa1z"
+      "live_price_id": "price_1SdS75DP7AOTRcvmLHIUKuPb",
+      "test_price_id": "price_1SdS75DP7AOTRcvmsYw5f7P2"
     }
   },
   "youporn-video-downloader": {
@@ -1041,8 +325,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1RvXMm06JrOmKRCmEXZ7GsiQ",
-      "test_price_id": "price_1SVVWr06JrOmKRCmVTTtRdYh"
+      "live_price_id": "price_1SdS76DP7AOTRcvm1khia8JP",
+      "test_price_id": "price_1SdS76DP7AOTRcvmodRgoH1e"
     }
   },
   "youtube-downloader": {
@@ -1052,8 +336,8 @@
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1S99xB06JrOmKRCmCyZM0ENF",
-      "test_price_id": "price_1SVQll06JrOmKRCmxDvl0lVU"
+      "live_price_id": "price_1SdS77DP7AOTRcvmEt8SQRBN",
+      "test_price_id": "price_1SdS77DP7AOTRcvmXEEQ8OXD"
     }
   }
 }

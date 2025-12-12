@@ -81,7 +81,13 @@ export async function GET(
     metadata.ghlTag = primaryGhlTag;
   }
 
-  ensureMetadataCaseVariants(metadata);
+  // Stripe metadata has a hard limit of 50 keys. We mirror case variants for most
+  // fields, but avoid mirroring Dub attribution keys (they are already stable)
+  // and enforce a strict cap.
+  ensureMetadataCaseVariants(metadata, {
+    maxKeys: 50,
+    skipMirror: (key) => key === "affiliateId" || key.startsWith("dub"),
+  });
 
   try {
     const session = await createCheckoutSessionForOffer({
