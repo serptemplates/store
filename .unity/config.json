@@ -1,0 +1,10 @@
+{
+  "unity": {
+    "unityHost": "localhost",
+    "mcpHost": "localhost",
+    "port": 6400
+  },
+  "project": {
+    "root": ""
+  }
+}
