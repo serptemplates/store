@@ -175,6 +175,17 @@
       "test_price_id": "price_1SdS6tDP7AOTRcvm8NG8kHAz"
     }
   },
+  "redgifs-downloader": {
+    "slug": "redgifs-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1Si2qPDP7AOTRcvmOrnM9ipn",
+      "test_price_id": "price_1Si2qPDP7AOTRcvm4u9yyy4V"
+    }
+  },
   "redtube-video-downloader": {
     "slug": "redtube-video-downloader",
     "provider": "stripe",
