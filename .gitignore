@@ -87,3 +87,4 @@ screenshots/
 .env.backup
 .env*
 tmp/*.sh
+config.json
