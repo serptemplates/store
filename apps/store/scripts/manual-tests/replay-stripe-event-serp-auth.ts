@@ -145,7 +145,7 @@ async function main() {
     return;
   }
 
-  const result = await grantSerpAuthEntitlements({
+  await grantSerpAuthEntitlements({
     email,
     entitlements,
     metadata: {
@@ -168,12 +168,6 @@ async function main() {
       providerSessionId: session.id ?? null,
     },
   });
-
-  console.log("serp-auth grant result", result);
-
-  if (result.status === "failed") {
-    process.exitCode = 1;
-  }
 }
 
 main().catch((error) => {

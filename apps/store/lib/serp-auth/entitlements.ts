@@ -11,6 +11,22 @@ type GrantEntitlementsInput = {
   };
 };
 
+export type SerpAuthEntitlementsGrantResult =
+  | {
+      status: "skipped";
+      reason: "missing_internal_secret" | "missing_email_or_entitlements";
+    }
+  | {
+      status: "failed";
+      httpStatus: number | null;
+      error?: { message: string; name?: string } | null;
+      responseBody?: string | null;
+    }
+  | {
+      status: "succeeded";
+      httpStatus: number;
+    };
+
 function getBaseUrl(): string {
   const raw = process.env.SERP_AUTH_BASE_URL ?? "https://auth.serp.co";
   return raw.replace(/\/+$/, "");
@@ -31,15 +47,19 @@ function normalizeEntitlements(entitlements: string[]): string[] {
   return Array.from(unique);
 }
 
-export async function grantSerpAuthEntitlements(input: GrantEntitlementsInput): Promise<void> {
+export async function grantSerpAuthEntitlements(
+  input: GrantEntitlementsInput,
+): Promise<SerpAuthEntitlementsGrantResult> {
   const secret = getInternalSecret();
   if (!secret) {
-    logger.debug("serp_auth.entitlements_grant_skipped", {
+    logger.warn("serp_auth.entitlements_grant_skipped", {
       reason: "missing_internal_secret",
       email: input.email,
       entitlements: input.entitlements,
+      vercelEnv: process.env.VERCEL_ENV ?? null,
+      nodeEnv: process.env.NODE_ENV ?? null,
     });
-    return;
+    return { status: "skipped", reason: "missing_internal_secret" };
   }
 
   const entitlements = normalizeEntitlements(input.entitlements);
@@ -49,7 +69,7 @@ export async function grantSerpAuthEntitlements(input: GrantEntitlementsInput): 
       email: input.email,
       entitlements,
     });
-    return;
+    return { status: "skipped", reason: "missing_email_or_entitlements" };
   }
 
   const baseUrl = getBaseUrl();
@@ -100,7 +120,11 @@ export async function grantSerpAuthEntitlements(input: GrantEntitlementsInput): 
         providerEventId: input.context?.providerEventId ?? null,
         providerSessionId: input.context?.providerSessionId ?? null,
       });
-      return;
+      return {
+        status: "failed",
+        httpStatus: response.status,
+        responseBody: bodyText.slice(0, 1_000),
+      };
     }
 
     logger.info("serp_auth.entitlements_grant_succeeded", {
@@ -113,6 +137,8 @@ export async function grantSerpAuthEntitlements(input: GrantEntitlementsInput): 
       providerEventId: input.context?.providerEventId ?? null,
       providerSessionId: input.context?.providerSessionId ?? null,
     });
+
+    return { status: "succeeded", httpStatus: response.status };
   } catch (error) {
     logger.error("serp_auth.entitlements_grant_failed", {
       url,
@@ -124,6 +150,12 @@ export async function grantSerpAuthEntitlements(input: GrantEntitlementsInput): 
       providerEventId: input.context?.providerEventId ?? null,
       providerSessionId: input.context?.providerSessionId ?? null,
     });
+
+    return {
+      status: "failed",
+      httpStatus: null,
+      error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
+    };
   } finally {
     clearTimeout(timeout);
   }

@@ -10,6 +10,7 @@ import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
 import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/order-fulfillment";
 import { getStripeClient } from "@/lib/payments/stripe";
+import type { SerpAuthEntitlementsGrantResult } from "@/lib/serp-auth/entitlements";
 
 const OPS_ALERT_THRESHOLD = 3;
 
@@ -539,6 +540,7 @@ export async function handleCheckoutSessionCompleted(
     fulfillmentResult.licenseConfig.entitlements.length > 0 ? fulfillmentResult.licenseConfig.entitlements : null;
 
   // Best-effort SERP Auth entitlements grant (only for paid/no-payment-required sessions)
+  let serpAuthEntitlementsGrant: SerpAuthEntitlementsGrantResult | null = null;
   try {
     const paymentStatus = session.payment_status ?? null;
     const isPaid = paymentStatus === "paid" || paymentStatus === "no_payment_required";
@@ -571,7 +573,7 @@ export async function handleCheckoutSessionCompleted(
 
       if (entitlementsToGrant.length > 0) {
         const { grantSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-        await grantSerpAuthEntitlements({
+        serpAuthEntitlementsGrant = await grantSerpAuthEntitlements({
           email: customerEmail,
           entitlements: entitlementsToGrant,
           metadata: {
@@ -609,6 +611,11 @@ export async function handleCheckoutSessionCompleted(
       paymentIntentId,
       error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
     });
+    serpAuthEntitlementsGrant = {
+      status: "failed",
+      httpStatus: null,
+      error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
+    };
   }
 
   const baseSkipReason = !offerConfig?.ghl
@@ -631,6 +638,7 @@ export async function handleCheckoutSessionCompleted(
         message,
         metadata: {
           errorName: fulfillmentResult.ghlResult.error instanceof Error ? fulfillmentResult.ghlResult.error.name : undefined,
+          serpAuthEntitlementsGrant,
         },
       });
 
@@ -657,6 +665,8 @@ export async function handleCheckoutSessionCompleted(
       if (skipReason) {
         outcomeMetadata.skipReason = skipReason;
       }
+
+      outcomeMetadata.serpAuthEntitlementsGrant = serpAuthEntitlementsGrant;
 
       await recordWebhookLog({
         paymentIntentId,

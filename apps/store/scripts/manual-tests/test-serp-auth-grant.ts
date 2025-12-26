@@ -42,4 +42,3 @@ main().catch((error) => {
   console.error("serp-auth grant smoke test failed", error instanceof Error ? error.message : error);
   process.exitCode = 1;
 });
-
