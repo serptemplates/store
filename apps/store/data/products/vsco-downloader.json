@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-vsco-downloader"
+      "purchase-vsco-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

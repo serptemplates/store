@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-luxuretv-downloader"
+      "purchase-luxuretv-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

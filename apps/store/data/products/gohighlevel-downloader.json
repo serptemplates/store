@@ -256,7 +256,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-gohighlevel-downloader"
+      "purchase-gohighlevel-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

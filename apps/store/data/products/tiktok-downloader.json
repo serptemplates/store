@@ -250,7 +250,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tiktok-downloader"
+      "purchase-tiktok-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

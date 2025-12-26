@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-khan-academy-downloader"
+      "purchase-khan-academy-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -190,7 +190,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-jwplayer-video-downloader"
+      "purchase-jwplayer-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

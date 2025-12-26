@@ -210,7 +210,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-pdf-downloader"
+      "purchase-pdf-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

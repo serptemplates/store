@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-learnworlds-downloader"
+      "purchase-learnworlds-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

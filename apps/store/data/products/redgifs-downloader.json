@@ -232,7 +232,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-redgifs-downloader"
+      "purchase-redgifs-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

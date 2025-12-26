@@ -269,7 +269,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-youtube-downloader"
+      "purchase-youtube-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

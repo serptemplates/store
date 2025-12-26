@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-txxx-downloader"
+      "purchase-txxx-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

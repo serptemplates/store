@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-terabox-downloader"
+      "purchase-terabox-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

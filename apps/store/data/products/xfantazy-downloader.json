@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-xfantazy-downloader"
+      "purchase-xfantazy-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

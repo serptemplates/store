@@ -213,7 +213,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-shutterstock-downloader"
+      "purchase-shutterstock-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

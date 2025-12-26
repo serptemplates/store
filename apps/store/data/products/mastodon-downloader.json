@@ -165,7 +165,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-mastodon-downloader"
+      "purchase-mastodon-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

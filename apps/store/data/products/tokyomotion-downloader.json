@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tokyomotion-downloader"
+      "purchase-tokyomotion-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

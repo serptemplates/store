@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-moodle-downloader"
+      "purchase-moodle-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

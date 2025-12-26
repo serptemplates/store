@@ -213,7 +213,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-depositphotos-downloader"
+      "purchase-depositphotos-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

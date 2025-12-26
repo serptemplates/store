@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-hclips-downloader"
+      "purchase-hclips-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

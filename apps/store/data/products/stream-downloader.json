@@ -213,7 +213,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-stream-downloader"
+      "purchase-stream-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

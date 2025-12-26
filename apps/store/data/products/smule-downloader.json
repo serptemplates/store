@@ -172,7 +172,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-smule-downloader"
+      "purchase-smule-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

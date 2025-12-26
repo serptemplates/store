@@ -205,7 +205,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-livejasmin-downloader"
+      "purchase-livejasmin-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

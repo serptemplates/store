@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-stocksy-downloader"
+      "purchase-stocksy-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

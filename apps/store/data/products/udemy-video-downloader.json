@@ -237,7 +237,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-udemy-video-downloader"
+      "purchase-udemy-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

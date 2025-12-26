@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tubi-downloader"
+      "purchase-tubi-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

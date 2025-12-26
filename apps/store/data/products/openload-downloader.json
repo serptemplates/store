@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-openload-downloader"
+      "purchase-openload-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

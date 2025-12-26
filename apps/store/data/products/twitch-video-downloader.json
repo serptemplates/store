@@ -216,7 +216,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-twitch-video-downloader"
+      "purchase-twitch-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

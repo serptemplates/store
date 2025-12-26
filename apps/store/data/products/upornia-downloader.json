@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-upornia-downloader"
+      "purchase-upornia-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

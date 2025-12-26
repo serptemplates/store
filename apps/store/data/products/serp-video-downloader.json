@@ -226,7 +226,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-serp-downloader"
+      "purchase-serp-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

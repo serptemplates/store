@@ -161,7 +161,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-yespornplease-downloader"
+      "purchase-yespornplease-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

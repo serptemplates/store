@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-einthusan-downloader"
+      "purchase-einthusan-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

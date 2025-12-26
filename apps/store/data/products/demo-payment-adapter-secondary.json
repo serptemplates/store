@@ -194,7 +194,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-demo-payment-adapter-secondary"
+      "purchase-demo-payment-adapter-secondary",
+      "purchase"
     ],
     "workflow_ids": []
   },

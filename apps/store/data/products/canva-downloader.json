@@ -215,7 +215,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-canva-downloader"
+      "purchase-canva-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

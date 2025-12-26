@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-mp3-downloader"
+      "purchase-mp3-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

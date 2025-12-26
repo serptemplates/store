@@ -204,7 +204,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-stripchat-video-downloader"
+      "purchase-stripchat-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

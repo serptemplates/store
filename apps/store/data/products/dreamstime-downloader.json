@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-dreamstime-downloader"
+      "purchase-dreamstime-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

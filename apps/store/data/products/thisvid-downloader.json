@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-thisvid-downloader"
+      "purchase-thisvid-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

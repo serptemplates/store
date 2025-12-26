@@ -460,6 +460,30 @@ function normalizeGhl(ghl: NonNullable<ProductData["ghl"]>): Record<string, unkn
     "opportunity_custom_field_ids",
   ]);
 
+  const rawTags = ordered.tag_ids;
+  const normalisedTags = Array.isArray(rawTags)
+    ? rawTags
+        .filter((tag): tag is string => typeof tag === "string")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
+    : [];
+
+  const seen = new Set<string>();
+  const dedupedTags: string[] = [];
+  for (const tag of normalisedTags) {
+    if (seen.has(tag)) continue;
+    seen.add(tag);
+    dedupedTags.push(tag);
+  }
+
+  const hasPurchaseTag = dedupedTags.includes("purchase");
+  const hasPurchaseScopedTag = dedupedTags.some((tag) => tag.startsWith("purchase-"));
+  if (hasPurchaseScopedTag && !hasPurchaseTag) {
+    dedupedTags.push("purchase");
+  }
+
+  ordered.tag_ids = dedupedTags;
+
   const contactFields = ordered.contact_custom_field_ids;
   if (isRecord(contactFields)) {
     ordered.contact_custom_field_ids = orderPlainRecord(contactFields);

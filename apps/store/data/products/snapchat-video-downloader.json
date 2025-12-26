@@ -222,7 +222,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-snapchat-video-downloader"
+      "purchase-snapchat-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

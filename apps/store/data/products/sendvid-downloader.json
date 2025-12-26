@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-sendvid-downloader"
+      "purchase-sendvid-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }
