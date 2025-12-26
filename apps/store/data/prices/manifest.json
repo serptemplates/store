@@ -32,6 +32,17 @@
       "test_price_id": "price_1SdS6fDP7AOTRcvmnR4di1JZ"
     }
   },
+  "ashemaletube-downloader": {
+    "slug": "ashemaletube-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdSDP7AOTRcvmPfnaHVgB",
+      "test_price_id": "price_1SibdTDP7AOTRcvm0Rbn8OA7"
+    }
+  },
   "beeg-video-downloader": {
     "slug": "beeg-video-downloader",
     "provider": "stripe",
@@ -41,6 +52,17 @@
     "stripe": {
       "live_price_id": "price_1SdS6gDP7AOTRcvmfBQFutsR",
       "test_price_id": "price_1SdS6gDP7AOTRcvm9J92EbFY"
+    }
+  },
+  "boyfriendtv-downloader": {
+    "slug": "boyfriendtv-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdTDP7AOTRcvmkTdnzESw",
+      "test_price_id": "price_1SibdUDP7AOTRcvm5Yp0fnNt"
     }
   },
   "circle-downloader": {
@@ -63,6 +85,17 @@
     "stripe": {
       "live_price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
       "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q"
+    }
+  },
+  "coomer-downloader": {
+    "slug": "coomer-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdVDP7AOTRcvmnmxmy66K",
+      "test_price_id": "price_1SibdVDP7AOTRcvmDbgVg5AP"
     }
   },
   "dailymotion-downloader": {
@@ -120,6 +153,39 @@
       "test_price_id": "price_1SdS6nDP7AOTRcvm7yPEHPHW"
     }
   },
+  "hdzog-downloader": {
+    "slug": "hdzog-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdWDP7AOTRcvmvQQcRY7k",
+      "test_price_id": "price_1SibdWDP7AOTRcvmxpsgMDYw"
+    }
+  },
+  "hentaihaven-downloader": {
+    "slug": "hentaihaven-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdXDP7AOTRcvm2gatgSXD",
+      "test_price_id": "price_1SibdYDP7AOTRcvmPqQm2nRc"
+    }
+  },
+  "justforfans-downloader": {
+    "slug": "justforfans-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdYDP7AOTRcvmeLXnv6oF",
+      "test_price_id": "price_1SibdZDP7AOTRcvmM7eY5trz"
+    }
+  },
   "kajabi-video-downloader": {
     "slug": "kajabi-video-downloader",
     "provider": "stripe",
@@ -142,6 +208,17 @@
       "test_price_id": "price_1SdS6pDP7AOTRcvmrC3NdrYn"
     }
   },
+  "luxuretv-downloader": {
+    "slug": "luxuretv-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdaDP7AOTRcvmKs7oaxsX",
+      "test_price_id": "price_1SibdaDP7AOTRcvmgtDypSj2"
+    }
+  },
   "m3u8-downloader": {
     "slug": "m3u8-downloader",
     "provider": "stripe",
@@ -151,6 +228,39 @@
     "stripe": {
       "live_price_id": "price_1SdS6qDP7AOTRcvmUER2kNTE",
       "test_price_id": "price_1SdS6qDP7AOTRcvmdBsyuWPv"
+    }
+  },
+  "manyvids-downloader": {
+    "slug": "manyvids-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdbDP7AOTRcvm8KrWQfLg",
+      "test_price_id": "price_1SibdbDP7AOTRcvmFwpIcLjU"
+    }
+  },
+  "motherless-downloader": {
+    "slug": "motherless-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdcDP7AOTRcvmS6viCC9e",
+      "test_price_id": "price_1SibdcDP7AOTRcvmnqz3FKLC"
+    }
+  },
+  "nhentai-downloader": {
+    "slug": "nhentai-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibddDP7AOTRcvm5Cog7M4L",
+      "test_price_id": "price_1SibdeDP7AOTRcvmqedn8TRF"
     }
   },
   "onlyfans-downloader": {
@@ -173,6 +283,17 @@
     "stripe": {
       "live_price_id": "price_1SdS6sDP7AOTRcvmYmPqDT8x",
       "test_price_id": "price_1SdS6tDP7AOTRcvm8NG8kHAz"
+    }
+  },
+  "porntrex-downloader": {
+    "slug": "porntrex-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdeDP7AOTRcvmblCWr1TB",
+      "test_price_id": "price_1SibdfDP7AOTRcvmcUdqnYmD"
     }
   },
   "redgifs-downloader": {
@@ -241,6 +362,17 @@
       "test_price_id": "price_1SdS6yDP7AOTRcvm4vHxvK06"
     }
   },
+  "thisvid-downloader": {
+    "slug": "thisvid-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdfDP7AOTRcvmhWf9YnSK",
+      "test_price_id": "price_1SibdgDP7AOTRcvmL3HYTGGT"
+    }
+  },
   "tiktok-downloader": {
     "slug": "tiktok-downloader",
     "provider": "stripe",
@@ -261,6 +393,39 @@
     "stripe": {
       "live_price_id": "price_1SdS6zDP7AOTRcvmpg9wZSdY",
       "test_price_id": "price_1SdS70DP7AOTRcvmM7jjtWpS"
+    }
+  },
+  "tokyomotion-downloader": {
+    "slug": "tokyomotion-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdhDP7AOTRcvmQcfZ6fAO",
+      "test_price_id": "price_1SibdhDP7AOTRcvmBmD0Mfw8"
+    }
+  },
+  "txxx-downloader": {
+    "slug": "txxx-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdiDP7AOTRcvmr1YudDOB",
+      "test_price_id": "price_1SibdjDP7AOTRcvm0jzasNbU"
+    }
+  },
+  "upornia-downloader": {
+    "slug": "upornia-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdjDP7AOTRcvmGmXtwkiM",
+      "test_price_id": "price_1SibdkDP7AOTRcvm2rlRjk3I"
     }
   },
   "vimeo-video-downloader": {
@@ -296,6 +461,17 @@
       "test_price_id": "price_1SdS72DP7AOTRcvm1lIS5aj5"
     }
   },
+  "xfantazy-downloader": {
+    "slug": "xfantazy-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdlDP7AOTRcvmTH9kLA4q",
+      "test_price_id": "price_1SibdlDP7AOTRcvmK5TdmILd"
+    }
+  },
   "xhamster-video-downloader": {
     "slug": "xhamster-video-downloader",
     "provider": "stripe",
@@ -327,6 +503,28 @@
     "stripe": {
       "live_price_id": "price_1SdS75DP7AOTRcvmLHIUKuPb",
       "test_price_id": "price_1SdS75DP7AOTRcvmsYw5f7P2"
+    }
+  },
+  "yespornplease-downloader": {
+    "slug": "yespornplease-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdmDP7AOTRcvm2CfmuNYO",
+      "test_price_id": "price_1SibdmDP7AOTRcvmJy7q4ul0"
+    }
+  },
+  "youjizz-downloader": {
+    "slug": "youjizz-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 1700,
+    "stripe": {
+      "live_price_id": "price_1SibdnDP7AOTRcvm60ps6Xm3",
+      "test_price_id": "price_1SibdoDP7AOTRcvmSVGESp0v"
     }
   },
   "youporn-video-downloader": {

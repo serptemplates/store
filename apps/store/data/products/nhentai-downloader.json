@@ -10,7 +10,7 @@
   "description": "NHentai Downloader lets collectors save doujinshi they are permitted to view, complete with page order and metadata. Skip page-by-page saving and keep your library ready for offline reading.\n\nUse it to organize research references, preserve favorite works on your tablet, or keep backups when traveling without stable internet.",
   "seo_title": "NHentai Downloader | Download NHentai Doujinshi",
   "seo_description": "Download NHentai doujinshi for private offline reading. Fast, secure NHentai downloader with full gallery support.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download authorized NHentai galleries in the original page order",
     "Capture metadata, tags, and titles for quick cataloging",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-nhentai-downloader",
     "ghlTag": "purchase-nhentai-downloader",
     "landerId": "nhentai-downloader",
+    "licenseEntitlements": "nhentai-downloader",
     "offerId": "nhentai-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/nhentai-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibddDP7AOTRcvm5Cog7M4L",
+      "test_price_id": "price_1SibdeDP7AOTRcvmqedn8TRF",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYd9hCfO3b9j",
+        "stripe_test_product_id": "prod_TfxYTegC0sNsGj"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibddDP7AOTRcvm5Cog7M4L",
+    "test_price_id": "price_1SibdeDP7AOTRcvmqedn8TRF",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYd9hCfO3b9j",
+      "stripe_test_product_id": "prod_TfxYTegC0sNsGj"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-nhentai-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "nhentai-downloader"
+    ]
   }
 }

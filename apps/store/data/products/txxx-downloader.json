@@ -10,7 +10,7 @@
   "description": "TXXX Downloader gives creators and teams a dependable way to save TXXX videos for\noffline access. Instead of juggling manual captures or risky browser extensions,\nit pulls publicly accessible files directly from TXXX with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal\nlibrary available when you're traveling or working with limited connectivity.",
   "seo_title": "TXXX Downloader | Download TXXX Videos",
   "seo_description": "Download TXXX videos for offline use. Fast, private TXXX downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from TXXX",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-txxx-downloader",
     "ghlTag": "purchase-txxx-downloader",
     "landerId": "txxx-downloader",
+    "licenseEntitlements": "txxx-downloader",
     "offerId": "txxx-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/txxx-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdiDP7AOTRcvmr1YudDOB",
+      "test_price_id": "price_1SibdjDP7AOTRcvm0jzasNbU",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYteFDeq5PN8",
+        "stripe_test_product_id": "prod_TfxYUmXJBwpkKn"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdiDP7AOTRcvmr1YudDOB",
+    "test_price_id": "price_1SibdjDP7AOTRcvm0jzasNbU",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYteFDeq5PN8",
+      "stripe_test_product_id": "prod_TfxYUmXJBwpkKn"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-txxx-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "txxx-downloader"
+    ]
   }
 }

@@ -15,6 +15,7 @@ import { isPreRelease } from "../lib/products/release-status"
 import {
   getProductsDataRoot,
   getProductsDirectory,
+  getProductSlugs,
   resolveProductFilePath,
   type ProductFileResolution,
 } from "../lib/products/product"
@@ -457,9 +458,9 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
   const manifestEntriesBySlug: Record<string, ProductPriceManifestEntry> = {}
   const assetFailures: ProductAssetCheckFailure[] = []
 
-  const slugsFromFiles = new Set(
-    productFiles.map((file) => file.replace(/\.json$/i, "")).filter((slug) => slug.trim().length > 0),
-  )
+  // Use the canonical slug list (already filtered by site.config excludeSlugs) to avoid
+  // failing validation on intentionally excluded products that still exist on disk.
+  const slugsFromFiles = new Set(getProductSlugs())
 
   for (const slug of Array.from(slugsFromFiles).sort((a, b) => a.localeCompare(b))) {
     let resolution: ProductFileResolution

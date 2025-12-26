@@ -10,7 +10,7 @@
   "description": "Xfantazy Downloader keeps downloads predictable for editors and viewers who have permission to access Xfantazy content. It captures the source files directly, preserving quality, performer tags, and timestamps.\n\nUse it to organize private libraries, hand off clips to collaborators, or prep travel drives without depending on streaming access.",
   "seo_title": "Xfantazy Downloader | Download Xfantazy Videos",
   "seo_description": "Download Xfantazy videos you are authorized to view. Fast, private Xfantazy downloader with batch support.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download Xfantazy videos you can view without quality loss",
     "Preserve performer tags, titles, and timestamps automatically",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-xfantazy-downloader",
     "ghlTag": "purchase-xfantazy-downloader",
     "landerId": "xfantazy-downloader",
+    "licenseEntitlements": "xfantazy-downloader",
     "offerId": "xfantazy-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/xfantazy-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdlDP7AOTRcvmTH9kLA4q",
+      "test_price_id": "price_1SibdlDP7AOTRcvmK5TdmILd",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYTSP1YBsUPu",
+        "stripe_test_product_id": "prod_TfxYIDRqceuCNn"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdlDP7AOTRcvmTH9kLA4q",
+    "test_price_id": "price_1SibdlDP7AOTRcvmK5TdmILd",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYTSP1YBsUPu",
+      "stripe_test_product_id": "prod_TfxYIDRqceuCNn"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-xfantazy-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "xfantazy-downloader"
+    ]
   }
 }

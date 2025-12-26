@@ -10,7 +10,7 @@
   "description": "YouJizz Downloader gives creators and teams a dependable way to save YouJizz videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from YouJizz with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "YouJizz Downloader | Download YouJizz Videos",
   "seo_description": "Download YouJizz videos for offline use. Fast, private YouJizz downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from YouJizz",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-youjizz-downloader",
     "ghlTag": "purchase-youjizz-downloader",
     "landerId": "youjizz-downloader",
+    "licenseEntitlements": "youjizz-downloader",
     "offerId": "youjizz-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/youjizz-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdnDP7AOTRcvm60ps6Xm3",
+      "test_price_id": "price_1SibdoDP7AOTRcvmSVGESp0v",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYlIvcUSu9Li",
+        "stripe_test_product_id": "prod_TfxYUxSWNMvH9t"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdnDP7AOTRcvm60ps6Xm3",
+    "test_price_id": "price_1SibdoDP7AOTRcvmSVGESp0v",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYlIvcUSu9Li",
+      "stripe_test_product_id": "prod_TfxYUxSWNMvH9t"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-youjizz-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "youjizz-downloader"
+    ]
   }
 }

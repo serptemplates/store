@@ -10,7 +10,7 @@
   "description": "Coomer Downloader gives creators and teams a dependable way to save Coomer media posts for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Coomer with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "Coomer Downloader | Download Coomer Content",
   "seo_description": "Download Coomer media posts for offline use. Fast, private Coomer downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from Coomer",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-coomer-downloader",
     "ghlTag": "purchase-coomer-downloader",
     "landerId": "coomer-downloader",
+    "licenseEntitlements": "coomer-downloader",
     "offerId": "coomer-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/coomer-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdVDP7AOTRcvmnmxmy66K",
+      "test_price_id": "price_1SibdVDP7AOTRcvmDbgVg5AP",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYLMxlfjtFuJ",
+        "stripe_test_product_id": "prod_TfxYYFwgogqw1U"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdVDP7AOTRcvmnmxmy66K",
+    "test_price_id": "price_1SibdVDP7AOTRcvmDbgVg5AP",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYLMxlfjtFuJ",
+      "stripe_test_product_id": "prod_TfxYYFwgogqw1U"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-coomer-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "coomer-downloader"
+    ]
   }
 }

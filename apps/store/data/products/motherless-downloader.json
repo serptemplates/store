@@ -10,7 +10,7 @@
   "description": "Motherless Downloader gives creators and teams a dependable way to save Motherless videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Motherless with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "Motherless Downloader | Download Motherless Videos",
   "seo_description": "Download Motherless videos for offline use. Fast, private Motherless downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from Motherless",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-motherless-downloader",
     "ghlTag": "purchase-motherless-downloader",
     "landerId": "motherless-downloader",
+    "licenseEntitlements": "motherless-downloader",
     "offerId": "motherless-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/motherless-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdcDP7AOTRcvmS6viCC9e",
+      "test_price_id": "price_1SibdcDP7AOTRcvmnqz3FKLC",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYCCYzli4aiG",
+        "stripe_test_product_id": "prod_TfxYK8kw5VWCUw"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdcDP7AOTRcvmS6viCC9e",
+    "test_price_id": "price_1SibdcDP7AOTRcvmnqz3FKLC",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYCCYzli4aiG",
+      "stripe_test_product_id": "prod_TfxYK8kw5VWCUw"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-motherless-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "motherless-downloader"
+    ]
   }
 }
