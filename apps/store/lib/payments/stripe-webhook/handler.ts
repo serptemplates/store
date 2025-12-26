@@ -19,7 +19,7 @@ export async function handleStripeEvent(
     case "checkout.session.completed":
       await handleCheckoutSessionCompleted(
         event.data.object as Stripe.Checkout.Session,
-        event.id,
+        { id: event.id, type: event.type, created: event.created },
         { accountAlias: options?.accountAlias ?? null },
       );
       break;
