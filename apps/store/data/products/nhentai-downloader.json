@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-nhentai-downloader"
+      "purchase-nhentai-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-linkedin-learning-downloader"
+      "purchase-linkedin-learning-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

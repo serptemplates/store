@@ -307,7 +307,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-vimeo-video-downloader"
+      "purchase-vimeo-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

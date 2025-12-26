@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-imagefap-downloader"
+      "purchase-imagefap-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

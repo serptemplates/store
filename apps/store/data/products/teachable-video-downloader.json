@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-teachable-video-downloader"
+      "purchase-teachable-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

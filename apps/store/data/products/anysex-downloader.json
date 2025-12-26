@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-anysex-downloader"
+      "purchase-anysex-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

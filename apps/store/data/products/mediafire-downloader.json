@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-mediafire-downloader"
+      "purchase-mediafire-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

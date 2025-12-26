@@ -281,7 +281,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-circle-downloader"
+      "purchase-circle-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

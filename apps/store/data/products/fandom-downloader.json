@@ -170,7 +170,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-fandom-downloader"
+      "purchase-fandom-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -172,7 +172,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-edx-downloader"
+      "purchase-edx-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

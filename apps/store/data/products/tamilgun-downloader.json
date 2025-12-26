@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tamilgun-downloader"
+      "purchase-tamilgun-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

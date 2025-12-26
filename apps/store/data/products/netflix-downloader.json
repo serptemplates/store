@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-netflix-downloader"
+      "purchase-netflix-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

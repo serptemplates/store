@@ -170,7 +170,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-pond5-downloader"
+      "purchase-pond5-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

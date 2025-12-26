@@ -255,7 +255,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-kajabi-downloader"
+      "purchase-kajabi-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

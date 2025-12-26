@@ -215,7 +215,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-getty-images-downloader"
+      "purchase-getty-images-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -220,7 +220,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-serp-audio-downloader"
+      "purchase-serp-audio-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

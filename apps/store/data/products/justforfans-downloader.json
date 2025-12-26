@@ -161,7 +161,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-justforfans-downloader"
+      "purchase-justforfans-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

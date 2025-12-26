@@ -287,7 +287,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-skool-video-downloader"
+      "purchase-skool-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

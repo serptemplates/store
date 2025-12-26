@@ -215,7 +215,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-deviantart-downloader"
+      "purchase-deviantart-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

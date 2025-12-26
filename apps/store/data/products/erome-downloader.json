@@ -252,7 +252,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-erome-downloader"
+      "purchase-erome-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

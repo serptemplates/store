@@ -265,7 +265,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-youporn-downloader"
+      "purchase-youporn-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

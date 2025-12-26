@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-naver-downloader"
+      "purchase-naver-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-alamy-downloader"
+      "purchase-alamy-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

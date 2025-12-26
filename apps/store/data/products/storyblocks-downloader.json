@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-storyblocks-downloader"
+      "purchase-storyblocks-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

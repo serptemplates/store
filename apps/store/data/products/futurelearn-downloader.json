@@ -172,7 +172,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-futurelearn-downloader"
+      "purchase-futurelearn-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

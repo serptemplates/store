@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-motherless-downloader"
+      "purchase-motherless-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

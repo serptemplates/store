@@ -216,7 +216,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tumblr-video-downloader"
+      "purchase-tumblr-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

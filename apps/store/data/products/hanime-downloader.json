@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-hanime-downloader"
+      "purchase-hanime-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-videohive-downloader"
+      "purchase-videohive-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

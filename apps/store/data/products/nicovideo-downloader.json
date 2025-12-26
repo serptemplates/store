@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-nicovideo-downloader"
+      "purchase-nicovideo-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

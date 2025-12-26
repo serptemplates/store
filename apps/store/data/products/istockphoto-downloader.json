@@ -173,7 +173,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-istockphoto-downloader"
+      "purchase-istockphoto-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

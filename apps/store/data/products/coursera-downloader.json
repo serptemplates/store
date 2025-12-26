@@ -253,7 +253,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-coursera-downloader"
+      "purchase-coursera-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

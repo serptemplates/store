@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-indavideo-downloader"
+      "purchase-indavideo-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

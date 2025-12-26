@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-kompoz-downloader"
+      "purchase-kompoz-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -216,7 +216,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-flickr-downloader"
+      "purchase-flickr-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

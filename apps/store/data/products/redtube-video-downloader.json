@@ -243,7 +243,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-redtube-downloader"
+      "purchase-redtube-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },
