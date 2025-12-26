@@ -231,7 +231,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-tnaflix-downloader"
+      "purchase-tnaflix-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

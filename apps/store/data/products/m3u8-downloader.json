@@ -246,7 +246,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-m3u8-downloader"
+      "purchase-m3u8-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

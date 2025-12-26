@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-bitchute-downloader"
+      "purchase-bitchute-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

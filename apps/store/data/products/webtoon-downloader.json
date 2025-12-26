@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-webtoon-downloader"
+      "purchase-webtoon-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

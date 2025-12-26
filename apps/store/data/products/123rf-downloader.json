@@ -233,7 +233,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-123rf-downloader"
+      "purchase-123rf-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

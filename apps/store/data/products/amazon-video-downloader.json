@@ -215,7 +215,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-amazon-video-downloader"
+      "purchase-amazon-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

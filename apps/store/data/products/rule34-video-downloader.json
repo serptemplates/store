@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-rule34-video-downloader"
+      "purchase-rule34-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

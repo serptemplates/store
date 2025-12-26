@@ -165,7 +165,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-dash-stream-video-downloader"
+      "purchase-dash-stream-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

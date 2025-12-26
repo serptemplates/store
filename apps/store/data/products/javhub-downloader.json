@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-javhub-downloader"
+      "purchase-javhub-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

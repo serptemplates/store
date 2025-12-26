@@ -109,7 +109,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-demo-payment-adapter-paypal"
+      "purchase-demo-payment-adapter-paypal",
+      "purchase"
     ],
     "workflow_ids": []
   },

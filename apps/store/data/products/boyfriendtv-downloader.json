@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-boyfriendtv-downloader"
+      "purchase-boyfriendtv-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

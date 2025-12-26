@@ -217,7 +217,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-rawpixel-downloader"
+      "purchase-rawpixel-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

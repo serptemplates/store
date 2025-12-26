@@ -216,7 +216,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-pexels-video-downloader"
+      "purchase-pexels-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

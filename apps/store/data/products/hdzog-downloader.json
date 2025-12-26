@@ -188,7 +188,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-hdzog-downloader"
+      "purchase-hdzog-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

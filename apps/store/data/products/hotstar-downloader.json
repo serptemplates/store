@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-hotstar-downloader"
+      "purchase-hotstar-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

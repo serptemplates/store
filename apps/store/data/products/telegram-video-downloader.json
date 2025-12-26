@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-telegram-video-downloader"
+      "purchase-telegram-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

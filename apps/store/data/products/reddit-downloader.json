@@ -173,7 +173,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-reddit-downloader"
+      "purchase-reddit-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

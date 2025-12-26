@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-shesfreaky-downloader"
+      "purchase-shesfreaky-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

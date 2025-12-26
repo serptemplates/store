@@ -165,7 +165,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-ted-talks-downloader"
+      "purchase-ted-talks-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

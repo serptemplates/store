@@ -232,7 +232,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-ai-voice-cloner-app"
+      "purchase-ai-voice-cloner-app",
+      "purchase"
     ],
     "workflow_ids": []
   },

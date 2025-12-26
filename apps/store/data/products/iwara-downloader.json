@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-iwara-downloader"
+      "purchase-iwara-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

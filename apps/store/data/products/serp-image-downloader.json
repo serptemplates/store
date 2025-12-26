@@ -220,7 +220,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-serp-image-downloader"
+      "purchase-serp-image-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

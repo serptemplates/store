@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-weibo-downloader"
+      "purchase-weibo-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

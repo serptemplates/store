@@ -165,7 +165,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-behance-downloader"
+      "purchase-behance-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

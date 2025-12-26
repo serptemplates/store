@@ -166,7 +166,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-cda-downloader"
+      "purchase-cda-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

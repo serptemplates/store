@@ -191,7 +191,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-open-video-downloader"
+      "purchase-open-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

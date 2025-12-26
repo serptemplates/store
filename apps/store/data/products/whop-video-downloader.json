@@ -271,7 +271,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-whop-downloader"
+      "purchase-whop-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

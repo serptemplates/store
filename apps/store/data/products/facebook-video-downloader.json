@@ -214,7 +214,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-facebook-video-downloader"
+      "purchase-facebook-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

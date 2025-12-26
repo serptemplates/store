@@ -239,7 +239,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-clientclub-downloader"
+      "purchase-clientclub-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

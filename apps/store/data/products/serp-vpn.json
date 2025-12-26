@@ -185,7 +185,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-serp-vpn"
+      "purchase-serp-vpn",
+      "purchase"
     ],
     "workflow_ids": []
   },

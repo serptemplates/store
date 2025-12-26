@@ -191,7 +191,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-brightcove-video-downloader"
+      "purchase-brightcove-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

@@ -165,7 +165,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-hls-video-downloader"
+      "purchase-hls-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

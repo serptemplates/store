@@ -213,7 +213,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-unsplash-downloader"
+      "purchase-unsplash-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

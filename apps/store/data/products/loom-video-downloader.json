@@ -290,7 +290,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-loom-video-downloader"
+      "purchase-loom-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

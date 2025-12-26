@@ -171,7 +171,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-plurk-downloader"
+      "purchase-plurk-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

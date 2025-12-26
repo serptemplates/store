@@ -279,7 +279,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-sprout-video-downloader"
+      "purchase-sprout-video-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   },

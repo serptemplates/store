@@ -203,7 +203,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-erothots-downloader"
+      "purchase-erothots-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

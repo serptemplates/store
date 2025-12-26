@@ -172,7 +172,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-mixcloud-downloader"
+      "purchase-mixcloud-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }

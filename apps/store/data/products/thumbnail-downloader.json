@@ -212,7 +212,8 @@
   },
   "ghl": {
     "tag_ids": [
-      "purchase-thumbnail-downloader"
+      "purchase-thumbnail-downloader",
+      "purchase"
     ],
     "workflow_ids": []
   }
