@@ -10,6 +10,7 @@ import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
 import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/order-fulfillment";
 import { getStripeClient } from "@/lib/payments/stripe";
+import type { SerpAuthEntitlementsGrantResult } from "@/lib/serp-auth/entitlements";
 
 const OPS_ALERT_THRESHOLD = 3;
 
@@ -59,28 +60,47 @@ function collectSlugCandidatesFromMetadata(metadata: Record<string, unknown> | n
 async function collectLineItemTagData(
   session: Stripe.Checkout.Session,
   stripeMode: StripeModeInput,
-): Promise<{ tagIds: string[]; productSlugs: string[] }> {
+  options?: { primaryPriceId?: string | null },
+): Promise<{
+  tagIds: string[];
+  productSlugs: string[];
+  lineItems: Array<{ priceId: string | null; productId: string | null; quantity: number }>;
+}> {
   const tagIds: string[] = [];
   const productSlugs: string[] = [];
+  const resolvedLineItems: Array<{ priceId: string | null; productId: string | null; quantity: number }> = [];
 
   if (!session.id) {
-    return { tagIds, productSlugs };
+    return { tagIds, productSlugs, lineItems: resolvedLineItems };
   }
 
   try {
     const stripe = getStripeClient(stripeMode);
-    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+    const lineItemsResponse = await stripe.checkout.sessions.listLineItems(session.id, {
       expand: ["data.price.product"],
       limit: 100,
     });
 
-    for (const item of lineItems.data ?? []) {
+    const deferredZeroQuantity: Stripe.LineItem[] = [];
+
+    for (const item of lineItemsResponse.data ?? []) {
       const quantity = typeof item.quantity === "number" ? item.quantity : 1;
+
+      const price = item.price ?? null;
+      const priceId = price?.id ?? null;
+      const productId = typeof price?.product === "string"
+        ? price.product
+        : price?.product && typeof price.product === "object" && "id" in price.product
+        ? (price.product as Stripe.Product).id
+        : null;
+
+      resolvedLineItems.push({ priceId, productId, quantity });
+
       if (quantity <= 0) {
+        deferredZeroQuantity.push(item);
         continue;
       }
 
-      const price = item.price ?? null;
       if (price?.metadata) {
         for (const tag of collectTagCandidatesFromMetadata(price.metadata)) {
           appendUniqueString(tagIds, tag);
@@ -106,6 +126,40 @@ async function collectLineItemTagData(
       }
 
     }
+
+    const primaryPriceId = options?.primaryPriceId ?? null;
+    if (primaryPriceId && deferredZeroQuantity.length > 0) {
+      for (const item of deferredZeroQuantity) {
+        const price = (item as Stripe.LineItem).price ?? null;
+        if (!price || price.id !== primaryPriceId) {
+          continue;
+        }
+
+        if (price.metadata) {
+          for (const tag of collectTagCandidatesFromMetadata(price.metadata)) {
+            appendUniqueString(tagIds, tag);
+          }
+
+          for (const slug of collectSlugCandidatesFromMetadata(price.metadata)) {
+            appendUniqueString(productSlugs, slug);
+          }
+        }
+
+        const priceProduct = price.product ?? null;
+        if (priceProduct && typeof priceProduct === "object" && !("deleted" in priceProduct && priceProduct.deleted)) {
+          const product = priceProduct as Stripe.Product;
+          if (product.metadata) {
+            for (const tag of collectTagCandidatesFromMetadata(product.metadata)) {
+              appendUniqueString(tagIds, tag);
+            }
+
+            for (const slug of collectSlugCandidatesFromMetadata(product.metadata)) {
+              appendUniqueString(productSlugs, slug);
+            }
+          }
+        }
+      }
+    }
   } catch (error) {
     logger.warn("stripe.checkout_line_items_fetch_failed", {
       sessionId: session.id,
@@ -113,12 +167,12 @@ async function collectLineItemTagData(
     });
   }
 
-  return { tagIds, productSlugs };
+  return { tagIds, productSlugs, lineItems: resolvedLineItems };
 }
 
 export async function handleCheckoutSessionCompleted(
   session: Stripe.Checkout.Session,
-  eventId?: string,
+  eventMeta?: { id?: string; type?: string; created?: number },
   context?: { accountAlias?: string | null },
 ) {
   const metadata = ensureMetadataCaseVariants(normalizeMetadata(session.metadata));
@@ -270,7 +324,10 @@ export async function handleCheckoutSessionCompleted(
     metadata.productSlug = offerId;
   }
 
-  const lineItemTagData = await collectLineItemTagData(session, stripeModeForLineItems);
+  const primaryPriceIdForTags = getMetadataString(metadata, "stripe_price_id") ?? getMetadataString(metadata, "stripePriceId");
+  const lineItemTagData = await collectLineItemTagData(session, stripeModeForLineItems, {
+    primaryPriceId: primaryPriceIdForTags,
+  });
   const lineItemTags: string[] = [];
   const appendLineItemTag = (value: unknown) => appendUniqueString(lineItemTags, value);
 
@@ -357,6 +414,12 @@ export async function handleCheckoutSessionCompleted(
   });
 
   if (paymentIntentId) {
+    const webhookMetadata = {
+      ...metadata,
+      resolvedTagCount: resolvedGhlTagIds.length,
+      resolvedTags: resolvedGhlTagIds,
+    };
+
     await recordWebhookLog({
       paymentIntentId,
       stripeSessionId: session.id,
@@ -364,7 +427,7 @@ export async function handleCheckoutSessionCompleted(
       offerId,
       landerId,
       status: "pending",
-      metadata,
+      metadata: webhookMetadata,
     });
   }
 
@@ -476,6 +539,85 @@ export async function handleCheckoutSessionCompleted(
   const licenseEntitlements =
     fulfillmentResult.licenseConfig.entitlements.length > 0 ? fulfillmentResult.licenseConfig.entitlements : null;
 
+  // Best-effort SERP Auth entitlements grant (only for paid/no-payment-required sessions)
+  let serpAuthEntitlementsGrant: SerpAuthEntitlementsGrantResult | null = null;
+  try {
+    const paymentStatus = session.payment_status ?? null;
+    const isPaid = paymentStatus === "paid" || paymentStatus === "no_payment_required";
+    const stripeCustomerId = typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id ?? null;
+    const stripeSubscriptionId = typeof session.subscription === "string"
+      ? session.subscription
+      : session.subscription && typeof session.subscription === "object" && "id" in session.subscription
+      ? (session.subscription as Stripe.Subscription).id
+      : null;
+
+    if (!isPaid) {
+      logger.info("serp_auth.entitlements_grant_skipped", {
+        sessionId: session.id,
+        paymentIntentId,
+        paymentStatus,
+      });
+    } else if (!customerEmail) {
+      logger.info("serp_auth.entitlements_grant_skipped", {
+        sessionId: session.id,
+        paymentIntentId,
+        paymentStatus,
+        reason: "missing_customer_email",
+      });
+    } else {
+      const entitlementsToGrant = (licenseEntitlements && licenseEntitlements.length > 0)
+        ? licenseEntitlements
+        : (offerId ? [offerId] : []);
+
+      if (entitlementsToGrant.length > 0) {
+        const { grantSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+        serpAuthEntitlementsGrant = await grantSerpAuthEntitlements({
+          email: customerEmail,
+          entitlements: entitlementsToGrant,
+          metadata: {
+            source: "stripe",
+            env: typeof session.livemode === "boolean"
+              ? session.livemode
+                ? "production"
+                : "test"
+              : process.env.NODE_ENV ?? "unknown",
+            offerId,
+            paymentStatus,
+            stripe: {
+              eventId: eventMeta?.id ?? null,
+              eventType: eventMeta?.type ?? "checkout.session.completed",
+              livemode: typeof session.livemode === "boolean" ? session.livemode : null,
+              created: eventMeta?.created ?? null,
+              checkoutSessionId: session.id ?? null,
+              paymentIntentId,
+              customerId: stripeCustomerId,
+              subscriptionId: stripeSubscriptionId,
+            },
+            lineItems: lineItemTagData.lineItems,
+          },
+          context: {
+            provider: "stripe",
+            providerEventId: eventMeta?.id ?? null,
+            providerSessionId: session.id ?? null,
+          },
+        });
+      }
+    }
+  } catch (error) {
+    logger.error("serp_auth.entitlements_grant_failed", {
+      sessionId: session.id,
+      paymentIntentId,
+      error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
+    });
+    serpAuthEntitlementsGrant = {
+      status: "failed",
+      httpStatus: null,
+      error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
+    };
+  }
+
   const baseSkipReason = !offerConfig?.ghl
     ? "missing_configuration"
     : alreadySynced
@@ -496,6 +638,7 @@ export async function handleCheckoutSessionCompleted(
         message,
         metadata: {
           errorName: fulfillmentResult.ghlResult.error instanceof Error ? fulfillmentResult.ghlResult.error.name : undefined,
+          serpAuthEntitlementsGrant,
         },
       });
 
@@ -522,6 +665,8 @@ export async function handleCheckoutSessionCompleted(
       if (skipReason) {
         outcomeMetadata.skipReason = skipReason;
       }
+
+      outcomeMetadata.serpAuthEntitlementsGrant = serpAuthEntitlementsGrant;
 
       await recordWebhookLog({
         paymentIntentId,

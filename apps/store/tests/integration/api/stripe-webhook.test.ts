@@ -6,6 +6,8 @@ import type { CheckoutSessionRecord } from "@/lib/checkout";
 
 vi.hoisted(() => {
   process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
+  process.env.SERP_AUTH_INTERNAL_SECRET = "serp_auth_test_secret";
+  process.env.SERP_AUTH_BASE_URL = "https://auth.serp.co";
 });
 
 vi.mock("node:timers/promises", () => {
@@ -104,6 +106,16 @@ const syncOrderWithGhlMock = vi.mocked(syncOrderWithGhl);
 const recordWebhookLogMock = vi.mocked(recordWebhookLog);
 const sendOpsAlertMock = vi.mocked(sendOpsAlert);
 const createLicenseForOrderMock = vi.mocked(createLicenseForOrder);
+const fetchMock = vi.fn();
+
+function buildFetchResponse(overrides?: Partial<{ ok: boolean; status: number; statusText: string; body: string }>) {
+  return {
+    ok: overrides?.ok ?? true,
+    status: overrides?.status ?? 200,
+    statusText: overrides?.statusText ?? "OK",
+    text: vi.fn().mockResolvedValue(overrides?.body ?? ""),
+  } as unknown as Response;
+}
 
 function buildRequest(rawBody: string, signature = "test-signature") {
   return new NextRequest("http://localhost/api/stripe/webhook", {
@@ -300,6 +312,8 @@ async function flushMicrotasks() {
 describe("POST /api/stripe/webhook", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.stubGlobal("fetch", fetchMock);
+    fetchMock.mockResolvedValue(buildFetchResponse());
     markStaleCheckoutSessionsMock.mockResolvedValue(undefined);
     findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(null);
     findCheckoutSessionByPaymentIntentIdMock.mockResolvedValue(null);
@@ -450,8 +464,78 @@ describe("POST /api/stripe/webhook", () => {
       }),
     );
 
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://auth.serp.co/internal/entitlements/grant",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "content-type": "application/json",
+          "x-serp-internal-secret": "serp_auth_test_secret",
+        }),
+      }),
+    );
+
+    const fetchOptions = fetchMock.mock.calls[0]?.[1] as { body?: string } | undefined;
+    expect(fetchOptions?.body).toBeTruthy();
+    const parsed = JSON.parse(fetchOptions!.body as string) as {
+      email: string;
+      entitlements: string[];
+      metadata?: Record<string, unknown>;
+    };
+
+    expect(parsed.email).toBe("buyer@example.com");
+    expect(parsed.entitlements).toEqual(["demo-offer"]);
+    expect(parsed.metadata).toEqual(
+      expect.objectContaining({
+        source: "stripe",
+        env: "test",
+        offerId: "demo-offer",
+        paymentStatus: "paid",
+        stripe: expect.objectContaining({
+          eventId: "evt_test_123",
+          eventType: "checkout.session.completed",
+          livemode: false,
+          created: expect.any(Number),
+          checkoutSessionId: "cs_test_123",
+          paymentIntentId: "pi_test_123",
+        }),
+        lineItems: expect.any(Array),
+      }),
+    );
+
     await flushMicrotasks();
     expect(markStaleCheckoutSessionsMock).toHaveBeenCalled();
+  });
+
+  it("does not grant SERP auth entitlements for unpaid sessions", async () => {
+    const event = buildCheckoutSessionEvent();
+    const session = event.data.object as Stripe.Checkout.Session;
+    session.payment_status = "unpaid";
+
+    getStripeClientMock.mockReturnValue({
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>);
+
+    getOfferConfigMock.mockReturnValue(offerConfigFixture);
+    findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    syncOrderWithGhlMock.mockResolvedValue({
+      contactId: "contact_123",
+      opportunityCreated: true,
+    });
+
+    recordWebhookLogMock.mockResolvedValueOnce(null);
+    recordWebhookLogMock.mockResolvedValueOnce({
+      status: "success",
+      attempts: 1,
+    });
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("aggregates all GHL tags from checkout line items", async () => {

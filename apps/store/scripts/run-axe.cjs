@@ -97,6 +97,10 @@ const paths = (process.env.AXE_PATHS ?? '/,/loom-video-downloader')
   .map((value) => value.trim())
   .filter(Boolean);
 
+const loadDelayMsRaw = process.env.AXE_LOAD_DELAY_MS ?? '1500';
+const loadDelayMs = Number.parseInt(loadDelayMsRaw, 10);
+const resolvedLoadDelayMs = Number.isFinite(loadDelayMs) && loadDelayMs >= 0 ? loadDelayMs : 1500;
+
 if (!paths.length) {
   console.error('No paths provided for axe run (AXE_PATHS).');
   process.exit(1);
@@ -116,6 +120,9 @@ for (const path of paths) {
   console.log(`\n🔍 Running axe-core on ${url}`);
 
   const axeArgs = [axeBin, url, '--tags', 'wcag2a,wcag2aa', '--exit'];
+  if (resolvedLoadDelayMs > 0) {
+    axeArgs.push('--load-delay', String(resolvedLoadDelayMs));
+  }
   if (chromedriverPath) {
     axeArgs.push('--chromedriver-path', chromedriverPath);
   }
