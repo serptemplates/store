@@ -10,7 +10,7 @@
   "description": "HentaiHaven Downloader gives creators and teams a dependable way to save HentaiHaven videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from HentaiHaven with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "HentaiHaven Downloader | Download HentaiHaven Videos",
   "seo_description": "Download HentaiHaven videos for offline use. Fast, private HentaiHaven downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from HentaiHaven",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-hentaihaven-downloader",
     "ghlTag": "purchase-hentaihaven-downloader",
     "landerId": "hentaihaven-downloader",
+    "licenseEntitlements": "hentaihaven-downloader",
     "offerId": "hentaihaven-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/hentaihaven-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdXDP7AOTRcvm2gatgSXD",
+      "test_price_id": "price_1SibdYDP7AOTRcvmPqQm2nRc",
+      "metadata": {
+        "stripe_product_id": "prod_TfxY3zIXUeBi79",
+        "stripe_test_product_id": "prod_TfxYGljfJODRp0"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdXDP7AOTRcvm2gatgSXD",
+    "test_price_id": "price_1SibdYDP7AOTRcvmPqQm2nRc",
+    "metadata": {
+      "stripe_product_id": "prod_TfxY3zIXUeBi79",
+      "stripe_test_product_id": "prod_TfxYGljfJODRp0"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-hentaihaven-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "hentaihaven-downloader"
+    ]
   }
 }

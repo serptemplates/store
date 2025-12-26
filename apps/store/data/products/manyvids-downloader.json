@@ -10,7 +10,7 @@
   "description": "ManyVids Downloader helps creators and authorized viewers archive the videos they own. Skip unreliable screen recording—download the original files so quality, captions, and metadata stay intact.\n\nUse it to deliver purchased content to editors, prep client projects, or keep personal collections available without relying on streaming access.",
   "seo_title": "ManyVids Downloader | Download ManyVids Videos",
   "seo_description": "Download ManyVids videos you own in original quality. Secure ManyVids downloader with batch support.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download ManyVids purchases in their original resolution",
     "Maintain creator folders and custom filenames automatically",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-manyvids-downloader",
     "ghlTag": "purchase-manyvids-downloader",
     "landerId": "manyvids-downloader",
+    "licenseEntitlements": "manyvids-downloader",
     "offerId": "manyvids-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/manyvids-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdbDP7AOTRcvm8KrWQfLg",
+      "test_price_id": "price_1SibdbDP7AOTRcvmFwpIcLjU",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYf5SkjvCwgJ",
+        "stripe_test_product_id": "prod_TfxY0c6boutoAZ"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdbDP7AOTRcvm8KrWQfLg",
+    "test_price_id": "price_1SibdbDP7AOTRcvmFwpIcLjU",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYf5SkjvCwgJ",
+      "stripe_test_product_id": "prod_TfxY0c6boutoAZ"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-manyvids-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "manyvids-downloader"
+    ]
   }
 }

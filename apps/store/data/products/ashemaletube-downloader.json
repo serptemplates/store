@@ -10,7 +10,7 @@
   "description": "AShemaleTube Downloader gives creators and teams a dependable way to save AShemaleTube videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from AShemaleTube with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "AShemaleTube Downloader | Download AShemaleTube Videos",
   "seo_description": "Download AShemaleTube videos for offline use. Fast, private AShemaleTube downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from AShemaleTube",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-ashemaletube-downloader",
     "ghlTag": "purchase-ashemaletube-downloader",
     "landerId": "ashemaletube-downloader",
+    "licenseEntitlements": "ashemaletube-downloader",
     "offerId": "ashemaletube-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/ashemaletube-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdSDP7AOTRcvmPfnaHVgB",
+      "test_price_id": "price_1SibdTDP7AOTRcvm0Rbn8OA7",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYX3PRhGWJaD",
+        "stripe_test_product_id": "prod_TfxY4E5r8nEYmE"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdSDP7AOTRcvmPfnaHVgB",
+    "test_price_id": "price_1SibdTDP7AOTRcvm0Rbn8OA7",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYX3PRhGWJaD",
+      "stripe_test_product_id": "prod_TfxY4E5r8nEYmE"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-ashemaletube-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "ashemaletube-downloader"
+    ]
   }
 }

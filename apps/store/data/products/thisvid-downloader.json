@@ -10,7 +10,7 @@
   "description": "ThisVid Downloader gives creators and teams a dependable way to save ThisVid videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from ThisVid with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "ThisVid Downloader | Download ThisVid Videos",
   "seo_description": "Download ThisVid videos for offline use. Fast, private ThisVid downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from ThisVid",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-thisvid-downloader",
     "ghlTag": "purchase-thisvid-downloader",
     "landerId": "thisvid-downloader",
+    "licenseEntitlements": "thisvid-downloader",
     "offerId": "thisvid-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/thisvid-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdfDP7AOTRcvmhWf9YnSK",
+      "test_price_id": "price_1SibdgDP7AOTRcvmL3HYTGGT",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYEfwVzoU97G",
+        "stripe_test_product_id": "prod_TfxYhOTzLfMExD"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdfDP7AOTRcvmhWf9YnSK",
+    "test_price_id": "price_1SibdgDP7AOTRcvmL3HYTGGT",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYEfwVzoU97G",
+      "stripe_test_product_id": "prod_TfxYhOTzLfMExD"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-thisvid-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "thisvid-downloader"
+    ]
   }
 }

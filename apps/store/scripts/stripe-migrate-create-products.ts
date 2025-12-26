@@ -46,6 +46,36 @@ type MigrationResult = {
   created: boolean;
 };
 
+type CliOptions = {
+  slugs: string[] | null;
+};
+
+function parseArgs(argv: string[]): CliOptions {
+  const slugs: string[] = [];
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    switch (arg) {
+      case "--slug":
+      case "-s": {
+        const value = argv[index + 1];
+        if (!value || value.startsWith("-")) {
+          throw new Error(`${arg} requires a slug argument`);
+        }
+        slugs.push(value);
+        index += 1;
+        break;
+      }
+      default:
+        throw new Error(`Unknown argument: ${arg}`);
+    }
+  }
+
+  return {
+    slugs: slugs.length > 0 ? slugs : null,
+  };
+}
+
 function assertString(value: unknown, label: string): string {
   if (typeof value !== "string" || value.trim().length === 0) {
     throw new Error(`Missing ${label}`);
@@ -226,9 +256,17 @@ async function ensureProduct(
 }
 
 async function main() {
+  const options = parseArgs(process.argv.slice(2));
   const products = await loadLiveProducts();
-  const bundles = loadBundleTargets();
-  const targets: TargetProduct[] = [...products, ...bundles];
+  const filteredProducts = options.slugs
+    ? products.filter((product) => options.slugs?.includes(product.slug))
+    : products;
+  const bundles = options.slugs ? [] : loadBundleTargets();
+  const targets: TargetProduct[] = [...filteredProducts, ...bundles];
+
+  if (options.slugs && filteredProducts.length === 0) {
+    throw new Error(`No live products found for provided slugs: ${options.slugs.join(", ")}`);
+  }
   const liveStripe = createStripeClient("live");
   const testStripe = createStripeClient("test");
 

@@ -1,0 +1,173 @@
+{
+  // PRODUCT INFO
+  "platform": "Justforfans",
+  "name": "Justforfans Downloader",
+  "tagline": "Download Justforfans videos instantly.",
+  "slug": "justforfans-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "Justforfans Downloader gives you a fast, reliable way to save Justforfans videos for offline access. Use it to archive content you own or have permission to access, prep deliverables, or keep a personal library available when you are offline.",
+  "seo_title": "Justforfans Downloader | Download Justforfans Videos",
+  "seo_description": "Download Justforfans videos for offline use. Fast, private Justforfans downloader.",
+  "status": "live",
+  "features": [
+    "One-click downloads from Justforfans",
+    "Preserves the best available quality",
+    "Batch queue with automatic retries",
+    "Local-first workflows with no tracking",
+    "Works on Windows, macOS, and Linux"
+  ],
+  "faqs": [
+    {
+      "question": "How do I use Justforfans Downloader?",
+      "answer": "Open Justforfans, choose the videos you need, and start the download directly from the app. Files save to your designated folder immediately."
+    },
+    {
+      "question": "What quality options are available?",
+      "answer": "Justforfans Downloader keeps the highest quality available from Justforfans, preserving resolution and metadata whenever possible."
+    },
+    {
+      "question": "Does this work with private or DRM content?",
+      "answer": "It is designed for publicly accessible material that you have rights to download. It does not bypass DRM, logins, or paywalls."
+    },
+    {
+      "question": "Is my data tracked?",
+      "answer": "No. Downloads stay on your device and we do not capture usage analytics or content copies."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "justforfans downloader"
+  ],
+  "layout_type": "landing",
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/justforfans-downloader",
+  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/justforfans-downloader",
+  "apps_serp_co_product_page_url": "https://apps.serp.co/justforfans-downloader",
+  "serp_co_product_page_url": "https://serp.co/products/justforfans-downloader/",
+  "success_url": "https://apps.serp.co/checkout/success",
+  "cancel_url": "https://apps.serp.co/checkout?product=justforfans-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  "checkout_metadata": {
+    "apps_serp_co_product_page_url": "https://apps.serp.co/justforfans-downloader",
+    "appsProductPageUrl": "https://apps.serp.co/justforfans-downloader",
+    "cancel_url": "https://apps.serp.co/checkout?product=justforfans-downloader",
+    "cancelUrl": "https://apps.serp.co/checkout?product=justforfans-downloader",
+    "ghl_tag": "purchase-justforfans-downloader",
+    "ghlTag": "purchase-justforfans-downloader",
+    "landerId": "justforfans-downloader",
+    "licenseEntitlements": "justforfans-downloader",
+    "offerId": "justforfans-downloader",
+    "payment_provider": "stripe",
+    "paymentProvider": "stripe",
+    "product_name": "Justforfans Downloader",
+    "product_page_url": "https://apps.serp.co/justforfans-downloader",
+    "product_slug": "justforfans-downloader",
+    "productName": "Justforfans Downloader",
+    "productPageUrl": "https://apps.serp.co/justforfans-downloader",
+    "productSlug": "justforfans-downloader",
+    "purchase_url": "https://serp.ly/justforfans-downloader",
+    "purchaseUrl": "https://serp.ly/justforfans-downloader",
+    "serp_co_product_page_url": "https://serp.co/products/justforfans-downloader/",
+    "serply_link": "https://serp.ly/justforfans-downloader",
+    "serplyLink": "https://serp.ly/justforfans-downloader",
+    "slug": "justforfans-downloader",
+    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/justforfans-downloader",
+    "storeProductPageUrl": "https://store.serp.co/product-details/product/justforfans-downloader",
+    "success_url": "https://apps.serp.co/checkout/success",
+    "successUrl": "https://apps.serp.co/checkout/success"
+  },
+  // PAYMENT DATA
+  "pricing": {
+    "label": "One-time",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/justforfans-downloader",
+    "currency": "USD",
+    "availability": "InStock",
+    "benefits": []
+  },
+  "return_policy": {
+    "days": 0,
+    "fees": "Non-refundable purchase",
+    "method": "No returns accepted",
+    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
+    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+  },
+  "payment": {
+    "provider": "stripe",
+    "stripe": {
+      "price_id": "price_1SibdYDP7AOTRcvmeLXnv6oF",
+      "test_price_id": "price_1SibdZDP7AOTRcvmM7eY5trz",
+      "metadata": {
+        "stripe_product_id": "prod_TfxY3kW5FIAIza",
+        "stripe_test_product_id": "prod_TfxYkexcpRlQfN"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
+    }
+  },
+  "stripe": {
+    "price_id": "price_1SibdYDP7AOTRcvmeLXnv6oF",
+    "test_price_id": "price_1SibdZDP7AOTRcvmM7eY5trz",
+    "metadata": {
+      "stripe_product_id": "prod_TfxY3kW5FIAIza",
+      "stripe_test_product_id": "prod_TfxYkexcpRlQfN"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-justforfans-downloader"
+    ],
+    "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "justforfans-downloader"
+    ]
+  }
+}

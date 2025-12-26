@@ -10,7 +10,7 @@
   "description": "Upornia Downloader gives creators and teams a dependable way to save Upornia videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from Upornia with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "Upornia Downloader | Download Upornia Videos",
   "seo_description": "Download Upornia videos for offline use. Fast, private Upornia downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from Upornia",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-upornia-downloader",
     "ghlTag": "purchase-upornia-downloader",
     "landerId": "upornia-downloader",
+    "licenseEntitlements": "upornia-downloader",
     "offerId": "upornia-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/upornia-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdjDP7AOTRcvmGmXtwkiM",
+      "test_price_id": "price_1SibdkDP7AOTRcvm2rlRjk3I",
+      "metadata": {
+        "stripe_product_id": "prod_TfxYELC6sfCFJ4",
+        "stripe_test_product_id": "prod_TfxY8qYQmoVPyr"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdjDP7AOTRcvmGmXtwkiM",
+    "test_price_id": "price_1SibdkDP7AOTRcvm2rlRjk3I",
+    "metadata": {
+      "stripe_product_id": "prod_TfxYELC6sfCFJ4",
+      "stripe_test_product_id": "prod_TfxY8qYQmoVPyr"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-upornia-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "upornia-downloader"
+    ]
   }
 }

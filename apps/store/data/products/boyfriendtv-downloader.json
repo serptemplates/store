@@ -10,7 +10,7 @@
   "description": "BoyfriendTV Downloader gives creators and teams a dependable way to save BoyfriendTV videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from BoyfriendTV with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "BoyfriendTV Downloader | Download BoyfriendTV Videos",
   "seo_description": "Download BoyfriendTV videos for offline use. Fast, private BoyfriendTV downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from BoyfriendTV",
     "Preserves original quality and metadata",
@@ -117,6 +117,7 @@
     "ghl_tag": "purchase-boyfriendtv-downloader",
     "ghlTag": "purchase-boyfriendtv-downloader",
     "landerId": "boyfriendtv-downloader",
+    "licenseEntitlements": "boyfriendtv-downloader",
     "offerId": "boyfriendtv-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -140,10 +141,11 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
+    "price": "$17.00",
+    "original_price": "",
+    "note": "",
+    "cta_text": "Get it Now",
+    "cta_href": "https://apps.serp.co/checkout/boyfriendtv-downloader",
     "currency": "USD",
     "availability": "InStock",
     "benefits": []
@@ -158,16 +160,41 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {}
+      "price_id": "price_1SibdTDP7AOTRcvmkTdnzESw",
+      "test_price_id": "price_1SibdUDP7AOTRcvm5Yp0fnNt",
+      "metadata": {
+        "stripe_product_id": "prod_TfxY8Bkfnrm48d",
+        "stripe_test_product_id": "prod_TfxYIkeVIHNism"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
     }
   },
   "stripe": {
-    "metadata": {}
+    "price_id": "price_1SibdTDP7AOTRcvmkTdnzESw",
+    "test_price_id": "price_1SibdUDP7AOTRcvm5Yp0fnNt",
+    "metadata": {
+      "stripe_product_id": "prod_TfxY8Bkfnrm48d",
+      "stripe_test_product_id": "prod_TfxYIkeVIHNism"
+    },
+    "optional_items": [
+      {
+        "product_id": "prod_TadNFo3sxzkGYb"
+      }
+    ]
   },
   "ghl": {
     "tag_ids": [
       "purchase-boyfriendtv-downloader"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "boyfriendtv-downloader"
+    ]
   }
 }
