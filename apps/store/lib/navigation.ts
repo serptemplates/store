@@ -7,7 +7,6 @@ import type { SiteConfig } from "@/lib/site-config";
 const NAV_LINKS: PrimaryNavLink[] = [
   { label: "Videos", href: "/videos" },
   { label: "Guides", href: "/blog" },
-  { label: "Github", href: "https://github.com/serpapps", external: true },
   {
     label: "Support",
     children: [
@@ -17,7 +16,7 @@ const NAV_LINKS: PrimaryNavLink[] = [
       { label: "DMCA Policy", href: "https://github.com/serpapps/legal/blob/main/dmca.md" , external: true },
     ],
   },
-  { label: "Account", href: "/account" },
+  { label: "Github", href: "https://github.com/serpapps", external: true },
 ];
 
 interface BuildNavOptions {

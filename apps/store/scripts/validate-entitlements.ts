@@ -5,16 +5,19 @@ type EntitlementCatalogEntry = {
   name: string;
   description?: string | null;
   metadataJson?: string | null;
+  metadata_json?: string | null;
 };
 
 type EntitlementAliasEntry = {
   alias: string;
-  canonicalName: string;
+  canonicalName?: string;
+  canonical?: string;
 };
 
 type EntitlementCatalogResponse = {
   source?: string;
   entitlements?: EntitlementCatalogEntry[];
+  catalog?: EntitlementCatalogEntry[];
   aliases?: EntitlementAliasEntry[];
 };
 
@@ -27,9 +30,9 @@ function getBaseUrl(): string {
   return raw.replace(/\/+$/, "");
 }
 
-function getInternalSecret(): string | null {
-  const secret = process.env.SERP_AUTH_INTERNAL_SECRET ?? "";
-  return secret.trim().length > 0 ? secret.trim() : null;
+function getCatalogToken(): string | null {
+  const token = process.env.INTERNAL_ENTITLEMENTS_TOKEN ?? "";
+  return token.trim().length > 0 ? token.trim() : null;
 }
 
 function resolveProductEntitlements(raw: unknown): string[] {
@@ -45,6 +48,35 @@ function resolveProductEntitlements(raw: unknown): string[] {
     if (trimmed) entitlements.push(trimmed);
   }
   return entitlements;
+}
+
+function normalizeCatalogResponse(raw: EntitlementCatalogResponse): {
+  source?: string;
+  entitlements: EntitlementCatalogEntry[];
+  aliases: EntitlementAliasEntry[];
+} {
+  const entitlements = raw.entitlements ?? raw.catalog ?? [];
+  const normalizedEntitlements = entitlements
+    .map((entry) => ({
+      name: String(entry.name ?? "").trim(),
+      description: entry.description ?? null,
+      metadataJson: entry.metadataJson ?? entry.metadata_json ?? null,
+    }))
+    .filter((entry) => entry.name.length > 0);
+
+  const aliases = raw.aliases ?? [];
+  const normalizedAliases = aliases
+    .map((entry) => ({
+      alias: String(entry.alias ?? "").trim(),
+      canonicalName: String(entry.canonicalName ?? entry.canonical ?? "").trim(),
+    }))
+    .filter((entry) => entry.alias.length > 0 && entry.canonicalName.length > 0);
+
+  return {
+    source: raw.source,
+    entitlements: normalizedEntitlements,
+    aliases: normalizedAliases,
+  };
 }
 
 type D1Config = {
@@ -165,8 +197,8 @@ async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
 
 async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
   const baseUrl = getBaseUrl();
-  const secret = getInternalSecret();
-  if (!secret) {
+  const token = getCatalogToken();
+  if (!token) {
     return fetchCatalogFromD1();
   }
 
@@ -175,7 +207,7 @@ async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
     method: "GET",
     headers: {
       "content-type": "application/json",
-      "x-serp-internal-secret": secret,
+      "x-entitlements-token": token,
     },
   });
 
@@ -188,7 +220,8 @@ async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
     throw new Error(`Failed to fetch entitlements catalog (${response.status}): ${body.slice(0, 500)}`);
   }
 
-  return (await response.json()) as EntitlementCatalogResponse;
+  const payload = (await response.json()) as EntitlementCatalogResponse;
+  return normalizeCatalogResponse(payload);
 }
 
 async function main() {
@@ -203,7 +236,11 @@ async function main() {
   }
 
   const canonical = new Set<string>(catalog.map((entry) => entry.name));
-  const aliasMap = new Map<string, string>(aliases.map((entry) => [entry.alias, entry.canonicalName]));
+  const aliasMap = new Map<string, string>(
+    aliases
+      .map((entry) => [entry.alias, entry.canonicalName ?? entry.canonical ?? ""] as const)
+      .filter(([, canonical]) => canonical.length > 0),
+  );
 
   const issues: LintIssue[] = [];
   const slugs = getProductSlugs();

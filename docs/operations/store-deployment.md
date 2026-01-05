@@ -39,6 +39,8 @@ pnpm test:unit
 pnpm test:smoke
 ```
 
+`pnpm lint` runs `validate:entitlements`; ensure `INTERNAL_ENTITLEMENTS_TOKEN` (preferred) or the D1 fallback credentials (`SERP_AUTH_CF_ACCOUNT_ID`, `SERP_AUTH_CF_D1_DATABASE_ID`, `SERP_AUTH_CF_API_TOKEN`) are configured in the environment.
+
 The smoke suite (`pnpm test:smoke`) launches Playwright’s Desktop Chrome project and covers:
 
 - Homepage render
@@ -62,6 +64,7 @@ pnpm --filter @apps/store test:e2e
 - Local development: `.env` at repo root.
 - CI / Vercel: manage through the Vercel dashboard (`Settings → Environment Variables`).
 - Scripts: use `loadScriptEnvironment` from `apps/store/scripts/utils/env.ts` when authoring new CLIs so they load `.env` files the same way as `update-video-metadata.ts` and `revoke-refunded-licenses.ts`.
+- Entitlements linting: set `INTERNAL_ENTITLEMENTS_TOKEN` for `scripts/validate-entitlements.ts` (sent as `x-entitlements-token` to `https://auth.serp.co/internal/entitlements/catalog`). The endpoint returns `catalog` + `aliases` (legacy payloads may use `entitlements`); the lint script normalizes either shape. This token is internal tooling only and must stay server-side.
 
 ## Manual diagnostics
 
