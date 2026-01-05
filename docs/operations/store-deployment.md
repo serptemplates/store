@@ -65,6 +65,7 @@ pnpm --filter @apps/store test:e2e
 - CI / Vercel: manage through the Vercel dashboard (`Settings → Environment Variables`).
 - Scripts: use `loadScriptEnvironment` from `apps/store/scripts/utils/env.ts` when authoring new CLIs so they load `.env` files the same way as `update-video-metadata.ts` and `revoke-refunded-licenses.ts`.
 - Entitlements linting: set `INTERNAL_ENTITLEMENTS_TOKEN` for `scripts/validate-entitlements.ts` (sent as `x-entitlements-token` to `https://auth.serp.co/internal/entitlements/catalog`). The endpoint returns `catalog` + `aliases` (legacy payloads may use `entitlements`); the lint script normalizes either shape. This token is internal tooling only and must stay server-side.
+- Verification email suppression: set `ACCOUNT_VERIFICATION_EMAIL_DISABLED=true` to stop sending confirmation emails temporarily (used for the legacy `/account` flow).
 
 ## Manual diagnostics
 
