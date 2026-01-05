@@ -7,6 +7,9 @@ The admin API exposed by that worker expects payloads that match the
 two projects in sync we document – and validate – the request/response
 shapes inside this codebase.
 
+License keys are legacy; serp-auth entitlements are the primary access model.
+Only the `ai-voice-cloner` flow still requires license-key provisioning today.
+
 ## Request payload
 
 The payload we POST to `LICENSE_ADMIN_URL` is validated against

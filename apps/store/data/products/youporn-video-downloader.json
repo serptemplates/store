@@ -190,8 +190,8 @@
     "ghl_tag": "purchase-youporn-downloader",
     "ghlTag": "purchase-youporn-downloader",
     "landerId": "youporn-video-downloader",
-    "license_entitlements": "youporn-video-downloader",
-    "licenseEntitlements": "youporn-video-downloader",
+    "license_entitlements": "youporn-downloader",
+    "licenseEntitlements": "youporn-downloader",
     "offerId": "youporn-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -272,7 +272,7 @@
   },
   "license": {
     "entitlements": [
-      "youporn-video-downloader"
+      "youporn-downloader"
     ]
   }
 }

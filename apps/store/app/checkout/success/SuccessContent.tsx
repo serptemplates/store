@@ -5,9 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   BookOpen,
   CheckCircle,
-  Download,
   MessageCircle,
-  Play,
   Users,
 } from "lucide-react";
 import Image from "next/image";
@@ -18,17 +16,9 @@ import { ConversionTracking, type ConversionData } from "./tracking";
 
 type CheckoutVariant = "stripe" | "ghl" | "paypal" | "external";
 
-type CtaDefinition = {
-  label: string;
-  href: string;
-  variant?: "default" | "outline";
-  icon?: ComponentType<{ className?: string }>;
-};
-
 type HeroCopy = {
   title: string;
   description: string;
-  ctas: CtaDefinition[];
 };
 
 type ResourceLink = {
@@ -44,87 +34,32 @@ type WhitelistGuide = {
   alt?: string;
 };
 
-type SuccessVideoSource =
-  | {
-      kind: "youtube";
-      id: string;
-      embedUrl: string;
-      autoplayUrl: string;
-      thumbnailUrl: string;
-      fallbackThumbnailUrl?: string;
-    }
-  | { kind: "file"; src: string };
-
-const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
-  stripe: {
-    title: "Thank you for your purchase!",
-    description:
-      "Your order is confirmed. We’ve sent a receipt and verification email to the address you used at checkout. It should arrive shortly.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  ghl: {
-    title: "Thank you for your purchase!",
-    description:
-      "Your order is confirmed. Watch the video below for your next steps.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  paypal: {
-    title: "Thank you for your purchase!",
-    description:
-      "We captured your PayPal order and are provisioning your account now.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  external: {
-    title: "Success! We received your order",
-    description: "",
-    ctas: [],
-  },
+const HERO_COPY: HeroCopy = {
+  title: "Thank you for your purchase!",
+  description:
+    "Your order is confirmed. We’ve sent a receipt and verification email to the address you used at checkout. It should arrive shortly.",
 };
 
 const RESOURCE_LINKS: ResourceLink[] = [
   {
-    title: "My Account",
-    description: "Access your downloads, license keys, and billing history.",
-    href: "/account",
-    icon: Download,
-  },
-  {
     title: "Installation Instructions",
     description: "Step-by-step setup guides for every tool in your bundle.",
-    href: "https://github.com/orgs/serpapps/discussions/59",
+    href: "https://github.com/orgs/serpapps/discussions/75",
     icon: BookOpen,
-  },
-  {
-    title: "Join the Community",
-    description: "Connect with other SERP users, share wins, and get tips.",
-    href: "https://serp.ly/@serp/community",
-    icon: Users,
   },
   {
     title: "Help Center",
     description: "Search FAQs, troubleshooting articles, and walkthroughs.",
-    href: "https://github.com/orgs/serpapps/discussions",
+    href: "https://help.serp.co",
     icon: MessageCircle,
   },
   {
-    title: "Support",
-    description: "Can’t find what you need? Reach our team in a couple clicks.",
-    href: "https://serp.ly/support",
-    icon: MessageCircle,
+    title: "Community",
+    description: "Connect with other SERP users, share wins, and get tips.",
+    href: "https://serp.ly/@serp/community",
+    icon: Users,
   },
 ];
-
-const SUCCESS_VIDEO_SRC = process.env.NEXT_PUBLIC_SUCCESS_VIDEO_URL ?? "";
-const DEFAULT_SUCCESS_VIDEO_ID = "eTXRjdODowE";
 
 const WHITELIST_GUIDES: WhitelistGuide[] = [
   {
@@ -160,75 +95,6 @@ function resolveVariant({
   if (sessionId) return "stripe";
   if (source && source.startsWith("ghl")) return "ghl";
   return "external";
-}
-
-function getYouTubeVideoId(candidate: string): string | null {
-  const trimmed = candidate.trim();
-  if (!trimmed) return null;
-
-  const idMatcher = /^[a-zA-Z0-9_-]{11}$/;
-  if (idMatcher.test(trimmed)) return trimmed;
-
-  try {
-    const url = new URL(trimmed);
-    const hostname = url.hostname.toLowerCase();
-    const pathSegments = url.pathname.split("/").filter(Boolean);
-
-    if (hostname === "youtu.be" && pathSegments[0]) {
-      return pathSegments[0];
-    }
-
-    const youtubeHostnames = [
-      "youtube.com",
-      "www.youtube.com",
-      "m.youtube.com"
-    ];
-    if (youtubeHostnames.includes(hostname)) {
-      if (url.pathname === "/watch") {
-        return url.searchParams.get("v");
-      }
-
-      if (pathSegments[0] === "embed" && pathSegments[1]) {
-        return pathSegments[1];
-      }
-
-      if (pathSegments[0] === "shorts" && pathSegments[1]) {
-        return pathSegments[1];
-      }
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
-function buildYouTubeEmbedUrl(id: string, autoplay = false): string {
-  const params = new URLSearchParams({
-    autoplay: autoplay ? "1" : "0",
-    mute: "0",
-    playsinline: "1",
-    rel: "0",
-  });
-  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
-}
-
-function buildYouTubeThumbnailUrls(id: string): { primary: string; fallback?: string } {
-  const primary = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-  const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-  return { primary, fallback };
-}
-
-function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
-  const thumbnailUrls = buildYouTubeThumbnailUrls(id);
-  return {
-    kind: "youtube",
-    id,
-    embedUrl: buildYouTubeEmbedUrl(id),
-    autoplayUrl: buildYouTubeEmbedUrl(id, true),
-    thumbnailUrl: thumbnailUrls.primary,
-    fallbackThumbnailUrl: thumbnailUrls.fallback,
-  };
 }
 
 export function SuccessContent() {
@@ -267,8 +133,6 @@ export function SuccessContent() {
     return false;
   });
   const [error, setError] = useState<string | null>(null);
-  const [isVideoActive, setIsVideoActive] = useState(false);
-  const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
   const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
 
@@ -403,21 +267,8 @@ export function SuccessContent() {
     }
   }, [productSlug, providerParam, variant]);
 
-  const heroCopy = HERO_COPY[variant];
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
-  const successVideo = useMemo<SuccessVideoSource>(() => {
-    const trimmed = SUCCESS_VIDEO_SRC.trim();
-    if (trimmed) {
-      const youtubeId = getYouTubeVideoId(trimmed);
-      if (youtubeId) {
-        return buildYouTubeSuccessVideo(youtubeId);
-      }
-      return { kind: "file", src: trimmed };
-    }
-
-    return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
-  }, []);
 
   const resolvedSessionId =
     orderDetails?.sessionId ??
@@ -425,14 +276,6 @@ export function SuccessContent() {
     ghlPaymentId ??
     null;
   const analyticsProvider = providerParam ?? variant;
-
-  useEffect(() => {
-    if (successVideo.kind === "youtube") {
-      setThumbnailSrc(successVideo.thumbnailUrl);
-    } else {
-      setThumbnailSrc(undefined);
-    }
-  }, [successVideo]);
 
   return (
     <div className="bg-background py-12">
@@ -460,63 +303,9 @@ export function SuccessContent() {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{heroCopy.title}</h1>
-              <p className="text-base text-muted-foreground">{heroCopy.description}</p>
+              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{HERO_COPY.title}</h1>
+              <p className="text-base text-muted-foreground">{HERO_COPY.description}</p>
             </div>
-            <div className="mx-auto w-full max-w-3xl">
-              {successVideo.kind === "youtube" ? (
-                isVideoActive ? (
-                  <iframe
-                    key={successVideo.autoplayUrl}
-                    src={successVideo.autoplayUrl}
-                    title="Welcome video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="aspect-video w-full rounded-md border border-border bg-black"
-                    loading="lazy"
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setIsVideoActive(true)}
-                    className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
-                    aria-label="Play welcome video"
-                  >
-                    <Image
-                      src={thumbnailSrc ?? successVideo.thumbnailUrl}
-                      alt="Welcome video thumbnail"
-                      fill
-                      className="object-cover transition duration-200 group-hover:scale-[1.01]"
-                      sizes="(max-width: 768px) 100vw, 800px"
-                      priority={false}
-                      onError={() => {
-                        if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
-                          setThumbnailSrc(successVideo.fallbackThumbnailUrl);
-                        }
-                      }}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
-                    />
-                    <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
-                      <Play className="h-4 w-4" />
-                      Watch welcome video
-                    </span>
-                  </button>
-                )
-              ) : (
-                <video
-                  key={successVideo.src}
-                  src={successVideo.src}
-                  playsInline
-                  controls
-                  preload="metadata"
-                  className="aspect-video w-full rounded-md border border-border bg-black"
-                />
-              )}
-            </div>
-
           </div>
         </section>
 

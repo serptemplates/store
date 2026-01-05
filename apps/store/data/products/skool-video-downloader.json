@@ -212,8 +212,8 @@
     "ghl_tag": "purchase-skool-video-downloader",
     "ghlTag": "purchase-skool-video-downloader",
     "landerId": "skool-video-downloader",
-    "license_entitlements": "skool-video-downloader",
-    "licenseEntitlements": "skool-video-downloader",
+    "license_entitlements": "skool-downloader",
+    "licenseEntitlements": "skool-downloader",
     "offerId": "skool-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -294,7 +294,7 @@
   },
   "license": {
     "entitlements": [
-      "skool-video-downloader"
+      "skool-downloader"
     ]
   }
 }

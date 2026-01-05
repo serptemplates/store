@@ -74,6 +74,29 @@ function assertValidProductSlug(slug: string, allowedSlugs?: readonly string[]):
   return normalized;
 }
 
+function assertProductSlugFormat(slug: string): string {
+  if (typeof slug !== "string") {
+    throw new Error("Product slug must be a string");
+  }
+
+  const normalized = slug.trim();
+  if (normalized.length === 0) {
+    throw new Error("Product slug cannot be empty");
+  }
+
+  if (normalized !== slug) {
+    throw new Error(`Product slug must not contain leading or trailing whitespace: "${slug}"`);
+  }
+
+  if (!PRODUCT_SLUG_PATTERN.test(normalized)) {
+    throw new Error(
+      `Product slug "${slug}" contains unsupported characters. Allowed: lowercase letters, numbers, and hyphens.`,
+    );
+  }
+
+  return normalized;
+}
+
 function readProductFile(filePath: string) {
   const raw = fs.readFileSync(filePath, "utf8");
   const sanitized = stripJsonComments(raw);
@@ -96,8 +119,28 @@ function resolveProductFile(slug: string): ProductFileResolution {
   );
 }
 
+function resolveProductFileAllowExcluded(slug: string): ProductFileResolution {
+  const normalizedSlug = assertProductSlugFormat(slug);
+  const candidatePath = path.join(productsDir, `${normalizedSlug}${PRODUCT_FILE_EXTENSION}`);
+  if (fs.existsSync(candidatePath)) {
+    return {
+      slug: normalizedSlug,
+      absolutePath: candidatePath,
+    };
+  }
+
+  throw new Error(
+    `Missing product data for slug "${slug}". Expected ${path.relative(process.cwd(), candidatePath)}`,
+  );
+}
+
 function loadProductFromFile(slug: string): ProductData {
   const resolution = resolveProductFile(slug);
+  return readProductFile(resolution.absolutePath);
+}
+
+function loadProductFromFileAllowExcluded(slug: string): ProductData {
+  const resolution = resolveProductFileAllowExcluded(slug);
   return readProductFile(resolution.absolutePath);
 }
 
@@ -143,6 +186,18 @@ export function getProductData(slug?: string): ProductData {
   }
 
   const product = loadProductFromFile(normalizedSlug);
+  productCache.set(normalizedSlug, product);
+  return product;
+}
+
+export function getProductDataAllowExcluded(slug: string): ProductData {
+  const normalizedSlug = assertProductSlugFormat(slug);
+
+  if (productCache.has(normalizedSlug)) {
+    return productCache.get(normalizedSlug)!;
+  }
+
+  const product = loadProductFromFileAllowExcluded(normalizedSlug);
   productCache.set(normalizedSlug, product);
   return product;
 }

@@ -1,5 +1,7 @@
 # Visual Flow Diagram - Account Checkout Fix
 
+> This diagram documents the legacy `/account` license-key flow. `/account` is no longer part of the primary purchase experience, and serp-auth entitlements are the source of truth. Keep this for historical context.
+
 ## 🔴 OLD FLOW (BROKEN)
 
 ```

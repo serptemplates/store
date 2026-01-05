@@ -17,6 +17,12 @@ export type SendVerificationEmailResult =
   | { ok: true }
   | { ok: false; error: string };
 
+function isVerificationEmailDisabled(): boolean {
+  const raw = process.env.ACCOUNT_VERIFICATION_EMAIL_DISABLED ?? "";
+  const normalized = raw.trim().toLowerCase();
+  return normalized === "true" || normalized === "1" || normalized === "yes";
+}
+
 function getSiteUrl(): string | null {
   return process.env.NEXT_PUBLIC_SITE_URL ?? null;
 }
@@ -88,6 +94,15 @@ function buildEmailText(input: VerificationEmailInput): string {
 }
 
 export async function sendVerificationEmail(input: VerificationEmailInput): Promise<SendVerificationEmailResult> {
+  if (isVerificationEmailDisabled()) {
+    logger.info("account_email.suppressed", {
+      email: input.email,
+      offerId: input.offerId ?? null,
+      reason: "verification_emails_disabled",
+    });
+    return { ok: true };
+  }
+
   const subject = input.offerId
     ? `Confirm your email to access ${input.offerId}`
     : "Verify your email to access your downloads";

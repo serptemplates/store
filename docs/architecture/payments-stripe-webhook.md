@@ -6,7 +6,7 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 
 1. The route verifies the payload with `stripe.webhooks.constructEvent` and hands off to `handleStripeEvent`.
 2. `handleStripeEvent` routes the event to one of the handlers under `events/`.
-   - `events/checkout-session-completed.ts` – Persists the session, creates licenses, queues GHL sync, and fires analytics.
+   - `events/checkout-session-completed.ts` – Persists the session, resolves entitlements (offer + line item slugs), grants serp-auth access, creates legacy license keys, queues GHL sync, and fires analytics.
    - `events/payment-intent-succeeded.ts` – Marks orders paid and closes outstanding sessions.
    - `events/payment-intent-failed.ts` – Flags orders as failed and triggers retryable alerts.
    - `events/unhandled-event.ts` – Logs and returns gracefully for events we do not yet support.
@@ -20,6 +20,7 @@ The Stripe webhook handler lives at `app/api/stripe/webhook/route.ts` and delega
 - Stripe session and order updates funnel through the `@/lib/checkout` facade. Do not import private modules directly.
 - Because the storefront creates Checkout Sessions server-side, the handler relies on metadata stored on Stripe products and prices (e.g., `offerId`, `landerId`, `ghl_tag`, `product_slug`). Keep the backfill script (`apps/store/scripts/update-stripe-product-tags.ts`) up to date so webhooks remain deterministic.
 - License creation goes through `@/lib/license-service`, which has its own modular breakdown (`request.ts`, `creation.ts`, etc.).
+- Entitlements are resolved from product JSONs and stored in `licenseEntitlementsResolved` metadata for downstream consumers; serp-auth grants use the canonical list. Bundle slugs must be canonical (`serp-downloaders-bundle`, `all-adult-video-downloaders-bundle`); `all-video-downloaders-bundle` remains a legacy alias and should not be emitted.
 - Analytics and alerting flow through `@/lib/analytics/checkout-server` and `@/lib/ops/alerts`.
 
 ## Testing strategy

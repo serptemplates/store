@@ -2,7 +2,7 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionByStripeSessionId } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
-import { getProductData } from "@/lib/products/product";
+import { getProductData, getProductDataAllowExcluded } from "@/lib/products/product";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/notifications/ops";
@@ -55,6 +55,66 @@ function collectSlugCandidatesFromMetadata(metadata: Record<string, unknown> | n
   appendUniqueString(candidates, metadata["slug"]);
   appendUniqueString(candidates, metadata["product_slug_id"]);
   return candidates;
+}
+
+function normalizeEntitlements(raw: unknown): string[] {
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    return trimmed ? [trimmed] : [];
+  }
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+
+  const entitlements: string[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== "string") continue;
+    const trimmed = entry.trim();
+    if (trimmed) {
+      entitlements.push(trimmed);
+    }
+  }
+  return entitlements;
+}
+
+function collectEntitlementsForSlugs(slugs: string[]): {
+  entitlements: string[];
+  missingSlugs: string[];
+  emptyEntitlementSlugs: string[];
+} {
+  const entitlements = new Set<string>();
+  const missingSlugs: string[] = [];
+  const emptyEntitlementSlugs: string[] = [];
+
+  for (const slug of slugs) {
+    if (!slug) continue;
+    try {
+      const product = (() => {
+        try {
+          return getProductData(slug);
+        } catch {
+          return getProductDataAllowExcluded(slug);
+        }
+      })();
+
+      const resolved = normalizeEntitlements(product?.license?.entitlements);
+      if (resolved.length === 0) {
+        emptyEntitlementSlugs.push(slug);
+        continue;
+      }
+      for (const entitlement of resolved) {
+        entitlements.add(entitlement);
+      }
+    } catch {
+      missingSlugs.push(slug);
+    }
+  }
+
+  return {
+    entitlements: Array.from(entitlements),
+    missingSlugs,
+    emptyEntitlementSlugs,
+  };
 }
 
 async function collectLineItemTagData(
@@ -413,6 +473,39 @@ export async function handleCheckoutSessionCompleted(
     lineItemProductSlugs: productSlugCandidatesFromLineItems,
   });
 
+  const entitlementSlugCandidates = Array.from(new Set([offerId, ...productSlugCandidatesFromLineItems]));
+  const entitlementLookup = collectEntitlementsForSlugs(entitlementSlugCandidates);
+  const resolvedLicenseEntitlements = entitlementLookup.entitlements;
+
+  if (resolvedLicenseEntitlements.length > 0) {
+    metadata.licenseEntitlementsResolved = resolvedLicenseEntitlements.join(",");
+    metadata.licenseEntitlementsResolvedCount = String(resolvedLicenseEntitlements.length);
+  }
+
+  if (entitlementLookup.missingSlugs.length > 0) {
+    logger.warn("stripe.checkout_entitlements_missing", {
+      sessionId: session.id,
+      offerId,
+      missingSlugs: entitlementLookup.missingSlugs,
+    });
+  }
+
+  if (entitlementLookup.emptyEntitlementSlugs.length > 0) {
+    logger.warn("stripe.checkout_entitlements_empty", {
+      sessionId: session.id,
+      offerId,
+      emptyEntitlementSlugs: entitlementLookup.emptyEntitlementSlugs,
+    });
+  }
+
+  logger.info("stripe.checkout_entitlements_resolved", {
+    sessionId: session.id,
+    offerId,
+    entitlementSlugCandidates,
+    entitlementsCount: resolvedLicenseEntitlements.length,
+    entitlements: resolvedLicenseEntitlements,
+  });
+
   if (paymentIntentId) {
     const webhookMetadata = {
       ...metadata,
@@ -531,6 +624,7 @@ export async function handleCheckoutSessionCompleted(
       successUrl: successUrl ?? undefined,
       cancelUrl: cancelUrl ?? undefined,
     },
+    license: resolvedLicenseEntitlements.length > 0 ? { entitlements: resolvedLicenseEntitlements } : undefined,
     tosAccepted: metadata.tosAccepted === "true" ? true : metadata.tosAccepted === "false" ? false : null,
     skipSideEffects: alreadySynced,
   };

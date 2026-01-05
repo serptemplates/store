@@ -164,8 +164,8 @@
     "ghl_tag": "purchase-spankbang-downloader",
     "ghlTag": "purchase-spankbang-downloader",
     "landerId": "spankbang-video-downloader",
-    "license_entitlements": "spankbang-video-downloader",
-    "licenseEntitlements": "spankbang-video-downloader",
+    "license_entitlements": "spankbang-downloader",
+    "licenseEntitlements": "spankbang-downloader",
     "offerId": "spankbang-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -246,7 +246,7 @@
   },
   "license": {
     "entitlements": [
-      "spankbang-video-downloader"
+      "spankbang-downloader"
     ]
   }
 }
