@@ -58,8 +58,8 @@
     "cancel_url": "https://apps.serp.co/checkout?product=webinarjam-video-downloader",
     "cancelUrl": "https://apps.serp.co/checkout?product=webinarjam-video-downloader",
     "landerId": "webinarjam-video-downloader",
-    "license_entitlements": "webinarjam-video-downloader",
-    "licenseEntitlements": "webinarjam-video-downloader",
+    "license_entitlements": "webinarjam-downloader",
+    "licenseEntitlements": "webinarjam-downloader",
     "offerId": "webinarjam-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -99,7 +99,7 @@
   },
   "license": {
     "entitlements": [
-      "webinarjam-video-downloader"
+      "webinarjam-downloader"
     ]
   }
 }

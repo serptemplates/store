@@ -169,7 +169,8 @@ The spec previously pre-seeded a PayPal checkout session, stubbed the capture ca
 - Existing payloads are preserved: the most recent purchase stays at the top level and earlier purchases are appended under `previousPurchases[]`, so no historical metadata is overwritten when new orders sync.
 
 **License Keys Payload**
-- Contains the active license key, license ID, action (created/updated), entitlements array, and tier.
+- Legacy payload; contains the active license key, license ID, action (created/updated), entitlements array, and tier.
+- Entitlements are the primary access signal going forward; license keys remain for `ai-voice-cloner` compatibility.
 - Stored as JSON in `contact.license_keys_v2`.
 
 > ℹ️ Field IDs are discovered from GoHighLevel at runtime. As long as your location has custom fields with the exact keys `contact.purchase_metadata` and `contact.license_keys_v2`, no additional configuration is required. The `GHL_CUSTOM_FIELD_*` environment variables remain available if you prefer to override the detected IDs or point to alternate fields per environment.

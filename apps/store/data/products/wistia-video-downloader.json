@@ -168,8 +168,8 @@
     "ghl_tag": "purchase-wistia-downloader",
     "ghlTag": "purchase-wistia-downloader",
     "landerId": "wistia-video-downloader",
-    "license_entitlements": "wistia-video-downloader",
-    "licenseEntitlements": "wistia-video-downloader",
+    "license_entitlements": "wistia-downloader",
+    "licenseEntitlements": "wistia-downloader",
     "offerId": "wistia-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -251,7 +251,7 @@
   },
   "license": {
     "entitlements": [
-      "wistia-video-downloader"
+      "wistia-downloader"
     ]
   }
 }

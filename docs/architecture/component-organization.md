@@ -29,9 +29,9 @@ When a component currently in `apps/store/components` proves reusable for other 
 
 ## Guardrails
 
-- Avoid adding new top-level folders under `apps/store/components` unless the scope is broad (e.g., `checkout/`, `account/`). Small domains should live under the nearest existing folder.
+- Avoid adding new top-level folders under `apps/store/components` unless the scope is broad (e.g., `checkout/`, `product/`). Small domains should live under the nearest existing folder.
 - UI code should never import private helpers from `apps/store/lib/**/internal`. Always use the public facades so refactors stay localized.
-- Use the Playwright smoke suite (`pnpm test:smoke`) after significant UI moves; it covers the product lander, checkout redirect, and account surfaces.
+- Use the Playwright smoke suite (`pnpm test:smoke`) after significant UI moves; it covers the product lander and checkout redirect.
 
 ## Migration: `@repo/templates` → consolidated UI
 

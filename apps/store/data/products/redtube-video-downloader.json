@@ -168,8 +168,8 @@
     "ghl_tag": "purchase-redtube-downloader",
     "ghlTag": "purchase-redtube-downloader",
     "landerId": "redtube-video-downloader",
-    "license_entitlements": "redtube-video-downloader",
-    "licenseEntitlements": "redtube-video-downloader",
+    "license_entitlements": "redtube-downloader",
+    "licenseEntitlements": "redtube-downloader",
     "offerId": "redtube-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -250,7 +250,7 @@
   },
   "license": {
     "entitlements": [
-      "redtube-video-downloader"
+      "redtube-downloader"
     ]
   }
 }

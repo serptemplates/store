@@ -166,8 +166,8 @@
     "ghl_tag": "purchase-ai-voice-cloner-app",
     "ghlTag": "purchase-ai-voice-cloner-app",
     "landerId": "ai-voice-cloner-app",
-    "license_entitlements": "ai-voice-cloner-app",
-    "licenseEntitlements": "ai-voice-cloner-app",
+    "license_entitlements": "ai-voice-cloner",
+    "licenseEntitlements": "ai-voice-cloner",
     "offerId": "ai-voice-cloner-app",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -239,7 +239,7 @@
   },
   "license": {
     "entitlements": [
-      "ai-voice-cloner-app"
+      "ai-voice-cloner"
     ]
   }
 }

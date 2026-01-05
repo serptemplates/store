@@ -2,7 +2,7 @@
 
 ## Application overview
 
-The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the hosted checkout redirect, Stripe Payment Link integration, GHL sync, and license-service orchestration (legacy PayPal orders remain in the database for historical reporting).
+The Store app (`@apps/store`) powers https://apps.serp.co. It is deployed on Vercel and ships the hosted checkout redirect, Stripe Checkout/Payment Link integration, GHL sync, and serp-auth entitlement grants. License-key orchestration remains for legacy flows (currently only `ai-voice-cloner`). Legacy PayPal orders remain in the database for historical reporting.
 
 Key directories:
 
@@ -39,12 +39,13 @@ pnpm test:unit
 pnpm test:smoke
 ```
 
+`pnpm lint` runs `validate:entitlements`; ensure `INTERNAL_ENTITLEMENTS_TOKEN` (preferred) or the D1 fallback credentials (`SERP_AUTH_CF_ACCOUNT_ID`, `SERP_AUTH_CF_D1_DATABASE_ID`, `SERP_AUTH_CF_API_TOKEN`) are configured in the environment.
+
 The smoke suite (`pnpm test:smoke`) launches Playwright’s Desktop Chrome project and covers:
 
+- Homepage render
 - Product page render and checkout CTA sanity
 - Stripe checkout redirect happy path
-- Account dashboard surface
-- Videos library regressions
 
 For full end-to-end coverage (including Stripe CLI forwarding) use:
 
@@ -63,6 +64,8 @@ pnpm --filter @apps/store test:e2e
 - Local development: `.env` at repo root.
 - CI / Vercel: manage through the Vercel dashboard (`Settings → Environment Variables`).
 - Scripts: use `loadScriptEnvironment` from `apps/store/scripts/utils/env.ts` when authoring new CLIs so they load `.env` files the same way as `update-video-metadata.ts` and `revoke-refunded-licenses.ts`.
+- Entitlements linting: set `INTERNAL_ENTITLEMENTS_TOKEN` for `scripts/validate-entitlements.ts` (sent as `x-entitlements-token` to `https://auth.serp.co/internal/entitlements/catalog`). The endpoint returns `catalog` + `aliases` (legacy payloads may use `entitlements`); the lint script normalizes either shape. This token is internal tooling only and must stay server-side.
+- Verification email suppression: set `ACCOUNT_VERIFICATION_EMAIL_DISABLED=true` to stop sending confirmation emails temporarily (used for the legacy `/account` flow).
 
 ## Manual diagnostics
 
@@ -95,7 +98,7 @@ These checks assert that:
 
 - Orders persist with the correct source + metadata.
 - Checkout sessions record `ghlSyncedAt` / `ghlContactId`.
-- GoHighLevel contacts receive the JSON payloads in `contact.purchase_metadata` and `contact.license_keys_v2`.
+- GoHighLevel contacts receive the JSON payloads in `contact.purchase_metadata` and `contact.license_keys_v2` (license keys are legacy; entitlements are the primary access signal).
 - The webhook no longer overwrites prior purchase metadata; new orders are inserted as the top-level JSON object and previous purchases remain available under `previousPurchases[]` on the same field for audit trails.
 
 Override the default field keys with `GHL_CUSTOM_FIELD_PURCHASE_METADATA` / `GHL_CUSTOM_FIELD_LICENSE_KEYS_V2` when a location deviates from the default schema.
@@ -158,7 +161,7 @@ Both tests create synthetic orders, replay the provider-specific webhook, and as
 
 - Orders persist with the correct `source` (`stripe` or `paypal`).
 - Checkout sessions gain `ghlSyncedAt`/`ghlContactId` metadata.
-- The GoHighLevel contact contains the JSON blobs in `contact.purchase_metadata` and `contact.license_keys_v2`.
+- The GoHighLevel contact contains the JSON blobs in `contact.purchase_metadata` and `contact.license_keys_v2` (license keys are legacy; entitlements are the primary access signal).
 
 > The runtime auto-discovers those custom fields by key. If your GoHighLevel location exposes `contact.purchase_metadata` and `contact.license_keys_v2`, no extra configuration is required. Optional overrides remain available via `GHL_CUSTOM_FIELD_PURCHASE_METADATA` and `GHL_CUSTOM_FIELD_LICENSE_KEYS_V2`.
 

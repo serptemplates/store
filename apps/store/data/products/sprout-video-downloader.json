@@ -203,8 +203,8 @@
     "ghl_tag": "purchase-sprout-video-downloader",
     "ghlTag": "purchase-sprout-video-downloader",
     "landerId": "sprout-video-downloader",
-    "license_entitlements": "sprout-video-downloader",
-    "licenseEntitlements": "sprout-video-downloader",
+    "license_entitlements": "sprout-downloader",
+    "licenseEntitlements": "sprout-downloader",
     "offerId": "sprout-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -286,7 +286,7 @@
   },
   "license": {
     "entitlements": [
-      "sprout-video-downloader"
+      "sprout-downloader"
     ]
   }
 }

@@ -88,3 +88,4 @@ screenshots/
 .env*
 tmp/*.sh
 config.json
+tmp
