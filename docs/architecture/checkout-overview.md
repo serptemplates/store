@@ -26,6 +26,7 @@ Import everything through `@/lib/checkout`. The facade re-exports the canonical 
 - `app/api/stripe/webhook/route.ts` handles `checkout.session.completed` events emitted by the programmatic Checkout Sessions. Because the storefront still relies on Stripe metadata for fulfilment, ensure Stripe product metadata includes the GHL tag, lander/offer IDs, and any fulfilment hints.
 - The `/checkout/success` route still processes a session on demand for local/testing environments when webhooks are unavailable. It retrieves the Stripe session directly, persists orders, and provisions licenses as a fallback path.
 - Historical PayPal orders remain in the database as `legacy_paypal` sources; the checkout persistence layer normalizes them alongside Stripe sessions for reporting.
+- Entitlements are the primary access signal. The webhook resolves entitlements from the offer slug plus any line item `product_slug` metadata (bundles included) and grants them to serp-auth. GHL tags are legacy-only, and license keys remain only for the `ai-voice-cloner` flow.
 
 ## Legacy `/checkout` behaviour
 

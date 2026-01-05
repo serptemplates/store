@@ -165,8 +165,8 @@
     "ghl_tag": "purchase-eporner-downloader",
     "ghlTag": "purchase-eporner-downloader",
     "landerId": "eporner-video-downloader",
-    "license_entitlements": "eporner-video-downloader",
-    "licenseEntitlements": "eporner-video-downloader",
+    "license_entitlements": "eporner-downloader",
+    "licenseEntitlements": "eporner-downloader",
     "offerId": "eporner-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -247,7 +247,7 @@
   },
   "license": {
     "entitlements": [
-      "eporner-video-downloader"
+      "eporner-downloader"
     ]
   }
 }

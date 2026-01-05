@@ -214,8 +214,8 @@
     "ghl_tag": "purchase-loom-video-downloader",
     "ghlTag": "purchase-loom-video-downloader",
     "landerId": "loom-video-downloader",
-    "license_entitlements": "loom-video-downloader",
-    "licenseEntitlements": "loom-video-downloader",
+    "license_entitlements": "loom-downloader",
+    "licenseEntitlements": "loom-downloader",
     "offerId": "loom-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -297,7 +297,7 @@
   },
   "license": {
     "entitlements": [
-      "loom-video-downloader"
+      "loom-downloader"
     ]
   }
 }

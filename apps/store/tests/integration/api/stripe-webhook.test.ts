@@ -655,6 +655,141 @@ describe("POST /api/stripe/webhook", () => {
     );
   });
 
+  it("grants entitlements for optional bundle line items", async () => {
+    const event = buildCheckoutSessionEvent();
+    const session = event.data.object as Stripe.Checkout.Session;
+    session.metadata = {
+      offerId: "loom-video-downloader",
+      landerId: "loom-video-downloader",
+      productName: "Loom Video Downloader",
+      product_slug: "loom-video-downloader",
+      stripePriceId: "price_primary",
+      stripe_price_id: "price_primary",
+      stripeProductId: "prod_primary",
+      stripe_product_id: "prod_primary",
+      ghl_tag: "purchase-loom-video-downloader",
+      environment: "test",
+    };
+
+    const listLineItemsMock = vi.fn().mockResolvedValue({
+      data: [
+        {
+          quantity: 1,
+          price: {
+            id: "price_primary",
+            metadata: {
+              product_slug: "loom-video-downloader",
+            },
+            product: {
+              id: "prod_primary",
+              metadata: {
+                product_slug: "loom-video-downloader",
+              },
+            },
+          },
+        },
+        {
+          quantity: 1,
+          price: {
+            id: "price_bundle",
+            metadata: {
+              product_slug: "serp-downloaders-bundle",
+            },
+            product: {
+              id: "prod_bundle",
+              metadata: {
+                product_slug: "serp-downloaders-bundle",
+              },
+            },
+          },
+        },
+      ],
+    });
+
+    const webhookClient = {
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+      paymentIntents: {
+        update: vi.fn().mockResolvedValue(undefined),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>;
+
+    getStripeClientMock.mockImplementation((mode?: unknown) => {
+      if (mode === "test" || mode === "live") {
+        return {
+          checkout: {
+            sessions: {
+              listLineItems: listLineItemsMock,
+            },
+          },
+          paymentLinks: {
+            retrieve: vi.fn(),
+          },
+        } as unknown as ReturnType<typeof getStripeClient>;
+      }
+
+      return webhookClient;
+    });
+
+    const offerConfig: OfferConfig = {
+      id: "loom-video-downloader",
+      stripePriceId: "price_primary",
+      successUrl: "https://example.com/success",
+      cancelUrl: "https://example.com/cancel",
+      mode: "payment",
+      metadata: {
+        productPageUrl: "https://apps.serp.co/loom-video-downloader",
+        store_serp_co_product_page_url: "https://store.serp.co/product-details/product/loom-video-downloader",
+        apps_serp_co_product_page_url: "https://apps.serp.co/loom-video-downloader",
+        purchaseUrl: "https://serp.ly/loom-video-downloader",
+        serply_link: "https://serp.ly/loom-video-downloader",
+        success_url: "https://apps.serp.co/checkout/success?product=loom-video-downloader",
+        cancel_url: "https://apps.serp.co/checkout?product=loom-video-downloader",
+      },
+      productName: "Loom Video Downloader",
+      ghl: {
+        pipelineId: "pipeline_loom",
+        stageId: "stage_loom",
+        tagIds: ["purchase-loom-video-downloader"],
+      },
+    };
+
+    getOfferConfigMock.mockReturnValue(offerConfig);
+    findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    syncOrderWithGhlMock.mockResolvedValue({
+      contactId: "contact_bundle",
+      opportunityCreated: true,
+    });
+
+    recordWebhookLogMock.mockResolvedValueOnce(null);
+    recordWebhookLogMock.mockResolvedValueOnce({
+      status: "success",
+      attempts: 1,
+    });
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    const fetchOptions = fetchMock.mock.calls[0]?.[1] as { body?: string } | undefined;
+    expect(fetchOptions?.body).toBeTruthy();
+    const parsed = JSON.parse(fetchOptions!.body as string) as { entitlements: string[] };
+
+    expect(parsed.entitlements).toEqual(
+      expect.arrayContaining(["loom-downloader", "serp-downloaders-bundle"]),
+    );
+
+    expect(upsertOrderMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        metadata: expect.objectContaining({
+          licenseEntitlementsResolved: expect.stringContaining("loom-downloader"),
+          licenseEntitlementsResolvedCount: "2",
+        }),
+      }),
+    );
+  });
+
   it("prefers optional item tags when the primary item quantity is zero", async () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;

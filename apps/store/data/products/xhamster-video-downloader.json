@@ -156,8 +156,8 @@
     "ghl_tag": "purchase-xhamster-downloader",
     "ghlTag": "purchase-xhamster-downloader",
     "landerId": "xhamster-video-downloader",
-    "license_entitlements": "xhamster-video-downloader",
-    "licenseEntitlements": "xhamster-video-downloader",
+    "license_entitlements": "xhamster-downloader",
+    "licenseEntitlements": "xhamster-downloader",
     "offerId": "xhamster-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -238,7 +238,7 @@
   },
   "license": {
     "entitlements": [
-      "xhamster-video-downloader"
+      "xhamster-downloader"
     ]
   }
 }

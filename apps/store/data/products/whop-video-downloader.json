@@ -195,8 +195,8 @@
     "ghl_tag": "purchase-whop-downloader",
     "ghlTag": "purchase-whop-downloader",
     "landerId": "whop-video-downloader",
-    "license_entitlements": "whop-video-downloader",
-    "licenseEntitlements": "whop-video-downloader",
+    "license_entitlements": "whop-downloader",
+    "licenseEntitlements": "whop-downloader",
     "offerId": "whop-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -278,7 +278,7 @@
   },
   "license": {
     "entitlements": [
-      "whop-video-downloader"
+      "whop-downloader"
     ]
   }
 }

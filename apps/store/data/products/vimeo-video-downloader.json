@@ -231,8 +231,8 @@
     "ghl_tag": "purchase-vimeo-video-downloader",
     "ghlTag": "purchase-vimeo-video-downloader",
     "landerId": "vimeo-video-downloader",
-    "license_entitlements": "vimeo-video-downloader",
-    "licenseEntitlements": "vimeo-video-downloader",
+    "license_entitlements": "vimeo-downloader",
+    "licenseEntitlements": "vimeo-downloader",
     "offerId": "vimeo-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -314,7 +314,7 @@
   },
   "license": {
     "entitlements": [
-      "vimeo-video-downloader"
+      "vimeo-downloader"
     ]
   }
 }

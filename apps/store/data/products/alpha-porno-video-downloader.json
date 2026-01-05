@@ -169,8 +169,8 @@
     "ghl_tag": "purchase-alpha-porno-downloader",
     "ghlTag": "purchase-alpha-porno-downloader",
     "landerId": "alpha-porno-video-downloader",
-    "license_entitlements": "alpha-porno-video-downloader",
-    "licenseEntitlements": "alpha-porno-video-downloader",
+    "license_entitlements": "alpha-porno-downloader",
+    "licenseEntitlements": "alpha-porno-downloader",
     "offerId": "alpha-porno-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -251,7 +251,7 @@
   },
   "license": {
     "entitlements": [
-      "alpha-porno-video-downloader"
+      "alpha-porno-downloader"
     ]
   }
 }

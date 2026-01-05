@@ -203,8 +203,8 @@
     "ghl_tag": "purchase-beeg-video-downloader",
     "ghlTag": "purchase-beeg-video-downloader",
     "landerId": "beeg-video-downloader",
-    "license_entitlements": "beeg-video-downloader",
-    "licenseEntitlements": "beeg-video-downloader",
+    "license_entitlements": "beeg-downloader",
+    "licenseEntitlements": "beeg-downloader",
     "offerId": "beeg-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -285,7 +285,7 @@
   },
   "license": {
     "entitlements": [
-      "beeg-video-downloader"
+      "beeg-downloader"
     ]
   }
 }

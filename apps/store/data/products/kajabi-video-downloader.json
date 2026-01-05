@@ -179,8 +179,8 @@
     "ghl_tag": "purchase-kajabi-downloader",
     "ghlTag": "purchase-kajabi-downloader",
     "landerId": "kajabi-video-downloader",
-    "license_entitlements": "kajabi-video-downloader",
-    "licenseEntitlements": "kajabi-video-downloader",
+    "license_entitlements": "kajabi-downloader",
+    "licenseEntitlements": "kajabi-downloader",
     "offerId": "kajabi-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -262,7 +262,7 @@
   },
   "license": {
     "entitlements": [
-      "kajabi-video-downloader"
+      "kajabi-downloader"
     ]
   }
 }

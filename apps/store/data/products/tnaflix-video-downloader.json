@@ -160,8 +160,8 @@
     "ghl_tag": "purchase-tnaflix-downloader",
     "ghlTag": "purchase-tnaflix-downloader",
     "landerId": "tnaflix-video-downloader",
-    "license_entitlements": "tnaflix-video-downloader",
-    "licenseEntitlements": "tnaflix-video-downloader",
+    "license_entitlements": "tnaflix-downloader",
+    "licenseEntitlements": "tnaflix-downloader",
     "offerId": "tnaflix-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -238,7 +238,7 @@
   },
   "license": {
     "entitlements": [
-      "tnaflix-video-downloader"
+      "tnaflix-downloader"
     ]
   }
 }

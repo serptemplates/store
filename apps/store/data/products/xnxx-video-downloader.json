@@ -156,8 +156,8 @@
     "ghl_tag": "purchase-xnxx-downloader",
     "ghlTag": "purchase-xnxx-downloader",
     "landerId": "xnxx-video-downloader",
-    "license_entitlements": "xnxx-video-downloader",
-    "licenseEntitlements": "xnxx-video-downloader",
+    "license_entitlements": "xnxx-downloader",
+    "licenseEntitlements": "xnxx-downloader",
     "offerId": "xnxx-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -238,7 +238,7 @@
   },
   "license": {
     "entitlements": [
-      "xnxx-video-downloader"
+      "xnxx-downloader"
     ]
   }
 }

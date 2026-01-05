@@ -170,8 +170,8 @@
     "ghl_tag": "purchase-pornhub-video-downloader",
     "ghlTag": "purchase-pornhub-video-downloader",
     "landerId": "pornhub-video-downloader",
-    "license_entitlements": "pornhub-video-downloader",
-    "licenseEntitlements": "pornhub-video-downloader",
+    "license_entitlements": "pornhub-downloader",
+    "licenseEntitlements": "pornhub-downloader",
     "offerId": "pornhub-video-downloader",
     "payment_provider": "stripe",
     "paymentProvider": "stripe",
@@ -252,7 +252,7 @@
   },
   "license": {
     "entitlements": [
-      "pornhub-video-downloader"
+      "pornhub-downloader"
     ]
   }
 }
