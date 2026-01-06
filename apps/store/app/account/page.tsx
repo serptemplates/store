@@ -62,7 +62,6 @@ export default async function AccountPage({
     purchases = await buildPurchaseSummaries(account.email);
     accountSummary = {
       email: account.email,
-      name: account.name,
       status: account.status,
       verifiedAt: account.verifiedAt?.toISOString() ?? null,
     } satisfies DashboardAccount;
@@ -87,7 +86,6 @@ export default async function AccountPage({
     purchases = adminPurchases;
     accountSummary = {
       email: impersonateEmail,
-      name: "Admin Preview",
       status: "admin_impersonation",
       verifiedAt: new Date().toISOString(),
     } satisfies DashboardAccount;
@@ -156,7 +154,6 @@ function getDevPreviewData(
 
   const account: DashboardAccount = {
     email: "jane.designer@example.com",
-    name: "Jane Designer",
     status: "active",
     verifiedAt: new Date(now - 2 * 60 * 1000).toISOString(),
   };

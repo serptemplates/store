@@ -8,7 +8,7 @@ import type {
   CheckoutSessionUpsert,
   CheckoutSource,
 } from "./types";
-import { toJsonbLiteral } from "./utils";
+import { normalizeEmail, toJsonbLiteral } from "./utils";
 
 interface CheckoutSessionRow {
   id: string;
@@ -232,6 +232,33 @@ export async function markStaleCheckoutSessions(hours = 24): Promise<void> {
      WHERE status = 'pending'
        AND created_at < NOW() - (${interval}::int * INTERVAL '1 hour');
   `;
+}
+
+export async function updateCheckoutSessionsCustomerEmail(
+  currentEmail: string,
+  nextEmail: string,
+): Promise<number> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return 0;
+  }
+
+  const normalizedCurrent = normalizeEmail(currentEmail);
+  const normalizedNext = normalizeEmail(nextEmail);
+
+  if (!normalizedCurrent || !normalizedNext || normalizedCurrent === normalizedNext) {
+    return 0;
+  }
+
+  const result = await query`
+    UPDATE checkout_sessions
+       SET customer_email = ${normalizedNext},
+           updated_at = NOW()
+     WHERE customer_email = ${normalizedCurrent};
+  `;
+
+  return result?.rowCount ?? 0;
 }
 
 export async function findCheckoutSessionByStripeSessionId(stripeSessionId: string): Promise<CheckoutSessionRecord | null> {

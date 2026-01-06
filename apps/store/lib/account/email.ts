@@ -4,6 +4,8 @@ import logger from "@/lib/logger";
 
 type MailTransporter = ReturnType<typeof nodemailer.createTransport>;
 
+type VerificationEmailPurpose = "account_access" | "email_change";
+
 interface VerificationEmailInput {
   email: string;
   code: string;
@@ -11,40 +13,42 @@ interface VerificationEmailInput {
   expiresAt: Date;
   offerId?: string | null;
   customerName?: string | null;
+  purpose?: VerificationEmailPurpose;
+  verificationPath?: string | null;
 }
 
 export type SendVerificationEmailResult =
   | { ok: true }
   | { ok: false; error: string };
 
-function isVerificationEmailDisabled(): boolean {
-  const raw = process.env.ACCOUNT_VERIFICATION_EMAIL_DISABLED ?? "";
-  const normalized = raw.trim().toLowerCase();
-  return normalized === "true" || normalized === "1" || normalized === "yes";
-}
-
 function getSiteUrl(): string | null {
   return process.env.NEXT_PUBLIC_SITE_URL ?? null;
 }
 
-function buildVerificationUrl(token: string): string | null {
+function buildVerificationUrl(token: string, path?: string | null): string | null {
   const baseUrl = getSiteUrl();
 
   if (!baseUrl) {
     return null;
   }
 
-  const url = new URL("/account/verify", baseUrl);
+  const resolvedPath = path === null ? null : path ?? "/account/verify";
+  if (!resolvedPath) {
+    return null;
+  }
+
+  const url = new URL(resolvedPath, baseUrl);
   url.searchParams.set("token", token);
 
   return url.toString();
 }
 
 function buildEmailHtml(input: VerificationEmailInput): string {
-  const verificationUrl = buildVerificationUrl(input.token);
+  const purpose = input.purpose ?? "account_access";
+  const verificationUrl = buildVerificationUrl(input.token, input.verificationPath);
   const expires = input.expiresAt.toLocaleString("en-US", { timeZone: "UTC", hour12: true });
 
-  const offerNote = input.offerId
+  const offerNote = purpose === "account_access" && input.offerId
     ? `<p style="margin: 0 0 16px; color: #4f46e5; font-size: 15px;">Recent purchase: <strong>${input.offerId}</strong></p>`
     : "";
 
@@ -52,13 +56,22 @@ function buildEmailHtml(input: VerificationEmailInput): string {
     ? `Hi ${input.customerName},`
     : "Hi there,";
 
+  const headline =
+    purpose === "email_change"
+      ? "Confirm your email change"
+      : "Verify your email to access your downloads";
+  const introCopy =
+    purpose === "email_change"
+      ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
+      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
+
   return `
     <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; padding: 24px;">
       <div style="max-width: 480px; margin: 0 auto; background: #ffffff; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);">
-        <h1 style="margin: 0 0 16px; font-size: 24px; color: #111827; font-weight: 700;">Verify your email to access your downloads</h1>
+        <h1 style="margin: 0 0 16px; font-size: 24px; color: #111827; font-weight: 700;">${headline}</h1>
         <p style="margin: 0 0 16px; color: #334155; font-size: 15px; line-height: 1.6;">${greeting}</p>
         <p style="margin: 0 0 16px; color: #334155; font-size: 15px; line-height: 1.6;">
-          Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.
+          ${introCopy}
         </p>
         ${offerNote}
         <div style="background: #f1f5f9; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
@@ -78,12 +91,23 @@ function buildEmailHtml(input: VerificationEmailInput): string {
 }
 
 function buildEmailText(input: VerificationEmailInput): string {
-  const verificationUrl = buildVerificationUrl(input.token);
-  const offerLine = input.offerId ? `Recent purchase: ${input.offerId}\n\n` : "";
+  const purpose = input.purpose ?? "account_access";
+  const verificationUrl = buildVerificationUrl(input.token, input.verificationPath);
+  const offerLine = purpose === "account_access" && input.offerId ? `Recent purchase: ${input.offerId}\n\n` : "";
+  const headline =
+    purpose === "email_change"
+      ? "Confirm your email change"
+      : "Verify your email to access your downloads";
+  const introCopy =
+    purpose === "email_change"
+      ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
+      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
   const lines = [
-    "Verify your email to access your downloads",
+    headline,
     "",
-    `${offerLine}Your verification code is ${input.code}.`,
+    `${offerLine}${introCopy}`,
+    "",
+    `Your verification code is ${input.code}.`,
     "",
     verificationUrl ? `Verify in one click: ${verificationUrl}` : "",
     "",
@@ -94,18 +118,13 @@ function buildEmailText(input: VerificationEmailInput): string {
 }
 
 export async function sendVerificationEmail(input: VerificationEmailInput): Promise<SendVerificationEmailResult> {
-  if (isVerificationEmailDisabled()) {
-    logger.info("account_email.suppressed", {
-      email: input.email,
-      offerId: input.offerId ?? null,
-      reason: "verification_emails_disabled",
-    });
-    return { ok: true };
-  }
-
-  const subject = input.offerId
-    ? `Confirm your email to access ${input.offerId}`
-    : "Verify your email to access your downloads";
+  const purpose = input.purpose ?? "account_access";
+  const subject =
+    purpose === "email_change"
+      ? "Confirm your email change"
+      : input.offerId
+        ? `Confirm your email to access ${input.offerId}`
+        : "Verify your email to access your downloads";
 
   const html = buildEmailHtml(input);
   const text = buildEmailText(input);

@@ -1,14 +1,17 @@
 "use client";
 
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import {
   BookOpen,
   CheckCircle,
+  Download,
   MessageCircle,
+  Play,
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { processCheckoutSession, processGhlPayment, processPayPalCheckout } from "./actions";
@@ -16,9 +19,17 @@ import { ConversionTracking, type ConversionData } from "./tracking";
 
 type CheckoutVariant = "stripe" | "ghl" | "paypal" | "external";
 
+type CtaDefinition = {
+  label: string;
+  href: string;
+  variant?: "default" | "outline";
+  icon?: ComponentType<{ className?: string }>;
+};
+
 type HeroCopy = {
   title: string;
-  description: string;
+  description: (email: string) => ReactNode;
+  ctas: CtaDefinition[];
 };
 
 type ResourceLink = {
@@ -34,13 +45,51 @@ type WhitelistGuide = {
   alt?: string;
 };
 
+type SuccessVideoSource =
+  | {
+      kind: "youtube";
+      id: string;
+      embedUrl: string;
+      autoplayUrl: string;
+      thumbnailUrl: string;
+      fallbackThumbnailUrl?: string;
+    }
+  | { kind: "file"; src: string };
+
 const HERO_COPY: HeroCopy = {
-  title: "Thank you for your purchase!",
-  description:
-    "Your order is confirmed. We’ve sent a receipt and verification email to the address you used at checkout. It should arrive shortly.",
+  title: "Success! Your order is confirmed.",
+  description: (email) => (
+    <div className="space-y-3">
+      <p>
+        Please check your email{" "}
+        <span className="font-medium text-foreground">({email})</span> for your receipt and a welcome packet
+        with information you&apos;ll need to get started.
+      </p>
+      <p>
+        Please use this email when authenticating your apps and receiving one-time pass codes - they won&apos;t work otherwise.
+      </p>
+      <p>
+        If you&apos;d like to change or update that email, you can do that in your{" "}
+        <Link href="/account" className="font-medium text-foreground underline underline-offset-4">
+          Account
+        </Link>{" "}
+        area.
+      </p>
+    </div>
+  ),
+  ctas: [
+    { label: "Open Your Account", href: "/account" },
+    { label: "Need Help?", href: "/support", variant: "outline" },
+  ],
 };
 
 const RESOURCE_LINKS: ResourceLink[] = [
+  {
+    title: "My Account",
+    description: "Access your downloads, license keys, and billing history.",
+    href: "/account",
+    icon: Download,
+  },
   {
     title: "Installation Instructions",
     description: "Step-by-step setup guides for every tool in your bundle.",
@@ -60,6 +109,9 @@ const RESOURCE_LINKS: ResourceLink[] = [
     icon: Users,
   },
 ];
+
+const SUCCESS_VIDEO_SRC = process.env.NEXT_PUBLIC_SUCCESS_VIDEO_URL ?? "";
+const DEFAULT_SUCCESS_VIDEO_ID = "eTXRjdODowE";
 
 const WHITELIST_GUIDES: WhitelistGuide[] = [
   {
@@ -95,6 +147,45 @@ function resolveVariant({
   if (sessionId) return "stripe";
   if (source && source.startsWith("ghl")) return "ghl";
   return "external";
+}
+
+function getYouTubeVideoId(candidate: string): string | null {
+  const trimmed = candidate.trim();
+  if (!trimmed) return null;
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  try {
+    const url = new URL(trimmed);
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.replace("/", "");
+    }
+    const idParam = url.searchParams.get("v");
+    if (idParam) return idParam;
+    const pathSegments = url.pathname.split("/").filter(Boolean);
+    const embedIndex = pathSegments.indexOf("embed");
+    if (embedIndex !== -1 && pathSegments[embedIndex + 1]) {
+      return pathSegments[embedIndex + 1];
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
+  const embedUrl = `https://www.youtube.com/embed/${id}`;
+  const autoplayUrl = `${embedUrl}?autoplay=1&rel=0`;
+  return {
+    kind: "youtube",
+    id,
+    embedUrl,
+    autoplayUrl,
+    thumbnailUrl: `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+    fallbackThumbnailUrl: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+  };
 }
 
 export function SuccessContent() {
@@ -135,6 +226,11 @@ export function SuccessContent() {
   const [error, setError] = useState<string | null>(null);
   const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
+  const [customerEmail, setCustomerEmail] = useState<string | null>(
+    () => searchParams.get("customer_email") ?? searchParams.get("email"),
+  );
+  const [isVideoActive, setIsVideoActive] = useState(false);
+  const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
@@ -157,6 +253,10 @@ export function SuccessContent() {
             price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
             quantity: item.quantity,
           })) ?? [];
+
+        if (result.order.customerEmail) {
+          setCustomerEmail(result.order.customerEmail);
+        }
 
         setOrderDetails({
           sessionId: result.order.sessionId,
@@ -267,8 +367,24 @@ export function SuccessContent() {
     }
   }, [productSlug, providerParam, variant]);
 
+  const heroCopy = HERO_COPY;
+  const resolvedCustomerEmail = customerEmail ?? "your checkout email";
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
+  const successVideo = useMemo<SuccessVideoSource>(() => {
+    const trimmed = SUCCESS_VIDEO_SRC.trim();
+    if (trimmed) {
+      const youtubeId = getYouTubeVideoId(trimmed);
+      if (youtubeId) {
+        return buildYouTubeSuccessVideo(youtubeId);
+      }
+      return { kind: "file", src: trimmed };
+    }
+
+    return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
+  }, []);
+  // Temporarily hide the outdated welcome video.
+  const showSuccessVideo = false;
 
   const resolvedSessionId =
     orderDetails?.sessionId ??
@@ -303,9 +419,67 @@ export function SuccessContent() {
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{HERO_COPY.title}</h1>
-              <p className="text-base text-muted-foreground">{HERO_COPY.description}</p>
+              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{heroCopy.title}</h1>
+              <div className="text-base text-muted-foreground">
+                {heroCopy.description(resolvedCustomerEmail)}
+              </div>
             </div>
+            {showSuccessVideo ? (
+              <div className="mx-auto w-full max-w-3xl">
+                {successVideo.kind === "youtube" ? (
+                  isVideoActive ? (
+                    <iframe
+                      key={successVideo.autoplayUrl}
+                      src={successVideo.autoplayUrl}
+                      title="Welcome video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="aspect-video w-full rounded-md border border-border bg-black"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsVideoActive(true)}
+                      className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
+                      aria-label="Play welcome video"
+                    >
+                      <Image
+                        src={thumbnailSrc ?? successVideo.thumbnailUrl}
+                        alt="Welcome video thumbnail"
+                        fill
+                        className="object-cover transition duration-200 group-hover:scale-[1.01]"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                        priority={false}
+                        onError={() => {
+                          if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
+                            setThumbnailSrc(successVideo.fallbackThumbnailUrl);
+                          }
+                        }}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
+                      />
+                      <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
+                        <Play className="h-4 w-4" />
+                        Watch welcome video
+                      </span>
+                    </button>
+                  )
+                ) : (
+                  <video
+                    key={successVideo.src}
+                    src={successVideo.src}
+                    playsInline
+                    controls
+                    preload="metadata"
+                    className="aspect-video w-full rounded-md border border-border bg-black"
+                  />
+                )}
+              </div>
+            ) : null}
+
           </div>
         </section>
 
