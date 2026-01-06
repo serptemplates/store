@@ -32,6 +32,12 @@ function getInternalSecret(): string | null {
   return secret.trim().length > 0 ? secret.trim() : null;
 }
 
+function maskValue(value: string, visible = 4): string {
+  if (!value) return "";
+  if (value.length <= visible) return "*".repeat(value.length);
+  return `${value.slice(0, visible)}...${value.slice(-visible)}`;
+}
+
 function resolveProductEntitlements(raw: unknown): string[] {
   if (typeof raw === "string") {
     const trimmed = raw.trim();
@@ -114,8 +120,19 @@ async function d1TableHasColumn(config: D1Config, table: string, column: string)
 async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
   const config = getD1Config();
   if (!config) {
+    console.error("entitlements.catalog_d1_config_missing", {
+      hasAccountId: Boolean(process.env.SERP_AUTH_CF_ACCOUNT_ID?.trim()),
+      hasDatabaseId: Boolean(process.env.SERP_AUTH_CF_D1_DATABASE_ID?.trim()),
+      hasApiToken: Boolean(process.env.SERP_AUTH_CF_API_TOKEN?.trim()),
+    });
     throw new Error("Missing SERP_AUTH_CF_ACCOUNT_ID/SERP_AUTH_CF_D1_DATABASE_ID/SERP_AUTH_CF_API_TOKEN for D1 lint.");
   }
+
+  console.info("entitlements.catalog_fetch_start", {
+    source: "d1",
+    accountId: maskValue(config.accountId),
+    databaseId: maskValue(config.databaseId),
+  });
 
   const hasCatalog = await d1TableExists(config, "entitlement_catalog");
   if (hasCatalog) {
@@ -166,11 +183,17 @@ async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
 async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
   const baseUrl = getBaseUrl();
   const secret = getInternalSecret();
+  const hasD1Config = Boolean(getD1Config());
   if (!secret) {
+    console.warn("entitlements.catalog_secret_missing", {
+      baseUrl,
+      hasD1Config,
+    });
     return fetchCatalogFromD1();
   }
 
   const url = `${baseUrl}/internal/entitlements/catalog`;
+  console.info("entitlements.catalog_fetch_start", { source: "serp-auth", baseUrl });
   const response = await fetch(url, {
     method: "GET",
     headers: {
@@ -183,6 +206,14 @@ async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
     const body = await response.text().catch(() => "");
     if (response.status === 404) {
       console.warn(`Entitlements catalog endpoint not found (404). Falling back to D1 query.`);
+      return fetchCatalogFromD1();
+    }
+    if (response.status === 401 || response.status === 403) {
+      console.warn("entitlements.catalog_auth_failed", {
+        status: response.status,
+        baseUrl,
+        hasD1Config,
+      });
       return fetchCatalogFromD1();
     }
     throw new Error(`Failed to fetch entitlements catalog (${response.status}): ${body.slice(0, 500)}`);
