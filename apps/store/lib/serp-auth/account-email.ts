@@ -56,23 +56,22 @@ function maskValue(value: string, visible = 4): string {
   return `${value.slice(0, visible)}...${value.slice(-visible)}`;
 }
 
-function escapeSql(value: string): string {
-  return value.replace(/'/g, "''");
-}
+type D1Param = string | number | null;
 
-function sqlString(value: string): string {
-  return `'${escapeSql(value)}'`;
-}
-
-async function queryD1(config: D1Config, sql: string): Promise<Array<Record<string, unknown>>> {
+async function queryD1(
+  config: D1Config,
+  sql: string,
+  params?: readonly D1Param[],
+): Promise<Array<Record<string, unknown>>> {
   const url = `https://api.cloudflare.com/client/v4/accounts/${config.accountId}/d1/database/${config.databaseId}/query`;
+  const body = params && params.length > 0 ? { sql, params } : { sql };
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "content-type": "application/json",
       authorization: `Bearer ${config.apiToken}`,
     },
-    body: JSON.stringify({ sql }),
+    body: JSON.stringify(body),
   });
 
   const payload = (await response.json().catch(() => null)) as D1QueryResponse | null;
@@ -126,7 +125,8 @@ export async function updateSerpAuthEmail({
   try {
     const customerRows = await queryD1(
       config,
-      `SELECT id, email, better_auth_user_id AS betterAuthUserId FROM customers WHERE email = ${sqlString(normalizedPrevious)} LIMIT 1;`,
+      "SELECT id, email, better_auth_user_id AS betterAuthUserId FROM customers WHERE email = ? LIMIT 1;",
+      [normalizedPrevious],
     );
 
     const customer = customerRows[0];
@@ -144,7 +144,8 @@ export async function updateSerpAuthEmail({
 
     const conflictRows = await queryD1(
       config,
-      `SELECT id FROM customers WHERE email = ${sqlString(normalizedNext)} LIMIT 1;`,
+      "SELECT id FROM customers WHERE email = ? LIMIT 1;",
+      [normalizedNext],
     );
     if (conflictRows.length > 0 && String(conflictRows[0]?.id ?? "") !== customerId) {
       logger.warn("serp_auth.email_update_conflict", {
@@ -161,29 +162,34 @@ export async function updateSerpAuthEmail({
 
     await queryD1(
       config,
-      `UPDATE customers SET email = ${sqlString(normalizedNext)} WHERE id = ${sqlString(customerId)};`,
+      "UPDATE customers SET email = ? WHERE id = ?;",
+      [normalizedNext, customerId],
     );
 
     if (userId) {
       await queryD1(
         config,
-        `UPDATE user SET email = ${sqlString(normalizedNext)}, updatedAt = datetime('now') WHERE id = ${sqlString(userId)};`,
+        "UPDATE user SET email = ?, updatedAt = datetime('now') WHERE id = ?;",
+        [normalizedNext, userId],
       );
     }
 
     await queryD1(
       config,
-      `UPDATE auth_events SET email = ${sqlString(normalizedNext)} WHERE customer_id = ${sqlString(customerId)};`,
+      "UPDATE auth_events SET email = ? WHERE customer_id = ?;",
+      [normalizedNext, customerId],
     );
 
     await queryD1(
       config,
-      `UPDATE license_redemptions SET email = ${sqlString(normalizedNext)} WHERE email = ${sqlString(normalizedPrevious)};`,
+      "UPDATE license_redemptions SET email = ? WHERE email = ?;",
+      [normalizedNext, normalizedPrevious],
     );
 
     const verifyRows = await queryD1(
       config,
-      `SELECT email FROM customers WHERE id = ${sqlString(customerId)} LIMIT 1;`,
+      "SELECT email FROM customers WHERE id = ? LIMIT 1;",
+      [customerId],
     );
     const verifiedEmail = verifyRows[0]?.email ? String(verifyRows[0].email) : null;
 
