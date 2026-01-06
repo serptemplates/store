@@ -334,14 +334,15 @@ function parseCompareAtAmount(price: Stripe.Price): number | undefined {
   return undefined
 }
 
-async function fetchStripePriceDetails(priceIds: Set<string>): Promise<Record<string, StripePriceLookup>> {
+async function fetchStripePriceDetails(
+  priceIds: Set<string>,
+  clients: StripeClientConfig[],
+): Promise<Record<string, StripePriceLookup>> {
   if (priceIds.size === 0) {
     return {}
   }
 
-  const clients = createStripeClients()
   if (!clients.length) {
-    console.warn("⚠️  STRIPE_SECRET_KEY or STRIPE_SECRET_KEY_TEST is not set. Skipping price manifest generation.")
     return {}
   }
 
@@ -378,26 +379,55 @@ async function fetchStripePriceDetails(priceIds: Set<string>): Promise<Record<st
   return manifestEntries
 }
 
-async function writePriceManifest(entriesBySlug: Record<string, ProductPriceManifestEntry>): Promise<Record<string, ProductPriceManifestEntry>> {
+async function writePriceManifest(
+  entriesBySlug: Record<string, ProductPriceManifestEntry>,
+  stripeMode?: PaymentMode,
+): Promise<Record<string, ProductPriceManifestEntry>> {
   const slugs = Object.keys(entriesBySlug)
   if (slugs.length === 0) {
     return {}
   }
 
-  const priceIds = new Set<string>()
+  const livePriceIds = new Set<string>()
+  const testPriceIds = new Set<string>()
   for (const entry of Object.values(entriesBySlug)) {
     if (entry.provider !== "stripe") {
       continue
     }
     if (entry.stripe?.live_price_id) {
-      priceIds.add(entry.stripe.live_price_id)
+      livePriceIds.add(entry.stripe.live_price_id)
     }
     if (entry.stripe?.test_price_id) {
-      priceIds.add(entry.stripe.test_price_id)
+      testPriceIds.add(entry.stripe.test_price_id)
     }
   }
 
-  const priceDetails = await fetchStripePriceDetails(priceIds)
+  const clients = createStripeClients()
+  if (!clients.length) {
+    console.warn("⚠️  Stripe secret keys are not configured. Skipping price manifest generation.")
+  }
+
+  const modesToCheck = stripeMode ? [stripeMode] : STRIPE_MODES
+  const priceDetailsByMode: Record<PaymentMode, Record<string, StripePriceLookup>> = {
+    live: {},
+    test: {},
+  }
+
+  for (const mode of modesToCheck) {
+    const modeClients = clients.filter((client) => client.mode === mode)
+    if (!modeClients.length) {
+      console.warn(`⚠️  No Stripe ${mode} keys configured. Skipping ${mode} price validation.`)
+      continue
+    }
+
+    const priceIds = mode === "live" ? livePriceIds : testPriceIds
+    if (priceIds.size === 0) {
+      continue
+    }
+
+    console.log(`Validating ${mode} Stripe prices (${priceIds.size}).`)
+    priceDetailsByMode[mode] = await fetchStripePriceDetails(priceIds, modeClients)
+  }
 
   for (const entry of Object.values(entriesBySlug)) {
     if (entry.provider !== "stripe") {
@@ -405,8 +435,10 @@ async function writePriceManifest(entriesBySlug: Record<string, ProductPriceMani
     }
 
     const liveId = entry.stripe?.live_price_id
-    const fallbackId = liveId ?? entry.stripe?.test_price_id
-    const resolved = (liveId && priceDetails[liveId]) || (fallbackId && priceDetails[fallbackId])
+    const testId = entry.stripe?.test_price_id
+    const resolved =
+      (liveId && priceDetailsByMode.live[liveId]) ||
+      (testId && priceDetailsByMode.test[testId])
 
     if (!resolved) {
       console.warn(`⚠️  Unable to resolve Stripe price for ${entry.slug}.`)
@@ -436,6 +468,7 @@ async function writePriceManifest(entriesBySlug: Record<string, ProductPriceMani
 export type ValidateProductsOptions = {
   skipPriceManifest?: boolean
   checkAssets?: boolean
+  stripeMode?: PaymentMode
 }
 
 export type ValidateProductsResult = {
@@ -447,7 +480,7 @@ export type ValidateProductsResult = {
 }
 
 export async function validateProducts(options: ValidateProductsOptions = {}): Promise<ValidateProductsResult> {
-  const { skipPriceManifest = false, checkAssets = false } = options
+  const { skipPriceManifest = false, checkAssets = false, stripeMode } = options
 
   const productsDir = getProductsDirectory()
   const entries = await fs.readdir(productsDir)
@@ -565,7 +598,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
     }
   }
 
-  const priceManifest = skipPriceManifest ? {} : await writePriceManifest(manifestEntriesBySlug)
+  const priceManifest = skipPriceManifest ? {} : await writePriceManifest(manifestEntriesBySlug, stripeMode)
 
   return {
     warnings,
@@ -579,11 +612,32 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
 function parseCliOptions(args: readonly string[]): ValidateProductsOptions {
   const options: ValidateProductsOptions = {}
 
-  for (const arg of args) {
+  for (let i = 0; i < args.length; i += 1) {
+    const arg = args[i]
     if (arg === "--skip-price-manifest") {
       options.skipPriceManifest = true
-    } else if (arg === "--check-assets") {
+      continue
+    }
+    if (arg === "--check-assets") {
       options.checkAssets = true
+      continue
+    }
+    if (arg.startsWith("--stripe-mode")) {
+      let value: string | undefined
+      if (arg.includes("=")) {
+        value = arg.split("=", 2)[1]
+      } else {
+        const next = args[i + 1]
+        if (next && !next.startsWith("--")) {
+          value = next
+          i += 1
+        }
+      }
+
+      const normalized = value?.trim().toLowerCase()
+      if (normalized === "live" || normalized === "test") {
+        options.stripeMode = normalized
+      }
     }
   }
 
