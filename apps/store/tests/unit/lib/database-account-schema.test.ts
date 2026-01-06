@@ -9,7 +9,7 @@ describe("ensureAccountSchema", () => {
 
     await ensureAccountSchema(mockClient as never);
 
-    expect(sql).toHaveBeenCalledTimes(5);
+    expect(sql).toHaveBeenCalledTimes(9);
 
     const statements = sql.mock.calls.map((call) => {
       const [strings] = call as [TemplateStringsArray?];
@@ -21,5 +21,9 @@ describe("ensureAccountSchema", () => {
     expect(statements[2]).toContain("CREATE TABLE IF NOT EXISTS account_verification_tokens");
     expect(statements[3]).toContain("CREATE INDEX IF NOT EXISTS idx_account_verification_tokens_account");
     expect(statements[4]).toContain("CREATE INDEX IF NOT EXISTS idx_account_verification_tokens_expires");
+    expect(statements[5]).toContain("CREATE TABLE IF NOT EXISTS account_email_change_tokens");
+    expect(statements[6]).toContain("CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_account");
+    expect(statements[7]).toContain("CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_expires");
+    expect(statements[8]).toContain("CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_email");
   });
 });

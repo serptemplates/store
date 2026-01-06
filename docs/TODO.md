@@ -2,15 +2,10 @@
 
 ## Auth + Entitlements
 
-- Define entitlements source of truth and add validation:
-  - Confirm serp-auth DB table name and read-only access method.
-  - Populate `entitlement_catalog` with canonical names and map legacy names in `entitlement_aliases`.
-  - Add a script to fetch the official entitlement slugs and lint `apps/store/data/products/*` entitlements against it.
-  - Wire the lint into existing checks (e.g., `pnpm lint` or a dedicated `validate:entitlements`).
-  - Log and surface mismatches clearly for fast triage.
-
-## Thank You Page
-
-- Update `apps/store/app/checkout/success/SuccessContent.tsx` to remove account/license-key messaging.
-- Replace CTAs/resources with the correct serp-auth access flow.
-- Confirm whether `/account` and verification email flows should be deprecated or removed after the update.
+- Keep serp-auth `entitlement_catalog` as the canonical source of truth; maintain `entitlement_aliases` for legacy names.
+- Store product JSONs must use canonical slugs (bundle canonicals: `serp-downloaders-bundle`, `all-adult-video-downloaders-bundle`; alias `all-video-downloaders-bundle` is accepted but should not be emitted).
+- Entitlement lint is wired into `pnpm lint` via `validate:entitlements`.
+  - Requires `SERP_AUTH_INTERNAL_SECRET` for `/internal/entitlements/catalog` (preferred) or the D1 fallback credentials.
+- Cleanup follow-ups:
+  - Retire GHL tags from downstream flows when safe.
+  - Remove license-key provisioning once `ai-voice-cloner` no longer depends on `serp-license-keys`.

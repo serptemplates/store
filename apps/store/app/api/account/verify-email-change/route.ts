@@ -4,12 +4,14 @@ import { z } from "zod";
 import logger from "@/lib/logger";
 import {
   AccountEmailUpdateError,
+  AccountEmailVerificationError,
   getAccountFromSessionCookie,
-  requestAccountEmailChange,
+  verifyAccountEmailChange,
 } from "@/lib/account/service";
 
 const bodySchema = z.object({
   email: z.string().email(),
+  code: z.string().min(4),
 });
 
 export async function POST(request: NextRequest) {
@@ -33,23 +35,29 @@ export async function POST(request: NextRequest) {
   const account = await getAccountFromSessionCookie(sessionCookie);
 
   if (!account) {
-    return NextResponse.json({ error: "You must be signed in to update your email." }, { status: 401 });
+    return NextResponse.json({ error: "You must be signed in to verify your email." }, { status: 401 });
   }
 
   try {
-    const result = await requestAccountEmailChange(account, payload.email);
+    const result = await verifyAccountEmailChange(account, payload);
     const message =
       result.status === "unchanged"
         ? "Email is already up to date."
-        : "Verification code sent to your new email.";
+        : "Email updated successfully.";
 
     return NextResponse.json({
       status: result.status,
       message,
-      pendingEmail: result.pendingEmail,
-      expiresAt: result.expiresAt.toISOString(),
+      account: { email: result.account.email },
     });
   } catch (error) {
+    if (error instanceof AccountEmailVerificationError) {
+      return NextResponse.json(
+        { error: error.message, code: error.code },
+        { status: error.status },
+      );
+    }
+
     if (error instanceof AccountEmailUpdateError) {
       return NextResponse.json(
         { error: error.message, code: error.code },
@@ -57,11 +65,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    logger.error("account.email_update_api_failed", {
+    logger.error("account.email_change_verify_failed", {
       accountId: account.id,
       error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
     });
 
-    return NextResponse.json({ error: "Unable to update email." }, { status: 500 });
+    return NextResponse.json({ error: "Unable to verify email." }, { status: 500 });
   }
 }

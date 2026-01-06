@@ -7,17 +7,16 @@ import type { SiteConfig } from "@/lib/site-config";
 const NAV_LINKS: PrimaryNavLink[] = [
   { label: "Videos", href: "/videos" },
   { label: "Guides", href: "/blog" },
-  { label: "Github", href: "https://github.com/serpapps", external: true },
   {
     label: "Support",
     children: [
-      { label: "Help Center", href: "https://help.serp.co", external: true },
-           { label: "Terms", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
-  { label: "DMCA", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
-  { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
-  { label: "Privacy", href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md", external: true },
+      { label: "Help Center", href: "https://help.serp.co/", external: true },
+      { label: "Terms of Service", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
+      { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
+      { label: "DMCA Policy", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
     ],
   },
+  { label: "Github", href: "https://github.com/serpapps", external: true },
   { label: "Account", href: "/account" },
 ];
 

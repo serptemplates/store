@@ -25,6 +25,17 @@ export interface AccountVerificationTokenRecord {
   createdAt: Date;
 }
 
+export interface AccountEmailChangeTokenRecord {
+  id: string;
+  accountId: string;
+  email: string;
+  tokenHash: string;
+  codeHash: string;
+  expiresAt: Date;
+  usedAt: Date | null;
+  createdAt: Date;
+}
+
 function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
 }
@@ -75,6 +86,32 @@ function mapVerificationRow(row?: {
   return {
     id: row.id,
     accountId: row.account_id,
+    tokenHash: row.token_hash,
+    codeHash: row.code_hash,
+    expiresAt: new Date(row.expires_at),
+    usedAt: row.used_at ? new Date(row.used_at) : null,
+    createdAt: new Date(row.created_at),
+  };
+}
+
+function mapEmailChangeRow(row?: {
+  id: string;
+  account_id: string;
+  email: string;
+  token_hash: string;
+  code_hash: string;
+  expires_at: string;
+  used_at: string | null;
+  created_at: string;
+} | null): AccountEmailChangeTokenRecord | null {
+  if (!row) {
+    return null;
+  }
+
+  return {
+    id: row.id,
+    accountId: row.account_id,
+    email: row.email,
     tokenHash: row.token_hash,
     codeHash: row.code_hash,
     expiresAt: new Date(row.expires_at),
@@ -316,6 +353,91 @@ export async function createVerificationToken(
   };
 }
 
+export interface EmailChangeCreationResult {
+  token: string;
+  code: string;
+  expiresAt: Date;
+  record: AccountEmailChangeTokenRecord;
+}
+
+export async function createEmailChangeToken(
+  accountId: string,
+  email: string,
+  options?: { expiresInMinutes?: number },
+): Promise<EmailChangeCreationResult | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+  const expiresInMinutes = Math.max(options?.expiresInMinutes ?? 30, 1);
+  const expiresAt = new Date(Date.now() + expiresInMinutes * 60 * 1000);
+
+  const token = randomBytes(32).toString("hex");
+  const codeNumber = randomInt(0, 1_000_000);
+  const code = codeNumber.toString().padStart(6, "0");
+
+  const tokenHash = hashValue(token);
+  const codeHash = hashValue(code);
+
+  await query`
+    UPDATE account_email_change_tokens
+       SET used_at = NOW()
+     WHERE account_id = ${accountId}
+       AND used_at IS NULL;
+  `;
+
+  const result = await query<{
+    id: string;
+    account_id: string;
+    email: string;
+    token_hash: string;
+    code_hash: string;
+    expires_at: string;
+    used_at: string | null;
+    created_at: string;
+  }>`
+    INSERT INTO account_email_change_tokens (
+      id,
+      account_id,
+      email,
+      token_hash,
+      code_hash,
+      expires_at
+    ) VALUES (
+      ${randomUUID()},
+      ${accountId},
+      ${normalizedEmail},
+      ${tokenHash},
+      ${codeHash},
+      ${expiresAt.toISOString()}
+    )
+    RETURNING id,
+              account_id,
+              email,
+              token_hash,
+              code_hash,
+              expires_at,
+              used_at,
+              created_at;
+  `;
+
+  const record = mapEmailChangeRow(result?.rows?.[0] ?? null);
+
+  if (!record) {
+    return null;
+  }
+
+  return {
+    token,
+    code,
+    expiresAt,
+    record,
+  };
+}
+
 export async function findActiveVerificationByToken(token: string): Promise<AccountVerificationTokenRecord | null> {
   const schemaReady = await ensureDatabase();
 
@@ -388,6 +510,48 @@ export async function findActiveVerificationByCode(accountId: string, code: stri
   return mapVerificationRow(result?.rows?.[0] ?? null);
 }
 
+export async function findActiveEmailChangeByCode(
+  accountId: string,
+  code: string,
+): Promise<AccountEmailChangeTokenRecord | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const codeHash = hashValue(code);
+
+  const result = await query<{
+    id: string;
+    account_id: string;
+    email: string;
+    token_hash: string;
+    code_hash: string;
+    expires_at: string;
+    used_at: string | null;
+    created_at: string;
+  }>`
+    SELECT id,
+           account_id,
+           email,
+           token_hash,
+           code_hash,
+           expires_at,
+           used_at,
+           created_at
+      FROM account_email_change_tokens
+     WHERE account_id = ${accountId}
+       AND code_hash = ${codeHash}
+       AND used_at IS NULL
+       AND expires_at > NOW()
+     ORDER BY created_at DESC
+     LIMIT 1;
+  `;
+
+  return mapEmailChangeRow(result?.rows?.[0] ?? null);
+}
+
 export async function markVerificationTokenUsed(tokenId: string): Promise<void> {
   const schemaReady = await ensureDatabase();
 
@@ -397,6 +561,20 @@ export async function markVerificationTokenUsed(tokenId: string): Promise<void> 
 
   await query`
     UPDATE account_verification_tokens
+       SET used_at = NOW()
+     WHERE id = ${tokenId};
+  `;
+}
+
+export async function markEmailChangeTokenUsed(tokenId: string): Promise<void> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return;
+  }
+
+  await query`
+    UPDATE account_email_change_tokens
        SET used_at = NOW()
      WHERE id = ${tokenId};
   `;

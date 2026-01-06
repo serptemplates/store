@@ -96,7 +96,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
     href: "https://github.com/orgs/serpapps/discussions/75",
     icon: BookOpen,
   },
-    {
+  {
     title: "Help Center",
     description: "Search FAQs, troubleshooting articles, and walkthroughs.",
     href: "https://help.serp.co",
@@ -107,7 +107,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
     description: "Connect with other SERP users, share wins, and get tips.",
     href: "https://serp.ly/@serp/community",
     icon: Users,
-  }
+  },
 ];
 
 const SUCCESS_VIDEO_SRC = process.env.NEXT_PUBLIC_SUCCESS_VIDEO_URL ?? "";
@@ -152,36 +152,21 @@ function resolveVariant({
 function getYouTubeVideoId(candidate: string): string | null {
   const trimmed = candidate.trim();
   if (!trimmed) return null;
-
-  const idMatcher = /^[a-zA-Z0-9_-]{11}$/;
-  if (idMatcher.test(trimmed)) return trimmed;
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
 
   try {
     const url = new URL(trimmed);
-    const hostname = url.hostname.toLowerCase();
-    const pathSegments = url.pathname.split("/").filter(Boolean);
-
-    if (hostname === "youtu.be" && pathSegments[0]) {
-      return pathSegments[0];
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.replace("/", "");
     }
-
-    const youtubeHostnames = [
-      "youtube.com",
-      "www.youtube.com",
-      "m.youtube.com"
-    ];
-    if (youtubeHostnames.includes(hostname)) {
-      if (url.pathname === "/watch") {
-        return url.searchParams.get("v");
-      }
-
-      if (pathSegments[0] === "embed" && pathSegments[1]) {
-        return pathSegments[1];
-      }
-
-      if (pathSegments[0] === "shorts" && pathSegments[1]) {
-        return pathSegments[1];
-      }
+    const idParam = url.searchParams.get("v");
+    if (idParam) return idParam;
+    const pathSegments = url.pathname.split("/").filter(Boolean);
+    const embedIndex = pathSegments.indexOf("embed");
+    if (embedIndex !== -1 && pathSegments[embedIndex + 1]) {
+      return pathSegments[embedIndex + 1];
     }
   } catch {
     return null;
@@ -190,31 +175,16 @@ function getYouTubeVideoId(candidate: string): string | null {
   return null;
 }
 
-function buildYouTubeEmbedUrl(id: string, autoplay = false): string {
-  const params = new URLSearchParams({
-    autoplay: autoplay ? "1" : "0",
-    mute: "0",
-    playsinline: "1",
-    rel: "0",
-  });
-  return `https://www.youtube.com/embed/${id}?${params.toString()}`;
-}
-
-function buildYouTubeThumbnailUrls(id: string): { primary: string; fallback?: string } {
-  const primary = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-  const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-  return { primary, fallback };
-}
-
 function buildYouTubeSuccessVideo(id: string): SuccessVideoSource {
-  const thumbnailUrls = buildYouTubeThumbnailUrls(id);
+  const embedUrl = `https://www.youtube.com/embed/${id}`;
+  const autoplayUrl = `${embedUrl}?autoplay=1&rel=0`;
   return {
     kind: "youtube",
     id,
-    embedUrl: buildYouTubeEmbedUrl(id),
-    autoplayUrl: buildYouTubeEmbedUrl(id, true),
-    thumbnailUrl: thumbnailUrls.primary,
-    fallbackThumbnailUrl: thumbnailUrls.fallback,
+    embedUrl,
+    autoplayUrl,
+    thumbnailUrl: `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
+    fallbackThumbnailUrl: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
   };
 }
 
@@ -254,13 +224,13 @@ export function SuccessContent() {
     return false;
   });
   const [error, setError] = useState<string | null>(null);
-  const [isVideoActive, setIsVideoActive] = useState(false);
-  const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
   const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
   const [customerEmail, setCustomerEmail] = useState<string | null>(
     () => searchParams.get("customer_email") ?? searchParams.get("email"),
   );
+  const [isVideoActive, setIsVideoActive] = useState(false);
+  const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
@@ -422,14 +392,6 @@ export function SuccessContent() {
     ghlPaymentId ??
     null;
   const analyticsProvider = providerParam ?? variant;
-
-  useEffect(() => {
-    if (successVideo.kind === "youtube") {
-      setThumbnailSrc(successVideo.thumbnailUrl);
-    } else {
-      setThumbnailSrc(undefined);
-    }
-  }, [successVideo]);
 
   return (
     <div className="bg-background py-12">

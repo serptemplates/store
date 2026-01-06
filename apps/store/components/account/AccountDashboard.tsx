@@ -11,7 +11,6 @@ type StatusTone = "emerald" | "amber" | "rose" | "slate";
 interface AccountDashboardProps {
   account: {
     email: string;
-    name: string | null;
     status: string;
     verifiedAt: string | null;
   };
@@ -40,6 +39,10 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
   const [accountEmail, setAccountEmail] = useState(account.email);
   const [emailDraft, setEmailDraft] = useState(account.email);
   const [emailUpdating, setEmailUpdating] = useState(false);
+  const [emailVerificationPending, setEmailVerificationPending] = useState(false);
+  const [emailVerificationCode, setEmailVerificationCode] = useState("");
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [emailVerifying, setEmailVerifying] = useState(false);
   const [emailMessage, setEmailMessage] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
 
@@ -96,6 +99,9 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
   useEffect(() => {
     setAccountEmail(account.email);
     setEmailDraft(account.email);
+    setPendingEmail(null);
+    setEmailVerificationPending(false);
+    setEmailVerificationCode("");
   }, [account.email]);
 
   const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
@@ -120,25 +126,79 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
           error?: string;
           message?: string;
           status?: string;
-          account?: { email?: string };
+          pendingEmail?: string;
+          expiresAt?: string;
         };
 
         if (!response.ok) {
           throw new Error(body.error ?? "Unable to update email");
         }
 
-        const nextEmail = body.account?.email ?? emailDraft;
-        setAccountEmail(nextEmail);
-        setEmailDraft(nextEmail);
-        setEmailMessage(body.message ?? (body.status === "unchanged" ? "Email is already up to date." : "Email updated successfully."));
-        router.refresh();
+        if (body.status === "unchanged") {
+          setEmailMessage(body.message ?? "Email is already up to date.");
+          setEmailVerificationPending(false);
+          setPendingEmail(null);
+          setEmailVerificationCode("");
+          return;
+        }
+
+        const nextPendingEmail = body.pendingEmail ?? emailDraft;
+        setPendingEmail(nextPendingEmail);
+        setEmailVerificationPending(true);
+        setEmailVerificationCode("");
+        setEmailMessage(body.message ?? "Verification code sent to your new email.");
       } catch (updateError) {
         setEmailError(updateError instanceof Error ? updateError.message : String(updateError));
       } finally {
         setEmailUpdating(false);
       }
     },
-    [emailDraft, router],
+    [emailDraft],
+  );
+
+  const handleEmailVerify = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setEmailVerifying(true);
+      setEmailMessage(null);
+      setEmailError(null);
+
+      try {
+        const response = await fetch("/api/account/verify-email-change", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            email: pendingEmail ?? emailDraft,
+            code: emailVerificationCode,
+          }),
+        });
+
+        const body = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+          status?: string;
+          account?: { email?: string };
+        };
+
+        if (!response.ok) {
+          throw new Error(body.error ?? "Unable to verify email");
+        }
+
+        const nextEmail = body.account?.email ?? pendingEmail ?? emailDraft;
+        setAccountEmail(nextEmail);
+        setEmailDraft(nextEmail);
+        setEmailVerificationPending(false);
+        setPendingEmail(null);
+        setEmailVerificationCode("");
+        setEmailMessage(body.message ?? "Email updated successfully.");
+        router.refresh();
+      } catch (verifyError) {
+        setEmailError(verifyError instanceof Error ? verifyError.message : String(verifyError));
+      } finally {
+        setEmailVerifying(false);
+      }
+    },
+    [emailDraft, emailVerificationCode, pendingEmail, router],
   );
 
   return (
@@ -189,77 +249,97 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
                 disabled={!emailIsValid || emailIsUnchanged || emailUpdating}
                 className="w-full sm:w-auto"
               >
-                {emailUpdating ? "Updating..." : "Update email"}
+                {emailUpdating ? "Sending..." : "Send verification code"}
               </Button>
             </form>
-            <p className="text-xs text-slate-500">
-              Use the same email for app authentication and one-time pass codes.
-            </p>
+
+            {emailVerificationPending ? (
+              <form className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end" onSubmit={handleEmailVerify}>
+                <div className="space-y-2">
+                  <Label htmlFor="account-email-code">
+                    Verification code {pendingEmail ? `for ${pendingEmail}` : ""}
+                  </Label>
+                  <Input
+                    id="account-email-code"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={6}
+                    value={emailVerificationCode}
+                    onChange={(event) => setEmailVerificationCode(event.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="123456"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={emailVerificationCode.length !== 6 || emailVerifying}
+                  className="w-full sm:w-auto"
+                >
+                  {emailVerifying ? "Verifying..." : "Confirm email"}
+                </Button>
+              </form>
+            ) : null}
             {emailMessage && <p className="text-sm text-emerald-600">{emailMessage}</p>}
             {emailError && <p className="text-sm text-red-600">{emailError}</p>}
           </CardContent>
         </Card>
       </section>
 
-      <section className="space-y-6">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-sm font-semibold text-slate-900 sm:text-2xl">License Keys</h2>
-          </div>
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-slate-900">Orders & keys</h2>
         </div>
 
         {purchases.length === 0 ? (
           <Card className="border border-dashed border-slate-200 bg-slate-50">
-            <CardContent className="py-12 text-center space-y-2">
-              <p className="text-base font-semibold text-slate-600">No orders yet</p>
-              <p className="text-sm text-slate-500">
+            <CardContent className="space-y-2 py-8 text-center">
+              <p className="text-sm font-semibold text-slate-600">No orders yet</p>
+              <p className="text-xs text-slate-500">
                 Complete a purchase with this email and it will appear here automatically within a few minutes.
               </p>
             </CardContent>
           </Card>
         ) : (
-          <Card className="border-slate-200 shadow-sm">
-            <CardContent className="p-0">
-              <ul className="divide-y divide-slate-100">
-                {purchases.map((purchase) => (
-                  <li key={`${purchase.orderId}-${purchase.offerId}`} className="px-4 py-3">
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="space-y-1">
-                        <p className="text-sm font-semibold text-slate-900">
-                          {purchase.offerId ?? "Unknown product"}
-                        </p>
-                        {purchase.amountFormatted && (
-                          <p className="text-xs text-slate-500">Amount {purchase.amountFormatted}</p>
-                        )}
+          <div className="rounded-lg border border-slate-200 bg-white">
+            <ul className="divide-y divide-slate-100 text-xs">
+              {purchases.map((purchase) => (
+                <li key={`${purchase.orderId}-${purchase.offerId}`} className="px-3 py-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 space-y-1">
+                      <p className="truncate font-medium text-slate-900">
+                        {purchase.offerId ?? "Unknown product"}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
+                        {purchase.amountFormatted ? <span>{purchase.amountFormatted}</span> : null}
                       </div>
-                      <Badge variant="outline" className="uppercase tracking-wide text-xs w-fit">
-                        {purchase.source.toUpperCase()}
-                      </Badge>
                     </div>
-                    <div className="mt-2 flex items-center gap-2 text-xs text-slate-600">
-                      {purchase.licenseKey ? (
-                        <>
-                          <span className="truncate font-mono" title={purchase.licenseKey}>
-                            {purchase.licenseKey}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="ml-auto h-6 px-2 text-[11px]"
-                            onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
-                          >
-                            {copiedKey === purchase.orderId ? "Copied" : "Copy"}
-                          </Button>
-                        </>
-                      ) : (
-                        <span>License key pending — we&apos;ll drop it here the moment it&apos;s ready.</span>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+                    <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
+                      {purchase.source.toUpperCase()}
+                    </Badge>
+                  </div>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-600">
+                    {purchase.licenseKey ? (
+                      <>
+                        <span className="truncate font-mono" title={purchase.licenseKey}>
+                          {purchase.licenseKey}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-[10px]"
+                          onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
+                        >
+                          {copiedKey === purchase.orderId ? "Copied" : "Copy"}
+                        </Button>
+                      </>
+                    ) : (
+                      <span>Key pending.</span>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </section>
     </div>
