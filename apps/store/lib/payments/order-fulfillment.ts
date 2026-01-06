@@ -6,6 +6,7 @@ import {
   updateCheckoutSessionStatus,
   updateOrderMetadata,
 } from "@/lib/checkout";
+import { syncCrispPurchase } from "@/lib/crisp/sync";
 import { createLicenseForOrder } from "@/lib/license-service";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import type { PaymentProviderId } from "@/lib/products/payment";
@@ -320,6 +321,29 @@ export async function processFulfilledOrder(order: NormalizedOrder): Promise<Pro
       licenseMetadataUpdate,
     );
   }
+
+  await syncCrispPurchase({
+    sessionId: order.sessionId,
+    offerId: order.offerId,
+    productName: order.productName ?? offerConfig?.productName ?? order.offerId,
+    customerEmail: order.customerEmail,
+    customerName: order.customerName ?? null,
+    customerPhone: order.customerPhone ?? null,
+    amountTotal: order.amountTotal ?? null,
+    currency: order.currency ?? null,
+    paymentStatus: order.paymentStatus ?? null,
+    paymentMethod: order.paymentMethod ?? null,
+    provider: order.provider,
+    providerMode,
+    providerSessionId,
+    providerPaymentId,
+    providerChargeId,
+    licenseId: licenseResult?.licenseId ?? null,
+    licenseKey: licenseResult?.licenseKey ?? null,
+    licenseTier: licenseConfig.tier ?? null,
+    licenseEntitlements: licenseConfig.entitlements ?? null,
+    urls: order.urls,
+  });
 
   const ghlOutcome: ProcessFulfilledOrderResult["ghlResult"] = {
     status: "skipped",
