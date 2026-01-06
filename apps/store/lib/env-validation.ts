@@ -162,8 +162,6 @@ export function validateEnvironment(): ValidationResult {
     "SMTP_PASS",
     "ACCOUNT_EMAIL_SENDER",
   ];
-  const emailDisabledRaw = process.env.ACCOUNT_VERIFICATION_EMAIL_DISABLED ?? "";
-  const emailDisabled = ["true", "1", "yes"].includes(emailDisabledRaw.trim().toLowerCase());
   const missingEmailVars = emailVars.filter((name) => !process.env[name]);
 
   if (!getOptionalStripeSecretKey(stripeMode)) {
@@ -190,16 +188,14 @@ export function validateEnvironment(): ValidationResult {
     );
   }
 
-  if (!emailDisabled) {
-    if (runtimeEnv === "production") {
-      if (missingEmailVars.length > 0) {
-        errors.push(`Missing SMTP configuration for verification emails: ${missingEmailVars.join(", ")}`);
-      }
-    } else if (missingEmailVars.length > 0) {
-      warnings.push(
-        `SMTP configuration incomplete (missing ${missingEmailVars.join(", ")}). Verification emails will not send without these.`,
-      );
+  if (runtimeEnv === "production") {
+    if (missingEmailVars.length > 0) {
+      errors.push(`Missing SMTP configuration for verification emails: ${missingEmailVars.join(", ")}`);
     }
+  } else if (missingEmailVars.length > 0) {
+    warnings.push(
+      `SMTP configuration incomplete (missing ${missingEmailVars.join(", ")}). Verification emails will not send without these.`,
+    );
   }
 
   if (runtimeEnv === "production") {

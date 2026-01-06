@@ -208,6 +208,31 @@ export async function ensureAccountSchema(client: { sql: SqlLike }) {
   await client.sql`
     CREATE INDEX IF NOT EXISTS idx_account_verification_tokens_expires ON account_verification_tokens (expires_at);
   `;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS account_email_change_tokens (
+      id UUID PRIMARY KEY,
+      account_id UUID REFERENCES accounts(id) ON DELETE CASCADE,
+      email TEXT NOT NULL,
+      token_hash TEXT UNIQUE NOT NULL,
+      code_hash TEXT NOT NULL,
+      expires_at TIMESTAMPTZ NOT NULL,
+      used_at TIMESTAMPTZ,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_account ON account_email_change_tokens (account_id);
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_expires ON account_email_change_tokens (expires_at);
+  `;
+
+  await client.sql`
+    CREATE INDEX IF NOT EXISTS idx_account_email_change_tokens_email ON account_email_change_tokens (email);
+  `;
 }
 
 async function runMigrations() {

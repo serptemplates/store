@@ -55,7 +55,7 @@ const DEFAULT_SECTIONS: FooterSection[] = [
     ],
   },
   {
-    title: "Help & Support",
+    title: "Support",
     links: [
       { label: "Help Center", href: "https://help.serp.co", external: true },
       { label: "Status", href: "https://status.serp.co", external: true },

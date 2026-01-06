@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Badge } from "@repo/ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@repo/ui";
 import type { CheckoutSessionStatus } from "@/lib/checkout/types";
 
 type StatusTone = "emerald" | "amber" | "rose" | "slate";
@@ -11,7 +11,6 @@ type StatusTone = "emerald" | "amber" | "rose" | "slate";
 interface AccountDashboardProps {
   account: {
     email: string;
-    name: string | null;
     status: string;
     verifiedAt: string | null;
   };
@@ -37,6 +36,15 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
   const [signingOut, setSigningOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [accountEmail, setAccountEmail] = useState(account.email);
+  const [emailDraft, setEmailDraft] = useState(account.email);
+  const [emailUpdating, setEmailUpdating] = useState(false);
+  const [emailVerificationPending, setEmailVerificationPending] = useState(false);
+  const [emailVerificationCode, setEmailVerificationCode] = useState("");
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [emailVerifying, setEmailVerifying] = useState(false);
+  const [emailMessage, setEmailMessage] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const statusToneMap: Record<string, { label: string; tone: StatusTone }> = {
     active: { label: "Verified", tone: "emerald" },
@@ -88,6 +96,111 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
     }
   }, []);
 
+  useEffect(() => {
+    setAccountEmail(account.email);
+    setEmailDraft(account.email);
+    setPendingEmail(null);
+    setEmailVerificationPending(false);
+    setEmailVerificationCode("");
+  }, [account.email]);
+
+  const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
+  const emailIsValid = emailDraft.trim().length > 3 && emailDraft.includes("@");
+  const emailIsUnchanged = normalizeEmail(emailDraft) === normalizeEmail(accountEmail);
+
+  const handleEmailUpdate = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setEmailUpdating(true);
+      setEmailMessage(null);
+      setEmailError(null);
+
+      try {
+        const response = await fetch("/api/account/update-email", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ email: emailDraft }),
+        });
+
+        const body = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+          status?: string;
+          pendingEmail?: string;
+          expiresAt?: string;
+        };
+
+        if (!response.ok) {
+          throw new Error(body.error ?? "Unable to update email");
+        }
+
+        if (body.status === "unchanged") {
+          setEmailMessage(body.message ?? "Email is already up to date.");
+          setEmailVerificationPending(false);
+          setPendingEmail(null);
+          setEmailVerificationCode("");
+          return;
+        }
+
+        const nextPendingEmail = body.pendingEmail ?? emailDraft;
+        setPendingEmail(nextPendingEmail);
+        setEmailVerificationPending(true);
+        setEmailVerificationCode("");
+        setEmailMessage(body.message ?? "Verification code sent to your new email.");
+      } catch (updateError) {
+        setEmailError(updateError instanceof Error ? updateError.message : String(updateError));
+      } finally {
+        setEmailUpdating(false);
+      }
+    },
+    [emailDraft],
+  );
+
+  const handleEmailVerify = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setEmailVerifying(true);
+      setEmailMessage(null);
+      setEmailError(null);
+
+      try {
+        const response = await fetch("/api/account/verify-email-change", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            email: pendingEmail ?? emailDraft,
+            code: emailVerificationCode,
+          }),
+        });
+
+        const body = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+          status?: string;
+          account?: { email?: string };
+        };
+
+        if (!response.ok) {
+          throw new Error(body.error ?? "Unable to verify email");
+        }
+
+        const nextEmail = body.account?.email ?? pendingEmail ?? emailDraft;
+        setAccountEmail(nextEmail);
+        setEmailDraft(nextEmail);
+        setEmailVerificationPending(false);
+        setPendingEmail(null);
+        setEmailVerificationCode("");
+        setEmailMessage(body.message ?? "Email updated successfully.");
+        router.refresh();
+      } catch (verifyError) {
+        setEmailError(verifyError instanceof Error ? verifyError.message : String(verifyError));
+      } finally {
+        setEmailVerifying(false);
+      }
+    },
+    [emailDraft, emailVerificationCode, pendingEmail, router],
+  );
+
   return (
     <div className="space-y-10">
       <section className="flex flex-col gap-4">
@@ -97,10 +210,7 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
               <div className="space-y-2">
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Account</p>
                 <div className="space-y-1">
-                  <CardTitle className="text-sm font-semibold text-slate-900">
-                    {account.name ? `${account.name}` : account.email}
-                  </CardTitle>
-                  <p className="text-xs font-medium text-slate-500">{account.email}</p>
+                  <CardTitle className="text-sm font-semibold text-slate-900">{accountEmail}</CardTitle>
                 </div>
               </div>
               <div className="flex flex-col gap-3 self-stretch sm:flex-row sm:items-center sm:self-auto">
@@ -120,81 +230,115 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
             {error && <p className="text-sm text-red-600">{error}</p>}
           </CardHeader>
 
-          <CardContent className="space-y-4 text-sm text-slate-600">
-            <div className="grid gap-4 sm:grid-cols-2">
-            </div>
+          <CardContent className="space-y-4 text-lg text-slate-600">
+            <form className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end" onSubmit={handleEmailUpdate}>
+              <div className="space-y-2">
+                <Label htmlFor="account-email-update">Update primary email</Label>
+                <Input
+                  id="account-email-update"
+                  type="email"
+                  autoComplete="email"
+                  value={emailDraft}
+                  onChange={(event) => setEmailDraft(event.target.value)}
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={!emailIsValid || emailIsUnchanged || emailUpdating}
+                className="w-full sm:w-auto"
+              >
+                {emailUpdating ? "Sending..." : "Send verification code"}
+              </Button>
+            </form>
+
+            {emailVerificationPending ? (
+              <form className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end" onSubmit={handleEmailVerify}>
+                <div className="space-y-2">
+                  <Label htmlFor="account-email-code">
+                    Verification code {pendingEmail ? `for ${pendingEmail}` : ""}
+                  </Label>
+                  <Input
+                    id="account-email-code"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={6}
+                    value={emailVerificationCode}
+                    onChange={(event) => setEmailVerificationCode(event.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="123456"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={emailVerificationCode.length !== 6 || emailVerifying}
+                  className="w-full sm:w-auto"
+                >
+                  {emailVerifying ? "Verifying..." : "Confirm email"}
+                </Button>
+              </form>
+            ) : null}
+            {emailMessage && <p className="text-sm text-emerald-600">{emailMessage}</p>}
+            {emailError && <p className="text-sm text-red-600">{emailError}</p>}
           </CardContent>
         </Card>
       </section>
 
-      <section className="space-y-6">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">License Keys</h2>
-          </div>
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-slate-900">Orders & keys</h2>
         </div>
 
         {purchases.length === 0 ? (
           <Card className="border border-dashed border-slate-200 bg-slate-50">
-            <CardContent className="py-12 text-center space-y-2">
-              <p className="text-base font-semibold text-slate-600">No orders yet</p>
-              <p className="text-sm text-slate-500">
+            <CardContent className="space-y-2 py-8 text-center">
+              <p className="text-sm font-semibold text-slate-600">No orders yet</p>
+              <p className="text-xs text-slate-500">
                 Complete a purchase with this email and it will appear here automatically within a few minutes.
               </p>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {purchases.map((purchase) => (
-              <Card key={`${purchase.orderId}-${purchase.offerId}`} className="border-slate-200 shadow-sm">
-                <CardHeader className="space-y-3 pb-4">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                    <div className="space-y-2">
-                      <CardTitle className="text-lg font-semibold text-slate-900">
+          <div className="rounded-lg border border-slate-200 bg-white">
+            <ul className="divide-y divide-slate-100 text-xs">
+              {purchases.map((purchase) => (
+                <li key={`${purchase.orderId}-${purchase.offerId}`} className="px-3 py-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 space-y-1">
+                      <p className="truncate font-medium text-slate-900">
                         {purchase.offerId ?? "Unknown product"}
-                      </CardTitle>
-                      {/* <p className="text-sm text-slate-500">
-                        {purchase.purchasedAt
-                          ? `Purchased ${new Date(purchase.purchasedAt).toLocaleString()}`
-                          : "Purchase date pending"}
-                      </p> */}
-                      {purchase.amountFormatted && (
-                        <p className="text-sm text-slate-600">
-                          Amount <span className="font-semibold text-slate-900">{purchase.amountFormatted}</span>
-                        </p>
-                      )}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
+                        {purchase.amountFormatted ? <span>{purchase.amountFormatted}</span> : null}
+                      </div>
                     </div>
-                    <div className="flex flex-col items-start gap-2 text-sm sm:items-end">
-                      <Badge variant="outline" className="uppercase tracking-wide text-xs">
-                        {purchase.source.toUpperCase()}
-                      </Badge>
-                    </div>
+                    <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
+                      {purchase.source.toUpperCase()}
+                    </Badge>
                   </div>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-4 border-t border-slate-100 pt-4 md:flex-row md:items-center md:justify-between">
-                  {purchase.licenseKey ? (
-                    <div className="flex w-full items-center gap-3 rounded-md border border-slate-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-700">
-                      <span className="truncate" title={purchase.licenseKey}>
-                        {purchase.licenseKey}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="ml-auto h-7 px-3 text-xs"
-                        onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
-                      >
-                        {copiedKey === purchase.orderId ? "Copied" : "Copy"}
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="w-full rounded-md border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-500">
-                      License key pending — we&apos;ll drop it here the moment it&apos;s ready.
-                    </div>
-                  )}
-
-                </CardContent>
-              </Card>
-            ))}
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-600">
+                    {purchase.licenseKey ? (
+                      <>
+                        <span className="truncate font-mono" title={purchase.licenseKey}>
+                          {purchase.licenseKey}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-[10px]"
+                          onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
+                        >
+                          {copiedKey === purchase.orderId ? "Copied" : "Copy"}
+                        </Button>
+                      </>
+                    ) : (
+                      <span>Key pending.</span>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </section>

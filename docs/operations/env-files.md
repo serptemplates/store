@@ -21,10 +21,8 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST=pk_test_...
 STRIPE_WEBHOOK_SECRET_TEST=whsec_...
 STRIPE_ENTITLEMENTS_ENABLED=true
 NEXT_PUBLIC_RUNTIME_ENV=development
-ACCOUNT_VERIFICATION_EMAIL_DISABLED=true
 ```
 
 Notes:
 - Do not commit `/.env`.
 - CI should inject its own environment via the runner (secrets manager or job variables). This file is only for local usage.
-- Set `ACCOUNT_VERIFICATION_EMAIL_DISABLED=true` to suppress verification emails (legacy `/account` flow).

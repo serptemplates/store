@@ -12,11 +12,12 @@ const NAV_LINKS: PrimaryNavLink[] = [
     children: [
       { label: "Help Center", href: "https://help.serp.co/", external: true },
       { label: "Terms of Service", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
-      { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md" , external: true },
-      { label: "DMCA Policy", href: "https://github.com/serpapps/legal/blob/main/dmca.md" , external: true },
+      { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
+      { label: "DMCA Policy", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
     ],
   },
   { label: "Github", href: "https://github.com/serpapps", external: true },
+  { label: "Account", href: "/account" },
 ];
 
 interface BuildNavOptions {
