@@ -11,11 +11,11 @@ const NAV_LINKS: PrimaryNavLink[] = [
   {
     label: "Support",
     children: [
-      { label: "Help Center", href: "https://serpcompany.tawk.help/", external: true },
-      { label: "Tickets", href: "https://serpcompany.tawk.help/#tickets", external: true },
-      { label: "Chat Support", href: "https://serp.ly/@support", external: true },
-      { label: "Terms of Service", href: "/legal/terms" },
-      { label: "DMCA Policy", href: "/legal/dmca" },
+      { label: "Help Center", href: "https://help.serp.co", external: true },
+           { label: "Terms", href: "https://github.com/serpapps/legal/blob/main/terms-conditions.md", external: true },
+  { label: "DMCA", href: "https://github.com/serpapps/legal/blob/main/dmca.md", external: true },
+  { label: "Refund Policy", href: "https://github.com/serpapps/legal/blob/main/refund-policy.md", external: true },
+  { label: "Privacy", href: "https://github.com/serpapps/legal/blob/main/privacy-policy.md", external: true },
     ],
   },
   { label: "Account", href: "/account" },

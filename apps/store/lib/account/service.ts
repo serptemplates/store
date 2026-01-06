@@ -7,6 +7,7 @@ import {
   findActiveVerificationByToken,
   markAccountVerified,
   markVerificationTokenUsed,
+  updateAccountEmail,
   recordAccountLogin,
   upsertAccount,
   type AccountRecord,
@@ -20,6 +21,9 @@ import {
 } from "@/lib/account/auth";
 import { sendVerificationEmail } from "@/lib/account/email";
 import { syncAccountLicensesFromGhl } from "@/lib/account/license-sync";
+import { updateCheckoutSessionsCustomerEmail, updateOrdersCustomerEmail } from "@/lib/checkout";
+import { normalizeEmail } from "@/lib/checkout/utils";
+import { updateSerpAuthEmail, type SerpAuthEmailUpdateResult } from "@/lib/serp-auth/account-email";
 
 export interface PurchaseAccountContext {
   email: string | null | undefined;
@@ -231,4 +235,146 @@ export async function getAccountFromSessionCookie(cookieValue: string | undefine
   }
 
   return findAccountById(parsed.accountId);
+}
+
+export class AccountEmailUpdateError extends Error {
+  status: number;
+  code:
+    | "email_in_use"
+    | "serp_auth_missing"
+    | "serp_auth_not_found"
+    | "serp_auth_failed"
+    | "store_update_failed";
+
+  constructor(message: string, code: AccountEmailUpdateError["code"], status = 400) {
+    super(message);
+    this.status = status;
+    this.code = code;
+  }
+}
+
+export type AccountEmailUpdateResult =
+  | {
+      status: "unchanged";
+      account: AccountRecord;
+    }
+  | {
+      status: "updated";
+      account: AccountRecord;
+      ordersUpdated: number;
+      sessionsUpdated: number;
+      serpAuth: SerpAuthEmailUpdateResult;
+    };
+
+export async function updateAccountEmailForAccount(
+  account: AccountRecord,
+  nextEmail: string,
+): Promise<AccountEmailUpdateResult> {
+  const normalizedCurrent = normalizeEmail(account.email);
+  const normalizedNext = normalizeEmail(nextEmail);
+
+  if (normalizedCurrent === normalizedNext) {
+    return { status: "unchanged", account };
+  }
+
+  const existing = await findAccountByEmail(normalizedNext);
+  if (existing && existing.id !== account.id) {
+    throw new AccountEmailUpdateError(
+      "That email is already linked to another account.",
+      "email_in_use",
+      409,
+    );
+  }
+
+  logger.info("account.email_update_started", {
+    accountId: account.id,
+    previousEmail: normalizedCurrent,
+    nextEmail: normalizedNext,
+  });
+
+  const serpAuthResult = await updateSerpAuthEmail({
+    previousEmail: normalizedCurrent,
+    nextEmail: normalizedNext,
+  });
+
+  if (serpAuthResult.status === "skipped") {
+    const message =
+      serpAuthResult.reason === "missing_d1_config"
+        ? "Serp-auth configuration is missing for email updates."
+        : "We couldn't find this email in the authentication database.";
+    const code =
+      serpAuthResult.reason === "missing_d1_config"
+        ? "serp_auth_missing"
+        : "serp_auth_not_found";
+    throw new AccountEmailUpdateError(message, code, 500);
+  }
+
+  if (serpAuthResult.status === "failed") {
+    const isConflict = serpAuthResult.code === "email_in_use";
+    throw new AccountEmailUpdateError(
+      isConflict ? "That email is already linked to another account." : "Unable to update authentication email.",
+      isConflict ? "email_in_use" : "serp_auth_failed",
+      isConflict ? 409 : 502,
+    );
+  }
+
+  try {
+    const updatedAccount = await updateAccountEmail(account.id, normalizedNext);
+    if (!updatedAccount) {
+      throw new Error("Account update returned no data.");
+    }
+
+    const ordersUpdated = await updateOrdersCustomerEmail(normalizedCurrent, normalizedNext);
+    const sessionsUpdated = await updateCheckoutSessionsCustomerEmail(normalizedCurrent, normalizedNext);
+
+    logger.info("account.email_update_store_succeeded", {
+      accountId: account.id,
+      previousEmail: normalizedCurrent,
+      nextEmail: normalizedNext,
+      ordersUpdated,
+      sessionsUpdated,
+    });
+
+    return {
+      status: "updated",
+      account: updatedAccount,
+      ordersUpdated,
+      sessionsUpdated,
+      serpAuth: serpAuthResult,
+    };
+  } catch (error) {
+    logger.error("account.email_update_store_failed", {
+      accountId: account.id,
+      previousEmail: normalizedCurrent,
+      nextEmail: normalizedNext,
+      error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
+    });
+
+    const rollback = await updateSerpAuthEmail({
+      previousEmail: normalizedNext,
+      nextEmail: normalizedCurrent,
+    });
+
+    if (rollback.status !== "succeeded") {
+      logger.error("account.email_update_rollback_failed", {
+        accountId: account.id,
+        previousEmail: normalizedNext,
+        nextEmail: normalizedCurrent,
+        rollbackStatus: rollback.status,
+        rollbackReason: rollback.status === "skipped" ? rollback.reason : rollback.code,
+      });
+    } else {
+      logger.info("account.email_update_rollback_succeeded", {
+        accountId: account.id,
+        previousEmail: normalizedNext,
+        nextEmail: normalizedCurrent,
+      });
+    }
+
+    throw new AccountEmailUpdateError(
+      "Unable to update account email at this time.",
+      "store_update_failed",
+      500,
+    );
+  }
 }

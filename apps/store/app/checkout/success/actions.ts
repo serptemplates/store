@@ -28,6 +28,7 @@ type ProcessedOrderDetails = {
   coupon?: string | null;
   affiliateId?: string | null;
   productSlug?: string | null;
+  customerEmail?: string | null;
 };
 
 type ProcessCheckoutResult = {
@@ -307,6 +308,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         coupon: couponCode,
         affiliateId: affiliateIdValue,
         productSlug: productSlug ?? offerId ?? null,
+        customerEmail,
       },
     };
   } catch (error) {
@@ -353,6 +355,7 @@ export async function processPayPalCheckout(input: PayPalProcessInput): Promise<
         sessionId: normalizedOrder.sessionId,
         amount: normalizedOrder.amountTotal ?? null,
         currency: normalizedOrder.currency ?? null,
+        customerEmail: normalizedOrder.customerEmail ?? null,
         items: [
           {
             id: normalizedOrder.offerId,
@@ -626,6 +629,7 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
         items,
         coupon: couponCode ?? null,
         affiliateId,
+        customerEmail: order?.customerEmail ?? null,
       },
     };
   } catch (error) {

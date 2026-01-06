@@ -565,3 +565,30 @@ export async function findRefundedOrders(options?: { limit?: number; skipIfMetad
     return false;
   });
 }
+
+export async function updateOrdersCustomerEmail(
+  currentEmail: string,
+  nextEmail: string,
+): Promise<number> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return 0;
+  }
+
+  const normalizedCurrent = normalizeEmail(currentEmail);
+  const normalizedNext = normalizeEmail(nextEmail);
+
+  if (!normalizedCurrent || !normalizedNext || normalizedCurrent === normalizedNext) {
+    return 0;
+  }
+
+  const result = await query`
+    UPDATE orders
+       SET customer_email = ${normalizedNext},
+           updated_at = NOW()
+     WHERE customer_email = ${normalizedCurrent};
+  `;
+
+  return result?.rowCount ?? 0;
+}

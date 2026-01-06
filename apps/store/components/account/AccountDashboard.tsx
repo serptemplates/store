@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Badge } from "@repo/ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@repo/ui";
 import type { CheckoutSessionStatus } from "@/lib/checkout/types";
 
 type StatusTone = "emerald" | "amber" | "rose" | "slate";
@@ -37,6 +37,11 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
   const [signingOut, setSigningOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [accountEmail, setAccountEmail] = useState(account.email);
+  const [emailDraft, setEmailDraft] = useState(account.email);
+  const [emailUpdating, setEmailUpdating] = useState(false);
+  const [emailMessage, setEmailMessage] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const statusToneMap: Record<string, { label: string; tone: StatusTone }> = {
     active: { label: "Verified", tone: "emerald" },
@@ -88,6 +93,54 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
     }
   }, []);
 
+  useEffect(() => {
+    setAccountEmail(account.email);
+    setEmailDraft(account.email);
+  }, [account.email]);
+
+  const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
+  const emailIsValid = emailDraft.trim().length > 3 && emailDraft.includes("@");
+  const emailIsUnchanged = normalizeEmail(emailDraft) === normalizeEmail(accountEmail);
+
+  const handleEmailUpdate = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setEmailUpdating(true);
+      setEmailMessage(null);
+      setEmailError(null);
+
+      try {
+        const response = await fetch("/api/account/update-email", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ email: emailDraft }),
+        });
+
+        const body = (await response.json().catch(() => ({}))) as {
+          error?: string;
+          message?: string;
+          status?: string;
+          account?: { email?: string };
+        };
+
+        if (!response.ok) {
+          throw new Error(body.error ?? "Unable to update email");
+        }
+
+        const nextEmail = body.account?.email ?? emailDraft;
+        setAccountEmail(nextEmail);
+        setEmailDraft(nextEmail);
+        setEmailMessage(body.message ?? (body.status === "unchanged" ? "Email is already up to date." : "Email updated successfully."));
+        router.refresh();
+      } catch (updateError) {
+        setEmailError(updateError instanceof Error ? updateError.message : String(updateError));
+      } finally {
+        setEmailUpdating(false);
+      }
+    },
+    [emailDraft, router],
+  );
+
   return (
     <div className="space-y-10">
       <section className="flex flex-col gap-4">
@@ -97,10 +150,7 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
               <div className="space-y-2">
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Account</p>
                 <div className="space-y-1">
-                  <CardTitle className="text-sm font-semibold text-slate-900">
-                    {account.name ? `${account.name}` : account.email}
-                  </CardTitle>
-                  <p className="text-xs font-medium text-slate-500">{account.email}</p>
+                  <CardTitle className="text-sm font-semibold text-slate-900">{accountEmail}</CardTitle>
                 </div>
               </div>
               <div className="flex flex-col gap-3 self-stretch sm:flex-row sm:items-center sm:self-auto">
@@ -120,9 +170,33 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
             {error && <p className="text-sm text-red-600">{error}</p>}
           </CardHeader>
 
-          <CardContent className="space-y-4 text-sm text-slate-600">
-            <div className="grid gap-4 sm:grid-cols-2">
-            </div>
+          <CardContent className="space-y-4 text-lg text-slate-600">
+            <form className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end" onSubmit={handleEmailUpdate}>
+              <div className="space-y-2">
+                <Label htmlFor="account-email-update">Update primary email</Label>
+                <Input
+                  id="account-email-update"
+                  type="email"
+                  autoComplete="email"
+                  value={emailDraft}
+                  onChange={(event) => setEmailDraft(event.target.value)}
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={!emailIsValid || emailIsUnchanged || emailUpdating}
+                className="w-full sm:w-auto"
+              >
+                {emailUpdating ? "Updating..." : "Update email"}
+              </Button>
+            </form>
+            <p className="text-xs text-slate-500">
+              Use the same email for app authentication and one-time pass codes.
+            </p>
+            {emailMessage && <p className="text-sm text-emerald-600">{emailMessage}</p>}
+            {emailError && <p className="text-sm text-red-600">{emailError}</p>}
           </CardContent>
         </Card>
       </section>
@@ -130,7 +204,7 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
       <section className="space-y-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">License Keys</h2>
+            <h2 className="text-sm font-semibold text-slate-900 sm:text-2xl">License Keys</h2>
           </div>
         </div>
 
@@ -144,58 +218,48 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
-            {purchases.map((purchase) => (
-              <Card key={`${purchase.orderId}-${purchase.offerId}`} className="border-slate-200 shadow-sm">
-                <CardHeader className="space-y-3 pb-4">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                    <div className="space-y-2">
-                      <CardTitle className="text-lg font-semibold text-slate-900">
-                        {purchase.offerId ?? "Unknown product"}
-                      </CardTitle>
-                      {/* <p className="text-sm text-slate-500">
-                        {purchase.purchasedAt
-                          ? `Purchased ${new Date(purchase.purchasedAt).toLocaleString()}`
-                          : "Purchase date pending"}
-                      </p> */}
-                      {purchase.amountFormatted && (
-                        <p className="text-sm text-slate-600">
-                          Amount <span className="font-semibold text-slate-900">{purchase.amountFormatted}</span>
+          <Card className="border-slate-200 shadow-sm">
+            <CardContent className="p-0">
+              <ul className="divide-y divide-slate-100">
+                {purchases.map((purchase) => (
+                  <li key={`${purchase.orderId}-${purchase.offerId}`} className="px-4 py-3">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="space-y-1">
+                        <p className="text-sm font-semibold text-slate-900">
+                          {purchase.offerId ?? "Unknown product"}
                         </p>
-                      )}
-                    </div>
-                    <div className="flex flex-col items-start gap-2 text-sm sm:items-end">
-                      <Badge variant="outline" className="uppercase tracking-wide text-xs">
+                        {purchase.amountFormatted && (
+                          <p className="text-xs text-slate-500">Amount {purchase.amountFormatted}</p>
+                        )}
+                      </div>
+                      <Badge variant="outline" className="uppercase tracking-wide text-xs w-fit">
                         {purchase.source.toUpperCase()}
                       </Badge>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-4 border-t border-slate-100 pt-4 md:flex-row md:items-center md:justify-between">
-                  {purchase.licenseKey ? (
-                    <div className="flex w-full items-center gap-3 rounded-md border border-slate-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-700">
-                      <span className="truncate" title={purchase.licenseKey}>
-                        {purchase.licenseKey}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="ml-auto h-7 px-3 text-xs"
-                        onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
-                      >
-                        {copiedKey === purchase.orderId ? "Copied" : "Copy"}
-                      </Button>
+                    <div className="mt-2 flex items-center gap-2 text-xs text-slate-600">
+                      {purchase.licenseKey ? (
+                        <>
+                          <span className="truncate font-mono" title={purchase.licenseKey}>
+                            {purchase.licenseKey}
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="ml-auto h-6 px-2 text-[11px]"
+                            onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
+                          >
+                            {copiedKey === purchase.orderId ? "Copied" : "Copy"}
+                          </Button>
+                        </>
+                      ) : (
+                        <span>License key pending — we&apos;ll drop it here the moment it&apos;s ready.</span>
+                      )}
                     </div>
-                  ) : (
-                    <div className="w-full rounded-md border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-500">
-                      License key pending — we&apos;ll drop it here the moment it&apos;s ready.
-                    </div>
-                  )}
-
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         )}
       </section>
     </div>

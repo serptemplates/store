@@ -201,6 +201,42 @@ export async function upsertAccount(params: {
   return mapAccountRow(result?.rows?.[0] ?? null);
 }
 
+export async function updateAccountEmail(accountId: string, email: string): Promise<AccountRecord | null> {
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const normalizedEmail = normalizeEmail(email);
+
+  const result = await query<{
+    id: string;
+    email: string;
+    name: string | null;
+    status: AccountStatus;
+    verified_at: string | null;
+    last_login_at: string | null;
+    created_at: string;
+    updated_at: string;
+  }>`
+    UPDATE accounts
+       SET email = ${normalizedEmail},
+           updated_at = NOW()
+     WHERE id = ${accountId}
+    RETURNING id,
+              email,
+              name,
+              status,
+              verified_at,
+              last_login_at,
+              created_at,
+              updated_at;
+  `;
+
+  return mapAccountRow(result?.rows?.[0] ?? null);
+}
+
 export interface VerificationCreationResult {
   token: string;
   code: string;

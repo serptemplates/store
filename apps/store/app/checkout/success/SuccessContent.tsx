@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import {
   BookOpen,
@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { processCheckoutSession, processGhlPayment, processPayPalCheckout } from "./actions";
@@ -27,7 +28,7 @@ type CtaDefinition = {
 
 type HeroCopy = {
   title: string;
-  description: string;
+  description: (email: string) => ReactNode;
   ctas: CtaDefinition[];
 };
 
@@ -55,39 +56,31 @@ type SuccessVideoSource =
     }
   | { kind: "file"; src: string };
 
-const HERO_COPY: Record<CheckoutVariant, HeroCopy> = {
-  stripe: {
-    title: "Thank you for your purchase!",
-    description:
-      "Your order is confirmed. We’ve sent a receipt and verification email to the address you used at checkout. It should arrive shortly.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  ghl: {
-    title: "Thank you for your purchase!",
-    description:
-      "Your order is confirmed. Watch the video below for your next steps.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  paypal: {
-    title: "Thank you for your purchase!",
-    description:
-      "We captured your PayPal order and are provisioning your account now.",
-    ctas: [
-      { label: "Open Your Account", href: "/account" },
-      { label: "Need Help?", href: "/support", variant: "outline" },
-    ],
-  },
-  external: {
-    title: "Success! We received your order",
-    description: "",
-    ctas: [],
-  },
+const HERO_COPY: HeroCopy = {
+  title: "Success! Your order is confirmed.",
+  description: (email) => (
+    <div className="space-y-3">
+      <p>
+        Please check your email{" "}
+        <span className="font-medium text-foreground">({email})</span> for your receipt and a welcome packet
+        with information you&apos;ll need to get started.
+      </p>
+      <p>
+        Please use this email when authenticating your apps and receiving one-time pass codes - they won&apos;t work otherwise.
+      </p>
+      <p>
+        If you&apos;d like to change or update that email, you can do that in your{" "}
+        <Link href="/account" className="font-medium text-foreground underline underline-offset-4">
+          Account
+        </Link>{" "}
+        area.
+      </p>
+    </div>
+  ),
+  ctas: [
+    { label: "Open Your Account", href: "/account" },
+    { label: "Need Help?", href: "/support", variant: "outline" },
+  ],
 };
 
 const RESOURCE_LINKS: ResourceLink[] = [
@@ -100,27 +93,21 @@ const RESOURCE_LINKS: ResourceLink[] = [
   {
     title: "Installation Instructions",
     description: "Step-by-step setup guides for every tool in your bundle.",
-    href: "https://github.com/orgs/serpapps/discussions/59",
+    href: "https://github.com/orgs/serpapps/discussions/75",
     icon: BookOpen,
   },
+    {
+    title: "Help Center",
+    description: "Search FAQs, troubleshooting articles, and walkthroughs.",
+    href: "https://help.serp.co",
+    icon: MessageCircle,
+  },
   {
-    title: "Join the Community",
+    title: "Community",
     description: "Connect with other SERP users, share wins, and get tips.",
     href: "https://serp.ly/@serp/community",
     icon: Users,
-  },
-  {
-    title: "Help Center",
-    description: "Search FAQs, troubleshooting articles, and walkthroughs.",
-    href: "https://github.com/orgs/serpapps/discussions",
-    icon: MessageCircle,
-  },
-  {
-    title: "Support",
-    description: "Can’t find what you need? Reach our team in a couple clicks.",
-    href: "https://serp.ly/support",
-    icon: MessageCircle,
-  },
+  }
 ];
 
 const SUCCESS_VIDEO_SRC = process.env.NEXT_PUBLIC_SUCCESS_VIDEO_URL ?? "";
@@ -271,6 +258,9 @@ export function SuccessContent() {
   const [thumbnailSrc, setThumbnailSrc] = useState<string | undefined>(undefined);
   const [productSlug, setProductSlug] = useState<string | null>(slugParam);
   const [orderDetails, setOrderDetails] = useState<ConversionData | null>(null);
+  const [customerEmail, setCustomerEmail] = useState<string | null>(
+    () => searchParams.get("customer_email") ?? searchParams.get("email"),
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -293,6 +283,10 @@ export function SuccessContent() {
             price: typeof item.price === "number" ? Number(item.price.toFixed(2)) : 0,
             quantity: item.quantity,
           })) ?? [];
+
+        if (result.order.customerEmail) {
+          setCustomerEmail(result.order.customerEmail);
+        }
 
         setOrderDetails({
           sessionId: result.order.sessionId,
@@ -403,7 +397,8 @@ export function SuccessContent() {
     }
   }, [productSlug, providerParam, variant]);
 
-  const heroCopy = HERO_COPY[variant];
+  const heroCopy = HERO_COPY;
+  const resolvedCustomerEmail = customerEmail ?? "your checkout email";
   const whitelistMedia = useMemo(() => WHITELIST_GUIDES.filter((guide) => Boolean(guide.mediaSrc)), [],);
   const hasWhitelistMedia = whitelistMedia.length > 0;
   const successVideo = useMemo<SuccessVideoSource>(() => {
@@ -418,6 +413,8 @@ export function SuccessContent() {
 
     return buildYouTubeSuccessVideo(DEFAULT_SUCCESS_VIDEO_ID);
   }, []);
+  // Temporarily hide the outdated welcome video.
+  const showSuccessVideo = false;
 
   const resolvedSessionId =
     orderDetails?.sessionId ??
@@ -461,61 +458,65 @@ export function SuccessContent() {
 
             <div className="space-y-4">
               <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{heroCopy.title}</h1>
-              <p className="text-base text-muted-foreground">{heroCopy.description}</p>
+              <div className="text-base text-muted-foreground">
+                {heroCopy.description(resolvedCustomerEmail)}
+              </div>
             </div>
-            <div className="mx-auto w-full max-w-3xl">
-              {successVideo.kind === "youtube" ? (
-                isVideoActive ? (
-                  <iframe
-                    key={successVideo.autoplayUrl}
-                    src={successVideo.autoplayUrl}
-                    title="Welcome video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="aspect-video w-full rounded-md border border-border bg-black"
-                    loading="lazy"
-                  />
+            {showSuccessVideo ? (
+              <div className="mx-auto w-full max-w-3xl">
+                {successVideo.kind === "youtube" ? (
+                  isVideoActive ? (
+                    <iframe
+                      key={successVideo.autoplayUrl}
+                      src={successVideo.autoplayUrl}
+                      title="Welcome video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="aspect-video w-full rounded-md border border-border bg-black"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setIsVideoActive(true)}
+                      className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
+                      aria-label="Play welcome video"
+                    >
+                      <Image
+                        src={thumbnailSrc ?? successVideo.thumbnailUrl}
+                        alt="Welcome video thumbnail"
+                        fill
+                        className="object-cover transition duration-200 group-hover:scale-[1.01]"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                        priority={false}
+                        onError={() => {
+                          if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
+                            setThumbnailSrc(successVideo.fallbackThumbnailUrl);
+                          }
+                        }}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
+                      />
+                      <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
+                        <Play className="h-4 w-4" />
+                        Watch welcome video
+                      </span>
+                    </button>
+                  )
                 ) : (
-                  <button
-                    type="button"
-                    onClick={() => setIsVideoActive(true)}
-                    className="group relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-md border border-border bg-black"
-                    aria-label="Play welcome video"
-                  >
-                    <Image
-                      src={thumbnailSrc ?? successVideo.thumbnailUrl}
-                      alt="Welcome video thumbnail"
-                      fill
-                      className="object-cover transition duration-200 group-hover:scale-[1.01]"
-                      sizes="(max-width: 768px) 100vw, 800px"
-                      priority={false}
-                      onError={() => {
-                        if (successVideo.fallbackThumbnailUrl && thumbnailSrc !== successVideo.fallbackThumbnailUrl) {
-                          setThumbnailSrc(successVideo.fallbackThumbnailUrl);
-                        }
-                      }}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0 bg-black/35 transition duration-200 group-hover:bg-black/45"
-                    />
-                    <span className="relative inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-foreground shadow-md transition duration-200 group-hover:bg-white">
-                      <Play className="h-4 w-4" />
-                      Watch welcome video
-                    </span>
-                  </button>
-                )
-              ) : (
-                <video
-                  key={successVideo.src}
-                  src={successVideo.src}
-                  playsInline
-                  controls
-                  preload="metadata"
-                  className="aspect-video w-full rounded-md border border-border bg-black"
-                />
-              )}
-            </div>
+                  <video
+                    key={successVideo.src}
+                    src={successVideo.src}
+                    playsInline
+                    controls
+                    preload="metadata"
+                    className="aspect-video w-full rounded-md border border-border bg-black"
+                  />
+                )}
+              </div>
+            ) : null}
 
           </div>
         </section>
