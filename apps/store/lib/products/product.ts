@@ -44,6 +44,7 @@ const dataRoot = resolveDataRoot();
 const productsDir = path.join(dataRoot, PRODUCT_DIRECTORY_NAME);
 
 let cachedSlugs: string[] | undefined;
+let cachedAllSlugs: string[] | undefined;
 const productCache = new Map<string, ProductData>();
 
 function assertValidProductSlug(slug: string, allowedSlugs?: readonly string[]): string {
@@ -144,11 +145,11 @@ function loadProductFromFileAllowExcluded(slug: string): ProductData {
   return readProductFile(resolution.absolutePath);
 }
 
-export function getProductSlugs(): string[] {
-  if (!cachedSlugs) {
+export function getAllProductSlugsIncludingExcluded(): string[] {
+  if (!cachedAllSlugs) {
     if (!fs.existsSync(productsDir)) {
-      cachedSlugs = [];
-      return cachedSlugs;
+      cachedAllSlugs = [];
+      return cachedAllSlugs;
     }
 
     const slugs = new Set<string>();
@@ -162,9 +163,15 @@ export function getProductSlugs(): string[] {
       slugs.add(slug);
     }
 
-    cachedSlugs = Array.from(slugs)
-      .filter((slug) => !isExcludedSlug(slug))
-      .sort((a, b) => a.localeCompare(b));
+    cachedAllSlugs = Array.from(slugs).sort((a, b) => a.localeCompare(b));
+  }
+
+  return cachedAllSlugs;
+}
+
+export function getProductSlugs(): string[] {
+  if (!cachedSlugs) {
+    cachedSlugs = getAllProductSlugsIncludingExcluded().filter((slug) => !isExcludedSlug(slug));
   }
 
   return cachedSlugs;
@@ -204,6 +211,10 @@ export function getProductDataAllowExcluded(slug: string): ProductData {
 
 export function getAllProducts(): ProductData[] {
   return getProductSlugs().map((slug) => getProductData(slug));
+}
+
+export function getAllProductsIncludingExcluded(): ProductData[] {
+  return getAllProductSlugsIncludingExcluded().map((slug) => getProductDataAllowExcluded(slug));
 }
 
 export function getProductJson(slug?: string, indent = 2): string {
