@@ -2,7 +2,11 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionByStripeSessionId } from "@/lib/checkout";
 import { getOfferConfig } from "@/lib/products/offer-config";
-import { getProductData, getProductDataAllowExcluded } from "@/lib/products/product";
+import {
+  getAllProductSlugsIncludingExcluded,
+  getProductData,
+  getProductDataAllowExcluded,
+} from "@/lib/products/product";
 import { recordWebhookLog } from "@/lib/webhook-logs";
 import logger from "@/lib/logger";
 import { sendOpsAlert } from "@/lib/notifications/ops";
@@ -29,6 +33,104 @@ function appendUniqueString(target: string[], value: unknown) {
   if (!target.includes(trimmed)) {
     target.push(trimmed);
   }
+}
+
+let stripeProductSlugMap: Map<string, string> | null = null;
+const stripeProductSlugCollisionIds = new Set<string>();
+
+function normalizeStripeProductId(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed || !trimmed.startsWith("prod_")) {
+    return null;
+  }
+
+  return trimmed;
+}
+
+function collectStripeProductIds(metadata?: Record<string, unknown>): string[] {
+  if (!metadata) {
+    return [];
+  }
+
+  const candidates = [
+    metadata["stripe_product_id"],
+    metadata["stripeProductId"],
+    metadata["stripe_test_product_id"],
+    metadata["stripeTestProductId"],
+  ];
+
+  const ids: string[] = [];
+  for (const candidate of candidates) {
+    const normalized = normalizeStripeProductId(candidate);
+    if (normalized) {
+      ids.push(normalized);
+    }
+  }
+
+  return ids;
+}
+
+function registerStripeProductId(map: Map<string, string>, productId: string, slug: string) {
+  const existing = map.get(productId);
+  if (!existing) {
+    map.set(productId, slug);
+    return;
+  }
+
+  if (existing !== slug && !stripeProductSlugCollisionIds.has(productId)) {
+    stripeProductSlugCollisionIds.add(productId);
+    logger.warn("stripe.product_slug_map_collision", {
+      productId,
+      slugs: [existing, slug],
+    });
+  }
+}
+
+function buildStripeProductSlugMap(): Map<string, string> {
+  const map = new Map<string, string>();
+  const slugs = getAllProductSlugsIncludingExcluded();
+
+  for (const slug of slugs) {
+    let product;
+    try {
+      product = getProductDataAllowExcluded(slug);
+    } catch (error) {
+      logger.warn("stripe.product_slug_map_product_load_failed", {
+        slug,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      continue;
+    }
+
+    const metadataSources = [
+      product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
+      product.stripe?.metadata as Record<string, unknown> | undefined,
+    ];
+
+    for (const source of metadataSources) {
+      for (const productId of collectStripeProductIds(source)) {
+        registerStripeProductId(map, productId, product.slug);
+      }
+    }
+  }
+
+  return map;
+}
+
+function resolveProductSlugFromStripeProductId(productId: string | null): string | null {
+  if (!productId) {
+    return null;
+  }
+
+  if (!stripeProductSlugMap) {
+    stripeProductSlugMap = buildStripeProductSlugMap();
+  }
+
+  return stripeProductSlugMap.get(productId) ?? null;
 }
 
 
@@ -161,6 +263,11 @@ async function collectLineItemTagData(
         continue;
       }
 
+      const slugFromProductId = resolveProductSlugFromStripeProductId(productId);
+      if (slugFromProductId) {
+        appendUniqueString(productSlugs, slugFromProductId);
+      }
+
       if (price?.metadata) {
         for (const tag of collectTagCandidatesFromMetadata(price.metadata)) {
           appendUniqueString(tagIds, tag);
@@ -193,6 +300,17 @@ async function collectLineItemTagData(
         const price = (item as Stripe.LineItem).price ?? null;
         if (!price || price.id !== primaryPriceId) {
           continue;
+        }
+
+        const productId = typeof price.product === "string"
+          ? price.product
+          : price.product && typeof price.product === "object" && "id" in price.product
+          ? (price.product as Stripe.Product).id
+          : null;
+
+        const slugFromProductId = resolveProductSlugFromStripeProductId(productId);
+        if (slugFromProductId) {
+          appendUniqueString(productSlugs, slugFromProductId);
         }
 
         if (price.metadata) {

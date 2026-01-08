@@ -14,6 +14,7 @@ type EntitlementAliasEntry = {
 
 type EntitlementCatalogResponse = {
   source?: string;
+  catalog?: EntitlementCatalogEntry[];
   entitlements?: EntitlementCatalogEntry[];
   aliases?: EntitlementAliasEntry[];
 };
@@ -155,7 +156,7 @@ async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
           ? "canonical"
           : null;
       if (!aliasColumn) {
-        return { source: "catalog", entitlements, aliases };
+        return { source: "catalog", catalog: entitlements, entitlements, aliases };
       }
       const aliasRows = await queryD1(
         config,
@@ -169,7 +170,7 @@ async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
       }
     }
 
-    return { source: "catalog", entitlements, aliases };
+    return { source: "catalog", catalog: entitlements, entitlements, aliases };
   }
 
   const rows = await queryD1(config, "SELECT DISTINCT name FROM entitlements ORDER BY name;");
@@ -177,7 +178,7 @@ async function fetchCatalogFromD1(): Promise<EntitlementCatalogResponse> {
     .map((row) => String(row.name ?? "").trim())
     .filter((name) => name.length > 0)
     .map((name) => ({ name }));
-  return { source: "entitlements", entitlements, aliases: [] };
+  return { source: "entitlements", catalog: entitlements, entitlements, aliases: [] };
 }
 
 async function fetchCatalog(): Promise<EntitlementCatalogResponse> {
@@ -226,7 +227,7 @@ async function main() {
   loadScriptEnvironment(import.meta.url);
 
   const response = await fetchCatalog();
-  const catalog = response.entitlements ?? [];
+  const catalog = response.entitlements ?? response.catalog ?? [];
   const aliases = response.aliases ?? [];
 
   if (catalog.length === 0) {

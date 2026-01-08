@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 import fs from "node:fs";
 import { normalizeStripeAccountAlias } from "../config/payment-accounts";
 import { getOptionalStripeSecretKey, type StripeMode } from "../lib/payments/stripe-environment";
-import { getAllProducts } from "../lib/products/product";
+import { getAllProductsIncludingExcluded } from "../lib/products/product";
 
 const API_VERSION: Stripe.LatestApiVersion = "2024-04-10";
 const REPO_ROOT = path.resolve(__dirname, "../../..");
@@ -79,7 +79,7 @@ function createStripeClients(accountAlias: string): StripeClient[] {
 
 async function updateStripeProducts() {
   const { accountAlias } = parseCliArgs(process.argv.slice(2));
-  const products = getAllProducts();
+  const products = getAllProductsIncludingExcluded();
   if (products.length === 0) {
     console.log("No product records found. Nothing to update.");
     return;
