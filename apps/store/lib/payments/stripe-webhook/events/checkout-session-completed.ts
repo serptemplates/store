@@ -17,6 +17,7 @@ import { getStripeClient } from "@/lib/payments/stripe";
 import type { SerpAuthEntitlementsGrantResult } from "@/lib/serp-auth/entitlements";
 
 const OPS_ALERT_THRESHOLD = 3;
+const BUNDLE_EXPAND_MODE_OPTIONAL_ITEMS_UNION = "optional_items_union";
 
 type StripeModeInput = "auto" | "live" | "test";
 
@@ -179,6 +180,170 @@ function normalizeEntitlements(raw: unknown): string[] {
   return entitlements;
 }
 
+function hasOptionalStripeItemProductId(product: unknown, stripeProductId: string): boolean {
+  if (!product || typeof product !== "object") {
+    return false;
+  }
+
+  const record = product as Record<string, unknown>;
+  const payment = record.payment as Record<string, unknown> | undefined;
+  const paymentStripe = (payment?.stripe as Record<string, unknown> | undefined) ?? undefined;
+  const stripe = (record.stripe as Record<string, unknown> | undefined) ?? undefined;
+
+  const optionalItems =
+    (paymentStripe?.optional_items as unknown) ??
+    (paymentStripe?.optionalItems as unknown) ??
+    (stripe?.optional_items as unknown) ??
+    (stripe?.optionalItems as unknown);
+
+  if (!Array.isArray(optionalItems)) {
+    return false;
+  }
+
+  return optionalItems.some((item) => {
+    if (!item || typeof item !== "object") return false;
+    const entry = item as Record<string, unknown>;
+    return entry.product_id === stripeProductId || entry.productId === stripeProductId;
+  });
+}
+
+type BundleIndex = {
+  productIdToSlug: Map<string, string>;
+  slugToProductIds: Map<string, string[]>;
+};
+
+let bundleIndexCache: BundleIndex | null = null;
+const bundleEntitlementsCacheBySlug = new Map<string, string[]>();
+
+function getBundleExpandMode(product: unknown): string | null {
+  if (!product || typeof product !== "object") return null;
+  const record = product as Record<string, unknown>;
+  const checkoutMetadata = record.checkout_metadata as Record<string, unknown> | undefined;
+  if (!checkoutMetadata || typeof checkoutMetadata !== "object") return null;
+
+  const raw =
+    checkoutMetadata.bundle_expand ??
+    checkoutMetadata.bundleExpand ??
+    checkoutMetadata.bundle_expand_mode ??
+    checkoutMetadata.bundleExpandMode ??
+    null;
+
+  if (typeof raw !== "string") return null;
+  const normalized = raw.trim().toLowerCase();
+  return normalized.length > 0 ? normalized : null;
+}
+
+function registerBundleProductId(map: Map<string, string>, productId: string, slug: string) {
+  const existing = map.get(productId);
+  if (!existing) {
+    map.set(productId, slug);
+    return;
+  }
+
+  if (existing !== slug) {
+    logger.warn("stripe.bundle_product_id_collision", {
+      productId,
+      slugs: [existing, slug],
+    });
+  }
+}
+
+function buildBundleIndex(): BundleIndex {
+  const productIdToSlug = new Map<string, string>();
+  const slugToProductIds = new Map<string, string[]>();
+  const slugs = getAllProductSlugsIncludingExcluded();
+
+  for (const slug of slugs) {
+    let product;
+    try {
+      product = getProductDataAllowExcluded(slug);
+    } catch {
+      continue;
+    }
+
+    const expandMode = getBundleExpandMode(product);
+    if (expandMode !== BUNDLE_EXPAND_MODE_OPTIONAL_ITEMS_UNION) {
+      continue;
+    }
+
+    const metadataSources = [
+      product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
+      product.stripe?.metadata as Record<string, unknown> | undefined,
+    ];
+
+    const ids = new Set<string>();
+    for (const source of metadataSources) {
+      for (const productId of collectStripeProductIds(source)) {
+        ids.add(productId);
+        registerBundleProductId(productIdToSlug, productId, product.slug);
+      }
+    }
+
+    const uniqueIds = Array.from(ids);
+    if (uniqueIds.length === 0) {
+      logger.warn("stripe.bundle_product_missing_stripe_product_id", {
+        slug: product.slug,
+        expandMode,
+      });
+      continue;
+    }
+    slugToProductIds.set(product.slug, uniqueIds);
+  }
+
+  return { productIdToSlug, slugToProductIds };
+}
+
+function getBundleIndex(): BundleIndex {
+  if (!bundleIndexCache) {
+    bundleIndexCache = buildBundleIndex();
+  }
+  return bundleIndexCache;
+}
+
+function getBundleUnionEntitlementsForSlug(bundleSlug: string): string[] {
+  const cached = bundleEntitlementsCacheBySlug.get(bundleSlug);
+  if (cached) return cached;
+
+  const bundleProductIds = getBundleIndex().slugToProductIds.get(bundleSlug) ?? [];
+  if (bundleProductIds.length === 0) {
+    bundleEntitlementsCacheBySlug.set(bundleSlug, []);
+    return [];
+  }
+
+  const entitlements = new Set<string>();
+  const slugs = getAllProductSlugsIncludingExcluded();
+
+  for (const slug of slugs) {
+    if (!slug || slug === bundleSlug) continue;
+
+    let product;
+    try {
+      product = getProductDataAllowExcluded(slug);
+    } catch {
+      continue;
+    }
+
+    const offersBundle = bundleProductIds.some((productId) => hasOptionalStripeItemProductId(product, productId));
+    if (!offersBundle) continue;
+
+    const license = (product as Record<string, unknown>).license as Record<string, unknown> | undefined;
+    const resolved = normalizeEntitlements(license?.entitlements);
+    for (const entitlement of resolved) {
+      entitlements.add(entitlement);
+    }
+  }
+
+  const resolved = Array.from(entitlements).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+  bundleEntitlementsCacheBySlug.set(bundleSlug, resolved);
+  if (resolved.length === 0) {
+    logger.warn("stripe.bundle_union_entitlements_empty", {
+      bundleSlug,
+      bundleProductIds,
+    });
+  }
+  return resolved;
+}
+
 function collectEntitlementsForSlugs(slugs: string[]): {
   entitlements: string[];
   missingSlugs: string[];
@@ -190,6 +355,7 @@ function collectEntitlementsForSlugs(slugs: string[]): {
 
   for (const slug of slugs) {
     if (!slug) continue;
+
     try {
       const product = (() => {
         try {
@@ -198,6 +364,13 @@ function collectEntitlementsForSlugs(slugs: string[]): {
           return getProductDataAllowExcluded(slug);
         }
       })();
+
+      const expandMode = getBundleExpandMode(product);
+      if (expandMode === BUNDLE_EXPAND_MODE_OPTIONAL_ITEMS_UNION) {
+        for (const entitlement of getBundleUnionEntitlementsForSlug(slug)) {
+          entitlements.add(entitlement);
+        }
+      }
 
       const resolved = normalizeEntitlements(product?.license?.entitlements);
       if (resolved.length === 0) {
@@ -518,6 +691,16 @@ export async function handleCheckoutSessionCompleted(
 
   for (const slug of lineItemTagData.productSlugs) {
     appendLineItemProductSlug(slug);
+  }
+
+  const bundles = getBundleIndex();
+  for (const item of lineItemTagData.lineItems) {
+    const productId = item.productId;
+    if (!productId || item.quantity <= 0) continue;
+    const bundleSlug = bundles.productIdToSlug.get(productId);
+    if (bundleSlug) {
+      appendLineItemProductSlug(bundleSlug);
+    }
   }
 
   const appendProductTags = (slugs: string[], target: string[]) => {
