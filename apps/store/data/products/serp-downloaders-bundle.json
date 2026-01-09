@@ -39,6 +39,8 @@
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {
+    "bundle_expand": "optional_items_union",
+    "bundleExpand": "optional_items_union",
     "ghl_tag": "purchase-serp-downloaders-bundle",
     "ghlTag": "purchase-serp-downloaders-bundle",
     "licenseEntitlements": "serp-downloaders-bundle",
