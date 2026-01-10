@@ -670,6 +670,24 @@ export async function handleCheckoutSessionCompleted(
     });
   }
 
+  // Receipt numbers are not available when the Checkout session is created; fetch them from the charge after payment.
+  try {
+    if (paymentIntentId) {
+      const stripe = getStripeClient();
+      const charges = await stripe.charges.list({ payment_intent: paymentIntentId, limit: 1 });
+      const receiptNumber = charges.data?.[0]?.receipt_number ?? null;
+      if (receiptNumber) {
+        metadata.receiptNumber = receiptNumber;
+        metadata.receipt_number = receiptNumber;
+      }
+    }
+  } catch (error) {
+    logger.warn("stripe.receipt_number_fetch_failed", {
+      paymentIntentId,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+  }
+
   if (!metadata.product_slug || !metadata.productSlug) {
     metadata.product_slug = offerId;
     metadata.productSlug = offerId;
@@ -1011,6 +1029,44 @@ export async function handleCheckoutSessionCompleted(
       httpStatus: null,
       error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
     };
+  }
+
+  if (paymentIntentId && serpAuthEntitlementsGrant && serpAuthEntitlementsGrant.status !== "succeeded") {
+    const shouldFailWebhook =
+      serpAuthEntitlementsGrant.status === "failed" ||
+      (serpAuthEntitlementsGrant.status === "skipped" && serpAuthEntitlementsGrant.reason === "missing_internal_secret");
+
+    if (shouldFailWebhook) {
+      const message =
+        serpAuthEntitlementsGrant.status === "skipped"
+          ? "SERP Auth entitlements grant skipped (missing internal secret)"
+          : "SERP Auth entitlements grant failed";
+
+      const logResult = await recordWebhookLog({
+        paymentIntentId,
+        stripeSessionId: session.id,
+        eventType: "checkout.session.completed",
+        offerId,
+        landerId,
+        status: "error",
+        message,
+        metadata: {
+          serpAuthEntitlementsGrant,
+        },
+      });
+
+      if (logResult?.status === "error" && logResult.attempts >= OPS_ALERT_THRESHOLD) {
+        await sendOpsAlert("SERP Auth entitlements grant failing", {
+          offerId,
+          landerId,
+          paymentIntentId,
+          attempts: logResult.attempts,
+          message,
+        });
+      }
+
+      throw new Error(message);
+    }
   }
 
   const baseSkipReason = !offerConfig?.ghl

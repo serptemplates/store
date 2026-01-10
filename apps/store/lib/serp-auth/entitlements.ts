@@ -76,7 +76,7 @@ export async function grantSerpAuthEntitlements(
   const url = `${baseUrl}/internal/entitlements/grant`;
 
   const controller = new AbortController();
-  const timeoutMs = 7_000;
+  const timeoutMs = 15_000;
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   const metadata = input.metadata ?? undefined;
@@ -86,6 +86,7 @@ export async function grantSerpAuthEntitlements(
     email: input.email,
     entitlements,
     metadataKeys: metadata ? Object.keys(metadata) : null,
+    timeoutMs,
     provider: input.context?.provider,
     providerEventId: input.context?.providerEventId ?? null,
     providerSessionId: input.context?.providerSessionId ?? null,
@@ -197,7 +198,7 @@ export async function revokeSerpAuthEntitlements(input: RevokeEntitlementsInput)
   const url = `${baseUrl}/internal/entitlements/revoke`;
 
   const controller = new AbortController();
-  const timeoutMs = 7_000;
+  const timeoutMs = 15_000;
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   const metadata = input.metadata ?? undefined;
@@ -207,6 +208,7 @@ export async function revokeSerpAuthEntitlements(input: RevokeEntitlementsInput)
     email: input.email,
     entitlements,
     metadataKeys: metadata ? Object.keys(metadata) : null,
+    timeoutMs,
     provider: input.context?.provider,
     providerEventId: input.context?.providerEventId ?? null,
     providerSessionId: input.context?.providerSessionId ?? null,

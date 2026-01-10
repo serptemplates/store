@@ -3,6 +3,7 @@ import { fetchContactLicensesByEmail } from "@/lib/ghl-client";
 import { upsertOrder, findOrdersByEmailAndSource, deleteOrderById } from "@/lib/checkout/orders";
 import type { GhlLicenseRecord } from "@/lib/ghl-client/types";
 import logger from "@/lib/logger";
+import { grantSerpAuthEntitlements } from "@/lib/serp-auth/entitlements";
 
 const PAYMENT_INTENT_PREFIX = "ghl_license:";
 
@@ -38,6 +39,7 @@ export async function syncAccountLicensesFromGhl(account: AccountRecord): Promis
 
   const keepIds = new Set<string>();
   const syncedAt = new Date().toISOString();
+  const ghlEntitlements = new Set<string>();
 
   for (const license of licenses) {
     const paymentIntentId = buildPaymentIntentId(license);
@@ -47,6 +49,13 @@ export async function syncAccountLicensesFromGhl(account: AccountRecord): Promis
     }
 
     keepIds.add(paymentIntentId);
+
+    for (const entitlement of license.entitlements ?? []) {
+      if (typeof entitlement !== "string") continue;
+      const trimmed = entitlement.trim();
+      if (!trimmed) continue;
+      ghlEntitlements.add(trimmed);
+    }
 
     try {
       await upsertOrder({
@@ -67,6 +76,26 @@ export async function syncAccountLicensesFromGhl(account: AccountRecord): Promis
         email,
         paymentIntentId,
         error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+
+  if (ghlEntitlements.size > 0) {
+    const result = await grantSerpAuthEntitlements({
+      email,
+      entitlements: Array.from(ghlEntitlements),
+      metadata: {
+        source: "ghl_license_sync",
+        ghlSyncedAt: syncedAt,
+        licenseCount: licenses.length,
+      },
+    });
+
+    if (result.status === "failed") {
+      logger.warn("account.ghl_sync.serp_auth_grant_failed", {
+        email,
+        httpStatus: result.httpStatus,
+        error: result.error?.message ?? null,
       });
     }
   }
