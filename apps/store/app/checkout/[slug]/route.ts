@@ -4,7 +4,10 @@ import { getOfferConfig } from "@/lib/products/offer-config";
 import type { OfferConfig } from "@/lib/products/offer-config";
 import { getProductData } from "@/lib/products/product";
 import { createCheckoutSessionForOffer } from "@/lib/payments/payment-router";
-import { ensureMetadataCaseVariants } from "@/lib/metadata/metadata-access";
+import {
+  canonicalizeStripeMetadataKeys,
+  enforceStripeMetadataLimits,
+} from "@/lib/metadata/stripe-metadata";
 
 function json(body: unknown, status = 200) {
   return NextResponse.json(body, { status });
@@ -64,7 +67,7 @@ export async function GET(
 
   const metadata: Record<string, string> = {
     ...(offer.metadata ?? {}),
-    productSlug: slug,
+    product_slug: slug,
   };
 
   if (dubId) {
@@ -78,22 +81,44 @@ export async function GET(
   // Mirror GHL tags into metadata (for parity with Payment Link flows)
   const primaryGhlTag = offer.ghl?.tagIds?.[0];
   if (primaryGhlTag) {
-    metadata.ghlTag = primaryGhlTag;
+    metadata.ghl_tag = primaryGhlTag;
   }
 
-  // Stripe metadata has a hard limit of 50 keys. We mirror case variants for most
-  // fields, but avoid mirroring Dub attribution keys (they are already stable)
-  // and enforce a strict cap.
-  ensureMetadataCaseVariants(metadata, {
-    maxKeys: 50,
-    skipMirror: (key) => key === "affiliateId" || key.startsWith("dub"),
+  const canonical = canonicalizeStripeMetadataKeys(metadata, {
+    preserveKey: (key) => key === "affiliateId" || key.startsWith("dub"),
+    dropKey: (key) =>
+      key.startsWith("store") ||
+      key.includes("store_serp_co") ||
+      key.includes("storeSerpCo") ||
+      key.includes("storeProductPageUrl") ||
+      key.includes("store_product_page_url"),
   });
+
+  const limited = enforceStripeMetadataLimits(canonical, {
+    keepKeysFirst: [
+      "product_slug",
+      "offer_id",
+      "lander_id",
+      "product_name",
+      "ghl_tag",
+      "environment",
+      "affiliateId",
+      "dubCustomerExternalId",
+      "dubClickId",
+      "purchase_url",
+      "serply_link",
+      "success_url",
+      "cancel_url",
+      "apps_serp_co_product_page_url",
+      "serp_co_product_page_url",
+    ],
+  }).metadata;
 
   try {
     const session = await createCheckoutSessionForOffer({
       offer,
       quantity,
-      metadata,
+      metadata: limited,
       customerEmail,
       clientReferenceId: dubId,
     });

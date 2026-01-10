@@ -34,6 +34,15 @@ type WebhookLogRow = {
   attempts: number;
 };
 
+export type WebhookLogRecord = {
+  status: WebhookLogStatus;
+  attempts: number;
+  lastError: string | null;
+  metadata: Record<string, unknown>;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export async function recordWebhookLog(input: WebhookLogRecordInput): Promise<WebhookLogRow | null> {
   if (!input.paymentIntentId) {
     return null;
@@ -93,6 +102,51 @@ export async function recordWebhookLog(input: WebhookLogRecordInput): Promise<We
   `;
 
   return result?.rows?.[0] ?? null;
+}
+
+export async function findWebhookLogByPaymentIntentId(paymentIntentId: string): Promise<WebhookLogRecord | null> {
+  if (!paymentIntentId) {
+    return null;
+  }
+
+  const schemaReady = await ensureDatabase();
+  if (!schemaReady) {
+    return null;
+  }
+
+  const result = await query<{
+    status: WebhookLogStatus;
+    attempts: number;
+    last_error: string | null;
+    metadata: Record<string, unknown> | null;
+    created_at: Date;
+    updated_at: Date;
+  }>`
+    SELECT
+      status,
+      attempts,
+      last_error,
+      metadata,
+      created_at,
+      updated_at
+    FROM webhook_logs
+    WHERE payment_intent_id = ${paymentIntentId}
+    LIMIT 1;
+  `;
+
+  const row = result?.rows?.[0];
+  if (!row) {
+    return null;
+  }
+
+  return {
+    status: row.status,
+    attempts: row.attempts,
+    lastError: row.last_error ?? null,
+    metadata: row.metadata ?? {},
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
 }
 
 export async function countErroredWebhookLogsSince(hours: number): Promise<number> {

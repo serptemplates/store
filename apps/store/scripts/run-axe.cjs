@@ -92,7 +92,7 @@ const baseUrl =
   process.env.TEST_BASE_URL ??
   'http://127.0.0.1:3000';
 
-const paths = (process.env.AXE_PATHS ?? '/,/loom-video-downloader')
+const paths = (process.env.AXE_PATHS ?? '/,/loom-video-downloader,/account?preview=1')
   .split(',')
   .map((value) => value.trim())
   .filter(Boolean);

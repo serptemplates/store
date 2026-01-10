@@ -3,14 +3,14 @@ import { cookies } from "next/headers";
 import AccountDashboard, { type PurchaseSummary } from "@/components/account/AccountDashboard";
 import AccountVerificationFlow from "@/components/account/AccountVerificationFlow";
 import { getAccountFromSessionCookie } from "@/lib/account/service";
-import { findRecentOrdersByEmail } from "@/lib/checkout";
-import { fetchLicenseForOrder } from "@/lib/license-service";
-import { fetchContactLicensesByEmail } from "@/lib/ghl-client";
-import { mergePurchasesWithGhlLicenses } from "@/lib/account/license-integration";
+import { findRecentOrdersByEmail, updateOrderMetadata, type OrderRecord } from "@/lib/checkout";
+import { fetchSerpAuthEntitlementsByEmail } from "@/lib/serp-auth/internal-entitlements";
 import { getSiteConfig } from "@/lib/site-config";
 import { getAllProducts } from "@/lib/products/product";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
+import logger from "@/lib/logger";
+import { getStripeClient } from "@/lib/payments/stripe";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +57,9 @@ export default async function AccountPage({
 
   let purchases: PurchaseSummary[] = [];
   let accountSummary: DashboardAccount | null = null;
+  let entitlements: string[] = [];
+  let entitlementsStatus: "ok" | "unavailable" | "error" = "unavailable";
+  let entitlementsMessage: string | null = null;
 
   if (account) {
     purchases = await buildPurchaseSummaries(account.email);
@@ -65,6 +68,20 @@ export default async function AccountPage({
       status: account.status,
       verifiedAt: account.verifiedAt?.toISOString() ?? null,
     } satisfies DashboardAccount;
+
+    const entitlementsResult = await fetchSerpAuthEntitlementsByEmail(account.email);
+    if (entitlementsResult.status === "ok") {
+      entitlementsStatus = "ok";
+      entitlements = entitlementsResult.entitlements;
+    } else if (entitlementsResult.status === "skipped") {
+      entitlementsStatus = "unavailable";
+      entitlements = [];
+      entitlementsMessage = "Can’t load permissions right now.";
+    } else {
+      entitlementsStatus = "error";
+      entitlements = [];
+      entitlementsMessage = "Can’t load permissions right now.";
+    }
   }
 
   const preview = getDevPreviewData(params);
@@ -74,6 +91,9 @@ export default async function AccountPage({
     purchases = preview.purchases;
     verifiedRecently = preview.verifiedRecently ?? verifiedRecently;
     prefilledEmail = preview.account.email;
+    entitlements = ["loom-downloader", "vimeo-downloader", "youtube-downloader", "serp-downloaders-bundle"];
+    entitlementsStatus = "ok";
+    entitlementsMessage = null;
   }
 
   let adminOverride = false;
@@ -107,6 +127,9 @@ export default async function AccountPage({
             <AccountDashboard
               account={accountSummary}
               purchases={purchases}
+              entitlements={entitlements}
+              entitlementsStatus={entitlementsStatus}
+              entitlementsMessage={entitlementsMessage}
               verifiedRecently={verifiedRecently}
             />
           ) : (
@@ -165,6 +188,7 @@ function getDevPreviewData(
       purchasedAt: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
       amountFormatted: "$129.00",
       source: "stripe",
+      receiptNumber: "1234-5678",
       licenseKey: "SERP-DEV-1234-5678-ABCD",
       licenseStatus: "active",
       licenseUrl: "https://example.com/licenses/pro-downloader-suite",
@@ -200,77 +224,202 @@ function getDevPreviewData(
 
 async function buildPurchaseSummaries(email: string): Promise<PurchaseSummary[]> {
   const orders = await findRecentOrdersByEmail(email, 20);
-  const licenseEnabled = Boolean(process.env.LICENSE_SERVICE_URL);
 
-  const purchaseSummaries = orders.length
-    ? await Promise.all(
-        orders.map(async (order) => {
-          const amountFormatted = formatAmount(order.amountTotal, order.currency);
-          const metadata = order.metadata ?? {};
+  if (!orders.length) {
+    return [];
+  }
 
-          const storedLicenseRaw = metadata.license;
-          const storedLicense =
-            storedLicenseRaw && typeof storedLicenseRaw === "object" && !Array.isArray(storedLicenseRaw)
-              ? (storedLicenseRaw as Record<string, unknown>)
-              : null;
+  const purchaseSummaries = orders.map((order) => {
+    const amountFormatted = formatAmount(order.amountTotal, order.currency);
+    const metadata = normalizeMetadata(order.metadata);
 
-          const storedLicenseKey =
-            typeof storedLicense?.licenseKey === "string" ? storedLicense.licenseKey : null;
-          const storedLicenseStatus =
-            typeof storedLicense?.status === "string"
-              ? storedLicense.status
-              : typeof storedLicense?.action === "string"
-                ? storedLicense.action
-                : null;
-          const storedLicenseUrl =
-            typeof storedLicense?.url === "string" ? storedLicense.url : null;
+    const receiptNumber = getReceiptNumberFromMetadata(metadata);
 
-          const normalizedStatus = storedLicenseStatus?.toLowerCase() ?? null;
-          const licenseRevokedAt = metadata["licenseRevokedAt"];
-          const metadataFetchSuppressed = metadata["licenseFetchSuppressed"];
-          const licenseFetchSuppressed =
-            normalizedStatus === "revoked" ||
-            normalizedStatus === "refunded" ||
-            normalizedStatus === "cancelled" ||
-            normalizedStatus === "canceled" ||
-            licenseRevokedAt != null ||
-            metadataFetchSuppressed === true ||
-            metadataFetchSuppressed === "1";
+    return {
+      orderId: order.id,
+      offerId: order.offerId,
+      purchasedAt: order.createdAt.toISOString(),
+      amountFormatted,
+      source: order.source,
+      receiptNumber,
+      paymentStatus: order.paymentStatus,
+      checkoutStatus: order.checkoutSessionStatus,
+      stripeSessionId: order.stripeSessionId,
+      paymentIntentId: order.stripePaymentIntentId,
+    } satisfies PurchaseSummary;
+  });
 
-          let fetchedLicense = null;
+  await maybeHydrateReceiptNumber(purchaseSummaries, orders);
 
-          if (licenseEnabled && !storedLicenseKey && !licenseFetchSuppressed) {
-            fetchedLicense = await fetchLicenseForOrder({
-              email,
-              offerId: order.offerId,
-              orderId: order.id,
-              source: order.source,
-            }).catch(() => null);
-          }
+  return purchaseSummaries;
+}
 
-          const licenseKey = storedLicenseKey ?? fetchedLicense?.licenseKey ?? null;
-          const licenseStatus = storedLicenseStatus ?? fetchedLicense?.status ?? null;
-          const licenseUrl = storedLicenseUrl ?? fetchedLicense?.url ?? null;
+function normalizeMetadata(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+  return value as Record<string, unknown>;
+}
 
-          return {
-            orderId: order.id,
-            offerId: order.offerId,
-            purchasedAt: order.createdAt.toISOString(),
-            amountFormatted,
-            source: order.source,
-            licenseKey,
-            licenseStatus,
-            licenseUrl,
-            paymentStatus: order.paymentStatus,
-            checkoutStatus: order.checkoutSessionStatus,
-          } satisfies PurchaseSummary;
-        }),
-      )
-    : [];
+function getReceiptNumberFromMetadata(metadata: Record<string, unknown> | null): string | null {
+  if (!metadata) return null;
+  if (typeof metadata.receiptNumber === "string" && metadata.receiptNumber.trim()) return metadata.receiptNumber.trim();
+  if (typeof metadata.receipt_number === "string" && metadata.receipt_number.trim()) return metadata.receipt_number.trim();
+  return null;
+}
 
-  const ghlLicenses = await fetchContactLicensesByEmail(email).catch(() => []);
+async function maybeHydrateReceiptNumber(purchases: PurchaseSummary[], orders: OrderRecord[]): Promise<void> {
+  const index = purchases.findIndex((purchase, idx) => {
+    if (purchase.source !== "stripe") return false;
+    if (purchase.receiptNumber) return false;
+    const order = orders[idx];
+    return Boolean(
+      order?.stripeChargeId ||
+        order?.stripePaymentIntentId ||
+        order?.stripeSessionId ||
+        order?.providerChargeId ||
+        order?.providerPaymentId ||
+        order?.providerSessionId,
+    );
+  });
 
-  return mergePurchasesWithGhlLicenses(purchaseSummaries, ghlLicenses);
+  if (index < 0) {
+    return;
+  }
+
+  const order = orders[index];
+  if (!order) return;
+
+  const receiptNumber = await fetchStripeReceiptNumber(order);
+  if (!receiptNumber) return;
+
+  purchases[index] = {
+    ...purchases[index],
+    receiptNumber,
+  };
+
+  try {
+    await updateOrderMetadata(
+      { stripePaymentIntentId: order.stripePaymentIntentId, stripeSessionId: order.stripeSessionId },
+      { receiptNumber, receipt_number: receiptNumber },
+    );
+  } catch {
+    // best-effort
+  }
+}
+
+async function fetchStripeReceiptNumber(order: OrderRecord): Promise<string | null> {
+  const stripeChargeId = order.stripeChargeId ?? order.providerChargeId ?? null;
+  const stripePaymentIntentId = order.stripePaymentIntentId ?? order.providerPaymentId ?? null;
+  const stripeSessionId = order.stripeSessionId ?? order.providerSessionId ?? null;
+
+  if (!stripeChargeId && !stripePaymentIntentId && !stripeSessionId) {
+    return null;
+  }
+
+  try {
+    const stripe = getStripeClient({
+      mode: order.providerMode ?? "auto",
+      accountAlias: order.providerAccountAlias ?? undefined,
+    });
+
+    if (stripeChargeId) {
+      const receiptNumber = await fetchReceiptNumberFromCharge(stripe, stripeChargeId);
+      if (receiptNumber) return receiptNumber;
+    }
+
+    if (stripePaymentIntentId) {
+      const receiptNumber = await fetchReceiptNumberFromPaymentIntent(stripe, stripePaymentIntentId);
+      if (receiptNumber) return receiptNumber;
+    }
+
+    if (stripeSessionId) {
+      const receiptNumber = await fetchReceiptNumberFromCheckoutSession(stripe, stripeSessionId);
+      if (receiptNumber) return receiptNumber;
+    }
+
+    logger.info("account.receipt_number_unavailable", {
+      orderId: order.id,
+      stripeChargeId,
+      stripePaymentIntentId,
+      stripeSessionId,
+    });
+    return null;
+  } catch (error) {
+    logger.warn("account.receipt_number_fetch_failed", {
+      orderId: order.id,
+      stripeChargeId,
+      stripePaymentIntentId,
+      stripeSessionId,
+      error: error instanceof Error ? { message: error.message, name: error.name } : String(error),
+    });
+    return null;
+  }
+}
+
+async function fetchReceiptNumberFromCharge(
+  stripe: ReturnType<typeof getStripeClient>,
+  chargeId: string,
+): Promise<string | null> {
+  const charge = await stripe.charges.retrieve(chargeId);
+  return charge.receipt_number ?? null;
+}
+
+async function fetchReceiptNumberFromPaymentIntent(
+  stripe: ReturnType<typeof getStripeClient>,
+  paymentIntentId: string,
+): Promise<string | null> {
+  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId, {
+    expand: ["latest_charge"],
+  });
+  const receiptFromCharge = getReceiptNumberFromCharge(paymentIntent.latest_charge);
+  if (receiptFromCharge) return receiptFromCharge;
+
+  if (typeof paymentIntent.latest_charge === "string") {
+    const receiptNumber = await fetchReceiptNumberFromCharge(stripe, paymentIntent.latest_charge);
+    if (receiptNumber) return receiptNumber;
+  }
+
+  const charges = await stripe.charges.list({ payment_intent: paymentIntentId, limit: 1 });
+  return charges.data?.[0]?.receipt_number ?? null;
+}
+
+async function fetchReceiptNumberFromCheckoutSession(
+  stripe: ReturnType<typeof getStripeClient>,
+  sessionId: string,
+): Promise<string | null> {
+  const session = await stripe.checkout.sessions.retrieve(sessionId, {
+    expand: ["payment_intent", "payment_intent.latest_charge"],
+  });
+
+  if (!session.payment_intent) {
+    return null;
+  }
+
+  if (typeof session.payment_intent === "string") {
+    return await fetchReceiptNumberFromPaymentIntent(stripe, session.payment_intent);
+  }
+
+  const receiptFromCharge = getReceiptNumberFromCharge(session.payment_intent.latest_charge);
+  if (receiptFromCharge) return receiptFromCharge;
+
+  if (typeof session.payment_intent.latest_charge === "string") {
+    const receiptNumber = await fetchReceiptNumberFromCharge(stripe, session.payment_intent.latest_charge);
+    if (receiptNumber) return receiptNumber;
+  }
+
+  return session.payment_intent.id
+    ? await fetchReceiptNumberFromPaymentIntent(stripe, session.payment_intent.id)
+    : null;
+}
+
+function getReceiptNumberFromCharge(charge: unknown): string | null {
+  if (!charge || typeof charge !== "object") {
+    return null;
+  }
+
+  const receiptNumber = (charge as { receipt_number?: unknown }).receipt_number;
+  return typeof receiptNumber === "string" && receiptNumber.trim() ? receiptNumber : null;
 }
 
 function formatAmount(amount: number | null, currency: string | null): string | null {

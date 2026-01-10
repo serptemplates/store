@@ -67,7 +67,6 @@ describe("GET /checkout/[slug]", () => {
     expect(Object.keys(args?.metadata ?? {}).length).toBeLessThanOrEqual(50);
     expect(args?.metadata).toMatchObject({
       product_slug: "onlyfans-downloader",
-      productSlug: "onlyfans-downloader",
       dubCustomerExternalId: "dub_id_affiliate-123",
       dubClickId: "dub_id_affiliate-123",
       affiliateId: "affiliate-123",

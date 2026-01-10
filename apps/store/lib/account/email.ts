@@ -63,7 +63,7 @@ function buildEmailHtml(input: VerificationEmailInput): string {
   const introCopy =
     purpose === "email_change"
       ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
-      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
+      : "Thanks for your purchase! To access your account dashboard and permissions, confirm your email using the code below.";
 
   return `
     <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; padding: 24px;">
@@ -101,7 +101,7 @@ function buildEmailText(input: VerificationEmailInput): string {
   const introCopy =
     purpose === "email_change"
       ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
-      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
+      : "Thanks for your purchase! To access your account dashboard and permissions, confirm your email using the code below.";
   const lines = [
     headline,
     "",

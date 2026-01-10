@@ -15,6 +15,9 @@ interface AccountDashboardProps {
     verifiedAt: string | null;
   };
   purchases: PurchaseSummary[];
+  entitlements?: string[];
+  entitlementsStatus?: "ok" | "unavailable" | "error";
+  entitlementsMessage?: string | null;
   verifiedRecently?: boolean;
 }
 
@@ -24,18 +27,50 @@ export interface PurchaseSummary {
   purchasedAt: string | null;
   amountFormatted: string | null;
   source: "stripe" | "ghl" | "legacy_paypal" | "unknown";
+  receiptNumber?: string | null;
   licenseKey?: string | null;
   licenseStatus?: string | null;
   licenseUrl?: string | null;
   paymentStatus?: string | null;
   checkoutStatus?: CheckoutSessionStatus | null;
+  stripeSessionId?: string | null;
+  paymentIntentId?: string | null;
+  serpAuthGrantStatus?: string | null;
+  serpAuthGrantHttpStatus?: number | null;
+  serpAuthGrantErrorMessage?: string | null;
+  entitlementsResolvedCount?: number | null;
+  webhookAttempts?: number | null;
 }
 
-export default function AccountDashboard({ account, purchases, verifiedRecently }: AccountDashboardProps) {
+function toTitleCase(value: string): string {
+  return value
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function getPurchaseLabel(purchase: PurchaseSummary): string {
+  if (purchase.offerId) {
+    return toTitleCase(purchase.offerId);
+  }
+  return "Purchase";
+}
+
+export default function AccountDashboard({
+  account,
+  purchases,
+  entitlements,
+  entitlementsStatus,
+  entitlementsMessage,
+  verifiedRecently,
+}: AccountDashboardProps) {
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [accountEmail, setAccountEmail] = useState(account.email);
   const [emailDraft, setEmailDraft] = useState(account.email);
   const [emailUpdating, setEmailUpdating] = useState(false);
@@ -45,6 +80,10 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
   const [emailVerifying, setEmailVerifying] = useState(false);
   const [emailMessage, setEmailMessage] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [receiptNumber, setReceiptNumber] = useState("");
+  const [repairing, setRepairing] = useState(false);
+  const [repairMessage, setRepairMessage] = useState<string | null>(null);
+  const [repairError, setRepairError] = useState<string | null>(null);
 
   const statusToneMap: Record<string, { label: string; tone: StatusTone }> = {
     active: { label: "Verified", tone: "emerald" },
@@ -86,23 +125,22 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
     }
   }, [router]);
 
-  const handleCopyKey = useCallback(async (orderId: string, licenseKey: string) => {
-    try {
-      await navigator.clipboard.writeText(licenseKey);
-      setCopiedKey(orderId);
-      setTimeout(() => setCopiedKey((current) => (current === orderId ? null : current)), 1800);
-    } catch (copyError) {
-      console.error("Failed to copy license key", copyError);
-    }
-  }, []);
-
   useEffect(() => {
     setAccountEmail(account.email);
     setEmailDraft(account.email);
     setPendingEmail(null);
     setEmailVerificationPending(false);
     setEmailVerificationCode("");
-  }, [account.email]);
+    setReceiptNumber((current) => {
+      if (current) return current;
+      const knownReceipt = purchases.find(
+        (purchase) => typeof purchase.receiptNumber === "string" && purchase.receiptNumber.trim(),
+      )?.receiptNumber;
+      return knownReceipt?.trim() ?? "";
+    });
+    setRepairMessage(null);
+    setRepairError(null);
+  }, [account.email, purchases]);
 
   const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
   const emailIsValid = emailDraft.trim().length > 3 && emailDraft.includes("@");
@@ -201,6 +239,89 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
     [emailDraft, emailVerificationCode, pendingEmail, router],
   );
 
+  const formatPurchasedAt = useCallback((value: string | null) => {
+    if (!value) return null;
+    try {
+      return new Intl.DateTimeFormat(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(new Date(value));
+    } catch {
+      return value;
+    }
+  }, []);
+
+  const stripeOrPaypalPurchases = purchases
+    .filter((purchase) => purchase.source === "stripe" || purchase.source === "legacy_paypal")
+    .filter((purchase) => !purchase.paymentStatus || purchase.paymentStatus === "paid" || purchase.paymentStatus === "succeeded");
+
+  const ghlPurchases = purchases.filter((purchase) => purchase.source === "ghl");
+
+  const purchaseCards = (stripeOrPaypalPurchases.length > 0 ? stripeOrPaypalPurchases : ghlPurchases).slice(0, 10);
+  const primaryPurchase = purchaseCards[0] ?? null;
+  const previousPurchases = purchaseCards.length > 1 ? purchaseCards.slice(1) : [];
+
+  const entitlementList = Array.isArray(entitlements) ? entitlements : [];
+  const visibleEntitlements = entitlementList
+    .map((e) => (typeof e === "string" ? e.trim() : ""))
+    .filter(Boolean)
+    .filter((e) => !e.endsWith("-bundle"));
+  const filteredEntitlements = visibleEntitlements.filter(
+    (e) => !e.startsWith("dub_id_") && !e.startsWith("dub-"),
+  );
+
+  const runReceiptRecovery = useCallback(
+    async (receipt: string) => {
+      setRepairing(true);
+      setRepairMessage(null);
+      setRepairError(null);
+
+      const normalizedReceipt = receipt.trim();
+      if (!normalizedReceipt) {
+        setRepairError("Receipt number is required.");
+        setRepairing(false);
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/account/receipt-recovery", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ receiptNumber: normalizedReceipt }),
+        });
+        const body = (await response.json().catch(() => ({}))) as { error?: string; message?: string };
+        if (!response.ok) {
+          throw new Error(body.error ?? "Unable to repair access");
+        }
+        setRepairMessage(body.message ?? "Updated your access. Refreshing...");
+        router.refresh();
+      } catch (recoveryError) {
+        setRepairError(recoveryError instanceof Error ? recoveryError.message : String(recoveryError));
+      } finally {
+        setRepairing(false);
+      }
+    },
+    [router],
+  );
+
+  const handleReceiptRecovery = useCallback(
+    async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      await runReceiptRecovery(receiptNumber);
+    },
+    [receiptNumber, runReceiptRecovery],
+  );
+
+  const handleQuickFix = useCallback(async () => {
+    if (!primaryPurchase?.receiptNumber) {
+      return;
+    }
+    await runReceiptRecovery(primaryPurchase.receiptNumber);
+  }, [primaryPurchase?.receiptNumber, runReceiptRecovery]);
+
   return (
     <div className="space-y-10">
       <section className="flex flex-col gap-4">
@@ -286,61 +407,133 @@ export default function AccountDashboard({ account, purchases, verifiedRecently 
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-900">Orders & keys</h2>
-        </div>
-
-        {purchases.length === 0 ? (
-          <Card className="border border-dashed border-slate-200 bg-slate-50">
-            <CardContent className="space-y-2 py-8 text-center">
-              <p className="text-sm font-semibold text-slate-600">No orders yet</p>
-              <p className="text-xs text-slate-500">
-                Complete a purchase with this email and it will appear here automatically within a few minutes.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="rounded-lg border border-slate-200 bg-white">
-            <ul className="divide-y divide-slate-100 text-xs">
-              {purchases.map((purchase) => (
-                <li key={`${purchase.orderId}-${purchase.offerId}`} className="px-3 py-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0 space-y-1">
-                      <p className="truncate font-medium text-slate-900">
-                        {purchase.offerId ?? "Unknown product"}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-                        {purchase.amountFormatted ? <span>{purchase.amountFormatted}</span> : null}
-                      </div>
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader className="space-y-2">
+            <CardTitle className="text-sm font-semibold text-slate-900">Your purchases</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-sm text-slate-600">
+            {!primaryPurchase ? (
+              <p className="text-xs text-slate-500">No paid purchases found for this email yet.</p>
+            ) : (
+              <div className="space-y-3">
+                <div className="rounded-lg border border-slate-200 bg-white px-3 py-3">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm font-semibold text-slate-900">{getPurchaseLabel(primaryPurchase)}</p>
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      {primaryPurchase.amountFormatted ? <span>{primaryPurchase.amountFormatted}</span> : null}
+                      <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
+                        {primaryPurchase.source.toUpperCase()}
+                      </Badge>
                     </div>
-                    <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
-                      {purchase.source.toUpperCase()}
-                    </Badge>
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-600">
-                    {purchase.licenseKey ? (
-                      <>
-                        <span className="truncate font-mono" title={purchase.licenseKey}>
-                          {purchase.licenseKey}
-                        </span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-[10px]"
-                          onClick={() => handleCopyKey(purchase.orderId, purchase.licenseKey ?? "")}
-                        >
-                          {copiedKey === purchase.orderId ? "Copied" : "Copy"}
-                        </Button>
-                      </>
-                    ) : (
-                      <span>Key pending.</span>
-                    )}
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    {primaryPurchase.purchasedAt ? <span>{formatPurchasedAt(primaryPurchase.purchasedAt)}</span> : null}
+                    {primaryPurchase.paymentStatus ? <span className="uppercase">{primaryPurchase.paymentStatus}</span> : null}
+                    {primaryPurchase.receiptNumber ? <span>Receipt: {primaryPurchase.receiptNumber}</span> : null}
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                </div>
+
+                {previousPurchases.length > 0 ? (
+                  <details className="rounded-lg border border-slate-200 bg-white px-3 py-3">
+                    <summary className="cursor-pointer text-xs font-medium text-slate-700">
+                      Show previous purchases ({previousPurchases.length})
+                    </summary>
+                    <ul className="mt-3 space-y-2">
+                      {previousPurchases.map((purchase) => (
+                        <li key={purchase.orderId} className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs font-semibold text-slate-900">{getPurchaseLabel(purchase)}</p>
+                            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                              {purchase.amountFormatted ? <span>{purchase.amountFormatted}</span> : null}
+                              <Badge variant="outline" className="uppercase tracking-wide text-[10px]">
+                                {purchase.source.toUpperCase()}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
+                            {purchase.purchasedAt ? <span>{formatPurchasedAt(purchase.purchasedAt)}</span> : null}
+                            {purchase.paymentStatus ? <span className="uppercase">{purchase.paymentStatus}</span> : null}
+                            {purchase.receiptNumber ? <span>Receipt: {purchase.receiptNumber}</span> : null}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : null}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader className="space-y-2">
+            <CardTitle className="text-sm font-semibold text-slate-900">Your Products</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-slate-600">
+            {entitlementsStatus && entitlementsStatus !== "ok" ? (
+              <p className="text-xs text-slate-500">
+                {entitlementsMessage ??
+                  "Can’t load permissions right now. If access feels wrong, use “Fix my access” below."}
+              </p>
+            ) : filteredEntitlements.length === 0 ? (
+              <p className="text-xs text-slate-500">
+                {primaryPurchase
+                  ? "Your purchase is recorded, but permissions have not synced yet. Use “Fix my access” below."
+                  : "No permissions found for this email yet."}
+              </p>
+            ) : (
+              <div className="space-y-3">
+                <p className="text-xs text-slate-500">{filteredEntitlements.length} permissions</p>
+                <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  {filteredEntitlements.map((entitlement) => (
+                    <li key={entitlement} className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs">
+                      <span className="font-medium text-slate-900">{toTitleCase(entitlement)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <p className="text-sm font-semibold text-slate-900">Not seeing the right permissions?</p>
+
+          {primaryPurchase?.receiptNumber ? (
+            <div className="mt-3">
+              <Button className="w-full sm:w-auto" onClick={handleQuickFix} disabled={repairing}>
+                {repairing ? "Updating..." : "Fix my access"}
+              </Button>
+            </div>
+          ) : (
+            <>
+              <p className="mt-1 text-xs text-slate-500">
+                Paste your Stripe receipt number to manually force-update your access.
+              </p>
+
+              <form className="mt-3 grid gap-2 sm:grid-cols-[1fr_auto]" onSubmit={handleReceiptRecovery}>
+                <div className="space-y-1">
+                  <Label htmlFor="receipt-number">Receipt number</Label>
+                  <Input
+                    id="receipt-number"
+                    value={receiptNumber}
+                    onChange={(event) => setReceiptNumber(event.target.value)}
+                    placeholder="1234-5678"
+                    required
+                  />
+                </div>
+                <div className="pt-6">
+                  <Button type="submit" className="w-full sm:w-auto" disabled={repairing}>
+                    {repairing ? "Updating..." : "Force update access"}
+                  </Button>
+                </div>
+              </form>
+            </>
+          )}
+
+          {repairMessage ? <p className="mt-2 text-xs text-emerald-700">{repairMessage}</p> : null}
+          {repairError ? <p className="mt-2 text-xs text-rose-700">{repairError}</p> : null}
+        </div>
       </section>
     </div>
   );
