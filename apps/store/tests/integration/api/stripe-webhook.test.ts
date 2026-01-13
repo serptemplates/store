@@ -117,6 +117,17 @@ function buildFetchResponse(overrides?: Partial<{ ok: boolean; status: number; s
   } as unknown as Response;
 }
 
+function resolveStripeClientMode(input: unknown): "test" | "live" | null {
+  if (input === "test" || input === "live") {
+    return input;
+  }
+  if (!input || typeof input !== "object") {
+    return null;
+  }
+  const mode = (input as { mode?: unknown }).mode;
+  return mode === "test" || mode === "live" ? mode : null;
+}
+
 function buildRequest(rawBody: string, signature = "test-signature") {
   return new NextRequest("http://localhost/api/stripe/webhook", {
     method: "POST",
@@ -577,8 +588,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -689,8 +700,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -821,8 +832,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -946,8 +957,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -1044,8 +1055,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
