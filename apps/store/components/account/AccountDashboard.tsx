@@ -53,6 +53,17 @@ function toTitleCase(value: string): string {
     .join(" ");
 }
 
+const ENTITLEMENT_LABEL_OVERRIDES: Record<string, string> = {
+  gohighlevel: "Gohighlevel Downloader",
+  "gohighlevel-downloader": "Gohighlevel Downloader",
+  clientclub: "Clientclub Downloader",
+  "clientclub-downloader": "Clientclub Downloader",
+  gokollab: "Gokollab Downloader",
+  "gokollab-downloader": "Gokollab Downloader",
+};
+
+const HIDDEN_ENTITLEMENTS = new Set(["s-v2"]);
+
 function getPurchaseLabel(purchase: PurchaseSummary): string {
   if (purchase.offerId) {
     return toTitleCase(purchase.offerId);
@@ -269,9 +280,25 @@ export default function AccountDashboard({
     .map((e) => (typeof e === "string" ? e.trim() : ""))
     .filter(Boolean)
     .filter((e) => !e.endsWith("-bundle"));
-  const filteredEntitlements = visibleEntitlements.filter(
-    (e) => !e.startsWith("dub_id_") && !e.startsWith("dub-"),
-  );
+  const filteredEntitlements = visibleEntitlements.filter((entitlement) => {
+    const normalized = entitlement.toLowerCase();
+    if (normalized.startsWith("dub_id_") || normalized.startsWith("dub-")) {
+      return false;
+    }
+    if (HIDDEN_ENTITLEMENTS.has(normalized)) {
+      return false;
+    }
+    return true;
+  });
+  const displayEntitlements = Array.from(
+    new Map(
+      filteredEntitlements.map((entitlement) => {
+        const normalized = entitlement.toLowerCase();
+        const label = ENTITLEMENT_LABEL_OVERRIDES[normalized] ?? toTitleCase(entitlement);
+        return [label.toLowerCase(), label];
+      }),
+    ).values(),
+  ).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
 
   const runReceiptRecovery = useCallback(
     async (receipt: string) => {
@@ -483,11 +510,11 @@ export default function AccountDashboard({
               </p>
             ) : (
               <div className="space-y-3">
-                <p className="text-xs text-slate-500">{filteredEntitlements.length} permissions</p>
-                <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  {filteredEntitlements.map((entitlement) => (
-                    <li key={entitlement} className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs">
-                      <span className="font-medium text-slate-900">{toTitleCase(entitlement)}</span>
+                <p className="text-xs text-slate-500">{displayEntitlements.length} permissions</p>
+                <ul className="grid grid-cols-1 gap-2">
+                  {displayEntitlements.map((label) => (
+                    <li key={label} className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs">
+                      <span className="font-medium text-slate-900">{label}</span>
                     </li>
                   ))}
                 </ul>
