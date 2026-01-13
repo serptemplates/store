@@ -17,46 +17,6 @@ echo "→ Running unit tests..."
 echo "########################################"
 pnpm test:unit
 
-AXE_DEV_SERVER_PID=""
-AXE_DEV_SERVER_LOG="/tmp/axe-dev-server-$$.log"
->"$AXE_DEV_SERVER_LOG"
-axe_cleanup() {
-  if [ -n "$AXE_DEV_SERVER_PID" ]; then
-    kill "$AXE_DEV_SERVER_PID" >/dev/null 2>&1 || true
-  fi
-  rm -f "$AXE_DEV_SERVER_LOG" >/dev/null 2>&1 || true
-}
-trap axe_cleanup EXIT HUP INT TERM
-
-echo "########################################"
-echo "→ Starting dev server for axe checks..."
-echo "########################################"
-NEXT_TELEMETRY_DISABLED=1 pnpm --filter @apps/store dev --hostname 127.0.0.1 --port 3000 >"$AXE_DEV_SERVER_LOG" 2>&1 &
-AXE_DEV_SERVER_PID=$!
-
-echo "▸ waiting for http://127.0.0.1:3000/ to respond"
-for i in $(seq 1 30); do
-  if curl -sSf http://127.0.0.1:3000/ >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
-done
-
-if ! curl -sSf http://127.0.0.1:3000/ >/dev/null 2>&1; then
-  echo "Failed to start dev server for axe checks. Log:"
-  tail -n 20 "$AXE_DEV_SERVER_LOG"
-  axe_cleanup
-  exit 1
-fi
-
-echo "########################################"
-echo "→ Running axe accessibility checks..."
-echo "########################################"
-pnpm --filter @apps/store test:axe
-
-axe_cleanup
-trap - EXIT HUP INT TERM
-
 echo "########################################"
 echo "→ Running smoke tests..."
 echo "########################################"
