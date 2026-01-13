@@ -159,7 +159,7 @@
   "serp_co_product_page_url": "https://serp.co/products/m3u8-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=m3u8-downloader",
-  "github_repo_url": "https://github.com/serpapps/m3u8-downloader/releases/tag/v1.0.0",
+  "github_repo_url": "https://github.com/serpapps/m3u8-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {

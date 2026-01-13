@@ -18,6 +18,8 @@ interface AccountDashboardProps {
   entitlements?: string[];
   entitlementsStatus?: "ok" | "unavailable" | "error";
   entitlementsMessage?: string | null;
+  entitlementLinks?: Record<string, string>;
+  liveEntitlements?: Record<string, true>;
   verifiedRecently?: boolean;
 }
 
@@ -77,6 +79,8 @@ export default function AccountDashboard({
   entitlements,
   entitlementsStatus,
   entitlementsMessage,
+  entitlementLinks,
+  liveEntitlements,
   verifiedRecently,
 }: AccountDashboardProps) {
   const router = useRouter();
@@ -288,17 +292,28 @@ export default function AccountDashboard({
     if (HIDDEN_ENTITLEMENTS.has(normalized)) {
       return false;
     }
+    if (liveEntitlements && !liveEntitlements[normalized]) {
+      return false;
+    }
     return true;
   });
   const displayEntitlements = Array.from(
-    new Map(
-      filteredEntitlements.map((entitlement) => {
+    filteredEntitlements
+      .reduce((map, entitlement) => {
         const normalized = entitlement.toLowerCase();
         const label = ENTITLEMENT_LABEL_OVERRIDES[normalized] ?? toTitleCase(entitlement);
-        return [label.toLowerCase(), label];
-      }),
-    ).values(),
-  ).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+        const link = entitlementLinks?.[normalized] ?? null;
+        const key = label.toLowerCase();
+        const existing = map.get(key);
+        if (!existing || (!existing.link && link)) {
+          map.set(key, { label, link });
+        }
+        return map;
+      }, new Map<string, { label: string; link: string | null }>())
+      .values(),
+  );
+
+  displayEntitlements.sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: "base" }));
 
   const runReceiptRecovery = useCallback(
     async (receipt: string) => {
@@ -511,10 +526,21 @@ export default function AccountDashboard({
             ) : (
               <div className="space-y-3">
                 <p className="text-xs text-slate-500">{displayEntitlements.length} permissions</p>
-                <ul className="grid grid-cols-1 gap-2">
-                  {displayEntitlements.map((label) => (
-                    <li key={label} className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs">
-                      <span className="font-medium text-slate-900">{label}</span>
+                <ul className="list-disc space-y-1 pl-4 text-xs text-slate-700">
+                  {displayEntitlements.map(({ label, link }) => (
+                    <li key={label}>
+                      {link ? (
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-medium text-slate-900 underline underline-offset-2"
+                        >
+                          {label}
+                        </a>
+                      ) : (
+                        <span className="font-medium text-slate-900">{label}</span>
+                      )}
                     </li>
                   ))}
                 </ul>

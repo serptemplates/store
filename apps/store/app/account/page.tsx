@@ -6,7 +6,8 @@ import { getAccountFromSessionCookie } from "@/lib/account/service";
 import { findRecentOrdersByEmail, updateOrderMetadata, type OrderRecord } from "@/lib/checkout";
 import { fetchSerpAuthEntitlementsByEmail } from "@/lib/serp-auth/internal-entitlements";
 import { getSiteConfig } from "@/lib/site-config";
-import { getAllProducts } from "@/lib/products/product";
+import { getAllProducts, getAllProductsIncludingExcluded } from "@/lib/products/product";
+import type { ProductData } from "@/lib/products/product-schema";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import logger from "@/lib/logger";
@@ -31,6 +32,10 @@ export default async function AccountPage({
 
   const siteConfig = getSiteConfig();
   const products = getAllProducts();
+  const productsForEntitlements = getAllProductsIncludingExcluded();
+  const liveEntitlements = buildLiveEntitlementsMap(productsForEntitlements);
+  const liveProducts = productsForEntitlements.filter((product) => product.status === "live");
+  const entitlementReleaseLinks = buildEntitlementReleaseLinks(liveProducts);
   const navProps = buildPrimaryNavProps({ products, siteConfig });
 
   let verifiedRecently = normalizeParam(params?.verified) === "1";
@@ -130,6 +135,8 @@ export default async function AccountPage({
               entitlements={entitlements}
               entitlementsStatus={entitlementsStatus}
               entitlementsMessage={entitlementsMessage}
+              entitlementLinks={entitlementReleaseLinks}
+              liveEntitlements={liveEntitlements}
               verifiedRecently={verifiedRecently}
             />
           ) : (
@@ -152,6 +159,99 @@ function normalizeParam(value?: string | string[] | null): string | null {
   }
 
   return Array.isArray(value) ? value[0] ?? null : value;
+}
+
+function buildEntitlementReleaseLinks(products: ProductData[]): Record<string, string> {
+  const links: Record<string, string> = {};
+
+  for (const product of products) {
+    const repoUrl = normalizeRepoUrl(product.github_repo_url);
+    if (!repoUrl) {
+      continue;
+    }
+
+    const releaseUrl = toGithubReleasesUrl(repoUrl);
+    const entitlements = normalizeEntitlements(product);
+    const slug = typeof product.slug === "string" ? product.slug.trim() : "";
+
+    for (const entitlement of entitlements) {
+      const normalized = entitlement.trim().toLowerCase();
+      if (!normalized) {
+        continue;
+      }
+      if (!links[normalized]) {
+        links[normalized] = releaseUrl;
+      }
+    }
+
+    if (slug) {
+      const normalizedSlug = slug.toLowerCase();
+      if (!links[normalizedSlug]) {
+        links[normalizedSlug] = releaseUrl;
+      }
+    }
+  }
+
+  return links;
+}
+
+function buildLiveEntitlementsMap(products: ProductData[]): Record<string, true> {
+  const liveEntitlements: Record<string, true> = {};
+
+  for (const product of products) {
+    if (product.status !== "live") {
+      continue;
+    }
+
+    const entitlements = normalizeEntitlements(product);
+    const slug = typeof product.slug === "string" ? product.slug.trim() : "";
+
+    for (const entitlement of entitlements) {
+      const normalized = entitlement.trim().toLowerCase();
+      if (normalized) {
+        liveEntitlements[normalized] = true;
+      }
+    }
+
+    if (slug) {
+      liveEntitlements[slug.toLowerCase()] = true;
+    }
+  }
+
+  return liveEntitlements;
+}
+
+function normalizeEntitlements(product: ProductData): string[] {
+  const entitlements = product.license?.entitlements;
+  if (!entitlements) {
+    return [];
+  }
+
+  return Array.isArray(entitlements) ? entitlements : [entitlements];
+}
+
+function normalizeRepoUrl(repoUrl?: string | null): string | null {
+  if (!repoUrl) {
+    return null;
+  }
+  const trimmed = repoUrl.trim();
+  return trimmed.length ? trimmed : null;
+}
+
+function toGithubReleasesUrl(repoUrl: string): string {
+  try {
+    const url = new URL(repoUrl);
+    if (url.hostname === "github.com") {
+      const [owner, repo] = url.pathname.split("/").filter(Boolean);
+      if (owner && repo) {
+        return `https://github.com/${owner}/${repo}/releases`;
+      }
+    }
+  } catch {
+    // fall through to append below
+  }
+
+  return `${repoUrl.replace(/\/+$/, "")}/releases`;
 }
 
 function getDevPreviewData(
