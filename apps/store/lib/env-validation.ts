@@ -155,14 +155,18 @@ export function validateEnvironment(): ValidationResult {
   const runtimeEnv = getRuntimeEnvironment();
   const stripeMode = getStripeMode();
 
-  const emailVars = [
+  const smtpVars = [
     "SMTP_HOST",
     "SMTP_PORT",
     "SMTP_USER",
     "SMTP_PASS",
     "ACCOUNT_EMAIL_SENDER",
   ];
-  const missingEmailVars = emailVars.filter((name) => !process.env[name]);
+  const missingSmtpVars = smtpVars.filter((name) => !process.env[name]);
+  const smtpConfigured = missingSmtpVars.length === 0;
+  const resendConfigured = Boolean(process.env.RESEND_API_KEY);
+  const senderMissing = !process.env.ACCOUNT_EMAIL_SENDER;
+  const emailDeliveryConfigured = smtpConfigured || resendConfigured;
 
   if (!getOptionalStripeSecretKey(stripeMode)) {
     errors.push(
@@ -189,12 +193,20 @@ export function validateEnvironment(): ValidationResult {
   }
 
   if (runtimeEnv === "production") {
-    if (missingEmailVars.length > 0) {
-      errors.push(`Missing SMTP configuration for verification emails: ${missingEmailVars.join(", ")}`);
+    if (!emailDeliveryConfigured) {
+      errors.push(
+        "Missing email delivery configuration for verification emails. Set SMTP_* or RESEND_API_KEY.",
+      );
     }
-  } else if (missingEmailVars.length > 0) {
+  } else if (!emailDeliveryConfigured) {
     warnings.push(
-      `SMTP configuration incomplete (missing ${missingEmailVars.join(", ")}). Verification emails will not send without these.`,
+      "Email delivery is not configured (missing SMTP_* and RESEND_API_KEY). Verification emails will not send.",
+    );
+  }
+
+  if (resendConfigured && senderMissing) {
+    warnings.push(
+      "ACCOUNT_EMAIL_SENDER is not set. Resend will use the default sender.",
     );
   }
 
@@ -255,6 +267,16 @@ export function validateEnvironmentOrThrow(): void {
  * Get redacted environment info for debugging
  */
 export function getEnvironmentInfo(): Record<string, string | boolean> {
+  const smtpConfigured = Boolean(
+    process.env.SMTP_HOST &&
+      process.env.SMTP_PORT &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS &&
+      process.env.ACCOUNT_EMAIL_SENDER,
+  );
+  const resendConfigured = Boolean(process.env.RESEND_API_KEY);
+  const emailDeliveryConfigured = smtpConfigured || resendConfigured;
+
   return {
     nodeEnv: process.env.NODE_ENV || "unknown",
     runtimeEnv: getRuntimeEnvironment(),
@@ -264,12 +286,6 @@ export function getEnvironmentInfo(): Record<string, string | boolean> {
       process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID
     ),
     monitoringConfigured: !!process.env.SLACK_ALERT_WEBHOOK_URL,
-    emailDeliveryConfigured: Boolean(
-      process.env.SMTP_HOST &&
-      process.env.SMTP_PORT &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS &&
-      process.env.ACCOUNT_EMAIL_SENDER,
-    ),
+    emailDeliveryConfigured,
   };
 }

@@ -524,7 +524,7 @@ export default function AccountDashboard({
                 </div>
                 <div className="pt-6">
                   <Button type="submit" className="w-full sm:w-auto" disabled={repairing}>
-                    {repairing ? "Updating..." : "Force update access"}
+                    {repairing ? "Updating..." : "Force update"}
                   </Button>
                 </div>
               </form>

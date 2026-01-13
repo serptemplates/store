@@ -33,7 +33,10 @@ function getBaseUrl(): string {
 }
 
 function getInternalSecret(): string | null {
-  const secret = process.env.SERP_AUTH_INTERNAL_SECRET ?? "";
+  const secret =
+    process.env.INTERNAL_ENTITLEMENTS_TOKEN ??
+    process.env.SERP_AUTH_INTERNAL_SECRET ??
+    "";
   return secret.trim().length > 0 ? secret.trim() : null;
 }
 

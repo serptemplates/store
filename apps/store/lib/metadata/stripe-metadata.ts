@@ -91,26 +91,27 @@ export function enforceStripeMetadataLimits(
   const keepKeysFirst = options?.keepKeysFirst ?? [];
   const keys = Object.keys(output);
   if (keys.length > STRIPE_METADATA_LIMITS.maxKeys) {
-    const prioritized = new Set(keepKeysFirst.filter((k) => typeof k === "string" && k.trim().length > 0));
+    const prioritizedKeys = keepKeysFirst
+      .map((key) => (typeof key === "string" ? key.trim() : ""))
+      .filter((key) => key.length > 0);
     const next: Record<string, string> = {};
 
-    for (const key of keepKeysFirst) {
+    for (const key of prioritizedKeys) {
       if (Object.prototype.hasOwnProperty.call(output, key)) {
         next[key] = output[key]!;
       }
     }
 
+    let nextCount = Object.keys(next).length;
     for (const key of keys) {
-      if (Object.keys(next).length >= STRIPE_METADATA_LIMITS.maxKeys) {
+      if (nextCount >= STRIPE_METADATA_LIMITS.maxKeys) {
         break;
       }
       if (Object.prototype.hasOwnProperty.call(next, key)) {
         continue;
       }
-      if (prioritized.has(key)) {
-        continue;
-      }
       next[key] = output[key]!;
+      nextCount += 1;
     }
 
     for (const key of keys) {

@@ -9,7 +9,10 @@ function getBaseUrl(): string {
 }
 
 function getInternalSecret(): string | null {
-  const secret = process.env.SERP_AUTH_INTERNAL_SECRET ?? "";
+  const secret =
+    process.env.INTERNAL_ENTITLEMENTS_TOKEN ??
+    process.env.SERP_AUTH_INTERNAL_SECRET ??
+    "";
   return secret.trim().length > 0 ? secret.trim() : null;
 }
 
@@ -41,7 +44,7 @@ export async function fetchSerpAuthEntitlementsByEmail(email: string): Promise<E
 
     if (!response.ok) {
       const message =
-        json && typeof json === "object" && json && "error" in json && typeof (json as { error?: unknown }).error === "string"
+        json && typeof json === "object" && "error" in json && typeof (json as { error?: unknown }).error === "string"
           ? (json as { error: string }).error
           : `HTTP ${response.status}`;
       return { status: "error", error: { message } };
