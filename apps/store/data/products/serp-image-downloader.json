@@ -152,7 +152,7 @@
   "serp_co_product_page_url": "https://serp.co/products/serp-image-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-image-downloader",
-  "github_repo_url": "https://github.com/serpapps/serp-downloader",
+  "github_repo_url": "https://github.com/serpapps/serp-image-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
     "browser-extension",

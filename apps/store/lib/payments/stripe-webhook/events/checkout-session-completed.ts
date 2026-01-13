@@ -395,7 +395,7 @@ function collectEntitlementsForSlugs(slugs: string[]): {
 async function collectLineItemTagData(
   session: Stripe.Checkout.Session,
   stripeMode: StripeModeInput,
-  options?: { primaryPriceId?: string | null },
+  options?: { primaryPriceId?: string | null; accountAlias?: string | null },
 ): Promise<{
   tagIds: string[];
   productSlugs: string[];
@@ -410,7 +410,7 @@ async function collectLineItemTagData(
   }
 
   try {
-    const stripe = getStripeClient(stripeMode);
+    const stripe = getStripeClient({ mode: stripeMode, accountAlias: options?.accountAlias ?? undefined });
     const lineItemsResponse = await stripe.checkout.sessions.listLineItems(session.id, {
       expand: ["data.price.product"],
       limit: 100,
@@ -653,7 +653,10 @@ export async function handleCheckoutSessionCompleted(
   // Ensure Payment Intent has a human-friendly description in Stripe
   try {
     if (paymentIntentId && productNameValue) {
-      const stripe = getStripeClient();
+      const stripe = getStripeClient({
+        mode: stripeModeForLineItems,
+        accountAlias: context?.accountAlias ?? undefined,
+      });
       const description = productNameValue;
       await stripe.paymentIntents.update(paymentIntentId, {
         description,
@@ -670,6 +673,27 @@ export async function handleCheckoutSessionCompleted(
     });
   }
 
+  // Receipt numbers are not available when the Checkout session is created; fetch them from the charge after payment.
+  try {
+    if (paymentIntentId) {
+      const stripe = getStripeClient({
+        mode: stripeModeForLineItems,
+        accountAlias: context?.accountAlias ?? undefined,
+      });
+      const charges = await stripe.charges.list({ payment_intent: paymentIntentId, limit: 1 });
+      const receiptNumber = charges.data?.[0]?.receipt_number ?? null;
+      if (receiptNumber) {
+        metadata.receiptNumber = receiptNumber;
+        metadata.receipt_number = receiptNumber;
+      }
+    }
+  } catch (error) {
+    logger.warn("stripe.receipt_number_fetch_failed", {
+      paymentIntentId,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+  }
+
   if (!metadata.product_slug || !metadata.productSlug) {
     metadata.product_slug = offerId;
     metadata.productSlug = offerId;
@@ -678,6 +702,7 @@ export async function handleCheckoutSessionCompleted(
   const primaryPriceIdForTags = getMetadataString(metadata, "stripe_price_id") ?? getMetadataString(metadata, "stripePriceId");
   const lineItemTagData = await collectLineItemTagData(session, stripeModeForLineItems, {
     primaryPriceId: primaryPriceIdForTags,
+    accountAlias: context?.accountAlias ?? null,
   });
   const lineItemTags: string[] = [];
   const appendLineItemTag = (value: unknown) => appendUniqueString(lineItemTags, value);
@@ -1011,6 +1036,59 @@ export async function handleCheckoutSessionCompleted(
       httpStatus: null,
       error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
     };
+  }
+
+  if (paymentIntentId && serpAuthEntitlementsGrant && serpAuthEntitlementsGrant.status !== "succeeded") {
+    const shouldFailWebhook =
+      serpAuthEntitlementsGrant.status === "failed" ||
+      (serpAuthEntitlementsGrant.status === "skipped" && serpAuthEntitlementsGrant.reason === "missing_internal_secret");
+
+    if (shouldFailWebhook) {
+      const message =
+        serpAuthEntitlementsGrant.status === "skipped"
+          ? "SERP Auth entitlements grant skipped (missing internal secret)"
+          : "SERP Auth entitlements grant failed";
+
+      const logResult = await recordWebhookLog({
+        paymentIntentId,
+        stripeSessionId: session.id,
+        eventType: "checkout.session.completed",
+        offerId,
+        landerId,
+        status: "error",
+        message,
+        metadata: {
+          serpAuthEntitlementsGrant,
+        },
+      });
+
+      if (
+        logResult?.status === "error" &&
+        logResult.attempts === 1 &&
+        serpAuthEntitlementsGrant.status === "failed"
+      ) {
+        await sendOpsAlert("SERP Auth entitlements grant failed", {
+          offerId,
+          landerId,
+          paymentIntentId,
+          stripeSessionId: session.id ?? null,
+          httpStatus: serpAuthEntitlementsGrant.httpStatus ?? null,
+          error: serpAuthEntitlementsGrant.error?.message ?? null,
+        });
+      }
+
+      if (logResult?.status === "error" && logResult.attempts >= OPS_ALERT_THRESHOLD) {
+        await sendOpsAlert("SERP Auth entitlements grant failing", {
+          offerId,
+          landerId,
+          paymentIntentId,
+          attempts: logResult.attempts,
+          message,
+        });
+      }
+
+      throw new Error(message);
+    }
   }
 
   const baseSkipReason = !offerConfig?.ghl

@@ -2,6 +2,8 @@ import nodemailer from "nodemailer";
 
 import logger from "@/lib/logger";
 
+const DEFAULT_RESEND_SENDER = "SERP Apps <noreply@apps.serp.co>";
+
 type MailTransporter = ReturnType<typeof nodemailer.createTransport>;
 
 type VerificationEmailPurpose = "account_access" | "email_change";
@@ -63,7 +65,7 @@ function buildEmailHtml(input: VerificationEmailInput): string {
   const introCopy =
     purpose === "email_change"
       ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
-      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
+      : "Thanks for your purchase! To access your account dashboard and permissions, confirm your email using the code below.";
 
   return `
     <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; padding: 24px;">
@@ -101,7 +103,7 @@ function buildEmailText(input: VerificationEmailInput): string {
   const introCopy =
     purpose === "email_change"
       ? "We received a request to update the email on your SERP account. Use the code below to confirm this new email address."
-      : "Thanks for your purchase! To access your account dashboard and license keys, confirm your email using the code below.";
+      : "Thanks for your purchase! To access your account dashboard and permissions, confirm your email using the code below.";
   const lines = [
     headline,
     "",
@@ -130,48 +132,86 @@ export async function sendVerificationEmail(input: VerificationEmailInput): Prom
   const text = buildEmailText(input);
 
   const smtpConfig = getSmtpConfig();
+  const resendConfig = getResendConfig();
   const deliveryErrorMessage = "We couldn't send the verification email. Please try again or contact support.";
 
-  if (!smtpConfig.config) {
+  if (!smtpConfig.config && !resendConfig.config) {
     const missing = smtpConfig.missing.join(", ");
-    logger.error("account_email.smtp_not_configured", {
+    logger.error("account_email.delivery_not_configured", {
       email: input.email,
       offerId: input.offerId,
       subject,
       missing,
+      resendMissing: resendConfig.missing.join(", "),
     });
     return { ok: false, error: deliveryErrorMessage };
   }
 
-  try {
-    const transporter = await getTransporter(smtpConfig.config);
+  if (smtpConfig.config) {
+    try {
+      const transporter = await getTransporter(smtpConfig.config);
 
-    await transporter.sendMail({
-      from: smtpConfig.config.sender,
-      to: input.email,
+      await transporter.sendMail({
+        from: smtpConfig.config.sender,
+        to: input.email,
+        subject,
+        html,
+        text,
+        replyTo: smtpConfig.config.replyTo,
+      });
+
+      logger.info("account_email.sent", {
+        email: input.email,
+        offerId: input.offerId,
+        provider: "smtp",
+        host: smtpConfig.config.host,
+        port: smtpConfig.config.port,
+      });
+      return { ok: true };
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error);
+      logger.error("account_email.delivery_failed", {
+        email: input.email,
+        offerId: input.offerId,
+        provider: "smtp",
+        error: reason,
+      });
+
+      if (resendConfig.config) {
+        logger.warn("account_email.smtp_failed_fallback", {
+          email: input.email,
+          offerId: input.offerId,
+        });
+        const resendResult = await sendWithResend({
+          config: resendConfig.config,
+          input,
+          subject,
+          html,
+          text,
+        });
+        if (resendResult.ok) {
+          return { ok: true };
+        }
+      }
+
+      return { ok: false, error: deliveryErrorMessage };
+    }
+  }
+
+  if (resendConfig.config) {
+    const resendResult = await sendWithResend({
+      config: resendConfig.config,
+      input,
       subject,
       html,
       text,
-      replyTo: smtpConfig.config.replyTo,
     });
-
-    logger.info("account_email.sent", {
-      email: input.email,
-      offerId: input.offerId,
-      provider: "smtp",
-      host: smtpConfig.config.host,
-      port: smtpConfig.config.port,
-    });
-    return { ok: true };
-  } catch (error) {
-    const reason = error instanceof Error ? error.message : String(error);
-    logger.error("account_email.delivery_failed", {
-      email: input.email,
-      offerId: input.offerId,
-      error: reason,
-    });
-    return { ok: false, error: deliveryErrorMessage };
+    if (resendResult.ok) {
+      return { ok: true };
+    }
   }
+
+  return { ok: false, error: deliveryErrorMessage };
 }
 
 type SmtpConfig = {
@@ -234,6 +274,92 @@ function getSmtpConfig(): { config: SmtpConfig | null; missing: string[] } {
     },
     missing,
   };
+}
+
+type ResendConfig = {
+  apiKey: string;
+  sender: string;
+  replyTo?: string;
+  senderIsDefault: boolean;
+};
+
+function getResendConfig(): { config: ResendConfig | null; missing: string[] } {
+  const apiKey = process.env.RESEND_API_KEY;
+  const senderRaw = process.env.ACCOUNT_EMAIL_SENDER;
+  const sender = senderRaw?.trim() || DEFAULT_RESEND_SENDER;
+  const senderIsDefault = !senderRaw || senderRaw.trim().length === 0;
+
+  const missing = [
+    apiKey ? null : "RESEND_API_KEY",
+  ].filter(Boolean) as string[];
+
+  if (missing.length > 0) {
+    return { config: null, missing };
+  }
+
+  const replyTo = process.env.ACCOUNT_EMAIL_REPLY_TO;
+  return {
+    config: {
+      apiKey: String(apiKey).trim(),
+      sender: String(sender).trim(),
+      replyTo: replyTo && replyTo.length > 0 ? replyTo : undefined,
+      senderIsDefault,
+    },
+    missing,
+  };
+}
+
+async function sendWithResend({
+  config,
+  input,
+  subject,
+  html,
+  text,
+}: {
+  config: ResendConfig;
+  input: VerificationEmailInput;
+  subject: string;
+  html: string;
+  text: string;
+}): Promise<SendVerificationEmailResult> {
+  try {
+    if (config.senderIsDefault) {
+      logger.info("account_email.resend_default_sender", {
+        email: input.email,
+        offerId: input.offerId,
+        sender: config.sender,
+      });
+    }
+
+    const { Resend } = await import("resend");
+    const resend = new Resend(config.apiKey);
+
+    await resend.emails.send({
+      from: config.sender,
+      to: input.email,
+      subject,
+      html,
+      text,
+      replyTo: config.replyTo,
+    });
+
+    logger.info("account_email.sent", {
+      email: input.email,
+      offerId: input.offerId,
+      provider: "resend",
+    });
+
+    return { ok: true };
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    logger.error("account_email.delivery_failed", {
+      email: input.email,
+      offerId: input.offerId,
+      provider: "resend",
+      error: reason,
+    });
+    return { ok: false, error: reason };
+  }
 }
 
 async function getTransporter(config: SmtpConfig): Promise<MailTransporter> {

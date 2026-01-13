@@ -106,7 +106,7 @@
   "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
-  "github_repo_url": null,
+  "github_repo_url": "https://github.com/serpapps/thisvid-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {

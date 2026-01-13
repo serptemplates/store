@@ -106,7 +106,7 @@
   "serp_co_product_page_url": "https://serp.co/products/hentaihaven-downloader/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=hentaihaven-downloader",
-  "github_repo_url": null,
+  "github_repo_url": "https://github.com/serpapps/hentaihaven-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {

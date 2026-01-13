@@ -1,4 +1,12 @@
+import { setTimeout as sleep } from "node:timers/promises";
+
 import logger from "@/lib/logger";
+
+// Keep webhook latency bounded; Stripe will retry on failures.
+const ENTITLEMENTS_GRANT_MAX_ATTEMPTS = 2;
+const ENTITLEMENTS_GRANT_RETRY_DELAY_MS = 500;
+const ENTITLEMENTS_GRANT_TIMEOUT_MS = 5_000;
+const RETRYABLE_STATUS_CODES = new Set([408, 429]);
 
 type GrantEntitlementsInput = {
   email: string;
@@ -33,7 +41,10 @@ function getBaseUrl(): string {
 }
 
 function getInternalSecret(): string | null {
-  const secret = process.env.SERP_AUTH_INTERNAL_SECRET ?? "";
+  const secret =
+    process.env.INTERNAL_ENTITLEMENTS_TOKEN ??
+    process.env.SERP_AUTH_INTERNAL_SECRET ??
+    "";
   return secret.trim().length > 0 ? secret.trim() : null;
 }
 
@@ -45,6 +56,17 @@ function normalizeEntitlements(entitlements: string[]): string[] {
     unique.add(trimmed);
   }
   return Array.from(unique);
+}
+
+function isRetryableStatus(status: number): boolean {
+  return RETRYABLE_STATUS_CODES.has(status) || status >= 500;
+}
+
+function isRetryableError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  if ("name" in error && typeof error.name === "string" && error.name === "AbortError") return true;
+  if ("name" in error && typeof error.name === "string" && error.name === "TypeError") return true;
+  return false;
 }
 
 export async function grantSerpAuthEntitlements(
@@ -75,44 +97,88 @@ export async function grantSerpAuthEntitlements(
   const baseUrl = getBaseUrl();
   const url = `${baseUrl}/internal/entitlements/grant`;
 
-  const controller = new AbortController();
-  const timeoutMs = 7_000;
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
   const metadata = input.metadata ?? undefined;
 
-  logger.info("serp_auth.entitlements_grant_started", {
-    url,
-    email: input.email,
-    entitlements,
-    metadataKeys: metadata ? Object.keys(metadata) : null,
-    provider: input.context?.provider,
-    providerEventId: input.context?.providerEventId ?? null,
-    providerSessionId: input.context?.providerSessionId ?? null,
-  });
+  for (let attempt = 1; attempt <= ENTITLEMENTS_GRANT_MAX_ATTEMPTS; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), ENTITLEMENTS_GRANT_TIMEOUT_MS);
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-serp-internal-secret": secret,
-      },
-      body: JSON.stringify({
-        email: input.email,
-        entitlements,
-        ...(metadata ? { metadata } : {}),
-      }),
-      signal: controller.signal,
+    logger.info("serp_auth.entitlements_grant_started", {
+      url,
+      attempt,
+      maxAttempts: ENTITLEMENTS_GRANT_MAX_ATTEMPTS,
+      email: input.email,
+      entitlements,
+      metadataKeys: metadata ? Object.keys(metadata) : null,
+      timeoutMs: ENTITLEMENTS_GRANT_TIMEOUT_MS,
+      provider: input.context?.provider,
+      providerEventId: input.context?.providerEventId ?? null,
+      providerSessionId: input.context?.providerSessionId ?? null,
     });
 
-    if (!response.ok) {
-      const bodyText = await response.text().catch(() => "");
-      logger.error("serp_auth.entitlements_grant_failed", {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-serp-internal-secret": secret,
+        },
+        body: JSON.stringify({
+          email: input.email,
+          entitlements,
+          ...(metadata ? { metadata } : {}),
+        }),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        const bodyText = await response.text().catch(() => "");
+        const retryable = isRetryableStatus(response.status);
+
+        if (retryable && attempt < ENTITLEMENTS_GRANT_MAX_ATTEMPTS) {
+          const delay = ENTITLEMENTS_GRANT_RETRY_DELAY_MS * 2 ** (attempt - 1);
+          logger.warn("serp_auth.entitlements_grant_retry", {
+            url,
+            attempt,
+            maxAttempts: ENTITLEMENTS_GRANT_MAX_ATTEMPTS,
+            delayMs: delay,
+            status: response.status,
+            statusText: response.statusText,
+            email: input.email,
+            entitlements,
+            metadataKeys: metadata ? Object.keys(metadata) : null,
+            provider: input.context?.provider,
+            providerEventId: input.context?.providerEventId ?? null,
+            providerSessionId: input.context?.providerSessionId ?? null,
+          });
+          await sleep(delay);
+          continue;
+        }
+
+        logger.error("serp_auth.entitlements_grant_failed", {
+          url,
+          status: response.status,
+          statusText: response.statusText,
+          body: bodyText.slice(0, 1_000),
+          email: input.email,
+          entitlements,
+          metadataKeys: metadata ? Object.keys(metadata) : null,
+          provider: input.context?.provider,
+          providerEventId: input.context?.providerEventId ?? null,
+          providerSessionId: input.context?.providerSessionId ?? null,
+        });
+        return {
+          status: "failed",
+          httpStatus: response.status,
+          responseBody: bodyText.slice(0, 1_000),
+        };
+      }
+
+      logger.info("serp_auth.entitlements_grant_succeeded", {
         url,
         status: response.status,
-        statusText: response.statusText,
-        body: bodyText.slice(0, 1_000),
+        attempt,
+        maxAttempts: ENTITLEMENTS_GRANT_MAX_ATTEMPTS,
         email: input.email,
         entitlements,
         metadataKeys: metadata ? Object.keys(metadata) : null,
@@ -120,45 +186,56 @@ export async function grantSerpAuthEntitlements(
         providerEventId: input.context?.providerEventId ?? null,
         providerSessionId: input.context?.providerSessionId ?? null,
       });
+
+      return { status: "succeeded", httpStatus: response.status };
+    } catch (error) {
+      const retryable = isRetryableError(error);
+
+      if (retryable && attempt < ENTITLEMENTS_GRANT_MAX_ATTEMPTS) {
+        const delay = ENTITLEMENTS_GRANT_RETRY_DELAY_MS * 2 ** (attempt - 1);
+        logger.warn("serp_auth.entitlements_grant_retry", {
+          url,
+          attempt,
+          maxAttempts: ENTITLEMENTS_GRANT_MAX_ATTEMPTS,
+          delayMs: delay,
+          error: error instanceof Error ? { message: error.message, name: error.name } : error,
+          email: input.email,
+          entitlements,
+          metadataKeys: metadata ? Object.keys(metadata) : null,
+          provider: input.context?.provider,
+          providerEventId: input.context?.providerEventId ?? null,
+          providerSessionId: input.context?.providerSessionId ?? null,
+        });
+        await sleep(delay);
+        continue;
+      }
+
+      logger.error("serp_auth.entitlements_grant_failed", {
+        url,
+        error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
+        email: input.email,
+        entitlements,
+        metadataKeys: metadata ? Object.keys(metadata) : null,
+        provider: input.context?.provider,
+        providerEventId: input.context?.providerEventId ?? null,
+        providerSessionId: input.context?.providerSessionId ?? null,
+      });
+
       return {
         status: "failed",
-        httpStatus: response.status,
-        responseBody: bodyText.slice(0, 1_000),
+        httpStatus: null,
+        error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
       };
+    } finally {
+      clearTimeout(timeout);
     }
-
-    logger.info("serp_auth.entitlements_grant_succeeded", {
-      url,
-      status: response.status,
-      email: input.email,
-      entitlements,
-      metadataKeys: metadata ? Object.keys(metadata) : null,
-      provider: input.context?.provider,
-      providerEventId: input.context?.providerEventId ?? null,
-      providerSessionId: input.context?.providerSessionId ?? null,
-    });
-
-    return { status: "succeeded", httpStatus: response.status };
-  } catch (error) {
-    logger.error("serp_auth.entitlements_grant_failed", {
-      url,
-      error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
-      email: input.email,
-      entitlements,
-      metadataKeys: metadata ? Object.keys(metadata) : null,
-      provider: input.context?.provider,
-      providerEventId: input.context?.providerEventId ?? null,
-      providerSessionId: input.context?.providerSessionId ?? null,
-    });
-
-    return {
-      status: "failed",
-      httpStatus: null,
-      error: error instanceof Error ? { message: error.message, name: error.name } : { message: String(error) },
-    };
-  } finally {
-    clearTimeout(timeout);
   }
+
+  return {
+    status: "failed",
+    httpStatus: null,
+    error: { message: "Entitlements grant exhausted retries" },
+  };
 }
 
 type RevokeEntitlementsInput = {
@@ -197,7 +274,7 @@ export async function revokeSerpAuthEntitlements(input: RevokeEntitlementsInput)
   const url = `${baseUrl}/internal/entitlements/revoke`;
 
   const controller = new AbortController();
-  const timeoutMs = 7_000;
+  const timeoutMs = 15_000;
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   const metadata = input.metadata ?? undefined;
@@ -207,6 +284,7 @@ export async function revokeSerpAuthEntitlements(input: RevokeEntitlementsInput)
     email: input.email,
     entitlements,
     metadataKeys: metadata ? Object.keys(metadata) : null,
+    timeoutMs,
     provider: input.context?.provider,
     providerEventId: input.context?.providerEventId ?? null,
     providerSessionId: input.context?.providerSessionId ?? null,
