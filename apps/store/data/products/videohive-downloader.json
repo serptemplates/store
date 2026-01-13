@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=videohive-downloader",
-    "ghl_tag": "purchase-videohive-downloader",
-    "lander_id": "videohive-downloader",
-    "offer_id": "videohive-downloader",
-    "payment_provider": "stripe",
-    "product_name": "VideoHive Downloader",
-    "product_page_url": "https://apps.serp.co/videohive-downloader",
-    "product_slug": "videohive-downloader",
-    "purchase_url": "https://serp.ly/videohive-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/videohive-downloader/",
-    "serply_link": "https://serp.ly/videohive-downloader",
-    "slug": "videohive-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

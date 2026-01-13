@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/manyvids-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=manyvids-downloader",
-    "ghl_tag": "purchase-manyvids-downloader",
-    "lander_id": "manyvids-downloader",
-    "license_entitlements": "manyvids-downloader",
-    "offer_id": "manyvids-downloader",
-    "payment_provider": "stripe",
-    "product_name": "ManyVids Downloader",
-    "product_page_url": "https://apps.serp.co/manyvids-downloader",
-    "product_slug": "manyvids-downloader",
-    "purchase_url": "https://serp.ly/manyvids-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/manyvids-downloader/",
-    "serply_link": "https://serp.ly/manyvids-downloader",
-    "slug": "manyvids-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

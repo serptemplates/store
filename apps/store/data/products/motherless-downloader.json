@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/motherless-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=motherless-downloader",
-    "ghl_tag": "purchase-motherless-downloader",
-    "lander_id": "motherless-downloader",
-    "license_entitlements": "motherless-downloader",
-    "offer_id": "motherless-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Motherless Downloader",
-    "product_page_url": "https://apps.serp.co/motherless-downloader",
-    "product_slug": "motherless-downloader",
-    "purchase_url": "https://serp.ly/motherless-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/motherless-downloader/",
-    "serply_link": "https://serp.ly/motherless-downloader",
-    "slug": "motherless-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

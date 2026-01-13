@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=shesfreaky-downloader",
-    "ghl_tag": "purchase-shesfreaky-downloader",
-    "lander_id": "shesfreaky-downloader",
-    "offer_id": "shesfreaky-downloader",
-    "payment_provider": "stripe",
-    "product_name": "ShesFreaky Downloader",
-    "product_page_url": "https://apps.serp.co/shesfreaky-downloader",
-    "product_slug": "shesfreaky-downloader",
-    "purchase_url": "https://serp.ly/shesfreaky-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/shesfreaky-downloader/",
-    "serply_link": "https://serp.ly/shesfreaky-downloader",
-    "slug": "shesfreaky-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

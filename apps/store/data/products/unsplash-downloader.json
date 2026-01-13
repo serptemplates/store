@@ -141,21 +141,6 @@
   "github_repo_url": "https://github.com/serpapps/unsplash-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=unsplash-downloader",
-    "ghl_tag": "purchase-unsplash-downloader",
-    "lander_id": "unsplash-downloader",
-    "offer_id": "unsplash-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Unsplash Downloader",
-    "product_page_url": "https://apps.serp.co/unsplash-downloader",
-    "product_slug": "unsplash-downloader",
-    "purchase_url": "https://serp.ly/unsplash-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/unsplash-downloader/",
-    "serply_link": "https://serp.ly/unsplash-downloader",
-    "slug": "unsplash-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

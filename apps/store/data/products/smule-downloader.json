@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=smule-downloader",
-    "ghl_tag": "purchase-smule-downloader",
-    "lander_id": "smule-downloader",
-    "offer_id": "smule-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Smule Downloader",
-    "product_page_url": "https://apps.serp.co/smule-downloader",
-    "product_slug": "smule-downloader",
-    "purchase_url": "https://serp.ly/smule-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/smule-downloader/",
-    "serply_link": "https://serp.ly/smule-downloader",
-    "slug": "smule-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

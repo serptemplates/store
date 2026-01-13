@@ -196,22 +196,6 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/circle-downloader/afjjgeafaiahjlcgnflgeojbjobglblg",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=circle-downloader",
-    "ghl_tag": "purchase-circle-downloader",
-    "lander_id": "circle-downloader",
-    "license_entitlements": "circle-downloader",
-    "offer_id": "circle-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Circle Downloader",
-    "product_page_url": "https://apps.serp.co/circle-downloader",
-    "product_slug": "circle-downloader",
-    "purchase_url": "https://serp.ly/circle-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/circle-downloader/",
-    "serply_link": "https://serp.ly/circle-downloader",
-    "slug": "circle-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

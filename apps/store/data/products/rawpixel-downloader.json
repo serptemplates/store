@@ -142,22 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/rawpixel-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=rawpixel-downloader",
-    "ghl_tag": "purchase-rawpixel-downloader",
-    "lander_id": "rawpixel-downloader",
-    "license_entitlements": "rawpixel-downloader",
-    "offer_id": "rawpixel-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Rawpixel Downloader",
-    "product_page_url": "https://apps.serp.co/rawpixel-downloader",
-    "product_slug": "rawpixel-downloader",
-    "purchase_url": "https://serp.ly/rawpixel-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/rawpixel-downloader/",
-    "serply_link": "https://serp.ly/rawpixel-downloader",
-    "slug": "rawpixel-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=mp3-downloader",
-    "ghl_tag": "purchase-mp3-downloader",
-    "lander_id": "mp3-downloader",
-    "offer_id": "mp3-downloader",
-    "payment_provider": "stripe",
-    "product_name": "MP3 Downloader",
-    "product_page_url": "https://apps.serp.co/mp3-downloader",
-    "product_slug": "mp3-downloader",
-    "purchase_url": "https://serp.ly/mp3-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/mp3-downloader/",
-    "serply_link": "https://serp.ly/mp3-downloader",
-    "slug": "mp3-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

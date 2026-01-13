@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pornohub-downloader",
-    "ghl_tag": "purchase-pornohub-downloader",
-    "lander_id": "pornohub-downloader",
-    "offer_id": "pornohub-downloader",
-    "payment_provider": "stripe",
-    "product_name": "PornoHub Downloader",
-    "product_page_url": "https://apps.serp.co/pornohub-downloader",
-    "product_slug": "pornohub-downloader",
-    "purchase_url": "https://serp.ly/pornohub-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pornohub-downloader/",
-    "serply_link": "https://serp.ly/pornohub-downloader",
-    "slug": "pornohub-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

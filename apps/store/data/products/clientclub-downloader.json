@@ -154,22 +154,6 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
-    "ghl_tag": "purchase-clientclub-downloader",
-    "lander_id": "clientclub-downloader",
-    "license_entitlements": "clientclub-downloader",
-    "offer_id": "clientclub-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Clientclub Downloader",
-    "product_page_url": "https://apps.serp.co/clientclub-downloader",
-    "product_slug": "clientclub-downloader",
-    "purchase_url": "https://serp.ly/clientclub-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
-    "serply_link": "https://serp.ly/clientclub-downloader",
-    "slug": "clientclub-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

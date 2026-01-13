@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/porntrex-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=porntrex-downloader",
-    "ghl_tag": "purchase-porntrex-downloader",
-    "lander_id": "porntrex-downloader",
-    "license_entitlements": "porntrex-downloader",
-    "offer_id": "porntrex-downloader",
-    "payment_provider": "stripe",
-    "product_name": "PornTrex Downloader",
-    "product_page_url": "https://apps.serp.co/porntrex-downloader",
-    "product_slug": "porntrex-downloader",
-    "purchase_url": "https://serp.ly/porntrex-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/porntrex-downloader/",
-    "serply_link": "https://serp.ly/porntrex-downloader",
-    "slug": "porntrex-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

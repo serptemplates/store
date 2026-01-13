@@ -294,89 +294,20 @@ function normalizeCheckoutMetadataRecord(source: Record<string, unknown> | undef
   return normalized;
 }
 
-function buildBaseCheckoutMetadata(product: ProductData): Record<string, string> {
-  const base: Record<string, string> = {};
-  const slug = normalizeMetadataValue(product.slug);
-  const productName = normalizeMetadataValue(product.name);
-  if (slug) {
-    base.product_slug = slug;
-    base.offer_id = slug;
-    base.lander_id = slug;
-  }
-
-  if (productName) {
-    base.product_name = productName;
-  }
-
-  const productPageUrl = normalizeMetadataValue(product.product_page_url);
-  if (productPageUrl) {
-    base.product_page_url = productPageUrl;
-  }
-
-  const serplyLink = normalizeMetadataValue(product.serply_link);
-  if (serplyLink) {
-    base.purchase_url = serplyLink;
-    base.serply_link = serplyLink;
-  }
-
-  const serpCoProductPageUrl = normalizeMetadataValue(product.serp_co_product_page_url);
-  if (serpCoProductPageUrl) {
-    base.serp_co_product_page_url = serpCoProductPageUrl;
-  }
-
-  const successUrl = normalizeMetadataValue(product.success_url);
-  if (successUrl) {
-    base.success_url = successUrl;
-  }
-
-  const cancelUrl = normalizeMetadataValue(product.cancel_url);
-  if (cancelUrl) {
-    base.cancel_url = cancelUrl;
-  }
-
-  const ghlTags = Array.isArray(product.ghl?.tag_ids)
-    ? product.ghl!.tag_ids.filter((tag): tag is string => typeof tag === "string" && tag.trim().length > 0)
-    : [];
-
-  if (ghlTags.length > 0) {
-    base.ghl_tag = ghlTags[0].trim();
-  }
-
-  const entitlements = Array.isArray(product.license?.entitlements)
-    ? product.license!.entitlements.filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
-    : [];
-
-  if (entitlements.length > 0) {
-    const serializedEntitlements = entitlements.join(",");
-    base.license_entitlements = serializedEntitlements;
-  }
-
-  const provider = product.payment?.provider ?? (product.stripe ? "stripe" : undefined);
-  if (provider) {
-    base.payment_provider = provider;
-  }
-
-  const accountAlias = typeof product.payment?.account === "string" ? product.payment.account.trim() : undefined;
-  if (accountAlias) {
-    base.payment_provider_account = accountAlias;
-  }
-
-  return base;
-}
+const CHECKOUT_METADATA_ALLOWLIST = new Set(["bundle_expand", "bundle_expand_mode"]);
 
 function normalizeCheckoutMetadata(product: ProductData): Record<string, string> {
-  const base = buildBaseCheckoutMetadata(product);
-  const userDefined = normalizeCheckoutMetadataRecord(product.checkout_metadata);
-  const merged = { ...base, ...userDefined };
-  delete merged.ghlTagIds;
-  delete (merged as Record<string, unknown>)["ghl_tag_ids"];
-  delete merged.paymentProviderAccountAlias;
-  delete (merged as Record<string, unknown>)["payment_provider_account_alias"];
-  delete merged.paymentProviderMode;
-  delete (merged as Record<string, unknown>)["payment_provider_mode"];
-  delete merged.stripeProductId;
-  delete (merged as Record<string, unknown>)["stripe_product_id"];
-  return orderPlainRecord(merged) as Record<string, string>;
+  const normalized = normalizeCheckoutMetadataRecord(product.checkout_metadata);
+  const filtered: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(normalized)) {
+    if (!CHECKOUT_METADATA_ALLOWLIST.has(key)) {
+      continue;
+    }
+    filtered[key] = value;
+  }
+
+  return orderPlainRecord(filtered) as Record<string, string>;
 }
 
 function normalizeStripe(stripe: NonNullable<ProductData["stripe"]>): Record<string, unknown> {
@@ -663,6 +594,8 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
   const normalizedCheckoutMetadata = normalizeCheckoutMetadata(prepared);
   if (Object.keys(normalizedCheckoutMetadata).length > 0) {
     prepared.checkout_metadata = normalizedCheckoutMetadata;
+  } else if ("checkout_metadata" in prepared) {
+    delete prepared.checkout_metadata;
   }
 
   const normalized: Record<string, unknown> = {};

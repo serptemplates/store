@@ -147,22 +147,6 @@
       "href": "https://www.reddit.com/r/serpdownloaders/comments/1pv1viq/redgifs_downloader_browser_extension_chrome/"
     }
   ],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=redgifs-downloader",
-    "ghl_tag": "purchase-redgifs-downloader",
-    "lander_id": "redgifs-downloader",
-    "license_entitlements": "redgifs-downloader",
-    "offer_id": "redgifs-downloader",
-    "payment_provider": "stripe",
-    "product_name": "RedGifs Downloader",
-    "product_page_url": "https://apps.serp.co/redgifs-downloader",
-    "product_slug": "redgifs-downloader",
-    "purchase_url": "https://serp.ly/redgifs-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/redgifs-downloader/",
-    "serply_link": "https://serp.ly/redgifs-downloader",
-    "slug": "redgifs-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

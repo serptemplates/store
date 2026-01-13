@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=mediafire-downloader",
-    "ghl_tag": "purchase-mediafire-downloader",
-    "lander_id": "mediafire-downloader",
-    "offer_id": "mediafire-downloader",
-    "payment_provider": "stripe",
-    "product_name": "MediaFire Downloader",
-    "product_page_url": "https://apps.serp.co/mediafire-downloader",
-    "product_slug": "mediafire-downloader",
-    "purchase_url": "https://serp.ly/mediafire-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/mediafire-downloader/",
-    "serply_link": "https://serp.ly/mediafire-downloader",
-    "slug": "mediafire-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

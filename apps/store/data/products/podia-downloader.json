@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/podia-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=podia-downloader",
-    "ghl_tag": "purchase-podia-downloader",
-    "lander_id": "podia-downloader",
-    "offer_id": "podia-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Podia Downloader",
-    "product_page_url": "https://apps.serp.co/podia-downloader",
-    "product_slug": "podia-downloader",
-    "purchase_url": "https://serp.ly/podia-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/podia-downloader/",
-    "serply_link": "https://serp.ly/podia-downloader",
-    "slug": "podia-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

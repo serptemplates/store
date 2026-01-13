@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/coomer-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=coomer-downloader",
-    "ghl_tag": "purchase-coomer-downloader",
-    "lander_id": "coomer-downloader",
-    "license_entitlements": "coomer-downloader",
-    "offer_id": "coomer-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Coomer Downloader",
-    "product_page_url": "https://apps.serp.co/coomer-downloader",
-    "product_slug": "coomer-downloader",
-    "purchase_url": "https://serp.ly/coomer-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/coomer-downloader/",
-    "serply_link": "https://serp.ly/coomer-downloader",
-    "slug": "coomer-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -115,21 +115,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=reddit-downloader",
-    "ghl_tag": "purchase-reddit-downloader",
-    "lander_id": "reddit-downloader",
-    "offer_id": "reddit-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Reddit Downloader",
-    "product_page_url": "https://apps.serp.co/reddit-downloader",
-    "product_slug": "reddit-downloader",
-    "purchase_url": "https://serp.ly/reddit-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/reddit-downloader/",
-    "serply_link": "https://serp.ly/reddit-downloader",
-    "slug": "reddit-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

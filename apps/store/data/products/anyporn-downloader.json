@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=anyporn-downloader",
-    "ghl_tag": "purchase-anyporn-downloader",
-    "lander_id": "anyporn-downloader",
-    "offer_id": "anyporn-downloader",
-    "payment_provider": "stripe",
-    "product_name": "AnyPorn Downloader",
-    "product_page_url": "https://apps.serp.co/anyporn-downloader",
-    "product_slug": "anyporn-downloader",
-    "purchase_url": "https://serp.ly/anyporn-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/anyporn-downloader/",
-    "serply_link": "https://serp.ly/anyporn-downloader",
-    "slug": "anyporn-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

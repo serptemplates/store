@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/khan-academy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=khan-academy-downloader",
-    "ghl_tag": "purchase-khan-academy-downloader",
-    "lander_id": "khan-academy-downloader",
-    "offer_id": "khan-academy-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Khan Academy Downloader",
-    "product_page_url": "https://apps.serp.co/khan-academy-downloader",
-    "product_slug": "khan-academy-downloader",
-    "purchase_url": "https://serp.ly/khan-academy-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/khan-academy-downloader/",
-    "serply_link": "https://serp.ly/khan-academy-downloader",
-    "slug": "khan-academy-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

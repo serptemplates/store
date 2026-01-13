@@ -186,22 +186,6 @@
   "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/whop-video-downloader/",
   "producthunt_link": "https://www.producthunt.com/products/whop-video-downloader",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=whop-video-downloader",
-    "ghl_tag": "purchase-whop-downloader",
-    "lander_id": "whop-video-downloader",
-    "license_entitlements": "whop-downloader",
-    "offer_id": "whop-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Whop Video Downloader",
-    "product_page_url": "https://apps.serp.co/whop-video-downloader",
-    "product_slug": "whop-video-downloader",
-    "purchase_url": "https://serp.ly/whop-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/whop-video-downloader/",
-    "serply_link": "https://serp.ly/whop-video-downloader",
-    "slug": "whop-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

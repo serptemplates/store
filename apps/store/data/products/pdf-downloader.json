@@ -138,21 +138,6 @@
   "github_repo_url": "https://github.com/serpapps/pdf-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pdf-downloader",
-    "ghl_tag": "purchase-pdf-downloader",
-    "lander_id": "pdf-downloader",
-    "offer_id": "pdf-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Pdf Downloader",
-    "product_page_url": "https://apps.serp.co/pdf-downloader",
-    "product_slug": "pdf-downloader",
-    "purchase_url": "https://serp.ly/pdf-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pdf-downloader/",
-    "serply_link": "https://serp.ly/pdf-downloader",
-    "slug": "pdf-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

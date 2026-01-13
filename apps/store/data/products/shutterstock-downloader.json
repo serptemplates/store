@@ -141,21 +141,6 @@
   "github_repo_url": "https://github.com/serpapps/shutterstock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=shutterstock-downloader",
-    "ghl_tag": "purchase-shutterstock-downloader",
-    "lander_id": "shutterstock-downloader",
-    "offer_id": "shutterstock-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Shutterstock Downloader",
-    "product_page_url": "https://apps.serp.co/shutterstock-downloader",
-    "product_slug": "shutterstock-downloader",
-    "purchase_url": "https://serp.ly/shutterstock-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/shutterstock-downloader/",
-    "serply_link": "https://serp.ly/shutterstock-downloader",
-    "slug": "shutterstock-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=mixcloud-downloader",
-    "ghl_tag": "purchase-mixcloud-downloader",
-    "lander_id": "mixcloud-downloader",
-    "offer_id": "mixcloud-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Mixcloud Downloader",
-    "product_page_url": "https://apps.serp.co/mixcloud-downloader",
-    "product_slug": "mixcloud-downloader",
-    "purchase_url": "https://serp.ly/mixcloud-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/mixcloud-downloader/",
-    "serply_link": "https://serp.ly/mixcloud-downloader",
-    "slug": "mixcloud-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=perfectgirls-downloader",
-    "ghl_tag": "purchase-perfectgirls-downloader",
-    "lander_id": "perfectgirls-downloader",
-    "offer_id": "perfectgirls-downloader",
-    "payment_provider": "stripe",
-    "product_name": "PerfectGirls Downloader",
-    "product_page_url": "https://apps.serp.co/perfectgirls-downloader",
-    "product_slug": "perfectgirls-downloader",
-    "purchase_url": "https://serp.ly/perfectgirls-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/perfectgirls-downloader/",
-    "serply_link": "https://serp.ly/perfectgirls-downloader",
-    "slug": "perfectgirls-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

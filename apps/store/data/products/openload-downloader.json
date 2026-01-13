@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=openload-downloader",
-    "ghl_tag": "purchase-openload-downloader",
-    "lander_id": "openload-downloader",
-    "offer_id": "openload-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Openload Downloader",
-    "product_page_url": "https://apps.serp.co/openload-downloader",
-    "product_slug": "openload-downloader",
-    "purchase_url": "https://serp.ly/openload-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/openload-downloader/",
-    "serply_link": "https://serp.ly/openload-downloader",
-    "slug": "openload-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

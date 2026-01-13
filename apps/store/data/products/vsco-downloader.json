@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=vsco-downloader",
-    "ghl_tag": "purchase-vsco-downloader",
-    "lander_id": "vsco-downloader",
-    "offer_id": "vsco-downloader",
-    "payment_provider": "stripe",
-    "product_name": "VSCO Downloader",
-    "product_page_url": "https://apps.serp.co/vsco-downloader",
-    "product_slug": "vsco-downloader",
-    "purchase_url": "https://serp.ly/vsco-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/vsco-downloader/",
-    "serply_link": "https://serp.ly/vsco-downloader",
-    "slug": "vsco-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

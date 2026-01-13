@@ -158,21 +158,6 @@
     "image-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-image-downloader",
-    "ghl_tag": "purchase-serp-image-downloader",
-    "lander_id": "serp-image-downloader",
-    "offer_id": "serp-image-downloader",
-    "payment_provider": "stripe",
-    "product_name": "SERP Image Downloader",
-    "product_page_url": "https://apps.serp.co/serp-image-downloader",
-    "product_slug": "serp-image-downloader",
-    "purchase_url": "https://serp.ly/serp-image-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/serp-image-downloader/",
-    "serply_link": "https://serp.ly/serp-image-downloader",
-    "slug": "serp-image-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

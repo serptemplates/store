@@ -46,20 +46,6 @@
   "github_repo_url": "https://github.com/serpapps/ai-bulk-image-generator",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
-    "lander_id": "ai-bulk-image-generator",
-    "license_entitlements": "ai-bulk-image-generator",
-    "offer_id": "ai-bulk-image-generator",
-    "product_name": "AI Bulk Image Generator",
-    "product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
-    "product_slug": "ai-bulk-image-generator",
-    "purchase_url": "https://serp.ly/ai-bulk-image-generator",
-    "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
-    "serply_link": "https://serp.ly/ai-bulk-image-generator",
-    "slug": "ai-bulk-image-generator",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "return_policy": {
     "days": 0,

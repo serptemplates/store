@@ -194,25 +194,6 @@
       "href": "https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader"
     }
   ],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=onlyfans-downloader",
-    "compare_at_amount": "$47.00",
-    "ghl_tag": "purchase-onlyfans-downloader",
-    "internal_id": "68a9acba8f1dfcb9736b861a",
-    "lander_id": "onlyfans-downloader",
-    "license_entitlements": "onlyfans-downloader",
-    "location_id": "XM0gbS5U3qNXtUksyJ6o",
-    "offer_id": "onlyfans-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Onlyfans Downloader",
-    "product_page_url": "https://apps.serp.co/onlyfans-downloader",
-    "product_slug": "onlyfans-downloader",
-    "purchase_url": "https://serp.ly/onlyfans-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/onlyfans-downloader/",
-    "serply_link": "https://serp.ly/onlyfans-downloader",
-    "slug": "onlyfans-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=beatport-downloader",
-    "ghl_tag": "purchase-beatport-downloader",
-    "lander_id": "beatport-downloader",
-    "offer_id": "beatport-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Beatport Downloader",
-    "product_page_url": "https://apps.serp.co/beatport-downloader",
-    "product_slug": "beatport-downloader",
-    "purchase_url": "https://serp.ly/beatport-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/beatport-downloader/",
-    "serply_link": "https://serp.ly/beatport-downloader",
-    "slug": "beatport-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

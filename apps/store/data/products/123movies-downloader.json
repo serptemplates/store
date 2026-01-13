@@ -159,22 +159,6 @@
   "github_repo_url": "https://github.com/serpapps/123movies-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
-    "ghl_tag": "purchase-123movies-downloader",
-    "lander_id": "123movies-downloader",
-    "license_entitlements": "123movies-downloader",
-    "offer_id": "123movies-downloader",
-    "payment_provider": "stripe",
-    "product_name": "123movies Downloader",
-    "product_page_url": "https://apps.serp.co/123movies-downloader",
-    "product_slug": "123movies-downloader",
-    "purchase_url": "https://serp.ly/123movies-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
-    "serply_link": "https://serp.ly/123movies-downloader",
-    "slug": "123movies-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

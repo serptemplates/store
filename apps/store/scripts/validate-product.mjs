@@ -74,6 +74,17 @@ for (const file of productFiles) {
         console.error(`   Received: ${ctaHref}`);
       }
     }
+
+    const entitlements = data?.license?.entitlements;
+    const hasEntitlements = Array.isArray(entitlements)
+      ? entitlements.some((entry) => typeof entry === "string" && entry.trim().length > 0)
+      : typeof entitlements === "string"
+        ? entitlements.trim().length > 0
+        : false;
+    if (!hasEntitlements) {
+      hasErrors = true;
+      console.error(`\n❌ ${file} missing license.entitlements for live product.`);
+    }
   }
 
   const normalizedName = typeof data?.name === "string" ? data.name.trim().toLowerCase() : null;

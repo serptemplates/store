@@ -45,20 +45,6 @@
   "github_repo_url": "https://github.com/serpapps/subscription-tracking-manager",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=subscription-tracking-manager",
-    "lander_id": "subscription-tracking-manager",
-    "license_entitlements": "subscription-tracking-manager",
-    "offer_id": "subscription-tracking-manager",
-    "product_name": "SERP Subscription Tracker",
-    "product_page_url": "https://apps.serp.co/subscription-tracking-manager",
-    "product_slug": "subscription-tracking-manager",
-    "purchase_url": "https://serp.ly/subscription-tracking-manager",
-    "serp_co_product_page_url": "https://serp.co/products/subscription-tracking-manager/",
-    "serply_link": "https://serp.ly/subscription-tracking-manager",
-    "slug": "subscription-tracking-manager",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "return_policy": {
     "days": 0,

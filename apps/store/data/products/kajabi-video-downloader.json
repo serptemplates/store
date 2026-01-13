@@ -170,22 +170,6 @@
   "github_repo_url": "https://github.com/serpapps/kajabi-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=kajabi-video-downloader",
-    "ghl_tag": "purchase-kajabi-downloader",
-    "lander_id": "kajabi-video-downloader",
-    "license_entitlements": "kajabi-downloader",
-    "offer_id": "kajabi-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Kajabi Video Downloader",
-    "product_page_url": "https://apps.serp.co/kajabi-video-downloader",
-    "product_slug": "kajabi-video-downloader",
-    "purchase_url": "https://serp.ly/kajabi-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/kajabi-video-downloader/",
-    "serply_link": "https://serp.ly/kajabi-video-downloader",
-    "slug": "kajabi-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

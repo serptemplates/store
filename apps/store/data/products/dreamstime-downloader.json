@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/dreamstime-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=dreamstime-downloader",
-    "ghl_tag": "purchase-dreamstime-downloader",
-    "lander_id": "dreamstime-downloader",
-    "offer_id": "dreamstime-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Dreamstime Downloader",
-    "product_page_url": "https://apps.serp.co/dreamstime-downloader",
-    "product_slug": "dreamstime-downloader",
-    "purchase_url": "https://serp.ly/dreamstime-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/dreamstime-downloader/",
-    "serply_link": "https://serp.ly/dreamstime-downloader",
-    "slug": "dreamstime-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -137,21 +137,6 @@
   "github_repo_url": "https://github.com/serpapps/myfreecams-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=myfreecams-downloader",
-    "ghl_tag": "purchase-myfreecams-downloader",
-    "lander_id": "myfreecams-downloader",
-    "offer_id": "myfreecams-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Myfreecams Downloader",
-    "product_page_url": "https://apps.serp.co/myfreecams-downloader",
-    "product_slug": "myfreecams-downloader",
-    "purchase_url": "https://serp.ly/myfreecams-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/myfreecams-downloader/",
-    "serply_link": "https://serp.ly/myfreecams-downloader",
-    "slug": "myfreecams-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

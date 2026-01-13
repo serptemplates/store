@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hdsex-downloader",
-    "ghl_tag": "purchase-hdsex-downloader",
-    "lander_id": "hdsex-downloader",
-    "offer_id": "hdsex-downloader",
-    "payment_provider": "stripe",
-    "product_name": "HDsex Downloader",
-    "product_page_url": "https://apps.serp.co/hdsex-downloader",
-    "product_slug": "hdsex-downloader",
-    "purchase_url": "https://serp.ly/hdsex-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hdsex-downloader/",
-    "serply_link": "https://serp.ly/hdsex-downloader",
-    "slug": "hdsex-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

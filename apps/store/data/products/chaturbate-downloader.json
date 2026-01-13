@@ -136,21 +136,6 @@
   "github_repo_url": "https://github.com/serpapps/chaturbate-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=chaturbate-downloader",
-    "ghl_tag": "purchase-chaturbate-downloader",
-    "lander_id": "chaturbate-downloader",
-    "offer_id": "chaturbate-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Chaturbate Downloader",
-    "product_page_url": "https://apps.serp.co/chaturbate-downloader",
-    "product_slug": "chaturbate-downloader",
-    "purchase_url": "https://serp.ly/chaturbate-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/chaturbate-downloader/",
-    "serply_link": "https://serp.ly/chaturbate-downloader",
-    "slug": "chaturbate-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

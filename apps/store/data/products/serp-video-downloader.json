@@ -164,21 +164,6 @@
     "video-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-video-downloader",
-    "ghl_tag": "purchase-serp-downloader",
-    "lander_id": "serp-video-downloader",
-    "offer_id": "serp-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "SERP Video Downloader",
-    "product_page_url": "https://apps.serp.co/serp-video-downloader",
-    "product_slug": "serp-video-downloader",
-    "purchase_url": "https://serp.ly/serp-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/serp-video-downloader/",
-    "serply_link": "https://serp.ly/serp-downloader",
-    "slug": "serp-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

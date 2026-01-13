@@ -171,22 +171,6 @@
   "github_repo_tags": [],
   "chrome_webstore_link": "https://chromewebstore.google.com/detail/gohighlevel-downloader/lcnajelpdoefgoilcihnpkofabpafjgd",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
-    "ghl_tag": "purchase-gohighlevel-downloader",
-    "lander_id": "gohighlevel-downloader",
-    "license_entitlements": "gohighlevel-downloader",
-    "offer_id": "gohighlevel-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Gohighlevel Downloader",
-    "product_page_url": "https://apps.serp.co/gohighlevel-downloader",
-    "product_slug": "gohighlevel-downloader",
-    "purchase_url": "https://serp.ly/gohighlevel-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/gohighlevel-downloader/",
-    "serply_link": "https://serp.ly/gohighlevel-downloader",
-    "slug": "gohighlevel-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

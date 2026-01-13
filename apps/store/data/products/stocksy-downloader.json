@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/stocksy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=stocksy-downloader",
-    "ghl_tag": "purchase-stocksy-downloader",
-    "lander_id": "stocksy-downloader",
-    "offer_id": "stocksy-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Stocksy Downloader",
-    "product_page_url": "https://apps.serp.co/stocksy-downloader",
-    "product_slug": "stocksy-downloader",
-    "purchase_url": "https://serp.ly/stocksy-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/stocksy-downloader/",
-    "serply_link": "https://serp.ly/stocksy-downloader",
-    "slug": "stocksy-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

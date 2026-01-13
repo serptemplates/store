@@ -137,21 +137,6 @@
   "github_repo_url": "https://github.com/serpapps/bongacams-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=bongacams-downloader",
-    "ghl_tag": "purchase-bongacams-downloader",
-    "lander_id": "bongacams-downloader",
-    "offer_id": "bongacams-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Bongacams Downloader",
-    "product_page_url": "https://apps.serp.co/bongacams-downloader",
-    "product_slug": "bongacams-downloader",
-    "purchase_url": "https://serp.ly/bongacams-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/bongacams-downloader/",
-    "serply_link": "https://serp.ly/bongacams-downloader",
-    "slug": "bongacams-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

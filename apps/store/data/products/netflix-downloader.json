@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/netflix-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=netflix-downloader",
-    "ghl_tag": "purchase-netflix-downloader",
-    "lander_id": "netflix-downloader",
-    "offer_id": "netflix-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Netflix Downloader",
-    "product_page_url": "https://apps.serp.co/netflix-downloader",
-    "product_slug": "netflix-downloader",
-    "purchase_url": "https://serp.ly/netflix-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/netflix-downloader/",
-    "serply_link": "https://serp.ly/netflix-downloader",
-    "slug": "netflix-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

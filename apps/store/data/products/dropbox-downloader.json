@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=dropbox-downloader",
-    "ghl_tag": "purchase-dropbox-downloader",
-    "lander_id": "dropbox-downloader",
-    "offer_id": "dropbox-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Dropbox Downloader",
-    "product_page_url": "https://apps.serp.co/dropbox-downloader",
-    "product_slug": "dropbox-downloader",
-    "purchase_url": "https://serp.ly/dropbox-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/dropbox-downloader/",
-    "serply_link": "https://serp.ly/dropbox-downloader",
-    "slug": "dropbox-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

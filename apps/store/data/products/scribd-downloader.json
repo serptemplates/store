@@ -141,21 +141,6 @@
   "github_repo_url": "https://github.com/serpapps/scribd-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=scribd-downloader",
-    "ghl_tag": "purchase-scribd-downloader",
-    "lander_id": "scribd-downloader",
-    "offer_id": "scribd-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Scribd Downloader",
-    "product_page_url": "https://apps.serp.co/scribd-downloader",
-    "product_slug": "scribd-downloader",
-    "purchase_url": "https://serp.ly/scribd-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/scribd-downloader/",
-    "serply_link": "https://serp.ly/scribd-downloader",
-    "slug": "scribd-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

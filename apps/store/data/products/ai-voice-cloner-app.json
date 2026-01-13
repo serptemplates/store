@@ -157,22 +157,6 @@
   "github_repo_url": "https://github.com/serpapps/ai-voice-cloner",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=ai-voice-cloner-app",
-    "ghl_tag": "purchase-ai-voice-cloner-app",
-    "lander_id": "ai-voice-cloner-app",
-    "license_entitlements": "ai-voice-cloner",
-    "offer_id": "ai-voice-cloner-app",
-    "payment_provider": "stripe",
-    "product_name": "AI Voice Cloner App",
-    "product_page_url": "https://apps.serp.co/ai-voice-cloner-app",
-    "product_slug": "ai-voice-cloner-app",
-    "purchase_url": "https://serp.ly/ai-voice-cloner-app",
-    "serp_co_product_page_url": "https://serp.co/products/ai-voice-cloner-app/",
-    "serply_link": "https://serp.ly/ai-voice-cloner-app",
-    "slug": "ai-voice-cloner-app",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

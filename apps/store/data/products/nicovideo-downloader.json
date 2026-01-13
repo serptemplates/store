@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/nicovideo-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=nicovideo-downloader",
-    "ghl_tag": "purchase-nicovideo-downloader",
-    "lander_id": "nicovideo-downloader",
-    "offer_id": "nicovideo-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Nicovideo Downloader",
-    "product_page_url": "https://apps.serp.co/nicovideo-downloader",
-    "product_slug": "nicovideo-downloader",
-    "purchase_url": "https://serp.ly/nicovideo-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/nicovideo-downloader/",
-    "serply_link": "https://serp.ly/nicovideo-downloader",
-    "slug": "nicovideo-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

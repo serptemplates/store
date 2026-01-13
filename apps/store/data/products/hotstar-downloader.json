@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hotstar-downloader",
-    "ghl_tag": "purchase-hotstar-downloader",
-    "lander_id": "hotstar-downloader",
-    "offer_id": "hotstar-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Hotstar Downloader",
-    "product_page_url": "https://apps.serp.co/hotstar-downloader",
-    "product_slug": "hotstar-downloader",
-    "purchase_url": "https://serp.ly/hotstar-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hotstar-downloader/",
-    "serply_link": "https://serp.ly/hotstar-downloader",
-    "slug": "hotstar-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

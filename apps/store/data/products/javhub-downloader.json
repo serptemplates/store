@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=javhub-downloader",
-    "ghl_tag": "purchase-javhub-downloader",
-    "lander_id": "javhub-downloader",
-    "offer_id": "javhub-downloader",
-    "payment_provider": "stripe",
-    "product_name": "JAVHub Downloader",
-    "product_page_url": "https://apps.serp.co/javhub-downloader",
-    "product_slug": "javhub-downloader",
-    "purchase_url": "https://serp.ly/javhub-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/javhub-downloader/",
-    "serply_link": "https://serp.ly/javhub-downloader",
-    "slug": "javhub-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/boyfriendtv-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=boyfriendtv-downloader",
-    "ghl_tag": "purchase-boyfriendtv-downloader",
-    "lander_id": "boyfriendtv-downloader",
-    "license_entitlements": "boyfriendtv-downloader",
-    "offer_id": "boyfriendtv-downloader",
-    "payment_provider": "stripe",
-    "product_name": "BoyfriendTV Downloader",
-    "product_page_url": "https://apps.serp.co/boyfriendtv-downloader",
-    "product_slug": "boyfriendtv-downloader",
-    "purchase_url": "https://serp.ly/boyfriendtv-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/boyfriendtv-downloader/",
-    "serply_link": "https://serp.ly/boyfriendtv-downloader",
-    "slug": "boyfriendtv-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

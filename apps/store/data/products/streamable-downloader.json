@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=streamable-downloader",
-    "ghl_tag": "purchase-streamable-downloader",
-    "lander_id": "streamable-downloader",
-    "offer_id": "streamable-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Streamable Downloader",
-    "product_page_url": "https://apps.serp.co/streamable-downloader",
-    "product_slug": "streamable-downloader",
-    "purchase_url": "https://serp.ly/streamable-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/streamable-downloader/",
-    "serply_link": "https://serp.ly/streamable-downloader",
-    "slug": "streamable-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

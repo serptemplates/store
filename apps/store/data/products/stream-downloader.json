@@ -141,21 +141,6 @@
   "github_repo_url": "https://github.com/serpapps/stream-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=stream-downloader",
-    "ghl_tag": "purchase-stream-downloader",
-    "lander_id": "stream-downloader",
-    "offer_id": "stream-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Stream Downloader",
-    "product_page_url": "https://apps.serp.co/stream-downloader",
-    "product_slug": "stream-downloader",
-    "purchase_url": "https://serp.ly/stream-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/stream-downloader/",
-    "serply_link": "https://serp.ly/stream-downloader",
-    "slug": "stream-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

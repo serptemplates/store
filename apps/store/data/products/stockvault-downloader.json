@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/stockvault-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=stockvault-downloader",
-    "ghl_tag": "purchase-stockvault-downloader",
-    "lander_id": "stockvault-downloader",
-    "offer_id": "stockvault-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Stockvault Downloader",
-    "product_page_url": "https://apps.serp.co/stockvault-downloader",
-    "product_slug": "stockvault-downloader",
-    "purchase_url": "https://serp.ly/stockvault-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/stockvault-downloader/",
-    "serply_link": "https://serp.ly/stockvault-downloader",
-    "slug": "stockvault-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

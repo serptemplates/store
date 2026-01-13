@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=bbc-downloader",
-    "ghl_tag": "purchase-bbc-downloader",
-    "lander_id": "bbc-downloader",
-    "offer_id": "bbc-downloader",
-    "payment_provider": "stripe",
-    "product_name": "BBC Downloader",
-    "product_page_url": "https://apps.serp.co/bbc-downloader",
-    "product_slug": "bbc-downloader",
-    "purchase_url": "https://serp.ly/bbc-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/bbc-downloader/",
-    "serply_link": "https://serp.ly/bbc-downloader",
-    "slug": "bbc-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=sendvid-downloader",
-    "ghl_tag": "purchase-sendvid-downloader",
-    "lander_id": "sendvid-downloader",
-    "offer_id": "sendvid-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Sendvid Downloader",
-    "product_page_url": "https://apps.serp.co/sendvid-downloader",
-    "product_slug": "sendvid-downloader",
-    "purchase_url": "https://serp.ly/sendvid-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/sendvid-downloader/",
-    "serply_link": "https://serp.ly/sendvid-downloader",
-    "slug": "sendvid-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

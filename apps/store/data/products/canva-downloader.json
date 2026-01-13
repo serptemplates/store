@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/canva-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=canva-downloader",
-    "ghl_tag": "purchase-canva-downloader",
-    "lander_id": "canva-downloader",
-    "offer_id": "canva-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Canva Downloader",
-    "product_page_url": "https://apps.serp.co/canva-downloader",
-    "product_slug": "canva-downloader",
-    "purchase_url": "https://serp.ly/canva-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/canva-downloader/",
-    "serply_link": "https://serp.ly/canva-downloader",
-    "slug": "canva-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

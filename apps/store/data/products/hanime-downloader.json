@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hanime-downloader",
-    "ghl_tag": "purchase-hanime-downloader",
-    "lander_id": "hanime-downloader",
-    "offer_id": "hanime-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Hanime Downloader",
-    "product_page_url": "https://apps.serp.co/hanime-downloader",
-    "product_slug": "hanime-downloader",
-    "purchase_url": "https://serp.ly/hanime-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hanime-downloader/",
-    "serply_link": "https://serp.ly/hanime-downloader",
-    "slug": "hanime-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

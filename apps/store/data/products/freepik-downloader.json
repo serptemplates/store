@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/freepik-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=freepik-downloader",
-    "ghl_tag": "purchase-freepik-downloader",
-    "lander_id": "freepik-downloader",
-    "offer_id": "freepik-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Freepik Downloader",
-    "product_page_url": "https://apps.serp.co/freepik-downloader",
-    "product_slug": "freepik-downloader",
-    "purchase_url": "https://serp.ly/freepik-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/freepik-downloader/",
-    "serply_link": "https://serp.ly/freepik-downloader",
-    "slug": "freepik-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

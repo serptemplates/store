@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=weibo-downloader",
-    "ghl_tag": "purchase-weibo-downloader",
-    "lander_id": "weibo-downloader",
-    "offer_id": "weibo-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Weibo Downloader",
-    "product_page_url": "https://apps.serp.co/weibo-downloader",
-    "product_slug": "weibo-downloader",
-    "purchase_url": "https://serp.ly/weibo-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/weibo-downloader/",
-    "serply_link": "https://serp.ly/weibo-downloader",
-    "slug": "weibo-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

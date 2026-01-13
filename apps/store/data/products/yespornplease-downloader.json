@@ -81,22 +81,6 @@
   "github_repo_url": "https://github.com/serpapps/yespornplease-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=yespornplease-downloader",
-    "ghl_tag": "purchase-yespornplease-downloader",
-    "lander_id": "yespornplease-downloader",
-    "license_entitlements": "yespornplease-downloader",
-    "offer_id": "yespornplease-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Yespornplease Downloader",
-    "product_page_url": "https://apps.serp.co/yespornplease-downloader",
-    "product_slug": "yespornplease-downloader",
-    "purchase_url": "https://serp.ly/yespornplease-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/yespornplease-downloader/",
-    "serply_link": "https://serp.ly/yespornplease-downloader",
-    "slug": "yespornplease-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

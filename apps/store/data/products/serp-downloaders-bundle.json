@@ -38,21 +38,7 @@
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {
-    "bundle_expand": "optional_items_union",
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-downloaders-bundle",
-    "ghl_tag": "purchase-serp-downloaders-bundle",
-    "lander_id": "serp-downloaders-bundle",
-    "license_entitlements": "serp-downloaders-bundle",
-    "offer_id": "serp-downloaders-bundle",
-    "payment_provider": "stripe",
-    "product_name": "All SERP Video Downloaders",
-    "product_page_url": "https://apps.serp.co/serp-downloaders-bundle",
-    "product_slug": "serp-downloaders-bundle",
-    "purchase_url": "https://serp.ly/serp-downloaders-bundle",
-    "serp_co_product_page_url": "https://serp.co/products/serp-downloaders-bundle/",
-    "serply_link": "https://serp.ly/serp-downloaders-bundle",
-    "slug": "serp-downloaders-bundle",
-    "success_url": "https://apps.serp.co/checkout/success"
+    "bundle_expand": "optional_items_union"
   },
   // PAYMENT DATA
   "pricing": {

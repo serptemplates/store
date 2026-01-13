@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/soundgasm-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=soundgasm-downloader",
-    "ghl_tag": "purchase-soundgasm-downloader",
-    "lander_id": "soundgasm-downloader",
-    "offer_id": "soundgasm-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Soundgasm Downloader",
-    "product_page_url": "https://apps.serp.co/soundgasm-downloader",
-    "product_slug": "soundgasm-downloader",
-    "purchase_url": "https://serp.ly/soundgasm-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/soundgasm-downloader/",
-    "serply_link": "https://serp.ly/soundgasm-downloader",
-    "slug": "soundgasm-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

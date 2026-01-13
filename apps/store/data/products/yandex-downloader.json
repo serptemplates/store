@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=yandex-downloader",
-    "ghl_tag": "purchase-yandex-downloader",
-    "lander_id": "yandex-downloader",
-    "offer_id": "yandex-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Yandex Downloader",
-    "product_page_url": "https://apps.serp.co/yandex-downloader",
-    "product_slug": "yandex-downloader",
-    "purchase_url": "https://serp.ly/yandex-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/yandex-downloader/",
-    "serply_link": "https://serp.ly/yandex-downloader",
-    "slug": "yandex-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

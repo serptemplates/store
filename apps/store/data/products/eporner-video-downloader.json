@@ -156,22 +156,6 @@
   "github_repo_url": "https://github.com/serpapps/eporner-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=eporner-video-downloader",
-    "ghl_tag": "purchase-eporner-downloader",
-    "lander_id": "eporner-video-downloader",
-    "license_entitlements": "eporner-downloader",
-    "offer_id": "eporner-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Eporner Video Downloader",
-    "product_page_url": "https://apps.serp.co/eporner-video-downloader",
-    "product_slug": "eporner-video-downloader",
-    "purchase_url": "https://serp.ly/eporner-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/eporner-video-downloader/",
-    "serply_link": "https://serp.ly/eporner-video-downloader",
-    "slug": "eporner-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

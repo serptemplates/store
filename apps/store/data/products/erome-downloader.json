@@ -168,22 +168,6 @@
   "github_repo_url": "https://github.com/serpapps/erome-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
-    "ghl_tag": "purchase-erome-downloader",
-    "lander_id": "erome-downloader",
-    "license_entitlements": "erome-downloader",
-    "offer_id": "erome-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Erome Downloader",
-    "product_page_url": "https://apps.serp.co/erome-downloader",
-    "product_slug": "erome-downloader",
-    "purchase_url": "https://serp.ly/erome-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
-    "serply_link": "https://serp.ly/erome-downloader",
-    "slug": "erome-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

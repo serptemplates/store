@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/ashemaletube-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=ashemaletube-downloader",
-    "ghl_tag": "purchase-ashemaletube-downloader",
-    "lander_id": "ashemaletube-downloader",
-    "license_entitlements": "ashemaletube-downloader",
-    "offer_id": "ashemaletube-downloader",
-    "payment_provider": "stripe",
-    "product_name": "AShemaleTube Downloader",
-    "product_page_url": "https://apps.serp.co/ashemaletube-downloader",
-    "product_slug": "ashemaletube-downloader",
-    "purchase_url": "https://serp.ly/ashemaletube-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/ashemaletube-downloader/",
-    "serply_link": "https://serp.ly/ashemaletube-downloader",
-    "slug": "ashemaletube-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

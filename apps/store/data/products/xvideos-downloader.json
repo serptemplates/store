@@ -148,22 +148,6 @@
   "github_repo_url": "https://github.com/serpapps/xvideos-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=xvideos-downloader",
-    "ghl_tag": "purchase-xvideos-downloader",
-    "lander_id": "xvideos-downloader",
-    "license_entitlements": "xvideos-downloader",
-    "offer_id": "xvideos-downloader",
-    "payment_provider": "stripe",
-    "product_name": "XVideos Downloader",
-    "product_page_url": "https://apps.serp.co/xvideos-downloader",
-    "product_slug": "xvideos-downloader",
-    "purchase_url": "https://serp.ly/xvideos-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/xvideos-downloader/",
-    "serply_link": "https://serp.ly/xvideos-downloader",
-    "slug": "xvideos-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

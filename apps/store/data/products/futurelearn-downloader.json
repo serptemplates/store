@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=futurelearn-downloader",
-    "ghl_tag": "purchase-futurelearn-downloader",
-    "lander_id": "futurelearn-downloader",
-    "offer_id": "futurelearn-downloader",
-    "payment_provider": "stripe",
-    "product_name": "FutureLearn Downloader",
-    "product_page_url": "https://apps.serp.co/futurelearn-downloader",
-    "product_slug": "futurelearn-downloader",
-    "purchase_url": "https://serp.ly/futurelearn-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/futurelearn-downloader/",
-    "serply_link": "https://serp.ly/futurelearn-downloader",
-    "slug": "futurelearn-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/linkedin-learning-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=linkedin-learning-downloader",
-    "ghl_tag": "purchase-linkedin-learning-downloader",
-    "lander_id": "linkedin-learning-downloader",
-    "offer_id": "linkedin-learning-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Linkedin Learning Downloader",
-    "product_page_url": "https://apps.serp.co/linkedin-learning-downloader",
-    "product_slug": "linkedin-learning-downloader",
-    "purchase_url": "https://serp.ly/linkedin-learning-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/linkedin-learning-downloader/",
-    "serply_link": "https://serp.ly/linkedin-learning-downloader",
-    "slug": "linkedin-learning-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

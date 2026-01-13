@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/pinterest-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pinterest-downloader",
-    "ghl_tag": "purchase-pinterest-downloader",
-    "lander_id": "pinterest-downloader",
-    "offer_id": "pinterest-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Pinterest Downloader",
-    "product_page_url": "https://apps.serp.co/pinterest-downloader",
-    "product_slug": "pinterest-downloader",
-    "purchase_url": "https://serp.ly/pinterest-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pinterest-downloader/",
-    "serply_link": "https://serp.ly/pinterest-downloader",
-    "slug": "pinterest-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

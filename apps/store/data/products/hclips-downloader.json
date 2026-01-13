@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hclips-downloader",
-    "ghl_tag": "purchase-hclips-downloader",
-    "lander_id": "hclips-downloader",
-    "offer_id": "hclips-downloader",
-    "payment_provider": "stripe",
-    "product_name": "HClips Downloader",
-    "product_page_url": "https://apps.serp.co/hclips-downloader",
-    "product_slug": "hclips-downloader",
-    "purchase_url": "https://serp.ly/hclips-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hclips-downloader/",
-    "serply_link": "https://serp.ly/hclips-downloader",
-    "slug": "hclips-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

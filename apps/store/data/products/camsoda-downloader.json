@@ -137,21 +137,6 @@
   "github_repo_url": "https://github.com/serpapps/camsoda-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=camsoda-downloader",
-    "ghl_tag": "purchase-camsoda-downloader",
-    "lander_id": "camsoda-downloader",
-    "offer_id": "camsoda-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Camsoda Downloader",
-    "product_page_url": "https://apps.serp.co/camsoda-downloader",
-    "product_slug": "camsoda-downloader",
-    "purchase_url": "https://serp.ly/camsoda-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/camsoda-downloader/",
-    "serply_link": "https://serp.ly/camsoda-downloader",
-    "slug": "camsoda-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

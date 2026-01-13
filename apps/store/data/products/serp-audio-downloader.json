@@ -158,21 +158,6 @@
     "audio-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-audio-downloader",
-    "ghl_tag": "purchase-serp-audio-downloader",
-    "lander_id": "serp-audio-downloader",
-    "offer_id": "serp-audio-downloader",
-    "payment_provider": "stripe",
-    "product_name": "SERP Audio Downloader",
-    "product_page_url": "https://apps.serp.co/serp-audio-downloader",
-    "product_slug": "serp-audio-downloader",
-    "purchase_url": "https://serp.ly/serp-audio-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/serp-audio-downloader/",
-    "serply_link": "https://serp.ly/serp-audio-downloader",
-    "slug": "serp-audio-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/kick-clip-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=kick-clip-downloader",
-    "ghl_tag": "purchase-kick-clip-downloader",
-    "lander_id": "kick-clip-downloader",
-    "offer_id": "kick-clip-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Kick Clip Downloader",
-    "product_page_url": "https://apps.serp.co/kick-clip-downloader",
-    "product_slug": "kick-clip-downloader",
-    "purchase_url": "https://serp.ly/kick-clip-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/kick-clip-downloader/",
-    "serply_link": "https://serp.ly/kick-clip-downloader",
-    "slug": "kick-clip-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

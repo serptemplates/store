@@ -170,22 +170,6 @@
   "github_repo_url": "https://github.com/serpapps/gokollab-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=gokollab-downloader",
-    "ghl_tag": "purchase-gokollab-downloader",
-    "lander_id": "gokollab-downloader",
-    "license_entitlements": "gokollab-downloader",
-    "offer_id": "gokollab-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Gokollab Downloader",
-    "product_page_url": "https://apps.serp.co/gokollab-downloader",
-    "product_slug": "gokollab-downloader",
-    "purchase_url": "https://serp.ly/gokollab-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/gokollab-downloader/",
-    "serply_link": "https://serp.ly/gokollab-downloader",
-    "slug": "gokollab-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=bandcamp-downloader",
-    "ghl_tag": "purchase-bandcamp-downloader",
-    "lander_id": "bandcamp-downloader",
-    "offer_id": "bandcamp-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Bandcamp Downloader",
-    "product_page_url": "https://apps.serp.co/bandcamp-downloader",
-    "product_slug": "bandcamp-downloader",
-    "purchase_url": "https://serp.ly/bandcamp-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/bandcamp-downloader/",
-    "serply_link": "https://serp.ly/bandcamp-downloader",
-    "slug": "bandcamp-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

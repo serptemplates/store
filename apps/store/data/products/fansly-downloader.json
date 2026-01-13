@@ -109,21 +109,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=fansly-downloader",
-    "ghl_tag": "purchase-fansly-downloader",
-    "lander_id": "fansly-downloader",
-    "offer_id": "fansly-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Fansly Downloader",
-    "product_page_url": "https://apps.serp.co/fansly-downloader",
-    "product_slug": "fansly-downloader",
-    "purchase_url": "https://serp.ly/fansly-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/fansly-downloader/",
-    "serply_link": "https://serp.ly/fansly-downloader",
-    "slug": "fansly-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

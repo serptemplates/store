@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=bitchute-downloader",
-    "ghl_tag": "purchase-bitchute-downloader",
-    "lander_id": "bitchute-downloader",
-    "offer_id": "bitchute-downloader",
-    "payment_provider": "stripe",
-    "product_name": "BitChute Downloader",
-    "product_page_url": "https://apps.serp.co/bitchute-downloader",
-    "product_slug": "bitchute-downloader",
-    "purchase_url": "https://serp.ly/bitchute-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/bitchute-downloader/",
-    "serply_link": "https://serp.ly/bitchute-downloader",
-    "slug": "bitchute-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -45,20 +45,6 @@
   "github_repo_url": "https://github.com/serpapps/restore-closed-tabs-extension",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=restore-closed-tabs-extension",
-    "lander_id": "restore-closed-tabs-extension",
-    "license_entitlements": "restore-closed-tabs-extension",
-    "offer_id": "restore-closed-tabs-extension",
-    "product_name": "Restore Closed Tabs Extension",
-    "product_page_url": "https://apps.serp.co/restore-closed-tabs-extension",
-    "product_slug": "restore-closed-tabs-extension",
-    "purchase_url": "https://serp.ly/restore-closed-tabs-extension",
-    "serp_co_product_page_url": "https://serp.co/products/restore-closed-tabs-extension/",
-    "serply_link": "https://serp.ly/restore-closed-tabs-extension",
-    "slug": "restore-closed-tabs-extension",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "return_policy": {
     "days": 0,

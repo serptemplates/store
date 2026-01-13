@@ -65,25 +65,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter",
-    "demo_environment": "primary-stripe",
-    "demo_owner": "store-payments",
-    "ghl_tag": "purchase-demo-payment-adapter",
-    "lander_id": "demo-payment-adapter",
-    "license_entitlements": "demo-payment-adapter",
-    "offer_id": "demo-payment-adapter",
-    "payment_provider": "stripe",
-    "payment_provider_account": "primary",
-    "product_name": "Demo Payment Adapter",
-    "product_page_url": "https://apps.serp.co/demo-payment-adapter",
-    "product_slug": "demo-payment-adapter",
-    "purchase_url": "https://serp.ly/demo-payment-adapter",
-    "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter/",
-    "serply_link": "https://serp.ly/demo-payment-adapter",
-    "slug": "demo-payment-adapter",
-    "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "Internal",

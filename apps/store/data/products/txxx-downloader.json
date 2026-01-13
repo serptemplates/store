@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/txxx-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=txxx-downloader",
-    "ghl_tag": "purchase-txxx-downloader",
-    "lander_id": "txxx-downloader",
-    "license_entitlements": "txxx-downloader",
-    "offer_id": "txxx-downloader",
-    "payment_provider": "stripe",
-    "product_name": "TXXX Downloader",
-    "product_page_url": "https://apps.serp.co/txxx-downloader",
-    "product_slug": "txxx-downloader",
-    "purchase_url": "https://serp.ly/txxx-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/txxx-downloader/",
-    "serply_link": "https://serp.ly/txxx-downloader",
-    "slug": "txxx-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

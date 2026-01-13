@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=webtoon-downloader",
-    "ghl_tag": "purchase-webtoon-downloader",
-    "lander_id": "webtoon-downloader",
-    "offer_id": "webtoon-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Webtoon Downloader",
-    "product_page_url": "https://apps.serp.co/webtoon-downloader",
-    "product_slug": "webtoon-downloader",
-    "purchase_url": "https://serp.ly/webtoon-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/webtoon-downloader/",
-    "serply_link": "https://serp.ly/webtoon-downloader",
-    "slug": "webtoon-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

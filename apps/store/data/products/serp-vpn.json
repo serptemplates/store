@@ -133,21 +133,6 @@
       "href": "https://gist.github.com/devinschumacher/84361cb22134d49fd875eacc2eaa9f37"
     }
   ],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
-    "ghl_tag": "purchase-serp-vpn",
-    "lander_id": "serp-vpn",
-    "license_entitlements": "serp-vpn",
-    "offer_id": "serp-vpn",
-    "payment_provider": "stripe",
-    "product_name": "SERP VPN",
-    "product_page_url": "https://apps.serp.co/serp-vpn",
-    "product_slug": "serp-vpn",
-    "purchase_url": "https://serp.ly/serp-vpn",
-    "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
-    "serply_link": "https://serp.ly/serp-vpn",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

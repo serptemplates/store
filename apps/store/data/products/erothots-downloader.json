@@ -135,21 +135,6 @@
   "github_repo_url": "https://github.com/serpapps/erothots-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=erothots-downloader",
-    "ghl_tag": "purchase-erothots-downloader",
-    "lander_id": "erothots-downloader",
-    "offer_id": "erothots-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Erothots Downloader",
-    "product_page_url": "https://apps.serp.co/erothots-downloader",
-    "product_slug": "erothots-downloader",
-    "purchase_url": "https://serp.ly/erothots-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/erothots-downloader/",
-    "serply_link": "https://serp.ly/erothots-downloader",
-    "slug": "erothots-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/youjizz-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=youjizz-downloader",
-    "ghl_tag": "purchase-youjizz-downloader",
-    "lander_id": "youjizz-downloader",
-    "license_entitlements": "youjizz-downloader",
-    "offer_id": "youjizz-downloader",
-    "payment_provider": "stripe",
-    "product_name": "YouJizz Downloader",
-    "product_page_url": "https://apps.serp.co/youjizz-downloader",
-    "product_slug": "youjizz-downloader",
-    "purchase_url": "https://serp.ly/youjizz-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/youjizz-downloader/",
-    "serply_link": "https://serp.ly/youjizz-downloader",
-    "slug": "youjizz-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

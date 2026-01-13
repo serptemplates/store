@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/pixabay-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pixabay-downloader",
-    "ghl_tag": "purchase-pixabay-downloader",
-    "lander_id": "pixabay-downloader",
-    "offer_id": "pixabay-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Pixabay Downloader",
-    "product_page_url": "https://apps.serp.co/pixabay-downloader",
-    "product_slug": "pixabay-downloader",
-    "purchase_url": "https://serp.ly/pixabay-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pixabay-downloader/",
-    "serply_link": "https://serp.ly/pixabay-downloader",
-    "slug": "pixabay-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -141,21 +141,6 @@
   "github_repo_url": "https://github.com/serpapps/patreon-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=patreon-downloader",
-    "ghl_tag": "purchase-patreon-downloader",
-    "lander_id": "patreon-downloader",
-    "offer_id": "patreon-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Patreon Downloader",
-    "product_page_url": "https://apps.serp.co/patreon-downloader",
-    "product_slug": "patreon-downloader",
-    "purchase_url": "https://serp.ly/patreon-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/patreon-downloader/",
-    "serply_link": "https://serp.ly/patreon-downloader",
-    "slug": "patreon-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

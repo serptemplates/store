@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=freesound-downloader",
-    "ghl_tag": "purchase-freesound-downloader",
-    "lander_id": "freesound-downloader",
-    "offer_id": "freesound-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Freesound Downloader",
-    "product_page_url": "https://apps.serp.co/freesound-downloader",
-    "product_slug": "freesound-downloader",
-    "purchase_url": "https://serp.ly/freesound-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/freesound-downloader/",
-    "serply_link": "https://serp.ly/freesound-downloader",
-    "slug": "freesound-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

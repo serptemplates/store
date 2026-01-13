@@ -107,21 +107,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=behance-downloader",
-    "ghl_tag": "purchase-behance-downloader",
-    "lander_id": "behance-downloader",
-    "offer_id": "behance-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Behance Downloader",
-    "product_page_url": "https://apps.serp.co/behance-downloader",
-    "product_slug": "behance-downloader",
-    "purchase_url": "https://serp.ly/behance-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/behance-downloader/",
-    "serply_link": "https://serp.ly/behance-downloader",
-    "slug": "behance-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -46,20 +46,6 @@
   "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
-    "lander_id": "ai-audio-video-transcription-generator",
-    "license_entitlements": "ai-audio-video-transcription-generator",
-    "offer_id": "ai-audio-video-transcription-generator",
-    "product_name": "AI Audio & Video Transcription Generator",
-    "product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
-    "product_slug": "ai-audio-video-transcription-generator",
-    "purchase_url": "https://serp.ly/ai-audio-video-transcription-generator",
-    "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
-    "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
-    "slug": "ai-audio-video-transcription-generator",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "return_policy": {
     "days": 0,

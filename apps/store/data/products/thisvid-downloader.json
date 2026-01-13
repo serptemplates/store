@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/thisvid-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
-    "ghl_tag": "purchase-thisvid-downloader",
-    "lander_id": "thisvid-downloader",
-    "license_entitlements": "thisvid-downloader",
-    "offer_id": "thisvid-downloader",
-    "payment_provider": "stripe",
-    "product_name": "ThisVid Downloader",
-    "product_page_url": "https://apps.serp.co/thisvid-downloader",
-    "product_slug": "thisvid-downloader",
-    "purchase_url": "https://serp.ly/thisvid-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
-    "serply_link": "https://serp.ly/thisvid-downloader",
-    "slug": "thisvid-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

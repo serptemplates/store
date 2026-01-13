@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/istock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=istock-downloader",
-    "ghl_tag": "purchase-istock-downloader",
-    "lander_id": "istock-downloader",
-    "offer_id": "istock-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Istock Downloader",
-    "product_page_url": "https://apps.serp.co/istock-downloader",
-    "product_slug": "istock-downloader",
-    "purchase_url": "https://serp.ly/istock-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/istock-downloader/",
-    "serply_link": "https://serp.ly/istock-downloader",
-    "slug": "istock-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

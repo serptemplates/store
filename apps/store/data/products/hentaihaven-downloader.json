@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/hentaihaven-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hentaihaven-downloader",
-    "ghl_tag": "purchase-hentaihaven-downloader",
-    "lander_id": "hentaihaven-downloader",
-    "license_entitlements": "hentaihaven-downloader",
-    "offer_id": "hentaihaven-downloader",
-    "payment_provider": "stripe",
-    "product_name": "HentaiHaven Downloader",
-    "product_page_url": "https://apps.serp.co/hentaihaven-downloader",
-    "product_slug": "hentaihaven-downloader",
-    "purchase_url": "https://serp.ly/hentaihaven-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hentaihaven-downloader/",
-    "serply_link": "https://serp.ly/hentaihaven-downloader",
-    "slug": "hentaihaven-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

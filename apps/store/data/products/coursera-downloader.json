@@ -174,22 +174,6 @@
   "github_repo_url": "https://github.com/serpapps/coursera-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=coursera-downloader",
-    "ghl_tag": "purchase-coursera-downloader",
-    "lander_id": "coursera-downloader",
-    "license_entitlements": "coursera-downloader",
-    "offer_id": "coursera-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Coursera Downloader",
-    "product_page_url": "https://apps.serp.co/coursera-downloader",
-    "product_slug": "coursera-downloader",
-    "purchase_url": "https://serp.ly/coursera-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/coursera-downloader/",
-    "serply_link": "https://serp.ly/coursera-downloader",
-    "slug": "coursera-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

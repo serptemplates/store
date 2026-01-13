@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pornoxo-downloader",
-    "ghl_tag": "purchase-pornoxo-downloader",
-    "lander_id": "pornoxo-downloader",
-    "offer_id": "pornoxo-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Pornoxo Downloader",
-    "product_page_url": "https://apps.serp.co/pornoxo-downloader",
-    "product_slug": "pornoxo-downloader",
-    "purchase_url": "https://serp.ly/pornoxo-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pornoxo-downloader/",
-    "serply_link": "https://serp.ly/pornoxo-downloader",
-    "slug": "pornoxo-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pornve-downloader",
-    "ghl_tag": "purchase-pornve-downloader",
-    "lander_id": "pornve-downloader",
-    "offer_id": "pornve-downloader",
-    "payment_provider": "stripe",
-    "product_name": "PornVe Downloader",
-    "product_page_url": "https://apps.serp.co/pornve-downloader",
-    "product_slug": "pornve-downloader",
-    "purchase_url": "https://serp.ly/pornve-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pornve-downloader/",
-    "serply_link": "https://serp.ly/pornve-downloader",
-    "slug": "pornve-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

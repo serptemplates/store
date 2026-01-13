@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=imagefap-downloader",
-    "ghl_tag": "purchase-imagefap-downloader",
-    "lander_id": "imagefap-downloader",
-    "offer_id": "imagefap-downloader",
-    "payment_provider": "stripe",
-    "product_name": "ImageFap Downloader",
-    "product_page_url": "https://apps.serp.co/imagefap-downloader",
-    "product_slug": "imagefap-downloader",
-    "purchase_url": "https://serp.ly/imagefap-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/imagefap-downloader/",
-    "serply_link": "https://serp.ly/imagefap-downloader",
-    "slug": "imagefap-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

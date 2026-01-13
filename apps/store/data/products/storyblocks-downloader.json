@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/storyblocks-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=storyblocks-downloader",
-    "ghl_tag": "purchase-storyblocks-downloader",
-    "lander_id": "storyblocks-downloader",
-    "offer_id": "storyblocks-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Storyblocks Downloader",
-    "product_page_url": "https://apps.serp.co/storyblocks-downloader",
-    "product_slug": "storyblocks-downloader",
-    "purchase_url": "https://serp.ly/storyblocks-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/storyblocks-downloader/",
-    "serply_link": "https://serp.ly/storyblocks-downloader",
-    "slug": "storyblocks-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

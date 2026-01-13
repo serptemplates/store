@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=naver-downloader",
-    "ghl_tag": "purchase-naver-downloader",
-    "lander_id": "naver-downloader",
-    "offer_id": "naver-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Naver Downloader",
-    "product_page_url": "https://apps.serp.co/naver-downloader",
-    "product_slug": "naver-downloader",
-    "purchase_url": "https://serp.ly/naver-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/naver-downloader/",
-    "serply_link": "https://serp.ly/naver-downloader",
-    "slug": "naver-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

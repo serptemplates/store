@@ -184,22 +184,6 @@
     "youtube-transcript-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=youtube-downloader",
-    "ghl_tag": "purchase-youtube-downloader",
-    "lander_id": "youtube-downloader",
-    "license_entitlements": "youtube-downloader",
-    "offer_id": "youtube-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Youtube Downloader",
-    "product_page_url": "https://apps.serp.co/youtube-downloader",
-    "product_slug": "youtube-downloader",
-    "purchase_url": "https://serp.ly/youtube-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/youtube-downloader/",
-    "serply_link": "https://serp.ly/youtube-downloader",
-    "slug": "youtube-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

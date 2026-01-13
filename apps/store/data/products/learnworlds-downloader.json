@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/learnworlds-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=learnworlds-downloader",
-    "ghl_tag": "purchase-learnworlds-downloader",
-    "lander_id": "learnworlds-downloader",
-    "offer_id": "learnworlds-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Learnworlds Downloader",
-    "product_page_url": "https://apps.serp.co/learnworlds-downloader",
-    "product_slug": "learnworlds-downloader",
-    "purchase_url": "https://serp.ly/learnworlds-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/learnworlds-downloader/",
-    "serply_link": "https://serp.ly/learnworlds-downloader",
-    "slug": "learnworlds-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

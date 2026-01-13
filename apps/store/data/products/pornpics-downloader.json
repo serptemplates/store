@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=pornpics-downloader",
-    "ghl_tag": "purchase-pornpics-downloader",
-    "lander_id": "pornpics-downloader",
-    "offer_id": "pornpics-downloader",
-    "payment_provider": "stripe",
-    "product_name": "PornPics Downloader",
-    "product_page_url": "https://apps.serp.co/pornpics-downloader",
-    "product_slug": "pornpics-downloader",
-    "purchase_url": "https://serp.ly/pornpics-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/pornpics-downloader/",
-    "serply_link": "https://serp.ly/pornpics-downloader",
-    "slug": "pornpics-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

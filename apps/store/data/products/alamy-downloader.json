@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/alamy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=alamy-downloader",
-    "ghl_tag": "purchase-alamy-downloader",
-    "lander_id": "alamy-downloader",
-    "offer_id": "alamy-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Alamy Downloader",
-    "product_page_url": "https://apps.serp.co/alamy-downloader",
-    "product_slug": "alamy-downloader",
-    "purchase_url": "https://serp.ly/alamy-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/alamy-downloader/",
-    "serply_link": "https://serp.ly/alamy-downloader",
-    "slug": "alamy-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -161,21 +161,6 @@
   "github_repo_url": "https://github.com/serpapps/123rf-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=123rf-downloader",
-    "ghl_tag": "purchase-123rf-downloader",
-    "lander_id": "123rf-downloader",
-    "offer_id": "123rf-downloader",
-    "payment_provider": "stripe",
-    "product_name": "123rf Downloader",
-    "product_page_url": "https://apps.serp.co/123rf-downloader",
-    "product_slug": "123rf-downloader",
-    "purchase_url": "https://serp.ly/123rf-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/123rf-downloader/",
-    "serply_link": "https://serp.ly/123rf-downloader",
-    "slug": "123rf-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

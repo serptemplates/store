@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=indavideo-downloader",
-    "ghl_tag": "purchase-indavideo-downloader",
-    "lander_id": "indavideo-downloader",
-    "offer_id": "indavideo-downloader",
-    "payment_provider": "stripe",
-    "product_name": "IndaVideo Downloader",
-    "product_page_url": "https://apps.serp.co/indavideo-downloader",
-    "product_slug": "indavideo-downloader",
-    "purchase_url": "https://serp.ly/indavideo-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/indavideo-downloader/",
-    "serply_link": "https://serp.ly/indavideo-downloader",
-    "slug": "indavideo-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

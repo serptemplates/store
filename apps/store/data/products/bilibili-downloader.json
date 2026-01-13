@@ -143,21 +143,6 @@
   "github_repo_url": "https://github.com/serpapps/bilibili-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=bilibili-downloader",
-    "ghl_tag": "purchase-bilibili-downloader",
-    "lander_id": "bilibili-downloader",
-    "offer_id": "bilibili-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Bilibili Downloader",
-    "product_page_url": "https://apps.serp.co/bilibili-downloader",
-    "product_slug": "bilibili-downloader",
-    "purchase_url": "https://serp.ly/bilibili-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/bilibili-downloader/",
-    "serply_link": "https://serp.ly/bilibili-downloader",
-    "slug": "bilibili-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

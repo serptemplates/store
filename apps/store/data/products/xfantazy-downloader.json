@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/xfantazy-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=xfantazy-downloader",
-    "ghl_tag": "purchase-xfantazy-downloader",
-    "lander_id": "xfantazy-downloader",
-    "license_entitlements": "xfantazy-downloader",
-    "offer_id": "xfantazy-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Xfantazy Downloader",
-    "product_page_url": "https://apps.serp.co/xfantazy-downloader",
-    "product_slug": "xfantazy-downloader",
-    "purchase_url": "https://serp.ly/xfantazy-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/xfantazy-downloader/",
-    "serply_link": "https://serp.ly/xfantazy-downloader",
-    "slug": "xfantazy-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

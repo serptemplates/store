@@ -118,19 +118,6 @@
   "github_repo_tags": [],
   "producthunt_link": "https://producthunt.com/posts/serp-ui-blocks",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
-    "lander_id": "serp-blocks",
-    "offer_id": "serp-blocks",
-    "product_name": "SERP Blocks",
-    "product_page_url": "https://apps.serp.co/serp-blocks",
-    "product_slug": "serp-blocks",
-    "purchase_url": "https://serp.ly/serp-blocks",
-    "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
-    "serply_link": "https://serp.ly/serp-blocks",
-    "slug": "serp-blocks",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

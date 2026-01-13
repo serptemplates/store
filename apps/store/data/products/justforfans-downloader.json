@@ -81,22 +81,6 @@
   "github_repo_url": "https://github.com/serpapps/justforfans-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=justforfans-downloader",
-    "ghl_tag": "purchase-justforfans-downloader",
-    "lander_id": "justforfans-downloader",
-    "license_entitlements": "justforfans-downloader",
-    "offer_id": "justforfans-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Justforfans Downloader",
-    "product_page_url": "https://apps.serp.co/justforfans-downloader",
-    "product_slug": "justforfans-downloader",
-    "purchase_url": "https://serp.ly/justforfans-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/justforfans-downloader/",
-    "serply_link": "https://serp.ly/justforfans-downloader",
-    "slug": "justforfans-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

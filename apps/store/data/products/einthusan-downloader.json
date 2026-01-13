@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=einthusan-downloader",
-    "ghl_tag": "purchase-einthusan-downloader",
-    "lander_id": "einthusan-downloader",
-    "offer_id": "einthusan-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Einthusan Downloader",
-    "product_page_url": "https://apps.serp.co/einthusan-downloader",
-    "product_slug": "einthusan-downloader",
-    "purchase_url": "https://serp.ly/einthusan-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/einthusan-downloader/",
-    "serply_link": "https://serp.ly/einthusan-downloader",
-    "slug": "einthusan-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

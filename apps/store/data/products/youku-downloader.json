@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=youku-downloader",
-    "ghl_tag": "purchase-youku-downloader",
-    "lander_id": "youku-downloader",
-    "offer_id": "youku-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Youku Downloader",
-    "product_page_url": "https://apps.serp.co/youku-downloader",
-    "product_slug": "youku-downloader",
-    "purchase_url": "https://serp.ly/youku-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/youku-downloader/",
-    "serply_link": "https://serp.ly/youku-downloader",
-    "slug": "youku-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -144,21 +144,6 @@
   "github_repo_url": "https://github.com/serpapps/flickr-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=flickr-downloader",
-    "ghl_tag": "purchase-flickr-downloader",
-    "lander_id": "flickr-downloader",
-    "offer_id": "flickr-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Flickr Downloader",
-    "product_page_url": "https://apps.serp.co/flickr-downloader",
-    "product_slug": "flickr-downloader",
-    "purchase_url": "https://serp.ly/flickr-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/flickr-downloader/",
-    "serply_link": "https://serp.ly/flickr-downloader",
-    "slug": "flickr-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

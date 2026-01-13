@@ -114,21 +114,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=edx-downloader",
-    "ghl_tag": "purchase-edx-downloader",
-    "lander_id": "edx-downloader",
-    "offer_id": "edx-downloader",
-    "payment_provider": "stripe",
-    "product_name": "edX Downloader",
-    "product_page_url": "https://apps.serp.co/edx-downloader",
-    "product_slug": "edx-downloader",
-    "purchase_url": "https://serp.ly/edx-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/edx-downloader/",
-    "serply_link": "https://serp.ly/edx-downloader",
-    "slug": "edx-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -194,22 +194,6 @@
   "firefox_addon_store_link": "https://addons.mozilla.org/en-US/firefox/addon/sprout-video-downloader/",
   "producthunt_link": "https://www.producthunt.com/products/sprout-video-downloader",
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=sprout-video-downloader",
-    "ghl_tag": "purchase-sprout-video-downloader",
-    "lander_id": "sprout-video-downloader",
-    "license_entitlements": "sprout-downloader",
-    "offer_id": "sprout-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Sprout Video Downloader",
-    "product_page_url": "https://apps.serp.co/sprout-video-downloader",
-    "product_slug": "sprout-video-downloader",
-    "purchase_url": "https://serp.ly/sprout-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/sprout-video-downloader/",
-    "serply_link": "https://serp.ly/sprout-video-downloader",
-    "slug": "sprout-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

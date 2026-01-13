@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=plurk-downloader",
-    "ghl_tag": "purchase-plurk-downloader",
-    "lander_id": "plurk-downloader",
-    "offer_id": "plurk-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Plurk Downloader",
-    "product_page_url": "https://apps.serp.co/plurk-downloader",
-    "product_slug": "plurk-downloader",
-    "purchase_url": "https://serp.ly/plurk-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/plurk-downloader/",
-    "serply_link": "https://serp.ly/plurk-downloader",
-    "slug": "plurk-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

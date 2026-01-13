@@ -113,21 +113,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=tamilgun-downloader",
-    "ghl_tag": "purchase-tamilgun-downloader",
-    "lander_id": "tamilgun-downloader",
-    "offer_id": "tamilgun-downloader",
-    "payment_provider": "stripe",
-    "product_name": "TamilGun Downloader",
-    "product_page_url": "https://apps.serp.co/tamilgun-downloader",
-    "product_slug": "tamilgun-downloader",
-    "purchase_url": "https://serp.ly/tamilgun-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/tamilgun-downloader/",
-    "serply_link": "https://serp.ly/tamilgun-downloader",
-    "slug": "tamilgun-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

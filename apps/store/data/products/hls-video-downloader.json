@@ -107,21 +107,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hls-video-downloader",
-    "ghl_tag": "purchase-hls-video-downloader",
-    "lander_id": "hls-video-downloader",
-    "offer_id": "hls-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "HLS Downloader",
-    "product_page_url": "https://apps.serp.co/hls-video-downloader",
-    "product_slug": "hls-video-downloader",
-    "purchase_url": "https://serp.ly/hls-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hls-video-downloader/",
-    "serply_link": "https://serp.ly/hls-video-downloader",
-    "slug": "hls-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

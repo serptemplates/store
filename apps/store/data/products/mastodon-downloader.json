@@ -107,21 +107,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=mastodon-downloader",
-    "ghl_tag": "purchase-mastodon-downloader",
-    "lander_id": "mastodon-downloader",
-    "offer_id": "mastodon-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Mastodon Downloader",
-    "product_page_url": "https://apps.serp.co/mastodon-downloader",
-    "product_slug": "mastodon-downloader",
-    "purchase_url": "https://serp.ly/mastodon-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/mastodon-downloader/",
-    "serply_link": "https://serp.ly/mastodon-downloader",
-    "slug": "mastodon-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -144,21 +144,6 @@
   "github_repo_url": "https://github.com/serpapps/tumblr-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=tumblr-video-downloader",
-    "ghl_tag": "purchase-tumblr-video-downloader",
-    "lander_id": "tumblr-video-downloader",
-    "offer_id": "tumblr-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Tumblr Video Downloader",
-    "product_page_url": "https://apps.serp.co/tumblr-video-downloader",
-    "product_slug": "tumblr-video-downloader",
-    "purchase_url": "https://serp.ly/tumblr-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/tumblr-video-downloader/",
-    "serply_link": "https://serp.ly/tumblr-video-downloader",
-    "slug": "tumblr-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

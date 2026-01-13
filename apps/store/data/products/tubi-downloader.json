@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/tubi-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=tubi-downloader",
-    "ghl_tag": "purchase-tubi-downloader",
-    "lander_id": "tubi-downloader",
-    "offer_id": "tubi-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Tubi Downloader",
-    "product_page_url": "https://apps.serp.co/tubi-downloader",
-    "product_slug": "tubi-downloader",
-    "purchase_url": "https://serp.ly/tubi-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/tubi-downloader/",
-    "serply_link": "https://serp.ly/tubi-downloader",
-    "slug": "tubi-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

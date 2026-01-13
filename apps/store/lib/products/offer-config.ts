@@ -292,7 +292,6 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
         product_slug: product.slug,
         product_name: product.name,
         product_page_url: productPageUrl,
-        purchase_url: product.serply_link,
         serply_link: product.serply_link,
         success_url: successUrl,
         cancel_url: cancelUrl,
@@ -303,6 +302,8 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       stripeDetails?.metadata ?? {},
       paymentConfig?.metadata ?? {},
     );
+    delete (metadata as Record<string, unknown>)["purchase_url"];
+    delete (metadata as Record<string, unknown>)["purchaseUrl"];
 
     const normalizedOptionalItems = normalizeOptionalItemsFromPayment(paymentConfig, product, isTest);
 

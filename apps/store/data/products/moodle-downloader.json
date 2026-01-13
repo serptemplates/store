@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/moodle-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=moodle-downloader",
-    "ghl_tag": "purchase-moodle-downloader",
-    "lander_id": "moodle-downloader",
-    "offer_id": "moodle-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Moodle Downloader",
-    "product_page_url": "https://apps.serp.co/moodle-downloader",
-    "product_slug": "moodle-downloader",
-    "purchase_url": "https://serp.ly/moodle-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/moodle-downloader/",
-    "serply_link": "https://serp.ly/moodle-downloader",
-    "slug": "moodle-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/adobe-stock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=adobe-stock-downloader",
-    "ghl_tag": "purchase-adobe-stock-downloader",
-    "lander_id": "adobe-stock-downloader",
-    "offer_id": "adobe-stock-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Adobe Stock Downloader",
-    "product_page_url": "https://apps.serp.co/adobe-stock-downloader",
-    "product_slug": "adobe-stock-downloader",
-    "purchase_url": "https://serp.ly/adobe-stock-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/adobe-stock-downloader/",
-    "serply_link": "https://serp.ly/adobe-stock-downloader",
-    "slug": "adobe-stock-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

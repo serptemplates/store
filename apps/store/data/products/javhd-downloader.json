@@ -108,21 +108,6 @@
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=javhd-downloader",
-    "ghl_tag": "purchase-javhd-downloader",
-    "lander_id": "javhd-downloader",
-    "offer_id": "javhd-downloader",
-    "payment_provider": "stripe",
-    "product_name": "JAVHD Downloader",
-    "product_page_url": "https://apps.serp.co/javhd-downloader",
-    "product_slug": "javhd-downloader",
-    "purchase_url": "https://serp.ly/javhd-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/javhd-downloader/",
-    "serply_link": "https://serp.ly/javhd-downloader",
-    "slug": "javhd-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

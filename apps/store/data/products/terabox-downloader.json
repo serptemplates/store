@@ -142,21 +142,6 @@
   "github_repo_url": "https://github.com/serpapps/terabox-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=terabox-downloader",
-    "ghl_tag": "purchase-terabox-downloader",
-    "lander_id": "terabox-downloader",
-    "offer_id": "terabox-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Terabox Downloader",
-    "product_page_url": "https://apps.serp.co/terabox-downloader",
-    "product_slug": "terabox-downloader",
-    "purchase_url": "https://serp.ly/terabox-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/terabox-downloader/",
-    "serply_link": "https://serp.ly/terabox-downloader",
-    "slug": "terabox-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

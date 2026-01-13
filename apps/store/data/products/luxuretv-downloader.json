@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/luxuretv-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=luxuretv-downloader",
-    "ghl_tag": "purchase-luxuretv-downloader",
-    "lander_id": "luxuretv-downloader",
-    "license_entitlements": "luxuretv-downloader",
-    "offer_id": "luxuretv-downloader",
-    "payment_provider": "stripe",
-    "product_name": "LuxureTV Downloader",
-    "product_page_url": "https://apps.serp.co/luxuretv-downloader",
-    "product_slug": "luxuretv-downloader",
-    "purchase_url": "https://serp.ly/luxuretv-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/luxuretv-downloader/",
-    "serply_link": "https://serp.ly/luxuretv-downloader",
-    "slug": "luxuretv-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

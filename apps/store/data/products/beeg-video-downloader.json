@@ -194,22 +194,6 @@
   "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
-    "ghl_tag": "purchase-beeg-video-downloader",
-    "lander_id": "beeg-video-downloader",
-    "license_entitlements": "beeg-downloader",
-    "offer_id": "beeg-video-downloader",
-    "payment_provider": "stripe",
-    "product_name": "Beeg Video Downloader",
-    "product_page_url": "https://apps.serp.co/beeg-video-downloader",
-    "product_slug": "beeg-video-downloader",
-    "purchase_url": "https://serp.ly/beeg-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-    "serply_link": "https://serp.ly/beeg-video-downloader",
-    "slug": "beeg-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

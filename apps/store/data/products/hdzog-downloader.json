@@ -108,22 +108,6 @@
   "github_repo_url": "https://github.com/serpapps/hdzog-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "cancel_url": "https://apps.serp.co/checkout?product=hdzog-downloader",
-    "ghl_tag": "purchase-hdzog-downloader",
-    "lander_id": "hdzog-downloader",
-    "license_entitlements": "hdzog-downloader",
-    "offer_id": "hdzog-downloader",
-    "payment_provider": "stripe",
-    "product_name": "HDZog Downloader",
-    "product_page_url": "https://apps.serp.co/hdzog-downloader",
-    "product_slug": "hdzog-downloader",
-    "purchase_url": "https://serp.ly/hdzog-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hdzog-downloader/",
-    "serply_link": "https://serp.ly/hdzog-downloader",
-    "slug": "hdzog-downloader",
-    "success_url": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",

@@ -94,24 +94,19 @@ export async function GET(
       key.includes("store_product_page_url"),
   });
 
-  const limited = enforceStripeMetadataLimits(canonical, {
-    keepKeysFirst: [
-      "product_slug",
-      "offer_id",
-      "lander_id",
-      "product_name",
-      "ghl_tag",
-      "environment",
-      "affiliateId",
-      "dubCustomerExternalId",
-      "dubClickId",
-      "purchase_url",
-      "serply_link",
-      "success_url",
-      "cancel_url",
-      "product_page_url",
-      "serp_co_product_page_url",
-    ],
+  const allowedStripeMetadataKeys = [
+    "product_slug",
+    "ghl_tag",
+    "affiliateId",
+    "dubCustomerExternalId",
+    "dubClickId",
+  ];
+  const allowedStripeMetadata = Object.fromEntries(
+    Object.entries(canonical).filter(([key]) => allowedStripeMetadataKeys.includes(key)),
+  );
+
+  const limited = enforceStripeMetadataLimits(allowedStripeMetadata, {
+    keepKeysFirst: allowedStripeMetadataKeys,
   }).metadata;
 
   try {
