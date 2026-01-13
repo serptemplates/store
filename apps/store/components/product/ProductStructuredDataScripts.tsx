@@ -173,7 +173,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       softwareVersion: "1.0",
       url: productUrl,
       downloadUrl:
-        product.serply_link ?? product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url ?? productUrl,
+        product.serply_link ?? product.product_page_url ?? productUrl,
       author: {
         name: siteConfig?.site?.name?.trim() || "SERP Apps",
         url: normalizedStoreUrl,

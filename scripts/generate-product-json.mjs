@@ -103,9 +103,6 @@ for (const slug of allSlugs) {
   const name = ghi?.name || productsCsv.find((row) => slugify(row["Name"]) === slug)?.["Name"] || slug.replace(/-/g, " ").toUpperCase();
   const description = htmlToText(ghi?.raw?.description || "");
   const image = ghi?.raw?.image || "";
-  const baseUrl = process.env.NEXT_PUBLIC_URL || "https://store.serp.co";
-
-  const storeUrl = `${baseUrl}/products/${slug}`;
   const appsUrl = `https://apps.serp.co/${slug}`;
 
   const data = {
@@ -113,8 +110,7 @@ for (const slug of allSlugs) {
     platform: name.split(' ')[0] || name,
     seo_title: `${name} | Download ${name} for Offline Access`,
     seo_description: description || `Download ${name} content for offline use with ease.`,
-    store_serp_co_product_page_url: storeUrl,
-    apps_serp_co_product_page_url: appsUrl,
+    product_page_url: appsUrl,
     reddit_url: null,
     serply_link: `https://serp.ly/${slug}`,
     stripe: {

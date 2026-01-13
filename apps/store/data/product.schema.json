@@ -10,8 +10,7 @@
     "trademark_metadata",
     "seo_title",
     "seo_description",
-    "store_serp_co_product_page_url",
-    "apps_serp_co_product_page_url",
+    "product_page_url",
     "serply_link",
     "success_url",
     "cancel_url",
@@ -91,12 +90,7 @@
       "type": "string",
       "minLength": 1
     },
-    "store_serp_co_product_page_url": {
-      "type": "string",
-      "format": "uri",
-      "pattern": "^https://store\\.serp\\.co/"
-    },
-    "apps_serp_co_product_page_url": {
+    "product_page_url": {
       "type": "string",
       "format": "uri",
       "pattern": "^https://apps\\.serp\\.co/"

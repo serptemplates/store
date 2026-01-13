@@ -39,8 +39,7 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/ai-bulk-image-generator",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
+  "product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
   "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
@@ -48,30 +47,18 @@
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
-    "appsProductPageUrl": "https://apps.serp.co/ai-bulk-image-generator",
     "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
-    "cancelUrl": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
-    "landerId": "ai-bulk-image-generator",
+    "lander_id": "ai-bulk-image-generator",
     "license_entitlements": "ai-bulk-image-generator",
-    "licenseEntitlements": "ai-bulk-image-generator",
-    "offerId": "ai-bulk-image-generator",
+    "offer_id": "ai-bulk-image-generator",
     "product_name": "AI Bulk Image Generator",
     "product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
     "product_slug": "ai-bulk-image-generator",
-    "productName": "AI Bulk Image Generator",
-    "productPageUrl": "https://apps.serp.co/ai-bulk-image-generator",
-    "productSlug": "ai-bulk-image-generator",
     "purchase_url": "https://serp.ly/ai-bulk-image-generator",
-    "purchaseUrl": "https://serp.ly/ai-bulk-image-generator",
     "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
     "serply_link": "https://serp.ly/ai-bulk-image-generator",
-    "serplyLink": "https://serp.ly/ai-bulk-image-generator",
     "slug": "ai-bulk-image-generator",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/ai-bulk-image-generator",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
+    "success_url": "https://apps.serp.co/checkout/success"
   },
   // PAYMENT DATA
   "return_policy": {

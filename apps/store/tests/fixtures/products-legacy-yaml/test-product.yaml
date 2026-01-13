@@ -8,8 +8,7 @@ description: 'Detailed description of the test product.
 seo_title: Test Product
 seo_description: Test product description.
 serply_link: https://serp.ly/test-product
-store_serp_co_product_page_url: https://store.serp.co/product-details/product/test-product
-apps_serp_co_product_page_url: https://apps.serp.co/test-product
+product_page_url: https://apps.serp.co/test-product
 serp_co_product_page_url: https://serp.co/products/test-product/
 reddit_url: null
 success_url: https://apps.serp.co/checkout/success?provider=stripe&slug=test-product&session_id={CHECKOUT_SESSION_ID}

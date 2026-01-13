@@ -17,13 +17,13 @@ describe("merchant-product helpers", () => {
     const result = buildMerchantProduct(product, {
       country: "US",
       language: "en",
-      siteUrl: "https://store.serp.co",
+      siteUrl: "https://apps.serp.co",
       appsUrl: "https://apps.serp.co",
     });
 
     expect(result.offerId).toBe("demo-product");
     expect(result.link).toBe("https://apps.serp.co/demo-product");
-    expect(result.mobileLink).toBe("https://store.serp.co/product-details/product/demo-product");
+    expect(result.mobileLink).toBe("https://apps.serp.co/demo-product");
     expect(result.description).toBe("Turn chaos into clarity.");
     expect(result.price).toEqual({ value: "19.00", currency: "USD" });
     expect(result.salePrice).toEqual({ value: "19.00", currency: "USD" });

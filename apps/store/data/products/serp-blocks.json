@@ -110,8 +110,7 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-blocks",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
+  "product_page_url": "https://apps.serp.co/serp-blocks",
   "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
@@ -120,28 +119,17 @@
   "producthunt_link": "https://producthunt.com/posts/serp-ui-blocks",
   "resource_links": [],
   "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
-    "appsProductPageUrl": "https://apps.serp.co/serp-blocks",
     "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
-    "cancelUrl": "https://apps.serp.co/checkout?product=serp-blocks",
-    "landerId": "serp-blocks",
-    "offerId": "serp-blocks",
+    "lander_id": "serp-blocks",
+    "offer_id": "serp-blocks",
     "product_name": "SERP Blocks",
     "product_page_url": "https://apps.serp.co/serp-blocks",
     "product_slug": "serp-blocks",
-    "productName": "SERP Blocks",
-    "productPageUrl": "https://apps.serp.co/serp-blocks",
-    "productSlug": "serp-blocks",
     "purchase_url": "https://serp.ly/serp-blocks",
-    "purchaseUrl": "https://serp.ly/serp-blocks",
     "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
     "serply_link": "https://serp.ly/serp-blocks",
-    "serplyLink": "https://serp.ly/serp-blocks",
     "slug": "serp-blocks",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/serp-blocks",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
+    "success_url": "https://apps.serp.co/checkout/success"
   },
   // PAYMENT DATA
   "pricing": {

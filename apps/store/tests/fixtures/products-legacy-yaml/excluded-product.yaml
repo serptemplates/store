@@ -8,8 +8,7 @@ description: 'This product should not appear in listings.
 seo_title: Excluded Product
 seo_description: Should be excluded.
 serply_link: https://serp.ly/excluded-product
-store_serp_co_product_page_url: https://store.serp.co/product-details/product/excluded-product
-apps_serp_co_product_page_url: https://apps.serp.co/excluded-product
+product_page_url: https://apps.serp.co/excluded-product
 serp_co_product_page_url: https://serp.co/products/excluded-product/
 reddit_url: null
 success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}

@@ -79,8 +79,7 @@ const COMMENT_SECTIONS = [
     comment: "// PRODUCT PAGE LINKS",
     keys: [
       "serply_link",
-      "store_serp_co_product_page_url",
-      "apps_serp_co_product_page_url",
+      "product_page_url",
       "serp_co_product_page_url",
       "reddit_url",
       "success_url",
@@ -109,8 +108,7 @@ const REQUIRED_PRODUCT_FIELDS = [
   "seo_title",
   "seo_description",
   "serply_link",
-  "store_serp_co_product_page_url",
-  "apps_serp_co_product_page_url",
+  "product_page_url",
   "success_url",
   "cancel_url",
 ] as const;
@@ -254,15 +252,45 @@ function assignMetadataValue(target: Record<string, string>, key: string, value:
   }
 }
 
+function toSnakeCaseKey(key: string): string {
+  return key
+    .replace(/([a-z\d])([A-Z])/g, "$1_$2")
+    .replace(/[-\s]+/g, "_")
+    .replace(/__+/g, "_")
+    .replace(/[^a-z0-9_]/gi, "_")
+    .replace(/^_+|_+$/g, "")
+    .toLowerCase();
+}
+
 function normalizeCheckoutMetadataRecord(source: Record<string, unknown> | undefined): Record<string, string> {
   if (!isRecord(source)) {
     return {};
   }
 
   const normalized: Record<string, string> = {};
-  for (const [key, value] of Object.entries(source)) {
-    assignMetadataValue(normalized, key, value);
+  const entries = Object.entries(source);
+
+  for (const [key, value] of entries) {
+    const normalizedValue = normalizeMetadataValue(value);
+    if (normalizedValue === undefined) continue;
+    const canonical = toSnakeCaseKey(key);
+    if (!canonical) continue;
+    if (canonical === key) {
+      normalized[canonical] = normalizedValue;
+    }
   }
+
+  for (const [key, value] of entries) {
+    const normalizedValue = normalizeMetadataValue(value);
+    if (normalizedValue === undefined) continue;
+    const canonical = toSnakeCaseKey(key);
+    if (!canonical) continue;
+    if (Object.prototype.hasOwnProperty.call(normalized, canonical)) {
+      continue;
+    }
+    normalized[canonical] = normalizedValue;
+  }
+
   return normalized;
 }
 
@@ -271,11 +299,39 @@ function buildBaseCheckoutMetadata(product: ProductData): Record<string, string>
   const slug = normalizeMetadataValue(product.slug);
   const productName = normalizeMetadataValue(product.name);
   if (slug) {
-    base.productSlug = slug;
+    base.product_slug = slug;
+    base.offer_id = slug;
+    base.lander_id = slug;
   }
 
   if (productName) {
-    base.productName = productName;
+    base.product_name = productName;
+  }
+
+  const productPageUrl = normalizeMetadataValue(product.product_page_url);
+  if (productPageUrl) {
+    base.product_page_url = productPageUrl;
+  }
+
+  const serplyLink = normalizeMetadataValue(product.serply_link);
+  if (serplyLink) {
+    base.purchase_url = serplyLink;
+    base.serply_link = serplyLink;
+  }
+
+  const serpCoProductPageUrl = normalizeMetadataValue(product.serp_co_product_page_url);
+  if (serpCoProductPageUrl) {
+    base.serp_co_product_page_url = serpCoProductPageUrl;
+  }
+
+  const successUrl = normalizeMetadataValue(product.success_url);
+  if (successUrl) {
+    base.success_url = successUrl;
+  }
+
+  const cancelUrl = normalizeMetadataValue(product.cancel_url);
+  if (cancelUrl) {
+    base.cancel_url = cancelUrl;
   }
 
   const ghlTags = Array.isArray(product.ghl?.tag_ids)
@@ -283,7 +339,7 @@ function buildBaseCheckoutMetadata(product: ProductData): Record<string, string>
     : [];
 
   if (ghlTags.length > 0) {
-    base.ghlTag = ghlTags[0].trim();
+    base.ghl_tag = ghlTags[0].trim();
   }
 
   const entitlements = Array.isArray(product.license?.entitlements)
@@ -292,17 +348,17 @@ function buildBaseCheckoutMetadata(product: ProductData): Record<string, string>
 
   if (entitlements.length > 0) {
     const serializedEntitlements = entitlements.join(",");
-    base.licenseEntitlements = serializedEntitlements;
+    base.license_entitlements = serializedEntitlements;
   }
 
   const provider = product.payment?.provider ?? (product.stripe ? "stripe" : undefined);
   if (provider) {
-    base.paymentProvider = provider;
+    base.payment_provider = provider;
   }
 
   const accountAlias = typeof product.payment?.account === "string" ? product.payment.account.trim() : undefined;
   if (accountAlias) {
-    base.paymentProviderAccount = accountAlias;
+    base.payment_provider_account = accountAlias;
   }
 
   return base;

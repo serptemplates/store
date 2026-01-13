@@ -10,8 +10,7 @@ const baseProduct: ProductData = {
   },
   seo_title: "Sample Product",
   seo_description: "Sample description",
-  store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
-  apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+  product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
@@ -192,15 +191,14 @@ describe("productToHomeTemplate", () => {
     const product: ProductData = {
       ...baseProduct,
       stripe: undefined,
-      
+
       pricing: {
         price: baseProduct.pricing?.price,
         benefits: baseProduct.pricing?.benefits ?? [],
         cta_href: "https://example.com/not-allowed",
       },
       serply_link: "https://serp.ly/something",
-      store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
-      apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+      product_page_url: "https://apps.serp.co/sample-product",
     };
 
     const template = productToHomeTemplate(product, []);

@@ -121,8 +121,7 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-vpn",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-vpn",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-vpn",
+  "product_page_url": "https://apps.serp.co/serp-vpn",
   "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
   "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
@@ -135,11 +134,19 @@
     }
   ],
   "checkout_metadata": {
-    "ghlTag": "purchase-serp-vpn",
-    "licenseEntitlements": "serp-vpn",
-    "paymentProvider": "stripe",
-    "productName": "SERP VPN",
-    "productSlug": "serp-vpn"
+    "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
+    "ghl_tag": "purchase-serp-vpn",
+    "lander_id": "serp-vpn",
+    "license_entitlements": "serp-vpn",
+    "offer_id": "serp-vpn",
+    "payment_provider": "stripe",
+    "product_name": "SERP VPN",
+    "product_page_url": "https://apps.serp.co/serp-vpn",
+    "product_slug": "serp-vpn",
+    "purchase_url": "https://serp.ly/serp-vpn",
+    "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
+    "serply_link": "https://serp.ly/serp-vpn",
+    "success_url": "https://apps.serp.co/checkout/success"
   },
   // PAYMENT DATA
   "pricing": {

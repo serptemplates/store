@@ -58,8 +58,7 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/demo-payment-adapter-paypal",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter-paypal",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
+  "product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
   "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-paypal/",
   "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-paypal",
   "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-paypal",
@@ -67,12 +66,20 @@
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {
-    "ghlTag": "purchase-demo-payment-adapter-paypal",
-    "licenseEntitlements": "demo-payment-adapter-paypal",
-    "paymentProvider": "paypal",
-    "paymentProviderAccount": "serpapps",
-    "productName": "Demo Payment Adapter (PayPal)",
-    "productSlug": "demo-payment-adapter-paypal"
+    "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-paypal",
+    "ghl_tag": "purchase-demo-payment-adapter-paypal",
+    "lander_id": "demo-payment-adapter-paypal",
+    "license_entitlements": "demo-payment-adapter-paypal",
+    "offer_id": "demo-payment-adapter-paypal",
+    "payment_provider": "paypal",
+    "payment_provider_account": "serpapps",
+    "product_name": "Demo Payment Adapter (PayPal)",
+    "product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
+    "product_slug": "demo-payment-adapter-paypal",
+    "purchase_url": "https://serp.ly/demo-payment-adapter-paypal",
+    "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-paypal/",
+    "serply_link": "https://serp.ly/demo-payment-adapter-paypal",
+    "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-paypal"
   },
   // PAYMENT DATA
   "pricing": {

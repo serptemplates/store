@@ -65,7 +65,7 @@ describe("syncOrderWithGhl custom field payloads", () => {
       currency: "usd",
       landerId: "demo-lander",
       metadata: {
-        productPageUrl: "https://store.example.com/products/demo-offer",
+        productPageUrl: "https://apps.example.com/demo-offer",
         purchaseUrl: "https://store.example.com/checkout/demo-offer",
       },
       provider: "stripe",
@@ -114,7 +114,7 @@ describe("syncOrderWithGhl custom field payloads", () => {
     expect(purchasePayload).toMatchObject({
       provider: "stripe",
       product: expect.objectContaining({
-        pageUrl: "https://store.example.com/products/demo-offer",
+        pageUrl: "https://apps.example.com/demo-offer",
       }),
       license: expect.objectContaining({
         key: "KEY-123",
@@ -170,7 +170,7 @@ describe("syncOrderWithGhl custom field payloads", () => {
       currency: "usd",
       landerId: "demo-lander",
       metadata: {
-        productPageUrl: "https://store.example.com/products/demo-offer",
+        productPageUrl: "https://apps.example.com/demo-offer",
         purchaseUrl: "https://store.example.com/checkout/demo-offer",
       },
       provider: "stripe",
@@ -229,7 +229,7 @@ describe("syncOrderWithGhl custom field payloads", () => {
     expect(purchasePayload).toMatchObject({
       provider: "stripe",
       product: expect.objectContaining({
-        pageUrl: "https://store.example.com/products/demo-offer",
+        pageUrl: "https://apps.example.com/demo-offer",
       }),
       license: expect.objectContaining({
         key: "KEY-123",
@@ -308,7 +308,7 @@ describe("syncOrderWithGhl custom field payloads", () => {
       currency: "usd",
       landerId: "demo-lander",
       metadata: {
-        productPageUrl: "https://store.example.com/products/demo-offer",
+        productPageUrl: "https://apps.example.com/demo-offer",
         purchaseUrl: "https://store.example.com/checkout/demo-offer",
       },
       provider: "stripe",

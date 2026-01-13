@@ -10,8 +10,7 @@ const baseProduct = (): ProductData => ({
   trademark_metadata: {
     uses_trademarked_brand: false,
   },
-  store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
-  apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+  product_page_url: "https://apps.serp.co/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   serply_link: "https://serp.ly/sample-product",
   success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",

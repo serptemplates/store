@@ -26,7 +26,6 @@ const DEFAULT_CTA_LABEL_LOWER = DEFAULT_CTA_LABEL.toLowerCase();
 
 const CTA_ALLOWED_PREFIXES = [
   "https://apps.serp.co/",
-  "https://store.serp.co/",
   "https://ghl.serp.co/",
   "https://serp.ly/",
   "https://serp.co/",
@@ -124,8 +123,7 @@ type ResolvedProductCta = ResolvedHomeCta;
 function selectExternalDestination(product: ProductData): string {
   const candidateLinks = [
     product.pricing?.cta_href,
-    product.apps_serp_co_product_page_url,
-    product.store_serp_co_product_page_url,
+    product.product_page_url,
     product.serp_co_product_page_url,
     product.serply_link,
   ];

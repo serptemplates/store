@@ -77,9 +77,10 @@ function resolveOfferId(order: OrderRecord): string | null {
 
   const metadata = order.metadata ?? {};
   const candidates = [
-    metadata.offerId,
-    metadata.productSlug,
+    metadata.offer_id ?? metadata.offerId,
+    metadata.product_slug ?? metadata.productSlug,
     metadata.product_id,
+    metadata.product_slug?.toString?.(),
     metadata.productSlug?.toString?.(),
   ];
 

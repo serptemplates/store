@@ -284,19 +284,20 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       ? [rawEntitlements.trim()]
       : undefined;
 
+    const productPageUrl =
+      product.product_page_url ?? product.serp_co_product_page_url ?? product.serply_link;
+
     const metadata = mergeMetadata(
       {
-        productSlug: product.slug,
-        productName: product.name,
-        productPageUrl: product.apps_serp_co_product_page_url ?? product.store_serp_co_product_page_url,
-        store_serp_co_product_page_url: product.store_serp_co_product_page_url,
-        apps_serp_co_product_page_url: product.apps_serp_co_product_page_url,
-        purchaseUrl: product.serply_link,
+        product_slug: product.slug,
+        product_name: product.name,
+        product_page_url: productPageUrl,
+        purchase_url: product.serply_link,
         serply_link: product.serply_link,
         success_url: successUrl,
         cancel_url: cancelUrl,
         environment: isTest ? "test" : "live",
-        ...(licenseEntitlements ? { licenseEntitlements } : {}),
+        ...(licenseEntitlements ? { license_entitlements: licenseEntitlements } : {}),
       },
       product.checkout_metadata,
       stripeDetails?.metadata ?? {},

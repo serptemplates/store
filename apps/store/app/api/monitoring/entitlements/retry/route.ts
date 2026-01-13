@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
       wl.payment_intent_id,
       wl.stripe_session_id,
       wl.offer_id as webhook_offer_id,
-      wl.metadata->>'licenseEntitlementsResolved' as license_entitlements_resolved,
+      COALESCE(wl.metadata->>'license_entitlements_resolved', wl.metadata->>'licenseEntitlementsResolved') as license_entitlements_resolved,
       cs.offer_id as session_offer_id,
       cs.customer_email
     FROM webhook_logs wl

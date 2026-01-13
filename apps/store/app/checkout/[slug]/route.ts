@@ -109,7 +109,7 @@ export async function GET(
       "serply_link",
       "success_url",
       "cancel_url",
-      "apps_serp_co_product_page_url",
+      "product_page_url",
       "serp_co_product_page_url",
     ],
   }).metadata;

@@ -101,24 +101,15 @@ export function extractSalePrice(product: ProductData): { value: string; currenc
   return { value: sale.toFixed(2), currency };
 }
 
-function buildStoreLink(product: ProductData, siteUrl: string): string | undefined {
-  if (product.store_serp_co_product_page_url) {
-    return product.store_serp_co_product_page_url;
+function buildAppsLink(product: ProductData, appsUrl: string, siteUrl: string): string | undefined {
+  if (product.product_page_url) {
+    return product.product_page_url;
   }
-  if (!siteUrl) {
+  const baseUrl = appsUrl || siteUrl;
+  if (!baseUrl) {
     return undefined;
   }
-  return `${siteUrl.replace(/\/$/, "")}/product-details/product/${product.slug}`;
-}
-
-function buildAppsLink(product: ProductData, appsUrl: string): string | undefined {
-  if (product.apps_serp_co_product_page_url) {
-    return product.apps_serp_co_product_page_url;
-  }
-  if (!appsUrl) {
-    return undefined;
-  }
-  return `${appsUrl.replace(/\/$/, "")}/${product.slug}`;
+  return `${baseUrl.replace(/\/$/, "")}/${product.slug}`;
 }
 
 function collectAdditionalImages(product: ProductData, origin: string): string[] {
@@ -151,9 +142,8 @@ function resolveAvailability(product: ProductData): "in stock" | "out of stock" 
 }
 
 export function buildMerchantProduct(product: ProductData, options: MerchantProductOptions): MerchantProduct {
-  const storeLink = buildStoreLink(product, options.siteUrl);
-  const appsLink = buildAppsLink(product, options.appsUrl);
-  const primaryLink = appsLink ?? storeLink;
+  const appsLink = buildAppsLink(product, options.appsUrl, options.siteUrl);
+  const primaryLink = appsLink;
 
   if (!primaryLink) {
     throw new Error(`Unable to determine product link for slug "${product.slug}"`);
@@ -177,7 +167,7 @@ export function buildMerchantProduct(product: ProductData, options: MerchantProd
     title: product.name,
     description,
     link: primaryLink,
-    mobileLink: storeLink && storeLink !== primaryLink ? storeLink : undefined,
+    mobileLink: primaryLink,
     imageLink: imageLink ?? undefined,
     additionalImageLinks: additionalImages.length ? additionalImages : undefined,
     contentLanguage: options.language,
