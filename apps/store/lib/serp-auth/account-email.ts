@@ -1,18 +1,18 @@
 import logger from "@/lib/logger";
 
-type D1Config = {
+export type D1Config = {
   accountId: string;
   databaseId: string;
   apiToken: string;
 };
 
-type D1QueryResponse = {
+export type D1QueryResponse = {
   success: boolean;
   errors?: Array<{ message?: string }>;
   result?: Array<{ results?: Array<Record<string, unknown>>; success?: boolean }>;
 };
 
-type SerpAuthEmailUpdateSuccess = {
+export type SerpAuthEmailUpdateSuccess = {
   status: "succeeded";
   customerId: string;
   userId: string | null;
@@ -20,12 +20,12 @@ type SerpAuthEmailUpdateSuccess = {
   nextEmail: string;
 };
 
-type SerpAuthEmailUpdateSkipped = {
+export type SerpAuthEmailUpdateSkipped = {
   status: "skipped";
   reason: "missing_d1_config" | "missing_email" | "customer_not_found";
 };
 
-type SerpAuthEmailUpdateFailed = {
+export type SerpAuthEmailUpdateFailed = {
   status: "failed";
   code: "email_in_use" | "request_failed";
   error?: { message: string; name?: string } | null;
@@ -56,7 +56,7 @@ function maskValue(value: string, visible = 4): string {
   return `${value.slice(0, visible)}...${value.slice(-visible)}`;
 }
 
-type D1Param = string | number | null;
+export type D1Param = string | number | null;
 
 async function queryD1(
   config: D1Config,
@@ -86,13 +86,15 @@ async function queryD1(
   return result?.results ?? [];
 }
 
+export type SerpAuthEmailUpdateInput = {
+  previousEmail: string;
+  nextEmail: string;
+};
+
 export async function updateSerpAuthEmail({
   previousEmail,
   nextEmail,
-}: {
-  previousEmail: string;
-  nextEmail: string;
-}): Promise<SerpAuthEmailUpdateResult> {
+}: SerpAuthEmailUpdateInput): Promise<SerpAuthEmailUpdateResult> {
   const config = getD1Config();
   if (!config) {
     logger.warn("serp_auth.email_update_skipped", {

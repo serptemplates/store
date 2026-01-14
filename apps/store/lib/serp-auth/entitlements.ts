@@ -8,15 +8,19 @@ const ENTITLEMENTS_GRANT_RETRY_DELAY_MS = 500;
 const ENTITLEMENTS_GRANT_TIMEOUT_MS = 5_000;
 const RETRYABLE_STATUS_CODES = new Set([408, 429]);
 
-type GrantEntitlementsInput = {
+export type SerpAuthEntitlementsContext = {
+  provider?: "stripe";
+  providerEventId?: string | null;
+  providerSessionId?: string | null;
+};
+
+export type SerpAuthEntitlementsMetadata = Record<string, unknown>;
+
+export type SerpAuthEntitlementsGrantInput = {
   email: string;
   entitlements: string[];
-  metadata?: Record<string, unknown>;
-  context?: {
-    provider?: "stripe";
-    providerEventId?: string | null;
-    providerSessionId?: string | null;
-  };
+  metadata?: SerpAuthEntitlementsMetadata;
+  context?: SerpAuthEntitlementsContext;
 };
 
 export type SerpAuthEntitlementsGrantResult =
@@ -70,7 +74,7 @@ function isRetryableError(error: unknown): boolean {
 }
 
 export async function grantSerpAuthEntitlements(
-  input: GrantEntitlementsInput,
+  input: SerpAuthEntitlementsGrantInput,
 ): Promise<SerpAuthEntitlementsGrantResult> {
   const secret = getInternalSecret();
   if (!secret) {
@@ -238,18 +242,14 @@ export async function grantSerpAuthEntitlements(
   };
 }
 
-type RevokeEntitlementsInput = {
+export type SerpAuthEntitlementsRevokeInput = {
   email: string;
   entitlements: string[];
-  metadata?: Record<string, unknown>;
-  context?: {
-    provider?: "stripe";
-    providerEventId?: string | null;
-    providerSessionId?: string | null;
-  };
+  metadata?: SerpAuthEntitlementsMetadata;
+  context?: SerpAuthEntitlementsContext;
 };
 
-export async function revokeSerpAuthEntitlements(input: RevokeEntitlementsInput): Promise<void> {
+export async function revokeSerpAuthEntitlements(input: SerpAuthEntitlementsRevokeInput): Promise<void> {
   const secret = getInternalSecret();
   if (!secret) {
     logger.debug("serp_auth.entitlements_revoke_skipped", {

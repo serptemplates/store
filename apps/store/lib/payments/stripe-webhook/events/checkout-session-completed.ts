@@ -15,6 +15,7 @@ import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/me
 import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/order-fulfillment";
 import { getStripeClient } from "@/lib/payments/stripe";
 import type { SerpAuthEntitlementsGrantResult } from "@/lib/serp-auth/entitlements";
+import type { StripeWebhookContext, StripeWebhookEventMeta } from "@/lib/payments/stripe-webhook/types";
 
 const OPS_ALERT_THRESHOLD = 3;
 const BUNDLE_EXPAND_MODE_OPTIONAL_ITEMS_UNION = "optional_items_union";
@@ -533,8 +534,8 @@ async function collectLineItemTagData(
 
 export async function handleCheckoutSessionCompleted(
   session: Stripe.Checkout.Session,
-  eventMeta?: { id?: string; type?: string; created?: number },
-  context?: { accountAlias?: string | null },
+  eventMeta?: StripeWebhookEventMeta,
+  context?: StripeWebhookContext,
 ) {
   const metadata = ensureMetadataCaseVariants(normalizeMetadata(session.metadata), { mirror: "snake" });
 

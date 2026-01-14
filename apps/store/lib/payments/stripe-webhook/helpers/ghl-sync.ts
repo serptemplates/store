@@ -10,9 +10,13 @@ import logger from "@/lib/logger";
 export const MAX_GHL_SYNC_ATTEMPTS = 3;
 export const GHL_SYNC_RETRY_DELAY_MS = 500;
 
+export type GhlSyncConfig = Parameters<typeof syncOrderWithGhl>[0];
+export type GhlSyncContext = Parameters<typeof syncOrderWithGhl>[1];
+export type GhlSyncResult = Awaited<ReturnType<typeof syncOrderWithGhl>>;
+
 export async function syncOrderWithGhlWithRetry(
-  config: Parameters<typeof syncOrderWithGhl>[0],
-  context: Parameters<typeof syncOrderWithGhl>[1],
+  config: GhlSyncConfig,
+  context: GhlSyncContext,
 ) {
   for (let attempt = 1; attempt <= MAX_GHL_SYNC_ATTEMPTS; attempt += 1) {
     try {
