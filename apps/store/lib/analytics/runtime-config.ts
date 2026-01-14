@@ -64,7 +64,8 @@ export function resolvePostHogConfig(env: Env = process.env): PostHogConfig {
 export function resolveDubConfig(env: Env = process.env): DubConfig {
   const publishableKey = env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY ?? null;
   const runtimeHint = resolveRuntimeHint(env);
-  const isProductionRuntime = runtimeHint.trim().toLowerCase() === "production";
+  const normalizedRuntime = runtimeHint.trim().toLowerCase();
+  const isProductionRuntime = ["production", "preview", "staging"].includes(normalizedRuntime);
   const enabled = Boolean(publishableKey && isProductionRuntime);
 
   return {
