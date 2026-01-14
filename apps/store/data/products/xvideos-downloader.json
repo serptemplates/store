@@ -156,11 +156,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with header management and multi-domain support. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/xvideos-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/xvideos-downloader"
   },
   "payment": {
     "provider": "stripe",

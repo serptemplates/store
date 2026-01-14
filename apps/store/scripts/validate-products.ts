@@ -557,7 +557,7 @@ export async function validateProducts(options: ValidateProductsOptions = {}): P
         provider: stripeDetails.provider,
         account: stripeDetails.account ?? undefined,
         mode: stripeDetails.mode,
-        currency: product.pricing?.currency?.toLowerCase?.() ?? "usd",
+        currency: "usd",
         unit_amount: 0,
         stripe: {
           live_price_id: stripeDetails.priceId ?? undefined,

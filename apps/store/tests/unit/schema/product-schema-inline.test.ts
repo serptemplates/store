@@ -24,9 +24,6 @@ const rawProduct = {
   pricing: {
     label: "Lifetime access",
     price: "$17.00",
-    note: "",
-    currency: "USD",
-    availability: "InStock",
     cta_href: "https://apps.serp.co/checkout/test-product",
   },
   features: ["Automation toolkit"],

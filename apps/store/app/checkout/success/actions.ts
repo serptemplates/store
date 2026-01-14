@@ -19,6 +19,7 @@ import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/orde
 import logger from "@/lib/logger";
 import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
 import { handlePayPalWebhookEvent } from "@/lib/payments/providers/paypal/webhook";
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
 
 type ProcessedOrderDetails = {
   sessionId: string;
@@ -582,7 +583,7 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
 
     const resolvedCurrency =
       coerceCurrency(order?.currency) ??
-      coerceCurrency(product?.pricing?.currency ?? null);
+      (product ? coerceCurrency(resolveProductCurrency(product)) : null);
 
     const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
     const ghlMeta = (metadata.ghl as Record<string, unknown> | undefined) ?? undefined;

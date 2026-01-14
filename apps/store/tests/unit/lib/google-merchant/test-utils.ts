@@ -54,9 +54,6 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
     description: "The definitive toolkit for creators.",
     pricing: {
       price: "$19",
-      original_price: "$29",
-      currency: "usd",
-      availability: "OutOfStock",
       cta_href: "https://apps.serp.co/checkout/demo-product",
       ...pricingOverrides,
     },
@@ -77,12 +74,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
 
   if (pricingOverrides) {
     const pricing = input.pricing as Record<string, unknown>;
-    const removableKeys: Array<keyof PricingOverrides> = [
-      "price",
-      "original_price",
-      "currency",
-      "availability",
-    ];
+    const removableKeys: Array<keyof PricingOverrides> = ["price"];
     for (const key of removableKeys) {
       if (Object.prototype.hasOwnProperty.call(pricingOverrides, key) && pricingOverrides[key] === undefined) {
         delete pricing[key as string];

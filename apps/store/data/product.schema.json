@@ -440,20 +440,6 @@
         "price": {
           "type": "string"
         },
-        "original_price": {
-          "type": "string"
-        },
-        "currency": {
-          "type": "string",
-          "pattern": "^[A-Z]{3}$"
-        },
-        "availability": {
-          "type": "string",
-          "minLength": 1
-        },
-        "note": {
-          "type": "string"
-        },
         "cta_text": {
           "type": "string"
         },

@@ -167,12 +167,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with ongoing mirror compatibility updates and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/123movies-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/123movies-downloader"
   },
   "payment": {
     "provider": "stripe",

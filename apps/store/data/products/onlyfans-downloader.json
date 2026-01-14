@@ -204,11 +204,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$57.00",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader"
   },
   "payment": {
     "provider": "stripe",

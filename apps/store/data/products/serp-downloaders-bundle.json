@@ -44,11 +44,7 @@
   "pricing": {
     "label": "Bundle",
     "price": "",
-    "original_price": "",
-    "note": "",
-    "cta_text": "",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_text": ""
   },
   "payment": {
     "provider": "stripe",

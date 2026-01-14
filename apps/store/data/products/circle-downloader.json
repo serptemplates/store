@@ -208,12 +208,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with updates for new Circle player changes. No trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/circle-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/circle-downloader"
   },
   "payment": {
     "provider": "stripe",

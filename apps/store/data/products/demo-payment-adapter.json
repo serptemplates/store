@@ -70,8 +70,7 @@
     "label": "Internal",
     "price": "$1.00",
     "cta_text": "Start Test Checkout",
-    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter",
-    "currency": "USD"
+    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter"
   },
   "payment": {
     "provider": "stripe",

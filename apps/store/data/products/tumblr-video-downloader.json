@@ -148,11 +148,7 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",

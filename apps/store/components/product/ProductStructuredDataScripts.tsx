@@ -13,6 +13,7 @@ import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/prod
 import type { BlogPostMeta } from "@/lib/blog";
 import type { ProductVideoEntry } from "@/lib/products/video";
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url";
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
 
 const TRANSLATED_RESULTS_LANGUAGES = [
   "en",
@@ -86,7 +87,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
   const productRelativeUrl = productPath ? `/${productPath}` : "/";
   const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;
   const productId = `${productUrl}#product`;
-  const resolvedCurrency = product.pricing?.currency?.trim() || "USD";
+  const resolvedCurrency = resolveProductCurrency(product);
   const normalizedPrice = parsePrice(product.pricing?.price) ?? "0.00";
   const normalizedImages = Array.from(
     new Set(

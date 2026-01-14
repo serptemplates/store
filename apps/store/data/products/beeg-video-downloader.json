@@ -202,11 +202,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader"
   },
   "payment": {
     "provider": "stripe",

@@ -835,6 +835,26 @@ async function convertSingleProduct(
         delete pricing.benefits;
         copy.pricing = pricing;
       }
+      if (isRecord(copy.pricing) && "availability" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.availability;
+        copy.pricing = pricing;
+      }
+      if (isRecord(copy.pricing) && "note" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.note;
+        copy.pricing = pricing;
+      }
+      if (isRecord(copy.pricing) && "original_price" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.original_price;
+        copy.pricing = pricing;
+      }
+      if (isRecord(copy.pricing) && "currency" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.currency;
+        copy.pricing = pricing;
+      }
       if ("return_policy" in copy) {
         delete copy.return_policy;
       }

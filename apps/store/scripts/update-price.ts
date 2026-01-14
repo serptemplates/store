@@ -115,11 +115,6 @@ function updateProductFile(args: CliArgs): PreviousIds {
 
   productData.pricing = productData.pricing ?? {};
   productData.pricing.price = formatCurrency(args.priceCents, args.currency);
-  if (args.compareAtCents !== undefined) {
-    productData.pricing.original_price = formatCurrency(args.compareAtCents, args.currency);
-  } else if (productData.pricing.original_price) {
-    delete productData.pricing.original_price;
-  }
 
   productData.payment = productData.payment ?? { provider: "stripe" };
   if (!productData.payment.provider) {

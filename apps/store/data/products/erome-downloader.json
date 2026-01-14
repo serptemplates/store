@@ -176,11 +176,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/erome-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/erome-downloader"
   },
   "payment": {
     "provider": "stripe",

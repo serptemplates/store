@@ -137,11 +137,7 @@
   "pricing": {
     "label": "One-time",
     "price": "$27.00",
-    "original_price": "$47.00",
-    "note": "Join the private beta to lock in early pricing and get migration support for existing Brightcove archives.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "PreOrder"
+    "cta_text": "Get Notified 🔔"
   },
   "payment": {
     "provider": "stripe",

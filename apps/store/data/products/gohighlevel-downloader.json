@@ -183,12 +183,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence covering GoHighLevel lessons, classrooms, communities, and embedded videos. No free trial and all sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader"
   },
   "payment": {
     "provider": "stripe",

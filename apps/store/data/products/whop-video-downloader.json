@@ -204,12 +204,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with stream conversion, password handling, and progress tracking. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/whop-video-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/whop-video-downloader"
   },
   "payment": {
     "provider": "stripe",

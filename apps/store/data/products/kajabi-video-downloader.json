@@ -178,12 +178,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with queue management and subtitle capture included. No free trial; refunds are not available.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/kajabi-video-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/kajabi-video-downloader"
   },
   "payment": {
     "provider": "stripe",

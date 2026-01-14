@@ -259,9 +259,6 @@ export function productToHomeTemplate(
   const formattedPrice = priceManifestEntry
     ? formatAmountFromCents(priceManifestEntry.unitAmount, priceManifestEntry.currency)
     : product.pricing?.price ?? (currentPriceValue != null ? formatPrice(currentPriceValue) : undefined);
-  let derivedOriginalPrice = priceManifestEntry?.compareAtAmount != null
-    ? formatAmountFromCents(priceManifestEntry.compareAtAmount, priceManifestEntry.currency)
-    : product.pricing?.original_price ?? undefined;
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -281,14 +278,6 @@ export function productToHomeTemplate(
     return entries.length > 0 ? entries : undefined;
   })();
 
-  if (!derivedOriginalPrice && currentPriceValue != null) {
-    if (Math.abs(currentPriceValue - 17) < 0.01) {
-      derivedOriginalPrice = formatPrice(37);
-    } else if (Math.abs(currentPriceValue - 27) < 0.01) {
-      derivedOriginalPrice = formatPrice(47);
-    }
-  }
-
   let pricingSubheading: string | undefined;
   if (product.pricing && Object.prototype.hasOwnProperty.call(product.pricing, "subheading")) {
     const rawSubheading = product.pricing?.subheading;
@@ -305,8 +294,6 @@ export function productToHomeTemplate(
     subheading: pricingSubheading,
     priceLabel: showPrices ? product.pricing?.label : undefined,
     price: showPrices ? formattedPrice : undefined,
-    originalPrice: showPrices ? derivedOriginalPrice : undefined,
-    priceNote: showPrices ? product.pricing?.note : undefined,
     benefits:
       product.benefits && product.benefits.length > 0
         ? product.benefits

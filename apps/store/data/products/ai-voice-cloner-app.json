@@ -165,12 +165,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime desktop licence; upgrade to Pro or Enterprise for advanced features and commercial rights. No refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/ai-voice-cloner-app",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/ai-voice-cloner-app"
   },
   "payment": {
     "provider": "stripe",

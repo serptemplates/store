@@ -167,11 +167,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with stream conversion and progress tracking included. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/redtube-video-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/redtube-video-downloader"
   },
   "payment": {
     "provider": "stripe",

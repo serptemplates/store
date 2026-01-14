@@ -1,6 +1,7 @@
 "use client";
 
 import type { ProductData } from "@/lib/products/product-schema";
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
 import { captureEvent } from "./posthog";
 import { pushSelectItemEvent, pushViewItemEvent, type EcommerceItem } from "./gtm";
 
@@ -46,7 +47,7 @@ function buildProductProperties(product: ProductData) {
     productSku: product.sku ?? null,
     productBrand: product.brand ?? null,
     item: getEcommerceItem(product, priceValue),
-    currency: product.pricing?.currency ?? DEFAULT_CURRENCY,
+    currency: resolveProductCurrency(product, DEFAULT_CURRENCY),
   };
 }
 

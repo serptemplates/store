@@ -113,11 +113,7 @@
   "pricing": {
     "label": "One-time",
     "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Secure Your Copy",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_text": "Secure Your Copy"
   },
   "payment": {
     "provider": "stripe",

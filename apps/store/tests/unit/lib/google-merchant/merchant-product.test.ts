@@ -26,8 +26,8 @@ describe("merchant-product helpers", () => {
     expect(result.mobileLink).toBe("https://apps.serp.co/demo-product");
     expect(result.description).toBe("Turn chaos into clarity.");
     expect(result.price).toEqual({ value: "19.00", currency: "USD" });
-    expect(result.salePrice).toEqual({ value: "19.00", currency: "USD" });
-    expect(result.availability).toBe("out of stock");
+    expect(result.salePrice).toBeUndefined();
+    expect(result.availability).toBe("in stock");
     expect(result.brand).toBe("SERP Apps");
     expect(result.googleProductCategory).toBe("Software > Computer Software");
     expect(result.productTypes).toEqual(["Artificial Intelligence", "Platform::Web"]);
@@ -40,39 +40,23 @@ describe("merchant-product helpers", () => {
     ]);
   });
 
-  it("extractPrice falls back to original price when sale price is missing", () => {
+  it("extractPrice falls back to the pricing price when no manifest entry exists", () => {
     const product = createTestProduct({
       pricing: {
-        price: undefined,
-        original_price: "$49.5",
-        currency: "cad",
-        availability: "InStock",
+        price: "$49.5",
       },
     });
 
-    expect(extractPrice(product)).toEqual({ value: "49.50", currency: "CAD" });
+    expect(extractPrice(product)).toEqual({ value: "49.50", currency: "USD" });
   });
 
-  it("extractSalePrice returns null when missing or not cheaper than original", () => {
-    const withoutSalePrice = createTestProduct({
-      pricing: {
-        price: undefined,
-        original_price: "$59",
-        currency: "usd",
-        availability: "InStock",
-      },
-    });
-
+  it("extractSalePrice returns null when there is no compare-at value", () => {
     const notCheaperSale = createTestProduct({
       pricing: {
         price: "$79",
-        original_price: "$59",
-        currency: "usd",
-        availability: "InStock",
       },
     });
 
-    expect(extractSalePrice(withoutSalePrice)).toBeNull();
     expect(extractSalePrice(notCheaperSale)).toBeNull();
   });
 

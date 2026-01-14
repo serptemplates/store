@@ -177,12 +177,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with in-feed download buttons and ongoing updates. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader"
   },
   "payment": {
     "provider": "stripe",

@@ -75,8 +75,8 @@ export function extractPrice(product: ProductData): { value: string; currency: s
     };
   }
 
-  const currency = product.pricing?.currency?.toUpperCase() ?? "USD";
-  const candidate = product.pricing?.price ?? product.pricing?.original_price ?? "";
+  const currency = "USD";
+  const candidate = product.pricing?.price ?? "";
   const parsed = parsePrice(candidate) ?? 0;
   return { value: parsed.toFixed(2), currency };
 }
@@ -91,14 +91,7 @@ export function extractSalePrice(product: ProductData): { value: string; currenc
       currency: manifestEntry.currency,
     };
   }
-
-  const sale = parsePrice(product.pricing?.price ?? null);
-  const original = parsePrice(product.pricing?.original_price ?? null);
-  if (sale === null || original === null || sale >= original) {
-    return null;
-  }
-  const currency = product.pricing?.currency?.toUpperCase() ?? "USD";
-  return { value: sale.toFixed(2), currency };
+  return null;
 }
 
 function buildAppsLink(product: ProductData, appsUrl: string, siteUrl: string): string | undefined {
@@ -136,9 +129,8 @@ function collectProductTypes(product: ProductData): string[] {
   return values;
 }
 
-function resolveAvailability(product: ProductData): "in stock" | "out of stock" {
-  const availability = product.pricing?.availability?.toLowerCase();
-  return availability === "outofstock" || availability === "out_of_stock" ? "out of stock" : "in stock";
+function resolveAvailability(): "in stock" {
+  return "in stock";
 }
 
 export function buildMerchantProduct(product: ProductData, options: MerchantProductOptions): MerchantProduct {
@@ -172,7 +164,7 @@ export function buildMerchantProduct(product: ProductData, options: MerchantProd
     additionalImageLinks: additionalImages.length ? additionalImages : undefined,
     contentLanguage: options.language,
     targetCountry: options.country,
-    availability: resolveAvailability(product),
+    availability: resolveAvailability(),
     condition: "new",
     price,
     brand: product.brand ?? DEFAULT_BRAND,

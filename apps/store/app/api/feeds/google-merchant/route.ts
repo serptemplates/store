@@ -22,7 +22,6 @@ export async function GET() {
     <description>Digital products and tools for creators and businesses</description>
     ${products.map(product => {
       const price = product.pricing?.price?.replace(/[^0-9.]/g, '') || '0.00';
-      const originalPrice = product.pricing?.original_price?.replace(/[^0-9.]/g, '');
       const imageUrl = product.featured_image?.startsWith('http')
         ? product.featured_image
         : `${siteUrl}${product.featured_image}`;
@@ -36,8 +35,6 @@ export async function GET() {
       ${imageUrl ? `<g:image_link>${escapeXml(imageUrl)}</g:image_link>` : ''}
       <g:availability>in stock</g:availability>
       <g:price>${price} USD</g:price>
-      ${originalPrice ? `<g:sale_price>${price} USD</g:sale_price>` : ''}
-      ${originalPrice ? `<g:sale_price_effective_date>${new Date().toISOString()}/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()}</g:sale_price_effective_date>` : ''}
       <g:brand>${escapeXml(product.brand || 'SERP Apps')}</g:brand>
       <g:condition>new</g:condition>
       <g:google_product_category>Software > Computer Software</g:google_product_category>
@@ -58,9 +55,6 @@ export async function GET() {
       <g:custom_label_0>${product.layout_type || 'standard'}</g:custom_label_0>
       <g:custom_label_1>${product.categories?.[0] || 'general'}</g:custom_label_1>
       ${product.featured ? '<g:custom_label_2>featured</g:custom_label_2>' : ''}
-
-      <!-- Promotion if applicable -->
-      ${product.pricing?.note ? `<g:promotion_id>limited-time-offer</g:promotion_id>` : ''}
     </item>`;
     }).join('')}
   </channel>
@@ -83,7 +77,6 @@ export async function POST() {
     if (!product) return null;
 
     const price = product.pricing?.price?.replace(/[^0-9.]/g, '') || '0.00';
-    const originalPrice = product.pricing?.original_price?.replace(/[^0-9.]/g, '');
 
     return {
       id: product.slug,
@@ -93,7 +86,6 @@ export async function POST() {
       image_link: product.featured_image,
       availability: 'in stock',
       price: `${price} USD`,
-      sale_price: originalPrice ? `${price} USD` : undefined,
       brand: product.brand || 'SERP Apps',
       condition: 'new',
       google_product_category: 'Software > Computer Software',

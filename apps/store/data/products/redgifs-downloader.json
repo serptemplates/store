@@ -156,11 +156,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/redgifs-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/redgifs-downloader"
   },
   "payment": {
     "provider": "stripe",

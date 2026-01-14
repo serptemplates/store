@@ -169,11 +169,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence covering free and Premium downloads with stream conversion. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/pornhub-video-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/pornhub-video-downloader"
   },
   "payment": {
     "provider": "stripe",

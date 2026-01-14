@@ -125,7 +125,6 @@
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$97.00",
-    "currency": "USD"
+    "price": "$97.00"
   }
 }

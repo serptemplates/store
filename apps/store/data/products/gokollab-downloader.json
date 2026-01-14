@@ -178,12 +178,8 @@
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence covering GoKollab workspaces and supported embed providers. No free trial; sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/gokollab-downloader",
-    "currency": "USD",
-    "availability": "InStock"
+    "cta_href": "https://apps.serp.co/checkout/gokollab-downloader"
   },
   "payment": {
     "provider": "stripe",

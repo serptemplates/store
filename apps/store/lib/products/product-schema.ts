@@ -7,7 +7,6 @@ import {
   enforceHost,
   externalLinkSchema,
   faqSchema,
-  isoCurrencyCode,
   optionalArray,
   optionalExternalUrl,
   optionalIsoDate,
@@ -48,24 +47,16 @@ const pricingSchemaShape = {
   label: z.string().trim().optional(),
   subheading: z.string().trim().optional(),
   price: z.string().trim().optional(),
-  original_price: z.string().trim().optional(),
-  note: z.string().trim().optional(),
   cta_text: z.string().trim().optional(),
   cta_href: z.string().trim().optional(),
-  currency: isoCurrencyCode,
-  availability: z.string().trim().optional(),
 } satisfies Record<string, z.ZodTypeAny>;
 
 export const PRICING_FIELD_ORDER = [
   "label",
   "subheading",
   "price",
-  "original_price",
-  "note",
   "cta_text",
   "cta_href",
-  "currency",
-  "availability",
 ] as const;
 const pricingSchema = z.object(pricingSchemaShape).optional();
 

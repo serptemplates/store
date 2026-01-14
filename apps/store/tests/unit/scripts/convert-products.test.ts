@@ -68,7 +68,6 @@ describe("scripts/convert-products", () => {
         },
       ],
       pricing: {
-        currency: "usd",
         price: "$10",
         cta_href: "https://apps.serp.co/checkout/sample-product",
       },
@@ -140,7 +139,6 @@ describe("scripts/convert-products", () => {
     expect(parsed).not.toHaveProperty("stripe");
 
     const pricing = parsed.pricing as Record<string, unknown>;
-    expect(pricing.currency).toBe("USD");
     expect(Object.keys(pricing)).toEqual(PRICING_FIELD_ORDER.filter((field) => pricing[field] !== undefined));
     expect(parsed.benefits).toEqual(["Benefit one"]);
     expect(pricing).not.toHaveProperty("benefits");
