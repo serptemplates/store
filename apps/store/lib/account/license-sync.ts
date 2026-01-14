@@ -1,5 +1,6 @@
 import type { AccountRecord } from "@/lib/account/store";
 import { fetchContactLicensesByEmail } from "@/lib/ghl-client";
+import { isGhlConfigured } from "@/lib/ghl-client/config";
 import { upsertOrder, findOrdersByEmailAndSource, deleteOrderById } from "@/lib/checkout/orders";
 import type { GhlLicenseRecord } from "@/lib/ghl-client/types";
 import logger from "@/lib/logger";
@@ -22,6 +23,11 @@ export async function syncAccountLicensesFromGhl(account: AccountRecord): Promis
 
   if (!email) {
     logger.debug("account.ghl_sync.skipped_missing_email", { accountId: account.id });
+    return;
+  }
+
+  if (!isGhlConfigured()) {
+    logger.debug("account.ghl_sync.skipped_unconfigured", { email });
     return;
   }
 

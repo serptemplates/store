@@ -64,10 +64,10 @@ Use this checklist to track JSON migration updates across code, tests, scripts, 
 ## Documentation / SOPs
 - [x] `apps/store/data/README.md`
 - [x] `docs/operations/store-deployment.md`
-- [x] `docs/operations/vercel-envs.md`
-- [x] `docs/operations/MERCHANT-CENTER-SETUP.md`
-- [x] `docs/operations/adult-downloader-price-update.md`
-- [x] `docs/checkout-cross-sell-setup.md`
+- [x] `docs/operations/env-files.md`
+- [ ] Merchant Center setup doc (not yet documented; see `scripts/google-merchant/*.ts`)
+- [x] `docs/runbooks/how-to-update-price-stripe.md`
+- [x] Cross-sell notes (covered in `apps/store/data/README.md`)
 
 ## Stage 4 Pilot Coverage
 - [x] `data/products/123movies-downloader.json` (pilot)

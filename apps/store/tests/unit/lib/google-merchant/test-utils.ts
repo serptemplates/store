@@ -37,29 +37,28 @@ type ProductOverrides = Partial<Omit<ProductData, "pricing" | "categories" | "sc
 
 export function createTestProduct(overrides: ProductOverrides = {}): ProductData {
   const { pricing: pricingOverrides, categories, screenshots, ...rest } = overrides;
+  const slug = typeof rest.slug === "string" ? rest.slug : "demo-product";
 
   const input: Record<string, unknown> = {
-    slug: "demo-product",
+    slug,
     trademark_metadata: {
       uses_trademarked_brand: false,
     },
     platform: "Web",
     seo_title: "Demo Product Title",
     seo_description: "Demo SEO description",
-    product_page_url: "https://apps.serp.co/demo-product",
-    serp_co_product_page_url: "https://serp.co/products/demo-product/",
-    serply_link: "https://serp.ly/demo-product",
+    product_page_url: `https://apps.serp.co/${slug}`,
+    serp_co_product_page_url: `https://serp.co/products/${slug}/`,
+    serply_link: `https://serp.ly/${slug}`,
     name: "Demo Product",
     tagline: "Instant productivity boost",
     description: "The definitive toolkit for creators.",
     pricing: {
-      price: "$19",
-      cta_href: "https://apps.serp.co/checkout/demo-product",
+      cta_text: "Get It Now",
       ...pricingOverrides,
     },
     benefits: [],
     faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
-    cancel_url: "https://apps.serp.co/checkout?product=demo-product",
     categories: categories ?? ["AI Tools"],
     screenshots:
       screenshots ??
@@ -74,7 +73,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
 
   if (pricingOverrides) {
     const pricing = input.pricing as Record<string, unknown>;
-    const removableKeys: Array<keyof PricingOverrides> = ["price"];
+    const removableKeys: Array<keyof PricingOverrides> = [];
     for (const key of removableKeys) {
       if (Object.prototype.hasOwnProperty.call(pricingOverrides, key) && pricingOverrides[key] === undefined) {
         delete pricing[key as string];

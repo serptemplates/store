@@ -26,3 +26,10 @@ export const LOOKUP_TOKEN =
 
 export const LOOKUP_TIMEOUT = Number(process.env.LICENSE_SERVICE_TIMEOUT_MS ?? 5000);
 
+export function isLicenseAdminConfigured(): boolean {
+  return Boolean(ADMIN_URL && ADMIN_TOKEN);
+}
+
+export function isLicenseLookupConfigured(): boolean {
+  return Boolean(LOOKUP_URL && LOOKUP_TOKEN);
+}

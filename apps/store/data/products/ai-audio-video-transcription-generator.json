@@ -27,7 +27,6 @@
     "speech to text",
     "captions"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -40,9 +39,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
-  "product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
-  "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
-  "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
   "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
   "github_repo_tags": [],
   "resource_links": [],

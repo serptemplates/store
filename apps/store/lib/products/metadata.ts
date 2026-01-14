@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
 import type { ProductData } from "./product-schema";
 import { resolveSeoTitle, resolveSeoDescription } from "./unofficial-branding";
+import { resolveProductPageUrl } from "./product-urls";
 
-const STORE_URL = "https://apps.serp.co";
-
-function buildCanonicalUrl(slug: string): string {
-  const trimmed = slug.trim().replace(/^\/+|\/+$/g, "");
-  return `${STORE_URL}/${trimmed}`;
-}
-
-export function buildProductMetadata(product: ProductData): Metadata {
+export function buildProductMetadata(product: ProductData, options: { baseUrl?: string | null } = {}): Metadata {
   const baseTitle = product.seo_title?.trim() || product.name.trim();
   const title = resolveSeoTitle(product, baseTitle);
   const description = resolveSeoDescription(product);
-  const canonical = buildCanonicalUrl(product.slug);
+  const canonical = resolveProductPageUrl(product, { baseUrl: options.baseUrl });
 
   const imageCandidates = [product.featured_image, product.featured_image_gif].filter(
     (value): value is string => Boolean(value && value.trim().length > 0),

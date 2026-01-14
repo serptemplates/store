@@ -60,7 +60,7 @@ describe("feed-formatter", () => {
     expect(xml).toContain("<rss version=\"2.0\"");
     expect(xml).toContain("<title>SERP Apps</title>");
     expect(xml).toContain("<g:id>demo-product</g:id>");
-    expect(xml).toContain("<g:price>19.00 USD</g:price>");
+    expect(xml).toContain("<g:price>0.00 USD</g:price>");
     expect(xml).toContain("<g:shipping>");
     expect(xml).toContain("<g:identifier_exists>FALSE</g:identifier_exists>");
   });

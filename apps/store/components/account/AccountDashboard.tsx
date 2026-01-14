@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import type { Route } from "next";
 
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@repo/ui";
 import type { CheckoutSessionStatus } from "@/lib/checkout/types";
+import { ROUTES } from "@/lib/routes";
 
 type StatusTone = "emerald" | "amber" | "rose" | "slate";
 
@@ -132,7 +134,7 @@ export default function AccountDashboard({
 
     try {
       await fetch("/api/account/verify", { method: "DELETE" });
-      router.replace("/account");
+      router.replace(ROUTES.account as Route);
       router.refresh();
     } catch (signOutError) {
       setError(signOutError instanceof Error ? signOutError.message : String(signOutError));

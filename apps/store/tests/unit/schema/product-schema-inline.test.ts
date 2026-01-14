@@ -17,14 +17,11 @@ const rawProduct = {
   serply_link: "https://serp.ly/test-product",
   product_page_url: "https://apps.serp.co/test-product",
   serp_co_product_page_url: "https://serp.co/products/test-product/",
-  cancel_url: "https://apps.serp.co/checkout?product=test-product",
   status: "live",
   featured_image: "https://cdn.serp.co/media/test-product.jpg",
   featured_image_gif: "https://cdn.serp.co/media/test-product.gif",
   pricing: {
-    label: "Lifetime access",
-    price: "$17.00",
-    cta_href: "https://apps.serp.co/checkout/test-product",
+    cta_text: "Get It Now",
   },
   features: ["Automation toolkit"],
   benefits: [],
@@ -48,7 +45,7 @@ const productData = productSchema.parse(rawProduct);
 
 describe("generateProductSchemaLD", () => {
   const schemaProduct = createSchemaProduct(productData, {
-    price: rawProduct.pricing.price,
+    price: 17,
     images: [rawProduct.featured_image, rawProduct.featured_image_gif],
   });
 

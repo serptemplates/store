@@ -1,60 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { PAYMENT_ACCOUNTS, getPayPalEnvVarCandidates } from "@/config/payment-accounts";
 import { handlePayPalWebhookEvent, type PayPalWebhookEvent } from "@/lib/payments/providers/paypal/webhook";
-import { verifyPayPalWebhookSignature, type PayPalMode } from "@/lib/payments/paypal/api";
+import { verifyPayPalWebhookSignature } from "@/lib/payments/paypal/api";
 import logger from "@/lib/logger";
-
-type WebhookCandidate = {
-  alias: string | null;
-  mode: PayPalMode;
-  webhookId: string;
-};
-
-function readEnvValue(envNames: string[]): string | null {
-  for (const envName of envNames) {
-    const value = process.env[envName];
-    if (typeof value === "string" && value.trim().length > 0) {
-      return value.trim();
-    }
-  }
-  return null;
-}
-
-function buildCandidates(): WebhookCandidate[] {
-  const entries: WebhookCandidate[] = [];
-  const aliases = Object.keys(PAYMENT_ACCOUNTS.paypal);
-  for (const alias of aliases) {
-    (["live", "test"] as const).forEach((mode) => {
-      const { values } = getPayPalEnvVarCandidates(alias, "webhookId", mode);
-      const webhookId = readEnvValue(values);
-      if (webhookId) {
-        entries.push({
-          alias,
-          mode,
-          webhookId,
-        });
-      }
-    });
-  }
-  // Also consider default alias when explicit ones aren't configured
-  if (entries.length === 0) {
-    const defaultAlias = null;
-    (["live", "test"] as const).forEach((mode) => {
-      const { values } = getPayPalEnvVarCandidates(defaultAlias, "webhookId", mode);
-      const webhookId = readEnvValue(values);
-      if (webhookId) {
-        entries.push({
-          alias: defaultAlias,
-          mode,
-          webhookId,
-        });
-      }
-    });
-  }
-  return entries;
-}
+import { buildPayPalWebhookCandidates, type WebhookCandidate } from "@/lib/payments/paypal/webhook-config";
 
 function missing(field: string) {
   return NextResponse.json({ error: `Missing ${field}` }, { status: 400 });
@@ -89,7 +39,7 @@ export async function POST(req: NextRequest) {
   const parsedBody = body as Record<string, unknown>;
   const event = parsedBody as PayPalWebhookEvent;
 
-  const candidates = buildCandidates();
+  const candidates = buildPayPalWebhookCandidates();
   if (candidates.length === 0) {
     return NextResponse.json({ error: "PayPal webhook not configured" }, { status: 500 });
   }

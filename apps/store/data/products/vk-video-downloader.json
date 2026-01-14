@@ -116,7 +116,6 @@
   "keywords": [
     "vk video downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -135,16 +134,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/vk-video-downloader",
-  "product_page_url": "https://apps.serp.co/vk-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/vk-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=vk-video-downloader",
   "github_repo_url": "https://github.com/serpapps/vk-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -164,7 +158,6 @@
     "tag_ids": [
       "purchase-vk-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

@@ -19,7 +19,7 @@ import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/orde
 import logger from "@/lib/logger";
 import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
 import { handlePayPalWebhookEvent } from "@/lib/payments/providers/paypal/webhook";
-import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 
 type ProcessedOrderDetails = {
   sessionId: string;
@@ -393,24 +393,6 @@ function normalizeGhlPaymentId(rawId: string | null | undefined): string | null 
   return trimmed.startsWith("ghl_") ? trimmed : `ghl_${trimmed}`;
 }
 
-function parseDisplayPrice(value: string | null | undefined): number | null {
-  if (!value) {
-    return null;
-  }
-
-  const normalized = value.replace(/[^0-9.,-]/g, "").replace(/,/g, "");
-  if (!normalized) {
-    return null;
-  }
-
-  const parsed = Number.parseFloat(normalized);
-  if (!Number.isFinite(parsed)) {
-    return null;
-  }
-
-  return Number(parsed.toFixed(2));
-}
-
 function coerceCurrency(code: string | null | undefined): string | null {
   if (!code) {
     return null;
@@ -576,14 +558,16 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
       };
     }
 
+    const priceDetails = product ? resolveProductPrice(product) : null;
+
     const amountMajorUnits =
       order?.amountTotal != null
         ? Number((order.amountTotal / 100).toFixed(2))
-        : parseDisplayPrice(product?.pricing?.price ?? null);
+        : priceDetails?.amount ?? null;
 
     const resolvedCurrency =
       coerceCurrency(order?.currency) ??
-      (product ? coerceCurrency(resolveProductCurrency(product)) : null);
+      (priceDetails ? coerceCurrency(priceDetails.currency) : null);
 
     const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
     const ghlMeta = (metadata.ghl as Record<string, unknown> | undefined) ?? undefined;
@@ -619,7 +603,7 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
       getMetadataString(ghlMeta as Record<string, unknown> | undefined, "product_name") ??
       "SERP Purchase";
 
-    const resolvedPrice = amountMajorUnits ?? parseDisplayPrice(product?.pricing?.price ?? null) ?? 0;
+    const resolvedPrice = amountMajorUnits ?? priceDetails?.amount ?? 0;
 
     const items: ProcessedOrderDetails["items"] = [
       {

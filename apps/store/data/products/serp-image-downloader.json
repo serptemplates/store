@@ -106,7 +106,6 @@
     "batch download vectors",
     "image downloader browser extension"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -152,9 +151,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-image-downloader",
-  "product_page_url": "https://apps.serp.co/serp-image-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/serp-image-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-image-downloader",
   "github_repo_url": "https://github.com/serpapps/serp-image-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
@@ -164,8 +160,6 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$47.00",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -178,7 +172,6 @@
     "tag_ids": [
       "purchase-serp-image-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

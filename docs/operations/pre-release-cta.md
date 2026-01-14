@@ -16,11 +16,11 @@ This branch introduces a schema-level toggle so pre-release products can share a
    - `waitlist_url`: provide a custom fallback URL (used if the modal cannot render). Most products can omit this.
    - `pricing.cta_text`: provide custom button copy (use sparingly; “Get Notified” is the standard).
 3. **Returning to checkout**
-   - Change the product `status` back to `live` when you are ready to sell, and ensure `pricing.cta_href` points to `/checkout/<slug>` (or the absolute equivalent on apps.serp.co).
+   - Change the product `status` back to `live` when you are ready to sell. The checkout CTA is derived from the slug (`/checkout/<slug>`), so no additional JSON fields are required.
 
 ## Hosted Checkout Usage
 
-Any product with `status: pre_release` automatically routes visitors to the waitlist CTA. Production launches must provide a valid `pricing.cta_href` so the storefront directs the shopper straight to the internal checkout route.
+Any product with `status: pre_release` automatically routes visitors to the waitlist CTA. Production launches rely on the slug-derived `/checkout/<slug>` path, so there is no separate CTA URL to maintain.
 
 ## QA Checklist
 

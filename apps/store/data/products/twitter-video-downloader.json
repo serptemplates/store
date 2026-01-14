@@ -116,7 +116,6 @@
   "keywords": [
     "twitter video downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -136,16 +135,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/twitter-video-downloader",
-  "product_page_url": "https://apps.serp.co/twitter-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/twitter-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=twitter-video-downloader",
   "github_repo_url": "https://github.com/serpapps/twitter-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -165,7 +159,6 @@
     "tag_ids": [
       "purchase-twitter-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

@@ -59,3 +59,7 @@ export function ensureConfigured(): void {
     );
   }
 }
+
+export function isGhlConfigured(): boolean {
+  return Boolean(GHL_AUTH_TOKEN && GHL_LOCATION_ID);
+}

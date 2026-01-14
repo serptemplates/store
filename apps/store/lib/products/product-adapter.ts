@@ -5,10 +5,12 @@ import type { Testimonial } from "@repo/ui/sections/TestimonialMarquee";
 import type { HomeTemplateProps, ResolvedHomeCta } from "@/components/product/landers/default/home-template.types";
 import { titleCase } from "@/lib/string-utils";
 import type { BlogPostMeta } from "@/lib/blog";
-import { findPriceEntry, findManifestEntryBySlug, formatAmountFromCents } from "@/lib/pricing/price-manifest";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
+import { ROUTES } from "@/lib/routes";
 import { getReleaseBadgeText } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
 import { buildPermissionEntries, buildProductResourceLinks } from "./view-model";
+import { resolveProductPageUrl, resolveSerpCoProductPageUrl } from "./product-urls";
 import type { ProductData } from "./product-schema";
 import { deriveProductCategories } from "./categories";
 
@@ -108,23 +110,12 @@ function toFaqs(faqs: ProductData["faqs"]): FAQ[] | undefined {
   return faqs;
 }
 
-function parsePriceToNumber(value?: string | null): number | null {
-  if (!value) return null;
-  const numeric = Number.parseFloat(value.replace(/[^0-9.]/g, ""));
-  return Number.isFinite(numeric) ? numeric : null;
-}
-
-function formatPrice(value: number): string {
-  return `$${Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2)}`;
-}
-
 type ResolvedProductCta = ResolvedHomeCta;
 
-function selectExternalDestination(product: ProductData): string {
+function selectExternalDestination(product: ProductData, baseUrl?: string | null): string {
   const candidateLinks = [
-    product.pricing?.cta_href,
-    product.product_page_url,
-    product.serp_co_product_page_url,
+    resolveProductPageUrl(product, { baseUrl }),
+    resolveSerpCoProductPageUrl(product),
     product.serply_link,
   ];
 
@@ -138,37 +129,18 @@ function selectExternalDestination(product: ProductData): string {
       ),
   );
 
-  return resolved ?? `https://apps.serp.co/${product.slug}`;
+  return resolved ?? resolveProductPageUrl(product, { baseUrl });
 }
 
-function resolveProductCta(product: ProductData): ResolvedProductCta {
+function buildCheckoutDestination(product: ProductData): string | null {
+  const slug = typeof product.slug === "string" ? product.slug.trim() : "";
+  return slug ? ROUTES.checkout(slug) : null;
+}
+
+function resolveProductCta(product: ProductData, baseUrl?: string | null): ResolvedProductCta {
   const trimmedCtaText =
     typeof product.pricing?.cta_text === "string" ? product.pricing.cta_text.trim() : "";
   const normalizedCtaText = trimmedCtaText.length > 0 ? trimmedCtaText : undefined;
-
-  const checkoutHref = typeof product.pricing?.cta_href === "string"
-    ? product.pricing.cta_href.trim()
-    : undefined;
-
-  if (
-    checkoutHref
-    && product.status !== "pre_release"
-    && (
-      checkoutHref.startsWith("/checkout/")
-      || checkoutHref.startsWith("https://apps.serp.co/checkout/")
-    )
-  ) {
-    return {
-      mode: "checkout",
-      href: checkoutHref,
-      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
-      opensInNewTab: false,
-      target: "_self",
-      analytics: {
-        destination: "checkout",
-      },
-    };
-  }
 
   const isPreRelease = product.status === "pre_release";
 
@@ -192,7 +164,21 @@ function resolveProductCta(product: ProductData): ResolvedProductCta {
     };
   }
 
-  const externalHref = selectExternalDestination(product);
+  const checkoutDestination = buildCheckoutDestination(product);
+  if (checkoutDestination) {
+    return {
+      mode: "checkout",
+      href: checkoutDestination,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab: false,
+      target: "_self",
+      analytics: {
+        destination: "checkout",
+      },
+    };
+  }
+
+  const externalHref = selectExternalDestination(product, baseUrl);
   const opensInNewTab = !externalHref.startsWith("/") && !externalHref.startsWith("#");
 
   return {
@@ -223,6 +209,7 @@ function resolvePosts(product: ProductData, posts: BlogPostMeta[]): BlogPostMeta
 
 type ProductToHomeTemplateOptions = {
   showPrices?: boolean;
+  baseUrl?: string | null;
 };
 
 export function productToHomeTemplate(
@@ -235,7 +222,7 @@ export function productToHomeTemplate(
   const badgeText = getReleaseBadgeText(product);
   const heroTitle = product.name || product.seo_title || `${platform} Downloader`;
   const heroDescription = "";
-  const resolvedCta = resolveProductCta(product);
+  const resolvedCta = resolveProductCta(product, options.baseUrl);
   const productIsPreRelease = product.status === "pre_release";
   const rawVideoUrl = product.product_videos?.[0];
   // Always surface hero video when available, even for pre_release
@@ -246,19 +233,8 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
-  let priceManifestEntry = findPriceEntry(
-    product.payment?.stripe?.price_id,
-    product.payment?.stripe?.test_price_id,
-  );
-  if (!priceManifestEntry) {
-    priceManifestEntry = findManifestEntryBySlug(product.slug);
-  }
-  const currentPriceValue = priceManifestEntry
-    ? priceManifestEntry.unitAmount / 100
-    : parsePriceToNumber(product.pricing?.price);
-  const formattedPrice = priceManifestEntry
-    ? formatAmountFromCents(priceManifestEntry.unitAmount, priceManifestEntry.currency)
-    : product.pricing?.price ?? (currentPriceValue != null ? formatPrice(currentPriceValue) : undefined);
+  const priceDetails = resolveProductPrice(product);
+  const formattedPrice = priceDetails.display;
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -292,7 +268,7 @@ export function productToHomeTemplate(
     heading: product.name,
     productName: product.name,
     subheading: pricingSubheading,
-    priceLabel: showPrices ? product.pricing?.label : undefined,
+    priceLabel: undefined,
     price: showPrices ? formattedPrice : undefined,
     benefits:
       product.benefits && product.benefits.length > 0

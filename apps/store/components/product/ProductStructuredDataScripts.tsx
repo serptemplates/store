@@ -10,10 +10,11 @@ import { resolveSeoProductName } from "@/lib/products/unofficial-branding";
 import type { SiteConfig } from "@/lib/site-config";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
+import { resolveProductPageUrl } from "@/lib/products/product-urls";
 import type { BlogPostMeta } from "@/lib/blog";
 import type { ProductVideoEntry } from "@/lib/products/video";
 import { canonicalizeStoreOrigin } from "@/lib/canonical-url";
-import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 
 const TRANSLATED_RESULTS_LANGUAGES = [
   "en",
@@ -71,24 +72,16 @@ export interface ProductStructuredDataScriptsProps {
 }
 
 export function ProductStructuredDataScripts({ product, posts = [], siteConfig, images, videoEntries }: ProductStructuredDataScriptsProps) {
-  const parsePrice = (value?: string | null): string | null => {
-    if (!value) return null;
-    const cleaned = value.toString().replace(/[^0-9.]/g, "");
-    if (!cleaned) return null;
-    const numeric = Number.parseFloat(cleaned);
-    if (!Number.isFinite(numeric)) return null;
-    return numeric.toFixed(2);
-  };
-
-  const productIsPreRelease = isPreRelease(product);
-  const homeProps = productToHomeTemplate(product, posts);
   const normalizedStoreUrl = canonicalizeStoreOrigin(siteConfig?.site?.domain);
+  const productIsPreRelease = isPreRelease(product);
+  const homeProps = productToHomeTemplate(product, posts, { baseUrl: normalizedStoreUrl });
   const productPath = product.slug?.replace(/^\/+/, "") ?? "";
   const productRelativeUrl = productPath ? `/${productPath}` : "/";
   const productUrl = productPath ? `${normalizedStoreUrl}/${productPath}` : normalizedStoreUrl;
   const productId = `${productUrl}#product`;
-  const resolvedCurrency = resolveProductCurrency(product);
-  const normalizedPrice = parsePrice(product.pricing?.price) ?? "0.00";
+  const priceDetails = resolveProductPrice(product);
+  const resolvedCurrency = priceDetails.currency;
+  const normalizedPrice = priceDetails.amount != null ? priceDetails.amount.toFixed(2) : "0.00";
   const normalizedImages = Array.from(
     new Set(
       (images.length
@@ -174,7 +167,7 @@ export function ProductStructuredDataScripts({ product, posts = [], siteConfig, 
       softwareVersion: "1.0",
       url: productUrl,
       downloadUrl:
-        product.serply_link ?? product.product_page_url ?? productUrl,
+        product.serply_link ?? resolveProductPageUrl(product, { baseUrl: normalizedStoreUrl }) ?? productUrl,
       author: {
         name: siteConfig?.site?.name?.trim() || "SERP Apps",
         url: normalizedStoreUrl,

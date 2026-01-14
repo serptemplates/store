@@ -10,10 +10,8 @@ const baseProduct = (): ProductData => ({
   trademark_metadata: {
     uses_trademarked_brand: false,
   },
-  product_page_url: "https://apps.serp.co/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
   serply_link: "https://serp.ly/sample-product",
-  cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   name: "Sample Product",
   tagline: "Download everything",
   featured_image: "https://cdn.example.com/sample.jpg",
@@ -37,7 +35,6 @@ const baseProduct = (): ProductData => ({
   payment: undefined,
   ghl: undefined,
   license: undefined,
-  layout_type: "landing",
   status: "live",
   featured: false,
   new_release: false,

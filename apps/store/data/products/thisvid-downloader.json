@@ -89,7 +89,6 @@
     "thisvid downloader",
     "thisvid download"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -102,18 +101,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/thisvid-downloader",
-  "product_page_url": "https://apps.serp.co/thisvid-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
   "github_repo_url": "https://github.com/serpapps/thisvid-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/thisvid-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -135,8 +128,7 @@
     "tag_ids": [
       "purchase-thisvid-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

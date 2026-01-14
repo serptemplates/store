@@ -100,7 +100,6 @@
     "chrome clientclub extension",
     "agency training downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -151,9 +150,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/clientclub-downloader",
-  "product_page_url": "https://apps.serp.co/clientclub-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
   "github_repo_url": "https://github.com/serpapps/clientclub-downloader",
   "github_repo_tags": [],
   "resource_links": [
@@ -164,10 +160,7 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/clientclub-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -189,8 +182,7 @@
     "tag_ids": [
       "purchase-clientclub-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

@@ -4,13 +4,14 @@ import {
   LOOKUP_TIMEOUT,
   LOOKUP_TOKEN,
   LOOKUP_URL,
+  isLicenseLookupConfigured,
 } from "./config";
 import { normaliseKey } from "./normalizers";
 import { requestJson } from "./request";
 import type { LicenseLookupInput, LicenseRecord } from "./types";
 
 export async function fetchLicenseForOrder(input: LicenseLookupInput): Promise<LicenseRecord | null> {
-  if (!LOOKUP_URL || !LOOKUP_TOKEN) {
+  if (!isLicenseLookupConfigured()) {
     logger.debug("license_service.disabled", {
       orderId: input.orderId,
       offerId: input.offerId,
@@ -62,4 +63,3 @@ export async function fetchLicenseForOrder(input: LicenseLookupInput): Promise<L
     return null;
   }
 }
-

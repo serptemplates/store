@@ -104,7 +104,6 @@
     "udemy caption downloader",
     "udemy resource saver"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -158,9 +157,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/udemy-video-downloader",
-  "product_page_url": "https://apps.serp.co/udemy-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/udemy-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=udemy-video-downloader",
   "github_repo_url": "https://github.com/serpapps/udemy-video-downloader",
   "github_repo_tags": [],
   "resource_links": [
@@ -171,8 +167,6 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -192,7 +186,6 @@
     "tag_ids": [
       "purchase-udemy-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

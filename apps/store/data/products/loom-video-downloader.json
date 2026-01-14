@@ -109,7 +109,6 @@
     "save loom share link",
     "loom batch downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": true,
   "popular": false,
@@ -197,9 +196,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/loom-video-downloader",
-  "product_page_url": "https://apps.serp.co/loom-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/loom-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=loom-video-downloader",
   "github_repo_url": "https://github.com/serpapps/loom-video-downloader",
   "github_repo_tags": [
     "loom-downloader",
@@ -218,10 +214,7 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/loom-video-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -243,8 +236,7 @@
     "tag_ids": [
       "purchase-loom-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

@@ -39,7 +39,6 @@
     "payment",
     "paypal"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -59,18 +58,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/demo-payment-adapter-paypal",
-  "product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
-  "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-paypal/",
-  "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-paypal",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "Internal",
-    "price": "$17.00",
-    "cta_text": "Start PayPal Test Checkout",
-    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-paypal"
+    "cta_text": "Start PayPal Test Checkout"
   },
   "payment": {
     "provider": "paypal",
@@ -93,8 +86,7 @@
     "tag_ids": [
       "purchase-demo-payment-adapter-paypal",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

@@ -89,7 +89,6 @@
     "anysex downloader",
     "anysex download"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -102,16 +101,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/anysex-downloader",
-  "product_page_url": "https://apps.serp.co/anysex-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/anysex-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=anysex-downloader",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$9",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -124,7 +118,6 @@
     "tag_ids": [
       "purchase-anysex-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

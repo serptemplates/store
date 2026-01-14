@@ -18,10 +18,6 @@ const baseProduct = createTestProduct({
   related_posts: [],
   product_videos: [],
   related_videos: [],
-  pricing: {
-    label: "One-time payment",
-    price: "$17.00",
-  },
   benefits: [],
   faqs: [],
   reviews: [],

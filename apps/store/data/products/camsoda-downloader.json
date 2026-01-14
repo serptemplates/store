@@ -117,7 +117,6 @@
   "keywords": [
     "camsoda downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -131,16 +130,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/camsoda-downloader",
-  "product_page_url": "https://apps.serp.co/camsoda-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/camsoda-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=camsoda-downloader",
   "github_repo_url": "https://github.com/serpapps/camsoda-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$9.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -158,7 +152,6 @@
     "tag_ids": [
       "purchase-camsoda-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

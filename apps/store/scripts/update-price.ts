@@ -113,9 +113,6 @@ function updateProductFile(args: CliArgs): PreviousIds {
   const previousPriceId: string | undefined = productData?.payment?.stripe?.price_id;
   const previousTestPriceId: string | undefined = productData?.payment?.stripe?.test_price_id;
 
-  productData.pricing = productData.pricing ?? {};
-  productData.pricing.price = formatCurrency(args.priceCents, args.currency);
-
   productData.payment = productData.payment ?? { provider: "stripe" };
   if (!productData.payment.provider) {
     productData.payment.provider = "stripe";

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import { notFound } from "next/navigation";
@@ -12,7 +12,9 @@ import rehypeCodeTitles from "rehype-code-titles";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { getAllProducts } from "@/lib/products/product";
 import { getSiteConfig } from "@/lib/site-config";
+import { getSiteBaseUrl } from "@/lib/urls";
 import { buildPrimaryNavProps } from "@/lib/navigation";
+import { ROUTES } from "@/lib/routes";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { Badge } from "@repo/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
@@ -67,9 +69,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const siteConfig = getSiteConfig();
-  const siteName = siteConfig.site?.name ?? "SERP Downloaders";
   const products = getAllProducts();
   const navProps = buildPrimaryNavProps({ products, siteConfig });
+  const baseUrl = getSiteBaseUrl();
   const recommendedPosts = getAllPosts()
     .filter((entry) => entry.slug !== slug)
     .sort(() => 0.5 - Math.random())
@@ -82,26 +84,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const articleSchema = generateArticleSchema({
     headline: metaTitle,
     description: metaDescription,
-    image: post.meta.image || 'https://apps.serp.co/og-image.png',
+    image: post.meta.image || `${baseUrl}/og-image.png`,
     datePublished: post.meta.date,
     dateModified: post.meta.dateModified ?? post.meta.date,
     author: {
       name: post.meta.author,
       url: post.meta.authorUrl ?? undefined,
     },
-    url: `https://apps.serp.co/blog/${slug}`,
-    wordCount: post.content.split(' ').length,
+    url: `${baseUrl}${ROUTES.blogPost(slug)}`,
+    wordCount: post.content.split(" ").length,
     keywords: post.meta.tags,
     articleSection: post.meta.category,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: 'Home', url: '/' },
-      { name: 'Blog', url: '/blog' },
+      { name: "Home", url: "/" },
+      { name: "Blog", url: ROUTES.blog },
       { name: metaTitle },
     ],
-    storeUrl: 'https://apps.serp.co',
+    storeUrl: baseUrl,
   });
 
   return (
@@ -136,7 +138,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </li>
               <li>/</li>
               <li>
-                <Link href="/blog" className="hover:text-primary">
+                <Link href={ROUTES.blog as Route} className="hover:text-primary">
                   Blog
                 </Link>
               </li>
@@ -197,7 +199,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <section className="mt-16 border-t pt-10">
               <div className="mb-6 flex items-center justify-between gap-4">
                 <h2 className="text-2xl font-semibold tracking-tight text-foreground">Read more</h2>
-                <Link href="/blog" className="text-sm font-medium text-primary hover:underline">
+                <Link href={ROUTES.blog as Route} className="text-sm font-medium text-primary hover:underline">
                   View all posts →
                 </Link>
               </div>
@@ -209,7 +211,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         {format(new Date(related.date), "MMM d, yyyy")}
                       </p>
                       <CardTitle className="line-clamp-2 text-base">
-                        <Link href={`/blog/${related.slug}`} className="hover:text-primary">
+                        <Link href={ROUTES.blogPost(related.slug) as Route} className="hover:text-primary">
                           {related.title}
                         </Link>
                       </CardTitle>
@@ -217,7 +219,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <CardContent className="space-y-3 text-sm text-muted-foreground">
                       <p className="line-clamp-3">{related.description}</p>
                       <Link
-                        href={`/blog/${related.slug}`}
+                        href={ROUTES.blogPost(related.slug) as Route}
                         className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
                       >
                         Read article
@@ -242,7 +244,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           )}
 
           <footer className="mt-12 border-t pt-8">
-            <Link href="/blog" className="text-sm font-medium text-primary hover:underline">
+            <Link href={ROUTES.blog as Route} className="text-sm font-medium text-primary hover:underline">
               ← Back to Blog
             </Link>
           </footer>

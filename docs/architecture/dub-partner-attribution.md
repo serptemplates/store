@@ -123,7 +123,7 @@ This implementation follows the exact same pattern as the existing GHL affiliate
 
 ## Product Data Requirements
 
-For this solution to work, products must have `stripe.price_id` and an internal checkout CTA in their JSON:
+For this solution to work, products must have `stripe.price_id`. Checkout CTA URLs are derived from the slug (`/checkout/<slug>`) at runtime.
 
 ```json
 {
@@ -132,9 +132,6 @@ For this solution to work, products must have `stripe.price_id` and an internal 
     "metadata": {
       "stripe_product_id": "prod_Sv6HHbpO7I9vt0"
     }
-  },
-  "pricing": {
-    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader"
   }
 }
 ```

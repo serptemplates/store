@@ -1,112 +1,44 @@
-# @serpcompany/payments
+# SERP Store Monorepo
 
-Internal payment adapter package for SERP projects. Provides Stripe/PayPal/Whop adapters, credential registry, provider metadata for toggle UIs, and shared helpers.
-
-## Install
-
-1) Auth to GitHub Packages (project-local `.npmrc` recommended):
-```
-@serpcompany:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-Use a PAT with `read:packages` (and `write:packages` only when publishing).
-
-2) Install:
-```
-pnpm add @serpcompany/payments
-```
-
-3) If using Next.js, add to `transpilePackages`:
-```js
-// next.config.mjs
-const nextConfig = {
-  transpilePackages: ["@serpcompany/payments"],
-};
-export default nextConfig;
-```
-
-## What’s inside
-
-- Adapters: `stripeCheckoutAdapter`, `paypalCheckoutAdapter`, `whopCheckoutAdapter`, placeholder adapters for Easy Pay Direct and LemonSqueezy.
-- Registry helpers: `defaultAdapters`, `getAdapter`, `createCheckoutSession`.
-- Credential registry: `payment-accounts.ts` (env var aliases for Stripe/PayPal).
-- Helpers: `stripe`, `stripe-environment`, `paypal/api`, `metadata` utilities.
-- Provider metadata: `listAvailableProviders()`, `requiredFieldsForProvider(id)` for toggle/config UIs.
-- Logger bridge: `setPaymentsLogger` (defaults to console-safe logging).
+This repo powers the SERP store at https://apps.serp.co. It includes the Next.js storefront, shared UI primitives, and the scripts/docs that manage product JSON, Stripe checkout, GHL sync, and serp-auth entitlement grants.
 
 ## Quick start
 
-```ts
-import {
-  defaultAdapters,
-  getAdapter,
-  type CheckoutRequest,
-} from "@serpcompany/payments";
-import { setPaymentsLogger } from "@serpcompany/payments/logger";
-import appLogger from "./logger"; // your logger
-
-setPaymentsLogger(appLogger);
-
-const adapter = getAdapter("stripe", defaultAdapters);
-
-const request: CheckoutRequest = {
-  slug: "my-offer",
-  mode: "payment",
-  quantity: 1,
-  metadata: { product_slug: "my-offer" },
-  successUrl: "https://example.com/success",
-  cancelUrl: "https://example.com/cancel",
-  price: { id: "price_123", productName: "My Offer" },
-  paymentAccountAlias: "primary",
-  providerConfig: {
-    provider: "stripe",
-    stripe: { price_id: "price_123" },
-  },
-};
-
-const session = await adapter.createCheckout(request);
-// => { provider, redirectUrl, sessionId, providerSessionId }
+```bash
+pnpm install
+pnpm dev
 ```
 
-## Config & env
+Create a local `.env` at the repo root before running the app. See `docs/operations/env-files.md` for the exact env layout and required keys.
 
-- Update `src/payment-accounts.ts` if your env var names differ (Stripe/PayPal aliases).
-- Stripe mode, test/live selection, and webhook secrets are resolved via `stripe-environment`.
-- PayPal credentials resolved via `paypal/api` using the registry.
+## Common commands
 
-## Provider metadata (for toggle UI)
-
-```ts
-import {
-  listAvailableProviders,
-  requiredFieldsForProvider,
-} from "@serpcompany/payments";
-
-const providers = listAvailableProviders(); // ids, labels, fields
-const stripeFields = requiredFieldsForProvider("stripe");
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test:unit
+pnpm test:smoke
+pnpm validate:products
 ```
 
-## Testing
+## Repo structure
 
-- Stripe adapter has test hooks:
-```ts
-import {
-  setStripeCheckoutDependencies,
-  resetStripeCheckoutDependencies,
-} from "@serpcompany/payments/providers/stripe/checkout";
-
-// In tests, mock getStripeClient/resolvePriceForEnvironment:
-setStripeCheckoutDependencies({ getStripeClient: mockFn, resolvePriceForEnvironment: mockFn });
-// reset after tests
-resetStripeCheckoutDependencies();
+```
+apps/store/     Next.js app (routes, APIs, checkout, account)
+packages/ui/   Shared UI components
+docs/          Architecture, operations, runbooks, data notes
+scripts/       Repo-level automation (Stripe, merchant feeds, syncs)
 ```
 
-## Publishing (maintainers)
+## Documentation
 
-- Bump version in `package.json`.
-- Ensure `.npmrc` has write token.
-- `pnpm publish --access public --no-git-checks`
+Start at `docs/README.md` for the doc index, then follow:
 
----
+- `docs/architecture/checkout-overview.md`
+- `docs/operations/store-deployment.md`
+- `apps/store/data/README.md`
 
-Adjust any env aliasing in `payment-accounts.ts` as needed for each project.
+## Notes
+
+- This is a PNPM workspace. Root scripts run against the `@apps/store` package by default.
+- Product content lives in `apps/store/data/products/*.json` and is validated by `pnpm validate:products`.

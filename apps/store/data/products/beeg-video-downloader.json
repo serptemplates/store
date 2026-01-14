@@ -108,7 +108,6 @@
     "chrome adult video downloader",
     "offline beeg saver"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -192,18 +191,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/beeg-video-downloader",
-  "product_page_url": "https://apps.serp.co/beeg-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
   "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -225,8 +218,7 @@
     "tag_ids": [
       "purchase-beeg-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

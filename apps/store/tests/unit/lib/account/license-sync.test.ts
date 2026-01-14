@@ -10,6 +10,10 @@ vi.mock("@/lib/checkout/orders", () => ({
   deleteOrderById: vi.fn(),
 }));
 
+vi.mock("@/lib/ghl-client/config", () => ({
+  isGhlConfigured: () => true,
+}));
+
 import type { AccountRecord } from "@/lib/account/store";
 import { syncAccountLicensesFromGhl } from "@/lib/account/license-sync";
 import { fetchContactLicensesByEmail } from "@/lib/ghl-client";

@@ -107,7 +107,6 @@
     "tiktok chrome download button",
     "offline tiktok library"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": true,
   "popular": false,
@@ -162,9 +161,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/tiktok-downloader",
-  "product_page_url": "https://apps.serp.co/tiktok-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
   "github_repo_url": "https://github.com/serpapps/tiktok-video-downloader",
   "github_repo_tags": [],
   "resource_links": [
@@ -175,10 +171,7 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -200,8 +193,7 @@
     "tag_ids": [
       "purchase-tiktok-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

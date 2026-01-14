@@ -20,6 +20,7 @@ import { useMarketplaceProductPageViewModel } from "@/components/product/landers
 import { mapPermissionItemsToFaq } from "@/components/product/shared/mapPermissionItemsToFaq";
 import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
+import { canonicalizeStoreOrigin } from "@/lib/canonical-url";
 import { ScreenshotsCarousel } from "@repo/ui/sections/ScreenshotsCarousel";
 
 export type MarketplaceProductPageViewProps = {
@@ -32,7 +33,8 @@ export function MarketplaceProductPageView({ product, siteConfig }: MarketplaceP
   const permissionFaqItems = mapPermissionItemsToFaq(viewModel.sections.permissionItems);
   // Reuse product adapter to normalize screenshots for carousel display
   const showPrices = siteConfig.storefront?.showPrices !== false;
-  const homeTemplate = productToHomeTemplate(product, [], { showPrices });
+  const baseUrl = canonicalizeStoreOrigin(siteConfig?.site?.domain);
+  const homeTemplate = productToHomeTemplate(product, [], { showPrices, baseUrl });
   const screenshots = homeTemplate.screenshots ?? [];
 
   return (

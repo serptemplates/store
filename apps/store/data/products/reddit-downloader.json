@@ -90,7 +90,6 @@
     "reddit downloader",
     "reddit download tool"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -109,16 +108,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/reddit-downloader",
-  "product_page_url": "https://apps.serp.co/reddit-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/reddit-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=reddit-downloader",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -131,7 +125,6 @@
     "tag_ids": [
       "purchase-reddit-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

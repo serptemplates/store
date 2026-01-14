@@ -107,7 +107,6 @@
     "spankbang embed saver",
     "offline spankbang collection"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -153,18 +152,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/spankbang-video-downloader",
-  "product_page_url": "https://apps.serp.co/spankbang-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/spankbang-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=spankbang-video-downloader",
   "github_repo_url": "https://github.com/serpapps/spankbang-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/spankbang-video-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -186,8 +179,7 @@
     "tag_ids": [
       "purchase-spankbang-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

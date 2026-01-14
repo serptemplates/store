@@ -10,6 +10,11 @@ import { chromium } from '@playwright/test';
 const CHECKOUT_URL = process.argv[2];
 const TEST_EMAIL = process.env.STRIPE_TEST_EMAIL || `test-${Date.now()}@serp.co`;
 const TEST_NAME = process.env.STRIPE_TEST_NAME || 'Test User';
+const headless =
+  process.env.PLAYWRIGHT_HEADLESS === '1' ||
+  process.env.PLAYWRIGHT_HEADLESS === 'true' ||
+  process.env.STRIPE_CHECKOUT_HEADLESS === '1' ||
+  process.env.STRIPE_CHECKOUT_HEADLESS === 'true';
 
 if (!CHECKOUT_URL) {
   console.error('Usage: tsx scripts/manual-tests/complete-dub-test-checkout.ts <checkout_url>');
@@ -19,7 +24,7 @@ if (!CHECKOUT_URL) {
 console.log('🤖 Automating Stripe checkout...\n');
 
 async function completeCheckout() {
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({ headless });
   const context = await browser.newContext();
   const page = await context.newPage();
 

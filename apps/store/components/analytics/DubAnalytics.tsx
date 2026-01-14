@@ -1,26 +1,17 @@
 "use client";
 
 import { Analytics as DubAnalyticsLib } from "@dub/analytics/react";
+import { resolveDubConfig } from "@/lib/analytics/runtime-config";
 
 // Centralized Dub Analytics client component
 // Configure client-side click tracking with our Dub short link domain
 export function DubAnalytics() {
-  const publishableKey = process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
-  const runtimeHint =
-    process.env.NEXT_PUBLIC_RUNTIME_ENV
-    ?? process.env.RUNTIME_ENV
-    ?? process.env.APP_ENV
-    ?? process.env.VERCEL_ENV
-    ?? process.env.NODE_ENV
-    ?? "development";
-  const isProductionRuntime = runtimeHint.trim().toLowerCase() === "production";
+  const dubConfig = resolveDubConfig();
 
-  const shouldLoadDub = Boolean(publishableKey && isProductionRuntime);
-
-  if (!shouldLoadDub) {
+  if (!dubConfig.enabled) {
     if (process.env.NODE_ENV !== "production") {
-      const reason = publishableKey
-        ? `runtime "${runtimeHint}" is not production`
+      const reason = dubConfig.publishableKey
+        ? `runtime "${dubConfig.runtimeHint}" is not production`
         : "NEXT_PUBLIC_DUB_PUBLISHABLE_KEY is not set";
       // eslint-disable-next-line no-console
       console.warn(`[DubAnalytics] Skipping Dub initialization: ${reason}.`);
@@ -28,11 +19,9 @@ export function DubAnalytics() {
     return null;
   }
 
-  // publishableKey is defined if shouldLoadDub is true
-
   return (
     <DubAnalyticsLib
-      publishableKey={publishableKey}
+      publishableKey={dubConfig.publishableKey!}
       cookieOptions={{ domain: ".serp.co" }}
       queryParams={["via"]}
       domainsConfig={{

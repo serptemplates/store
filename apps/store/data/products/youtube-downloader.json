@@ -107,7 +107,6 @@
     "chrome youtube downloader extension",
     "yt-dlp alternative gui"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": true,
   "popular": false,
@@ -178,9 +177,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/youtube-downloader",
-  "product_page_url": "https://apps.serp.co/youtube-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/youtube-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=youtube-downloader",
   "github_repo_url": "https://github.com/serpapps/youtube-downloader",
   "github_repo_tags": [
     "youtube-downloader",
@@ -190,10 +186,7 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/youtube-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -215,8 +208,7 @@
     "tag_ids": [
       "purchase-youtube-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [
