@@ -51,10 +51,9 @@ async function migrate() {
       changed = true;
     }
 
-    // 2) Normalize success_url to success page (server will inject placeholder for Stripe)
-    const desiredSuccess = "https://apps.serp.co/checkout/success";
-    if (data.success_url !== desiredSuccess) {
-      data.success_url = desiredSuccess;
+    // 2) Remove deprecated success_url (now derived in code)
+    if ("success_url" in data) {
+      delete (data as Record<string, unknown>).success_url;
       changed = true;
     }
 

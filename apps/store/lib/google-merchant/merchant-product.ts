@@ -66,7 +66,7 @@ function parsePrice(value: string | null | undefined): number | null {
 
 export function extractPrice(product: ProductData): { value: string; currency: string } {
   const manifestEntry =
-    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
     findManifestEntryBySlug(product.slug);
   if (manifestEntry) {
     return {
@@ -83,7 +83,7 @@ export function extractPrice(product: ProductData): { value: string; currency: s
 
 export function extractSalePrice(product: ProductData): { value: string; currency: string } | null {
   const manifestEntry =
-    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
     findManifestEntryBySlug(product.slug);
   if (manifestEntry?.compareAtAmount != null && manifestEntry.compareAtAmount > manifestEntry.unitAmount) {
     return {

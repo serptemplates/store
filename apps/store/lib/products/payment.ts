@@ -18,12 +18,12 @@ export type StripePaymentDetails = {
   priceId: string | null;
   testPriceId: string | null;
   metadata: Record<string, string>;
-  optionalItems: NonNullable<ProductData["stripe"]>["optional_items"];
+  optionalItems: NonNullable<NonNullable<ProductPayment>["stripe"]>["optional_items"];
   successUrl: string | null;
   cancelUrl: string | null;
 };
 
-function normalizeOptionalItems(items?: NonNullable<ProductData["stripe"]>["optional_items"]) {
+function normalizeOptionalItems(items?: NonNullable<NonNullable<ProductPayment>["stripe"]>["optional_items"]) {
   if (!Array.isArray(items) || items.length === 0) {
     return undefined;
   }
@@ -32,7 +32,7 @@ function normalizeOptionalItems(items?: NonNullable<ProductData["stripe"]>["opti
 
 export function resolveStripePaymentDetails(product: ProductData): StripePaymentDetails | null {
   const payment = product.payment?.provider === "stripe" ? product.payment : undefined;
-  const stripeConfig = payment?.stripe ?? product.stripe;
+  const stripeConfig = payment?.stripe;
 
   if (!stripeConfig) {
     return null;
@@ -55,8 +55,8 @@ export function getStripePriceIds(product: ProductData): { live?: string | null;
   const details = resolveStripePaymentDetails(product);
   if (!details) {
     return {
-      live: product.stripe?.price_id ?? null,
-      test: product.stripe?.test_price_id ?? null,
+      live: null,
+      test: null,
     };
   }
 
@@ -70,5 +70,5 @@ export function getPaymentProvider(product: ProductData): PaymentProviderId {
   if (product.payment?.provider) {
     return product.payment.provider;
   }
-  return product.stripe ? "stripe" : "stripe";
+  return "stripe";
 }

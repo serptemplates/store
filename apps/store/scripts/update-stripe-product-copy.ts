@@ -123,10 +123,11 @@ async function collectMappings(): Promise<ProductStripeMapping[]> {
   return getAllProducts()
     .filter(
       (product) =>
-        product.trademark_metadata?.uses_trademarked_brand && typeof product.stripe?.metadata?.stripe_product_id === "string",
+        product.trademark_metadata?.uses_trademarked_brand
+        && typeof product.payment?.stripe?.metadata?.stripe_product_id === "string",
     )
     .map((product) => {
-      const stripeProductId = product.stripe!.metadata!.stripe_product_id!.trim();
+      const stripeProductId = product.payment!.stripe!.metadata!.stripe_product_id!.trim();
       const resolvedName = resolveSeoProductName(product);
       const computedDisclaimer = formatTrademarkDisclaimer(product);
       const fallback = fallbackDisclaimer(

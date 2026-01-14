@@ -57,7 +57,6 @@ describe("scripts/convert-products", () => {
       seo_description: "A concise marketing description.",
       serply_link: "https://serp.ly/sample-product",
       product_page_url: "https://apps.serp.co/sample-product",
-      success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://apps.serp.co/checkout?product=sample-product",
       tagline: "Save time instantly",
       featured_image: "/media/products/sample-product/featured.png",
@@ -72,8 +71,8 @@ describe("scripts/convert-products", () => {
         currency: "usd",
         price: "$10",
         cta_href: "https://apps.serp.co/checkout/sample-product",
-        benefits: ["Benefit one"],
       },
+      benefits: ["Benefit one"],
       faqs: [
         {
           answer: "Yes, immediately.",
@@ -138,16 +137,20 @@ describe("scripts/convert-products", () => {
     const productKeys = Object.keys(parsed);
     const expectedOrder = PRODUCT_FIELD_ORDER.filter((field) => parsed[field] !== undefined);
     expect(productKeys).toEqual(expectedOrder);
+    expect(parsed).not.toHaveProperty("stripe");
 
     const pricing = parsed.pricing as Record<string, unknown>;
     expect(pricing.currency).toBe("USD");
     expect(Object.keys(pricing)).toEqual(PRICING_FIELD_ORDER.filter((field) => pricing[field] !== undefined));
+    expect(parsed.benefits).toEqual(["Benefit one"]);
+    expect(pricing).not.toHaveProperty("benefits");
 
     const screenshots = parsed.screenshots as Array<Record<string, unknown>>;
     expect(screenshots).toHaveLength(1);
     expect(Object.keys(screenshots[0])).toEqual(SCREENSHOT_FIELD_ORDER);
 
-    const stripe = parsed.stripe as Record<string, unknown>;
+    const payment = parsed.payment as Record<string, unknown>;
+    const stripe = payment.stripe as Record<string, unknown>;
     expect(Object.keys(stripe)).toEqual(
       STRIPE_FIELD_ORDER.filter((field) => stripe[field] !== undefined),
     );
@@ -180,7 +183,6 @@ describe("scripts/convert-products", () => {
       },
       serply_link: `https://serp.ly/${slug}`,
       product_page_url: `https://apps.serp.co/${slug}`,
-      success_url: "https://apps.serp.co/checkout/success",
       cancel_url: `https://apps.serp.co/checkout?product=${slug}`,
       faqs: [
         {
@@ -225,7 +227,6 @@ describe("scripts/convert-products", () => {
       seo_description: "Dry run description text.",
       serply_link: "https://serp.ly/dry-run-product",
       product_page_url: "https://apps.serp.co/dry-run-product",
-      success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://apps.serp.co/checkout?product=dry-run-product",
       pricing: { price: "$10" },
     });
@@ -257,7 +258,6 @@ describe("scripts/convert-products", () => {
       seo_title: "Needs format",
       serply_link: "https://serp.ly/needs-format",
       product_page_url: "https://apps.serp.co/needs-format",
-      success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://apps.serp.co/checkout?product=needs-format",
       tagline: "Messy order",
     });

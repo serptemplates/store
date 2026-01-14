@@ -124,11 +124,11 @@ export const paymentSchema = z
 
 export type ProductPayment = z.infer<typeof paymentSchema>;
 
-export function resolveStripePriceId(data: { payment?: z.infer<typeof paymentSchema>; stripe?: z.infer<typeof stripeSchema> }) {
-  if (data.payment?.provider === "stripe" && data.payment?.stripe?.price_id) {
-    return data.payment.stripe.price_id;
+export function resolveStripePriceId(payment?: z.infer<typeof paymentSchema>): string | null {
+  if (payment?.provider === "stripe" && payment.stripe?.price_id) {
+    return payment.stripe.price_id;
   }
-  return data.stripe?.price_id;
+  return null;
 }
 
 export const PAYMENT_FIELD_ORDER = [

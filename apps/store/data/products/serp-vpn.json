@@ -23,6 +23,11 @@
     "Optimized routes for search, scraping, and QA workflows",
     "Zero analytics beacons or invasive trackers inside the extension"
   ],
+  "benefits": [
+    "Switch IPs quickly without juggling full desktop VPN clients",
+    "Keep testing, research, and personal browsing cleanly separated",
+    "Rely on clear connection indicators before running sensitive workflows"
+  ],
   "faqs": [
     {
       "question": "What browsers does SERP VPN Extension support?",
@@ -123,7 +128,6 @@
   "serply_link": "https://serp.ly/serp-vpn",
   "product_page_url": "https://apps.serp.co/serp-vpn",
   "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
   "github_repo_url": "https://github.com/serpapps/serp-vpn",
   "github_repo_tags": [],
@@ -142,19 +146,7 @@
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/serp-vpn",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Switch IPs quickly without juggling full desktop VPN clients",
-      "Keep testing, research, and personal browsing cleanly separated",
-      "Rely on clear connection indicators before running sensitive workflows"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -165,14 +157,6 @@
         "stripe_product_id": "prod_TadN87zfHr8CTD",
         "stripe_test_product_id": "prod_TadNr26NIX4TK1"
       }
-    }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6uDP7AOTRcvmM8M435bb",
-    "test_price_id": "price_1SdS6vDP7AOTRcvmsfdW0ZIS",
-    "metadata": {
-      "stripe_product_id": "prod_TadN87zfHr8CTD",
-      "stripe_test_product_id": "prod_TadNr26NIX4TK1"
     }
   },
   "ghl": {

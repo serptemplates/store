@@ -17,6 +17,7 @@
     "Lets us swap Stripe accounts per product",
     "Supports future providers like Whop or LemonSqueezy"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Can customers buy this product?",
@@ -60,7 +61,6 @@
   "serply_link": "https://serp.ly/demo-payment-adapter",
   "product_page_url": "https://apps.serp.co/demo-payment-adapter",
   "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter/",
-  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter",
   "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter",
   "github_repo_url": null,
   "github_repo_tags": [],
@@ -71,15 +71,7 @@
     "price": "$1.00",
     "cta_text": "Start Test Checkout",
     "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter",
-    "currency": "USD",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Not a customer-facing SKU",
-    "method": "N/A",
-    "policy_category": "https://schema.org/SoftwareApplication",
-    "url": "https://github.com/serpapps/legal"
+    "currency": "USD"
   },
   "payment": {
     "provider": "stripe",
@@ -116,12 +108,6 @@
         "variant_id": "lemonsqueezy_variant_demo_live"
       }
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_TRyJyIFPwaPuBf"
-    },
-    "optional_items": []
   },
   "ghl": {
     "tag_ids": [

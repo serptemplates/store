@@ -246,7 +246,10 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
-  let priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceManifestEntry = findPriceEntry(
+    product.payment?.stripe?.price_id,
+    product.payment?.stripe?.test_price_id,
+  );
   if (!priceManifestEntry) {
     priceManifestEntry = findManifestEntryBySlug(product.slug);
   }
@@ -305,8 +308,8 @@ export function productToHomeTemplate(
     originalPrice: showPrices ? derivedOriginalPrice : undefined,
     priceNote: showPrices ? product.pricing?.note : undefined,
     benefits:
-      product.pricing?.benefits && product.pricing.benefits.length > 0
-        ? product.pricing.benefits
+      product.benefits && product.benefits.length > 0
+        ? product.benefits
         : product.features && product.features.length > 0
         ? product.features.slice(0, 8) // Take first 8 features for the pricing section
         : defaultPricingBenefits,

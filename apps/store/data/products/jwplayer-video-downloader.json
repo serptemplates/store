@@ -19,6 +19,11 @@
     "Writes video metadata—title, duration, publish date, and custom fields—to a sidecar JSON file",
     "Built for Chrome, Edge, Firefox, Brave, and Opera with hardware-accelerated merging on desktop"
   ],
+  "benefits": [
+    "Keep JW Player news clips and interviews accessible when newsroom CMS access changes",
+    "Deliver clean video handoffs to editors without screen recording or quality loss",
+    "Maintain offline training archives for compliance or low-bandwidth workforces"
+  ],
   "faqs": [
     {
       "question": "Will it download videos from paywalled JW Player sites?",
@@ -123,7 +128,6 @@
   "serply_link": "https://serp.ly/jwplayer-video-downloader",
   "product_page_url": "https://apps.serp.co/jwplayer-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/jwplayer-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=jwplayer-video-downloader",
   "github_repo_url": null,
   "github_repo_tags": [],
@@ -136,28 +140,13 @@
     "note": "Reserve your seat on the beta waitlist to receive launch pricing and early feature access.",
     "cta_text": "Get Notified 🔔",
     "currency": "USD",
-    "availability": "PreOrder",
-    "benefits": [
-      "Keep JW Player news clips and interviews accessible when newsroom CMS access changes",
-      "Deliver clean video handoffs to editors without screen recording or quality loss",
-      "Maintain offline training archives for compliance or low-bandwidth workforces"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "PreOrder"
   },
   "payment": {
     "provider": "stripe",
     "stripe": {
       "metadata": {}
     }
-  },
-  "stripe": {
-    "metadata": {}
   },
   "ghl": {
     "tag_ids": [

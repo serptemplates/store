@@ -18,11 +18,9 @@ import {
   reviewSchema,
   screenshotSchema,
   slugSchema,
-  stripeIdSchema,
-  successUrlSchema,
   trimmedString,
 } from "./schema/helpers";
-import { paymentSchema, resolveStripePriceId, stripeSchema } from "./schema/payment";
+import { paymentSchema, resolveStripePriceId } from "./schema/payment";
 
 const ghlCustomFieldSchema = z.record(trimmedString());
 
@@ -56,7 +54,6 @@ const pricingSchemaShape = {
   cta_href: z.string().trim().optional(),
   currency: isoCurrencyCode,
   availability: z.string().trim().optional(),
-  benefits: optionalArray(z.string().trim()),
 } satisfies Record<string, z.ZodTypeAny>;
 
 export const PRICING_FIELD_ORDER = [
@@ -69,20 +66,8 @@ export const PRICING_FIELD_ORDER = [
   "cta_href",
   "currency",
   "availability",
-  "benefits",
 ] as const;
 const pricingSchema = z.object(pricingSchemaShape).optional();
-
-const returnPolicySchemaShape = {
-  days: z.number().int().nonnegative().optional(),
-  fees: z.string().trim().optional(),
-  method: z.string().trim().optional(),
-  policy_category: z.string().trim().optional(),
-  url: z.string().trim().url().optional(),
-} satisfies Record<string, z.ZodTypeAny>;
-
-export const RETURN_POLICY_FIELD_ORDER = Object.keys(returnPolicySchemaShape);
-const returnPolicySchema = z.object(returnPolicySchemaShape).optional();
 
 const permissionJustificationSchema = z.object({
   permission: trimmedString(),
@@ -148,9 +133,7 @@ export const productSchemaShape = {
   serply_link: enforceHost(["serp.ly"]),
   product_page_url: enforceHost(["apps.serp.co"]),
   serp_co_product_page_url: optionalHost(["serp.co", "www.serp.co"]),
-  reddit_url: optionalHost(["www.reddit.com", "reddit.com", "old.reddit.com", "new.reddit.com", "redd.it"]),
   // buy_button_destination removed; use pricing.cta_href for CTA targeting
-  success_url: successUrlSchema,
   cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "demo", "pre_release", "live"]).default("draft"),
   featured_image: optionalAssetPathSchema(),
@@ -161,13 +144,9 @@ export const productSchemaShape = {
   related_posts: optionalArray(trimmedString()),
   github_repo_url: z.string().trim().url().nullable().optional(),
   github_repo_tags: optionalArray(z.string().trim()),
-  chrome_webstore_link: optionalHost(["chromewebstore.google.com", "chrome.google.com"]),
-  firefox_addon_store_link: optionalHost(["addons.mozilla.org"]),
-  edge_addons_store_link: optionalHost(["microsoftedge.microsoft.com"]),
-  opera_addons_store_link: optionalHost(["addons.opera.com"]),
-  producthunt_link: optionalHost(["www.producthunt.com", "producthunt.com"]),
   resource_links: optionalArray(externalLinkSchema),
   features: optionalArray(z.string().trim()),
+  benefits: optionalArray(z.string().trim()),
   pricing: pricingSchema,
   order_bump: z.any().optional().transform(() => undefined),
   faqs: optionalArray(faqSchema),
@@ -199,10 +178,8 @@ export const productSchemaShape = {
     z.array(z.enum(ACCEPTED_CATEGORIES as unknown as [string, ...string[]])).optional().default([]),
   ),
   keywords: optionalArray(z.string().trim()),
-  return_policy: returnPolicySchema,
   checkout_metadata: z.record(trimmedString()).optional(),
   payment: paymentSchema,
-  stripe: stripeSchema.optional(),
   ghl: ghlSchema,
   license: licenseSchema,
   layout_type: z.enum(["ecommerce", "landing", "marketplace"]).optional().default("landing"),
@@ -226,6 +203,7 @@ export const PRODUCT_FIELD_ORDER = [
   "seo_description",
   "status",
   "features",
+  "benefits",
   "faqs",
   "reviews",
   "supported_operating_systems",
@@ -249,22 +227,13 @@ export const PRODUCT_FIELD_ORDER = [
   "serply_link",
   "product_page_url",
   "serp_co_product_page_url",
-  "reddit_url",
-  "success_url",
   "cancel_url",
   "github_repo_url",
   "github_repo_tags",
-  "chrome_webstore_link",
-  "firefox_addon_store_link",
-  "edge_addons_store_link",
-  "opera_addons_store_link",
-  "producthunt_link",
   "resource_links",
   "checkout_metadata",
   "pricing",
-  "return_policy",
   "payment",
-  "stripe",
   "ghl",
   "license",
 ] as const;
@@ -388,11 +357,11 @@ export const productSchema = z
         });
       }
 
-      const activeStripePriceId = resolveStripePriceId({ payment: data.payment, stripe: data.stripe });
+      const activeStripePriceId = resolveStripePriceId(data.payment);
       if (!activeStripePriceId) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: data.payment ? ["payment", "stripe", "price_id"] : ["stripe", "price_id"],
+          path: ["payment", "stripe", "price_id"],
           message: "Live products must define a Stripe price (payment.stripe.price_id).",
         });
       }

@@ -39,7 +39,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  let priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceEntry = findPriceEntry(
+    product.payment?.stripe?.price_id,
+    product.payment?.stripe?.test_price_id,
+  );
   if (!priceEntry) {
     priceEntry = findManifestEntryBySlug(product.slug);
   }

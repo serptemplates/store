@@ -116,7 +116,7 @@ for (const [name, files] of nameIndex.entries()) {
     const raw = fs.readFileSync(filePath, "utf8");
     try {
       const data = JSON.parse(stripJsonComments(raw));
-      const stripe = data?.stripe || {};
+      const stripe = data?.payment?.stripe || {};
       const metadata = stripe?.metadata || {};
       const stripeProductId = metadata?.stripe_product_id || null;
       return { file: f, path: filePath, data, stripeProductId };
@@ -132,7 +132,7 @@ for (const [name, files] of nameIndex.entries()) {
   for (const prod of products) {
     const data = prod.data;
     if (!data || data.status !== "live") continue;
-    const optionalItems = (data.stripe && data.stripe.optional_items) || [];
+    const optionalItems = data?.payment?.stripe?.optional_items || [];
     if (!optionalItems || optionalItems.length === 0) continue;
     for (const opt of optionalItems) {
       const targetId = opt && opt.product_id;
@@ -151,7 +151,9 @@ for (const [name, files] of nameIndex.entries()) {
         // Allowed - no price_id required for pre_release.
         continue;
       }
-      const hasPrice = Boolean((tdata.stripe && (tdata.stripe.price_id || tdata.stripe.test_price_id || tdata.stripe.default_price)));
+      const hasPrice = Boolean(
+        (tdata.payment?.stripe && (tdata.payment.stripe.price_id || tdata.payment.stripe.test_price_id || tdata.payment.stripe.default_price))
+      );
       if (!hasPrice) {
         optionalIssues.push({ file: prod.file, slug: data.slug, issue: `optional item references repo product without price_id: ${targetId}`, optional: opt });
       }

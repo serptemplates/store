@@ -24,7 +24,6 @@ const baseProduct: ProductData = {
   product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
-  success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   name: "Sample Product Downloader",
   tagline: "Download everything",
@@ -37,18 +36,21 @@ const baseProduct: ProductData = {
   faqs: [],
   pricing: {
     price: "$19",
-    benefits: [],
     cta_href: "https://apps.serp.co/checkout/sample-product",
   },
+  benefits: [],
   screenshots: [],
   supported_operating_systems: [],
   supported_regions: [],
   categories: [],
   keywords: [],
   features: [],
-  stripe: {
-    price_id: "price_123",
-    metadata: {},
+  payment: {
+    provider: "stripe",
+    stripe: {
+      price_id: "price_123",
+      metadata: {},
+    },
   },
   layout_type: "landing",
   status: "live",

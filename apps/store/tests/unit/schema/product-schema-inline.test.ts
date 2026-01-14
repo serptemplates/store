@@ -17,7 +17,6 @@ const rawProduct = {
   serply_link: "https://serp.ly/test-product",
   product_page_url: "https://apps.serp.co/test-product",
   serp_co_product_page_url: "https://serp.co/products/test-product/",
-  success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=test-product",
   status: "live",
   featured_image: "https://cdn.serp.co/media/test-product.jpg",
@@ -29,9 +28,9 @@ const rawProduct = {
     currency: "USD",
     availability: "InStock",
     cta_href: "https://apps.serp.co/checkout/test-product",
-    benefits: [],
   },
   features: ["Automation toolkit"],
+  benefits: [],
   categories: ["Downloader"],
   keywords: ["automation", "downloader"],
   permission_justifications: [
@@ -40,8 +39,11 @@ const rawProduct = {
   supported_operating_systems: ["Chrome", "Firefox", "Edge"],
   supported_regions: ["Worldwide"],
   faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
-  stripe: {
-    price_id: "price_1TEST1234567890",
+  payment: {
+    provider: "stripe",
+    stripe: {
+      price_id: "price_1TEST1234567890",
+    },
   },
 } as const;
 

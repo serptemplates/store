@@ -12,7 +12,6 @@ import {
   PERMISSION_JUSTIFICATION_FIELD_ORDER,
   PRICING_FIELD_ORDER,
   PRODUCT_FIELD_ORDER,
-  RETURN_POLICY_FIELD_ORDER,
   REVIEW_FIELD_ORDER,
   SCREENSHOT_FIELD_ORDER,
   STRIPE_FIELD_ORDER,
@@ -48,6 +47,7 @@ const COMMENT_SECTIONS = [
       "seo_description",
       "status",
       "features",
+      "benefits",
       "faqs",
       "reviews",
       "supported_operating_systems",
@@ -81,22 +81,15 @@ const COMMENT_SECTIONS = [
       "serply_link",
       "product_page_url",
       "serp_co_product_page_url",
-      "reddit_url",
-      "success_url",
       "cancel_url",
       "github_repo_url",
       "github_repo_tags",
-      "chrome_webstore_link",
-      "firefox_addon_store_link",
-      "edge_addons_store_link",
-      "opera_addons_store_link",
-      "producthunt_link",
       "resource_links",
     ],
   },
   {
     comment: "// PAYMENT DATA",
-    keys: ["pricing", "return_policy", "payment", "stripe", "ghl", "license"],
+    keys: ["pricing", "payment", "ghl", "license"],
   },
 ] as const;
 
@@ -109,7 +102,6 @@ const REQUIRED_PRODUCT_FIELDS = [
   "seo_description",
   "serply_link",
   "product_page_url",
-  "success_url",
   "cancel_url",
 ] as const;
 
@@ -310,7 +302,9 @@ function normalizeCheckoutMetadata(product: ProductData): Record<string, string>
   return orderPlainRecord(filtered) as Record<string, string>;
 }
 
-function normalizeStripe(stripe: NonNullable<ProductData["stripe"]>): Record<string, unknown> {
+function normalizeStripe(
+  stripe: NonNullable<NonNullable<ProductData["payment"]>["stripe"]>,
+): Record<string, unknown> {
   const ordered = orderObject(stripe as Record<string, unknown>, STRIPE_FIELD_ORDER);
   const metadata = ordered.metadata;
 
@@ -391,7 +385,9 @@ function normalizePayment(payment: NonNullable<ProductData["payment"]>): Record<
   }
 
   if (isRecord(ordered.stripe)) {
-    ordered.stripe = normalizeStripe(ordered.stripe as Record<string, unknown> as NonNullable<ProductData["stripe"]>);
+    ordered.stripe = normalizeStripe(
+      ordered.stripe as Record<string, unknown> as NonNullable<NonNullable<ProductData["payment"]>["stripe"]>,
+    );
   }
 
   if (isRecord(ordered.whop)) {
@@ -416,22 +412,7 @@ function normalizePayment(payment: NonNullable<ProductData["payment"]>): Record<
 }
 
 function derivePaymentSection(product: ProductData): ProductData["payment"] | undefined {
-  const existing = product.payment;
-  if (existing) {
-    if (existing.provider === "stripe" && !existing.stripe && product.stripe) {
-      return { ...existing, stripe: product.stripe };
-    }
-    return existing;
-  }
-
-  if (product.stripe) {
-    return {
-      provider: "stripe",
-      stripe: product.stripe,
-    };
-  }
-
-  return undefined;
+  return product.payment ?? undefined;
 }
 
 function normalizeGhl(ghl: NonNullable<ProductData["ghl"]>): Record<string, unknown> {
@@ -587,10 +568,6 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
     ...(paymentSection ? { payment: paymentSection } : {}),
   };
 
-  if (paymentSection?.provider === "stripe" && paymentSection.stripe) {
-    prepared.stripe = paymentSection.stripe;
-  }
-
   const normalizedCheckoutMetadata = normalizeCheckoutMetadata(prepared);
   if (Object.keys(normalizedCheckoutMetadata).length > 0) {
     prepared.checkout_metadata = normalizedCheckoutMetadata;
@@ -607,24 +584,6 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
     }
 
     switch (key) {
-      case "success_url": {
-        const rawUrl = String(value);
-        try {
-          const url = new URL(rawUrl);
-          // Drop placeholder-only session_id param
-          const sid = url.searchParams.get("session_id");
-          if (sid === "{CHECKOUT_SESSION_ID}") {
-            url.searchParams.delete("session_id");
-          }
-          const serialized = url.searchParams.toString();
-          const withoutQuery = `${url.origin}${url.pathname}`;
-          normalized[key] = serialized ? `${withoutQuery}?${serialized}` : withoutQuery;
-        } catch {
-          // If not a valid URL, pass through unchanged
-          normalized[key] = cloneValue(value);
-        }
-        break;
-      }
       case "screenshots": {
         const screenshots = value as NonNullable<ProductData["screenshots"]>;
         normalized[key] = screenshots.map((shot) =>
@@ -661,11 +620,6 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
         normalized[key] = orderObject(pricing as Record<string, unknown>, PRICING_FIELD_ORDER);
         break;
       }
-      case "return_policy": {
-        const policy = value as NonNullable<ProductData["return_policy"]>;
-        normalized[key] = orderObject(policy as Record<string, unknown>, RETURN_POLICY_FIELD_ORDER);
-        break;
-      }
       case "categories": {
         const categories = (value as string[] | undefined) ?? [];
         const allAccepted: readonly string[] = ACCEPTED_CATEGORIES as unknown as readonly string[];
@@ -691,11 +645,6 @@ function normalizeProduct(product: ProductData): Record<string, unknown> {
       case "payment": {
         const payment = value as NonNullable<ProductData["payment"]>;
         normalized[key] = normalizePayment(payment);
-        break;
-      }
-      case "stripe": {
-        const stripe = value as NonNullable<ProductData["stripe"]>;
-        normalized[key] = normalizeStripe(stripe);
         break;
       }
       case "ghl": {
@@ -862,6 +811,85 @@ async function convertSingleProduct(
         });
       }
       copy.faqs = ensureLegalFaqArray(copy.faqs);
+      if (isRecord(copy.stripe)) {
+        const stripe = copy.stripe as Record<string, unknown>;
+        const payment = isRecord(copy.payment) ? (copy.payment as Record<string, unknown>) : null;
+        if (!payment) {
+          copy.payment = { provider: "stripe", stripe };
+        } else {
+          if (payment.provider == null) {
+            payment.provider = "stripe";
+          }
+          if (payment.provider === "stripe" && !isRecord(payment.stripe)) {
+            payment.stripe = stripe;
+          }
+          copy.payment = payment;
+        }
+        delete copy.stripe;
+      }
+      if (isRecord(copy.pricing) && Array.isArray((copy.pricing as Record<string, unknown>).benefits)) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        if (!Array.isArray(copy.benefits)) {
+          copy.benefits = pricing.benefits;
+        }
+        delete pricing.benefits;
+        copy.pricing = pricing;
+      }
+      if ("return_policy" in copy) {
+        delete copy.return_policy;
+      }
+      if ("success_url" in copy) {
+        delete copy.success_url;
+      }
+      const resourceLinkFields = [
+        { key: "reddit_url", label: "Reddit" },
+        { key: "producthunt_link", label: "Product Hunt" },
+        { key: "chrome_webstore_link", label: "Chrome Web Store" },
+        { key: "firefox_addon_store_link", label: "Firefox Add-ons" },
+        { key: "edge_addons_store_link", label: "Microsoft Edge Add-ons" },
+        { key: "opera_addons_store_link", label: "Opera Add-ons" },
+      ] as const;
+      const nextResourceLinks: Array<{ label: string; href: string }> = [];
+      const seenResourceLinks = new Set<string>();
+      const appendResourceLink = (label: string, href: string) => {
+        const trimmedLabel = label.trim();
+        const trimmedHref = href.trim();
+        if (!trimmedLabel || !trimmedHref) {
+          return;
+        }
+        const key = `${trimmedLabel}:::${trimmedHref}`;
+        if (seenResourceLinks.has(key)) {
+          return;
+        }
+        seenResourceLinks.add(key);
+        nextResourceLinks.push({ label: trimmedLabel, href: trimmedHref });
+      };
+      if (Array.isArray(copy.resource_links)) {
+        copy.resource_links.forEach((link) => {
+          if (!isRecord(link)) {
+            return;
+          }
+          const label = typeof link.label === "string" ? link.label : "";
+          const href = typeof link.href === "string" ? link.href : "";
+          if (label && href) {
+            appendResourceLink(label, href);
+          }
+        });
+      }
+      resourceLinkFields.forEach(({ key, label }) => {
+        const value = copy[key];
+        if (typeof value === "string" && value.trim().length > 0) {
+          appendResourceLink(label, value);
+        }
+        if (key in copy) {
+          delete copy[key];
+        }
+      });
+      if (nextResourceLinks.length > 0) {
+        copy.resource_links = nextResourceLinks;
+      } else if ("resource_links" in copy) {
+        delete copy.resource_links;
+      }
       return copy;
     })();
 
@@ -871,7 +899,23 @@ async function convertSingleProduct(
     }
 
     const product = applyUnofficialBranding(parsed.data);
-    const warnings = collectWarnings(data, product, source.slug);
+    const warningSource = isRecord(data) ? { ...data } : data;
+    if (isRecord(warningSource)) {
+      delete (warningSource as Record<string, unknown>).stripe;
+      delete (warningSource as Record<string, unknown>).return_policy;
+      delete (warningSource as Record<string, unknown>).success_url;
+      delete (warningSource as Record<string, unknown>).reddit_url;
+      delete (warningSource as Record<string, unknown>).producthunt_link;
+      delete (warningSource as Record<string, unknown>).chrome_webstore_link;
+      delete (warningSource as Record<string, unknown>).firefox_addon_store_link;
+      delete (warningSource as Record<string, unknown>).edge_addons_store_link;
+      delete (warningSource as Record<string, unknown>).opera_addons_store_link;
+    }
+    const warnings = collectWarnings(
+      (warningSource as Record<string, unknown>) ?? data,
+      product,
+      source.slug,
+    );
     const normalized = normalizeProduct(product);
     const outputPath = source.jsonPath;
     const formattedJson = JSON.stringify(normalized, null, 2);

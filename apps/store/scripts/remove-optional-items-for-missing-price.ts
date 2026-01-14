@@ -16,16 +16,21 @@ function removeOptionalItemsFromProductsWithoutPrice() {
     const raw = fs.readFileSync(filePath, "utf8");
     const data = JSON.parse(stripJsonComments(raw));
 
-    if (!data.stripe) {
+    const stripe = data?.payment?.stripe ?? data?.stripe;
+    if (!stripe) {
       skipped++;
       continue;
     }
 
-    const hasPrice = !!data.stripe.price_id || !!data.stripe.test_price_id;
-    const hasOptionalItems = !!data.stripe.optional_items && data.stripe.optional_items.length > 0;
+    const hasPrice = !!stripe.price_id || !!stripe.test_price_id;
+    const hasOptionalItems = Array.isArray(stripe.optional_items) && stripe.optional_items.length > 0;
 
     if (!hasPrice && hasOptionalItems) {
-      delete data.stripe.optional_items;
+      if (data?.payment?.stripe?.optional_items) {
+        delete data.payment.stripe.optional_items;
+      } else if (data?.stripe?.optional_items) {
+        delete data.stripe.optional_items;
+      }
       fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n");
       console.log(`Removed optional_items from ${file} because price_id is missing`);
       updated++;

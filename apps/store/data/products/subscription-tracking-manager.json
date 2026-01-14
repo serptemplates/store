@@ -12,6 +12,7 @@
   "seo_description": "Track SaaS renewals, costs, and owners across your team.",
   "status": "pre_release",
   "features": [],
+  "benefits": [],
   "faqs": [],
   "reviews": [],
   "supported_operating_systems": [],
@@ -40,19 +41,11 @@
   "serply_link": "https://serp.ly/subscription-tracking-manager",
   "product_page_url": "https://apps.serp.co/subscription-tracking-manager",
   "serp_co_product_page_url": "https://serp.co/products/subscription-tracking-manager/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=subscription-tracking-manager",
   "github_repo_url": "https://github.com/serpapps/subscription-tracking-manager",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
   "license": {
     "entitlements": [
       "subscription-tracking-manager"

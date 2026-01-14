@@ -131,9 +131,9 @@ function toProduct(data: ProductData): Product {
       seo_title: data.seo_title ?? undefined,
       seo_description: data.seo_description ?? undefined,
       github_repo_url: data.github_repo_url ?? undefined,
-      stripe_price_id: data.stripe?.price_id ?? undefined,
+      stripe_price_id: data.payment?.stripe?.price_id ?? undefined,
       original_price: data.pricing?.original_price ?? undefined,
-      benefits: data.pricing?.benefits ?? undefined,
+      benefits: data.benefits ?? undefined,
       features: data.features ?? undefined,
     },
   };

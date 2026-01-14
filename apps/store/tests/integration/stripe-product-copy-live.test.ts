@@ -26,7 +26,8 @@ maybeDescribe(
       async () => {
         const products = getAllProducts().filter(
           (product) =>
-            product.trademark_metadata?.uses_trademarked_brand && product.stripe?.metadata?.stripe_product_id?.trim(),
+            product.trademark_metadata?.uses_trademarked_brand
+            && product.payment?.stripe?.metadata?.stripe_product_id?.trim(),
         );
 
         if (products.length === 0) {
@@ -37,7 +38,7 @@ maybeDescribe(
         const issues: string[] = [];
 
         for (const product of products) {
-          const productId = product.stripe!.metadata!.stripe_product_id!.trim();
+          const productId = product.payment!.stripe!.metadata!.stripe_product_id!.trim();
           const expectedName = resolveSeoProductName(product);
           const expectedDisclaimer =
             formatTrademarkDisclaimer(product) ??
@@ -72,4 +73,3 @@ maybeDescribe(
     );
   },
 );
-

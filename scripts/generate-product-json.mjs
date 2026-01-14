@@ -111,7 +111,6 @@ for (const slug of allSlugs) {
     seo_title: `${name} | Download ${name} for Offline Access`,
     seo_description: description || `Download ${name} content for offline use with ease.`,
     product_page_url: appsUrl,
-    reddit_url: null,
     serply_link: `https://serp.ly/${slug}`,
     stripe: {
       price_id: priceId || 'PLACEHOLDER',
@@ -120,7 +119,6 @@ for (const slug of allSlugs) {
         stripe_product_id: productId || '',
       },
     },
-    success_url: `${appsUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${appsUrl}?checkout=cancel`,
     name,
     tagline: description.slice(0, 140) || `Download ${name} instantly to your device.`,

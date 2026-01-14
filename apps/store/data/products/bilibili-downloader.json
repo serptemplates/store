@@ -35,6 +35,7 @@
     "Backup & sync",
     "Multi-language subtitle support and extraction"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Bilibili downloader?",
@@ -138,7 +139,6 @@
   "serply_link": "https://serp.ly/bilibili-downloader",
   "product_page_url": "https://apps.serp.co/bilibili-downloader",
   "serp_co_product_page_url": "https://serp.co/products/bilibili-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=bilibili-downloader",
   "github_repo_url": "https://github.com/serpapps/bilibili-downloader",
   "github_repo_tags": [],
@@ -151,15 +151,7 @@
     "note": "",
     "cta_text": "Get it Now",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -173,16 +165,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Go0jcavriZb"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

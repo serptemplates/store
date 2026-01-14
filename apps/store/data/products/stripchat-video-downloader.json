@@ -34,6 +34,7 @@
     "Multi-performer recording capabilities",
     "Detailed recording logs and history tracking"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Stripchat downloader?",
@@ -131,7 +132,6 @@
   "serply_link": "https://serp.ly/stripchat-video-downloader",
   "product_page_url": "https://apps.serp.co/stripchat-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/stripchat-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=stripchat-video-downloader",
   "github_repo_url": "https://github.com/serpapps/stripchat-video-downloader",
   "github_repo_tags": [],
@@ -144,15 +144,7 @@
     "note": "",
     "cta_text": "Get it Now",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -164,14 +156,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {},
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

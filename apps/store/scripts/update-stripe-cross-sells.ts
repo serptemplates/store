@@ -157,8 +157,8 @@ async function updateStripeCrossSells() {
     const name = product.name;
     const status = product.status;
     const stripeProductId =
-      typeof product.stripe?.metadata?.stripe_product_id === "string"
-        ? product.stripe.metadata.stripe_product_id.trim()
+      typeof product.payment?.stripe?.metadata?.stripe_product_id === "string"
+        ? product.payment.stripe.metadata.stripe_product_id.trim()
         : undefined;
 
     if (!stripeProductId) {

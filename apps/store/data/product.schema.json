@@ -12,7 +12,6 @@
     "seo_description",
     "product_page_url",
     "serply_link",
-    "success_url",
     "cancel_url",
     "name",
     "tagline"
@@ -100,18 +99,6 @@
       "format": "uri",
       "pattern": "^https://(www\\.)?serp\\.co/"
     },
-    "reddit_url": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^(https://((www|old|new)\\.)?reddit\\.com/|https://redd\\.it/)"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "serply_link": {
       "type": "string",
       "format": "uri",
@@ -150,66 +137,6 @@
         }
       ]
     },
-    "chrome_webstore_link": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://(chromewebstore\\.google\\.com|chrome\\.google\\.com)/"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "firefox_addon_store_link": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://addons\\.mozilla\\.org/"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "edge_addons_store_link": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://microsoftedge\\.microsoft\\.com/"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "opera_addons_store_link": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://addons\\.opera\\.com/"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "producthunt_link": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https://(www\\.)?producthunt\\.com/"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "resource_links": {
       "type": "array",
       "items": {
@@ -241,6 +168,14 @@
       "default": []
     },
     "features": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "benefits": {
       "type": "array",
       "items": {
         "type": "string",
@@ -525,14 +460,6 @@
         "cta_href": {
           "type": "string",
           "format": "uri"
-        },
-        "benefits": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          },
-          "default": []
         }
       }
     },
@@ -543,29 +470,6 @@
         { "type": "string" },
         { "type": "null" }
       ]
-    },
-    "return_policy": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "days": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "fees": {
-          "type": "string"
-        },
-        "method": {
-          "type": "string"
-        },
-        "policy_category": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri"
-        }
-      }
     },
     "license": {
       "type": "object",
@@ -630,7 +534,7 @@
           }
         },
         "stripe": {
-          "$ref": "#/properties/stripe"
+          "$ref": "#/$defs/stripe"
         },
         "whop": {
           "$ref": "#/$defs/whop"
@@ -642,61 +546,6 @@
           "$ref": "#/$defs/lemonsqueezy"
         }
       }
-    },
-    "stripe": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "price_id": {
-          "type": "string",
-          "minLength": 1,
-          "pattern": "^price_"
-        },
-        "test_price_id": {
-          "type": "string",
-          "minLength": 1,
-          "pattern": "^price_"
-        },
-        "mode": {
-          "type": "string",
-          "enum": [
-            "payment",
-            "subscription"
-          ]
-        },
-        "metadata": {
-          "type": ["object", "null"],
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {}
-        },
-        "optional_items": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "product_id"
-            ],
-            "properties": {
-              "product_id": {
-                "type": "string",
-                "minLength": 1,
-                "pattern": "^prod_"
-              },
-              "quantity": {
-                "type": "integer",
-                "minimum": 1
-              }
-            }
-          }
-        }
-      }
-    },
-    "success_url": {
-      "type": "string",
-      "pattern": "^(https://apps\\.serp\\.co/|http://localhost)"
     },
     "cancel_url": {
       "type": "string",
@@ -755,6 +604,57 @@
     }
   },
   "$defs": {
+    "stripe": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "price_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^price_"
+        },
+        "test_price_id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^price_"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "payment",
+            "subscription"
+          ]
+        },
+        "metadata": {
+          "type": ["object", "null"],
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        },
+        "optional_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "product_id"
+            ],
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^prod_"
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
     "whop": {
       "type": "object",
       "additionalProperties": false,
@@ -1029,8 +929,12 @@
       },
       "then": {
         "properties": {
-          "stripe": {
-            "required": ["price_id"]
+          "payment": {
+            "properties": {
+              "stripe": {
+                "required": ["price_id"]
+              }
+            }
           }
         }
       }

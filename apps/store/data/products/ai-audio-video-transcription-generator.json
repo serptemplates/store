@@ -12,6 +12,7 @@
   "seo_description": "Transcribe audio and video into accurate, editable text for docs, captions, and summaries.",
   "status": "pre_release",
   "features": [],
+  "benefits": [],
   "faqs": [],
   "reviews": [],
   "supported_operating_systems": [],
@@ -41,19 +42,11 @@
   "serply_link": "https://serp.ly/ai-audio-video-transcription-generator",
   "product_page_url": "https://apps.serp.co/ai-audio-video-transcription-generator",
   "serp_co_product_page_url": "https://serp.co/products/ai-audio-video-transcription-generator/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=ai-audio-video-transcription-generator",
   "github_repo_url": "https://github.com/serpapps/ai-audio-video-transcription-generator",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
-  },
   "license": {
     "entitlements": [
       "ai-audio-video-transcription-generator"

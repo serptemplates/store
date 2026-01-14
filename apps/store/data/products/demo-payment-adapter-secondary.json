@@ -17,6 +17,7 @@
     "Targets the secondary Stripe account end to end",
     "Supports future providers like Whop or LemonSqueezy"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Can customers buy this product?",
@@ -60,7 +61,6 @@
   "serply_link": "https://serp.ly/demo-payment-adapter-secondary",
   "product_page_url": "https://apps.serp.co/demo-payment-adapter-secondary",
   "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-secondary/",
-  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-secondary",
   "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-secondary",
   "github_repo_url": null,
   "github_repo_tags": [],
@@ -71,15 +71,7 @@
     "price": "$17.00",
     "cta_text": "Start Test Checkout",
     "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-secondary",
-    "currency": "USD",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Not a customer-facing SKU",
-    "method": "N/A",
-    "policy_category": "https://schema.org/SoftwareApplication",
-    "url": "https://github.com/serpapps/legal"
+    "currency": "USD"
   },
   "payment": {
     "provider": "stripe",
@@ -116,12 +108,6 @@
         "variant_id": "lemonsqueezy_variant_demo_live"
       }
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_TRzHsRcr0mBCRx"
-    },
-    "optional_items": []
   },
   "ghl": {
     "tag_ids": [

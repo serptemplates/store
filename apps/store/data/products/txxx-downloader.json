@@ -18,6 +18,7 @@
     "Local-first workflows with no tracking",
     "Works on Windows, macOS, and Linux"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use TXXX Downloader?",
@@ -103,7 +104,6 @@
   "serply_link": "https://serp.ly/txxx-downloader",
   "product_page_url": "https://apps.serp.co/txxx-downloader",
   "serp_co_product_page_url": "https://serp.co/products/txxx-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=txxx-downloader",
   "github_repo_url": "https://github.com/serpapps/txxx-downloader",
   "github_repo_tags": [],
@@ -117,15 +117,7 @@
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/txxx-downloader",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -142,19 +134,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SibdiDP7AOTRcvmr1YudDOB",
-    "test_price_id": "price_1SibdjDP7AOTRcvm0jzasNbU",
-    "metadata": {
-      "stripe_product_id": "prod_TfxYteFDeq5PN8",
-      "stripe_test_product_id": "prod_TfxYUmXJBwpkKn"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

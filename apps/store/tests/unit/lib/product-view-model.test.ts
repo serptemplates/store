@@ -21,8 +21,8 @@ const baseProduct = createTestProduct({
   pricing: {
     label: "One-time payment",
     price: "$17.00",
-    benefits: [],
   },
+  benefits: [],
   faqs: [],
   reviews: [],
   screenshots: [],

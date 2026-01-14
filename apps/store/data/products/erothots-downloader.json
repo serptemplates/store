@@ -32,6 +32,7 @@
     "Zero data tracking",
     "Ad-free experience"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Erothots downloader?",
@@ -130,7 +131,6 @@
   "serply_link": "https://serp.ly/erothots-downloader",
   "product_page_url": "https://apps.serp.co/erothots-downloader",
   "serp_co_product_page_url": "https://serp.co/products/erothots-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=erothots-downloader",
   "github_repo_url": "https://github.com/serpapps/erothots-downloader",
   "github_repo_tags": [],
@@ -143,15 +143,7 @@
     "note": "",
     "cta_text": "Get it Now",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -163,14 +155,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {},
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

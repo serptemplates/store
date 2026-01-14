@@ -97,7 +97,7 @@ function mergeMetadata(...records: Array<Record<string, unknown> | undefined>): 
 const GLOBAL_OPTIONAL_ITEM_SLUGS = ["serp-vpn"] as const;
 
 function resolveStripeProductIdForEnv(product: ProductData, isTestEnv: boolean): string | null {
-  const stripeConfig = product.payment?.stripe ?? product.stripe;
+  const stripeConfig = product.payment?.stripe;
   const metadata = stripeConfig?.metadata ?? {};
 
   const liveId = typeof metadata.stripe_product_id === "string" ? metadata.stripe_product_id.trim() : "";
@@ -179,30 +179,26 @@ function buildPaymentConfig(
     return product.payment;
   }
 
-  if (!stripeDetails && !product.stripe) {
+  if (!stripeDetails) {
     return undefined;
   }
 
-  const optionalItems = stripeDetails?.optionalItems ?? product.stripe?.optional_items;
+  const optionalItems = stripeDetails.optionalItems;
 
-  const mergedMetadata = mergeMetadata(
-    product.checkout_metadata,
-    stripeDetails?.metadata ?? {},
-    product.stripe?.metadata ?? {},
-  );
+  const mergedMetadata = mergeMetadata(product.checkout_metadata, stripeDetails.metadata ?? {});
 
   return {
     provider: "stripe",
-    account: stripeDetails?.account ?? undefined,
-    mode: stripeDetails?.mode ?? product.stripe?.mode ?? "payment",
-    success_url: stripeDetails?.successUrl ?? product.success_url ?? undefined,
-    cancel_url: stripeDetails?.cancelUrl ?? product.cancel_url ?? undefined,
+    account: stripeDetails.account ?? undefined,
+    mode: stripeDetails.mode ?? "payment",
+    success_url: stripeDetails.successUrl ?? undefined,
+    cancel_url: stripeDetails.cancelUrl ?? product.cancel_url ?? undefined,
     metadata: mergedMetadata,
     stripe: {
-      price_id: stripeDetails?.priceId ?? product.stripe?.price_id,
-      test_price_id: stripeDetails?.testPriceId ?? product.stripe?.test_price_id,
-      mode: stripeDetails?.mode ?? product.stripe?.mode,
-      metadata: mergeMetadata(product.checkout_metadata, stripeDetails?.metadata ?? {}, product.stripe?.metadata ?? {}),
+      price_id: stripeDetails.priceId ?? undefined,
+      test_price_id: stripeDetails.testPriceId ?? undefined,
+      mode: stripeDetails.mode ?? undefined,
+      metadata: mergeMetadata(product.checkout_metadata, stripeDetails.metadata ?? {}),
       optional_items: optionalItems,
     },
   };
@@ -215,9 +211,9 @@ function resolveStripePriceId(
   stripeDetails: StripePaymentDetails | null,
 ): string | null {
   const livePrice =
-    payment?.stripe?.price_id ?? stripeDetails?.priceId ?? product.stripe?.price_id ?? null;
+    payment?.stripe?.price_id ?? stripeDetails?.priceId ?? product.payment?.stripe?.price_id ?? null;
   const testPrice =
-    payment?.stripe?.test_price_id ?? stripeDetails?.testPriceId ?? product.stripe?.test_price_id ?? null;
+    payment?.stripe?.test_price_id ?? stripeDetails?.testPriceId ?? product.payment?.stripe?.test_price_id ?? null;
 
   if (isTest && testPrice) {
     return testPrice;
@@ -260,8 +256,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
     const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://apps.serp.co";
     const baseUrl = configuredSiteUrl ?? defaultBaseUrl;
 
-    const configuredSuccessUrl =
-      paymentConfig?.success_url ?? stripeDetails?.successUrl ?? product.success_url ?? undefined;
+    const configuredSuccessUrl = paymentConfig?.success_url ?? stripeDetails?.successUrl ?? undefined;
     const rawSuccessUrl = isTest
       ? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
       : configuredSuccessUrl ?? `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`;

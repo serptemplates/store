@@ -10,8 +10,6 @@ seo_description: Should be excluded.
 serply_link: https://serp.ly/excluded-product
 product_page_url: https://apps.serp.co/excluded-product
 serp_co_product_page_url: https://serp.co/products/excluded-product/
-reddit_url: null
-success_url: https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}
 cancel_url: https://apps.serp.co/checkout?product=excluded-product
 status: pre_release
 screenshots: []
@@ -19,13 +17,9 @@ product_videos: []
 related_videos: []
 related_posts: []
 github_repo_tags: []
-chrome_webstore_link: null
-firefox_addon_store_link: null
-edge_addons_store_link: null
-producthunt_link: null
 features: []
-pricing:
-  benefits: []
+benefits: []
+pricing: {}
 faqs: []
 reviews: []
 supported_operating_systems: []

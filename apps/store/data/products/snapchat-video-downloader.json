@@ -34,6 +34,7 @@
     "Real-time story archiving before expiration",
     "Smart content categorization and tagging"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Snapchat downloader?",
@@ -145,7 +146,6 @@
   "serply_link": "https://serp.ly/snapchat-video-downloader",
   "product_page_url": "https://apps.serp.co/snapchat-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/snapchat-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=snapchat-video-downloader",
   "github_repo_url": "https://github.com/serpapps/snapchat-video-downloader",
   "github_repo_tags": [],
@@ -158,15 +158,7 @@
     "note": "",
     "cta_text": "Get it Now",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -180,16 +172,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_Sv6HGmec4Qc0D6"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

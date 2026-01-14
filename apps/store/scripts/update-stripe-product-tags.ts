@@ -98,13 +98,15 @@ async function updateStripeProducts() {
     const tagIds = Array.isArray(product.ghl?.tag_ids) ? product.ghl?.tag_ids : [];
     const primaryTag = typeof tagIds[0] === "string" && tagIds[0].trim().length > 0 ? tagIds[0].trim() : undefined;
     const stripeProductId =
-      typeof product.stripe?.metadata?.stripe_product_id === "string"
-        ? product.stripe.metadata.stripe_product_id.trim()
+      typeof product.payment?.stripe?.metadata?.stripe_product_id === "string"
+        ? product.payment.stripe.metadata.stripe_product_id.trim()
         : undefined;
     const livePriceId =
-      typeof product.stripe?.price_id === "string" ? product.stripe.price_id.trim() : undefined;
+      typeof product.payment?.stripe?.price_id === "string" ? product.payment.stripe.price_id.trim() : undefined;
     const testPriceId =
-      typeof product.stripe?.test_price_id === "string" ? product.stripe.test_price_id.trim() : undefined;
+      typeof product.payment?.stripe?.test_price_id === "string"
+        ? product.payment.stripe.test_price_id.trim()
+        : undefined;
     const priceIds = [livePriceId, testPriceId].filter(
       (value): value is string => typeof value === "string" && value.length > 0,
     );

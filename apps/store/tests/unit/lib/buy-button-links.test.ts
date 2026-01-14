@@ -12,7 +12,6 @@ const ALLOWED_PREFIXES = [
 
 const ALLOWED_EXACT = new Set(["#waitlist"]);
 
-const FALLBACK_SUCCESS_URL = "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}";
 const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
 const FALLBACK_PAGE_BASE = "https://apps.serp.co/";
 
@@ -40,19 +39,6 @@ describe("buy button destinations", () => {
       .filter((entry): entry is { slug: string; href: string } => entry !== null);
 
     expect(ctaViolations).toEqual([]);
-
-    const successViolations: Array<{ slug: string; successUrl?: string }> = [];
-
-    products.forEach((product) => {
-      const successUrl = product.success_url;
-      const ok = typeof successUrl === "string"
-        && successUrl.startsWith("https://apps.serp.co/checkout/success");
-      if (!ok) {
-        successViolations.push({ slug: product.slug, successUrl });
-      }
-    });
-
-    expect(successViolations).toEqual([]);
 
     const cancelViolations: Array<{ slug: string; cancelUrl?: string; expected: string }> = [];
 

@@ -125,7 +125,6 @@ function buildStripeProductSlugMap(): Map<string, string> {
 
     const metadataSources = [
       product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
-      product.stripe?.metadata as Record<string, unknown> | undefined,
     ];
 
     for (const source of metadataSources) {
@@ -204,13 +203,9 @@ function hasOptionalStripeItemProductId(product: unknown, stripeProductId: strin
   const record = product as Record<string, unknown>;
   const payment = record.payment as Record<string, unknown> | undefined;
   const paymentStripe = (payment?.stripe as Record<string, unknown> | undefined) ?? undefined;
-  const stripe = (record.stripe as Record<string, unknown> | undefined) ?? undefined;
-
   const optionalItems =
     (paymentStripe?.optional_items as unknown) ??
-    (paymentStripe?.optionalItems as unknown) ??
-    (stripe?.optional_items as unknown) ??
-    (stripe?.optionalItems as unknown);
+    (paymentStripe?.optionalItems as unknown);
 
   if (!Array.isArray(optionalItems)) {
     return false;
@@ -284,7 +279,6 @@ function buildBundleIndex(): BundleIndex {
 
     const metadataSources = [
       product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
-      product.stripe?.metadata as Record<string, unknown> | undefined,
     ];
 
     const ids = new Set<string>();

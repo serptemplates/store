@@ -21,6 +21,11 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera across desktop platforms",
     "Stores licence data locally with no analytics or remote tracking"
   ],
+  "benefits": [
+    "Convert HLS streams to MP4 without ffmpeg or command-line tooling",
+    "Archive webinars, live events, and hosted videos for offline reference",
+    "Preserve original quality while keeping downloads private on your device"
+  ],
   "faqs": [
     {
       "question": "How do I download an m3u8 stream with this extension?",
@@ -156,7 +161,6 @@
   "serply_link": "https://serp.ly/m3u8-downloader",
   "product_page_url": "https://apps.serp.co/m3u8-downloader",
   "serp_co_product_page_url": "https://serp.co/products/m3u8-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=m3u8-downloader",
   "github_repo_url": "https://github.com/serpapps/m3u8-downloader",
   "github_repo_tags": [],
@@ -170,19 +174,7 @@
     "cta_text": "Get it Now",
     "cta_href": "https://apps.serp.co/checkout/m3u8-downloader",
     "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Convert HLS streams to MP4 without ffmpeg or command-line tooling",
-      "Archive webinars, live events, and hosted videos for offline reference",
-      "Preserve original quality while keeping downloads private on your device"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "availability": "InStock"
   },
   "payment": {
     "provider": "stripe",
@@ -199,19 +191,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6qDP7AOTRcvmUER2kNTE",
-    "test_price_id": "price_1SdS6qDP7AOTRcvmdBsyuWPv",
-    "metadata": {
-      "stripe_product_id": "prod_TadNVdHcfAlMNB",
-      "stripe_test_product_id": "prod_TadNNfAt5PCPPJ"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

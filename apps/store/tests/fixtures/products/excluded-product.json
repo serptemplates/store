@@ -9,7 +9,6 @@
   "serply_link": "https://serp.ly/excluded-product",
   "product_page_url": "https://apps.serp.co/excluded-product",
   "serp_co_product_page_url": "https://serp.co/products/excluded-product/",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   "cancel_url": "https://apps.serp.co/checkout?product=excluded-product",
   "status": "pre_release",
   "screenshots": [],
@@ -18,9 +17,8 @@
   "related_posts": [],
   "github_repo_tags": [],
   "features": [],
-  "pricing": {
-    "benefits": []
-  },
+  "benefits": [],
+  "pricing": {},
   "faqs": [
     {
       "question": "Is this legal?",
