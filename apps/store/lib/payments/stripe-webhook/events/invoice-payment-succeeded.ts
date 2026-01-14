@@ -2,12 +2,45 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionBySubscriptionId } from "@/lib/checkout";
 import logger from "@/lib/logger";
+import { getStripeClient } from "@/lib/payments/stripe";
 import {
   resolveCheckoutCustomerEmail,
   resolveCheckoutEntitlements,
 } from "@/lib/payments/stripe-webhook/helpers/entitlements";
+import { getOfferConfig } from "@/lib/products/offer-config";
+import type { StripeWebhookContext } from "@/lib/payments/stripe-webhook/types";
 
-export async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
+function asTrimmedString(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function resolveProductName(
+  sessionRecord: Awaited<ReturnType<typeof findCheckoutSessionBySubscriptionId>>,
+): string | null {
+  if (!sessionRecord) {
+    return null;
+  }
+
+  const metadata = sessionRecord.metadata ?? {};
+  const fromMetadata =
+    asTrimmedString(metadata["product_name"]) ??
+    asTrimmedString(metadata["productName"]);
+  if (fromMetadata) {
+    return fromMetadata;
+  }
+
+  const offerConfig = getOfferConfig(sessionRecord.offerId);
+  return asTrimmedString(offerConfig?.productName);
+}
+
+export async function handleInvoicePaymentSucceeded(
+  invoice: Stripe.Invoice,
+  context?: StripeWebhookContext,
+) {
   try {
     const subscriptionId = typeof invoice.subscription === "string"
       ? invoice.subscription
@@ -31,6 +64,31 @@ export async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
     const customerEmail = resolveCheckoutCustomerEmail(sessionRecord)
       ?? invoice.customer_email
       ?? null;
+
+    const paymentIntentId =
+      typeof invoice.payment_intent === "string"
+        ? invoice.payment_intent
+        : invoice.payment_intent?.id ?? null;
+    const productName = resolveProductName(sessionRecord) ?? sessionRecord.offerId;
+
+    if (paymentIntentId && productName) {
+      try {
+        const stripe = getStripeClient({ accountAlias: context?.accountAlias ?? undefined });
+        const description = `Subscription - ${productName}`;
+        await stripe.paymentIntents.update(paymentIntentId, { description });
+        logger.info("stripe.payment_intent_description_updated", {
+          paymentIntentId,
+          description,
+          source: "invoice.payment_succeeded",
+        });
+      } catch (error) {
+        logger.warn("stripe.payment_intent_description_update_failed", {
+          paymentIntentId,
+          error: error instanceof Error ? { message: error.message, name: error.name } : error,
+          source: "invoice.payment_succeeded",
+        });
+      }
+    }
 
     if (entitlements.length === 0 || !customerEmail) {
       logger.debug("serp_auth.entitlements_regrant_skipped_invoice_succeeded", {

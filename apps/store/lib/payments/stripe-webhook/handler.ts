@@ -13,10 +13,11 @@ import { handleCustomerSubscriptionDeleted } from "./events/customer-subscriptio
 import { handleInvoicePaymentFailed } from "./events/invoice-payment-failed";
 import { handleInvoicePaymentSucceeded } from "./events/invoice-payment-succeeded";
 import { handleUnhandledStripeEvent } from "./events/unhandled-event";
+import type { StripeWebhookContext } from "./types";
 
 export async function handleStripeEvent(
   event: Stripe.Event,
-  options?: { accountAlias?: string | null },
+  options?: StripeWebhookContext,
 ) {
   switch (event.type) {
     case "checkout.session.completed":
@@ -48,7 +49,9 @@ export async function handleStripeEvent(
       await handleInvoicePaymentFailed(event.data.object as Stripe.Invoice);
       break;
     case "invoice.payment_succeeded":
-      await handleInvoicePaymentSucceeded(event.data.object as Stripe.Invoice);
+      await handleInvoicePaymentSucceeded(event.data.object as Stripe.Invoice, {
+        accountAlias: options?.accountAlias ?? null,
+      });
       break;
     default:
       handleUnhandledStripeEvent(event);

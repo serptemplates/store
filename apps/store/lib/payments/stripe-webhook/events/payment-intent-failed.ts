@@ -10,12 +10,13 @@ import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { getMetadataString } from "@/lib/metadata/metadata-access";
 import { resolveCheckoutEntitlements } from "@/lib/payments/stripe-webhook/helpers/entitlements";
 import { getOfferConfig } from "@/lib/products/offer-config";
+import type { StripeWebhookRecordMetadata } from "@/lib/payments/stripe-webhook/types";
 
 export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentIntent) {
   const metadata = normalizeMetadata(paymentIntent.metadata);
   const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntent.id);
 
-  const failureMetadata: Record<string, unknown> = { ...metadata };
+  const failureMetadata: StripeWebhookRecordMetadata = { ...metadata };
 
   if (paymentIntent.last_payment_error?.message) {
     failureMetadata.lastPaymentError = paymentIntent.last_payment_error.message;

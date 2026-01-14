@@ -74,4 +74,11 @@ describe("DubAnalytics configuration", () => {
     const script = document.head.querySelector('script[data-sdkn="@dub/analytics"]');
     expect(script).toBeNull();
   });
+
+  it("loads Dub script in preview/runtime smoke environments", () => {
+    process.env.NEXT_PUBLIC_RUNTIME_ENV = "preview";
+    render(<DubAnalytics />);
+    const script = document.head.querySelector('script[data-sdkn="@dub/analytics"]');
+    expect(script).toBeTruthy();
+  });
 });

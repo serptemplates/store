@@ -1,14 +1,14 @@
-type EntitlementsLookupResult =
+export type EntitlementsLookupResult =
   | { status: "skipped"; reason: "missing_internal_secret" }
   | { status: "ok"; entitlements: string[]; customerExists: boolean }
   | { status: "error"; error: { message: string; name?: string } };
 
-type EntitlementsCatalogResult =
+export type EntitlementsCatalogResult =
   | { status: "skipped"; reason: "missing_internal_secret" }
   | { status: "ok"; aliasMap: Map<string, string> }
   | { status: "error"; error: { message: string; name?: string } };
 
-type EntitlementAliasRow = {
+export type EntitlementAliasRow = {
   alias?: string | null;
   canonical?: string | null;
 };

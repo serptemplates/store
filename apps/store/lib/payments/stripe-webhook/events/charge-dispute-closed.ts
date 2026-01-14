@@ -6,8 +6,9 @@ import {
   resolveCheckoutCustomerEmail,
   resolveCheckoutEntitlements,
 } from "@/lib/payments/stripe-webhook/helpers/entitlements";
+import type { StripeChargeReference } from "@/lib/payments/stripe-webhook/types";
 
-function extractIdsFromCharge(chargeLike: Stripe.Charge | string | null | undefined) {
+function extractIdsFromCharge(chargeLike: StripeChargeReference) {
   const result: {
     chargeId: string | null;
     stripeCustomerId: string | null;
@@ -49,7 +50,7 @@ export async function handleChargeDisputeClosed(dispute: Stripe.Dispute) {
     }
 
     const { stripeCustomerId, paymentIntentId } = extractIdsFromCharge(
-      (dispute.charge ?? null) as unknown as Stripe.Charge | string | null,
+      dispute.charge,
     );
 
     if (!stripeCustomerId || !paymentIntentId) {

@@ -8,6 +8,7 @@ import {
 import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { getMetadataString } from "@/lib/metadata/metadata-access";
+import type { StripeWebhookRecordMetadata } from "@/lib/payments/stripe-webhook/types";
 
 export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent) {
   const metadata = normalizeMetadata(paymentIntent.metadata);
@@ -18,7 +19,7 @@ export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.Payment
   const stripeSessionId = sessionRecord?.stripeSessionId ?? null;
   const offerId = sessionRecord?.offerId ?? getMetadataString(metadata, "offer_id") ?? null;
   const landerId = sessionRecord?.landerId ?? getMetadataString(metadata, "lander_id") ?? null;
-  const sessionMetadata = sessionRecord?.metadata ?? {};
+  const sessionMetadata = (sessionRecord?.metadata ?? {}) as StripeWebhookRecordMetadata;
 
   const customerEmail =
     sessionRecord?.customerEmail ??
@@ -73,14 +74,14 @@ export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.Payment
     source: "stripe",
   });
 
-  const sessionAffiliate = (sessionMetadata as Record<string, unknown>).affiliateId;
+  const sessionAffiliate = sessionMetadata.affiliateId;
   const affiliateId =
     (typeof metadata.affiliateId === "string" ? metadata.affiliateId : undefined) ??
     (typeof sessionAffiliate === "string" ? sessionAffiliate : undefined) ??
     null;
 
-  const combinedMetadata: Record<string, unknown> = {
-    ...(sessionMetadata as Record<string, unknown>),
+  const combinedMetadata: StripeWebhookRecordMetadata = {
+    ...sessionMetadata,
     ...metadata,
   };
 

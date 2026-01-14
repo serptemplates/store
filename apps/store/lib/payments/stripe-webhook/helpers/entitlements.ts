@@ -1,7 +1,7 @@
 import type { CheckoutSessionRecord } from "@/lib/checkout";
 import { getMetadataString } from "@/lib/metadata/metadata-access";
 
-type Metadata = Record<string, unknown>;
+export type StripeWebhookMetadata = Record<string, unknown>;
 
 function normalizeEntitlementList(raw: unknown): string[] {
   if (Array.isArray(raw)) {
@@ -28,7 +28,7 @@ function normalizeEntitlementList(raw: unknown): string[] {
   return [];
 }
 
-function resolveEntitlementsFromMetadata(metadata?: Metadata | null): string[] {
+function resolveEntitlementsFromMetadata(metadata?: StripeWebhookMetadata | null): string[] {
   if (!metadata) {
     return [];
   }
@@ -48,7 +48,7 @@ export function resolveCheckoutEntitlements(sessionRecord: CheckoutSessionRecord
     return [];
   }
 
-  const metadata = sessionRecord.metadata as Metadata | null | undefined;
+  const metadata = sessionRecord.metadata as StripeWebhookMetadata | null | undefined;
   const entitlements = resolveEntitlementsFromMetadata(metadata);
   if (entitlements.length > 0) {
     return entitlements;
@@ -62,7 +62,7 @@ export function resolveCheckoutCustomerEmail(sessionRecord: CheckoutSessionRecor
     return null;
   }
 
-  const metadata = sessionRecord.metadata as Metadata | null | undefined;
+  const metadata = sessionRecord.metadata as StripeWebhookMetadata | null | undefined;
   return (
     sessionRecord.customerEmail ??
     getMetadataString(metadata, "customer_email") ??
