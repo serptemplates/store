@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 import type { ProductVideoEntry } from "@/lib/products/video";
+import { ROUTES } from "@/lib/routes";
 
 type ProductVideosSectionProps = {
   videos: ProductVideoEntry[];
@@ -15,7 +16,7 @@ export function ProductVideosSection({
   videos,
   heading = "Videos",
   ctaLabel = "More videos",
-  moreLinkHref = "/videos",
+  moreLinkHref = ROUTES.videos,
 }: ProductVideosSectionProps) {
   if (!Array.isArray(videos) || videos.length === 0) {
     return null;

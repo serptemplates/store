@@ -1,5 +1,6 @@
-import { findPriceEntry, findManifestEntryBySlug } from "@/lib/pricing/price-manifest";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "@/lib/products/asset-paths";
+import { resolveProductPageUrl } from "@/lib/products/product-urls";
 import type { ProductData } from "../products/product-schema";
 
 export type MerchantProduct = {
@@ -52,57 +53,32 @@ export function sanitizeDescription(input: string | null | undefined): string {
   return input.replace(/\s+/g, " ").trim().slice(0, 4999);
 }
 
-function parsePrice(value: string | null | undefined): number | null {
-  if (!value) {
-    return null;
-  }
-  const match = value.match(/([0-9]+(?:\.[0-9]+)?)/);
-  if (!match) {
-    return null;
-  }
-  const parsed = Number.parseFloat(match[1]);
-  return Number.isNaN(parsed) ? null : parsed;
-}
-
 export function extractPrice(product: ProductData): { value: string; currency: string } {
-  const manifestEntry =
-    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
-    findManifestEntryBySlug(product.slug);
-  if (manifestEntry) {
-    return {
-      value: (manifestEntry.unitAmount / 100).toFixed(2),
-      currency: manifestEntry.currency,
-    };
-  }
-
-  const currency = "USD";
-  const candidate = product.pricing?.price ?? "";
-  const parsed = parsePrice(candidate) ?? 0;
-  return { value: parsed.toFixed(2), currency };
+  const priceDetails = resolveProductPrice(product);
+  return {
+    value: (priceDetails.amount ?? 0).toFixed(2),
+    currency: priceDetails.currency,
+  };
 }
 
 export function extractSalePrice(product: ProductData): { value: string; currency: string } | null {
-  const manifestEntry =
-    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
-    findManifestEntryBySlug(product.slug);
-  if (manifestEntry?.compareAtAmount != null && manifestEntry.compareAtAmount > manifestEntry.unitAmount) {
-    return {
-      value: (manifestEntry.unitAmount / 100).toFixed(2),
-      currency: manifestEntry.currency,
-    };
+  const priceDetails = resolveProductPrice(product);
+  if (
+    priceDetails.amount != null
+    && priceDetails.compareAtAmount != null
+    && priceDetails.compareAtAmount > priceDetails.amount
+  ) {
+    return { value: priceDetails.amount.toFixed(2), currency: priceDetails.currency };
   }
   return null;
 }
 
 function buildAppsLink(product: ProductData, appsUrl: string, siteUrl: string): string | undefined {
-  if (product.product_page_url) {
-    return product.product_page_url;
-  }
   const baseUrl = appsUrl || siteUrl;
   if (!baseUrl) {
     return undefined;
   }
-  return `${baseUrl.replace(/\/$/, "")}/${product.slug}`;
+  return resolveProductPageUrl(product, { baseUrl });
 }
 
 function collectAdditionalImages(product: ProductData, origin: string): string[] {

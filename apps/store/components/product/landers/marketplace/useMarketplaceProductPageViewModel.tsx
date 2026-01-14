@@ -75,9 +75,14 @@ export function useMarketplaceProductPageViewModel(
   siteConfig: SiteConfig,
 ): MarketplaceProductPageViewModel {
   const showPrices = siteConfig.storefront?.showPrices !== false;
+  // Build a deterministic base URL from configured site domain to avoid SSR/CSR mismatches
+  const canonicalBaseUrl = useMemo(
+    () => canonicalizeStoreOrigin(siteConfig?.site?.domain),
+    [siteConfig],
+  );
   const homeTemplate = useMemo(
-    () => productToHomeTemplate(product, [], { showPrices }),
-    [product, showPrices],
+    () => productToHomeTemplate(product, [], { showPrices, baseUrl: canonicalBaseUrl }),
+    [product, showPrices, canonicalBaseUrl],
   );
 
   const { resolvedCta, handleCtaClick, waitlist } = useProductPageExperience(
@@ -103,11 +108,6 @@ export function useMarketplaceProductPageViewModel(
   const faqItems = useMemo(() => buildFaqEntries(product), [product]);
   const reviewItems = useMemo(() => buildReviewEntries(product), [product]);
 
-  // Build a deterministic base URL from configured site domain to avoid SSR/CSR mismatches
-  const canonicalBaseUrl = useMemo(
-    () => canonicalizeStoreOrigin(siteConfig?.site?.domain),
-    [siteConfig],
-  );
   const normalizedSlug = product.slug?.replace(/^\/+/, "") ?? "";
   const productUrl = normalizedSlug ? `${canonicalBaseUrl}/${normalizedSlug}` : canonicalBaseUrl;
 

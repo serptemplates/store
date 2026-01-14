@@ -13,6 +13,7 @@ import {
   ADMIN_TIMEOUT,
   ADMIN_TOKEN,
   ADMIN_URL,
+  isLicenseAdminConfigured,
 } from "./config";
 import { fetchLicenseFromAdmin } from "./admin";
 import {
@@ -63,7 +64,7 @@ export async function markLicenseAsRefunded(input: LicenseRevocationInput): Prom
 }
 
 export async function createLicenseForOrder(input: LicenseCreationInput): Promise<LicenseCreationResult | null> {
-  if (!ADMIN_URL || !ADMIN_TOKEN) {
+  if (!isLicenseAdminConfigured()) {
     logger.debug("license_service.create_skipped", {
       reason: !ADMIN_URL ? "missing_endpoint" : "missing_token",
       provider: input.provider,
@@ -242,4 +243,3 @@ export async function createLicenseForOrder(input: LicenseCreationInput): Promis
     return null;
   }
 }
-

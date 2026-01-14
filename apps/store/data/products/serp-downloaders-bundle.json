@@ -18,7 +18,6 @@
   "supported_operating_systems": [],
   "supported_regions": [],
   "keywords": [],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -31,9 +30,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-downloaders-bundle",
-  "product_page_url": "https://apps.serp.co/serp-downloaders-bundle",
-  "serp_co_product_page_url": "https://serp.co/products/serp-downloaders-bundle/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-downloaders-bundle",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
@@ -42,8 +38,6 @@
   },
   // PAYMENT DATA
   "pricing": {
-    "label": "Bundle",
-    "price": "",
     "cta_text": ""
   },
   "payment": {
@@ -59,8 +53,7 @@
     "tag_ids": [
       "purchase-serp-downloaders-bundle",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

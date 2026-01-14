@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import type { Route } from "next";
 
 import { Button, Input, Label } from "@repo/ui";
+import { ROUTES } from "@/lib/routes";
 
 interface AccountVerificationFlowProps {
   defaultEmail?: string;
@@ -87,7 +89,7 @@ export default function AccountVerificationFlow({
         setMessage("Verification successful! Redirecting to your account...");
         setError(null);
         setTimeout(() => {
-          router.replace("/account?verified=1");
+          router.replace(`${ROUTES.account}?verified=1` as Route);
           router.refresh();
         }, 600);
       } catch (verifyError) {

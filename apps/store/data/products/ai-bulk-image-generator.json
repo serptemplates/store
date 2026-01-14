@@ -27,7 +27,6 @@
     "ai generator",
     "creative"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -40,9 +39,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/ai-bulk-image-generator",
-  "product_page_url": "https://apps.serp.co/ai-bulk-image-generator",
-  "serp_co_product_page_url": "https://serp.co/products/ai-bulk-image-generator/",
-  "cancel_url": "https://apps.serp.co/checkout?product=ai-bulk-image-generator",
   "github_repo_url": "https://github.com/serpapps/ai-bulk-image-generator",
   "github_repo_tags": [],
   "resource_links": [],

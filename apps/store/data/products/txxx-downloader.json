@@ -89,7 +89,6 @@
     "txxx downloader",
     "txxx download"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -102,18 +101,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/txxx-downloader",
-  "product_page_url": "https://apps.serp.co/txxx-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/txxx-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=txxx-downloader",
   "github_repo_url": "https://github.com/serpapps/txxx-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/txxx-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -135,8 +128,7 @@
     "tag_ids": [
       "purchase-txxx-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

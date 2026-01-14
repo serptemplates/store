@@ -13,7 +13,7 @@
 
 ## Schema groups
 
-- **Identity & SEO** – `platform`, `slug`, `name`, `tagline`, `description`, `seo_title`, `seo_description`, and canonical URLs (`serply_link`, `product_page_url`, optional `serp_co_product_page_url`). URL hosts are locked down so broken redirects fail validation early.
+- **Identity & SEO** – `platform`, `slug`, `name`, `tagline`, `description`, `seo_title`, `seo_description`, and canonical URLs (`serply_link`, optional `product_page_url` override, optional `serp_co_product_page_url` override). Product URLs now default to `/<slug>` on the configured site base and `https://serp.co/products/<slug>/` when overrides are omitted, and URL hosts stay locked down so broken redirects fail validation early.
 - **Marketing surfaces** – `features`, `benefits`, `pricing`, `screenshots`, `product_videos`, `related_videos`, `related_posts`, `faqs`, `reviews`, and optional badges (`featured`, `new_release`, `popular`). Review ratings must sit between 0–5; currency comes from `data/prices/manifest.json`.
 - **Commerce & fulfilment** – `pricing` (CTA + copy), `checkout_metadata` (provider-agnostic key/value overrides used to build checkout payloads), `payment` (provider + account routing, Stripe config lives under `payment.stripe`), `ghl`, `license`, and `permission_justifications`. Stripe IDs must start with `price_`, and GoHighLevel lists normalise empty/null values to arrays. Return policy is global and defined in `apps/store/schema/return-policy.ts`.
 - **Navigation & taxonomy** – `categories`, `keywords`, `supported_operating_systems`, `supported_regions`, `github_repo_tags`, plus optional `brand`, `sku`, and `waitlist_url`.
@@ -104,7 +104,7 @@ Practical example:
 
 - Stripe cross-sells are now configured directly in the Stripe Dashboard. The storefront no longer reads `order_bump` YAML blocks.
 - Remove legacy `order_bump` entries from product files as you touch them; they have no effect on the hosted checkout flow.
-- See `docs/checkout-cross-sell-setup.md` for the updated cross-sell playbook and cleanup checklist.
+- Stripe handles optional item display and pricing; no additional product JSON wiring is required beyond `payment.stripe.optional_items`.
 
 ## Product media assets
 
@@ -120,4 +120,4 @@ Practical example:
 - Canonical amounts live in `data/prices/manifest.json`, keyed by product slug. Each entry records the payment provider, account alias, resolved currency/unit amount, and provider-specific identifiers (e.g. Stripe live/test price IDs).
 - The manifest is consumed by the landers, checkout helpers, and Google Merchant feed; all display pricing now resolves from this file instead of the YAML copy.
 - Regenerate the manifest with `pnpm --filter @apps/store validate:products`. When `STRIPE_SECRET_KEY` is configured the script fetches fresh price data before writing.
-- If a product is missing from the manifest, the app falls back to the product JSON `pricing.price` string—handy while backfilling—but keep the manifest up to date so Stripe and the landers stay in sync.
+- If a product is missing from the manifest, pricing displays fall back to zeroed amounts. Keep the manifest updated so storefront pricing and Stripe stay in sync.

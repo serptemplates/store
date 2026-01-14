@@ -35,29 +35,19 @@ async function migrate() {
 
     let changed = false;
 
-    // 1) Point CTA to internal checkout
-    const desiredCta = `https://apps.serp.co/checkout/${slug}`;
-    if (!data.pricing) {
-      (data as any).pricing = {};
-    }
-    if ((data.pricing as any).cta_href !== desiredCta) {
-      (data.pricing as any).cta_href = desiredCta;
-      changed = true;
-    }
-
     // Remove deprecated buy_button_destination if present
     if ((data as any).buy_button_destination !== undefined) {
       delete (data as any).buy_button_destination;
       changed = true;
     }
 
-    // 2) Remove deprecated success_url (now derived in code)
+    // 1) Remove deprecated success_url (now derived in code)
     if ("success_url" in data) {
       delete (data as Record<string, unknown>).success_url;
       changed = true;
     }
 
-    // 3) Ensure license.entitlements present (default to slug)
+    // 2) Ensure license.entitlements present (default to slug)
     const current = (data as any).license?.entitlements;
     if (!current) {
       (data as any).license = { ...(data as any).license, entitlements: [slug] };

@@ -10,9 +10,6 @@
   "seo_title": "Another Product",
   "seo_description": "Another product description.",
   "serply_link": "https://serp.ly/another-product",
-  "product_page_url": "https://apps.serp.co/another-product",
-  "serp_co_product_page_url": "https://serp.co/products/another-product/",
-  "cancel_url": "https://apps.serp.co/checkout?product=another-product",
   "status": "pre_release",
   "screenshots": [],
   "product_videos": [],
@@ -21,9 +18,7 @@
   "github_repo_tags": [],
   "features": [],
   "benefits": [],
-  "pricing": {
-    "price": "$59"
-  },
+  "pricing": {},
   "faqs": [
     {
       "question": "Is this legal?",
@@ -35,7 +30,6 @@
   "supported_regions": [],
   "categories": [],
   "keywords": [],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,

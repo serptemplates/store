@@ -1,4 +1,5 @@
 import type { ResolvedHomeCta, HomeCtaMode } from "@/components/product/landers/default/home-template.types";
+import { ROUTES } from "@/lib/routes";
 import type { ProductData } from "./product-schema";
 
 type MinimalHomeCtaProps = {
@@ -50,7 +51,7 @@ export function ensureResolvedHomeCta(product: ProductData, props: MinimalHomeCt
 
   return {
     mode: fallbackMode,
-    href: props.ctaHref ?? `/product-details/product/${product.slug}`,
+    href: props.ctaHref ?? ROUTES.checkout(product.slug),
     text: props.ctaText ?? "Get It Now",
     target: props.ctaTarget ?? (fallbackOpensInNewTab ? "_blank" : "_self"),
     rel: props.ctaRel ?? undefined,

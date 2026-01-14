@@ -106,7 +106,6 @@
     "archive private rss feeds",
     "flac wav downloader extension"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -152,9 +151,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-audio-downloader",
-  "product_page_url": "https://apps.serp.co/serp-audio-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/serp-audio-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-audio-downloader",
   "github_repo_url": "https://github.com/serpapps/serp-audio-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
@@ -164,8 +160,6 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$47.00",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -178,7 +172,6 @@
     "tag_ids": [
       "purchase-serp-audio-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

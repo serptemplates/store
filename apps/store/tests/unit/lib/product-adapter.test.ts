@@ -13,7 +13,6 @@ const baseProduct: ProductData = {
   product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
-  cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
@@ -36,10 +35,7 @@ const baseProduct: ProductData = {
       answer: "Magic.",
     },
   ],
-  pricing: {
-    price: "$99",
-    cta_href: "https://apps.serp.co/checkout/sample-product",
-  },
+  pricing: {},
   screenshots: [],
   supported_operating_systems: [],
   supported_regions: [],
@@ -52,7 +48,6 @@ const baseProduct: ProductData = {
       metadata: {},
     },
   },
-  layout_type: "landing",
   status: "live",
   featured: false,
   new_release: false,
@@ -101,8 +96,6 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       benefits: ["One", "Two"],
       pricing: {
-        price: "$49",
-        cta_href: "https://apps.serp.co/checkout/sample-product",
         cta_text: "Get Started",
       },
     };
@@ -129,12 +122,12 @@ describe("productToHomeTemplate", () => {
     expect(template.ctaMode).toBe("checkout");
     expect(template.ctaOpensInNewTab).toBe(false);
     expect(template.cta?.mode).toBe("checkout");
-    expect(template.ctaHref).toBe("https://apps.serp.co/checkout/sample-product");
+    expect(template.ctaHref).toBe("/checkout/sample-product");
     expect(template.ctaText).toBe("Get Started");
     expect(template.cta?.analytics?.destination).toBe("checkout");
     const pricing = template.pricing!;
     expect(pricing.benefits ?? []).toEqual(["One", "Two"]);
-    expect(pricing.ctaHref).toBe("https://apps.serp.co/checkout/sample-product");
+    expect(pricing.ctaHref).toBe("/checkout/sample-product");
     expect(pricing.ctaText).toBe("Get Started");
     expect(pricing.subheading).toBeUndefined();
     expect(template.posts).toHaveLength(1);
@@ -145,7 +138,6 @@ describe("productToHomeTemplate", () => {
     const explicitSubheadingProduct: ProductData = {
       ...baseProduct,
       pricing: {
-        price: "$59",
         subheading: "Custom pricing message",
       },
     };
@@ -159,7 +151,6 @@ describe("productToHomeTemplate", () => {
     const hiddenSubheadingProduct: ProductData = {
       ...baseProduct,
       pricing: {
-        price: baseProduct.pricing?.price,
         subheading: " ",
       },
     };
@@ -183,24 +174,20 @@ describe("productToHomeTemplate", () => {
 
   // Removed: legacy buy_button_destination no longer supported
 
-  it("falls back to apps product page when links are missing or unsupported", () => {
+  it("uses internal checkout when no explicit checkout config is provided", () => {
     const product: ProductData = {
       ...baseProduct,
       payment: undefined,
 
-      pricing: {
-        price: baseProduct.pricing?.price,
-        cta_href: "https://example.com/not-allowed",
-      },
       serply_link: "https://serp.ly/something",
       product_page_url: "https://apps.serp.co/sample-product",
     };
 
     const template = productToHomeTemplate(product, []);
 
-    expect(template.ctaMode).toBe("external");
-    expect(template.ctaOpensInNewTab).toBe(true);
-    expect(template.ctaHref).toBe("https://apps.serp.co/sample-product");
+    expect(template.ctaMode).toBe("checkout");
+    expect(template.ctaOpensInNewTab).toBe(false);
+    expect(template.ctaHref).toBe("/checkout/sample-product");
   });
 
   it("routes pre-release products to the waitlist CTA by default", () => {
@@ -208,9 +195,7 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       status: "pre_release",
       payment: undefined,
-      
       pricing: {
-        price: baseProduct.pricing?.price,
         cta_text: "Get it Now",
       },
       featured_image: "https://cdn.example.com/hero.jpg",

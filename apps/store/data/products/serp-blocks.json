@@ -70,7 +70,6 @@
   "supported_operating_systems": [],
   "supported_regions": [],
   "keywords": [],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -111,9 +110,7 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-blocks",
-  "product_page_url": "https://apps.serp.co/serp-blocks",
   "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
   "github_repo_url": "https://github.com/serpapps/serp-blocks",
   "github_repo_tags": [],
   "resource_links": [
@@ -123,8 +120,5 @@
     }
   ],
   // PAYMENT DATA
-  "pricing": {
-    "label": "One-time",
-    "price": "$97.00"
-  }
+  "pricing": {}
 }

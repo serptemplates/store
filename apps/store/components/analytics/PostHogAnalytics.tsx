@@ -4,13 +4,9 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { PropsWithChildren, Suspense, useEffect } from "react";
 import posthog from "posthog-js";
 import { wireGlobalErrorListeners } from "@/lib/analytics/posthog";
+import { resolvePostHogConfig } from "@/lib/analytics/runtime-config";
 
-const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
-const POSTHOG_DISABLED = process.env.NEXT_PUBLIC_POSTHOG_DISABLED === "true";
-
-const hasValidKey = typeof POSTHOG_KEY === "string" && POSTHOG_KEY.startsWith("phc_");
-const isPostHogEnabled = hasValidKey && !POSTHOG_DISABLED;
+const posthogConfig = resolvePostHogConfig();
 
 interface AnalyticsWindow extends Window {
   __POSTHOG_INITIALIZED__?: boolean;
@@ -18,7 +14,7 @@ interface AnalyticsWindow extends Window {
 }
 
 function initializePostHog() {
-  if (!isPostHogEnabled || typeof window === "undefined") {
+  if (!posthogConfig.enabled || typeof window === "undefined") {
     return;
   }
 
@@ -28,8 +24,8 @@ function initializePostHog() {
     return;
   }
 
-  posthog.init(POSTHOG_KEY!, {
-    api_host: POSTHOG_HOST,
+  posthog.init(posthogConfig.key!, {
+    api_host: posthogConfig.host,
     capture_pageview: false,
     autocapture: false,
     disable_surveys: true,
@@ -77,7 +73,7 @@ function PostHogClient() {
   }, []);
 
   useEffect(() => {
-    if (!isPostHogEnabled || typeof window === "undefined") {
+    if (!posthogConfig.enabled || typeof window === "undefined") {
       return;
     }
 

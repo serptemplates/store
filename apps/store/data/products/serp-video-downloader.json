@@ -112,7 +112,6 @@
     "batch media downloader",
     "compliance media archiving"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -158,9 +157,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-downloader",
-  "product_page_url": "https://apps.serp.co/serp-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/serp-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-video-downloader",
   "github_repo_url": "https://github.com/serpapps/serp-video-downloader",
   "github_repo_tags": [
     "universal-media-downloader",
@@ -170,8 +166,6 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$47.00",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -184,7 +178,6 @@
     "tag_ids": [
       "purchase-serp-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

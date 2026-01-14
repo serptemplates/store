@@ -3,10 +3,11 @@ import { getAllProducts } from "@/lib/products/product";
 import type { ProductData } from "@/lib/products/product-schema";
 import { getSiteConfig } from "@/lib/site-config";
 import type { SiteConfig } from "@/lib/site-config";
+import { ROUTES } from "@/lib/routes";
 
 const NAV_LINKS: PrimaryNavLink[] = [
-  { label: "Videos", href: "/videos" },
-  { label: "Guides", href: "/blog" },
+  { label: "Videos", href: ROUTES.videos },
+  { label: "Guides", href: ROUTES.blog },
   {
     label: "Support",
     children: [
@@ -17,7 +18,7 @@ const NAV_LINKS: PrimaryNavLink[] = [
     ],
   },
   { label: "Github", href: "https://github.com/serpapps", external: true },
-  { label: "Account", href: "/account" },
+  { label: "Account", href: ROUTES.account },
 ];
 
 interface BuildNavOptions {

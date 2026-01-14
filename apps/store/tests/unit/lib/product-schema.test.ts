@@ -15,11 +15,7 @@ function buildBaseProduct(): Record<string, unknown> {
     seo_title: "Example SEO Title",
     seo_description: "Example SEO Description",
     serply_link: "https://serp.ly/example-product",
-    product_page_url: "https://apps.serp.co/example-product",
-    cancel_url: "https://apps.serp.co/checkout?product=example-product",
-    pricing: {
-      price: "$19.00",
-    },
+    pricing: {},
     faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
     payment: {
       provider: "stripe",
@@ -68,32 +64,22 @@ describe("productSchema", () => {
     }
   });
 
-  it("requires an internal checkout CTA when status is live", () => {
+  it("requires a Stripe price ID when status is live", () => {
     const base = buildBaseProduct();
     const result = productSchema.safeParse({
       ...base,
       status: "live",
+      payment: {
+        provider: "stripe",
+        stripe: {},
+      },
     });
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      const ctaIssue = result.error.issues.find((issue) => issue.path.join(".") === "pricing.cta_href");
-      expect(ctaIssue?.message).toMatch(/must define an internal checkout CTA/i);
+      const priceIssue = result.error.issues.find((issue) => issue.path.join(".") === "payment.stripe.price_id");
+      expect(priceIssue?.message).toMatch(/must define a Stripe price/i);
     }
-  });
-
-  it("accepts a live product when pricing.cta_href points to internal checkout", () => {
-    const base = buildBaseProduct();
-    const result = productSchema.safeParse({
-      ...base,
-      status: "live",
-      pricing: {
-        price: (base.pricing as { price?: string })?.price,
-        cta_href: "https://apps.serp.co/checkout/example-product",
-      },
-    });
-
-    expect(result.success).toBe(true);
   });
 
   it("requires trademark metadata when a known brand alias is detected", () => {

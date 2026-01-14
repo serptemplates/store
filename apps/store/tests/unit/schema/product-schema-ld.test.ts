@@ -8,8 +8,8 @@ describe("generateProductSchemaLD", () => {
       product: {
         slug: "sample-product",
         trademark_metadata: {
-        uses_trademarked_brand: false,
-      },
+          uses_trademarked_brand: false,
+        },
       seo_title: "Sample Product",
       seo_description: "Sample description",
       name: "Sample Product",
@@ -17,7 +17,6 @@ describe("generateProductSchemaLD", () => {
       product_page_url: "https://apps.serp.co/sample-product",
       serp_co_product_page_url: "https://serp.co/products/sample-product/",
       serply_link: "https://serp.ly/sample-product",
-        cancel_url: "https://apps.serp.co/checkout?product=sample-product",
         price: 49.99,
         images: ["https://cdn.example.com/image.jpg", "/local-image.png"],
         isDigital: true,
@@ -26,10 +25,7 @@ describe("generateProductSchemaLD", () => {
         keywords: [],
         features: [],
         benefits: [],
-        layout_type: "landing",
-        pricing: {
-          price: "49.99",
-        },
+        pricing: {},
         supported_operating_systems: [],
         product_videos: [],
         related_videos: [],

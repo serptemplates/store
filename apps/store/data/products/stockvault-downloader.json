@@ -117,7 +117,6 @@
   "keywords": [
     "stockvault downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -137,16 +136,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/stockvault-downloader",
-  "product_page_url": "https://apps.serp.co/stockvault-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/stockvault-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=stockvault-downloader",
   "github_repo_url": "https://github.com/serpapps/stockvault-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -166,7 +160,6 @@
     "tag_ids": [
       "purchase-stockvault-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

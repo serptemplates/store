@@ -43,8 +43,11 @@ export interface SchemaProduct extends Omit<ProductData, 'reviews'> {
   }>;
 }
 
-const normalizePriceValue = (value?: string | null): number | null => {
+const normalizePriceValue = (value?: string | number | null): number | null => {
   if (value == null) return null;
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? Number(value.toFixed(2)) : null;
+  }
   const cleaned = value.toString().replace(/[^0-9.]/g, '');
   if (!cleaned) return null;
   const numeric = Number.parseFloat(cleaned);
@@ -70,7 +73,7 @@ const collectProductImages = (product: ProductData, provided?: string[]): string
 };
 
 export interface SchemaProductTransformOptions {
-  price?: string | null;
+  price?: string | number | null;
   images?: string[];
   isDigital?: boolean;
 }
@@ -80,7 +83,7 @@ export function createSchemaProduct(
   { price, images, isDigital = true }: SchemaProductTransformOptions = {},
 ): SchemaProduct {
   const { reviews, ...rest } = product;
-  const normalizedPrice = normalizePriceValue(price ?? product.pricing?.price) ?? null;
+  const normalizedPrice = normalizePriceValue(price) ?? null;
   const normalizedImages = collectProductImages(product, images);
 
   const reviewsWithRatings =
@@ -139,7 +142,7 @@ export function generateProductSchemaLD({
   const resolvedPrice =
     typeof product.price === 'number'
       ? product.price
-      : normalizePriceValue(product.pricing?.price ?? null) ?? 0;
+      : 0;
 
   // Get primary image or use placeholder
   const primaryImage = product.images?.[0] || '/api/og';

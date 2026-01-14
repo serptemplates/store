@@ -11,6 +11,20 @@ import { createTestProduct } from "./test-utils";
 describe("merchant-product helpers", () => {
   it("buildMerchantProduct maps product fields into the Merchant payload", () => {
     const product = createTestProduct({
+      slug: "loom-video-downloader",
+      status: "live",
+      trademark_metadata: {
+        uses_trademarked_brand: true,
+        trade_name: "Loom",
+        legal_entity: "Loom, Inc.",
+      },
+      payment: {
+        provider: "stripe",
+        stripe: {
+          price_id: "price_1SdS6pDP7AOTRcvmC4iRmMQV",
+          metadata: {},
+        },
+      },
       seo_description: "Turn\n\n chaos into clarity.",
     });
 
@@ -21,11 +35,11 @@ describe("merchant-product helpers", () => {
       appsUrl: "https://apps.serp.co",
     });
 
-    expect(result.offerId).toBe("demo-product");
-    expect(result.link).toBe("https://apps.serp.co/demo-product");
-    expect(result.mobileLink).toBe("https://apps.serp.co/demo-product");
+    expect(result.offerId).toBe("loom-video-downloader");
+    expect(result.link).toBe("https://apps.serp.co/loom-video-downloader");
+    expect(result.mobileLink).toBe("https://apps.serp.co/loom-video-downloader");
     expect(result.description).toBe("Turn chaos into clarity.");
-    expect(result.price).toEqual({ value: "19.00", currency: "USD" });
+    expect(result.price).toEqual({ value: "17.00", currency: "USD" });
     expect(result.salePrice).toBeUndefined();
     expect(result.availability).toBe("in stock");
     expect(result.brand).toBe("SERP Apps");
@@ -40,21 +54,17 @@ describe("merchant-product helpers", () => {
     ]);
   });
 
-  it("extractPrice falls back to the pricing price when no manifest entry exists", () => {
+  it("extractPrice falls back to 0.00 when no manifest entry exists", () => {
     const product = createTestProduct({
-      pricing: {
-        price: "$49.5",
-      },
+      slug: "missing-price",
     });
 
-    expect(extractPrice(product)).toEqual({ value: "49.50", currency: "USD" });
+    expect(extractPrice(product)).toEqual({ value: "0.00", currency: "USD" });
   });
 
   it("extractSalePrice returns null when there is no compare-at value", () => {
     const notCheaperSale = createTestProduct({
-      pricing: {
-        price: "$79",
-      },
+      slug: "no-compare-at",
     });
 
     expect(extractSalePrice(notCheaperSale)).toBeNull();

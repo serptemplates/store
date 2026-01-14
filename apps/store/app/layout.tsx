@@ -3,7 +3,9 @@ import "./globals.css";
 import { DelayedGTM } from "@/components/DelayedGTM";
 import { PostHogAnalytics } from "@/components/analytics/PostHogAnalytics";
 import { DubAnalytics } from "@/components/analytics/DubAnalytics";
+import { resolveGtmId } from "@/lib/analytics/runtime-config";
 import { getSiteConfig } from "@/lib/site-config";
+import { getSiteBaseUrl } from "@/lib/urls";
 import { Providers } from "./providers";
 import { inter } from "./fonts";
 import Footer2 from "@repo/ui/composites/Footer2";
@@ -44,15 +46,10 @@ export const viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const siteConfig = getSiteConfig();
-  const { gtmId } = siteConfig;
+  const gtmId = resolveGtmId({ siteConfig });
   const rawSiteName = siteConfig.site?.name ?? "SERP Apps";
   const normalizedSiteName = rawSiteName.replace(/\bApps\b/gi, "").trim() || rawSiteName;
-  const domain = siteConfig.site?.domain?.trim();
-  const siteUrl = domain
-    ? /^https?:\/\//i.test(domain)
-      ? domain
-      : `https://${domain.replace(/^\/+/, "")}`
-    : "https://serp.co";
+  const siteUrl = getSiteBaseUrl();
 
   return (
     <html lang="en">

@@ -1,4 +1,5 @@
 import type { ProductData } from "./product-schema";
+import { resolveSerpCoProductPageUrl } from "./product-urls";
 import { LEGAL_FAQ_TEMPLATE } from "./product-schema";
 
 export type ProductCopy = {
@@ -162,7 +163,7 @@ export function buildProductResourceLinks(product: ProductData): ProductResource
     links.push({ label, href: trimmed });
   };
 
-  appendLink(product.serp_co_product_page_url, "SERP");
+  appendLink(resolveSerpCoProductPageUrl(product), "SERP");
   appendLink(product.github_repo_url, "GitHub");
 
   if (Array.isArray(product.resource_links)) {

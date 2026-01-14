@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
 import stripJsonComments from "strip-json-comments";
 
@@ -13,7 +12,8 @@ import {
   STRIPE_FIELD_ORDER,
 } from "@/lib/products/product-schema";
 
-const TEMP_PREFIX = path.join(os.tmpdir(), "convert-products-");
+const TEMP_ROOT = path.join(process.cwd(), "tmp");
+const TEMP_PREFIX = path.join(TEMP_ROOT, "convert-products-");
 
 describe("scripts/convert-products", () => {
   let tempDir = "";
@@ -30,6 +30,7 @@ describe("scripts/convert-products", () => {
   }
 
   beforeEach(async () => {
+    await fs.mkdir(TEMP_ROOT, { recursive: true });
     tempDir = await fs.mkdtemp(TEMP_PREFIX);
     productsDir = path.join(tempDir, "products");
     await fs.mkdir(productsDir, { recursive: true });
@@ -57,7 +58,6 @@ describe("scripts/convert-products", () => {
       seo_description: "A concise marketing description.",
       serply_link: "https://serp.ly/sample-product",
       product_page_url: "https://apps.serp.co/sample-product",
-      cancel_url: "https://apps.serp.co/checkout?product=sample-product",
       tagline: "Save time instantly",
       featured_image: "/media/products/sample-product/featured.png",
       screenshots: [
@@ -68,8 +68,7 @@ describe("scripts/convert-products", () => {
         },
       ],
       pricing: {
-        price: "$10",
-        cta_href: "https://apps.serp.co/checkout/sample-product",
+        cta_text: "Get It Now",
       },
       benefits: ["Benefit one"],
       faqs: [
@@ -137,6 +136,7 @@ describe("scripts/convert-products", () => {
     const expectedOrder = PRODUCT_FIELD_ORDER.filter((field) => parsed[field] !== undefined);
     expect(productKeys).toEqual(expectedOrder);
     expect(parsed).not.toHaveProperty("stripe");
+    expect(parsed).not.toHaveProperty("product_page_url");
 
     const pricing = parsed.pricing as Record<string, unknown>;
     expect(Object.keys(pricing)).toEqual(PRICING_FIELD_ORDER.filter((field) => pricing[field] !== undefined));
@@ -181,7 +181,6 @@ describe("scripts/convert-products", () => {
       },
       serply_link: `https://serp.ly/${slug}`,
       product_page_url: `https://apps.serp.co/${slug}`,
-      cancel_url: `https://apps.serp.co/checkout?product=${slug}`,
       faqs: [
         {
           question: "Does support cover prompts?",
@@ -189,9 +188,7 @@ describe("scripts/convert-products", () => {
         },
       ],
       categories: ["Artificial Intelligence"],
-      pricing: {
-        price: "$47",
-      },
+      pricing: {},
     });
 
     const { convertProducts } = await import("@/scripts/convert-products");
@@ -225,8 +222,7 @@ describe("scripts/convert-products", () => {
       seo_description: "Dry run description text.",
       serply_link: "https://serp.ly/dry-run-product",
       product_page_url: "https://apps.serp.co/dry-run-product",
-      cancel_url: "https://apps.serp.co/checkout?product=dry-run-product",
-      pricing: { price: "$10" },
+      pricing: {},
     });
 
     const before = await fs.readFile(productPath(slug), "utf8");
@@ -256,7 +252,6 @@ describe("scripts/convert-products", () => {
       seo_title: "Needs format",
       serply_link: "https://serp.ly/needs-format",
       product_page_url: "https://apps.serp.co/needs-format",
-      cancel_url: "https://apps.serp.co/checkout?product=needs-format",
       tagline: "Messy order",
     });
 

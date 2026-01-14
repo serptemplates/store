@@ -24,7 +24,6 @@ const baseProduct: ProductData = {
   product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
-  cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
@@ -34,10 +33,7 @@ const baseProduct: ProductData = {
   related_posts: [],
   reviews: [],
   faqs: [],
-  pricing: {
-    price: "$19",
-    cta_href: "https://apps.serp.co/checkout/sample-product",
-  },
+  pricing: {},
   benefits: [],
   screenshots: [],
   supported_operating_systems: [],
@@ -52,7 +48,6 @@ const baseProduct: ProductData = {
       metadata: {},
     },
   },
-  layout_type: "landing",
   status: "live",
   featured: false,
   new_release: false,
@@ -61,7 +56,6 @@ const baseProduct: ProductData = {
   permission_justifications: [],
   ghl: {
     tag_ids: [],
-    workflow_ids: [],
   },
   license: {
     entitlements: ["single_user"],

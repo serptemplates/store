@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
 import logger from "@/lib/logger";
+import { getSiteBaseUrl } from "@/lib/urls";
+import { ROUTES } from "@/lib/routes";
 
 const DEFAULT_RESEND_SENDER = "SERP Apps <noreply@apps.serp.co>";
 
@@ -24,7 +26,7 @@ export type SendVerificationEmailResult =
   | { ok: false; error: string };
 
 function getSiteUrl(): string | null {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? null;
+  return getSiteBaseUrl();
 }
 
 function buildVerificationUrl(token: string, path?: string | null): string | null {
@@ -34,7 +36,7 @@ function buildVerificationUrl(token: string, path?: string | null): string | nul
     return null;
   }
 
-  const resolvedPath = path === null ? null : path ?? "/account/verify";
+  const resolvedPath = path === null ? null : path ?? ROUTES.accountVerify;
   if (!resolvedPath) {
     return null;
   }

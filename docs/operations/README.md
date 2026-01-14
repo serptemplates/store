@@ -2,22 +2,23 @@
 
 Use this index to find the tooling and configuration docs that support the store deployment.
 
-- **Deployment**
-  - `store-deployment.md` – Project overview, verification checklist, and manual diagnostics.
-  - `DEPLOYMENT-WORKFLOW.md` – Branch protection rules, PR checklist, and Git/GitHub workflow.
-- **Environment & Providers**
-  - `vercel-envs.md` – Vercel env var matrix and aliasing strategy.
-  - `PAYPAL-SETUP.md` – Legacy PayPal account + webhook configuration (archival reference).
-  - `MERCHANT-CENTER-SETUP.md` – Google Merchant Center configuration notes.
-  - `EMAIL-NOTIFICATIONS.md` – Transactional email setup and incident playbook.
-- **Product Launch Modes**
-  - `pre-release-cta.md` – Configure waitlist CTAs and understand checkout CTA routing.
-- **Monitoring**
-  - `store-post-launch-monitoring.md` – Post-launch observation checklist.
-  - `MONITORING-SETUP.md` – Runtime metrics, alerts, and dashboards.
-  - `REAL-TIME-MONITORING-GUIDE.md` – Manual probes for high-touch incidents.
-- **Support & Sales Enablement**
-  - Share the internal checkout + Dub attribution overview (`docs/architecture/checkout-overview.md`, `docs/architecture/dub-partner-attribution.md`) with account, support, and sales teams. Emphasize that all purchase CTAs route through `/checkout/<slug>` and that fulfilment data lives in Stripe session metadata.
-  - Confirm each team completes their canned-response updates and removes references to legacy Payment Links or PayPal flows.
+## Deployment
 
-All scripts referenced in these docs live under `apps/store/scripts/` and load configuration through the shared `scripts/utils/env.ts` helper.
+- `store-deployment.md` - Project overview, verification checklist, and manual diagnostics.
+- `env-files.md` - Local env file layout and key runtime variables.
+
+## Monitoring
+
+- `store-post-launch-monitoring.md` - Post-launch observation checklist.
+- `REAL-TIME-MONITORING-GUIDE.md` - Live monitoring endpoints and alerting flow.
+
+## Product launch modes
+
+- `pre-release-cta.md` - Configure waitlist CTAs and checkout routing for pre-release products.
+
+## Legacy references
+
+- `PAYPAL-SETUP.md` - Legacy PayPal account + webhook configuration (historical reference).
+- `repo-cleanup-inventory.md` - Inventory of repo cleanup tasks.
+
+All scripts referenced in these docs live under `apps/store/scripts/` and load configuration through `apps/store/scripts/utils/env.ts`.

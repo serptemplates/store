@@ -117,7 +117,6 @@
   "keywords": [
     "stripchat video downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -130,16 +129,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/stripchat-video-downloader",
-  "product_page_url": "https://apps.serp.co/stripchat-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/stripchat-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=stripchat-video-downloader",
   "github_repo_url": "https://github.com/serpapps/stripchat-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$9.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -157,7 +151,6 @@
     "tag_ids": [
       "purchase-stripchat-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

@@ -115,7 +115,6 @@
   "keywords": [
     "internet archive downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -135,16 +134,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/internet-archive-downloader",
-  "product_page_url": "https://apps.serp.co/internet-archive-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/internet-archive-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=internet-archive-downloader",
   "github_repo_url": "https://github.com/serpapps/internet-archive-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -164,7 +158,6 @@
     "tag_ids": [
       "purchase-internet-archive-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

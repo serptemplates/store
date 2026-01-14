@@ -9,12 +9,14 @@ The store app now leans on a clear separation between the design system packages
 - Product landers follow the same rule: keep `HomeTemplate` and `MarketplaceProductPageView` as orchestration layers while pushing derived data and defaults into `apps/store/components/product/landers/default/home-template.view-model.ts` and `apps/store/components/product/landers/marketplace/useMarketplaceProductPageViewModel.tsx`.
 - **`apps/store/app`** – Next.js routes that stitch the UI with server actions and fetchers. Route-level components should stay lean by delegating most markup to `components/`.
 - **`apps/store/lib`** – Domain logic split by capability (`checkout/`, `payments/`, `license-service/`, `ghl-client/`, etc.). UI components should only import the facades exposed by these folders (e.g., `@/lib/checkout`), never the private helpers.
+- **Shared helpers** – `apps/store/lib/routes.ts` is the canonical source for route paths, and `apps/store/lib/products/product-urls.ts` derives product page URLs from slug + base URL.
 
 ## Checkout routing conventions
 
 - Product CTAs call `useProductCheckoutCta`, which resolves the correct Payment Link (Stripe or GHL), records analytics, and opens the destination in a new tab.
 - The `/checkout` route now acts as a static redirect back to the product slug (or home) for legacy deep links. No session API calls occur there.
 - Avoid reintroducing bespoke forms or credit-card elements; Stripe handles the payment surface entirely.
+- Use `ROUTES` helpers instead of hardcoding path strings in components or view models.
 
 ## Promotion checklist
 

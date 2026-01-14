@@ -18,9 +18,6 @@ describe("buildProductFilterItem", () => {
         trade_name: "YouTube",
         legal_entity: "Google LLC",
       },
-      pricing: {
-        cta_href: "https://apps.serp.co/checkout/youtube-downloader",
-      },
     });
 
     const item = buildProductFilterItem(product);

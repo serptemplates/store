@@ -8,7 +8,10 @@ import { getAllProducts, getProductData, getProductSlugs } from "@/lib/products/
 import { getSiteConfig } from "@/lib/site-config";
 import { getProductVideoEntries } from "@/lib/products/video";
 import { isPreRelease } from "@/lib/products/release-status";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 import { getSiteBaseUrl, toAbsoluteUrl } from "@/lib/urls";
+import { ROUTES } from "@/lib/routes";
+import { resolveProductPageUrl } from "@/lib/products/product-urls";
 import PrimaryNavbar from "@/components/navigation/PrimaryNavbar";
 import { buildPrimaryNavProps } from "@/lib/navigation";
 import { ProductBreadcrumb } from "@/components/product/ProductBreadcrumb";
@@ -30,6 +33,7 @@ function getWatchMetadata({ productSlug, videoSlug }: { productSlug: string; vid
     const baseUrl = getSiteBaseUrl();
     const watchUrl = `${baseUrl}${entry.watchPath}`;
     const productUrl = `${baseUrl}/${product.slug}`;
+    const priceDetails = resolveProductPrice(product);
     const title = `${entry.title} — ${product.name}`;
     const description = entry.description;
     const images = entry.thumbnailUrl
@@ -72,7 +76,7 @@ function getWatchMetadata({ productSlug, videoSlug }: { productSlug: string; vid
       },
     };
 
-    return { metadata, product, entry, siteName, watchUrl, productUrl };
+    return { metadata, product, entry, siteName, watchUrl, productUrl, priceDetails };
   } catch (error) {
     console.warn(`[watch-page] Failed to build metadata for ${productSlug}/${videoSlug}:`, error);
     return null;
@@ -109,7 +113,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     notFound();
   }
 
-  const { product, entry, siteName, watchUrl, productUrl } = context;
+  const { product, entry, siteName, watchUrl, productUrl, priceDetails } = context;
   const baseUrl = getSiteBaseUrl();
   const siteConfig = getSiteConfig();
   const allProducts = getAllProducts();
@@ -133,7 +137,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const primaryRegion = siteRegions[0] ?? 'Worldwide';
   const sameAsUrls = [
     entry.url,
-    product.product_page_url,
+    resolveProductPageUrl(product, { baseUrl }),
     product.serply_link,
   ].filter(Boolean);
 
@@ -182,8 +186,8 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
       ? {
           "@type": "Offer",
           url: product.serply_link,
-          price: product.pricing?.price?.replace(/[^0-9.]/g, "") || "0",
-          priceCurrency: "USD",
+          price: priceDetails.amount != null ? priceDetails.amount.toFixed(2) : "0",
+          priceCurrency: priceDetails.currency,
           availability: isPreRelease(product) ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
         }
       : undefined,
@@ -193,7 +197,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
       { name: "Home", url: "/" },
-      { name: "Videos", url: "/videos" },
+      { name: "Videos", url: ROUTES.videos },
       { name: product.name, url: productUrl },
       { name: entry.title, url: entry.watchPath },
     ],
@@ -210,7 +214,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
     primaryImageOfPage: entry.thumbnailUrl,
     isPartOf: {
       "@type": "CollectionPage",
-      url: `${baseUrl}/videos`,
+      url: `${baseUrl}${ROUTES.videos}`,
       name: "Videos",
     },
   };
@@ -229,7 +233,7 @@ export default async function WatchPage({ params }: { params: Promise<WatchPageP
             className="text-sm text-gray-600"
             items={[
               { label: "Home", href: "/" },
-              { label: "Videos", href: "/videos" },
+              { label: "Videos", href: ROUTES.videos },
               { label: product.name, href: productUrl },
               { label: entry.title },
             ]}

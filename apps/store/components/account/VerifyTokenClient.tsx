@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import type { Route } from "next";
 
 import { Button } from "@repo/ui";
+import { ROUTES } from "@/lib/routes";
 
 interface VerifyTokenClientProps {
   token: string | null;
@@ -45,7 +47,7 @@ export default function VerifyTokenClient({ token }: VerifyTokenClientProps) {
 
         setStatus("success");
         setTimeout(() => {
-          router.replace("/account?verified=1");
+          router.replace(`${ROUTES.account}?verified=1` as Route);
           router.refresh();
         }, 500);
       } catch (verificationError) {
@@ -84,7 +86,7 @@ function MissingToken() {
         <p className="text-slate-600">
           We couldn&apos;t find your verification token. Request a new code to access your account.
         </p>
-        <Button onClick={() => window.location.replace("/account")}>Go back to account</Button>
+        <Button onClick={() => window.location.replace(ROUTES.account)}>Go back to account</Button>
       </div>
     </div>
   );
@@ -98,7 +100,7 @@ function VerificationError({ error }: { error: string | null }) {
         <p className="text-slate-600">
           {error ?? "The verification link has expired. Request a fresh code and try again."}
         </p>
-        <Button variant="outline" onClick={() => window.location.replace("/account")}>Request new code</Button>
+        <Button variant="outline" onClick={() => window.location.replace(ROUTES.account)}>Request new code</Button>
       </div>
     </div>
   );
