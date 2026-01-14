@@ -4,7 +4,7 @@ import stripJsonComments from "strip-json-comments";
 
 /**
  * Add optional_items to all downloader products pointing to the bundle product.
- * This script adds: stripe.optional_items = [{product_id: "prod_TadNFo3sxzkGYb"}]
+ * This script adds: payment.stripe.optional_items = [{product_id: "prod_TadNFo3sxzkGYb"}]
  */
 
 const OPTIONAL_BUNDLE_PRODUCT_ID = "prod_TadNFo3sxzkGYb";
@@ -25,19 +25,24 @@ async function addOptionalBundleToDownloaders() {
     let data = JSON.parse(stripJsonComments(content));
 
     // Check if already has optional_items
-    if (data.stripe?.optional_items && data.stripe.optional_items.length > 0) {
+    if (data.payment?.stripe?.optional_items && data.payment.stripe.optional_items.length > 0) {
       console.log(`⏭️  ${file} already has optional_items, skipping`);
       skipped++;
       continue;
     }
 
-    // Initialize stripe object if not present
-    if (!data.stripe) {
-      data.stripe = {};
+    // Initialize payment + stripe objects if not present
+    if (!data.payment) {
+      data.payment = { provider: "stripe" };
+    } else if (!data.payment.provider) {
+      data.payment.provider = "stripe";
+    }
+    if (!data.payment.stripe) {
+      data.payment.stripe = {};
     }
 
     // Add optional_items
-    data.stripe.optional_items = [
+    data.payment.stripe.optional_items = [
       {
         product_id: OPTIONAL_BUNDLE_PRODUCT_ID,
       },

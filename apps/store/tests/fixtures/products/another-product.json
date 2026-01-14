@@ -10,10 +10,8 @@
   "seo_title": "Another Product",
   "seo_description": "Another product description.",
   "serply_link": "https://serp.ly/another-product",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/another-product",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/another-product",
+  "product_page_url": "https://apps.serp.co/another-product",
   "serp_co_product_page_url": "https://serp.co/products/another-product/",
-  "success_url": "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
   "cancel_url": "https://apps.serp.co/checkout?product=another-product",
   "status": "pre_release",
   "screenshots": [],
@@ -22,9 +20,9 @@
   "related_posts": [],
   "github_repo_tags": [],
   "features": [],
+  "benefits": [],
   "pricing": {
-    "price": "$59",
-    "benefits": []
+    "price": "$59"
   },
   "faqs": [
     {

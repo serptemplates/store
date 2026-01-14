@@ -21,6 +21,11 @@
     "Supports Chrome, Edge, Firefox, Brave, and Opera on desktop via Manifest V3",
     "Stores licence status locally with no analytics or credential harvesting"
   ],
+  "benefits": [
+    "Capture TikTok inspiration as you scroll without leaving the site",
+    "Keep offline copies for edits, reports, or travel with zero extra steps",
+    "Download safely inside your browser using your legitimate account"
+  ],
   "faqs": [
     {
       "question": "How do I download a TikTok video with this extension?",
@@ -157,67 +162,23 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/tiktok-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
+  "product_page_url": "https://apps.serp.co/tiktok-downloader",
   "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
   "github_repo_url": "https://github.com/serpapps/tiktok-video-downloader",
   "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
-  "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/tiktok-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/tiktok-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=tiktok-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=tiktok-downloader",
-    "ghl_tag": "purchase-tiktok-downloader",
-    "ghlTag": "purchase-tiktok-downloader",
-    "landerId": "tiktok-downloader",
-    "license_entitlements": "tiktok-downloader",
-    "licenseEntitlements": "tiktok-downloader",
-    "offerId": "tiktok-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Tiktok Downloader",
-    "product_page_url": "https://apps.serp.co/tiktok-downloader",
-    "product_slug": "tiktok-downloader",
-    "productName": "Tiktok Downloader",
-    "productPageUrl": "https://apps.serp.co/tiktok-downloader",
-    "productSlug": "tiktok-downloader",
-    "purchase_url": "https://serp.ly/tiktok-downloader",
-    "purchaseUrl": "https://serp.ly/tiktok-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/tiktok-downloader/",
-    "serply_link": "https://serp.ly/tiktok-downloader",
-    "serplyLink": "https://serp.ly/tiktok-downloader",
-    "slug": "tiktok-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/tiktok-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/tiktok-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
+  "resource_links": [
+    {
+      "label": "Chrome Web Store",
+      "href": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae"
+    }
+  ],
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with in-feed download buttons and ongoing updates. Sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Capture TikTok inspiration as you scroll without leaving the site",
-      "Keep offline copies for edits, reports, or travel with zero extra steps",
-      "Download safely inside your browser using your legitimate account"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/tiktok-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -234,19 +195,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6yDP7AOTRcvm66nWvCXX",
-    "test_price_id": "price_1SdS6zDP7AOTRcvmppjozxYj",
-    "metadata": {
-      "stripe_product_id": "prod_TadNHfVFiv2Dd6",
-      "stripe_test_product_id": "prod_TadNVyoztlCIbC"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

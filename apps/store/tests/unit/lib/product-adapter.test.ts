@@ -10,21 +10,16 @@ const baseProduct: ProductData = {
   },
   seo_title: "Sample Product",
   seo_description: "Sample description",
-  store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
-  apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+  product_page_url: "https://apps.serp.co/sample-product",
   serply_link: "https://serp.ly/sample-product",
   serp_co_product_page_url: "https://serp.co/products/sample-product/",
-  success_url: "https://apps.serp.co/checkout/success?product=sample-product&session_id={CHECKOUT_SESSION_ID}",
   cancel_url: "https://apps.serp.co/checkout?product=sample-product",
   name: "Sample Product Downloader",
   tagline: "Download everything",
   description: "Sample product long description",
   github_repo_tags: [],
-  chrome_webstore_link: undefined,
-  firefox_addon_store_link: undefined,
-  edge_addons_store_link: undefined,
-  producthunt_link: undefined,
   features: ["Feature A", "Feature B"],
+  benefits: [],
   product_videos: ["https://videos.example.com/demo.mp4"],
   related_videos: [],
   related_posts: [],
@@ -43,7 +38,6 @@ const baseProduct: ProductData = {
   ],
   pricing: {
     price: "$99",
-    benefits: [],
     cta_href: "https://apps.serp.co/checkout/sample-product",
   },
   screenshots: [],
@@ -51,9 +45,12 @@ const baseProduct: ProductData = {
   supported_regions: [],
   categories: [],
   keywords: [],
-  stripe: {
-    price_id: "price_123",
-    metadata: {},
+  payment: {
+    provider: "stripe",
+    stripe: {
+      price_id: "price_123",
+      metadata: {},
+    },
   },
   layout_type: "landing",
   status: "live",
@@ -102,11 +99,11 @@ describe("productToHomeTemplate", () => {
   it("merges pricing CTA settings and posts", () => {
     const product: ProductData = {
       ...baseProduct,
+      benefits: ["One", "Two"],
       pricing: {
         price: "$49",
         cta_href: "https://apps.serp.co/checkout/sample-product",
         cta_text: "Get Started",
-        benefits: ["One", "Two"],
       },
     };
 
@@ -149,7 +146,6 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       pricing: {
         price: "$59",
-        benefits: [],
         subheading: "Custom pricing message",
       },
     };
@@ -164,7 +160,6 @@ describe("productToHomeTemplate", () => {
       ...baseProduct,
       pricing: {
         price: baseProduct.pricing?.price,
-        benefits: baseProduct.pricing?.benefits ?? [],
         subheading: " ",
       },
     };
@@ -191,16 +186,14 @@ describe("productToHomeTemplate", () => {
   it("falls back to apps product page when links are missing or unsupported", () => {
     const product: ProductData = {
       ...baseProduct,
-      stripe: undefined,
-      
+      payment: undefined,
+
       pricing: {
         price: baseProduct.pricing?.price,
-        benefits: baseProduct.pricing?.benefits ?? [],
         cta_href: "https://example.com/not-allowed",
       },
       serply_link: "https://serp.ly/something",
-      store_serp_co_product_page_url: "https://store.serp.co/product-details/product/sample-product",
-      apps_serp_co_product_page_url: "https://apps.serp.co/sample-product",
+      product_page_url: "https://apps.serp.co/sample-product",
     };
 
     const template = productToHomeTemplate(product, []);
@@ -214,11 +207,10 @@ describe("productToHomeTemplate", () => {
     const product: ProductData = {
       ...baseProduct,
       status: "pre_release",
-      stripe: undefined,
+      payment: undefined,
       
       pricing: {
         price: baseProduct.pricing?.price,
-        benefits: baseProduct.pricing?.benefits ?? [],
         cta_text: "Get it Now",
       },
       featured_image: "https://cdn.example.com/hero.jpg",
@@ -251,19 +243,21 @@ describe("productToHomeTemplate", () => {
     const product: ProductData = {
       ...baseProduct,
       github_repo_url: "https://github.com/serpapps/sample-product",
-      reddit_url: "https://www.reddit.com/r/sample/comments/abc",
-      chrome_webstore_link: "https://chromewebstore.google.com/detail/demo/abcdef123456",
-      firefox_addon_store_link: "https://addons.mozilla.org/en-US/firefox/addon/demo",
-      edge_addons_store_link: "https://microsoftedge.microsoft.com/addons/detail/demo",
-      producthunt_link: "https://www.producthunt.com/products/sample-product",
+      resource_links: [
+        { label: "Reddit", href: "https://www.reddit.com/r/sample/comments/abc" },
+        { label: "Chrome Web Store", href: "https://chromewebstore.google.com/detail/demo/abcdef123456" },
+        { label: "Firefox Add-ons", href: "https://addons.mozilla.org/en-US/firefox/addon/demo" },
+        { label: "Microsoft Edge Add-ons", href: "https://microsoftedge.microsoft.com/addons/detail/demo" },
+        { label: "Product Hunt", href: "https://www.producthunt.com/products/sample-product" },
+      ],
     };
 
     const template = productToHomeTemplate(product, []);
 
     expect(template.resourceLinks).toEqual([
       { label: "SERP", href: "https://serp.co/products/sample-product/" },
-      { label: "Reddit", href: "https://www.reddit.com/r/sample/comments/abc" },
       { label: "GitHub", href: "https://github.com/serpapps/sample-product" },
+      { label: "Reddit", href: "https://www.reddit.com/r/sample/comments/abc" },
       { label: "Chrome Web Store", href: "https://chromewebstore.google.com/detail/demo/abcdef123456" },
       { label: "Firefox Add-ons", href: "https://addons.mozilla.org/en-US/firefox/addon/demo" },
       { label: "Microsoft Edge Add-ons", href: "https://microsoftedge.microsoft.com/addons/detail/demo" },

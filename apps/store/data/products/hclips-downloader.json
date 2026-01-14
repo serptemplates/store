@@ -18,6 +18,7 @@
     "Local-first workflows with no tracking",
     "Works on Windows, macOS, and Linux"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use HClips Downloader?",
@@ -101,68 +102,23 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/hclips-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hclips-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/hclips-downloader",
+  "product_page_url": "https://apps.serp.co/hclips-downloader",
   "serp_co_product_page_url": "https://serp.co/products/hclips-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=hclips-downloader",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/hclips-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/hclips-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=hclips-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=hclips-downloader",
-    "ghl_tag": "purchase-hclips-downloader",
-    "ghlTag": "purchase-hclips-downloader",
-    "landerId": "hclips-downloader",
-    "offerId": "hclips-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "HClips Downloader",
-    "product_page_url": "https://apps.serp.co/hclips-downloader",
-    "product_slug": "hclips-downloader",
-    "productName": "HClips Downloader",
-    "productPageUrl": "https://apps.serp.co/hclips-downloader",
-    "productSlug": "hclips-downloader",
-    "purchase_url": "https://serp.ly/hclips-downloader",
-    "purchaseUrl": "https://serp.ly/hclips-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/hclips-downloader/",
-    "serply_link": "https://serp.ly/hclips-downloader",
-    "serplyLink": "https://serp.ly/hclips-downloader",
-    "slug": "hclips-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/hclips-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/hclips-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$9",
-    "original_price": "$17.00",
-    "note": "Contact us for current licensing options.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_text": "Get Notified 🔔"
   },
   "payment": {
     "provider": "stripe",
     "stripe": {
       "metadata": {}
     }
-  },
-  "stripe": {
-    "metadata": {}
   },
   "ghl": {
     "tag_ids": [

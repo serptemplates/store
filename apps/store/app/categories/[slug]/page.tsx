@@ -16,6 +16,7 @@ import {
 import { isPreRelease } from "@/lib/products/release-status";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema";
 
 const ProductsFilter = dynamic(
@@ -82,7 +83,7 @@ export default async function CategoryLandingPage({
     matchingProducts.length > 0
       ? matchingProducts.map((product, index) => {
           const productUrl = `${baseUrl}/${product.slug}`;
-          const currency = product.pricing?.currency?.trim().toUpperCase() || "USD";
+          const currency = resolveProductCurrency(product);
           const schemaProduct = createSchemaProduct(product, {
             price: product.pricing?.price ?? null,
             isDigital: true,

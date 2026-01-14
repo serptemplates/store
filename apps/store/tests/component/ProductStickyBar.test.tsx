@@ -16,9 +16,7 @@ function buildProduct(overrides: Partial<ProductData>): ProductData {
     seo_title: "Demo Product | Download",
     seo_description: "Demo description",
     serply_link: "https://serp.ly/demo-product",
-    store_serp_co_product_page_url: "https://store.serp.co/product-details/product/demo-product",
-    apps_serp_co_product_page_url: "https://apps.serp.co/demo-product",
-    success_url: "https://apps.serp.co/checkout/success",
+    product_page_url: "https://apps.serp.co/demo-product",
     cancel_url: "https://apps.serp.co/checkout",
     pricing: {
       label: "One-time payment",

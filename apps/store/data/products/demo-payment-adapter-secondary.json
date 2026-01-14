@@ -17,6 +17,7 @@
     "Targets the secondary Stripe account end to end",
     "Supports future providers like Whop or LemonSqueezy"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Can customers buy this product?",
@@ -58,63 +59,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/demo-payment-adapter-secondary",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter-secondary",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter-secondary",
+  "product_page_url": "https://apps.serp.co/demo-payment-adapter-secondary",
   "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-secondary/",
-  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-secondary",
   "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-secondary",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter-secondary",
-    "appsProductPageUrl": "https://apps.serp.co/demo-payment-adapter-secondary",
-    "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-secondary",
-    "cancelUrl": "https://apps.serp.co/checkout?product=demo-payment-adapter-secondary",
-    "demo_environment": "secondary-stripe",
-    "demo_owner": "store-payments",
-    "ghl_tag": "purchase-demo-payment-adapter-secondary",
-    "ghlTag": "purchase-demo-payment-adapter-secondary",
-    "landerId": "demo-payment-adapter-secondary",
-    "license_entitlements": "demo-payment-adapter-secondary",
-    "licenseEntitlements": "demo-payment-adapter-secondary",
-    "offerId": "demo-payment-adapter-secondary",
-    "payment_provider": "stripe",
-    "payment_provider_account": "secondary",
-    "paymentProvider": "stripe",
-    "paymentProviderAccount": "secondary",
-    "product_name": "Demo Payment Adapter (Secondary Account)",
-    "product_page_url": "https://apps.serp.co/demo-payment-adapter-secondary",
-    "product_slug": "demo-payment-adapter-secondary",
-    "productName": "Demo Payment Adapter (Secondary Account)",
-    "productPageUrl": "https://apps.serp.co/demo-payment-adapter-secondary",
-    "productSlug": "demo-payment-adapter-secondary",
-    "purchase_url": "https://serp.ly/demo-payment-adapter-secondary",
-    "purchaseUrl": "https://serp.ly/demo-payment-adapter-secondary",
-    "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-secondary/",
-    "serply_link": "https://serp.ly/demo-payment-adapter-secondary",
-    "serplyLink": "https://serp.ly/demo-payment-adapter-secondary",
-    "slug": "demo-payment-adapter-secondary",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter-secondary",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/demo-payment-adapter-secondary",
-    "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-secondary",
-    "successUrl": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-secondary"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "Internal",
     "price": "$17.00",
     "cta_text": "Start Test Checkout",
-    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-secondary",
-    "currency": "USD",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Not a customer-facing SKU",
-    "method": "N/A",
-    "policy_category": "https://schema.org/SoftwareApplication",
-    "url": "https://github.com/serpapps/legal"
+    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-secondary"
   },
   "payment": {
     "provider": "stripe",
@@ -135,62 +91,22 @@
       "live": {
         "listing_id": "whop_listing_demo_live",
         "plan_id": "whop_plan_demo_live",
-        "offer_id": "whop_offer_demo_live",
         "product_id": "whop_product_demo_live",
         "checkout_url": "https://whop.com/demo-payment-adapter-live"
       },
-      "test": {
-        "listing_id": "whop_listing_demo_test",
-        "plan_id": "whop_plan_demo_test",
-        "offer_id": "whop_offer_demo_test",
-        "product_id": "whop_product_demo_test",
-        "checkout_url": "https://whop.com/demo-payment-adapter-test"
-      }
+      "test": {}
     },
     "easy_pay_direct": {
-      "api_key_alias": "demo_epd",
-      "webhook_secret_alias": "demo_epd_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
       "live": {
-        "product_id": "epd_product_demo_live",
-        "campaign_id": "epd_campaign_demo_live",
-        "offer_id": "epd_offer_demo_live",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "product_id": "epd_product_demo_test",
-        "campaign_id": "epd_campaign_demo_test",
-        "offer_id": "epd_offer_demo_test",
-        "checkout_url": "https://secure.easypaydirectgateway.com/demo-payment-adapter-test"
+        "campaign_id": "epd_campaign_demo_live"
       }
     },
     "lemonsqueezy": {
-      "api_key_alias": "demo_lemonsqueezy",
-      "webhook_secret_alias": "demo_lemonsqueezy_webhook",
-      "metadata": {
-        "notes": "demo placeholder"
-      },
       "live": {
         "store_id": "lemonsqueezy_store_demo_live",
-        "product_id": "lemonsqueezy_product_demo_live",
-        "variant_id": "lemonsqueezy_variant_demo_live",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-live"
-      },
-      "test": {
-        "store_id": "lemonsqueezy_store_demo_test",
-        "product_id": "lemonsqueezy_product_demo_test",
-        "variant_id": "lemonsqueezy_variant_demo_test",
-        "checkout_url": "https://store.lemonsqueezy.com/demo-payment-adapter-test"
+        "variant_id": "lemonsqueezy_variant_demo_live"
       }
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_TRzHsRcr0mBCRx"
-    },
-    "optional_items": []
   },
   "ghl": {
     "tag_ids": [

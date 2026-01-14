@@ -75,7 +75,6 @@ export function useProductCheckoutCta({
         "localhost",
         "127.0.0.1",
         "apps.serp.co",
-        "store.serp.co",
       ]);
 
       if (internalHosts.has(candidateUrl.hostname)) {

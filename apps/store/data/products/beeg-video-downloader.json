@@ -25,6 +25,11 @@
     "Media download customization",
     "Supports photos & videos"
   ],
+  "benefits": [
+    "Skip manual HLS extraction and save straight to MP4 with one click",
+    "Queue several Beeg videos at once while the extension handles retries",
+    "Keep downloads private thanks to on-device processing and storage"
+  ],
   "faqs": [
     {
       "question": "How do I download a Beeg video with this extension?",
@@ -187,65 +192,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/beeg-video-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
+  "product_page_url": "https://apps.serp.co/beeg-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
   "github_repo_url": "https://github.com/serpapps/beeg-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/beeg-video-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/beeg-video-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=beeg-video-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=beeg-video-downloader",
-    "ghl_tag": "purchase-beeg-video-downloader",
-    "ghlTag": "purchase-beeg-video-downloader",
-    "landerId": "beeg-video-downloader",
-    "license_entitlements": "beeg-downloader",
-    "licenseEntitlements": "beeg-downloader",
-    "offerId": "beeg-video-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Beeg Video Downloader",
-    "product_page_url": "https://apps.serp.co/beeg-video-downloader",
-    "product_slug": "beeg-video-downloader",
-    "productName": "Beeg Video Downloader",
-    "productPageUrl": "https://apps.serp.co/beeg-video-downloader",
-    "productSlug": "beeg-video-downloader",
-    "purchase_url": "https://serp.ly/beeg-video-downloader",
-    "purchaseUrl": "https://serp.ly/beeg-video-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/beeg-video-downloader/",
-    "serply_link": "https://serp.ly/beeg-video-downloader",
-    "serplyLink": "https://serp.ly/beeg-video-downloader",
-    "slug": "beeg-video-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/beeg-video-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/beeg-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with unlimited Beeg downloads. No trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Skip manual HLS extraction and save straight to MP4 with one click",
-      "Queue several Beeg videos at once while the extension handles retries",
-      "Keep downloads private thanks to on-device processing and storage"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/beeg-video-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -262,19 +220,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6gDP7AOTRcvmfBQFutsR",
-    "test_price_id": "price_1SdS6gDP7AOTRcvm9J92EbFY",
-    "metadata": {
-      "stripe_product_id": "prod_TadNxoLWa9AnQV",
-      "stripe_test_product_id": "prod_TadNfrSQk0TUtJ"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

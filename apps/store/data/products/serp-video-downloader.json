@@ -23,6 +23,11 @@
     "Works across Chrome, Edge, Firefox, Brave, and Arc with Manifest V3 compliance",
     "Integrates with yt-dlp and ffmpeg behind the scenes so power users can export CLI commands"
   ],
+  "benefits": [
+    "Replace dozens of single-site downloaders with one maintained extension",
+    "Guarantee archivists and compliance teams keep broadcast-quality masters",
+    "Save support hours with repeatable download recipes that anyone on the team can run"
+  ],
   "faqs": [
     {
       "question": "How many providers does SERP Downloader actually support?",
@@ -153,10 +158,8 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-video-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-video-downloader",
+  "product_page_url": "https://apps.serp.co/serp-video-downloader",
   "serp_co_product_page_url": "https://serp.co/products/serp-video-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-video-downloader",
   "github_repo_url": "https://github.com/serpapps/serp-video-downloader",
   "github_repo_tags": [
@@ -165,64 +168,17 @@
     "video-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/serp-video-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/serp-video-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-video-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=serp-video-downloader",
-    "ghl_tag": "purchase-serp-downloader",
-    "ghlTag": "purchase-serp-downloader",
-    "landerId": "serp-video-downloader",
-    "offerId": "serp-video-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "SERP Video Downloader",
-    "product_page_url": "https://apps.serp.co/serp-video-downloader",
-    "product_slug": "serp-video-downloader",
-    "productName": "SERP Video Downloader",
-    "productPageUrl": "https://apps.serp.co/serp-video-downloader",
-    "productSlug": "serp-video-downloader",
-    "purchase_url": "https://serp.ly/serp-downloader",
-    "purchaseUrl": "https://serp.ly/serp-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/serp-video-downloader/",
-    "serply_link": "https://serp.ly/serp-downloader",
-    "serplyLink": "https://serp.ly/serp-downloader",
-    "slug": "serp-video-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-video-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/serp-video-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$47.00",
-    "original_price": "$97",
-    "note": "Join the waitlist for early access, roadmap votes, and launch pricing.",
-    "cta_text": "Get Notified 🔔",
-    "currency": "USD",
-    "availability": "PreOrder",
-    "benefits": [
-      "Replace dozens of single-site downloaders with one maintained extension",
-      "Guarantee archivists and compliance teams keep broadcast-quality masters",
-      "Save support hours with repeatable download recipes that anyone on the team can run"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_text": "Get Notified 🔔"
   },
   "payment": {
     "provider": "stripe",
     "stripe": {
       "metadata": {}
     }
-  },
-  "stripe": {
-    "metadata": {}
   },
   "ghl": {
     "tag_ids": [

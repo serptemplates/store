@@ -117,6 +117,17 @@ function buildFetchResponse(overrides?: Partial<{ ok: boolean; status: number; s
   } as unknown as Response;
 }
 
+function resolveStripeClientMode(input: unknown): "test" | "live" | null {
+  if (input === "test" || input === "live") {
+    return input;
+  }
+  if (!input || typeof input !== "object") {
+    return null;
+  }
+  const mode = (input as { mode?: unknown }).mode;
+  return mode === "test" || mode === "live" ? mode : null;
+}
+
 function buildRequest(rawBody: string, signature = "test-signature") {
   return new NextRequest("http://localhost/api/stripe/webhook", {
     method: "POST",
@@ -142,17 +153,19 @@ const checkoutSessionFixture: CheckoutSessionRecord = {
   landerId: "demo-offer",
   customerEmail: "buyer@example.com",
   metadata: {
-    productPageUrl: "https://store.example.com/products/demo-offer",
-    store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
-    apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
-    purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    product_page_url: "https://apps.example.com/demo-offer",
+    purchase_url: "https://store.example.com/checkout/demo-offer",
     serply_link: "https://serp.ly/demo-offer",
     success_url: "https://apps.example.com/checkout/success?product=demo-offer",
     cancel_url: "https://apps.example.com/checkout?product=demo-offer",
-    stripePriceId: "price_123",
-    stripeProductId: "prod_demo",
-    ghlTag: "purchase-demo",
+    stripe_price_id: "price_123",
+    stripe_product_id: "prod_demo",
+    ghl_tag: "purchase-demo",
     environment: "test",
+    offer_id: "demo-offer",
+    lander_id: "demo-offer",
+    product_name: "Demo Offer",
+    product_slug: "demo-offer",
   },
   status: "pending",
   source: "stripe",
@@ -167,10 +180,8 @@ const offerConfigFixture: OfferConfig = {
   cancelUrl: "https://example.com/cancel",
   mode: "payment",
   metadata: {
-    productPageUrl: "https://store.example.com/products/demo-offer",
-    store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
-    apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
-    purchaseUrl: "https://store.example.com/checkout/demo-offer",
+    product_page_url: "https://apps.example.com/demo-offer",
+    purchase_url: "https://store.example.com/checkout/demo-offer",
     serply_link: "https://serp.ly/demo-offer",
     success_url: "https://apps.example.com/checkout/success?product=demo-offer",
     cancel_url: "https://apps.example.com/checkout?product=demo-offer",
@@ -201,23 +212,18 @@ function buildCheckoutSessionEvent() {
     },
     payment_intent: "pi_test_123",
     metadata: {
-      offerId: "demo-offer",
-      landerId: "demo-offer",
-      productName: "Demo Offer",
-      productSlug: "demo-offer",
-      productPageUrl: "https://store.example.com/products/demo-offer",
-      store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
-      apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
-      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      offer_id: "demo-offer",
+      lander_id: "demo-offer",
+      product_name: "Demo Offer",
+      product_slug: "demo-offer",
+      product_page_url: "https://apps.example.com/demo-offer",
+      purchase_url: "https://store.example.com/checkout/demo-offer",
       serply_link: "https://serp.ly/demo-offer",
       success_url: "https://apps.example.com/checkout/success?product=demo-offer",
       cancel_url: "https://apps.example.com/checkout?product=demo-offer",
-      stripePriceId: "price_123",
-      stripeProductId: "prod_demo",
       stripe_price_id: "price_123",
       stripe_product_id: "prod_demo",
       ghl_tag: "purchase-demo",
-      ghlTag: "purchase-demo",
       environment: "test",
     },
     client_reference_id: null,
@@ -266,19 +272,17 @@ function buildPaymentIntentEvent(
     status: type === "payment_intent.succeeded" ? "succeeded" : "requires_payment_method",
     payment_method_types: ["card"],
     metadata: {
-      offerId: "demo-offer",
-      landerId: "demo-offer",
-      customerEmail: "buyer@example.com",
-      productPageUrl: "https://store.example.com/products/demo-offer",
-      store_serp_co_product_page_url: "https://store.example.com/products/demo-offer",
-      apps_serp_co_product_page_url: "https://apps.example.com/demo-offer",
-      purchaseUrl: "https://store.example.com/checkout/demo-offer",
+      offer_id: "demo-offer",
+      lander_id: "demo-offer",
+      customer_email: "buyer@example.com",
+      product_page_url: "https://apps.example.com/demo-offer",
+      purchase_url: "https://store.example.com/checkout/demo-offer",
       serply_link: "https://serp.ly/demo-offer",
       success_url: "https://apps.example.com/checkout/success?product=demo-offer",
       cancel_url: "https://apps.example.com/checkout?product=demo-offer",
-      stripePriceId: "price_123",
-      stripeProductId: "prod_demo",
-      ghlTag: "purchase-demo",
+      stripe_price_id: "price_123",
+      stripe_product_id: "prod_demo",
+      ghl_tag: "purchase-demo",
       environment: "test",
     },
     latest_charge: "ch_test_123",
@@ -374,17 +378,11 @@ describe("POST /api/stripe/webhook", () => {
         paymentStatus: "paid",
         stripePaymentIntentId: "pi_test_123",
         metadata: expect.objectContaining({
-          // Mirrors plus payment description fields
-          paymentDescription: "Demo Offer",
           payment_description: "Demo Offer",
           description: "Demo Offer",
-          stripePriceId: "price_123",
           stripe_price_id: "price_123",
-          stripeProductId: "prod_demo",
           stripe_product_id: "prod_demo",
-          productSlug: "demo-offer",
           product_slug: "demo-offer",
-          ghlTag: "purchase-demo",
           ghl_tag: "purchase-demo",
         }),
       }),
@@ -395,23 +393,18 @@ describe("POST /api/stripe/webhook", () => {
       expect.objectContaining({
         offerId: "demo-offer",
         provider: "stripe",
-        productPageUrl: "https://store.example.com/products/demo-offer",
+        productPageUrl: "https://apps.example.com/demo-offer",
         purchaseUrl: "https://store.example.com/checkout/demo-offer",
         licenseEntitlements: ["demo-offer"],
         licenseTier: "demo-offer",
         metadata: expect.objectContaining({
-          paymentDescription: "Demo Offer",
           payment_description: "Demo Offer",
           description: "Demo Offer",
-          stripePriceId: "price_123",
           stripe_price_id: "price_123",
-          stripeProductId: "prod_demo",
           stripe_product_id: "prod_demo",
           stripeTermsOfService: "accepted",
           stripeTermsOfServiceRequirement: "required",
-          productSlug: "demo-offer",
           product_slug: "demo-offer",
-          ghlTag: "purchase-demo",
           ghl_tag: "purchase-demo",
           environment: "test",
           tosAccepted: "true",
@@ -425,12 +418,9 @@ describe("POST /api/stripe/webhook", () => {
     expect(createLicenseForOrderMock).toHaveBeenCalledWith(
       expect.objectContaining({
         metadata: expect.objectContaining({
-          offerId: "demo-offer",
-          productSlug: "demo-offer",
+          offer_id: "demo-offer",
           product_slug: "demo-offer",
-          stripeProductId: "prod_demo",
           stripe_product_id: "prod_demo",
-          ghlTag: "purchase-demo",
           ghl_tag: "purchase-demo",
         }),
       }),
@@ -542,13 +532,11 @@ describe("POST /api/stripe/webhook", () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
     session.metadata = {
-      offerId: "demo-offer",
-      landerId: "demo-offer",
-      productName: "Demo Offer",
+      offer_id: "demo-offer",
+      lander_id: "demo-offer",
+      product_name: "Demo Offer",
       product_slug: "demo-offer",
-      stripePriceId: "price_primary",
       stripe_price_id: "price_primary",
-      stripeProductId: "prod_primary",
       stripe_product_id: "prod_primary",
       ghl_tag: "purchase-demo",
       environment: "test",
@@ -600,8 +588,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -649,7 +637,6 @@ describe("POST /api/stripe/webhook", () => {
       expect.objectContaining({
         metadata: expect.objectContaining({
           ghl_tag: "purchase-demo",
-          ghlTag: "purchase-demo",
         }),
       }),
     );
@@ -659,13 +646,11 @@ describe("POST /api/stripe/webhook", () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
     session.metadata = {
-      offerId: "loom-video-downloader",
-      landerId: "loom-video-downloader",
-      productName: "Loom Video Downloader",
+      offer_id: "loom-video-downloader",
+      lander_id: "loom-video-downloader",
+      product_name: "Loom Video Downloader",
       product_slug: "loom-video-downloader",
-      stripePriceId: "price_primary",
       stripe_price_id: "price_primary",
-      stripeProductId: "prod_primary",
       stripe_product_id: "prod_primary",
       ghl_tag: "purchase-loom-video-downloader",
       environment: "test",
@@ -715,8 +700,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -739,10 +724,8 @@ describe("POST /api/stripe/webhook", () => {
       cancelUrl: "https://example.com/cancel",
       mode: "payment",
       metadata: {
-        productPageUrl: "https://apps.serp.co/loom-video-downloader",
-        store_serp_co_product_page_url: "https://store.serp.co/product-details/product/loom-video-downloader",
-        apps_serp_co_product_page_url: "https://apps.serp.co/loom-video-downloader",
-        purchaseUrl: "https://serp.ly/loom-video-downloader",
+        product_page_url: "https://apps.serp.co/loom-video-downloader",
+        purchase_url: "https://serp.ly/loom-video-downloader",
         serply_link: "https://serp.ly/loom-video-downloader",
         success_url: "https://apps.serp.co/checkout/success?product=loom-video-downloader",
         cancel_url: "https://apps.serp.co/checkout?product=loom-video-downloader",
@@ -783,14 +766,14 @@ describe("POST /api/stripe/webhook", () => {
     expect(upsertOrderMock).toHaveBeenCalledWith(
       expect.objectContaining({
         metadata: expect.objectContaining({
-          licenseEntitlementsResolved: expect.stringContaining("loom-downloader"),
-          licenseEntitlementsResolvedCount: expect.any(String),
+          license_entitlements_resolved: expect.stringContaining("loom-downloader"),
+          license_entitlements_resolved_count: expect.any(String),
         }),
       }),
     );
 
     const firstCall = upsertOrderMock.mock.calls[0]?.[0] as { metadata?: Record<string, unknown> } | undefined;
-    const resolvedCountRaw = firstCall?.metadata?.licenseEntitlementsResolvedCount;
+    const resolvedCountRaw = firstCall?.metadata?.license_entitlements_resolved_count;
     const resolvedCount = typeof resolvedCountRaw === "string" ? Number.parseInt(resolvedCountRaw, 10) : 0;
     expect(resolvedCount).toBeGreaterThan(1);
   });
@@ -799,13 +782,11 @@ describe("POST /api/stripe/webhook", () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
     session.metadata = {
-      offerId: "loom-video-downloader",
-      landerId: "loom-video-downloader",
-      productName: "Loom Video Downloader",
+      offer_id: "loom-video-downloader",
+      lander_id: "loom-video-downloader",
+      product_name: "Loom Video Downloader",
       product_slug: "loom-video-downloader",
-      stripePriceId: "price_primary",
       stripe_price_id: "price_primary",
-      stripeProductId: "prod_primary",
       stripe_product_id: "prod_primary",
       ghl_tag: "purchase-loom-video-downloader",
       environment: "test",
@@ -851,8 +832,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -875,10 +856,8 @@ describe("POST /api/stripe/webhook", () => {
       cancelUrl: "https://example.com/cancel",
       mode: "payment",
       metadata: {
-        productPageUrl: "https://apps.serp.co/loom-video-downloader",
-        store_serp_co_product_page_url: "https://store.serp.co/product-details/product/loom-video-downloader",
-        apps_serp_co_product_page_url: "https://apps.serp.co/loom-video-downloader",
-        purchaseUrl: "https://serp.ly/loom-video-downloader",
+        product_page_url: "https://apps.serp.co/loom-video-downloader",
+        purchase_url: "https://serp.ly/loom-video-downloader",
         serply_link: "https://serp.ly/loom-video-downloader",
         success_url: "https://apps.serp.co/checkout/success?product=loom-video-downloader",
         cancel_url: "https://apps.serp.co/checkout?product=loom-video-downloader",
@@ -921,13 +900,10 @@ describe("POST /api/stripe/webhook", () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
     session.metadata = {
-      offerId: "demo-offer",
-      landerId: "demo-offer",
-      productSlug: "demo-offer",
+      offer_id: "demo-offer",
+      lander_id: "demo-offer",
       product_slug: "demo-offer",
-      stripePriceId: "price_primary",
       stripe_price_id: "price_primary",
-      stripeProductId: "prod_primary",
       stripe_product_id: "prod_primary",
       ghl_tag: "purchase-demo",
       environment: "test",
@@ -981,8 +957,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -1030,7 +1006,6 @@ describe("POST /api/stripe/webhook", () => {
       expect.objectContaining({
         metadata: expect.objectContaining({
           ghl_tag: "purchase-cross-sell",
-          ghlTag: "purchase-cross-sell",
         }),
       }),
     );
@@ -1040,13 +1015,10 @@ describe("POST /api/stripe/webhook", () => {
     const event = buildCheckoutSessionEvent();
     const session = event.data.object as Stripe.Checkout.Session;
     session.metadata = {
-      offerId: "demo-offer",
-      landerId: "demo-offer",
-      productSlug: "demo-offer",
+      offer_id: "demo-offer",
+      lander_id: "demo-offer",
       product_slug: "demo-offer",
-      stripePriceId: "price_primary",
       stripe_price_id: "price_primary",
-      stripeProductId: "prod_primary",
       stripe_product_id: "prod_primary",
       ghl_tag: "purchase-demo",
       environment: "test",
@@ -1083,8 +1055,8 @@ describe("POST /api/stripe/webhook", () => {
       },
     } as unknown as ReturnType<typeof getStripeClient>;
 
-    getStripeClientMock.mockImplementation((mode?: unknown) => {
-      if (mode === "test" || mode === "live") {
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      if (resolveStripeClientMode(options)) {
         return {
           checkout: {
             sessions: {
@@ -1124,7 +1096,6 @@ describe("POST /api/stripe/webhook", () => {
       expect.objectContaining({
         metadata: expect.objectContaining({
           ghl_tag: "purchase-cross-sell",
-          ghlTag: "purchase-cross-sell",
         }),
       }),
     );
@@ -1201,7 +1172,7 @@ describe("POST /api/stripe/webhook", () => {
       "completed",
       expect.objectContaining({
         paymentIntentId: "pi_test_123",
-        metadata: expect.objectContaining({ offerId: "demo-offer" }),
+        metadata: expect.objectContaining({ offer_id: "demo-offer" }),
       }),
     );
 

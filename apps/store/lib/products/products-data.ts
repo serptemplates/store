@@ -9,7 +9,6 @@ export interface ProductMetadata {
   seo_description?: string;
   github_repo_url?: string;
   stripe_price_id?: string;
-  original_price?: string;
   benefits?: string[];
   features?: string[];
   [key: string]: unknown;
@@ -131,9 +130,8 @@ function toProduct(data: ProductData): Product {
       seo_title: data.seo_title ?? undefined,
       seo_description: data.seo_description ?? undefined,
       github_repo_url: data.github_repo_url ?? undefined,
-      stripe_price_id: data.stripe?.price_id ?? undefined,
-      original_price: data.pricing?.original_price ?? undefined,
-      benefits: data.pricing?.benefits ?? undefined,
+      stripe_price_id: data.payment?.stripe?.price_id ?? undefined,
+      benefits: data.benefits ?? undefined,
       features: data.features ?? undefined,
     },
   };

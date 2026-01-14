@@ -39,7 +39,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
 
-  let priceEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceEntry = findPriceEntry(
+    product.payment?.stripe?.price_id,
+    product.payment?.stripe?.test_price_id,
+  );
   if (!priceEntry) {
     priceEntry = findManifestEntryBySlug(product.slug);
   }
@@ -49,13 +52,11 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     : formatPriceDisplay(product.pricing?.price, priceNumber ?? 0);
   const originalPriceNumber = priceEntry?.compareAtAmount != null
     ? priceEntry.compareAtAmount / 100
-    : parsePrice(product.pricing?.original_price);
-  const originalPriceDisplay = originalPriceNumber !== undefined && originalPriceNumber !== null
-    ? priceEntry?.compareAtAmount != null
-      ? formatAmountFromCents(priceEntry.compareAtAmount, priceEntry.currency)
-      : formatPriceDisplay(product.pricing?.original_price, originalPriceNumber)
     : undefined;
-  const currency = priceEntry?.currency ?? product.pricing?.currency ?? "USD";
+  const originalPriceDisplay = priceEntry?.compareAtAmount != null
+    ? formatAmountFromCents(priceEntry.compareAtAmount, priceEntry.currency)
+    : undefined;
+  const currency = priceEntry?.currency ?? "USD";
 
   return NextResponse.json({
     slug: product.slug,
@@ -66,6 +67,5 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     originalPrice: originalPriceNumber,
     originalPriceDisplay,
     currency,
-    note: product.pricing?.note ?? undefined,
   });
 }

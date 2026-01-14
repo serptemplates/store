@@ -15,16 +15,17 @@ function buildBaseProduct(): Record<string, unknown> {
     seo_title: "Example SEO Title",
     seo_description: "Example SEO Description",
     serply_link: "https://serp.ly/example-product",
-    store_serp_co_product_page_url: "https://store.serp.co/product-details/product/example-product",
-    apps_serp_co_product_page_url: "https://apps.serp.co/example-product",
-    success_url: "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}",
+    product_page_url: "https://apps.serp.co/example-product",
     cancel_url: "https://apps.serp.co/checkout?product=example-product",
     pricing: {
       price: "$19.00",
     },
     faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
-    stripe: {
-      price_id: "price_1EXAMPLE1234567890",
+    payment: {
+      provider: "stripe",
+      stripe: {
+        price_id: "price_1EXAMPLE1234567890",
+      },
     },
   };
 }

@@ -7,6 +7,7 @@ import {
 } from "@/lib/checkout";
 import { trackCheckoutCompleted } from "@/lib/analytics/checkout-server";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
+import { getMetadataString } from "@/lib/metadata/metadata-access";
 
 export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent) {
   const metadata = normalizeMetadata(paymentIntent.metadata);
@@ -15,14 +16,14 @@ export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.Payment
 
   const checkoutSessionId = sessionRecord?.id ?? null;
   const stripeSessionId = sessionRecord?.stripeSessionId ?? null;
-  const offerId = sessionRecord?.offerId ?? metadata.offerId ?? null;
-  const landerId = sessionRecord?.landerId ?? metadata.landerId ?? null;
+  const offerId = sessionRecord?.offerId ?? getMetadataString(metadata, "offer_id") ?? null;
+  const landerId = sessionRecord?.landerId ?? getMetadataString(metadata, "lander_id") ?? null;
   const sessionMetadata = sessionRecord?.metadata ?? {};
 
   const customerEmail =
     sessionRecord?.customerEmail ??
     paymentIntent.receipt_email ??
-    metadata.customerEmail ??
+    getMetadataString(metadata, "customer_email") ??
     null;
 
   const amountTotalCents = paymentIntent.amount_received ?? paymentIntent.amount ?? null;
@@ -46,7 +47,7 @@ export async function handlePaymentIntentSucceeded(paymentIntent: Stripe.Payment
     });
   }
 
-  const customerName = metadata.customerName ?? null;
+  const customerName = getMetadataString(metadata, "customer_name") ?? null;
   const paymentMethod = paymentIntent.payment_method_types?.[0] ?? null;
 
   await upsertOrder({

@@ -18,7 +18,7 @@ function findProducts() {
     const file = path.join(productsDir, f);
     try {
       const data = readJSONSync(file);
-      const stripe = data.stripe || {};
+      const stripe = (data.payment && data.payment.stripe) || data.stripe || {};
       const metadata = stripe.metadata || {};
       const stripeProductId = metadata.stripe_product_id || metadata.stripe_product_id || null;
       const slug = data.slug || data.id || f.replace('.json', '');
@@ -52,7 +52,10 @@ function runCheck() {
   const externalReferences = [];
   for (const [, p] of Object.entries(products)) {
     if (!p.raw || p.status !== 'live') continue; // only check live products
-    const optionalItems = (p.raw.stripe && p.raw.stripe.optional_items) || [];
+    const optionalItems =
+      (p.raw.payment && p.raw.payment.stripe && p.raw.payment.stripe.optional_items)
+      || (p.raw.stripe && p.raw.stripe.optional_items)
+      || [];
     if (!optionalItems || optionalItems.length === 0) continue;
     for (const opt of optionalItems) {
       const optProductId = opt.product_id;

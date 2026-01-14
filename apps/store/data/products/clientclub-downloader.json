@@ -21,6 +21,11 @@
     "Background merging converts HLS and DASH streams into a single MP4 without re-encoding",
     "Uses your existing ClientClub login while keeping licence data stored locally"
   ],
+  "benefits": [
+    "Preserve ClientClub trainings before memberships or portals change",
+    "Consolidate embedded lessons into one MP4 archive without juggling tools",
+    "Study offline during travel or limited connectivity without buffering"
+  ],
   "faqs": [
     {
       "question": "How do I download a ClientClub lesson with this extension?",
@@ -146,67 +151,23 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/clientclub-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/clientclub-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/clientclub-downloader",
+  "product_page_url": "https://apps.serp.co/clientclub-downloader",
   "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
   "github_repo_url": "https://github.com/serpapps/clientclub-downloader",
   "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae",
-  "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/clientclub-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/clientclub-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=clientclub-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=clientclub-downloader",
-    "ghl_tag": "purchase-clientclub-downloader",
-    "ghlTag": "purchase-clientclub-downloader",
-    "landerId": "clientclub-downloader",
-    "license_entitlements": "clientclub-downloader",
-    "licenseEntitlements": "clientclub-downloader",
-    "offerId": "clientclub-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Clientclub Downloader",
-    "product_page_url": "https://apps.serp.co/clientclub-downloader",
-    "product_slug": "clientclub-downloader",
-    "productName": "Clientclub Downloader",
-    "productPageUrl": "https://apps.serp.co/clientclub-downloader",
-    "productSlug": "clientclub-downloader",
-    "purchase_url": "https://serp.ly/clientclub-downloader",
-    "purchaseUrl": "https://serp.ly/clientclub-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/clientclub-downloader/",
-    "serply_link": "https://serp.ly/clientclub-downloader",
-    "serplyLink": "https://serp.ly/clientclub-downloader",
-    "slug": "clientclub-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/clientclub-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/clientclub-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
+  "resource_links": [
+    {
+      "label": "Chrome Web Store",
+      "href": "https://chromewebstore.google.com/detail/tiktok-downloader/apkldlbgpmenoilgjldmbkipidboplae"
+    }
+  ],
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with ongoing compatibility updates. No free trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/clientclub-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Preserve ClientClub trainings before memberships or portals change",
-      "Consolidate embedded lessons into one MP4 archive without juggling tools",
-      "Study offline during travel or limited connectivity without buffering"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpdownloaders/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/clientclub-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -223,19 +184,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
-    "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q",
-    "metadata": {
-      "stripe_product_id": "prod_TadNlOW6v3RoQQ",
-      "stripe_test_product_id": "prod_TadN9KYiYPF1OE"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

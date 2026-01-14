@@ -8,6 +8,7 @@ import Stripe from "stripe";
 import { config as loadEnv } from "dotenv";
 
 import { grantSerpAuthEntitlements } from "@/lib/serp-auth/entitlements";
+import { getProductDataAllowExcluded } from "@/lib/products/product";
 
 function readEnv(name: string): string | null {
   const raw = process.env[name];
@@ -51,12 +52,37 @@ function resolveEntitlements(session: Stripe.Checkout.Session): string[] {
     (typeof md.offer_id === "string" ? md.offer_id : null) ??
     null;
 
-  if (!raw) return [];
+  if (raw) {
+    return raw
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean);
+  }
 
-  return raw
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
+  const slug =
+    (typeof md.product_slug === "string" ? md.product_slug.trim() : "") ||
+    (typeof md.productSlug === "string" ? md.productSlug.trim() : "") ||
+    null;
+
+  if (!slug) return [];
+
+  try {
+    const product = getProductDataAllowExcluded(slug);
+    const entitlements = product.license?.entitlements ?? [];
+    const resolved = Array.isArray(entitlements)
+      ? entitlements.filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
+      : typeof entitlements === "string" && entitlements.trim().length > 0
+      ? [entitlements.trim()]
+      : [];
+
+    if (resolved.length > 0) {
+      return resolved;
+    }
+  } catch {
+    // fall through to default
+  }
+
+  return [slug];
 }
 
 async function main() {

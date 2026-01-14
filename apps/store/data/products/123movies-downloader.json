@@ -25,6 +25,11 @@
     "Host permissions tuned to follow redirects and surface hidden video sources",
     "Recommended browser profile isolation for safer high-permission usage"
   ],
+  "benefits": [
+    "Lifetime updates keep pace with new 123movies mirror domains",
+    "Faster than manual tools like ffmpeg or screen recording workflows",
+    "Saves perfect MP4 copies for flights, edits, and offline archives"
+  ],
   "faqs": [
     {
       "question": "How do I save a movie with 123movies Downloader?",
@@ -152,66 +157,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/123movies-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123movies-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/123movies-downloader",
+  "product_page_url": "https://apps.serp.co/123movies-downloader",
   "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
   "github_repo_url": "https://github.com/serpapps/123movies-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/123movies-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/123movies-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=123movies-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=123movies-downloader",
-    "ghl_tag": "purchase-123movies-downloader",
-    "ghlTag": "purchase-123movies-downloader",
-    "landerId": "123movies-downloader",
-    "license_entitlements": "123movies-downloader",
-    "licenseEntitlements": "123movies-downloader",
-    "offerId": "123movies-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "123movies Downloader",
-    "product_page_url": "https://apps.serp.co/123movies-downloader",
-    "product_slug": "123movies-downloader",
-    "productName": "123movies Downloader",
-    "productPageUrl": "https://apps.serp.co/123movies-downloader",
-    "productSlug": "123movies-downloader",
-    "purchase_url": "https://serp.ly/123movies-downloader",
-    "purchaseUrl": "https://serp.ly/123movies-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/123movies-downloader/",
-    "serply_link": "https://serp.ly/123movies-downloader",
-    "serplyLink": "https://serp.ly/123movies-downloader",
-    "slug": "123movies-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/123movies-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/123movies-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with ongoing mirror compatibility updates and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/123movies-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Lifetime updates keep pace with new 123movies mirror domains",
-      "Faster than manual tools like ffmpeg or screen recording workflows",
-      "Saves perfect MP4 copies for flights, edits, and offline archives"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/123movies-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -228,19 +185,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6cDP7AOTRcvm3EeOELFV",
-    "test_price_id": "price_1SdS6dDP7AOTRcvmgxMd5FzK",
-    "metadata": {
-      "stripe_product_id": "prod_TadNrEU3Zz1yAe",
-      "stripe_test_product_id": "prod_TadNA3OUwl0eaL"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

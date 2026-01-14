@@ -17,6 +17,7 @@
     "Lets us test alternate credentials safely",
     "Drives webhook + GHL sync verification"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Is this sku public?",
@@ -58,37 +59,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/demo-payment-adapter-paypal",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/demo-payment-adapter-paypal",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
+  "product_page_url": "https://apps.serp.co/demo-payment-adapter-paypal",
   "serp_co_product_page_url": "https://serp.co/products/demo-payment-adapter-paypal/",
-  "success_url": "https://apps.serp.co/checkout/success?product=demo-payment-adapter-paypal",
   "cancel_url": "https://apps.serp.co/checkout?product=demo-payment-adapter-paypal",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "ghlTag": "purchase-demo-payment-adapter-paypal",
-    "licenseEntitlements": "demo-payment-adapter-paypal",
-    "paymentProvider": "paypal",
-    "paymentProviderAccount": "serpapps",
-    "productName": "Demo Payment Adapter (PayPal)",
-    "productSlug": "demo-payment-adapter-paypal"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "Internal",
     "price": "$17.00",
     "cta_text": "Start PayPal Test Checkout",
-    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-paypal",
-    "currency": "USD",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Not a customer-facing SKU",
-    "method": "N/A",
-    "policy_category": "https://schema.org/SoftwareApplication",
-    "url": "https://github.com/serpapps/legal"
+    "cta_href": "https://apps.serp.co/checkout/demo-payment-adapter-paypal"
   },
   "payment": {
     "provider": "paypal",

@@ -1,5 +1,6 @@
 import priceManifest from "@/data/prices/manifest.json";
 import type { PaymentProviderId } from "@/lib/products/payment";
+import type { ProductData } from "@/lib/products/product-schema";
 
 type ProviderEnvironmentDetails = {
   listing_id?: string;
@@ -132,6 +133,13 @@ export function findManifestEntryBySlug(slug: string): PriceManifestEntry | unde
     raw.slug;
 
   return formatEntry(raw, fallbackId ?? raw.slug);
+}
+
+export function resolveProductCurrency(product: ProductData, fallback = "USD"): string {
+  const entry =
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
+    findManifestEntryBySlug(product.slug);
+  return entry?.currency ?? normaliseCurrency(fallback);
 }
 
 export function formatAmountFromCents(

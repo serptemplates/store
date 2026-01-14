@@ -12,6 +12,7 @@
   "seo_description": "Internal checkout bundle for SERP Video Downloaders.",
   "status": "pre_release",
   "features": [],
+  "benefits": [],
   "faqs": [],
   "reviews": [],
   "supported_operating_systems": [],
@@ -30,47 +31,20 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-downloaders-bundle",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-downloaders-bundle",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-downloaders-bundle",
+  "product_page_url": "https://apps.serp.co/serp-downloaders-bundle",
   "serp_co_product_page_url": "https://serp.co/products/serp-downloaders-bundle/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-downloaders-bundle",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
   "checkout_metadata": {
-    "bundle_expand": "optional_items_union",
-    "bundleExpand": "optional_items_union",
-    "ghl_tag": "purchase-serp-downloaders-bundle",
-    "ghlTag": "purchase-serp-downloaders-bundle",
-    "licenseEntitlements": "serp-downloaders-bundle",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "All SERP Video Downloaders",
-    "product_slug": "serp-downloaders-bundle",
-    "productName": "All SERP Video Downloaders",
-    "productSlug": "serp-downloaders-bundle",
-    "purchase_url": "https://serp.ly/serp-downloaders-bundle",
-    "purchaseUrl": "https://serp.ly/serp-downloaders-bundle",
-    "slug": "serp-downloaders-bundle"
+    "bundle_expand": "optional_items_union"
   },
   // PAYMENT DATA
   "pricing": {
     "label": "Bundle",
     "price": "",
-    "original_price": "",
-    "note": "",
-    "cta_text": "",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_text": ""
   },
   "payment": {
     "provider": "stripe",
@@ -79,12 +53,6 @@
       "metadata": {
         "stripe_product_id": "prod_TadNFo3sxzkGYb"
       }
-    }
-  },
-  "stripe": {
-    "price_id": "price_1SdS78DP7AOTRcvmL0rMa3mD",
-    "metadata": {
-      "stripe_product_id": "prod_TadNFo3sxzkGYb"
     }
   },
   "ghl": {

@@ -23,6 +23,7 @@
     "100% privacy-friendly",
     "Zero data tracking"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Can I download private videos?",
@@ -125,60 +126,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/dailymotion-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dailymotion-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/dailymotion-downloader",
+  "product_page_url": "https://apps.serp.co/dailymotion-downloader",
   "serp_co_product_page_url": "https://serp.co/products/dailymotion-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=dailymotion-downloader",
   "github_repo_url": "https://github.com/serpapps/dailymotion-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/dailymotion-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/dailymotion-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=dailymotion-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=dailymotion-downloader",
-    "ghl_tag": "purchase-dailymotion-downloader",
-    "ghlTag": "purchase-dailymotion-downloader",
-    "landerId": "dailymotion-downloader",
-    "offerId": "dailymotion-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Dailymotion Downloader",
-    "product_page_url": "https://apps.serp.co/dailymotion-downloader",
-    "product_slug": "dailymotion-downloader",
-    "productName": "Dailymotion Downloader",
-    "productPageUrl": "https://apps.serp.co/dailymotion-downloader",
-    "productSlug": "dailymotion-downloader",
-    "purchase_url": "https://serp.ly/dailymotion-downloader",
-    "purchaseUrl": "https://serp.ly/dailymotion-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/dailymotion-downloader/",
-    "serply_link": "https://serp.ly/dailymotion-downloader",
-    "serplyLink": "https://serp.ly/dailymotion-downloader",
-    "slug": "dailymotion-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/dailymotion-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/dailymotion-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/dailymotion-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/dailymotion-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -196,24 +155,16 @@
       ]
     }
   },
-  "stripe": {
-    "price_id": "price_1SdS6jDP7AOTRcvmSPOaz9gI",
-    "test_price_id": "price_1SdS6jDP7AOTRcvmUpRlTPty",
-    "metadata": {
-      "stripe_product_id": "prod_TadNBbXZ4w9iil",
-      "stripe_test_product_id": "prod_TadNTWQZtH9xaT"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
-  },
   "ghl": {
     "tag_ids": [
       "purchase-dailymotion-downloader",
       "purchase"
     ],
     "workflow_ids": []
+  },
+  "license": {
+    "entitlements": [
+      "dailymotion-downloader"
+    ]
   }
 }

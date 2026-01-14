@@ -34,6 +34,7 @@
     "Multi-stream recording capabilities",
     "Comprehensive logging and recording history"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Chaturbate downloader?",
@@ -129,59 +130,17 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/chaturbate-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/chaturbate-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/chaturbate-downloader",
+  "product_page_url": "https://apps.serp.co/chaturbate-downloader",
   "serp_co_product_page_url": "https://serp.co/products/chaturbate-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=chaturbate-downloader",
   "github_repo_url": "https://github.com/serpapps/chaturbate-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/chaturbate-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/chaturbate-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=chaturbate-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=chaturbate-downloader",
-    "ghl_tag": "purchase-chaturbate-downloader",
-    "ghlTag": "purchase-chaturbate-downloader",
-    "landerId": "chaturbate-downloader",
-    "offerId": "chaturbate-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Chaturbate Downloader",
-    "product_page_url": "https://apps.serp.co/chaturbate-downloader",
-    "product_slug": "chaturbate-downloader",
-    "productName": "Chaturbate Downloader",
-    "productPageUrl": "https://apps.serp.co/chaturbate-downloader",
-    "productSlug": "chaturbate-downloader",
-    "purchase_url": "https://serp.ly/chaturbate-downloader",
-    "purchaseUrl": "https://serp.ly/chaturbate-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/chaturbate-downloader/",
-    "serply_link": "https://serp.ly/chaturbate-downloader",
-    "serplyLink": "https://serp.ly/chaturbate-downloader",
-    "slug": "chaturbate-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/chaturbate-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/chaturbate-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$9.00",
-    "original_price": "$17.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -193,14 +152,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {},
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

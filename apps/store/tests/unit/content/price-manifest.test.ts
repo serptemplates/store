@@ -19,7 +19,7 @@ describe("price manifest", () => {
     const products = getAllProducts();
 
     for (const product of products) {
-      const stripe = product.stripe;
+      const stripe = product.payment?.stripe;
       if (!stripe?.price_id) continue;
 
       const manifestEntry = findPriceEntry(stripe.price_id, undefined);

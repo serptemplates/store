@@ -118,6 +118,9 @@ After deployment, monitor performance in Search Console:
 - aggregateRating
 - review
 - offers.hasMerchantReturnPolicy
+
+**Return Policy**
+- Merchant return policy values are centralized in `apps/store/schema/return-policy.ts` and applied to every product schema.
 - offers.shippingDetails
 
 ### Breadcrumbs

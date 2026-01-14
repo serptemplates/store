@@ -26,7 +26,6 @@ const DEFAULT_CTA_LABEL_LOWER = DEFAULT_CTA_LABEL.toLowerCase();
 
 const CTA_ALLOWED_PREFIXES = [
   "https://apps.serp.co/",
-  "https://store.serp.co/",
   "https://ghl.serp.co/",
   "https://serp.ly/",
   "https://serp.co/",
@@ -124,8 +123,7 @@ type ResolvedProductCta = ResolvedHomeCta;
 function selectExternalDestination(product: ProductData): string {
   const candidateLinks = [
     product.pricing?.cta_href,
-    product.apps_serp_co_product_page_url,
-    product.store_serp_co_product_page_url,
+    product.product_page_url,
     product.serp_co_product_page_url,
     product.serply_link,
   ];
@@ -248,7 +246,10 @@ export function productToHomeTemplate(
   const screenshots = toScreenshots(product.screenshots, product);
   const testimonials = toTestimonials(product.reviews);
   const faqs = toFaqs(product.faqs);
-  let priceManifestEntry = findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id);
+  let priceManifestEntry = findPriceEntry(
+    product.payment?.stripe?.price_id,
+    product.payment?.stripe?.test_price_id,
+  );
   if (!priceManifestEntry) {
     priceManifestEntry = findManifestEntryBySlug(product.slug);
   }
@@ -258,9 +259,6 @@ export function productToHomeTemplate(
   const formattedPrice = priceManifestEntry
     ? formatAmountFromCents(priceManifestEntry.unitAmount, priceManifestEntry.currency)
     : product.pricing?.price ?? (currentPriceValue != null ? formatPrice(currentPriceValue) : undefined);
-  let derivedOriginalPrice = priceManifestEntry?.compareAtAmount != null
-    ? formatAmountFromCents(priceManifestEntry.compareAtAmount, priceManifestEntry.currency)
-    : product.pricing?.original_price ?? undefined;
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -280,14 +278,6 @@ export function productToHomeTemplate(
     return entries.length > 0 ? entries : undefined;
   })();
 
-  if (!derivedOriginalPrice && currentPriceValue != null) {
-    if (Math.abs(currentPriceValue - 17) < 0.01) {
-      derivedOriginalPrice = formatPrice(37);
-    } else if (Math.abs(currentPriceValue - 27) < 0.01) {
-      derivedOriginalPrice = formatPrice(47);
-    }
-  }
-
   let pricingSubheading: string | undefined;
   if (product.pricing && Object.prototype.hasOwnProperty.call(product.pricing, "subheading")) {
     const rawSubheading = product.pricing?.subheading;
@@ -304,11 +294,9 @@ export function productToHomeTemplate(
     subheading: pricingSubheading,
     priceLabel: showPrices ? product.pricing?.label : undefined,
     price: showPrices ? formattedPrice : undefined,
-    originalPrice: showPrices ? derivedOriginalPrice : undefined,
-    priceNote: showPrices ? product.pricing?.note : undefined,
     benefits:
-      product.pricing?.benefits && product.pricing.benefits.length > 0
-        ? product.pricing.benefits
+      product.benefits && product.benefits.length > 0
+        ? product.benefits
         : product.features && product.features.length > 0
         ? product.features.slice(0, 8) // Take first 8 features for the pricing section
         : defaultPricingBenefits,

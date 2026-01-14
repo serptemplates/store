@@ -176,11 +176,8 @@ export async function processFulfilledOrder(order: NormalizedOrder): Promise<Pro
   const providerMode = order.providerMode ?? null;
   ensureMetadataValues(metadata, {
     product_slug: order.productSlug,
-    productSlug: order.productSlug,
-    productName: order.productName,
-    paymentProvider: order.provider,
+    product_name: order.productName,
     payment_provider: order.provider,
-    paymentProviderAccount: order.providerAccountAlias,
     payment_provider_account: order.providerAccountAlias,
     providerSessionId,
     providerPaymentId,
@@ -399,8 +396,8 @@ export async function processFulfilledOrder(order: NormalizedOrder): Promise<Pro
         metadata: serializeMetadataForGhl(metadata),
         productPageUrl: urls.productPageUrl ?? null,
         purchaseUrl: urls.purchaseUrl ?? null,
-        storeProductPageUrl: urls.storeProductPageUrl ?? urls.productPageUrl ?? null,
-        appsProductPageUrl: urls.appsProductPageUrl ?? urls.productPageUrl ?? null,
+        storeProductPageUrl: urls.storeProductPageUrl ?? null,
+        appsProductPageUrl: urls.appsProductPageUrl ?? null,
         serplyLink: urls.serplyLink ?? null,
         successUrl: urls.successUrl ?? null,
         cancelUrl: urls.cancelUrl ?? null,

@@ -52,6 +52,22 @@ function normalizeStripeProductId(value: unknown): string | null {
   return trimmed;
 }
 
+function normalizeStoreProductUrl(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.replace(
+    /^https:\/\/store\.serp\.co\/product-details\/product\//,
+    "https://apps.serp.co/",
+  );
+  if (normalized !== value) {
+    return normalized;
+  }
+
+  return value.replace(/^https:\/\/store\.serp\.co\//, "https://apps.serp.co/");
+}
+
 function collectStripeProductIds(metadata?: Record<string, unknown>): string[] {
   if (!metadata) {
     return [];
@@ -109,7 +125,6 @@ function buildStripeProductSlugMap(): Map<string, string> {
 
     const metadataSources = [
       product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
-      product.stripe?.metadata as Record<string, unknown> | undefined,
     ];
 
     for (const source of metadataSources) {
@@ -188,13 +203,9 @@ function hasOptionalStripeItemProductId(product: unknown, stripeProductId: strin
   const record = product as Record<string, unknown>;
   const payment = record.payment as Record<string, unknown> | undefined;
   const paymentStripe = (payment?.stripe as Record<string, unknown> | undefined) ?? undefined;
-  const stripe = (record.stripe as Record<string, unknown> | undefined) ?? undefined;
-
   const optionalItems =
     (paymentStripe?.optional_items as unknown) ??
-    (paymentStripe?.optionalItems as unknown) ??
-    (stripe?.optional_items as unknown) ??
-    (stripe?.optionalItems as unknown);
+    (paymentStripe?.optionalItems as unknown);
 
   if (!Array.isArray(optionalItems)) {
     return false;
@@ -268,7 +279,6 @@ function buildBundleIndex(): BundleIndex {
 
     const metadataSources = [
       product.payment?.stripe?.metadata as Record<string, unknown> | undefined,
-      product.stripe?.metadata as Record<string, unknown> | undefined,
     ];
 
     const ids = new Set<string>();
@@ -526,7 +536,7 @@ export async function handleCheckoutSessionCompleted(
   eventMeta?: { id?: string; type?: string; created?: number },
   context?: { accountAlias?: string | null },
 ) {
-  const metadata = ensureMetadataCaseVariants(normalizeMetadata(session.metadata));
+  const metadata = ensureMetadataCaseVariants(normalizeMetadata(session.metadata), { mirror: "snake" });
 
   const coerceMetadataString = (value: unknown): string | null => {
     if (typeof value !== "string") {
@@ -551,10 +561,10 @@ export async function handleCheckoutSessionCompleted(
   };
 
   let productNameValue =
-    coerceMetadataString(metadata["productName"]) ??
     coerceMetadataString(metadata["product_name"]) ??
+    coerceMetadataString(metadata["productName"]) ??
     null;
-  ensureMetadataValues(productNameValue, "productName", "product_name");
+  ensureMetadataValues(productNameValue, "product_name");
 
   const checkoutMode =
     typeof session.livemode === "boolean"
@@ -563,9 +573,7 @@ export async function handleCheckoutSessionCompleted(
   const providerMode = typeof session.livemode === "boolean" ? (session.livemode ? "live" : "test") : null;
   if (checkoutMode) {
     metadata.checkout_mode = checkoutMode;
-    metadata.checkoutMode = checkoutMode;
     metadata.payment_link_mode = checkoutMode;
-    metadata.paymentLinkMode = checkoutMode;
   }
 
   const stripeModeForLineItems: StripeModeInput =
@@ -578,19 +586,16 @@ export async function handleCheckoutSessionCompleted(
   let productSlugValue = metadata.product_slug ?? metadata.productSlug ?? null;
   if (productSlugValue) {
     metadata.product_slug = productSlugValue;
-    metadata.productSlug = productSlugValue;
   }
 
   let stripeProductIdValue =
     metadata.stripe_product_id ?? metadata.stripeProductId ?? null;
   if (stripeProductIdValue) {
     metadata.stripe_product_id = stripeProductIdValue;
-    metadata.stripeProductId = stripeProductIdValue;
   }
 
   const metadataTagCandidates: string[] = [];
   appendUniqueString(metadataTagCandidates, metadata.ghl_tag);
-  appendUniqueString(metadataTagCandidates, metadata.ghlTag);
 
 
   const tosStatus = session.consent?.terms_of_service ?? null;
@@ -610,11 +615,11 @@ export async function handleCheckoutSessionCompleted(
     metadata.clientReferenceId = session.client_reference_id;
   }
 
-  const offerId = metadata.offerId
-    ?? metadata.product_slug
-    ?? metadata.productSlug
-    ?? session.client_reference_id
-    ?? (process.env.NODE_ENV === "development" ? "loom-video-downloader" : null);
+  const offerId =
+    getMetadataString(metadata, "offer_id")
+      ?? getMetadataString(metadata, "product_slug")
+      ?? session.client_reference_id
+      ?? (process.env.NODE_ENV === "development" ? "loom-video-downloader" : null);
 
   if (!offerId) {
     logger.error("webhook.missing_offer_id", {
@@ -625,7 +630,7 @@ export async function handleCheckoutSessionCompleted(
     return;
   }
 
-  const landerId = metadata.landerId ?? metadata.productSlug ?? metadata.product_slug ?? offerId;
+  const landerId = getMetadataString(metadata, "lander_id") ?? metadata.product_slug ?? offerId;
 
   const paymentIntentId =
     typeof session.payment_intent === "string"
@@ -640,11 +645,11 @@ export async function handleCheckoutSessionCompleted(
     const fallbackProductName = coerceMetadataString(offerConfig?.productName);
     if (fallbackProductName) {
       productNameValue = fallbackProductName;
-      ensureMetadataValues(productNameValue, "productName", "product_name");
+      ensureMetadataValues(productNameValue, "product_name");
     }
   }
 
-  ensureMetadataValues(productNameValue, "paymentDescription", "payment_description");
+  ensureMetadataValues(productNameValue, "payment_description");
 
   if (!coerceMetadataString(metadata["description"]) && productNameValue) {
     metadata.description = productNameValue;
@@ -683,7 +688,6 @@ export async function handleCheckoutSessionCompleted(
       const charges = await stripe.charges.list({ payment_intent: paymentIntentId, limit: 1 });
       const receiptNumber = charges.data?.[0]?.receipt_number ?? null;
       if (receiptNumber) {
-        metadata.receiptNumber = receiptNumber;
         metadata.receipt_number = receiptNumber;
       }
     }
@@ -694,9 +698,8 @@ export async function handleCheckoutSessionCompleted(
     });
   }
 
-  if (!metadata.product_slug || !metadata.productSlug) {
+  if (!metadata.product_slug) {
     metadata.product_slug = offerId;
-    metadata.productSlug = offerId;
   }
 
   const primaryPriceIdForTags = getMetadataString(metadata, "stripe_price_id") ?? getMetadataString(metadata, "stripePriceId");
@@ -766,7 +769,6 @@ export async function handleCheckoutSessionCompleted(
 
   appendFallbackProductSlug(productSlugValue);
   appendFallbackProductSlug(metadata.product_slug);
-  appendFallbackProductSlug(metadata.productSlug);
   appendFallbackProductSlug(offerId);
 
   const resolvedGhlTagIds: string[] = [];
@@ -786,7 +788,6 @@ export async function handleCheckoutSessionCompleted(
   const primaryGhlTag = resolvedGhlTagIds[0] ?? null;
   if (primaryGhlTag) {
     metadata.ghl_tag = primaryGhlTag;
-    metadata.ghlTag = primaryGhlTag;
   }
 
   logger.debug("stripe.checkout_resolved_tags", {
@@ -804,8 +805,8 @@ export async function handleCheckoutSessionCompleted(
   const resolvedLicenseEntitlements = entitlementLookup.entitlements;
 
   if (resolvedLicenseEntitlements.length > 0) {
-    metadata.licenseEntitlementsResolved = resolvedLicenseEntitlements.join(",");
-    metadata.licenseEntitlementsResolvedCount = String(resolvedLicenseEntitlements.length);
+    metadata.license_entitlements_resolved = resolvedLicenseEntitlements.join(",");
+    metadata.license_entitlements_resolved_count = String(resolvedLicenseEntitlements.length);
   }
 
   if (entitlementLookup.missingSlugs.length > 0) {
@@ -864,58 +865,57 @@ export async function handleCheckoutSessionCompleted(
     typeof existingMetadata["ghlSyncedAt"] === "string" ? (existingMetadata["ghlSyncedAt"] as string) : undefined;
   const alreadySynced = Boolean(ghlSyncedAtValue);
 
-  const productPageUrl =
-    offerConfig?.metadata?.productPageUrl
-      ?? metadata.productPageUrl
-      ?? metadata.product_page_url
+  const offerMetadata = (offerConfig?.metadata ?? {}) as Record<string, unknown>;
+
+  const legacyAppsUrl =
+    getMetadataString(offerMetadata, "apps_serp_co_product_page_url")
+      ?? getMetadataString(metadata, "apps_serp_co_product_page_url")
+      ?? null;
+  const legacyStoreUrl =
+    getMetadataString(offerMetadata, "store_serp_co_product_page_url")
+      ?? getMetadataString(metadata, "store_serp_co_product_page_url")
       ?? null;
 
-  const storeProductPageUrl =
-    offerConfig?.metadata?.store_serp_co_product_page_url
-      ?? metadata.store_serp_co_product_page_url
-      ?? null;
+  const appsProductPageUrl = normalizeStoreProductUrl(legacyAppsUrl);
+  const storeProductPageUrl = normalizeStoreProductUrl(legacyStoreUrl);
 
-  const appsProductPageUrl =
-    offerConfig?.metadata?.apps_serp_co_product_page_url
-      ?? metadata.apps_serp_co_product_page_url
-      ?? null;
+  const productPageUrl = normalizeStoreProductUrl(
+    getMetadataString(offerMetadata, "product_page_url")
+      ?? getMetadataString(metadata, "product_page_url")
+      ?? legacyAppsUrl
+      ?? legacyStoreUrl,
+  );
 
   const purchaseUrl =
-    metadata.purchaseUrl
-      ?? metadata.purchase_url
-      ?? metadata.serply_link
-      ?? metadata.serplyLink
-      ?? metadata.checkoutUrl
-      ?? metadata.checkout_url
-      ?? offerConfig?.metadata?.purchaseUrl
-      ?? offerConfig?.metadata?.serply_link
+    getMetadataString(metadata, "purchase_url")
+      ?? getMetadataString(metadata, "serply_link")
+      ?? getMetadataString(metadata, "checkout_url")
+      ?? getMetadataString(offerMetadata, "purchase_url")
+      ?? getMetadataString(offerMetadata, "serply_link")
       ?? null;
 
   const serplyLink =
-    metadata.serply_link
-      ?? metadata.serplyLink
+    getMetadataString(metadata, "serply_link")
       ?? purchaseUrl
-      ?? offerConfig?.metadata?.serply_link
+      ?? getMetadataString(offerMetadata, "serply_link")
       ?? null;
 
   const successUrl =
-    metadata.success_url
-      ?? metadata.successUrl
-      ?? offerConfig?.metadata?.success_url
+    getMetadataString(metadata, "success_url")
+      ?? getMetadataString(offerMetadata, "success_url")
       ?? offerConfig?.successUrl
       ?? null;
 
   const cancelUrl =
-    metadata.cancel_url
-      ?? metadata.cancelUrl
-      ?? offerConfig?.metadata?.cancel_url
+    getMetadataString(metadata, "cancel_url")
+      ?? getMetadataString(offerMetadata, "cancel_url")
       ?? offerConfig?.cancelUrl
       ?? null;
 
   const providerAccountAlias =
     context?.accountAlias
-      ?? getMetadataString(metadata, "paymentProviderAccount")
-      ?? getMetadataString(metadata, "paymentProviderAccountAlias")
+      ?? getMetadataString(metadata, "payment_provider_account")
+      ?? getMetadataString(metadata, "payment_provider_account_alias")
       ?? null;
 
   const normalizedOrder: NormalizedOrder = {
@@ -928,8 +928,8 @@ export async function handleCheckoutSessionCompleted(
     paymentIntentId,
     offerId,
     landerId,
-    productSlug: metadata.product_slug ?? metadata.productSlug ?? offerId,
-    productName: metadata.productName ?? metadata.product_name ?? offerConfig?.productName ?? offerId,
+    productSlug: getMetadataString(metadata, "product_slug") ?? offerId,
+    productName: getMetadataString(metadata, "product_name") ?? offerConfig?.productName ?? offerId,
     customerEmail: customerEmail ?? null,
     customerName: session.customer_details?.name ?? null,
     customerPhone,

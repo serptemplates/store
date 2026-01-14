@@ -20,10 +20,10 @@ function findProducts() {
   const files = fs.readdirSync(productsDir).filter((f) => f.endsWith('.json'));
   const products = {};
   for (const f of files) {
-    const file = path.join(productsDir, f);
+      const file = path.join(productsDir, f);
     try {
       const data = readJsonc(file);
-      const stripe = data.stripe || {};
+      const stripe = (data.payment && data.payment.stripe) || data.stripe || {};
       const metadata = stripe.metadata || {};
       const stripeProductId = metadata.stripe_product_id || metadata.stripe_product_id || null;
       const slug = data.slug || data.id || f.replace('.json', '');
@@ -48,7 +48,10 @@ function run() {
   const toChange = [];
   for (const [, p] of Object.entries(products)) {
     if (!p.raw || p.status !== 'live') continue;
-    const optionalItems = (p.raw.stripe && p.raw.stripe.optional_items) || [];
+    const optionalItems =
+      (p.raw.payment && p.raw.payment.stripe && p.raw.payment.stripe.optional_items)
+      || (p.raw.stripe && p.raw.stripe.optional_items)
+      || [];
     if (!optionalItems || optionalItems.length === 0) continue;
     const filtered = optionalItems.filter((opt) => {
       const id = opt.product_id;
@@ -78,8 +81,17 @@ function run() {
     console.log(`- new optional_items: ${change.new.map((o) => o.product_id).join(', ')}`);
     if (apply) {
       const data = readJsonc(change.file);
-      if (!data.stripe) data.stripe = {};
-      data.stripe.optional_items = change.new;
+      if (!data.payment || typeof data.payment !== 'object') {
+        data.payment = { provider: 'stripe' };
+      }
+      if (!data.payment.provider) {
+        data.payment.provider = 'stripe';
+      }
+      if (!data.payment.stripe) {
+        data.payment.stripe = data.stripe || {};
+      }
+      data.payment.stripe.optional_items = change.new;
+      delete data.stripe;
       writeJson(change.file, data);
       console.log('  -> written');
     }

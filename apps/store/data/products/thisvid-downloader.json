@@ -18,6 +18,7 @@
     "Local-first workflows with no tracking",
     "Works on Windows, macOS, and Linux"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use ThisVid Downloader?",
@@ -101,61 +102,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/thisvid-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thisvid-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/thisvid-downloader",
+  "product_page_url": "https://apps.serp.co/thisvid-downloader",
   "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
   "github_repo_url": "https://github.com/serpapps/thisvid-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/thisvid-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/thisvid-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=thisvid-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=thisvid-downloader",
-    "ghl_tag": "purchase-thisvid-downloader",
-    "ghlTag": "purchase-thisvid-downloader",
-    "landerId": "thisvid-downloader",
-    "licenseEntitlements": "thisvid-downloader",
-    "offerId": "thisvid-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "ThisVid Downloader",
-    "product_page_url": "https://apps.serp.co/thisvid-downloader",
-    "product_slug": "thisvid-downloader",
-    "productName": "ThisVid Downloader",
-    "productPageUrl": "https://apps.serp.co/thisvid-downloader",
-    "productSlug": "thisvid-downloader",
-    "purchase_url": "https://serp.ly/thisvid-downloader",
-    "purchaseUrl": "https://serp.ly/thisvid-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/thisvid-downloader/",
-    "serply_link": "https://serp.ly/thisvid-downloader",
-    "serplyLink": "https://serp.ly/thisvid-downloader",
-    "slug": "thisvid-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/thisvid-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/thisvid-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/thisvid-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/thisvid-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -172,19 +130,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SibdfDP7AOTRcvmhWf9YnSK",
-    "test_price_id": "price_1SibdgDP7AOTRcvmL3HYTGGT",
-    "metadata": {
-      "stripe_product_id": "prod_TfxYEfwVzoU97G",
-      "stripe_test_product_id": "prod_TfxYhOTzLfMExD"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

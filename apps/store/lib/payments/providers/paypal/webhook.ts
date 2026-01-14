@@ -154,7 +154,7 @@ function resolveAmount(resource: PayPalResource | undefined): number | null {
 }
 
 function normalizeMetadata(base: Record<string, unknown> | undefined, additions: Record<string, unknown>): Record<string, unknown> {
-  const merged = ensureMetadataCaseVariants({ ...(base ?? {}) });
+  const merged = ensureMetadataCaseVariants({ ...(base ?? {}) }, { mirror: "snake" });
   for (const [key, value] of Object.entries(additions)) {
     if (value === undefined || value === null) continue;
     merged[key] = value;
@@ -204,13 +204,28 @@ export async function handlePayPalWebhookEvent(
   const offer = getOfferConfig(slug);
 
   const metadata = normalizeMetadata(offer?.metadata, {
-    paypalEventId: event.id,
-    paypalEventType: event.event_type ?? null,
-    paypalOrderId: orderId,
-    paypalCaptureId: captureId,
+    paypal_event_id: event.id,
+    paypal_event_type: event.event_type ?? null,
+    paypal_order_id: orderId,
+    paypal_capture_id: captureId,
   });
   const metadataRecord = metadata as Record<string, unknown>;
   const metadataString = (key: string) => asString(metadataRecord[key]);
+  const normalizeStoreProductUrl = (value: string | null): string | null => {
+    if (!value) {
+      return null;
+    }
+
+    const normalized = value.replace(
+      /^https:\/\/store\.serp\.co\/product-details\/product\//,
+      "https://apps.serp.co/",
+    );
+    if (normalized !== value) {
+      return normalized;
+    }
+
+    return value.replace(/^https:\/\/store\.serp\.co\//, "https://apps.serp.co/");
+  };
 
   const normalizedOrder: NormalizedOrder = {
     provider: "paypal",
@@ -235,15 +250,22 @@ export async function handlePayPalWebhookEvent(
     clientReferenceId: null,
     resolvedGhlTagIds: offer?.ghl?.tagIds ?? [],
     urls: {
-      productPageUrl: metadataString("productPageUrl") ?? metadataString("product_page_url") ?? null,
-      purchaseUrl: metadataString("purchaseUrl") ?? metadataString("purchase_url") ?? null,
-      appsProductPageUrl:
-        metadataString("appsProductPageUrl") ?? metadataString("apps_serp_co_product_page_url") ?? null,
-      storeProductPageUrl:
-        metadataString("storeProductPageUrl") ?? metadataString("store_serp_co_product_page_url") ?? null,
-      serplyLink: metadataString("serplyLink") ?? metadataString("serply_link") ?? null,
-      successUrl: metadataString("successUrl") ?? metadataString("success_url") ?? null,
-      cancelUrl: metadataString("cancelUrl") ?? metadataString("cancel_url") ?? null,
+      productPageUrl: normalizeStoreProductUrl(
+        metadataString("product_page_url")
+          ?? metadataString("apps_serp_co_product_page_url")
+          ?? metadataString("store_serp_co_product_page_url")
+          ?? null,
+      ),
+      purchaseUrl: metadataString("purchase_url") ?? metadataString("serply_link") ?? null,
+      appsProductPageUrl: normalizeStoreProductUrl(
+        metadataString("apps_serp_co_product_page_url") ?? null,
+      ),
+      storeProductPageUrl: normalizeStoreProductUrl(
+        metadataString("store_serp_co_product_page_url") ?? null,
+      ),
+      serplyLink: metadataString("serply_link") ?? null,
+      successUrl: metadataString("success_url") ?? null,
+      cancelUrl: metadataString("cancel_url") ?? null,
     },
   };
 

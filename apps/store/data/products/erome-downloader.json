@@ -25,6 +25,11 @@
     "Media download customization",
     "Supports photos & videos"
   ],
+  "benefits": [
+    "Preserve Erome videos before posts or profiles disappear",
+    "Skip manual URL hunting thanks to automatic quality detection",
+    "Keep archives private with 100% on-device processing"
+  ],
   "faqs": [
     {
       "question": "How do I download an Erome video with this extension?",
@@ -161,65 +166,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/erome-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
+  "product_page_url": "https://apps.serp.co/erome-downloader",
   "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
   "github_repo_url": "https://github.com/serpapps/erome-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/erome-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/erome-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=erome-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=erome-downloader",
-    "ghl_tag": "purchase-erome-downloader",
-    "ghlTag": "purchase-erome-downloader",
-    "landerId": "erome-downloader",
-    "license_entitlements": "erome-downloader",
-    "licenseEntitlements": "erome-downloader",
-    "offerId": "erome-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Erome Downloader",
-    "product_page_url": "https://apps.serp.co/erome-downloader",
-    "product_slug": "erome-downloader",
-    "productName": "Erome Downloader",
-    "productPageUrl": "https://apps.serp.co/erome-downloader",
-    "productSlug": "erome-downloader",
-    "purchase_url": "https://serp.ly/erome-downloader",
-    "purchaseUrl": "https://serp.ly/erome-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/erome-downloader/",
-    "serply_link": "https://serp.ly/erome-downloader",
-    "serplyLink": "https://serp.ly/erome-downloader",
-    "slug": "erome-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/erome-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/erome-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "note": "Lifetime licence with unlimited Erome downloads and ongoing compatibility updates. No free trial and no refunds.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/erome-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Preserve Erome videos before posts or profiles disappear",
-      "Skip manual URL hunting thanks to automatic quality detection",
-      "Keep archives private with 100% on-device processing"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/erome-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -236,19 +194,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6lDP7AOTRcvm2uSqP6Ek",
-    "test_price_id": "price_1SdS6lDP7AOTRcvmMH5MyLFG",
-    "metadata": {
-      "stripe_product_id": "prod_TadN8tuks5WclX",
-      "stripe_test_product_id": "prod_TadN5pNox4PD3P"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

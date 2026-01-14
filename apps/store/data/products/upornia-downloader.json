@@ -18,6 +18,7 @@
     "Local-first workflows with no tracking",
     "Works on Windows, macOS, and Linux"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use Upornia Downloader?",
@@ -101,61 +102,18 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/upornia-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/upornia-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/upornia-downloader",
+  "product_page_url": "https://apps.serp.co/upornia-downloader",
   "serp_co_product_page_url": "https://serp.co/products/upornia-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=upornia-downloader",
   "github_repo_url": "https://github.com/serpapps/upornia-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/upornia-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/upornia-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=upornia-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=upornia-downloader",
-    "ghl_tag": "purchase-upornia-downloader",
-    "ghlTag": "purchase-upornia-downloader",
-    "landerId": "upornia-downloader",
-    "licenseEntitlements": "upornia-downloader",
-    "offerId": "upornia-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Upornia Downloader",
-    "product_page_url": "https://apps.serp.co/upornia-downloader",
-    "product_slug": "upornia-downloader",
-    "productName": "Upornia Downloader",
-    "productPageUrl": "https://apps.serp.co/upornia-downloader",
-    "productSlug": "upornia-downloader",
-    "purchase_url": "https://serp.ly/upornia-downloader",
-    "purchaseUrl": "https://serp.ly/upornia-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/upornia-downloader/",
-    "serply_link": "https://serp.ly/upornia-downloader",
-    "serplyLink": "https://serp.ly/upornia-downloader",
-    "slug": "upornia-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/upornia-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/upornia-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/upornia-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/upornia-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -172,19 +130,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SibdjDP7AOTRcvmGmXtwkiM",
-    "test_price_id": "price_1SibdkDP7AOTRcvm2rlRjk3I",
-    "metadata": {
-      "stripe_product_id": "prod_TfxYELC6sfCFJ4",
-      "stripe_test_product_id": "prod_TfxY8qYQmoVPyr"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [
