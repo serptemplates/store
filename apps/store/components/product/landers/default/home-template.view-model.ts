@@ -422,7 +422,6 @@ function buildPricingView({
     priceLabel: showPriceDetails ? pricing?.priceLabel ?? "One-time purchase" : undefined,
     price: showPriceDetails ? pricing?.price ?? "$47" : undefined,
     originalPrice: showPriceDetails ? pricing?.originalPrice : undefined,
-    priceNote: showPriceDetails ? pricing?.priceNote ?? "" : undefined,
     benefits,
     ctaText: pricing?.ctaText ?? primaryCtaText,
     ctaHref: pricing?.ctaHref ?? primaryCtaHref,

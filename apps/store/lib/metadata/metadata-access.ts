@@ -85,6 +85,7 @@ export function hasMetadataValue(metadata: MetadataSource, key: string): boolean
 type EnsureMetadataCaseVariantsOptions = {
   maxKeys?: number;
   skipMirror?: (key: string) => boolean;
+  mirror?: "snake" | "camel" | "both";
 };
 
 export function ensureMetadataCaseVariants<T extends Record<string, unknown>>(
@@ -96,6 +97,7 @@ export function ensureMetadataCaseVariants<T extends Record<string, unknown>>(
   }
   const maxKeys = options?.maxKeys ?? Number.POSITIVE_INFINITY;
   const skipMirror = options?.skipMirror;
+  const mirror = options?.mirror ?? "both";
 
   const container = metadata as Record<string, unknown>;
   const addedKeys: string[] = [];
@@ -104,12 +106,12 @@ export function ensureMetadataCaseVariants<T extends Record<string, unknown>>(
     if (skipMirror?.(key)) continue;
 
     const snake = toSnakeCaseKey(key);
-    if (!Object.prototype.hasOwnProperty.call(container, snake)) {
+    if ((mirror === "snake" || mirror === "both") && !Object.prototype.hasOwnProperty.call(container, snake)) {
       container[snake] = value;
       addedKeys.push(snake);
     }
     const camel = snakeToCamel(snake);
-    if (!Object.prototype.hasOwnProperty.call(container, camel)) {
+    if ((mirror === "camel" || mirror === "both") && !Object.prototype.hasOwnProperty.call(container, camel)) {
       container[camel] = value;
       addedKeys.push(camel);
     }

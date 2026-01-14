@@ -5,7 +5,8 @@ import { resolveSeoProductName } from "@/lib/products/unofficial-branding";
 import { formatTrademarkDisclaimer } from "@/lib/products/trademark";
 
 const stripeTrademarkedProducts = getAllProducts().filter(
-  (product) => product.trademark_metadata?.uses_trademarked_brand && product.stripe?.metadata?.stripe_product_id,
+  (product) => product.trademark_metadata?.uses_trademarked_brand
+    && product.payment?.stripe?.metadata?.stripe_product_id,
 );
 
 describe("stripe product copy", () => {

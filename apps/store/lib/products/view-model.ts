@@ -163,13 +163,7 @@ export function buildProductResourceLinks(product: ProductData): ProductResource
   };
 
   appendLink(product.serp_co_product_page_url, "SERP");
-  appendLink(product.reddit_url, "Reddit");
   appendLink(product.github_repo_url, "GitHub");
-  appendLink(product.chrome_webstore_link, "Chrome Web Store");
-  appendLink(product.firefox_addon_store_link, "Firefox Add-ons");
-  appendLink(product.edge_addons_store_link, "Microsoft Edge Add-ons");
-  appendLink(product.opera_addons_store_link, "Opera Add-ons");
-  appendLink(product.producthunt_link, "Product Hunt");
 
   if (Array.isArray(product.resource_links)) {
     product.resource_links.forEach((link) => {

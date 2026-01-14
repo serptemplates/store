@@ -103,7 +103,7 @@ async function applyCrossSells() {
   let updatesSucceeded = 0;
 
   for (const product of products) {
-    const productId = product.stripe?.metadata?.stripe_product_id;
+    const productId = product.payment?.stripe?.metadata?.stripe_product_id;
     if (!productId) {
       console.warn(`⚪️  ${product.slug}: missing stripe_product_id, skipping.`);
       continue;

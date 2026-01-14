@@ -131,12 +131,13 @@ async function collectTrademarkedStripeProducts(): Promise<ProductStripeMapping[
   return getAllProducts()
     .filter(
       (product) =>
-        product.trademark_metadata?.uses_trademarked_brand && product.stripe?.metadata?.stripe_product_id?.trim(),
+        product.trademark_metadata?.uses_trademarked_brand
+        && product.payment?.stripe?.metadata?.stripe_product_id?.trim(),
     )
     .map((product) => ({
       slug: product.slug,
       productName: resolveSeoProductName(product),
-      stripeProductId: product.stripe!.metadata!.stripe_product_id!.trim(),
+      stripeProductId: product.payment!.stripe!.metadata!.stripe_product_id!.trim(),
       product,
     }));
 }

@@ -26,6 +26,7 @@
     "Media download customization",
     "Supports photos & videos"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Onlyfans downloader?",
@@ -172,15 +173,11 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/onlyfans-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/onlyfans-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/onlyfans-downloader",
+  "product_page_url": "https://apps.serp.co/onlyfans-downloader",
   "serp_co_product_page_url": "https://serp.co/products/onlyfans-downloader/",
-  "reddit_url": "https://www.reddit.com/r/serpdownloaders/comments/1okjpfr/onlyfans_downloader_browser_extension_chrome/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=onlyfans-downloader",
   "github_repo_url": "https://github.com/serpapps/onlyfans-downloader",
   "github_repo_tags": [],
-  "producthunt_link": "https://www.producthunt.com/products/onlyfans-downloader-2",
   "resource_links": [
     {
       "label": "Firefox Store",
@@ -193,58 +190,22 @@
     {
       "label": "Open Collective",
       "href": "https://opencollective.com/serpapps/projects/onlyfans-bulk-downloader"
+    },
+    {
+      "label": "Reddit",
+      "href": "https://www.reddit.com/r/serpdownloaders/comments/1okjpfr/onlyfans_downloader_browser_extension_chrome/"
+    },
+    {
+      "label": "Product Hunt",
+      "href": "https://www.producthunt.com/products/onlyfans-downloader-2"
     }
   ],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/onlyfans-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/onlyfans-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=onlyfans-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=onlyfans-downloader",
-    "compare_at_amount": "$47.00",
-    "ghl_tag": "purchase-onlyfans-downloader",
-    "ghlTag": "purchase-onlyfans-downloader",
-    "internal_id": "68a9acba8f1dfcb9736b861a",
-    "landerId": "onlyfans-downloader",
-    "license_entitlements": "onlyfans-downloader",
-    "licenseEntitlements": "onlyfans-downloader",
-    "location_id": "XM0gbS5U3qNXtUksyJ6o",
-    "offerId": "onlyfans-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Onlyfans Downloader",
-    "product_page_url": "https://apps.serp.co/onlyfans-downloader",
-    "product_slug": "onlyfans-downloader",
-    "productName": "Onlyfans Downloader",
-    "productPageUrl": "https://apps.serp.co/onlyfans-downloader",
-    "productSlug": "onlyfans-downloader",
-    "purchase_url": "https://serp.ly/onlyfans-downloader",
-    "purchaseUrl": "https://serp.ly/onlyfans-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/onlyfans-downloader/",
-    "serply_link": "https://serp.ly/onlyfans-downloader",
-    "serplyLink": "https://serp.ly/onlyfans-downloader",
-    "slug": "onlyfans-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/onlyfans-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/onlyfans-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$57.00",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/onlyfans-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -261,19 +222,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1Sm9mBDP7AOTRcvmfszxoKZP",
-    "test_price_id": "price_1Sm9mLDP7AOTRcvm4z3V2NUS",
-    "metadata": {
-      "stripe_product_id": "prod_TadNdRxTOeK7sm",
-      "stripe_test_product_id": "prod_TadNlvXDs1J0Xf"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

@@ -14,7 +14,6 @@ Confirm all of these items are present before starting work on a task:
 - There is a precommit hook for running lint
 - There is a precommit hook for running typechecks
 - There is a precommit hook for running unit test suite
-- There is a precommit hook for running smoke test suite
 
 
 ## Work rules

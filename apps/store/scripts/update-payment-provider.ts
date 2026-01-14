@@ -130,6 +130,7 @@ type ProductData = {
   stripe?: {
     price_id?: string;
     test_price_id?: string;
+    [key: string]: unknown;
   };
 };
 
@@ -196,6 +197,20 @@ function readProduct(slug: string): { data: ProductData; path: string } {
 function updateProductPayment(args: CliArgs): void {
   const { data, path: productPath } = readProduct(args.slug);
 
+  if (data.stripe && typeof data.stripe === "object") {
+    data.payment = data.payment ?? {};
+    if (typeof data.payment !== "object") {
+      data.payment = {};
+    }
+    if (!data.payment.stripe) {
+      data.payment.stripe = data.stripe;
+    }
+    if (!data.payment.provider) {
+      data.payment.provider = "stripe";
+    }
+    delete data.stripe;
+  }
+
   if (!data.payment || typeof data.payment !== "object") {
     data.payment = { provider: args.provider };
   }
@@ -216,16 +231,13 @@ function updateProductPayment(args: CliArgs): void {
 
   if (args.provider === "stripe") {
     data.payment.stripe = data.payment.stripe ?? {};
-    data.stripe = data.stripe ?? {};
 
     if (args.priceId) {
       data.payment.stripe.price_id = args.priceId;
-      data.stripe.price_id = args.priceId;
     }
 
     if (args.testPriceId) {
       data.payment.stripe.test_price_id = args.testPriceId;
-      data.stripe.test_price_id = args.testPriceId;
     }
   }
 

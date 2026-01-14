@@ -1,5 +1,6 @@
 import type { ProductData } from '@/lib/products/product-schema';
 import { canonicalizeStoreOrigin, canonicalizeStoreHref, getDefaultStoreUrl } from '@/lib/canonical-url';
+import { DEFAULT_MERCHANT_RETURN_POLICY } from './return-policy';
 
 const DEFAULT_IMAGE_LICENSE_URL = 'https://github.com/serpapps/legal/blob/main/terms-conditions.md';
 const DEFAULT_IMAGE_ACQUIRE_LICENSE_URL = 'https://serp.co/contact';
@@ -268,14 +269,7 @@ export function generateProductSchemaLD({
       url: normalizedStoreUrl,
     },
     // Return policy for Google Shopping
-    hasMerchantReturnPolicy: {
-      '@type': 'MerchantReturnPolicy',
-      applicableCountry: 'US',
-      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-      merchantReturnDays: 30,
-      returnMethod: 'https://schema.org/ReturnByMail',
-      returnFees: 'https://schema.org/FreeReturn',
-    },
+    hasMerchantReturnPolicy: DEFAULT_MERCHANT_RETURN_POLICY,
     // Shipping details (required for physical products, optional for digital)
     shippingDetails: product.isDigital ? {
       '@type': 'OfferShippingDetails',

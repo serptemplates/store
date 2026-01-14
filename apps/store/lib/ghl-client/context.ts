@@ -60,14 +60,32 @@ export function buildPurchaseMetadata(context: GhlSyncContext): string | undefin
     ? Number((context.amountTotal / 100).toFixed(2))
     : undefined;
 
-  const productPageUrl = context.productPageUrl
-    ?? context.storeProductPageUrl
-    ?? context.appsProductPageUrl
-    ?? context.metadata?.productPageUrl
-    ?? context.metadata?.product_page_url
-    ?? context.metadata?.store_serp_co_product_page_url
-    ?? context.metadata?.apps_serp_co_product_page_url
-    ?? context.metadata?.productPageURL;
+  const normalizeStoreProductUrl = (value: string | null | undefined): string | undefined => {
+    if (!value) {
+      return undefined;
+    }
+
+    const normalized = value.replace(
+      /^https:\/\/store\.serp\.co\/product-details\/product\//,
+      "https://apps.serp.co/",
+    );
+    if (normalized !== value) {
+      return normalized;
+    }
+
+    return value.replace(/^https:\/\/store\.serp\.co\//, "https://apps.serp.co/");
+  };
+
+  const productPageUrl = normalizeStoreProductUrl(
+    context.productPageUrl
+      ?? context.metadata?.product_page_url
+      ?? context.metadata?.productPageUrl
+      ?? context.storeProductPageUrl
+      ?? context.appsProductPageUrl
+      ?? context.metadata?.store_serp_co_product_page_url
+      ?? context.metadata?.apps_serp_co_product_page_url
+      ?? context.metadata?.productPageURL,
+  );
 
   const checkoutUrl = context.purchaseUrl
     ?? context.metadata?.purchaseUrl

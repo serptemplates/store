@@ -24,6 +24,11 @@
     "Desktop notifications let you know when lectures finish downloading",
     "Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux"
   ],
+  "benefits": [
+    "Build an offline lecture library for flights, commutes, and travel days",
+    "Preserve access to courses before they retire or subscriptions lapse",
+    "Keep study sessions private with on-device processing and storage"
+  ],
   "faqs": [
     {
       "question": "How do I download a Coursera lecture?",
@@ -167,66 +172,18 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/coursera-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/coursera-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/coursera-downloader",
+  "product_page_url": "https://apps.serp.co/coursera-downloader",
   "serp_co_product_page_url": "https://serp.co/products/coursera-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=coursera-downloader",
   "github_repo_url": "https://github.com/serpapps/coursera-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/coursera-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/coursera-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=coursera-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=coursera-downloader",
-    "ghl_tag": "purchase-coursera-downloader",
-    "ghlTag": "purchase-coursera-downloader",
-    "landerId": "coursera-downloader",
-    "license_entitlements": "coursera-downloader",
-    "licenseEntitlements": "coursera-downloader",
-    "offerId": "coursera-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Coursera Downloader",
-    "product_page_url": "https://apps.serp.co/coursera-downloader",
-    "product_slug": "coursera-downloader",
-    "productName": "Coursera Downloader",
-    "productPageUrl": "https://apps.serp.co/coursera-downloader",
-    "productSlug": "coursera-downloader",
-    "purchase_url": "https://serp.ly/coursera-downloader",
-    "purchaseUrl": "https://serp.ly/coursera-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/coursera-downloader/",
-    "serply_link": "https://serp.ly/coursera-downloader",
-    "serplyLink": "https://serp.ly/coursera-downloader",
-    "slug": "coursera-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/coursera-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/coursera-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence with unlimited Coursera lecture downloads. No free trial; refunds aren’t available.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/coursera-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Build an offline lecture library for flights, commutes, and travel days",
-      "Preserve access to courses before they retire or subscriptions lapse",
-      "Keep study sessions private with on-device processing and storage"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/coursera-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -240,16 +197,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Gv9ZcVq94rx"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

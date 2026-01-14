@@ -8,6 +8,7 @@ import { buildPrimaryNavProps } from "@/lib/navigation"
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema"
 import { isPreRelease } from "@/lib/products/release-status"
 import { buildProductFilterItems } from "@/lib/products/filter-items"
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest"
 
 import { WhoIsBehind } from "./WhoIsBehind"
 
@@ -71,7 +72,7 @@ export function HomePageView() {
       numberOfItems: products.length,
       itemListElement: products.map((product, index) => {
         const productUrl = `${STORE_ORIGIN}/${product.slug}`
-        const currency = product.pricing?.currency?.trim().toUpperCase() || "USD"
+        const currency = resolveProductCurrency(product)
         const schemaProduct = createSchemaProduct(product, {
           price: product.pricing?.price ?? null,
           isDigital: true,

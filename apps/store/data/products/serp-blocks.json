@@ -31,6 +31,7 @@
     "New projects use the new-york style (default style deprecated)",
     "HSL colors converted to OKLCH"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "Is there a free trial available?",
@@ -110,51 +111,20 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-blocks",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
+  "product_page_url": "https://apps.serp.co/serp-blocks",
   "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
   "github_repo_url": "https://github.com/serpapps/serp-blocks",
   "github_repo_tags": [],
-  "producthunt_link": "https://producthunt.com/posts/serp-ui-blocks",
-  "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/serp-blocks",
-    "appsProductPageUrl": "https://apps.serp.co/serp-blocks",
-    "cancel_url": "https://apps.serp.co/checkout?product=serp-blocks",
-    "cancelUrl": "https://apps.serp.co/checkout?product=serp-blocks",
-    "landerId": "serp-blocks",
-    "offerId": "serp-blocks",
-    "product_name": "SERP Blocks",
-    "product_page_url": "https://apps.serp.co/serp-blocks",
-    "product_slug": "serp-blocks",
-    "productName": "SERP Blocks",
-    "productPageUrl": "https://apps.serp.co/serp-blocks",
-    "productSlug": "serp-blocks",
-    "purchase_url": "https://serp.ly/serp-blocks",
-    "purchaseUrl": "https://serp.ly/serp-blocks",
-    "serp_co_product_page_url": "https://serp.co/products/serp-blocks/reviews/",
-    "serply_link": "https://serp.ly/serp-blocks",
-    "serplyLink": "https://serp.ly/serp-blocks",
-    "slug": "serp-blocks",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-blocks",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/serp-blocks",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
+  "resource_links": [
+    {
+      "label": "Product Hunt",
+      "href": "https://producthunt.com/posts/serp-ui-blocks"
+    }
+  ],
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
-    "price": "$97.00",
-    "currency": "USD",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "price": "$97.00"
   }
 }

@@ -193,33 +193,6 @@ export const faqSchema = z.object({
   answer: trimmedString(),
 });
 
-export const successUrlSchema = trimmedString().superRefine((value, ctx) => {
-  const sanitized = value.replaceAll("{CHECKOUT_SESSION_ID}", "checkout_session_id");
-
-  try {
-    const parsed = new URL(sanitized);
-    if (!["http:", "https:"].includes(parsed.protocol)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "URL must use http or https",
-      });
-      return;
-    }
-
-    if (!["apps.serp.co", "localhost"].includes(parsed.hostname)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "success_url must point to apps.serp.co (or localhost for development)",
-      });
-    }
-  } catch (error) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Invalid URL",
-    });
-  }
-});
-
 export const cancelUrlSchema = trimmedString()
   .url()
   .superRefine((value, ctx) => {

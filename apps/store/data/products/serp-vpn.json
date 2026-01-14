@@ -23,6 +23,11 @@
     "Optimized routes for search, scraping, and QA workflows",
     "Zero analytics beacons or invasive trackers inside the extension"
   ],
+  "benefits": [
+    "Switch IPs quickly without juggling full desktop VPN clients",
+    "Keep testing, research, and personal browsing cleanly separated",
+    "Rely on clear connection indicators before running sensitive workflows"
+  ],
   "faqs": [
     {
       "question": "What browsers does SERP VPN Extension support?",
@@ -121,10 +126,8 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-vpn",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/serp-vpn",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/serp-vpn",
+  "product_page_url": "https://apps.serp.co/serp-vpn",
   "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
   "github_repo_url": "https://github.com/serpapps/serp-vpn",
   "github_repo_tags": [],
@@ -134,35 +137,12 @@
       "href": "https://gist.github.com/devinschumacher/84361cb22134d49fd875eacc2eaa9f37"
     }
   ],
-  "checkout_metadata": {
-    "ghlTag": "purchase-serp-vpn",
-    "licenseEntitlements": "serp-vpn",
-    "paymentProvider": "stripe",
-    "productName": "SERP VPN",
-    "productSlug": "serp-vpn"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/serp-vpn",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Switch IPs quickly without juggling full desktop VPN clients",
-      "Keep testing, research, and personal browsing cleanly separated",
-      "Rely on clear connection indicators before running sensitive workflows"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/serp-vpn"
   },
   "payment": {
     "provider": "stripe",
@@ -173,14 +153,6 @@
         "stripe_product_id": "prod_TadN87zfHr8CTD",
         "stripe_test_product_id": "prod_TadNr26NIX4TK1"
       }
-    }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6uDP7AOTRcvmM8M435bb",
-    "test_price_id": "price_1SdS6vDP7AOTRcvmsfdW0ZIS",
-    "metadata": {
-      "stripe_product_id": "prod_TadN87zfHr8CTD",
-      "stripe_test_product_id": "prod_TadNr26NIX4TK1"
     }
   },
   "ghl": {

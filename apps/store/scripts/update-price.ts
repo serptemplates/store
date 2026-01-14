@@ -110,17 +110,11 @@ function updateProductFile(args: CliArgs): PreviousIds {
 
   const raw = fs.readFileSync(productPath, "utf8");
   const productData = JSON.parse(stripJsonComments(raw));
-  const previousPriceId: string | undefined = productData?.payment?.stripe?.price_id ?? productData?.stripe?.price_id;
-  const previousTestPriceId: string | undefined =
-    productData?.payment?.stripe?.test_price_id ?? productData?.stripe?.test_price_id;
+  const previousPriceId: string | undefined = productData?.payment?.stripe?.price_id;
+  const previousTestPriceId: string | undefined = productData?.payment?.stripe?.test_price_id;
 
   productData.pricing = productData.pricing ?? {};
   productData.pricing.price = formatCurrency(args.priceCents, args.currency);
-  if (args.compareAtCents !== undefined) {
-    productData.pricing.original_price = formatCurrency(args.compareAtCents, args.currency);
-  } else if (productData.pricing.original_price) {
-    delete productData.pricing.original_price;
-  }
 
   productData.payment = productData.payment ?? { provider: "stripe" };
   if (!productData.payment.provider) {
@@ -130,14 +124,6 @@ function updateProductFile(args: CliArgs): PreviousIds {
   productData.payment.stripe.price_id = args.priceId;
   if (args.testPriceId) {
     productData.payment.stripe.test_price_id = args.testPriceId;
-  }
-
-  if (!productData.stripe || typeof productData.stripe !== "object") {
-    productData.stripe = {};
-  }
-  productData.stripe.price_id = args.priceId;
-  if (args.testPriceId) {
-    productData.stripe.test_price_id = args.testPriceId;
   }
 
   fs.writeFileSync(productPath, `${JSON.stringify(productData, null, 2)}\n`, "utf8");

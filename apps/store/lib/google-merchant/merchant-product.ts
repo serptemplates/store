@@ -66,7 +66,7 @@ function parsePrice(value: string | null | undefined): number | null {
 
 export function extractPrice(product: ProductData): { value: string; currency: string } {
   const manifestEntry =
-    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
     findManifestEntryBySlug(product.slug);
   if (manifestEntry) {
     return {
@@ -75,15 +75,15 @@ export function extractPrice(product: ProductData): { value: string; currency: s
     };
   }
 
-  const currency = product.pricing?.currency?.toUpperCase() ?? "USD";
-  const candidate = product.pricing?.price ?? product.pricing?.original_price ?? "";
+  const currency = "USD";
+  const candidate = product.pricing?.price ?? "";
   const parsed = parsePrice(candidate) ?? 0;
   return { value: parsed.toFixed(2), currency };
 }
 
 export function extractSalePrice(product: ProductData): { value: string; currency: string } | null {
   const manifestEntry =
-    findPriceEntry(product.stripe?.price_id, product.stripe?.test_price_id) ??
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
     findManifestEntryBySlug(product.slug);
   if (manifestEntry?.compareAtAmount != null && manifestEntry.compareAtAmount > manifestEntry.unitAmount) {
     return {
@@ -91,34 +91,18 @@ export function extractSalePrice(product: ProductData): { value: string; currenc
       currency: manifestEntry.currency,
     };
   }
-
-  const sale = parsePrice(product.pricing?.price ?? null);
-  const original = parsePrice(product.pricing?.original_price ?? null);
-  if (sale === null || original === null || sale >= original) {
-    return null;
-  }
-  const currency = product.pricing?.currency?.toUpperCase() ?? "USD";
-  return { value: sale.toFixed(2), currency };
+  return null;
 }
 
-function buildStoreLink(product: ProductData, siteUrl: string): string | undefined {
-  if (product.store_serp_co_product_page_url) {
-    return product.store_serp_co_product_page_url;
+function buildAppsLink(product: ProductData, appsUrl: string, siteUrl: string): string | undefined {
+  if (product.product_page_url) {
+    return product.product_page_url;
   }
-  if (!siteUrl) {
+  const baseUrl = appsUrl || siteUrl;
+  if (!baseUrl) {
     return undefined;
   }
-  return `${siteUrl.replace(/\/$/, "")}/product-details/product/${product.slug}`;
-}
-
-function buildAppsLink(product: ProductData, appsUrl: string): string | undefined {
-  if (product.apps_serp_co_product_page_url) {
-    return product.apps_serp_co_product_page_url;
-  }
-  if (!appsUrl) {
-    return undefined;
-  }
-  return `${appsUrl.replace(/\/$/, "")}/${product.slug}`;
+  return `${baseUrl.replace(/\/$/, "")}/${product.slug}`;
 }
 
 function collectAdditionalImages(product: ProductData, origin: string): string[] {
@@ -145,15 +129,13 @@ function collectProductTypes(product: ProductData): string[] {
   return values;
 }
 
-function resolveAvailability(product: ProductData): "in stock" | "out of stock" {
-  const availability = product.pricing?.availability?.toLowerCase();
-  return availability === "outofstock" || availability === "out_of_stock" ? "out of stock" : "in stock";
+function resolveAvailability(): "in stock" {
+  return "in stock";
 }
 
 export function buildMerchantProduct(product: ProductData, options: MerchantProductOptions): MerchantProduct {
-  const storeLink = buildStoreLink(product, options.siteUrl);
-  const appsLink = buildAppsLink(product, options.appsUrl);
-  const primaryLink = appsLink ?? storeLink;
+  const appsLink = buildAppsLink(product, options.appsUrl, options.siteUrl);
+  const primaryLink = appsLink;
 
   if (!primaryLink) {
     throw new Error(`Unable to determine product link for slug "${product.slug}"`);
@@ -177,12 +159,12 @@ export function buildMerchantProduct(product: ProductData, options: MerchantProd
     title: product.name,
     description,
     link: primaryLink,
-    mobileLink: storeLink && storeLink !== primaryLink ? storeLink : undefined,
+    mobileLink: primaryLink,
     imageLink: imageLink ?? undefined,
     additionalImageLinks: additionalImages.length ? additionalImages : undefined,
     contentLanguage: options.language,
     targetCountry: options.country,
-    availability: resolveAvailability(product),
+    availability: resolveAvailability(),
     condition: "new",
     price,
     brand: product.brand ?? DEFAULT_BRAND,

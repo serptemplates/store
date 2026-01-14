@@ -50,7 +50,7 @@ const coverageChecks = [
     test: (value) => Array.isArray(value) && value.length > 0,
   },
   {
-    path: "pricing.benefits",
+    path: "benefits",
     label: "Pricing benefits",
     hint: "List the benefits that accompany the offer",
     test: (value) => Array.isArray(value) && value.length > 0,

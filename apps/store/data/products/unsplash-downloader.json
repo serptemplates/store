@@ -32,6 +32,7 @@
     "Backup & restore capabilities for photo archives",
     "Creative Commons license management and tracking"
   ],
+  "benefits": [],
   "faqs": [
     {
       "question": "How do I use the Unsplash downloader?",
@@ -134,59 +135,17 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/unsplash-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/unsplash-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/unsplash-downloader",
+  "product_page_url": "https://apps.serp.co/unsplash-downloader",
   "serp_co_product_page_url": "https://serp.co/products/unsplash-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=unsplash-downloader",
   "github_repo_url": "https://github.com/serpapps/unsplash-downloader",
   "github_repo_tags": [],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/unsplash-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/unsplash-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=unsplash-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=unsplash-downloader",
-    "ghl_tag": "purchase-unsplash-downloader",
-    "ghlTag": "purchase-unsplash-downloader",
-    "landerId": "unsplash-downloader",
-    "offerId": "unsplash-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Unsplash Downloader",
-    "product_page_url": "https://apps.serp.co/unsplash-downloader",
-    "product_slug": "unsplash-downloader",
-    "productName": "Unsplash Downloader",
-    "productPageUrl": "https://apps.serp.co/unsplash-downloader",
-    "productSlug": "unsplash-downloader",
-    "purchase_url": "https://serp.ly/unsplash-downloader",
-    "purchaseUrl": "https://serp.ly/unsplash-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/unsplash-downloader/",
-    "serply_link": "https://serp.ly/unsplash-downloader",
-    "serplyLink": "https://serp.ly/unsplash-downloader",
-    "slug": "unsplash-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/unsplash-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/unsplash-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "",
-    "cta_text": "Get it Now",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": []
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -200,16 +159,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "metadata": {
-      "stripe_product_id": "prod_Sv6Id9wmYp3UtU"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

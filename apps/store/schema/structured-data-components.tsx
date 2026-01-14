@@ -4,6 +4,7 @@ import type { ProductData } from "@/lib/products/product-schema"
 import { isPreRelease } from "@/lib/products/release-status"
 import { resolveSeoProductName } from "@/lib/products/unofficial-branding"
 import { canonicalizeStoreOrigin, getDefaultStoreUrl } from "@/lib/canonical-url"
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest"
 
 import {
   createSchemaProduct,
@@ -92,7 +93,7 @@ export function ProductStructuredData({ product, url }: StructuredDataProps) {
   const storeUrl = resolveStoreUrl(url)
   const productUrl = url
   const productId = `${productUrl.replace(/#.*$/, "")}#product`
-  const currency = product.pricing?.currency?.trim()?.toUpperCase() || "USD"
+  const currency = resolveProductCurrency(product)
   const seoProductName = resolveSeoProductName(product)
   const productForSeo = product.name === seoProductName ? product : { ...product, name: seoProductName }
 

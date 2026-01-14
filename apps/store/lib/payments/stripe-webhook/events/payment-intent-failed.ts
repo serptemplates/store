@@ -6,6 +6,7 @@ import {
   updateCheckoutSessionStatus,
 } from "@/lib/checkout";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
+import { getMetadataString } from "@/lib/metadata/metadata-access";
 
 export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentIntent) {
   const metadata = normalizeMetadata(paymentIntent.metadata);
@@ -47,12 +48,12 @@ export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentInt
     providerPaymentId: paymentIntent.id,
     providerChargeId: stripeChargeId,
     providerMode,
-    offerId: sessionRecord?.offerId ?? metadata.offerId ?? null,
-    landerId: sessionRecord?.landerId ?? metadata.landerId ?? null,
+    offerId: sessionRecord?.offerId ?? getMetadataString(metadata, "offer_id") ?? null,
+    landerId: sessionRecord?.landerId ?? getMetadataString(metadata, "lander_id") ?? null,
     customerEmail:
       sessionRecord?.customerEmail ??
       paymentIntent.receipt_email ??
-      metadata.customerEmail ??
+      getMetadataString(metadata, "customer_email") ??
       null,
     amountTotal: paymentIntent.amount ?? null,
     currency: paymentIntent.currency ?? null,

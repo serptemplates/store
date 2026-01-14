@@ -19,6 +19,7 @@ import { processFulfilledOrder, type NormalizedOrder } from "@/lib/payments/orde
 import logger from "@/lib/logger";
 import { ensureMetadataCaseVariants, getMetadataString } from "@/lib/metadata/metadata-access";
 import { handlePayPalWebhookEvent } from "@/lib/payments/providers/paypal/webhook";
+import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
 
 type ProcessedOrderDetails = {
   sessionId: string;
@@ -76,12 +77,12 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     const existingSession = await findCheckoutSessionByStripeSessionId(sessionId);
     const alreadyProcessed = existingSession?.metadata?.processedAt;
 
-    const metadata = ensureMetadataCaseVariants((session.metadata ?? {}) as Record<string, unknown>);
+    const metadata = ensureMetadataCaseVariants((session.metadata ?? {}) as Record<string, unknown>, {
+      mirror: "snake",
+    });
 
-    const metadataOfferId = coerceMetadataString(metadata.offerId);
-    const metadataProductSlugCamel = coerceMetadataString(metadata.productSlug);
-    const metadataProductSlugSnake = coerceMetadataString(metadata.product_slug);
-    const productSlug = metadataProductSlugSnake ?? metadataProductSlugCamel ?? null;
+    const metadataOfferId = getMetadataString(metadata, "offer_id");
+    const productSlug = getMetadataString(metadata, "product_slug");
     const offerId =
       metadataOfferId ??
       productSlug ??
@@ -101,7 +102,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     }
 
     const landerId =
-      coerceMetadataString(metadata.landerId) ??
+      getMetadataString(metadata, "lander_id") ??
       productSlug ??
       offerId;
     const customerEmail = session.customer_details?.email ?? session.customer_email ?? null;
@@ -117,14 +118,17 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       };
     }
 
-    const augmentedMetadata: Record<string, unknown> = ensureMetadataCaseVariants({
-      ...metadata,
-    });
+    const augmentedMetadata: Record<string, unknown> = ensureMetadataCaseVariants(
+      {
+        ...metadata,
+      },
+      { mirror: "snake" },
+    );
 
     // Populate payment description fields similar to webhook path
     const coerce = (v: unknown) => (typeof v === "string" ? v.trim() : "");
-    let productNameValue = coerce((metadata as Record<string, unknown>)["productName"]) ||
-      coerce((metadata as Record<string, unknown>)["product_name"]);
+    let productNameValue = coerce((metadata as Record<string, unknown>)["product_name"]) ||
+      coerce((metadata as Record<string, unknown>)["productName"]);
 
     if (!productNameValue) {
       const lineItem = (session.line_items as Stripe.ApiList<Stripe.LineItem> | null | undefined)?.data?.[0];
@@ -153,9 +157,6 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
     }
 
     if (productNameValue) {
-      if (!coerce(augmentedMetadata["paymentDescription"])) {
-        augmentedMetadata.paymentDescription = productNameValue;
-      }
       if (!coerce(augmentedMetadata["payment_description"])) {
         augmentedMetadata.payment_description = productNameValue;
       }
@@ -183,16 +184,13 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
       if (!augmentedMetadata.product_slug) {
         augmentedMetadata.product_slug = productSlug;
       }
-      if (!augmentedMetadata.productSlug) {
-        augmentedMetadata.productSlug = productSlug;
-      }
     }
 
     augmentedMetadata.processedAt = new Date().toISOString();
 
     const providerAccountAlias =
-      getMetadataString(augmentedMetadata, "paymentProviderAccount")
-        ?? getMetadataString(augmentedMetadata, "paymentProviderAccountAlias")
+      getMetadataString(augmentedMetadata, "payment_provider_account")
+        ?? getMetadataString(augmentedMetadata, "payment_provider_account_alias")
         ?? null;
 
     const providerMode = typeof session.livemode === "boolean"
@@ -253,8 +251,8 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
           lineTotal ?? (resolvedUnitAmount !== null ? Number((resolvedUnitAmount * quantity).toFixed(2)) : null);
 
         const fallbackProductName =
-          coerceMetadataString(augmentedMetadata.productName) ??
-          coerceMetadataString(augmentedMetadata.offerName) ??
+          getMetadataString(augmentedMetadata, "product_name") ??
+          getMetadataString(augmentedMetadata, "offer_name") ??
           offerId ??
           "Product";
 
@@ -264,7 +262,7 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
           fallbackProductName;
 
         const fallbackProductSlug =
-          coerceMetadataString(augmentedMetadata.productSlug) ??
+          getMetadataString(augmentedMetadata, "product_slug") ??
           offerId ??
           sessionId;
 
@@ -280,8 +278,8 @@ export async function processCheckoutSession(sessionId: string): Promise<Process
         };
       }) ?? [
         {
-          id: coerceMetadataString(augmentedMetadata.productSlug) ?? offerId ?? sessionId,
-          name: coerceMetadataString(augmentedMetadata.productName) ?? offerId ?? "Product",
+          id: getMetadataString(augmentedMetadata, "product_slug") ?? offerId ?? sessionId,
+          name: getMetadataString(augmentedMetadata, "product_name") ?? offerId ?? "Product",
           price: orderAmount ?? 0,
           quantity: 1,
         },
@@ -463,7 +461,6 @@ function resolveGhlTagIds(metadata: Record<string, unknown>): string[] | undefin
     }
   };
 
-  append(metadata.ghlTag);
   append(metadata.ghl_tag);
 
   return tags.size > 0 ? Array.from(tags) : undefined;
@@ -482,20 +479,40 @@ function readMetadataUrl(metadata: Record<string, unknown>, ...keys: string[]): 
   return null;
 }
 
+function normalizeStoreProductUrl(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.replace(
+    /^https:\/\/store\.serp\.co\/product-details\/product\//,
+    "https://apps.serp.co/",
+  );
+  if (normalized !== value) {
+    return normalized;
+  }
+
+  return value.replace(/^https:\/\/store\.serp\.co\//, "https://apps.serp.co/");
+}
+
 function resolveOrderUrls(metadata: Record<string, unknown>) {
-  const productPageUrl = readMetadataUrl(
+  const productPageUrl = normalizeStoreProductUrl(readMetadataUrl(
     metadata,
+    "product_page_url",
     "productPageUrl",
-    "appsProductPageUrl",
     "apps_serp_co_product_page_url",
     "store_serp_co_product_page_url",
+  ));
+  const purchaseUrl = readMetadataUrl(metadata, "purchase_url", "purchaseUrl", "serply_link");
+  const storeProductPageUrl = normalizeStoreProductUrl(
+    readMetadataUrl(metadata, "store_serp_co_product_page_url", "storeProductPageUrl"),
   );
-  const purchaseUrl = readMetadataUrl(metadata, "purchaseUrl", "purchase_url", "serply_link");
-  const storeProductPageUrl = readMetadataUrl(metadata, "storeProductPageUrl", "store_serp_co_product_page_url");
-  const appsProductPageUrl = readMetadataUrl(metadata, "appsProductPageUrl", "apps_serp_co_product_page_url");
+  const appsProductPageUrl = normalizeStoreProductUrl(
+    readMetadataUrl(metadata, "apps_serp_co_product_page_url", "appsProductPageUrl"),
+  );
   const serplyLink = readMetadataUrl(metadata, "serply_link", "serplyLink");
-  const successUrl = readMetadataUrl(metadata, "successUrl", "success_url");
-  const cancelUrl = readMetadataUrl(metadata, "cancelUrl", "cancel_url");
+  const successUrl = readMetadataUrl(metadata, "success_url", "successUrl");
+  const cancelUrl = readMetadataUrl(metadata, "cancel_url", "cancelUrl");
 
   if (
     !productPageUrl &&
@@ -566,7 +583,7 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
 
     const resolvedCurrency =
       coerceCurrency(order?.currency) ??
-      coerceCurrency(product?.pricing?.currency ?? null);
+      (product ? coerceCurrency(resolveProductCurrency(product)) : null);
 
     const metadata = (order?.metadata ?? {}) as Record<string, unknown>;
     const ghlMeta = (metadata.ghl as Record<string, unknown> | undefined) ?? undefined;
@@ -598,8 +615,8 @@ export async function processGhlPayment(params: ProcessGhlPaymentParams): Promis
 
     const itemName =
       product?.name ??
-      (typeof metadata.productName === "string" ? (metadata.productName as string) : undefined) ??
-      (typeof ghlMeta?.productName === "string" ? (ghlMeta.productName as string) : undefined) ??
+      getMetadataString(metadata, "product_name") ??
+      getMetadataString(ghlMeta as Record<string, unknown> | undefined, "product_name") ??
       "SERP Purchase";
 
     const resolvedPrice = amountMajorUnits ?? parseDisplayPrice(product?.pricing?.price ?? null) ?? 0;

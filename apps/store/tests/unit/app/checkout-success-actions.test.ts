@@ -32,7 +32,7 @@ describe("checkout success action populates payment description", () => {
     vi.clearAllMocks();
   });
 
-  it("sets paymentDescription, payment_description, and description from product name", async () => {
+  it("sets payment_description and description from product name", async () => {
     const sessionId = "cs_test_123";
 
     // Build a fake checkout session with line item + product
@@ -54,7 +54,7 @@ describe("checkout success action populates payment description", () => {
       livemode: false,
       payment_intent: { id: "pi_test_123" },
       line_items: { object: "list", data: [fakeLineItem] },
-      metadata: { productSlug: "rawpixel-downloader" },
+      metadata: { product_slug: "rawpixel-downloader" },
     } as unknown as Stripe.Checkout.Session;
 
     getStripeClientMock.mockReturnValue({
@@ -67,14 +67,12 @@ describe("checkout success action populates payment description", () => {
     // upsertCheckoutSession receives augmentedMetadata with the fields
     expect(upsertCheckoutSessionMock).toHaveBeenCalled();
     const checkoutArgs = upsertCheckoutSessionMock.mock.calls[0]?.[0];
-    expect(checkoutArgs?.metadata?.paymentDescription).toBe("Rawpixel Downloader");
     expect(checkoutArgs?.metadata?.payment_description).toBe("Rawpixel Downloader");
     expect(checkoutArgs?.metadata?.description).toBe("Rawpixel Downloader");
 
     // upsertOrder receives augmentedMetadata with the fields
     expect(upsertOrderMock).toHaveBeenCalled();
     const orderArgs = upsertOrderMock.mock.calls[0]?.[0];
-    expect(orderArgs?.metadata?.paymentDescription).toBe("Rawpixel Downloader");
     expect(orderArgs?.metadata?.payment_description).toBe("Rawpixel Downloader");
     expect(orderArgs?.metadata?.description).toBe("Rawpixel Downloader");
   });

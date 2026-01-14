@@ -14,7 +14,9 @@ maybeDescribe("Stripe cross-sells configuration (live)", () => {
   it(
     "verifies Stripe products expose cross_sells when configured",
     async () => {
-      const products = getAllProducts().filter((p) => p.status === "live" && !!p.stripe?.metadata?.stripe_product_id);
+      const products = getAllProducts().filter(
+        (p) => p.status === "live" && !!p.payment?.stripe?.metadata?.stripe_product_id,
+      );
       if (products.length === 0) {
         return; // nothing to check
       }
@@ -24,7 +26,7 @@ maybeDescribe("Stripe cross-sells configuration (live)", () => {
       const issues: string[] = [];
       let checked = 0;
       for (const p of products) {
-        const productId = p.stripe!.metadata!.stripe_product_id!;
+        const productId = p.payment!.stripe!.metadata!.stripe_product_id!;
         const stripeProduct = await stripe.products.retrieve(productId);
 
         const anyProduct = stripeProduct as unknown as { cross_sells?: unknown };
@@ -45,4 +47,3 @@ maybeDescribe("Stripe cross-sells configuration (live)", () => {
     90_000,
   );
 });
-

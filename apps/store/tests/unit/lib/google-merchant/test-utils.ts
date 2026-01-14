@@ -46,28 +46,19 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
     platform: "Web",
     seo_title: "Demo Product Title",
     seo_description: "Demo SEO description",
-    store_serp_co_product_page_url: "https://store.serp.co/product-details/product/demo-product",
-    apps_serp_co_product_page_url: "https://apps.serp.co/demo-product",
+    product_page_url: "https://apps.serp.co/demo-product",
     serp_co_product_page_url: "https://serp.co/products/demo-product/",
     serply_link: "https://serp.ly/demo-product",
     name: "Demo Product",
     tagline: "Instant productivity boost",
     description: "The definitive toolkit for creators.",
-    chrome_webstore_link: undefined,
-    firefox_addon_store_link: undefined,
-    edge_addons_store_link: undefined,
-    producthunt_link: undefined,
     pricing: {
       price: "$19",
-      original_price: "$29",
-      currency: "usd",
-      availability: "OutOfStock",
       cta_href: "https://apps.serp.co/checkout/demo-product",
-      benefits: [],
       ...pricingOverrides,
     },
+    benefits: [],
     faqs: [{ ...LEGAL_FAQ_TEMPLATE }],
-    success_url: "https://apps.serp.co/checkout/success?product=demo-product&session_id={CHECKOUT_SESSION_ID}",
     cancel_url: "https://apps.serp.co/checkout?product=demo-product",
     categories: categories ?? ["AI Tools"],
     screenshots:
@@ -83,13 +74,7 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
 
   if (pricingOverrides) {
     const pricing = input.pricing as Record<string, unknown>;
-    const removableKeys: Array<keyof PricingOverrides> = [
-      "price",
-      "original_price",
-      "currency",
-      "availability",
-      "benefits",
-    ];
+    const removableKeys: Array<keyof PricingOverrides> = ["price"];
     for (const key of removableKeys) {
       if (Object.prototype.hasOwnProperty.call(pricingOverrides, key) && pricingOverrides[key] === undefined) {
         delete pricing[key as string];
@@ -98,10 +83,18 @@ export function createTestProduct(overrides: ProductOverrides = {}): ProductData
   }
 
   // Add price_id for live products
-  if (input.status === "live" && !input.stripe) {
-    input.stripe = {
-      price_id: "price_1DEMO1234567890",
-    };
+  const mutableInput = input as { payment?: ProductData["payment"] };
+  const payment = mutableInput.payment;
+  if (input.status === "live" && !payment?.stripe?.price_id) {
+    const nextPayment = (payment ?? {}) as NonNullable<ProductData["payment"]>;
+    if (!nextPayment.provider) {
+      nextPayment.provider = "stripe";
+    }
+    const stripe =
+      (nextPayment.stripe ?? { metadata: {} }) as NonNullable<NonNullable<ProductData["payment"]>["stripe"]>;
+    stripe.price_id = "price_1DEMO1234567890";
+    nextPayment.stripe = stripe;
+    mutableInput.payment = nextPayment;
   }
 
   return productSchema.parse(input);

@@ -20,7 +20,6 @@ describe("buildProductFilterItem", () => {
       },
       pricing: {
         cta_href: "https://apps.serp.co/checkout/youtube-downloader",
-        benefits: [],
       },
     });
 

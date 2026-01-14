@@ -25,6 +25,11 @@
     "Stores licence data and preferences locally with no analytics or tracking",
     "Supports Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux"
   ],
+  "benefits": [
+    "Archive paid GoHighLevel trainings before subscriptions or client access changes",
+    "Consolidate native and embedded lessons into one organised MP4 library",
+    "Keep downloads private with 100% on-device processing and licence storage"
+  ],
   "faqs": [
     {
       "question": "How do I download a GoHighLevel lesson?",
@@ -163,67 +168,23 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/gohighlevel-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gohighlevel-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/gohighlevel-downloader",
+  "product_page_url": "https://apps.serp.co/gohighlevel-downloader",
   "serp_co_product_page_url": "https://serp.co/products/gohighlevel-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
   "github_repo_url": "https://github.com/serpapps/gohighlevel-downloader",
   "github_repo_tags": [],
-  "chrome_webstore_link": "https://chromewebstore.google.com/detail/gohighlevel-downloader/lcnajelpdoefgoilcihnpkofabpafjgd",
-  "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/gohighlevel-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/gohighlevel-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=gohighlevel-downloader",
-    "ghl_tag": "purchase-gohighlevel-downloader",
-    "ghlTag": "purchase-gohighlevel-downloader",
-    "landerId": "gohighlevel-downloader",
-    "license_entitlements": "gohighlevel-downloader",
-    "licenseEntitlements": "gohighlevel-downloader",
-    "offerId": "gohighlevel-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Gohighlevel Downloader",
-    "product_page_url": "https://apps.serp.co/gohighlevel-downloader",
-    "product_slug": "gohighlevel-downloader",
-    "productName": "Gohighlevel Downloader",
-    "productPageUrl": "https://apps.serp.co/gohighlevel-downloader",
-    "productSlug": "gohighlevel-downloader",
-    "purchase_url": "https://serp.ly/gohighlevel-downloader",
-    "purchaseUrl": "https://serp.ly/gohighlevel-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/gohighlevel-downloader/",
-    "serply_link": "https://serp.ly/gohighlevel-downloader",
-    "serplyLink": "https://serp.ly/gohighlevel-downloader",
-    "slug": "gohighlevel-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/gohighlevel-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/gohighlevel-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
+  "resource_links": [
+    {
+      "label": "Chrome Web Store",
+      "href": "https://chromewebstore.google.com/detail/gohighlevel-downloader/lcnajelpdoefgoilcihnpkofabpafjgd"
+    }
+  ],
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Lifetime licence covering GoHighLevel lessons, classrooms, communities, and embedded videos. No free trial and all sales are final.",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Archive paid GoHighLevel trainings before subscriptions or client access changes",
-      "Consolidate native and embedded lessons into one organised MP4 library",
-      "Keep downloads private with 100% on-device processing and licence storage"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/gohighlevel-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -240,19 +201,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS6mDP7AOTRcvm7bCMj3gV",
-    "test_price_id": "price_1SdS6mDP7AOTRcvmSEV301HE",
-    "metadata": {
-      "stripe_product_id": "prod_TadNfxz8dTezYT",
-      "stripe_test_product_id": "prod_TadNKH4HLblNJn"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [

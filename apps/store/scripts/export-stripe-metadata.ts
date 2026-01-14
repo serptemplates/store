@@ -106,7 +106,7 @@ async function collectStripeMetadata(stripe: Stripe): Promise<MetadataSnapshot[]
   for (const product of products) {
     const slug = product.slug;
     const name = product.name ?? slug;
-    const stripeDetails = product.payment?.stripe ?? product.stripe;
+    const stripeDetails = product.payment?.stripe;
     const stripeProductId =
       typeof stripeDetails?.metadata?.stripe_product_id === "string"
         ? stripeDetails.metadata.stripe_product_id.trim()

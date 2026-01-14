@@ -24,6 +24,11 @@
     "Generates ready-to-run yt-dlp commands for advanced workflows",
     "Stores license activation and preferences locally with zero analytics"
   ],
+  "benefits": [
+    "Archive Shorts, embedded players, and unlisted review links without quality loss",
+    "Deliver ready-to-edit MP4 files by merging adaptive streams automatically",
+    "Keep projects private thanks to on-device decryption and background processing"
+  ],
   "faqs": [
     {
       "question": "Does it work with YouTube Shorts and embedded players?",
@@ -173,10 +178,8 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/youtube-downloader",
-  "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youtube-downloader",
-  "apps_serp_co_product_page_url": "https://apps.serp.co/youtube-downloader",
+  "product_page_url": "https://apps.serp.co/youtube-downloader",
   "serp_co_product_page_url": "https://serp.co/products/youtube-downloader/",
-  "success_url": "https://apps.serp.co/checkout/success",
   "cancel_url": "https://apps.serp.co/checkout?product=youtube-downloader",
   "github_repo_url": "https://github.com/serpapps/youtube-downloader",
   "github_repo_tags": [
@@ -185,58 +188,12 @@
     "youtube-transcript-downloader"
   ],
   "resource_links": [],
-  "checkout_metadata": {
-    "apps_serp_co_product_page_url": "https://apps.serp.co/youtube-downloader",
-    "appsProductPageUrl": "https://apps.serp.co/youtube-downloader",
-    "cancel_url": "https://apps.serp.co/checkout?product=youtube-downloader",
-    "cancelUrl": "https://apps.serp.co/checkout?product=youtube-downloader",
-    "ghl_tag": "purchase-youtube-downloader",
-    "ghlTag": "purchase-youtube-downloader",
-    "landerId": "youtube-downloader",
-    "license_entitlements": "youtube-downloader",
-    "licenseEntitlements": "youtube-downloader",
-    "offerId": "youtube-downloader",
-    "payment_provider": "stripe",
-    "paymentProvider": "stripe",
-    "product_name": "Youtube Downloader",
-    "product_page_url": "https://apps.serp.co/youtube-downloader",
-    "product_slug": "youtube-downloader",
-    "productName": "Youtube Downloader",
-    "productPageUrl": "https://apps.serp.co/youtube-downloader",
-    "productSlug": "youtube-downloader",
-    "purchase_url": "https://serp.ly/youtube-downloader",
-    "purchaseUrl": "https://serp.ly/youtube-downloader",
-    "serp_co_product_page_url": "https://serp.co/products/youtube-downloader/",
-    "serply_link": "https://serp.ly/youtube-downloader",
-    "serplyLink": "https://serp.ly/youtube-downloader",
-    "slug": "youtube-downloader",
-    "store_serp_co_product_page_url": "https://store.serp.co/product-details/product/youtube-downloader",
-    "storeProductPageUrl": "https://store.serp.co/product-details/product/youtube-downloader",
-    "success_url": "https://apps.serp.co/checkout/success",
-    "successUrl": "https://apps.serp.co/checkout/success"
-  },
   // PAYMENT DATA
   "pricing": {
     "label": "One-time",
     "price": "$17.00",
-    "original_price": "$37.00",
-    "note": "Download instantly • Lifetime updates included • No refunds",
     "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/youtube-downloader",
-    "currency": "USD",
-    "availability": "InStock",
-    "benefits": [
-      "Archive Shorts, embedded players, and unlisted review links without quality loss",
-      "Deliver ready-to-edit MP4 files by merging adaptive streams automatically",
-      "Keep projects private thanks to on-device decryption and background processing"
-    ]
-  },
-  "return_policy": {
-    "days": 0,
-    "fees": "Non-refundable purchase",
-    "method": "No returns accepted",
-    "policy_category": "https://schema.org/MerchantReturnNotPermitted",
-    "url": "https://github.com/serpapps/legal/blob/main/refund-policy.md"
+    "cta_href": "https://apps.serp.co/checkout/youtube-downloader"
   },
   "payment": {
     "provider": "stripe",
@@ -253,19 +210,6 @@
         }
       ]
     }
-  },
-  "stripe": {
-    "price_id": "price_1SdS77DP7AOTRcvmEt8SQRBN",
-    "test_price_id": "price_1SdS77DP7AOTRcvmXEEQ8OXD",
-    "metadata": {
-      "stripe_product_id": "prod_TadNJWWsw2CE3X",
-      "stripe_test_product_id": "prod_TadN8vddC2g7mc"
-    },
-    "optional_items": [
-      {
-        "product_id": "prod_TadNFo3sxzkGYb"
-      }
-    ]
   },
   "ghl": {
     "tag_ids": [
