@@ -81,21 +81,23 @@ export function middleware(request: NextRequest) {
     search.includes("ref=") ||
     search.includes("affiliateId=") ||
     search.includes("aff=") ||
-    search.includes("am_id=")
+    search.includes("am_id=") ||
+    search.includes("via=")
   ) {
     // Preserve UTM parameters when redirecting
-    const url = request.nextUrl.clone();
-
     // Store UTM parameters in cookies for attribution tracking
     const response = NextResponse.next();
     const searchParams = new URLSearchParams(search);
 
     // Set cookies for tracking (30 day expiry)
+    const host = request.headers.get("host") ?? "";
+    const domain = host.endsWith(".serp.co") ? ".serp.co" : undefined;
     const cookieOptions = {
       maxAge: 30 * 24 * 60 * 60, // 30 days
       httpOnly: false,
       sameSite: 'lax' as const,
       secure: process.env.NODE_ENV === 'production',
+      ...(domain ? { domain } : {}),
     };
 
     if (searchParams.get('utm_source')) {
@@ -118,12 +120,31 @@ export function middleware(request: NextRequest) {
       searchParams.get('affiliate') ||
       searchParams.get('affiliateId') ||
       searchParams.get('ref') ||
-      searchParams.get('am_id');
+      searchParams.get('am_id') ||
+      searchParams.get('via');
 
     if (affiliateParam) {
       const normalizedAffiliate = affiliateParam.trim();
       if (normalizedAffiliate) {
         response.cookies.set('affiliateId', normalizedAffiliate, cookieOptions);
+      }
+    }
+
+    const viaParam = searchParams.get("via");
+    if (viaParam && viaParam.trim()) {
+      const normalizedVia = viaParam.trim();
+      const normalizedDubId = normalizedVia.startsWith("dub_id_")
+        ? normalizedVia
+        : `dub_id_${normalizedVia}`;
+      const currentDubId = request.cookies.get("dub_id")?.value ?? "";
+      if (!currentDubId) {
+        response.cookies.set("dub_id", normalizedDubId, cookieOptions);
+      }
+
+      const currentPartnerData = request.cookies.get("dub_partner_data")?.value ?? "";
+      if (!currentPartnerData) {
+        const partnerData = JSON.stringify({ via: normalizedVia });
+        response.cookies.set("dub_partner_data", partnerData, cookieOptions);
       }
     }
 
