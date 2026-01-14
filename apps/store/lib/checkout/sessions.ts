@@ -295,6 +295,49 @@ export async function findCheckoutSessionByStripeSessionId(stripeSessionId: stri
   return mapCheckoutSessionRow(result?.rows?.[0] ?? null);
 }
 
+export async function findCheckoutSessionBySubscriptionId(
+  subscriptionId: string,
+): Promise<CheckoutSessionRecord | null> {
+  if (!subscriptionId) {
+    return null;
+  }
+
+  const schemaReady = await ensureDatabase();
+
+  if (!schemaReady) {
+    return null;
+  }
+
+  const result = await query<CheckoutSessionRow>`
+    SELECT
+      id,
+      stripe_session_id,
+      stripe_payment_intent_id,
+      payment_provider,
+      provider_account_alias,
+      provider_session_id,
+      provider_payment_id,
+      provider_charge_id,
+      provider_mode,
+      offer_id,
+      lander_id,
+      customer_email,
+      metadata,
+      status,
+      source,
+      created_at,
+      updated_at
+    FROM checkout_sessions
+    WHERE
+      metadata->>'stripe_subscription_id' = ${subscriptionId}
+      OR metadata->>'stripeSubscriptionId' = ${subscriptionId}
+    ORDER BY created_at DESC
+    LIMIT 1;
+  `;
+
+  return mapCheckoutSessionRow(result?.rows?.[0] ?? null);
+}
+
 export async function findCheckoutSessionByPaymentIntentId(paymentIntentId: string): Promise<CheckoutSessionRecord | null> {
   const schemaReady = await ensureDatabase();
 

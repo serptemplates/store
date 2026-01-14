@@ -9,6 +9,9 @@ import { handlePaymentIntentFailed } from "./events/payment-intent-failed";
 import { handleChargeRefunded } from "./events/charge-refunded";
 import { handleChargeDisputeCreated } from "./events/charge-dispute-created";
 import { handleChargeDisputeClosed } from "./events/charge-dispute-closed";
+import { handleCustomerSubscriptionDeleted } from "./events/customer-subscription-deleted";
+import { handleInvoicePaymentFailed } from "./events/invoice-payment-failed";
+import { handleInvoicePaymentSucceeded } from "./events/invoice-payment-succeeded";
 import { handleUnhandledStripeEvent } from "./events/unhandled-event";
 
 export async function handleStripeEvent(
@@ -37,6 +40,15 @@ export async function handleStripeEvent(
       break;
     case "charge.dispute.closed":
       await handleChargeDisputeClosed(event.data.object as Stripe.Dispute);
+      break;
+    case "customer.subscription.deleted":
+      await handleCustomerSubscriptionDeleted(event.data.object as Stripe.Subscription);
+      break;
+    case "invoice.payment_failed":
+      await handleInvoicePaymentFailed(event.data.object as Stripe.Invoice);
+      break;
+    case "invoice.payment_succeeded":
+      await handleInvoicePaymentSucceeded(event.data.object as Stripe.Invoice);
       break;
     default:
       handleUnhandledStripeEvent(event);
