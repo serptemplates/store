@@ -431,23 +431,23 @@
   "vimeo-video-downloader": {
     "slug": "vimeo-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS70DP7AOTRcvmE9x9q923",
-      "test_price_id": "price_1SdS71DP7AOTRcvmKDsjOqhR"
+      "live_price_id": "price_1SpcnVDP7AOTRcvmF6LWW6KI",
+      "test_price_id": "price_1SpcnVDP7AOTRcvmAoUWCqSP"
     }
   },
   "whop-video-downloader": {
     "slug": "whop-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS71DP7AOTRcvmRHPIpT8y",
-      "test_price_id": "price_1SdS72DP7AOTRcvmW4a5G2Yw"
+      "live_price_id": "price_1SpcnVDP7AOTRcvmSvsW56MG",
+      "test_price_id": "price_1SpcnWDP7AOTRcvmfOnPbB9Z"
     }
   },
   "wistia-video-downloader": {
