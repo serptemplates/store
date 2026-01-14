@@ -4,13 +4,7 @@ This document describes the new marketplace-style product lander, how to enable 
 
 ## Enable per product
 
-Products live in `apps/store/data/products/<slug>.json`. Set one of the following to activate the marketplace lander:
-
-- `layout_type: "marketplace"` – forces the marketplace lander for this product
-- or `status: "pre_release"` – also uses the marketplace lander automatically
-
-Other layout options:
-- `layout_type: "landing"` (default) – uses the classic landing template
+Products live in `apps/store/data/products/<slug>.json`. Set `status: "pre_release"` to activate the marketplace lander.
 
 Routing logic: `apps/store/app/[slug]/page.tsx` chooses the layout at request time.
 
@@ -20,7 +14,11 @@ Routing logic: `apps/store/app/[slug]/page.tsx` chooses the layout at request ti
 - Screenshots: `screenshots` entries (URLs); also uses `featured_image` as a fallback
 - Related posts: `related_posts` – array of blog slugs; order is preserved
 - Features: `features` – rendered in the Features section
-- Pricing/CTA: `pricing` – label, price, and CTA label/URL
+<<<<<<< HEAD
+- Pricing/CTA: `pricing.cta_text` plus the price manifest (`apps/store/data/prices/manifest.json`); CTA URL is derived from `/checkout/<slug>`
+=======
+- Pricing/CTA: `pricing.cta_text` plus the price manifest (`apps/store/data/prices/manifest.json`); CTA URL is derived from `/checkout/<slug>` using `ROUTES.checkout`
+>>>>>>> 34aba1f4 (clean up dry up store repo)
 - Metadata: `brand`, `categories`, `keywords`, `supported_*`, `permission_justifications`, etc.
 
 ## Page structure (marketplace lander)
@@ -62,14 +60,14 @@ Inputs are passed from the marketplace view:
 - `posts`: resolved blog posts matching `related_posts` from product JSON
 - `images`: `featured_image` + all `screenshots` (absolute URLs)
 - `videoEntries`: all primary + related videos (with embed/thumbnail metadata)
+  - Base URLs are derived from `siteConfig.site.domain` (fallback to `NEXT_PUBLIC_SITE_URL`) so product URLs are consistent in SSR/CSR.
 
 Server wiring lives in `apps/store/app/[slug]/marketplace-page.tsx` and passes `schemaPosts` and `schemaVideoEntries` so no server-only modules leak into client code.
 
 ## Toggling behavior / quick reference
 
-- Use marketplace lander: add `layout_type: marketplace` (or set `status: pre_release`)
-- Classic landing: omit `layout_type` or set `layout_type: landing`
-- Legacy hybrid ecommerce: remove `layout_type: ecommerce` (layout retired)
+- Use marketplace lander: set `status: pre_release`
+- Classic landing: omit `status: pre_release`
 
 ## Notes
 

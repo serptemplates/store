@@ -62,7 +62,6 @@
   "keywords": [
     "yespornplease downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -75,18 +74,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/yespornplease-downloader",
-  "product_page_url": "https://apps.serp.co/yespornplease-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/yespornplease-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=yespornplease-downloader",
   "github_repo_url": "https://github.com/serpapps/yespornplease-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/yespornplease-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -108,8 +101,7 @@
     "tag_ids": [
       "purchase-yespornplease-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

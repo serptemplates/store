@@ -19,6 +19,24 @@ export function getSiteBaseUrl(): string {
   return getDefaultStoreUrl();
 }
 
+export function getStoreBaseUrl(options: { isTest?: boolean } = {}): string {
+  const configured = process.env.NEXT_PUBLIC_STORE_BASE_URL ?? process.env.NEXT_PUBLIC_SITE_URL;
+  if (configured) {
+    return canonicalizeStoreOrigin(configured);
+  }
+
+  if (options.isTest) {
+    return "http://localhost:3000";
+  }
+
+  const domain = getSiteConfig().site?.domain;
+  if (domain) {
+    return normalizeDomain(domain);
+  }
+
+  return getDefaultStoreUrl();
+}
+
 export function toAbsoluteUrl(path: string): string {
   const base = getSiteBaseUrl();
   if (!path) {

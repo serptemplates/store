@@ -107,7 +107,6 @@
     "offline redtube videos",
     "embed redtube downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": true,
   "popular": false,
@@ -157,18 +156,12 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/redtube-video-downloader",
-  "product_page_url": "https://apps.serp.co/redtube-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/redtube-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=redtube-video-downloader",
   "github_repo_url": "https://github.com/serpapps/redtube-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/redtube-video-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -190,8 +183,7 @@
     "tag_ids": [
       "purchase-redtube-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

@@ -29,9 +29,12 @@ import {
 import { resolveSeoDescription, resolveSeoTitle } from "../lib/products/unofficial-branding";
 import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "../lib/products/category-constants";
 import { getProductsDirectory } from "../lib/products/product";
+import { getSiteBaseUrl } from "../lib/urls";
 
 const PRODUCT_FILE_EXTENSION = ".json";
 const LEGAL_FAQ_NORMALIZED_QUESTION = LEGAL_FAQ_TEMPLATE.question.trim().toLowerCase();
+const DEFAULT_PRODUCT_BASE_URL = getSiteBaseUrl().replace(/\/$/, "");
+const SERP_CO_PRODUCT_BASE_URL = "https://serp.co/products";
 
 const COMMENT_SECTIONS = [
   {
@@ -54,7 +57,6 @@ const COMMENT_SECTIONS = [
       "supported_regions",
       "categories",
       "keywords",
-      "layout_type",
       "featured",
       "waitlist_url",
       "new_release",
@@ -81,7 +83,6 @@ const COMMENT_SECTIONS = [
       "serply_link",
       "product_page_url",
       "serp_co_product_page_url",
-      "cancel_url",
       "github_repo_url",
       "github_repo_tags",
       "resource_links",
@@ -101,8 +102,6 @@ const REQUIRED_PRODUCT_FIELDS = [
   "seo_title",
   "seo_description",
   "serply_link",
-  "product_page_url",
-  "cancel_url",
 ] as const;
 
 type RequiredProductField = (typeof REQUIRED_PRODUCT_FIELDS)[number];
@@ -157,6 +156,18 @@ function cloneValue<T>(value: T): T {
     }
   }
   return result as T;
+}
+
+function normalizeUrlForComparison(value: string): string {
+  return value.trim().replace(/\/$/, "");
+}
+
+function buildDefaultProductPageUrl(slug: string): string {
+  return `${DEFAULT_PRODUCT_BASE_URL}/${slug}`;
+}
+
+function buildDefaultSerpCoProductPageUrl(slug: string): string {
+  return `${SERP_CO_PRODUCT_BASE_URL}/${slug}/`;
 }
 
 function orderObject<T extends Record<string, unknown>>(input: T, order: readonly string[]): Record<string, unknown> {
@@ -422,7 +433,6 @@ function normalizeGhl(ghl: NonNullable<ProductData["ghl"]>): Record<string, unkn
     "status",
     "source",
     "tag_ids",
-    "workflow_ids",
     "opportunity_name_template",
     "contact_custom_field_ids",
     "opportunity_custom_field_ids",
@@ -840,9 +850,19 @@ async function convertSingleProduct(
         delete pricing.availability;
         copy.pricing = pricing;
       }
+      if (isRecord(copy.pricing) && "label" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.label;
+        copy.pricing = pricing;
+      }
       if (isRecord(copy.pricing) && "note" in copy.pricing) {
         const pricing = copy.pricing as Record<string, unknown>;
         delete pricing.note;
+        copy.pricing = pricing;
+      }
+      if (isRecord(copy.pricing) && "price" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.price;
         copy.pricing = pricing;
       }
       if (isRecord(copy.pricing) && "original_price" in copy.pricing) {
@@ -855,11 +875,42 @@ async function convertSingleProduct(
         delete pricing.currency;
         copy.pricing = pricing;
       }
+      if (isRecord(copy.pricing) && "cta_href" in copy.pricing) {
+        const pricing = copy.pricing as Record<string, unknown>;
+        delete pricing.cta_href;
+        copy.pricing = pricing;
+      }
+      if (typeof copy.slug === "string" && copy.slug.trim().length > 0) {
+        const slug = copy.slug.trim();
+        if (typeof copy.product_page_url === "string") {
+          const expected = buildDefaultProductPageUrl(slug);
+          if (normalizeUrlForComparison(copy.product_page_url) === normalizeUrlForComparison(expected)) {
+            delete copy.product_page_url;
+          }
+        }
+        if (typeof copy.serp_co_product_page_url === "string") {
+          const expected = buildDefaultSerpCoProductPageUrl(slug);
+          if (normalizeUrlForComparison(copy.serp_co_product_page_url) === normalizeUrlForComparison(expected)) {
+            delete copy.serp_co_product_page_url;
+          }
+        }
+      }
       if ("return_policy" in copy) {
         delete copy.return_policy;
       }
       if ("success_url" in copy) {
         delete copy.success_url;
+      }
+      if ("layout_type" in copy) {
+        delete copy.layout_type;
+      }
+      if ("cancel_url" in copy) {
+        delete copy.cancel_url;
+      }
+      if (isRecord(copy.ghl) && "workflow_ids" in copy.ghl) {
+        const ghl = copy.ghl as Record<string, unknown>;
+        delete ghl.workflow_ids;
+        copy.ghl = ghl;
       }
       const resourceLinkFields = [
         { key: "reddit_url", label: "Reddit" },
@@ -924,6 +975,8 @@ async function convertSingleProduct(
       delete (warningSource as Record<string, unknown>).stripe;
       delete (warningSource as Record<string, unknown>).return_policy;
       delete (warningSource as Record<string, unknown>).success_url;
+      delete (warningSource as Record<string, unknown>).cancel_url;
+      delete (warningSource as Record<string, unknown>).layout_type;
       delete (warningSource as Record<string, unknown>).reddit_url;
       delete (warningSource as Record<string, unknown>).producthunt_link;
       delete (warningSource as Record<string, unknown>).chrome_webstore_link;

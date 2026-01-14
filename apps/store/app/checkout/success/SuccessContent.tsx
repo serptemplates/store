@@ -1,6 +1,7 @@
 "use client";
 
 import type { ComponentType, ReactNode } from "react";
+import type { Route } from "next";
 import { useEffect, useMemo, useState } from "react";
 import {
   BookOpen,
@@ -16,6 +17,7 @@ import { useSearchParams } from "next/navigation";
 
 import { processCheckoutSession, processGhlPayment, processPayPalCheckout } from "./actions";
 import { ConversionTracking, type ConversionData } from "./tracking";
+import { ROUTES } from "@/lib/routes";
 
 type CheckoutVariant = "stripe" | "ghl" | "paypal" | "external";
 
@@ -68,9 +70,9 @@ const HERO_COPY: HeroCopy = {
       <p>
         Please use this email when authenticating your apps and receiving one-time pass codes - they won&apos;t work otherwise.
       </p>
-      <p>
+        <p>
         If you&apos;d like to change or update that email, you can do that in your{" "}
-        <Link href="/account" className="font-medium text-foreground underline underline-offset-4">
+        <Link href={ROUTES.account as Route} className="font-medium text-foreground underline underline-offset-4">
           Account
         </Link>{" "}
         area.
@@ -78,7 +80,7 @@ const HERO_COPY: HeroCopy = {
     </div>
   ),
   ctas: [
-    { label: "Open Your Account", href: "/account" },
+    { label: "Open Your Account", href: ROUTES.account },
     { label: "Need Help?", href: "/support", variant: "outline" },
   ],
 };
@@ -87,7 +89,7 @@ const RESOURCE_LINKS: ResourceLink[] = [
   {
     title: "My Account",
     description: "Access your downloads, license keys, and billing history.",
-    href: "/account",
+    href: ROUTES.account,
     icon: Download,
   },
   {

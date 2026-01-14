@@ -137,10 +137,10 @@ Review these after each migration milestone to confirm behaviour:
 ### Documentation / SOP updates
 - `apps/store/data/README.md`
 - `docs/operations/store-deployment.md`
-- `docs/operations/vercel-envs.md`
-- `docs/operations/MERCHANT-CENTER-SETUP.md`
-- `docs/operations/adult-downloader-price-update.md`
-- `docs/checkout-cross-sell-setup.md`
+- `docs/operations/env-files.md`
+- Merchant Center setup doc (not yet documented; see `scripts/google-merchant/*.ts`)
+- `docs/runbooks/how-to-update-price-stripe.md`
+- Cross-sell notes (covered in `apps/store/data/README.md`)
 
 ## Execution Checklist
 

@@ -26,7 +26,6 @@
     "restore tabs",
     "reopen tab"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -39,9 +38,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/restore-closed-tabs-extension",
-  "product_page_url": "https://apps.serp.co/restore-closed-tabs-extension",
-  "serp_co_product_page_url": "https://serp.co/products/restore-closed-tabs-extension/",
-  "cancel_url": "https://apps.serp.co/checkout?product=restore-closed-tabs-extension",
   "github_repo_url": "https://github.com/serpapps/restore-closed-tabs-extension",
   "github_repo_tags": [],
   "resource_links": [],

@@ -1,42 +1,44 @@
-# Checkout Module Overview
+# Checkout Overview
 
-The storefront now owns Stripe Checkout Session creation for every product CTA. `pricing.cta_href` always points to `/checkout/<slug>` (or the absolute equivalent on apps.serp.co), and the route handler at `app/checkout/[slug]/route.ts` creates the Checkout Session server-side. The React hook behind the buy button simply records analytics, enforces waitlist behaviour for pre-release products, and lets the browser navigate directly to the internal checkout route. The `@/lib/checkout` facade still owns persistence, webhook handling, and reporting so downstream systems retain a single integration surface (legacy PayPal records are treated as `legacy_paypal` sources).
+## Summary
 
-## Public facade
-
-Import everything through `@/lib/checkout`. The facade re-exports the canonical types and helpers:
-
-- `sessions.ts` – CRUD helpers for checkout sessions (insert/update/status transitions, stale session pruning).
-- `orders.ts` – Order upsert helpers, metadata updates, and reporting hooks that operate on orders.
-- `queries.ts` – Read-only reporting helpers (`findRecentOrdersByEmail`, `countPendingCheckoutSessionsOlderThan`, etc.).
-- `types.ts` – Shared enums and record shapes to keep inter-module imports stable.
+The store uses internal checkout routes for every product CTA. Product pages route to `/checkout/<slug>`, and the server-side handler creates a Stripe Checkout Session using product JSON + Stripe metadata. Post-purchase processing happens in the Stripe webhook and is shared with the `/checkout/success` fallback path for local/dev.
 
 ## Checkout entry points
 
-### Internal checkout CTA
-
-- Product JSON now declares `pricing.cta_href` values that always point to `/checkout/<slug>` (absolute URLs are fine for schema validation; runtime normalizes them to relative paths).
-- `product-adapter` resolves CTAs to `mode: "checkout"` for every live product, so downstream components can assume the CTA is internal.
-- `useProductCheckoutCta` tracks CTA analytics, opens the waitlist modal for `status === "pre_release"`, and normalizes navigation so every click lands on `/checkout/<slug>` (or the provided waitlist URL). Session creation happens inside the route handler, not in the client hook.
-- Metadata required for fulfilment (e.g., `offerId`, `ghl_tag`, `stripe_product_id`) must be stored on the Stripe price/product so webhooks can recover it—our sync scripts backfill these tags.
-- The success page only relies on `session_id` (or `payment_id` for GHL) plus the `slug`/`provider` query params. No additional identifiers are required for dedupe because Checkout Sessions are now created server-side.
+- `/checkout/<slug>` is the primary CTA target. The route handler lives at `apps/store/app/checkout/[slug]/route.ts`.
+- Product CTAs are resolved from product JSON and mapped by `useProductCheckoutCta` so every live product drives the internal checkout flow.
+- Pre-release products trigger the waitlist modal instead of checkout.
+<<<<<<< HEAD
+=======
+- Use `apps/store/lib/routes.ts` for checkout path construction and `apps/store/lib/products/product-urls.ts` for canonical product URLs.
+>>>>>>> 34aba1f4 (clean up dry up store repo)
 
 ## Post-purchase processing
 
-- `app/api/stripe/webhook/route.ts` handles `checkout.session.completed` events emitted by the programmatic Checkout Sessions. Because the storefront still relies on Stripe metadata for fulfilment, ensure Stripe product metadata includes the GHL tag, lander/offer IDs, and any fulfilment hints.
-- The `/checkout/success` route still processes a session on demand for local/testing environments when webhooks are unavailable. It retrieves the Stripe session directly, persists orders, and provisions licenses as a fallback path.
-- Historical PayPal orders remain in the database as `legacy_paypal` sources; the checkout persistence layer normalizes them alongside Stripe sessions for reporting.
-- Entitlements are the primary access signal. The webhook resolves entitlements from the offer slug plus any line item `product_slug` metadata and grants them to serp-auth. If line item metadata is missing, it falls back to mapping Stripe product IDs to product JSON (including excluded bundles). Bundle purchases should use canonical bundle slugs (`serp-downloaders-bundle`, `all-adult-video-downloaders-bundle`); `all-video-downloaders-bundle` is a legacy alias accepted by serp-auth but should not be emitted. Bundle expansion happens server-side based on `entitlement_catalog.metadata_json` tags. GHL tags are legacy-only, and license keys remain only for the `ai-voice-cloner` flow.
+The Stripe webhook (`apps/store/app/api/stripe/webhook/route.ts`) is the source of truth for fulfillment. It delegates to `apps/store/lib/payments/stripe-webhook/events/checkout-session-completed.ts`, which:
 
-## Legacy `/checkout` behaviour
+- Persists checkout sessions and orders via `@/lib/checkout`.
+- Resolves entitlements from the offer slug and line item metadata, with bundle expansion when required.
+- Grants serp-auth entitlements via `@/lib/serp-auth/entitlements` (best-effort with retries).
+- Syncs GoHighLevel contact metadata via `@/lib/ghl-client` (with retry/backoff).
+- Notifies Crisp via `@/lib/crisp/sync`.
+- Optionally calls the license service if `LICENSE_ADMIN_URL` + token are configured.
 
-- `/checkout` now performs a static redirect back to the product slug (or home) so old deep links do not 404. There is no server action or session creation there.
-- `/checkout/cancel` and `/checkout/success` remain available because third-party cancel/success URLs still point at them. Cancel simply links back to the product page, while success renders order status using the shared components.
-- Middleware rewrites like `/ghl/checkout` → `/checkout` remain for backwards compatibility but no longer create sessions.
+The `/checkout/success` page uses `apps/store/app/checkout/success/actions.ts` to replay the same fulfillment logic in local/dev when webhooks are not available. It retrieves the Stripe session directly and then calls `processFulfilledOrder`.
 
-## Adding new checkout flows
+## Entitlements and serp-auth
 
-1. Prefer the existing `/checkout/[slug]` workflow for new Stripe surfaces. If a CTA must behave differently, add a new route handler that mirrors the existing metadata/fulfilment pipeline rather than reintroducing client-side session creation.
-2. If you must add another provider, place the API route under `app/api/<provider>` and reuse the `@/lib/checkout` persistence helpers for consistency.
-3. Extend Vitest coverage for any new helpers under `apps/store/tests/**`, and keep E2E coverage in Playwright focused on CTA navigation + `/checkout/<slug>` rather than Payment Link redirects.
-4. Run the acceptance stack when shipping changes: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm test:smoke`.
+- Entitlements are the primary access signal for customer permissions.
+- The webhook resolves entitlements and posts them to `SERP_AUTH_BASE_URL` (default `https://auth.serp.co`) using `INTERNAL_ENTITLEMENTS_TOKEN` or `SERP_AUTH_INTERNAL_SECRET`.
+- Entitlements are stored in order metadata (`license_entitlements_resolved`) and used for serp-auth grants.
+
+## License service (legacy)
+
+The license service is optional and enabled only when `LICENSE_ADMIN_URL` plus a token are configured. If enabled, each completed order posts a `LicenseProviderPurchase` payload to the admin endpoint, and the response is stored on the order metadata.
+
+## Related docs
+
+- `docs/architecture/payments-stripe-webhook.md`
+- `docs/architecture/GHL-INTEGRATION-STATUS.md`
+- `apps/store/data/README.md`

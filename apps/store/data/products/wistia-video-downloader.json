@@ -102,7 +102,6 @@
     "wistia mp4 downloader",
     "offline wistia archive"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": true,
   "popular": false,
@@ -156,9 +155,6 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/wistia-video-downloader",
-  "product_page_url": "https://apps.serp.co/wistia-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/wistia-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=wistia-video-downloader",
   "github_repo_url": "https://github.com/serpapps/wistia-video-downloader",
   "github_repo_tags": [],
   "resource_links": [
@@ -169,10 +165,7 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/wistia-video-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -194,8 +187,7 @@
     "tag_ids": [
       "purchase-wistia-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

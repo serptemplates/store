@@ -74,7 +74,6 @@
     "private browsing",
     "multi ip vpn"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -126,9 +125,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/serp-vpn",
-  "product_page_url": "https://apps.serp.co/serp-vpn",
-  "serp_co_product_page_url": "https://serp.co/products/serp-vpn/",
-  "cancel_url": "https://apps.serp.co/checkout?product=serp-vpn",
   "github_repo_url": "https://github.com/serpapps/serp-vpn",
   "github_repo_tags": [],
   "resource_links": [
@@ -139,10 +135,7 @@
   ],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/serp-vpn"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -159,8 +152,7 @@
     "tag_ids": [
       "purchase-serp-vpn",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

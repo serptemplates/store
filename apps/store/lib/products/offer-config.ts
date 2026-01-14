@@ -6,6 +6,8 @@ import { paymentSchema } from "@/lib/products/product-schema";
 import { isStripeTestMode } from "@/lib/payments/stripe-environment";
 import { resolveStripePaymentDetails } from "@/lib/products/payment";
 import type { PaymentProviderId, StripePaymentDetails } from "@/lib/products/payment";
+import { resolveProductPageUrl } from "@/lib/products/product-urls";
+import { getStoreBaseUrl } from "@/lib/urls";
 import { normalizeProductAssetPath, toAbsoluteProductAssetUrl } from "./asset-paths";
 
 const CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}";
@@ -192,7 +194,7 @@ function buildPaymentConfig(
     account: stripeDetails.account ?? undefined,
     mode: stripeDetails.mode ?? "payment",
     success_url: stripeDetails.successUrl ?? undefined,
-    cancel_url: stripeDetails.cancelUrl ?? product.cancel_url ?? undefined,
+    cancel_url: stripeDetails.cancelUrl ?? undefined,
     metadata: mergedMetadata,
     stripe: {
       price_id: stripeDetails.priceId ?? undefined,
@@ -252,9 +254,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       return null;
     }
 
-    const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-    const defaultBaseUrl = isTest ? "http://localhost:3000" : "https://apps.serp.co";
-    const baseUrl = configuredSiteUrl ?? defaultBaseUrl;
+    const baseUrl = getStoreBaseUrl({ isTest });
 
     const configuredSuccessUrl = paymentConfig?.success_url ?? stripeDetails?.successUrl ?? undefined;
     const rawSuccessUrl = isTest
@@ -263,7 +263,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
     const successUrl = ensureSuccessUrlHasSessionPlaceholder(rawSuccessUrl);
     const cancelUrl = isTest
       ? `${baseUrl}/checkout?canceled=true`
-      : paymentConfig?.cancel_url ?? stripeDetails?.cancelUrl ?? product.cancel_url ?? `${baseUrl}/checkout?canceled=true`;
+      : paymentConfig?.cancel_url ?? stripeDetails?.cancelUrl ?? `${baseUrl}/checkout?canceled=true`;
 
     const normalizedImage = normalizeProductAssetPath(product.featured_image);
     const productImageUrl = normalizedImage
@@ -279,8 +279,7 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
       ? [rawEntitlements.trim()]
       : undefined;
 
-    const productPageUrl =
-      product.product_page_url ?? product.serp_co_product_page_url ?? product.serply_link;
+    const productPageUrl = resolveProductPageUrl(product, { baseUrl });
 
     const metadata = mergeMetadata(
       {
@@ -320,10 +319,6 @@ export function getOfferConfig(offerId: string): OfferConfig | null {
             status: product.ghl.status,
             source: product.ghl.source,
             tagIds: product.ghl.tag_ids && product.ghl.tag_ids.length > 0 ? product.ghl.tag_ids : undefined,
-            workflowIds:
-              product.ghl.workflow_ids && product.ghl.workflow_ids.length > 0
-                ? product.ghl.workflow_ids
-                : undefined,
             opportunityNameTemplate: product.ghl.opportunity_name_template,
             contactCustomFieldIds: product.ghl.contact_custom_field_ids,
             opportunityCustomFieldIds: product.ghl.opportunity_custom_field_ids,

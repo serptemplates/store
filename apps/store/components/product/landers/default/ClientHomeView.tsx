@@ -22,6 +22,7 @@ import { useProductPageExperience } from "@/components/product/hooks/useProductP
 import { ProductVideosSection } from "@/components/product/shared/ProductVideosSection"
 import { ProductStickyBar } from "@/components/product/shared/ProductStickyBar"
 import { deriveProductCategories } from "@/lib/products/categories"
+import { ROUTES } from "@/lib/routes"
 
 export type ClientHomeProps = {
   product: ProductData
@@ -45,7 +46,8 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   }, [posts, product.related_posts])
 
   const showPrices = siteConfig.storefront?.showPrices !== false
-  const homeProps = productToHomeTemplate(product, resolvedPosts, { showPrices })
+  const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
+  const homeProps = productToHomeTemplate(product, resolvedPosts, { showPrices, baseUrl: siteUrl })
   const derivedCategories =
     Array.isArray(homeProps.categories) && homeProps.categories.length > 0
       ? homeProps.categories
@@ -73,12 +75,13 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
   // Set up Dub-aware checkout handler
   // This intercepts buy button clicks to create programmatic checkout sessions
   // with proper Dub attribution metadata when stripe.price_id is available
+  const checkoutPathPrefix = `${ROUTES.checkoutRoot}/`
   const isInternalCheckoutRoute = (() => {
     if (typeof resolvedCta.href !== "string") return false
-    if (resolvedCta.href.startsWith("/checkout/")) return true
+    if (resolvedCta.href.startsWith(checkoutPathPrefix)) return true
     try {
       const url = new URL(resolvedCta.href)
-      return url.pathname.startsWith("/checkout/")
+      return url.pathname.startsWith(checkoutPathPrefix)
     } catch {
       return false
     }
@@ -98,7 +101,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
       const host = window.location.hostname
       const isLocal = host === "localhost" || host === "127.0.0.1"
       const url = new URL(resolvedCta.href, window.location.origin)
-      if (isLocal && url.pathname.startsWith("/checkout/")) {
+      if (isLocal && url.pathname.startsWith(checkoutPathPrefix)) {
         nextHref = `${url.pathname}${url.search ?? ""}`
       }
     } catch {
@@ -106,7 +109,7 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     }
 
     setClientCheckoutHref((prev) => (prev === nextHref ? prev : nextHref))
-  }, [isInternalCheckoutRoute, resolvedCta.href])
+  }, [checkoutPathPrefix, isInternalCheckoutRoute, resolvedCta.href])
   // If CTA is explicitly the internal checkout route, render it (optionally localhost-normalized)
   // Otherwise, use "#" when we have a price ID (intercept to add Dub metadata)
   const resolvedCtaHref = isInternalCheckoutRoute ? clientCheckoutHref ?? resolvedCta.href : resolvedCta.href
@@ -165,7 +168,6 @@ export function ClientHomeView({ product, posts, siteConfig, navProps, videoEntr
     [handleCtaClick],
   )
 
-  const siteUrl = canonicalizeStoreOrigin(siteConfig.site?.domain)
   const productPath = product.slug.startsWith("/") ? product.slug : `/${product.slug}`
   // Build a deterministic product URL from configured site origin to avoid SSR/CSR mismatches
   const productUrl = useMemo(() => {

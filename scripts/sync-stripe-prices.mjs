@@ -5,47 +5,9 @@ import process from "node:process";
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import stripJsonComments from "strip-json-comments";
-const PRICING_FIELD_ORDER = [
-  "label",
-  "subheading",
-  "price",
-  "original_price",
-  "note",
-  "cta_text",
-  "cta_href",
-  "currency",
-  "availability",
-  "benefits",
-];
 
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function orderObject(record, order) {
-  const ordered = {};
-  const visited = new Set();
-
-  for (const key of order) {
-    if (Object.prototype.hasOwnProperty.call(record, key)) {
-      ordered[key] = record[key];
-      visited.add(key);
-    }
-  }
-
-  const remaining = Object.keys(record)
-    .filter((key) => !visited.has(key))
-    .sort((a, b) => a.localeCompare(b));
-
-  for (const key of remaining) {
-    ordered[key] = record[key];
-  }
-
-  return ordered;
-}
-
-function orderPricingRecord(record) {
-  return orderObject(record, PRICING_FIELD_ORDER);
 }
 
 const apiVersion = "2024-04-10";
@@ -127,7 +89,8 @@ function formatAmount(unitAmount, currency) {
 }
 
 async function main() {
-    const productsDir = path.resolve(process.cwd(), "apps/store/data/products");
+  const productsDir = path.resolve(process.cwd(), "apps/store/data/products");
+  const manifestPath = path.resolve(process.cwd(), "apps/store/data/prices/manifest.json");
 
   if (!fs.existsSync(productsDir)) {
     console.error(`⚠️  Products directory not found at ${productsDir}`);
@@ -140,7 +103,22 @@ async function main() {
     return;
   }
 
-  let updatedFiles = 0;
+  const manifestRaw = fs.existsSync(manifestPath) ? fs.readFileSync(manifestPath, "utf8") : "{}";
+  let manifest = {};
+
+  try {
+    manifest = JSON.parse(manifestRaw);
+  } catch (error) {
+    console.error(`❌  Failed to parse manifest at ${manifestPath}.`, error);
+    process.exit(1);
+  }
+
+  if (!isRecord(manifest)) {
+    console.error(`❌  Manifest at ${manifestPath} is not an object.`);
+    process.exit(1);
+  }
+
+  let updatedEntries = 0;
 
   for (const file of files) {
     const absolutePath = path.join(productsDir, file);
@@ -176,35 +154,71 @@ async function main() {
     }
 
     try {
-      const { price } = await fetchPrice(priceId);
-      const formatted = formatAmount(price.unit_amount, price.currency);
-
-      const pricing = isRecord(product.pricing)
-        ? { ...product.pricing }
-        : {};
-      const existing = typeof pricing.price === "string" ? pricing.price : null;
-
-      if (existing === formatted) {
-        console.log(`✅  ${file}: price already up to date (${formatted}).`);
+      const slug = typeof product.slug === "string" ? product.slug.trim() : "";
+      if (!slug) {
+        console.log(`ℹ️  ${file}: missing product slug, skipping.`);
         continue;
       }
 
-      pricing.price = formatted;
-      product.pricing = orderPricingRecord(pricing);
+      const { price, mode } = await fetchPrice(priceId);
+      const formatted = formatAmount(price.unit_amount, price.currency);
+      const existingEntry = isRecord(manifest[slug]) ? manifest[slug] : null;
+      const existingStripe = existingEntry && isRecord(existingEntry.stripe) ? existingEntry.stripe : {};
+      const isUpToDate =
+        existingEntry
+        && existingEntry.unit_amount === price.unit_amount
+        && existingEntry.currency === price.currency
+        && (
+          (mode === "live" && existingStripe.live_price_id === priceId)
+          || (mode === "test" && existingStripe.test_price_id === priceId)
+        );
 
-      fs.writeFileSync(absolutePath, `${JSON.stringify(product, null, 2)}\n`);
-      updatedFiles += 1;
-      console.log(`📝  ${file}: price updated to ${formatted}.`);
+      if (isUpToDate) {
+        console.log(`✅  ${file}: manifest already up to date (${formatted}).`);
+        continue;
+      }
+
+      const nextEntry = isRecord(existingEntry) ? { ...existingEntry } : {};
+      nextEntry.slug = slug;
+      nextEntry.provider = nextEntry.provider ?? "stripe";
+      const inferredMode = product.payment?.mode ?? product.payment?.stripe?.mode;
+      if (inferredMode) {
+        nextEntry.mode = inferredMode;
+      }
+      if (product.payment?.account) {
+        nextEntry.account = product.payment.account;
+      }
+      nextEntry.currency = price.currency;
+      nextEntry.unit_amount = price.unit_amount;
+      nextEntry.stripe = isRecord(nextEntry.stripe) ? { ...nextEntry.stripe } : {};
+      if (mode === "live") {
+        nextEntry.stripe.live_price_id = priceId;
+      } else if (mode === "test") {
+        nextEntry.stripe.test_price_id = priceId;
+      }
+
+      manifest[slug] = nextEntry;
+      updatedEntries += 1;
+      console.log(`📝  ${file}: manifest updated to ${formatted}.`);
     } catch (error) {
       console.error(`❌  ${file}: failed to update price.`, error);
       process.exitCode = 1;
     }
   }
 
-  if (updatedFiles === 0) {
-    console.log("✨ Stripe price sync complete – no changes detected.");
+  const sorted = Object.keys(manifest)
+    .sort((a, b) => a.localeCompare(b))
+    .reduce((acc, key) => {
+      acc[key] = manifest[key];
+      return acc;
+    }, {});
+
+  fs.writeFileSync(manifestPath, `${JSON.stringify(sorted, null, 2)}\n`);
+
+  if (updatedEntries === 0) {
+    console.log("✨ Stripe price sync complete – no manifest changes detected.");
   } else {
-    console.log(`✨ Stripe price sync complete – updated ${updatedFiles} file(s).`);
+    console.log(`✨ Stripe price sync complete – updated ${updatedEntries} manifest entr${updatedEntries === 1 ? "y" : "ies"}.`);
   }
 }
 

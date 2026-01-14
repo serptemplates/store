@@ -10,9 +10,7 @@
     "trademark_metadata",
     "seo_title",
     "seo_description",
-    "product_page_url",
     "serply_link",
-    "cancel_url",
     "name",
     "tagline"
   ],
@@ -362,15 +360,6 @@
       },
       "default": []
     },
-    "layout_type": {
-      "type": "string",
-      "enum": [
-        "landing",
-        "ecommerce",
-        "marketplace"
-      ],
-      "default": "landing"
-    },
     "featured": {
       "type": "boolean",
       "default": false
@@ -431,21 +420,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "label": {
-          "type": "string"
-        },
         "subheading": {
-          "type": "string"
-        },
-        "price": {
           "type": "string"
         },
         "cta_text": {
           "type": "string"
-        },
-        "cta_href": {
-          "type": "string",
-          "format": "uri"
         }
       }
     },
@@ -533,10 +512,6 @@
         }
       }
     },
-    "cancel_url": {
-      "type": "string",
-      "pattern": "^(https://apps\\.serp\\.co/|http://localhost)"
-    },
     "ghl": {
       "type": "object",
       "additionalProperties": false,
@@ -556,14 +531,6 @@
           "type": "string"
         },
         "tag_ids": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          },
-          "default": []
-        },
-        "workflow_ids": {
           "type": "array",
           "items": {
             "type": "string",
@@ -887,26 +854,6 @@
             }
           }
         }
-      }
-    },
-    {
-      "if": {
-        "properties": { "status": { "const": "live" } }
-      },
-      "then": {
-        "allOf": [
-          { "required": ["pricing"] },
-          {
-            "properties": {
-              "pricing": {
-                "required": ["cta_href"],
-                "properties": {
-                  "cta_href": { "type": "string", "pattern": "^https://apps\\.serp\\.co/checkout/" }
-                }
-              }
-            }
-          }
-        ]
       }
     },
     {

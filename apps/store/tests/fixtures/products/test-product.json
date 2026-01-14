@@ -10,9 +10,6 @@
   "seo_title": "Test Product",
   "seo_description": "Test product description.",
   "serply_link": "https://serp.ly/test-product",
-  "product_page_url": "https://apps.serp.co/test-product",
-  "serp_co_product_page_url": "https://serp.co/products/test-product/",
-  "cancel_url": "https://apps.serp.co/checkout?product=test-product",
   "status": "live",
   "screenshots": [],
   "product_videos": [],
@@ -22,9 +19,7 @@
   "features": [],
   "benefits": [],
   "pricing": {
-    "label": "Lifetime access",
-    "price": "$99",
-    "cta_href": "https://apps.serp.co/checkout/test-product"
+    "cta_text": "Get It Now"
   },
   "faqs": [
     {
@@ -37,7 +32,6 @@
   "supported_regions": [],
   "categories": [],
   "keywords": [],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,

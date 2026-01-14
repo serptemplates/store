@@ -96,7 +96,6 @@
     "save jwplayer embed",
     "jwplayer offline access"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -126,16 +125,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/jwplayer-video-downloader",
-  "product_page_url": "https://apps.serp.co/jwplayer-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/jwplayer-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=jwplayer-video-downloader",
   "github_repo_url": null,
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get Notified 🔔"
   },
   "payment": {
@@ -148,7 +142,6 @@
     "tag_ids": [
       "purchase-jwplayer-video-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

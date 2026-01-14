@@ -106,9 +106,7 @@ describe("ClientHomeView", () => {
         { name: "Morgan", review: "Super helpful for our content team.", rating: 4.9 },
       ],
       pricing: {
-        price: "$27",
         cta_text: "Get It Now",
-        cta_href: "https://apps.serp.co/checkout/sample-product",
       },
       related_posts: ["first-post"],
     });

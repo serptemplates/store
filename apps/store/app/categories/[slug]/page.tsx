@@ -14,9 +14,10 @@ import {
   slugifyCategoryLabel,
 } from "@/lib/products/categories";
 import { isPreRelease } from "@/lib/products/release-status";
+import { ROUTES } from "@/lib/routes";
 import { getSiteConfig } from "@/lib/site-config";
 import { getSiteBaseUrl } from "@/lib/urls";
-import { resolveProductCurrency } from "@/lib/pricing/price-manifest";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema";
 
 const ProductsFilter = dynamic(
@@ -52,7 +53,7 @@ export default async function CategoryLandingPage({
   );
 
   const filterItems = buildProductFilterItems(matchingProducts);
-  const canonicalUrl = `${baseUrl}/categories/${normalizedSlug}`;
+  const canonicalUrl = `${baseUrl}${ROUTES.category(normalizedSlug)}`;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -68,7 +69,7 @@ export default async function CategoryLandingPage({
         "@type": "ListItem",
         position: 2,
         name: "Categories",
-        item: `${baseUrl}/categories`,
+        item: `${baseUrl}${ROUTES.categories}`,
       },
       {
         "@type": "ListItem",
@@ -83,9 +84,9 @@ export default async function CategoryLandingPage({
     matchingProducts.length > 0
       ? matchingProducts.map((product, index) => {
           const productUrl = `${baseUrl}/${product.slug}`;
-          const currency = resolveProductCurrency(product);
+          const priceDetails = resolveProductPrice(product);
           const schemaProduct = createSchemaProduct(product, {
-            price: product.pricing?.price ?? null,
+            price: priceDetails.amount ?? null,
             isDigital: true,
           });
 
@@ -95,7 +96,7 @@ export default async function CategoryLandingPage({
             storeUrl: baseUrl,
             storeName,
             brandName: product.brand?.trim() || storeName,
-            currency,
+            currency: priceDetails.currency,
             preRelease: isPreRelease(product),
           });
 
@@ -154,7 +155,7 @@ export default async function CategoryLandingPage({
           className="text-xs text-muted-foreground"
           items={[
             { label: "Home", href: "/" },
-            { label: "Categories", href: "/categories" },
+            { label: "Categories", href: ROUTES.categories },
             { label: `${categoryLabel}` },
           ]}
         />
@@ -199,7 +200,7 @@ export async function generateMetadata({
   const baseUrl = getSiteBaseUrl();
   const title = `${categoryLabel} | SERP Apps`;
   const description = `Browse vetted ${categoryLabel.toLowerCase()} tools from SERP Apps with seamless workflows.`;
-  const canonical = `${baseUrl}/categories/${slugifyCategoryLabel(categoryLabel)}`;
+  const canonical = `${baseUrl}${ROUTES.category(slugifyCategoryLabel(categoryLabel))}`;
 
   return {
     title,

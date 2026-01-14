@@ -3,6 +3,7 @@ import fs from "node:fs";
 import { getProductData, getProductSlugs, getProductsDirectory, resolveProductFilePath } from "@/lib/products/product";
 import { getAllPosts } from "@/lib/blog";
 import { getSiteConfig } from "@/lib/site-config";
+import { getSiteBaseUrl } from "@/lib/urls";
 import { deriveProductCategories, slugifyCategoryLabel } from "./products/categories";
 
 function resolveProductsDir(): string {
@@ -19,12 +20,7 @@ export type SitemapUrlEntry = {
 };
 
 export function resolveBaseUrl(): string {
-  const domain =
-    getSiteConfig().site?.domain ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://apps.serp.co";
-
-  return domain.replace(/\/$/, "");
+  return getSiteBaseUrl();
 }
 
 function readLastModified(filePath: string): Date | undefined {

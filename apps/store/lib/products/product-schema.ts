@@ -3,16 +3,12 @@ import { ACCEPTED_CATEGORIES, CATEGORY_SYNONYMS } from "./category-constants";
 import { inferTrademarkedBrand } from "./trademarked-brands";
 import {
   assetPathSchema,
-  cancelUrlSchema,
   enforceHost,
   externalLinkSchema,
   faqSchema,
   optionalArray,
-  optionalExternalUrl,
-  optionalIsoDate,
   optionalHost,
   optionalAssetPathSchema,
-  optionalRemoteUrl,
   optionalTrimmedString,
   reviewSchema,
   screenshotSchema,
@@ -30,7 +26,6 @@ const ghlSchema = z
     status: optionalTrimmedString(),
     source: optionalTrimmedString(),
     tag_ids: optionalArray(trimmedString()),
-    workflow_ids: optionalArray(trimmedString()),
     opportunity_name_template: optionalTrimmedString(),
     contact_custom_field_ids: ghlCustomFieldSchema.optional(),
     opportunity_custom_field_ids: ghlCustomFieldSchema.optional(),
@@ -44,19 +39,13 @@ const licenseSchema = z
   .optional();
 
 const pricingSchemaShape = {
-  label: z.string().trim().optional(),
   subheading: z.string().trim().optional(),
-  price: z.string().trim().optional(),
   cta_text: z.string().trim().optional(),
-  cta_href: z.string().trim().optional(),
 } satisfies Record<string, z.ZodTypeAny>;
 
 export const PRICING_FIELD_ORDER = [
-  "label",
   "subheading",
-  "price",
   "cta_text",
-  "cta_href",
 ] as const;
 const pricingSchema = z.object(pricingSchemaShape).optional();
 
@@ -122,10 +111,8 @@ export const productSchemaShape = {
   seo_title: trimmedString(),
   seo_description: trimmedString(),
   serply_link: enforceHost(["serp.ly"]),
-  product_page_url: enforceHost(["apps.serp.co"]),
+  product_page_url: optionalHost(["apps.serp.co"]),
   serp_co_product_page_url: optionalHost(["serp.co", "www.serp.co"]),
-  // buy_button_destination removed; use pricing.cta_href for CTA targeting
-  cancel_url: cancelUrlSchema,
   status: z.enum(["draft", "demo", "pre_release", "live"]).default("draft"),
   featured_image: optionalAssetPathSchema(),
   featured_image_gif: optionalAssetPathSchema(),
@@ -173,7 +160,6 @@ export const productSchemaShape = {
   payment: paymentSchema,
   ghl: ghlSchema,
   license: licenseSchema,
-  layout_type: z.enum(["ecommerce", "landing", "marketplace"]).optional().default("landing"),
   featured: z.boolean().optional().default(false),
   waitlist_url: z.string().url().optional(),
   new_release: z.boolean().optional().default(false),
@@ -201,7 +187,6 @@ export const PRODUCT_FIELD_ORDER = [
   "supported_regions",
   "categories",
   "keywords",
-  "layout_type",
   "featured",
   "waitlist_url",
   "new_release",
@@ -218,7 +203,6 @@ export const PRODUCT_FIELD_ORDER = [
   "serply_link",
   "product_page_url",
   "serp_co_product_page_url",
-  "cancel_url",
   "github_repo_url",
   "github_repo_tags",
   "resource_links",
@@ -332,22 +316,6 @@ export const productSchema = z
     }
 
     if (data.status === "live") {
-      const internalCheckoutHref = data.pricing?.cta_href as unknown;
-      const hasInternalCheckout =
-        typeof internalCheckoutHref === "string"
-        && (
-          internalCheckoutHref.startsWith("/checkout/")
-          || internalCheckoutHref.startsWith("https://apps.serp.co/checkout/")
-        );
-
-      if (!hasInternalCheckout) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["pricing", "cta_href"],
-          message: "Live products must define an internal checkout CTA (pricing.cta_href → /checkout/:slug).",
-        });
-      }
-
       const activeStripePriceId = resolveStripePriceId(data.payment);
       if (!activeStripePriceId) {
         ctx.addIssue({

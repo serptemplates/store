@@ -32,7 +32,6 @@
     "webinarjam downloader",
     "webinar replay"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -45,9 +44,6 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/webinarjam-video-downloader",
-  "product_page_url": "https://apps.serp.co/webinarjam-video-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/webinarjam-video-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=webinarjam-video-downloader",
   "github_repo_url": "https://github.com/serpapps/webinarjam-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],

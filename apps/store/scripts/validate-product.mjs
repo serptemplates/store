@@ -60,21 +60,6 @@ for (const file of productFiles) {
   }
 
   if (data?.status === "live") {
-    const slug = typeof data?.slug === "string" ? data.slug.trim() : null;
-    const ctaHref = data?.pricing?.cta_href;
-    if (!slug || !ctaHref || typeof ctaHref !== "string") {
-      hasErrors = true;
-      console.error(`\n❌ ${file} missing required internal checkout CTA for live product.`);
-    } else {
-      const expected = `https://apps.serp.co/checkout/${slug}`;
-      if (ctaHref !== expected) {
-        hasErrors = true;
-        console.error(`\n❌ ${file} has mismatched checkout CTA.`);
-        console.error(`   Expected: ${expected}`);
-        console.error(`   Received: ${ctaHref}`);
-      }
-    }
-
     const entitlements = data?.license?.entitlements;
     const hasEntitlements = Array.isArray(entitlements)
       ? entitlements.some((entry) => typeof entry === "string" && entry.trim().length > 0)

@@ -116,7 +116,6 @@
   "keywords": [
     "adobe stock downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -136,16 +135,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/adobe-stock-downloader",
-  "product_page_url": "https://apps.serp.co/adobe-stock-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/adobe-stock-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=adobe-stock-downloader",
   "github_repo_url": "https://github.com/serpapps/adobe-stock-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -165,7 +159,6 @@
     "tag_ids": [
       "purchase-adobe-stock-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

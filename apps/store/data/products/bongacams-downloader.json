@@ -117,7 +117,6 @@
   "keywords": [
     "bongacams downloader"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -131,16 +130,11 @@
   "related_posts": [],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/bongacams-downloader",
-  "product_page_url": "https://apps.serp.co/bongacams-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/bongacams-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=bongacams-downloader",
   "github_repo_url": "https://github.com/serpapps/bongacams-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$9.00",
     "cta_text": "Get it Now"
   },
   "payment": {
@@ -158,7 +152,6 @@
     "tag_ids": [
       "purchase-bongacams-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   }
 }

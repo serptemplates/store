@@ -106,7 +106,6 @@
     "chrome hls downloader",
     "m3u8 playlist saver"
   ],
-  "layout_type": "landing",
   "featured": false,
   "new_release": false,
   "popular": false,
@@ -159,18 +158,12 @@
   ],
   // PRODUCT PAGE LINKS
   "serply_link": "https://serp.ly/m3u8-downloader",
-  "product_page_url": "https://apps.serp.co/m3u8-downloader",
-  "serp_co_product_page_url": "https://serp.co/products/m3u8-downloader/",
-  "cancel_url": "https://apps.serp.co/checkout?product=m3u8-downloader",
   "github_repo_url": "https://github.com/serpapps/m3u8-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "label": "One-time",
-    "price": "$17.00",
-    "cta_text": "Get it Now",
-    "cta_href": "https://apps.serp.co/checkout/m3u8-downloader"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
@@ -192,8 +185,7 @@
     "tag_ids": [
       "purchase-m3u8-downloader",
       "purchase"
-    ],
-    "workflow_ids": []
+    ]
   },
   "license": {
     "entitlements": [

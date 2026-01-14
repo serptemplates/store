@@ -36,9 +36,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const navProps = buildPrimaryNavProps({ products: allProducts, siteConfig });
   const videoEntries = getProductVideoEntries(product);
 
-  // Marketplace layout is used for pre-release products or when explicitly configured
-  const shouldUseMarketplaceLayout =
-    product.status === "pre_release" || product.layout_type === "marketplace";
+  // Marketplace layout is used for pre-release products.
+  const shouldUseMarketplaceLayout = product.status === "pre_release";
 
   if (shouldUseMarketplaceLayout) {
     return (
@@ -69,7 +68,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {};
   }
   const product = getProductData(slug);
-  return buildProductMetadata(product);
+  const siteConfig = getSiteConfig();
+  return buildProductMetadata(product, { baseUrl: siteConfig.site?.domain });
 }
 
 export function generateStaticParams() {

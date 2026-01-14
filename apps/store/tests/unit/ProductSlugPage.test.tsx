@@ -192,9 +192,6 @@ describe("apps/store/app/[slug]/page routing", () => {
     const liveProduct = createTestProduct({
       slug: "live-product",
       status: "live",
-      pricing: {
-        cta_href: "https://apps.serp.co/checkout/live-product",
-      },
     });
 
     getProductSlugsMock.mockReturnValue(["live-product"]);

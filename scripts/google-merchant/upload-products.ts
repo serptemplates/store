@@ -28,6 +28,7 @@ import {
   type MerchantProduct,
 } from "../../apps/store/lib/google-merchant/merchant-product";
 import type { ProductData } from "../../apps/store/lib/products/product-schema";
+import { getSiteBaseUrl, getStoreBaseUrl } from "../../apps/store/lib/urls";
 
 type ScriptOptions = {
   slugs?: string[];
@@ -244,8 +245,8 @@ async function main() {
 
   const products: ProductData[] = selectedSlugs.map(loadProduct);
 
-  const siteUrl = process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://apps.serp.co";
-  const appsUrl = process.env.GOOGLE_MERCHANT_APPS_URL ?? "https://apps.serp.co";
+  const siteUrl = process.env.GOOGLE_MERCHANT_SITE_URL ?? getSiteBaseUrl();
+  const appsUrl = process.env.GOOGLE_MERCHANT_APPS_URL ?? getStoreBaseUrl();
 
   const merchantProducts: MerchantProduct[] = [];
   for (const product of products) {

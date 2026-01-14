@@ -136,9 +136,7 @@ export function findManifestEntryBySlug(slug: string): PriceManifestEntry | unde
 }
 
 export function resolveProductCurrency(product: ProductData, fallback = "USD"): string {
-  const entry =
-    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id) ??
-    findManifestEntryBySlug(product.slug);
+  const entry = resolveProductPriceEntry(product);
   return entry?.currency ?? normaliseCurrency(fallback);
 }
 
@@ -154,4 +152,49 @@ export function formatAmountFromCents(
 
 export function formatEntryAmount(entry: PriceManifestEntry): string {
   return formatAmountFromCents(entry.unitAmount, entry.currency);
+}
+
+export function resolveProductPriceEntry(product: ProductData): PriceManifestEntry | undefined {
+  return (
+    findPriceEntry(product.payment?.stripe?.price_id, product.payment?.stripe?.test_price_id)
+    ?? findManifestEntryBySlug(product.slug)
+  );
+}
+
+export type ResolvedProductPrice = {
+  entry?: PriceManifestEntry;
+  amount?: number;
+  display?: string;
+  currency: string;
+  compareAtAmount?: number;
+  compareAtDisplay?: string;
+};
+
+export function resolveProductPrice(product: ProductData, fallbackCurrency = "USD"): ResolvedProductPrice {
+  const entry = resolveProductPriceEntry(product);
+  if (!entry) {
+    return {
+      entry: undefined,
+      amount: undefined,
+      display: undefined,
+      currency: normaliseCurrency(fallbackCurrency),
+      compareAtAmount: undefined,
+      compareAtDisplay: undefined,
+    };
+  }
+
+  const amount = entry.unitAmount / 100;
+  const display = formatAmountFromCents(entry.unitAmount, entry.currency);
+  const compareAtAmount = entry.compareAtAmount != null ? entry.compareAtAmount / 100 : undefined;
+  const compareAtDisplay =
+    entry.compareAtAmount != null ? formatAmountFromCents(entry.compareAtAmount, entry.currency) : undefined;
+
+  return {
+    entry,
+    amount,
+    display,
+    currency: entry.currency,
+    compareAtAmount,
+    compareAtDisplay,
+  };
 }

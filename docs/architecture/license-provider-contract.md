@@ -1,32 +1,34 @@
-# License Provider Contract
+# License Provider Contract (Legacy)
 
-This project connects to the universal licensing service that lives in
-[`serpcompany/serp-license-key-management`](../serp-license-key-management).
-The admin API exposed by that worker expects payloads that match the
-`PurchaseProcessingInput` contract defined in that repository. To keep the
-two projects in sync we document – and validate – the request/response
-shapes inside this codebase.
+The store can post purchase events to an external license service when the admin endpoint is configured. This integration is optional and disabled when the env variables are missing.
 
-License keys are legacy; serp-auth entitlements are the primary access model.
-Only the `ai-voice-cloner` flow still requires license-key provisioning today.
+## Enablement
+
+The license service is enabled only when these env vars are set:
+
+- `LICENSE_ADMIN_URL` (or `LICENSE_SERVICE_ADMIN_URL`)
+- `LICENSE_KEY_ADMIN_API_KEY` (or `LICENSE_ADMIN_API_KEY`)
+
+Optional lookup config (used when reading back license details):
+
+- `LICENSE_SERVICE_URL`
+- `LICENSE_SERVICE_TOKEN` (or `LICENSE_SERVICE_API_KEY`)
 
 ## Request payload
 
-The payload we POST to `LICENSE_ADMIN_URL` is validated against
-`apps/store/lib/contracts/license-provider.ts#LicenseProviderPurchaseSchema`.
-It normalises casing and guarantees the presence of all required fields:
+The payload is validated against `apps/store/lib/contracts/license-provider.ts#LicenseProviderPurchaseSchema` and sent by `createLicenseForOrder` in `apps/store/lib/license-service/creation.ts`.
 
 ```ts
 export interface LicenseProviderPurchase {
-  id: string;                     // event id (Stripe evt_ / legacy PayPal order id)
-  provider: string;               // e.g. "stripe", "legacy_paypal"
-  providerObjectId: string | null;// payment intent / subscription / capture id
+  id: string;                     // event id (Stripe evt_...)
+  provider: string;               // e.g. "stripe"
+  providerObjectId: string | null;// payment intent / capture id
   eventType: string;              // webhook event name
   status: "completed" | "refunded" | "cancelled" | "failed";
   amount: number | null;          // major units (17.00 => 17)
   currency: string | null;        // lower-case ISO 4217 (e.g. "usd")
   userEmail: string | null;       // customer email if present
-  tier: string;                   // license tier identifier (defaults to provider)
+  tier: string;                   // license tier identifier
   entitlements: string[];         // unique, non-empty entitlement slugs
   features: Record<string, unknown>; // feature flags / config
   expiresAt?: number | null;      // optional unix timestamp
@@ -35,15 +37,9 @@ export interface LicenseProviderPurchase {
 }
 ```
 
-Normalisation ensures `entitlements` are unique, `currency` is lower-case and
-`rawEvent` always contains at least a `source`. When new provider fields are
-required, update the schema first; any mismatch will surface during local
-development.
-
 ## Response payload
 
-Responses from the admin endpoint are parsed with
-`LicenseProviderResponseSchema` and must resolve to:
+Responses are parsed with `LicenseProviderResponseSchema` and normalized to:
 
 ```ts
 type LicenseProviderResponse =
@@ -51,14 +47,9 @@ type LicenseProviderResponse =
   | { action: "updated" | "none"; licenseId: string | null; licenseKey: string | null };
 ```
 
-Unexpected shapes trigger a `license_service.response_unexpected_shape` log so
-we can harden the contract without silently dropping data.
+Unexpected shapes are logged with `license_service.response_unexpected_shape` so the integration can be hardened without silent failures.
 
-## Source of truth
+## Notes
 
-The submodule `serp-license-key-management` (checked out at
-`./serp-license-key-management`) remains the canonical implementation of the
-license service. Any API changes there must be reflected in the schema above
-and this document. Running the local test suite
-(`pnpm --filter @apps/store test -- __tests__/license-service.test.ts`) will
-exercise the normalised payload and keep the integration honest.
+- If the admin URL or token is missing, the license integration is skipped entirely.
+- License keys are legacy; serp-auth entitlements remain the primary access model.

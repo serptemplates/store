@@ -1,6 +1,7 @@
 import type { ReleaseStatus } from "./release-status";
 import { normalizeProductAssetPath } from "./asset-paths";
 import { getAllProducts } from "./product";
+import { resolveProductPrice } from "@/lib/pricing/price-manifest";
 import type { ProductData } from "./product-schema";
 
 export interface ProductMetadata {
@@ -53,12 +54,6 @@ export async function getProductsByCollection(collection: string): Promise<Produ
   return products.filter(p => p.collection === collection)
 }
 
-function parsePrice(priceString?: string): number {
-  if (!priceString) return 0
-  const price = parseFloat(priceString.replace(/[$,]/g, ''))
-  return Math.round(price * 100)
-}
-
 export function formatPrice(amount: number, currency = "USD"): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -90,6 +85,8 @@ function toProduct(data: ProductData): Product {
 
   const releaseStatus: ReleaseStatus = (data.status as ReleaseStatus) ?? "draft";
   const isPreRelease = releaseStatus === "pre_release";
+  const priceDetails = resolveProductPrice(data);
+  const priceAmount = priceDetails.amount != null ? Math.round(priceDetails.amount * 100) : 0;
 
   const normalizedFeaturedImage = normalizeProductAssetPath(data.featured_image) ?? undefined;
   const normalizedFeaturedGif = normalizeProductAssetPath(data.featured_image_gif) ?? undefined;
@@ -118,8 +115,8 @@ function toProduct(data: ProductData): Product {
         title: "Default",
         prices: [
           {
-            amount: parsePrice(data.pricing?.price),
-            currency_code: "USD",
+            amount: priceAmount,
+            currency_code: priceDetails.currency,
           },
         ],
         inventory_quantity: 999,

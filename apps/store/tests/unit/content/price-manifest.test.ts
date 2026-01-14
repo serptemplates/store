@@ -1,19 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { findPriceEntry, formatAmountFromCents } from "@/lib/pricing/price-manifest";
+import { findPriceEntry } from "@/lib/pricing/price-manifest";
 import { getAllProducts } from "@/lib/products/product";
 import type { ProductData } from "@/lib/products/product-schema";
 
-function parsePrice(value?: string | null): number | null {
-  if (!value) return null;
-  const match = value.match(/([0-9]+(?:\.[0-9]+)?)/);
-  if (!match) return null;
-  const parsed = Number.parseFloat(match[1]);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
 describe("price manifest", () => {
-  it("keeps manifest amounts in sync with product copy", () => {
-    const mismatches: string[] = [];
+  it("keeps stripe price IDs in sync with the manifest", () => {
+    const missingManifestEntries: string[] = [];
+    const mismatchedSlugs: string[] = [];
     const missingStripeProducts: string[] = [];
 
     const products = getAllProducts();
@@ -23,15 +16,11 @@ describe("price manifest", () => {
       if (!stripe?.price_id) continue;
 
       const manifestEntry = findPriceEntry(stripe.price_id, undefined);
-      if (!manifestEntry) continue;
-
-      const declaredPrice = parsePrice(product.pricing?.price ?? null);
-      if (declaredPrice == null) continue;
-
-      const manifestPrice = manifestEntry.unitAmount / 100;
-      if (Math.abs(manifestPrice - declaredPrice) > 0.005) {
-        mismatches.push(
-          `${product.slug}: Stripe price ${formatAmountFromCents(manifestEntry.unitAmount, manifestEntry.currency)} does not match declared price ${product.pricing?.price ?? declaredPrice}`,
+      if (!manifestEntry) {
+        missingManifestEntries.push(`${product.slug}: missing manifest entry for ${stripe.price_id}`);
+      } else if (manifestEntry.slug !== product.slug) {
+        mismatchedSlugs.push(
+          `${product.slug}: manifest entry ${manifestEntry.slug} does not match price_id ${stripe.price_id}`,
         );
       }
 
@@ -41,7 +30,8 @@ describe("price manifest", () => {
       }
     }
 
-    expect(mismatches).toEqual([]);
+    expect(missingManifestEntries).toEqual([]);
+    expect(mismatchedSlugs).toEqual([]);
     expect(missingStripeProducts).toEqual([]);
   });
 });

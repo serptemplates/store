@@ -8,6 +8,7 @@ import {
   verifyAccountWithCode,
   verifyAccountWithToken,
 } from "@/lib/account/service";
+import { ROUTES } from "@/lib/routes";
 
 const bodySchema = z.object({
   email: z.string().email().optional(),
@@ -73,7 +74,7 @@ export async function GET(request: NextRequest) {
   try {
     const result = await verifyAccountWithToken(token);
 
-    const redirectUrl = new URL("/account?verified=1", request.nextUrl.origin);
+    const redirectUrl = new URL(`${ROUTES.account}?verified=1`, request.nextUrl.origin);
     const response = NextResponse.redirect(redirectUrl);
 
     const cookie = buildSessionCookie(result);
@@ -84,7 +85,7 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (error) {
-    const redirectUrl = new URL("/account?error=verification", request.nextUrl.origin);
+    const redirectUrl = new URL(`${ROUTES.account}?error=verification`, request.nextUrl.origin);
     const response = NextResponse.redirect(redirectUrl, { status: 303 });
 
     const clearCookie = buildSessionClearCookie();
@@ -95,7 +96,7 @@ export async function GET(request: NextRequest) {
       sameSite: "lax",
       secure: process.env.NODE_ENV !== "development",
       maxAge: 60,
-      path: "/account",
+      path: ROUTES.account,
     });
 
     return response;

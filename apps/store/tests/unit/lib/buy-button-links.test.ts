@@ -2,9 +2,14 @@ import { describe, expect, it } from "vitest";
 
 import { getAllProducts } from "@/lib/products/product";
 import { productToHomeTemplate } from "@/lib/products/product-adapter";
+import { resolveProductPageUrl } from "@/lib/products/product-urls";
+import { getSiteBaseUrl } from "@/lib/urls";
+
+const baseUrl = getSiteBaseUrl();
+const siteBaseUrl = `${baseUrl.replace(/\/$/, "")}/`;
 
 const ALLOWED_PREFIXES = [
-  "https://apps.serp.co/",
+  siteBaseUrl,
   "https://ghl.serp.co/",
   "https://newsletter.serp.co/",
   "https://buy.stripe.com/",
@@ -12,8 +17,7 @@ const ALLOWED_PREFIXES = [
 
 const ALLOWED_EXACT = new Set(["#waitlist"]);
 
-const FALLBACK_CANCEL_BASE = "https://apps.serp.co/checkout?product=";
-const FALLBACK_PAGE_BASE = "https://apps.serp.co/";
+const FALLBACK_PAGE_BASE = siteBaseUrl;
 
 describe("buy button destinations", () => {
   it("ensures each product CTA points to an approved destination", () => {
@@ -21,7 +25,7 @@ describe("buy button destinations", () => {
 
     const ctaViolations = products
       .map((product) => {
-        const template = productToHomeTemplate(product);
+        const template = productToHomeTemplate(product, [], { baseUrl });
         const href = template.ctaHref;
 
         if (typeof href !== "string") {
@@ -40,27 +44,16 @@ describe("buy button destinations", () => {
 
     expect(ctaViolations).toEqual([]);
 
-    const cancelViolations: Array<{ slug: string; cancelUrl?: string; expected: string }> = [];
-
-    products.forEach((product) => {
-      const cancelUrl = product.cancel_url;
-      const expected = `${FALLBACK_CANCEL_BASE}${product.slug}`;
-      if (cancelUrl !== expected) {
-        cancelViolations.push({ slug: product.slug, cancelUrl, expected });
-      }
-    });
-
-    expect(cancelViolations).toEqual([]);
-
     const pageViolations: Array<{ slug: string; field: "apps"; pageUrl: string; expected: string }> = [];
 
     products.forEach((product) => {
       const expectedApps = `${FALLBACK_PAGE_BASE}${product.slug}`;
-      if (product.product_page_url !== expectedApps) {
+      const resolved = resolveProductPageUrl(product, { baseUrl });
+      if (resolved !== expectedApps) {
         pageViolations.push({
           slug: product.slug,
           field: "apps",
-          pageUrl: product.product_page_url ?? "",
+          pageUrl: resolved ?? "",
           expected: expectedApps,
         });
       }

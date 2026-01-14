@@ -15,6 +15,7 @@ import { listProductSlugs, loadProduct, loadSiteConfig } from "../../apps/store/
 import { serializeMerchantProductsToCsv, serializeMerchantProductsToXml } from "../../apps/store/lib/google-merchant/feed-formatter";
 import { buildMerchantProduct } from "../../apps/store/lib/google-merchant/merchant-product";
 import type { ProductData } from "../../apps/store/lib/products/product-schema";
+import { getSiteBaseUrl, getStoreBaseUrl } from "../../apps/store/lib/urls";
 
 type FeedFormat = "csv" | "xml";
 
@@ -32,6 +33,8 @@ type ScriptOptions = {
 
 function parseArgs(): ScriptOptions {
   const args = process.argv.slice(2);
+  const defaultSiteUrl = process.env.GOOGLE_MERCHANT_SITE_URL ?? getSiteBaseUrl();
+  const defaultAppsUrl = process.env.GOOGLE_MERCHANT_APPS_URL ?? getStoreBaseUrl();
   const options: ScriptOptions = {
     countries: (process.env.GOOGLE_MERCHANT_COUNTRIES ?? "US")
       .split(",")
@@ -39,8 +42,8 @@ function parseArgs(): ScriptOptions {
       .filter(Boolean),
     language: (process.env.GOOGLE_MERCHANT_LANGUAGE ?? "en").trim().toLowerCase(),
     format: "csv",
-    siteUrl: process.env.GOOGLE_MERCHANT_SITE_URL ?? "https://apps.serp.co",
-    appsUrl: process.env.GOOGLE_MERCHANT_APPS_URL ?? "https://apps.serp.co",
+    siteUrl: defaultSiteUrl,
+    appsUrl: defaultAppsUrl,
   };
 
   for (const raw of args) {

@@ -8,7 +8,7 @@ import { buildPrimaryNavProps } from "@/lib/navigation"
 import { createSchemaProduct, generateProductSchemaLD } from "@/schema"
 import { isPreRelease } from "@/lib/products/release-status"
 import { buildProductFilterItems } from "@/lib/products/filter-items"
-import { resolveProductCurrency } from "@/lib/pricing/price-manifest"
+import { resolveProductPrice } from "@/lib/pricing/price-manifest"
 
 import { WhoIsBehind } from "./WhoIsBehind"
 
@@ -72,9 +72,9 @@ export function HomePageView() {
       numberOfItems: products.length,
       itemListElement: products.map((product, index) => {
         const productUrl = `${STORE_ORIGIN}/${product.slug}`
-        const currency = resolveProductCurrency(product)
+        const priceDetails = resolveProductPrice(product)
         const schemaProduct = createSchemaProduct(product, {
-          price: product.pricing?.price ?? null,
+          price: priceDetails.amount ?? null,
           isDigital: true,
         })
 
@@ -84,7 +84,7 @@ export function HomePageView() {
           storeUrl: STORE_ORIGIN,
           storeName: "SERP Apps",
           brandName: product.brand?.trim() || "SERP Apps",
-          currency,
+          currency: priceDetails.currency,
           preRelease: isPreRelease(product),
         })
 
