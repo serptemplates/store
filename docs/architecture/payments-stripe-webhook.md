@@ -14,11 +14,16 @@ The Stripe webhook handler lives at `apps/store/app/api/stripe/webhook/route.ts`
   - Persists checkout sessions and orders via `@/lib/checkout`.
   - Resolves entitlements from offer + line item slugs (bundle expansion included).
   - Calls `processFulfilledOrder`, which triggers serp-auth grants, GHL sync, Crisp sync, and optional license service calls.
+  - Persists Stripe subscription IDs in checkout session metadata for later revoke lookups.
   - Writes webhook logs via `@/lib/webhook-logs`.
 - `payment-intent-succeeded.ts` / `payment-intent-failed.ts`
   - Marks orders paid/failed and updates checkout session metadata.
+  - For subscription products, `payment-intent-failed.ts` revokes SERP Auth entitlements.
 - `charge-refunded.ts`, `charge-dispute-created.ts`, `charge-dispute-closed.ts`
   - Revokes or re-grants Stripe customer entitlements via `@/lib/payments/stripe-entitlements` (gated by `STRIPE_ENTITLEMENTS_ENABLED`).
+  - Revokes/re-grants SERP Auth entitlements for the receipt email.
+- `customer-subscription-deleted.ts`, `invoice-payment-failed.ts`, `invoice-payment-succeeded.ts`
+  - Revokes SERP Auth entitlements on cancel/failed renewal and re-grants on successful renewal using subscription ID -> checkout session lookups.
 - `unhandled-event.ts`
   - Logs and exits for unsupported events.
 

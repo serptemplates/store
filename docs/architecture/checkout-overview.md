@@ -14,6 +14,10 @@ The store uses internal checkout routes for every product CTA. Product pages rou
 - Use `apps/store/lib/routes.ts` for checkout path construction and `apps/store/lib/products/product-urls.ts` for canonical product URLs.
 >>>>>>> 34aba1f4 (clean up dry up store repo)
 
+## Stripe Checkout session notes
+
+- Stripe docs show `customer_creation` alongside `mode: payment` when creating Checkout Sessions for saved payment methods. Keep `customer_creation` scoped to `payment` mode only and omit it for `subscription` mode to avoid API errors. https://docs.stripe.com/payments/save-during-payment
+
 ## Post-purchase processing
 
 The Stripe webhook (`apps/store/app/api/stripe/webhook/route.ts`) is the source of truth for fulfillment. It delegates to `apps/store/lib/payments/stripe-webhook/events/checkout-session-completed.ts`, which:

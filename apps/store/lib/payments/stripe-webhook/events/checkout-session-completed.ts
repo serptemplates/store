@@ -918,6 +918,17 @@ export async function handleCheckoutSessionCompleted(
       ?? getMetadataString(metadata, "payment_provider_account_alias")
       ?? null;
 
+  const stripeSubscriptionId = typeof session.subscription === "string"
+    ? session.subscription
+    : session.subscription && typeof session.subscription === "object" && "id" in session.subscription
+    ? (session.subscription as Stripe.Subscription).id
+    : null;
+
+  if (stripeSubscriptionId) {
+    metadata.stripe_subscription_id = stripeSubscriptionId;
+    metadata.stripeSubscriptionId = stripeSubscriptionId;
+  }
+
   const normalizedOrder: NormalizedOrder = {
     provider: "stripe",
     providerAccountAlias,
@@ -967,11 +978,6 @@ export async function handleCheckoutSessionCompleted(
     const stripeCustomerId = typeof session.customer === "string"
       ? session.customer
       : session.customer?.id ?? null;
-    const stripeSubscriptionId = typeof session.subscription === "string"
-      ? session.subscription
-      : session.subscription && typeof session.subscription === "object" && "id" in session.subscription
-      ? (session.subscription as Stripe.Subscription).id
-      : null;
 
     if (!isPaid) {
       logger.info("serp_auth.entitlements_grant_skipped", {
