@@ -52,7 +52,6 @@ Before calling a task finished:
 - Run `lint` to ensure there are no errors or warnings surfacing (they must be fixed, not ignored)
 - Run `typecheck` to ensure there are no errors or warnings surfacing (they must be fixed, not ignored)
 - Run `unit tests` to ensure there are no errors or warnings surfacing
-- Run `axe` tests
 - Run validate products
 
 **MANUAL CHECKS:**

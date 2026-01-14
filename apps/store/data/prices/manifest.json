@@ -266,12 +266,12 @@
   "onlyfans-downloader": {
     "slug": "onlyfans-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 5700,
+    "unit_amount": 2700,
     "stripe": {
-      "live_price_id": "price_1Sm9mBDP7AOTRcvmfszxoKZP",
-      "test_price_id": "price_1Sm9mLDP7AOTRcvm4z3V2NUS"
+      "live_price_id": "price_1SpX5ZDP7AOTRcvmqzdg1fTx",
+      "test_price_id": "price_1SpXPfDP7AOTRcvmJrJNDNBP"
     }
   },
   "pornhub-video-downloader": {
@@ -332,12 +332,12 @@
   "skool-video-downloader": {
     "slug": "skool-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 4700,
+    "unit_amount": 2700,
     "stripe": {
-      "live_price_id": "price_1SeJdtDP7AOTRcvmPiHhIyIP",
-      "test_price_id": "price_1SeJduDP7AOTRcvmCeUk57Ob"
+      "live_price_id": "price_1SpXDJDP7AOTRcvmdPeIbUeK",
+      "test_price_id": "price_1SpXPgDP7AOTRcvmDSX6EOLQ"
     }
   },
   "spankbang-video-downloader": {

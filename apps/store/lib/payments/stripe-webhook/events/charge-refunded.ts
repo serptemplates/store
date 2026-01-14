@@ -2,6 +2,10 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionByPaymentIntentId } from "@/lib/checkout";
 import logger from "@/lib/logger";
+import {
+  resolveCheckoutCustomerEmail,
+  resolveCheckoutEntitlements,
+} from "@/lib/payments/stripe-webhook/helpers/entitlements";
 
 export async function handleChargeRefunded(charge: Stripe.Charge) {
   try {
@@ -16,12 +20,8 @@ export async function handleChargeRefunded(charge: Stripe.Charge) {
 
     const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntentId);
     const offerId = sessionRecord?.offerId ?? null;
-    const entitlements = (() => {
-      const raw = (sessionRecord?.metadata as Record<string, unknown> | null | undefined)?.licenseEntitlements;
-      if (Array.isArray(raw)) return raw as string[];
-      if (typeof raw === "string" && raw.trim().length > 0) return [raw.trim()];
-      return offerId ? [offerId] : [];
-    })();
+    const entitlements = resolveCheckoutEntitlements(sessionRecord);
+    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord);
 
     if (entitlements.length === 0) {
       return;
@@ -37,6 +37,39 @@ export async function handleChargeRefunded(charge: Stripe.Charge) {
         error: error instanceof Error ? { message: error.message, name: error.name } : error,
       });
     }
+
+    if (!customerEmail) {
+      return;
+    }
+
+    try {
+      const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+      await revokeSerpAuthEntitlements({
+        email: customerEmail,
+        entitlements,
+        metadata: {
+          source: "stripe",
+          offerId,
+          stripe: {
+            eventType: "charge.refunded",
+            chargeId: charge.id ?? null,
+            paymentIntentId,
+            customerId: stripeCustomerId,
+          },
+        },
+        context: {
+          provider: "stripe",
+          providerEventId: charge.id ?? null,
+          providerSessionId: sessionRecord?.stripeSessionId ?? null,
+        },
+      });
+    } catch (error) {
+      logger.debug("serp_auth.entitlements_revoke_on_refund_failed", {
+        chargeId: charge.id,
+        paymentIntentId,
+        error: error instanceof Error ? { message: error.message, name: error.name } : error,
+      });
+    }
   } catch (error) {
     logger.debug("stripe.charge_refunded_handler_failed", {
       chargeId: charge.id,
@@ -44,4 +77,3 @@ export async function handleChargeRefunded(charge: Stripe.Charge) {
     });
   }
 }
-

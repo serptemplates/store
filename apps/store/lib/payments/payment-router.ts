@@ -3,6 +3,7 @@ import { defaultAdapters, getAdapter as getAdapterFromRegistry } from "@repo/pay
 import type { CheckoutFeatures, CheckoutResponse, OptionalItemInput } from "@/lib/payments/providers/base";
 import type { PaymentProviderId } from "@/lib/products/payment";
 import type { OfferConfig } from "@/lib/products/offer-config";
+import { stripeCheckoutAdapter } from "@/lib/payments/providers/stripe/checkout";
 
 type CheckoutRouterInput = {
   offer: OfferConfig;
@@ -33,7 +34,11 @@ function normalizeOptionalItems(offer: OfferConfig): OptionalItemInput[] | undef
 
 export async function createCheckoutSessionForOffer(input: CheckoutRouterInput): Promise<CheckoutResponse> {
   const provider = input.offer.payment?.provider ?? "stripe";
-  const adapter = getAdapterFromRegistry(provider, defaultAdapters);
+  const adapters = {
+    ...defaultAdapters,
+    stripe: stripeCheckoutAdapter,
+  };
+  const adapter = getAdapterFromRegistry(provider, adapters);
   const optionalItems = normalizeOptionalItems(input.offer);
   const stripePriceId = provider === "stripe" ? ensureStripePriceId(input.offer) : undefined;
 

@@ -73,10 +73,14 @@ async function completeCheckout() {
       }
       for (const frame of page.frames()) {
         for (const selector of selectors) {
-          const locator = frame.locator(selector).first();
-          if (await locator.count()) {
-            await locator.fill(value);
-            return true;
+          try {
+            const locator = frame.locator(selector).first();
+            if (await locator.count()) {
+              await locator.fill(value);
+              return true;
+            }
+          } catch {
+            // Ignore detached frames while Stripe swaps payment method iframes.
           }
         }
       }
@@ -89,7 +93,65 @@ async function completeCheckout() {
       TEST_EMAIL,
     );
 
+    const selectCardPaymentMethod = async () => {
+      const payWithCardButton = page.getByRole('button', { name: /pay with card/i }).first();
+      if (await payWithCardButton.isVisible().catch(() => false)) {
+        await payWithCardButton.click();
+        return;
+      }
+      const payWithCardTestId = page.locator('[data-testid="card-accordion-item-button"]').first();
+      if (await payWithCardTestId.isVisible().catch(() => false)) {
+        await payWithCardTestId.click();
+        return;
+      }
+      const radio = page.getByRole('radio', { name: /card/i }).first();
+      if (await radio.count()) {
+        if (await radio.isChecked().catch(() => false)) {
+          return;
+        }
+        await radio.check({ force: true });
+        return;
+      }
+      const cardRow = page.locator('text=Card').first();
+      if (await cardRow.count()) {
+        await cardRow.click();
+      }
+    };
+
+    const waitForCardInputs = async () => {
+      const selectors = [
+        'input[autocomplete="cc-number"]',
+        'input[name="cardNumber"]',
+        'input[name="number"]',
+        'input[placeholder*="1234"]',
+      ];
+      for (let attempt = 0; attempt < 20; attempt += 1) {
+        for (const selector of selectors) {
+          if (await page.locator(selector).count()) return true;
+        }
+        for (const frame of page.frames()) {
+          for (const selector of selectors) {
+            try {
+              if (await frame.locator(selector).count()) return true;
+            } catch {
+              // Ignore detached frames while Stripe swaps payment method iframes.
+            }
+          }
+        }
+        await page.waitForTimeout(500);
+      }
+      return false;
+    };
+
+    await selectCardPaymentMethod();
+    await page.waitForTimeout(500);
+
     console.log('3️⃣ Filling card details...');
+    const cardInputsReady = await waitForCardInputs();
+    if (!cardInputsReady) {
+      await logInputFields();
+      throw new Error('Unable to locate Stripe card inputs for automated checkout.');
+    }
     const cardOk = await fillField(
       [
         'input[autocomplete="cc-number"]',
@@ -143,11 +205,15 @@ async function completeCheckout() {
     }
 
     console.log('4️⃣ Submitting payment...');
-    const payButton = page.getByRole('button', { name: /^Pay/i });
-    if (await payButton.count()) {
-      await payButton.click();
+    const submitPreferred = page
+      .locator('button[type="submit"]')
+      .filter({ hasText: /subscribe|pay|start|complete/i })
+      .first();
+    if (await submitPreferred.isVisible().catch(() => false)) {
+      await submitPreferred.click();
     } else {
-      await page.locator('button[type="submit"]').click();
+      const submitFallback = page.locator('button[type="submit"]').first();
+      await submitFallback.click();
     }
 
     console.log('5️⃣ Waiting for redirect to success page...');

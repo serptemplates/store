@@ -2,6 +2,10 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionByPaymentIntentId } from "@/lib/checkout";
 import logger from "@/lib/logger";
+import {
+  resolveCheckoutCustomerEmail,
+  resolveCheckoutEntitlements,
+} from "@/lib/payments/stripe-webhook/helpers/entitlements";
 
 function extractIdsFromCharge(chargeLike: Stripe.Charge | string | null | undefined) {
   const result: {
@@ -52,12 +56,8 @@ export async function handleChargeDisputeCreated(dispute: Stripe.Dispute) {
 
     const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntentId);
     const offerId = sessionRecord?.offerId ?? null;
-    const entitlements = (() => {
-      const raw = (sessionRecord?.metadata as Record<string, unknown> | null | undefined)?.licenseEntitlements;
-      if (Array.isArray(raw)) return raw as string[];
-      if (typeof raw === "string" && raw.trim().length > 0) return [raw.trim()];
-      return offerId ? [offerId] : [];
-    })();
+    const entitlements = resolveCheckoutEntitlements(sessionRecord);
+    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord);
 
     if (entitlements.length === 0) {
       return;
@@ -68,6 +68,41 @@ export async function handleChargeDisputeCreated(dispute: Stripe.Dispute) {
       await revokeCustomerFeatures(stripeCustomerId, entitlements);
     } catch (error) {
       logger.debug("stripe.entitlements_revoke_on_dispute_failed", {
+        disputeId: dispute.id,
+        chargeId,
+        paymentIntentId,
+        error: error instanceof Error ? { message: error.message, name: error.name } : error,
+      });
+    }
+
+    if (!customerEmail) {
+      return;
+    }
+
+    try {
+      const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+      await revokeSerpAuthEntitlements({
+        email: customerEmail,
+        entitlements,
+        metadata: {
+          source: "stripe",
+          offerId,
+          stripe: {
+            eventType: "charge.dispute.created",
+            disputeId: dispute.id ?? null,
+            chargeId,
+            paymentIntentId,
+            customerId: stripeCustomerId,
+          },
+        },
+        context: {
+          provider: "stripe",
+          providerEventId: dispute.id ?? null,
+          providerSessionId: sessionRecord?.stripeSessionId ?? null,
+        },
+      });
+    } catch (error) {
+      logger.debug("serp_auth.entitlements_revoke_on_dispute_failed", {
         disputeId: dispute.id,
         chargeId,
         paymentIntentId,
