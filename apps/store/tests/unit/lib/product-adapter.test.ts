@@ -172,6 +172,26 @@ describe("productToHomeTemplate", () => {
     expect(template.pricing?.productName).toBe(baseProduct.name);
   });
 
+  it("adds a billed monthly label for subscription products", () => {
+    const subscriptionProduct: ProductData = {
+      ...baseProduct,
+      payment: {
+        provider: "stripe",
+        mode: "subscription",
+        stripe: {
+          price_id: "price_123",
+          metadata: {},
+        },
+      },
+    };
+
+    const subscriptionTemplate = productToHomeTemplate(subscriptionProduct, []);
+    expect(subscriptionTemplate.pricing?.priceLabel).toBe("Billed monthly");
+
+    const oneTimeTemplate = productToHomeTemplate(baseProduct, []);
+    expect(oneTimeTemplate.pricing?.priceLabel).toBeUndefined();
+  });
+
   // Removed: legacy buy_button_destination no longer supported
 
   it("uses internal checkout when no explicit checkout config is provided", () => {

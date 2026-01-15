@@ -42,6 +42,39 @@ type CheckoutOptionalItem = {
   adjustable_quantity?: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity;
 };
 
+type StripeProviderConfig = NonNullable<CheckoutRequest["providerConfig"]>["stripe"];
+
+function normalizeStripeId(value: string | null | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function resolveSetupFeePriceId(stripeConfig: StripeProviderConfig, primaryPriceId: string | null): string | null {
+  if (!stripeConfig || typeof stripeConfig !== "object") {
+    return null;
+  }
+
+  const metadata = "metadata" in stripeConfig && stripeConfig.metadata ? stripeConfig.metadata : null;
+  if (!metadata || typeof metadata !== "object") {
+    return null;
+  }
+
+  const liveSetup = normalizeStripeId(metadata["setup_fee_price_id"]);
+  const testSetup = normalizeStripeId(metadata["setup_fee_test_price_id"]);
+  if (!liveSetup && !testSetup) {
+    return null;
+  }
+
+  const testPriceId =
+    "test_price_id" in stripeConfig ? normalizeStripeId(stripeConfig.test_price_id) : null;
+  const useTest = Boolean(testPriceId && primaryPriceId && primaryPriceId === testPriceId);
+
+  return useTest ? (testSetup ?? liveSetup) : liveSetup;
+}
+
 const OPTIONAL_ITEM_ADJUSTABLE_QUANTITY: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity = {
   enabled: true,
   minimum: 0,
@@ -130,6 +163,23 @@ export const stripeCheckoutAdapter: PaymentProviderAdapter = {
       { accountAlias: request.paymentAccountAlias ?? undefined },
     );
 
+    const setupFeePriceId =
+      request.mode === "subscription"
+        ? resolveSetupFeePriceId(request.providerConfig?.stripe, request.price.id)
+        : null;
+    const setupFeePrice = setupFeePriceId
+      ? await priceResolver(
+          {
+            id: `${request.slug}-setup-fee`,
+            priceId: setupFeePriceId,
+            productName: request.price.productName ?? null,
+            productDescription: request.price.productDescription ?? null,
+            productImage: request.price.productImage ?? null,
+          },
+          { accountAlias: request.paymentAccountAlias ?? undefined },
+        )
+      : null;
+
     const adjustableQuantity: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity = {
       enabled: true,
       minimum: 0,
@@ -155,6 +205,15 @@ export const stripeCheckoutAdapter: PaymentProviderAdapter = {
           quantity: request.quantity,
           adjustable_quantity: adjustableQuantity,
         },
+        ...(setupFeePrice
+          ? [
+              {
+                price: setupFeePrice.id,
+                // Setup fee quantity follows the main subscription and is not independently adjustable.
+                quantity: request.quantity,
+              },
+            ]
+          : []),
       ],
       success_url: request.successUrl,
       cancel_url: request.cancelUrl,

@@ -68,12 +68,12 @@
   "circle-downloader": {
     "slug": "circle-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS6hDP7AOTRcvmVNye8iZQ",
-      "test_price_id": "price_1SdS6hDP7AOTRcvmsRFKHHsR"
+      "live_price_id": "price_1SpedSDP7AOTRcvmplWfXnla",
+      "test_price_id": "price_1SpedSDP7AOTRcvmwrWds119"
     }
   },
   "clientclub-downloader": {
@@ -189,12 +189,12 @@
   "kajabi-video-downloader": {
     "slug": "kajabi-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS6oDP7AOTRcvm8lIDw4o9",
-      "test_price_id": "price_1SdS6oDP7AOTRcvmzRFn2zaT"
+      "live_price_id": "price_1SpedSDP7AOTRcvmdyoBhcXg",
+      "test_price_id": "price_1SpedTDP7AOTRcvm0JJllkPJ"
     }
   },
   "loom-video-downloader": {
@@ -268,10 +268,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SpX5ZDP7AOTRcvmqzdg1fTx",
-      "test_price_id": "price_1SpXPfDP7AOTRcvmJrJNDNBP"
+      "live_price_id": "price_1SpfnLDP7AOTRcvmjHpejToz",
+      "test_price_id": "price_1SpfnMDP7AOTRcvmjyIfjpU1"
     }
   },
   "pornhub-video-downloader": {
@@ -334,10 +334,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SpXDJDP7AOTRcvmdPeIbUeK",
-      "test_price_id": "price_1SpXPgDP7AOTRcvmDSX6EOLQ"
+      "live_price_id": "price_1SpfnLDP7AOTRcvmEOJoEPg4",
+      "test_price_id": "price_1SpfnMDP7AOTRcvmiHXJIK0L"
     }
   },
   "spankbang-video-downloader": {

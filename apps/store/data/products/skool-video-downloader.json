@@ -218,8 +218,8 @@
     "provider": "stripe",
     "mode": "subscription",
     "stripe": {
-      "price_id": "price_1SpXDJDP7AOTRcvmdPeIbUeK",
-      "test_price_id": "price_1SpXPgDP7AOTRcvmDSX6EOLQ",
+      "price_id": "price_1SpfnLDP7AOTRcvmEOJoEPg4",
+      "test_price_id": "price_1SpfnMDP7AOTRcvmiHXJIK0L",
       "metadata": {
         "stripe_product_id": "prod_TadNI3zQlXZr1L",
         "stripe_test_product_id": "prod_TadNElbOvpyuG3"
