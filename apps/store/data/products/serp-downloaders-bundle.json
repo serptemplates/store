@@ -43,7 +43,8 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "price_id": "price_1SdS78DP7AOTRcvmL0rMa3mD",
+      "price_id": "price_1SpeoDDP7AOTRcvmHxKn0Ns6",
+      "test_price_id": "price_1SpeoDDP7AOTRcvmyDKXnlHc",
       "metadata": {
         "stripe_product_id": "prod_TadNFo3sxzkGYb"
       }

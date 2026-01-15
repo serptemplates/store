@@ -235,6 +235,8 @@ export function productToHomeTemplate(
   const faqs = toFaqs(product.faqs);
   const priceDetails = resolveProductPrice(product);
   const formattedPrice = priceDetails.display;
+  const paymentMode = product.payment?.mode ?? product.payment?.stripe?.mode ?? "payment";
+  const priceLabel = paymentMode === "subscription" ? "Billed monthly" : undefined;
   const resolvedPosts = resolvePosts(product, posts);
   const aboutParagraphs: string[] = [];
   if (typeof product.description === "string" && product.description.trim().length > 0) {
@@ -268,7 +270,7 @@ export function productToHomeTemplate(
     heading: product.name,
     productName: product.name,
     subheading: pricingSubheading,
-    priceLabel: undefined,
+    priceLabel: priceLabel,
     price: showPrices ? formattedPrice : undefined,
     benefits:
       product.benefits && product.benefits.length > 0

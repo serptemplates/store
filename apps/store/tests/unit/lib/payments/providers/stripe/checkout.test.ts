@@ -151,4 +151,60 @@ describe("stripeCheckoutAdapter", () => {
       /Stripe did not return a checkout URL/,
     );
   });
+
+  it("adds a setup fee line item for subscription checkouts", async () => {
+    const checkoutCreateMock = vi.fn().mockResolvedValue({
+      id: "cs_test_456",
+      url: "https://checkout.stripe.com/cs_test_456",
+    });
+
+    getStripeClientMock.mockReturnValue({
+      checkout: {
+        sessions: {
+          create: checkoutCreateMock,
+        },
+      },
+    } as unknown as Stripe);
+
+    resolvePriceForEnvironmentMock
+      .mockResolvedValueOnce(mockPrice("price_test_main"))
+      .mockResolvedValueOnce(mockPrice("price_setup_test"));
+
+    const request: CheckoutRequest = {
+      slug: "vimeo-video-downloader",
+      mode: "subscription",
+      quantity: 1,
+      metadata: { product_slug: "vimeo-video-downloader" },
+      successUrl: "https://apps.serp.co/checkout/success",
+      cancelUrl: "https://apps.serp.co/checkout/cancel",
+      price: {
+        id: "price_test_main",
+        productName: "Vimeo Video Downloader",
+      },
+      providerConfig: {
+        provider: "stripe",
+        stripe: {
+          price_id: "price_live_main",
+          test_price_id: "price_test_main",
+          metadata: {
+            setup_fee_price_id: "price_setup_live",
+            setup_fee_test_price_id: "price_setup_test",
+          },
+        },
+      },
+    };
+
+    await stripeCheckoutAdapter.createCheckout(request);
+
+    expect(resolvePriceForEnvironmentMock).toHaveBeenCalledTimes(2);
+    expect(checkoutCreateMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mode: "subscription",
+        line_items: [
+          expect.objectContaining({ price: "price_test_main", quantity: 1 }),
+          expect.objectContaining({ price: "price_setup_test", quantity: 1 }),
+        ],
+      }),
+    );
+  });
 });

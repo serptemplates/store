@@ -26,6 +26,14 @@
 - Stripe always shows the built-in coupon/promotion field because `allow_promotion_codes` is enabled in the adapter. There is no product-level toggle today—if we need one later we can wire a `checkout_metadata.allowCouponBox=false` flag into the adapters.
 - Stripe “Optional Items” (Stripe’s terminology for Additional Items/optional line items) stay configured under `payment.stripe.optional_items`. Those definitions pull their metadata from the same `checkout_metadata` map, so make sure any shared fields (e.g., `ghl_tag`, `product_slug`) live here rather than in Stripe’s dashboard UI.
 
+### Stripe subscription setup fees
+
+- Use this when the first payment should be higher than the recurring amount (e.g., $17 upfront, then $9/mo).
+- Keep the recurring monthly price in `payment.stripe.price_id` / `payment.stripe.test_price_id`.
+- Add the one-time setup fee price IDs to `payment.stripe.metadata.setup_fee_price_id` / `payment.stripe.metadata.setup_fee_test_price_id`.
+- Checkout adds the setup fee as a second line item only when `payment.mode` is `subscription`; future invoices include only the recurring price.
+- If only one setup fee ID is present, the adapter will reuse it for both live/test environments.
+
 ### PayPal provider metadata (temporary contract)
 
 Until we persist product pricing directly in the manifest, PayPal adapters read the following keys from `payment.metadata`:
