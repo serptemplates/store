@@ -268,10 +268,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SpX5ZDP7AOTRcvmqzdg1fTx",
-      "test_price_id": "price_1SpXPfDP7AOTRcvmJrJNDNBP"
+      "live_price_id": "price_1SpfnLDP7AOTRcvmjHpejToz",
+      "test_price_id": "price_1SpfnMDP7AOTRcvmjyIfjpU1"
     }
   },
   "pornhub-video-downloader": {
@@ -334,10 +334,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 3700,
     "stripe": {
-      "live_price_id": "price_1SpXDJDP7AOTRcvmdPeIbUeK",
-      "test_price_id": "price_1SpXPgDP7AOTRcvmDSX6EOLQ"
+      "live_price_id": "price_1SpfnLDP7AOTRcvmEOJoEPg4",
+      "test_price_id": "price_1SpfnMDP7AOTRcvmiHXJIK0L"
     }
   },
   "spankbang-video-downloader": {

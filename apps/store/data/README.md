@@ -32,7 +32,7 @@
 - Keep the recurring monthly price in `payment.stripe.price_id` / `payment.stripe.test_price_id`.
 - Add the one-time setup fee price IDs to `payment.stripe.metadata.setup_fee_price_id` / `payment.stripe.metadata.setup_fee_test_price_id`.
 - Checkout adds the setup fee as a second line item only when `payment.mode` is `subscription`; future invoices include only the recurring price.
-- If only one setup fee ID is present, the adapter will reuse it for both live/test environments.
+- Always configure both live + test setup fee IDs. Live mode only uses `setup_fee_price_id`; test mode will fall back to the live ID if the test ID is missing, but do not rely on that fallback.
 
 ### PayPal provider metadata (temporary contract)
 

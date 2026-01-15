@@ -9,6 +9,8 @@ type CliArgs = {
   priceCents: number;
   priceId: string;
   testPriceId?: string;
+  setupFeePriceId?: string;
+  setupFeeTestPriceId?: string;
   compareAtCents?: number;
   currency: string;
 };
@@ -55,6 +57,14 @@ function parseArgs(argv: string[]): CliArgs {
         result.testPriceId = value;
         if (rawValue === undefined) i += 1;
         break;
+      case "setup-fee-price-id":
+        result.setupFeePriceId = value;
+        if (rawValue === undefined) i += 1;
+        break;
+      case "setup-fee-test-price-id":
+        result.setupFeeTestPriceId = value;
+        if (rawValue === undefined) i += 1;
+        break;
       case "currency":
         result.currency = value ?? "usd";
         if (rawValue === undefined) i += 1;
@@ -66,7 +76,7 @@ function parseArgs(argv: string[]): CliArgs {
 
   if (!result.slug || !result.priceId || Number.isNaN(result.priceCents!)) {
     throw new Error(
-      "Usage: pnpm --filter @apps/store update:price -- --slug <slug> --price-cents <int> --price-id <price_xxx> [--test-price-id <price_xxx>] [--compare-cents <int>] [--currency usd]",
+      "Usage: pnpm --filter @apps/store update:price -- --slug <slug> --price-cents <int> --price-id <price_xxx> [--test-price-id <price_xxx>] [--setup-fee-price-id <price_xxx>] [--setup-fee-test-price-id <price_xxx>] [--compare-cents <int>] [--currency usd]",
     );
   }
 
@@ -75,6 +85,8 @@ function parseArgs(argv: string[]): CliArgs {
     priceCents: Number(result.priceCents),
     priceId: result.priceId,
     testPriceId: result.testPriceId,
+    setupFeePriceId: result.setupFeePriceId,
+    setupFeeTestPriceId: result.setupFeeTestPriceId,
     compareAtCents: result.compareAtCents !== undefined && !Number.isNaN(result.compareAtCents)
       ? Number(result.compareAtCents)
       : undefined,
@@ -121,6 +133,15 @@ function updateProductFile(args: CliArgs): PreviousIds {
   productData.payment.stripe.price_id = args.priceId;
   if (args.testPriceId) {
     productData.payment.stripe.test_price_id = args.testPriceId;
+  }
+  if (args.setupFeePriceId || args.setupFeeTestPriceId) {
+    productData.payment.stripe.metadata = productData.payment.stripe.metadata ?? {};
+    if (args.setupFeePriceId) {
+      productData.payment.stripe.metadata.setup_fee_price_id = args.setupFeePriceId;
+    }
+    if (args.setupFeeTestPriceId) {
+      productData.payment.stripe.metadata.setup_fee_test_price_id = args.setupFeeTestPriceId;
+    }
   }
 
   fs.writeFileSync(productPath, `${JSON.stringify(productData, null, 2)}\n`, "utf8");

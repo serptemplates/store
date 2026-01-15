@@ -72,7 +72,7 @@ function resolveSetupFeePriceId(stripeConfig: StripeProviderConfig, primaryPrice
     "test_price_id" in stripeConfig ? normalizeStripeId(stripeConfig.test_price_id) : null;
   const useTest = Boolean(testPriceId && primaryPriceId && primaryPriceId === testPriceId);
 
-  return useTest ? (testSetup ?? liveSetup) : (liveSetup ?? testSetup);
+  return useTest ? (testSetup ?? liveSetup) : liveSetup;
 }
 
 const OPTIONAL_ITEM_ADJUSTABLE_QUANTITY: Stripe.Checkout.SessionCreateParams.LineItem.AdjustableQuantity = {
@@ -209,6 +209,7 @@ export const stripeCheckoutAdapter: PaymentProviderAdapter = {
           ? [
               {
                 price: setupFeePrice.id,
+                // Setup fee quantity follows the main subscription and is not independently adjustable.
                 quantity: request.quantity,
               },
             ]

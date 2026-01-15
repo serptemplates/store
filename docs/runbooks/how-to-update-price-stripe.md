@@ -56,7 +56,9 @@ pnpm --filter @apps/store update:price -- \
   --slug <slug> \
   --price-cents <live_price_in_cents> \
   --price-id <new_live_price_id> \
-  --test-price-id <new_test_price_id>
+  --test-price-id <new_test_price_id> \
+  --setup-fee-price-id <new_live_setup_fee_price_id> \
+  --setup-fee-test-price-id <new_test_setup_fee_price_id>
 ```
 
 - `--compare-cents <strike_through_amount>` is optional if you need a “compare at” price.
@@ -64,10 +66,10 @@ pnpm --filter @apps/store update:price -- \
   - Updates `apps/store/data/products/<slug>.json` (`pricing.*`, `payment.stripe`, and `stripe` blocks).
   - Rewrites `apps/store/data/prices/manifest.json` with the new amount and IDs.
   - Runs `pnpm --filter @apps/store convert:products -- --slug <slug>` and `pnpm --filter @apps/store validate:products` to normalize + validate JSON.
-- For subscription products with an upfront setup fee, also set:
-  - `payment.stripe.metadata.setup_fee_price_id`
-  - `payment.stripe.metadata.setup_fee_test_price_id`
-  The helper does not touch these fields—edit the product JSON and re-run `pnpm --filter @apps/store convert:products -- --slug <slug>` afterward.
+- For subscription products with an upfront setup fee, pass:
+  - `--setup-fee-price-id <new_live_setup_fee_price_id>`
+  - `--setup-fee-test-price-id <new_test_setup_fee_price_id>`
+  The helper writes these into `payment.stripe.metadata` and runs `convert:products` during the normal flow.
 - Afterward, update any docs/CSVs that reference the price ID (e.g., partner runbooks, `docs/architecture/dub-partner-attribution.md`).
 - Run `rg -n "price_<old_live_price_id>"` again to confirm nothing stale remains.
 
