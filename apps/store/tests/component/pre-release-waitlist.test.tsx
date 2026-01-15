@@ -30,10 +30,6 @@ vi.mock("@/components/product/hooks/useProductPageExperience", () => ({
   }),
 }));
 
-vi.mock("@repo/ui/composites/Footer", () => ({
-  Footer: () => null,
-}));
-
 describe("Pre-release waitlist modal", () => {
   it("renders GHL waitlist modal for pre_release products", async () => {
     // Ensure React is available for any components reading it from global

@@ -3,11 +3,10 @@ import type { HeroLink } from "@repo/ui/components/hero";
 import type { HeroMediaProps } from "@repo/ui/components/hero-media";
 import type { PricingCtaProps } from "@repo/ui/sections/PricingCta";
 import type { PostItem } from "@repo/ui/sections/PostsSection";
-import type { FAQ } from "@repo/ui/sections/FaqSection";
 import type { FaqItem } from "@/components/product/landers/marketplace/sections/FaqAccordion";
 import type { ProductPermissionEntry } from "@/lib/products/view-model";
 import type { PermissionDisplayItem } from "@/components/product/shared/mapPermissionItemsToFaq";
-import type { HomeTemplateProps } from "./home-template.types";
+import type { FAQ, HomeTemplateProps } from "./home-template.types";
 import { LEGAL_FAQ_TEMPLATE } from "@/lib/products/product-schema";
 
 type HeroMediaItem = HeroMediaProps["items"][number];

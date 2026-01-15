@@ -21,20 +21,17 @@ function normalizeParam(value?: string | null): string | null {
   return trimmed.length ? trimmed : null;
 }
 
-function isTrustedEnvironment(): boolean {
-  const deploymentEnv = process.env.VERCEL_ENV ?? "development";
-  const isLocalStack = process.env.NODE_ENV !== "production" && !process.env.VERCEL_ENV;
-  const isPreview = deploymentEnv === "preview";
-  const isStaging = deploymentEnv === "staging";
-  return isLocalStack || isPreview || isStaging;
+function isLocalStack(): boolean {
+  return process.env.NODE_ENV !== "production" && !process.env.VERCEL_ENV;
 }
 
 async function resolveAdminImpersonation(
   request: NextRequest,
 ): Promise<{ email: string; adminTokenSatisfied: boolean } | null> {
   let body: Record<string, unknown> | null = null;
+  const requestClone = request.clone();
   try {
-    body = (await request.json()) as Record<string, unknown>;
+    body = (await requestClone.json()) as Record<string, unknown>;
   } catch {
     body = null;
   }
@@ -58,8 +55,7 @@ async function resolveAdminImpersonation(
 
   const adminTokenEnv = normalizeParam(process.env.ACCOUNT_ADMIN_TOKEN);
   const adminTokenSatisfied =
-    Boolean(adminTokenEnv) &&
-    (adminTokenParam === adminTokenEnv || isTrustedEnvironment());
+    (Boolean(adminTokenEnv) && adminTokenParam === adminTokenEnv) || isLocalStack();
 
   return {
     email: impersonateParam,
