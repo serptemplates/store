@@ -33,10 +33,6 @@ vi.mock("@/components/product/hooks/useProductPageExperience", () => ({
   useProductPageExperience: experienceMock.useProductPageExperience,
 }));
 
-vi.mock("@repo/ui/composites/Footer", () => ({
-  Footer: () => null,
-}));
-
 // Make sure React is available globally for some mocked components
 vi.stubGlobal("React", React);
 

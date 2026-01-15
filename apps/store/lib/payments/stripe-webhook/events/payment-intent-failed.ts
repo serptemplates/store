@@ -8,11 +8,12 @@ import {
 import logger from "@/lib/logger";
 import { normalizeMetadata } from "@/lib/payments/stripe-webhook/metadata";
 import { getMetadataString } from "@/lib/metadata/metadata-access";
-import { resolveCheckoutEntitlements } from "@/lib/payments/stripe-webhook/helpers/entitlements";
-import { getOfferConfig } from "@/lib/products/offer-config";
 import type { StripeWebhookRecordMetadata } from "@/lib/payments/stripe-webhook/types";
 
-export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentIntent) {
+export async function handlePaymentIntentFailed(
+  paymentIntent: Stripe.PaymentIntent,
+  eventType: "payment_intent.payment_failed" | "payment_intent.canceled" = "payment_intent.payment_failed",
+) {
   const metadata = normalizeMetadata(paymentIntent.metadata);
   const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntent.id);
 
@@ -34,9 +35,6 @@ export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentInt
     paymentIntent.receipt_email ??
     getMetadataString(metadata, "customer_email") ??
     null;
-  const offerConfig = offerId ? getOfferConfig(offerId) : null;
-  const isSubscriptionOffer = offerConfig?.mode === "subscription";
-  const entitlements = resolveCheckoutEntitlements(sessionRecord);
 
   if (sessionRecord) {
     await updateCheckoutSessionStatus(sessionRecord.stripeSessionId, "failed", {
@@ -73,20 +71,19 @@ export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentInt
     source: "stripe",
   });
 
-  if (!isSubscriptionOffer || !customerEmail || entitlements.length === 0) {
+  if (!customerEmail) {
     return;
   }
 
   try {
-    const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-    await revokeSerpAuthEntitlements({
+    const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+    await revokeAllSerpAuthEntitlements({
       email: customerEmail,
-      entitlements,
       metadata: {
         source: "stripe",
         offerId,
         stripe: {
-          eventType: "payment_intent.payment_failed",
+          eventType,
           paymentIntentId: paymentIntent.id ?? null,
           customerId: typeof paymentIntent.customer === "string"
             ? paymentIntent.customer
@@ -103,7 +100,7 @@ export async function handlePaymentIntentFailed(paymentIntent: Stripe.PaymentInt
       },
     });
   } catch (error) {
-    logger.debug("serp_auth.entitlements_revoke_on_payment_failed", {
+    logger.debug("serp_auth.entitlements_revoke_on_payment_intent_failure", {
       paymentIntentId: paymentIntent.id,
       error: error instanceof Error ? { message: error.message, name: error.name } : error,
     });

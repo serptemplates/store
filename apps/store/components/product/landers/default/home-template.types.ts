@@ -1,12 +1,22 @@
 import type { ComponentType, ReactNode } from "react";
 import type { Screenshot } from "@repo/ui/sections/ScreenshotsCarousel";
-import type { FAQ } from "@repo/ui/sections/FaqSection";
 import type { PostItem } from "@repo/ui/sections/PostsSection";
 import type { PricingCtaProps } from "@repo/ui/sections/PricingCta";
-import type { HeroMediaItem } from "@repo/ui/sections/Hero";
 import type { ProductPermissionEntry } from "@/lib/products/view-model";
 
 type GenericComponent = ComponentType<Record<string, unknown>>;
+
+export type FAQ = { question: string; answer: string };
+
+export type Testimonial = {
+  id: string | number;
+  name: string;
+  designation?: string;
+  company?: string;
+  testimonial: string;
+  avatar?: string;
+  url?: string;
+};
 
 export type HomeCtaMode = "checkout" | "external" | "pre_release";
 
@@ -60,7 +70,7 @@ export type HomeTemplateProps = {
   faqs?: FAQ[];
   screenshots?: Screenshot[];
   featureHighlights?: Array<{ title: string; description?: string } | string>;
-  testimonials?: Array<Record<string, unknown>>;
+  testimonials?: Testimonial[];
   testimonialsHeading?: string;
   posts?: PostItem[];
   postsTitle?: string;

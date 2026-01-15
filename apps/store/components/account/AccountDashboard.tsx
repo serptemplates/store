@@ -97,6 +97,8 @@ export default function AccountDashboard({
   const [emailVerifying, setEmailVerifying] = useState(false);
   const [emailMessage, setEmailMessage] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [billingLoading, setBillingLoading] = useState(false);
+  const [billingError, setBillingError] = useState<string | null>(null);
   const [receiptNumber, setReceiptNumber] = useState("");
   const [repairing, setRepairing] = useState(false);
   const [repairMessage, setRepairMessage] = useState<string | null>(null);
@@ -157,6 +159,7 @@ export default function AccountDashboard({
     });
     setRepairMessage(null);
     setRepairError(null);
+    setBillingError(null);
   }, [account.email, purchases]);
 
   const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
@@ -275,6 +278,7 @@ export default function AccountDashboard({
     .filter((purchase) => purchase.source === "stripe" || purchase.source === "legacy_paypal")
     .filter((purchase) => !purchase.paymentStatus || purchase.paymentStatus === "paid" || purchase.paymentStatus === "succeeded");
 
+  const hasStripePurchase = purchases.some((purchase) => purchase.source === "stripe");
   const ghlPurchases = purchases.filter((purchase) => purchase.source === "ghl");
 
   const purchaseCards = (stripeOrPaypalPurchases.length > 0 ? stripeOrPaypalPurchases : ghlPurchases).slice(0, 10);
@@ -359,6 +363,50 @@ export default function AccountDashboard({
     [receiptNumber, runReceiptRecovery],
   );
 
+  const handleBillingPortal = useCallback(async () => {
+    setBillingLoading(true);
+    setBillingError(null);
+
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const impersonateEmail =
+        params.get("impersonate") ?? params.get("impersonateEmail") ?? params.get("impersonate_email");
+      const adminToken = params.get("adminToken") ?? params.get("admin_token") ?? params.get("admintoken");
+      const requestBody =
+        impersonateEmail || adminToken
+          ? JSON.stringify({
+              ...(impersonateEmail ? { impersonateEmail } : {}),
+              ...(adminToken ? { adminToken } : {}),
+            })
+          : null;
+
+      const response = await fetch("/api/account/billing-portal", {
+        method: "POST",
+        headers: requestBody ? { "content-type": "application/json" } : undefined,
+        body: requestBody ?? undefined,
+      });
+      const body = (await response.json().catch(() => ({}))) as { error?: string; url?: string };
+
+      if (!response.ok) {
+        throw new Error(body.error ?? "Unable to open billing portal");
+      }
+
+      if (!body.url) {
+        throw new Error("Billing portal link unavailable");
+      }
+
+      window.setTimeout(() => {
+        setBillingError("Billing portal did not open. Please try again.");
+        setBillingLoading(false);
+      }, 10000);
+
+      window.location.assign(body.url);
+    } catch (billingPortalError) {
+      setBillingError(billingPortalError instanceof Error ? billingPortalError.message : String(billingPortalError));
+      setBillingLoading(false);
+    }
+  }, []);
+
   const handleQuickFix = useCallback(async () => {
     if (!primaryPurchase?.receiptNumber) {
       return;
@@ -379,9 +427,14 @@ export default function AccountDashboard({
                 </div>
               </div>
               <div className="flex flex-col gap-3 self-stretch sm:flex-row sm:items-center sm:self-auto">
-                <Badge variant="secondary" className={statusBadgeClasses[statusVisual.tone]}>
-                  {statusVisual.label}
-                </Badge>
+                <Button
+                  className="w-full sm:w-auto"
+                  variant="outline"
+                  onClick={handleBillingPortal}
+                  disabled={!hasStripePurchase || billingLoading}
+                >
+                  {billingLoading ? "Opening..." : "Manage Account"}
+                </Button>
                 <Button
                   variant="outline"
                   onClick={handleSignOut}
@@ -392,6 +445,10 @@ export default function AccountDashboard({
                 </Button>
               </div>
             </div>
+            {billingError ? <p className="text-xs text-rose-600">{billingError}</p> : null}
+            {!hasStripePurchase ? (
+              <p className="text-xs text-slate-500">No Stripe billing history found for this account yet.</p>
+            ) : null}
             {error && <p className="text-sm text-red-600">{error}</p>}
           </CardHeader>
 

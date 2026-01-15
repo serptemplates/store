@@ -61,10 +61,6 @@ vi.mock("@repo/ui", async () => {
   };
 });
 
-vi.mock("@repo/ui/composites/Footer", () => ({
-  Footer: () => null,
-}));
-
 vi.mock("embla-carousel-react", () => ({
   __esModule: true,
   default: () => null,

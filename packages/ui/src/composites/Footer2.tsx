@@ -1,8 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 import { Github, Instagram, Twitter, Youtube, Bot } from "lucide-react";
-import Link from "next/link";
 
-import type { FooterLink, FooterSite } from "./Footer";
+type FooterSite = {
+  name?: string;
+  url?: string;
+};
+
+type FooterLink = { label: string; href: string; external?: boolean };
 
 type FooterSection = {
   title: string;

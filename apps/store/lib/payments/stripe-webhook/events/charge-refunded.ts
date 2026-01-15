@@ -13,40 +13,40 @@ export async function handleChargeRefunded(charge: Stripe.Charge) {
     const paymentIntentId = typeof charge.payment_intent === "string"
       ? charge.payment_intent
       : (charge.payment_intent as Stripe.PaymentIntent | null)?.id ?? null;
-
-    if (!stripeCustomerId || !paymentIntentId) {
-      return;
-    }
-
-    const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntentId);
+    const chargeEmail = charge.receipt_email ?? charge.billing_details?.email ?? null;
+    const sessionRecord = paymentIntentId
+      ? await findCheckoutSessionByPaymentIntentId(paymentIntentId)
+      : null;
     const offerId = sessionRecord?.offerId ?? null;
     const entitlements = resolveCheckoutEntitlements(sessionRecord);
-    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord);
+    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord) ?? chargeEmail ?? null;
 
-    if (entitlements.length === 0) {
-      return;
-    }
-
-    try {
-      const { revokeCustomerFeatures } = await import("@/lib/payments/stripe-entitlements");
-      await revokeCustomerFeatures(stripeCustomerId, entitlements);
-    } catch (error) {
-      logger.debug("stripe.entitlements_revoke_skipped_or_failed", {
-        chargeId: charge.id,
-        paymentIntentId,
-        error: error instanceof Error ? { message: error.message, name: error.name } : error,
-      });
+    if (stripeCustomerId && entitlements.length > 0) {
+      try {
+        const { revokeCustomerFeatures } = await import("@/lib/payments/stripe-entitlements");
+        await revokeCustomerFeatures(stripeCustomerId, entitlements);
+      } catch (error) {
+        logger.debug("stripe.entitlements_revoke_skipped_or_failed", {
+          chargeId: charge.id,
+          paymentIntentId,
+          error: error instanceof Error ? { message: error.message, name: error.name } : error,
+        });
+      }
     }
 
     if (!customerEmail) {
+      logger.debug("serp_auth.entitlements_revoke_skipped_refund", {
+        chargeId: charge.id,
+        paymentIntentId,
+        hasEmail: false,
+      });
       return;
     }
 
     try {
-      const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-      await revokeSerpAuthEntitlements({
+      const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+      await revokeAllSerpAuthEntitlements({
         email: customerEmail,
-        entitlements,
         metadata: {
           source: "stripe",
           offerId,

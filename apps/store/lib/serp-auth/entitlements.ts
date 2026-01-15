@@ -249,6 +249,12 @@ export type SerpAuthEntitlementsRevokeInput = {
   context?: SerpAuthEntitlementsContext;
 };
 
+export type SerpAuthEntitlementsRevokeAllInput = {
+  email: string;
+  metadata?: SerpAuthEntitlementsMetadata;
+  context?: SerpAuthEntitlementsContext;
+};
+
 export async function revokeSerpAuthEntitlements(input: SerpAuthEntitlementsRevokeInput): Promise<void> {
   const secret = getInternalSecret();
   if (!secret) {
@@ -338,6 +344,99 @@ export async function revokeSerpAuthEntitlements(input: SerpAuthEntitlementsRevo
       error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
       email: input.email,
       entitlements,
+      metadataKeys: metadata ? Object.keys(metadata) : null,
+      provider: input.context?.provider,
+      providerEventId: input.context?.providerEventId ?? null,
+      providerSessionId: input.context?.providerSessionId ?? null,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+export async function revokeAllSerpAuthEntitlements(
+  input: SerpAuthEntitlementsRevokeAllInput,
+): Promise<void> {
+  const secret = getInternalSecret();
+  if (!secret) {
+    logger.debug("serp_auth.entitlements_revoke_all_skipped", {
+      reason: "missing_internal_secret",
+      email: input.email,
+    });
+    return;
+  }
+
+  if (!input.email) {
+    logger.debug("serp_auth.entitlements_revoke_all_skipped", {
+      reason: "missing_email",
+      email: input.email,
+    });
+    return;
+  }
+
+  const baseUrl = getBaseUrl();
+  const url = `${baseUrl}/internal/entitlements/revoke`;
+
+  const controller = new AbortController();
+  const timeoutMs = 15_000;
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  const metadata = input.metadata ?? undefined;
+
+  logger.info("serp_auth.entitlements_revoke_all_started", {
+    url,
+    email: input.email,
+    metadataKeys: metadata ? Object.keys(metadata) : null,
+    timeoutMs,
+    provider: input.context?.provider,
+    providerEventId: input.context?.providerEventId ?? null,
+    providerSessionId: input.context?.providerSessionId ?? null,
+  });
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-serp-internal-secret": secret,
+      },
+      body: JSON.stringify({
+        email: input.email,
+        ...(metadata ? { metadata } : {}),
+      }),
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      const bodyText = await response.text().catch(() => "");
+      logger.error("serp_auth.entitlements_revoke_all_failed", {
+        url,
+        status: response.status,
+        statusText: response.statusText,
+        body: bodyText.slice(0, 1_000),
+        email: input.email,
+        metadataKeys: metadata ? Object.keys(metadata) : null,
+        provider: input.context?.provider,
+        providerEventId: input.context?.providerEventId ?? null,
+        providerSessionId: input.context?.providerSessionId ?? null,
+      });
+      return;
+    }
+
+    logger.info("serp_auth.entitlements_revoke_all_succeeded", {
+      url,
+      status: response.status,
+      email: input.email,
+      metadataKeys: metadata ? Object.keys(metadata) : null,
+      provider: input.context?.provider,
+      providerEventId: input.context?.providerEventId ?? null,
+      providerSessionId: input.context?.providerSessionId ?? null,
+    });
+  } catch (error) {
+    logger.error("serp_auth.entitlements_revoke_all_failed", {
+      url,
+      error: error instanceof Error ? { message: error.message, name: error.name, stack: error.stack } : error,
+      email: input.email,
       metadataKeys: metadata ? Object.keys(metadata) : null,
       provider: input.context?.provider,
       providerEventId: input.context?.providerEventId ?? null,
