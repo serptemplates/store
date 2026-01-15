@@ -83,7 +83,7 @@ const OPTIONAL_ITEM_ADJUSTABLE_QUANTITY: Stripe.Checkout.SessionCreateParams.Lin
 
 async function buildOptionalItems(
   items: OptionalItemInput[] | undefined,
-  context: { slug: string; accountAlias?: string | null },
+  context: { slug: string; accountAlias?: string | null; mode: CheckoutRequest["mode"] },
 ): Promise<CheckoutOptionalItem[]> {
   const { getStripeClient: stripeClient, resolvePriceForEnvironment: priceResolver } = stripeDeps;
   if (!items || items.length === 0) {
@@ -121,6 +121,17 @@ async function buildOptionalItems(
         },
         { syncWithLiveProduct: true, accountAlias: context.accountAlias ?? undefined },
       );
+
+      const isRecurringOptional =
+        optionalPrice.type === "recurring" || Boolean(optionalPrice.recurring);
+      if (context.mode === "payment" && isRecurringOptional) {
+        logger.warn("checkout.optional_item_recurring_skipped", {
+          slug: context.slug,
+          productId: optionalItem.productId,
+          priceId: optionalPrice.id,
+        });
+        continue;
+      }
 
       optionalItems.push({
         price: optionalPrice.id,
@@ -191,6 +202,7 @@ export const stripeCheckoutAdapter: PaymentProviderAdapter = {
         ? await buildOptionalItems(request.optionalItems, {
             slug: request.slug,
             accountAlias: request.paymentAccountAlias ?? undefined,
+            mode: request.mode,
           })
         : [];
 

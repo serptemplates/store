@@ -14,6 +14,13 @@ const mockPrice = (id: string): Stripe.Price =>
     id,
   } as unknown as Stripe.Price);
 
+const mockRecurringPrice = (id: string): Stripe.Price =>
+  ({
+    id,
+    type: "recurring",
+    recurring: { interval: "month" },
+  } as unknown as Stripe.Price);
+
 describe("stripeCheckoutAdapter", () => {
   const getStripeClientMock = vi.fn();
   const resolvePriceForEnvironmentMock = vi.fn();
@@ -150,6 +157,74 @@ describe("stripeCheckoutAdapter", () => {
     await expect(stripeCheckoutAdapter.createCheckout(request)).rejects.toThrow(
       /Stripe did not return a checkout URL/,
     );
+  });
+
+  it("skips recurring optional items for payment mode", async () => {
+    const liveClient = {
+      products: {
+        retrieve: vi.fn().mockResolvedValue({
+          id: "prod_optional",
+          name: "Optional Bundle",
+          description: "Optional",
+          images: ["https://img"],
+          default_price: "price_optional_live",
+        }),
+      },
+    } as unknown as Stripe;
+
+    const checkoutCreateMock = vi.fn().mockResolvedValue({
+      id: "cs_test_124",
+      url: "https://checkout.stripe.com/cs_test_124",
+    });
+
+    const checkoutClient = {
+      checkout: {
+        sessions: {
+          create: checkoutCreateMock,
+        },
+      },
+    } as unknown as Stripe;
+
+    getStripeClientMock.mockImplementation((options?: unknown) => {
+      const opts = options as { mode?: string } | undefined;
+      if (opts?.mode === "live") {
+        return liveClient;
+      }
+      return checkoutClient;
+    });
+
+    resolvePriceForEnvironmentMock
+      .mockResolvedValueOnce(mockPrice("price_test_main"))
+      .mockResolvedValueOnce(mockRecurringPrice("price_optional_recurring"));
+
+    const request: CheckoutRequest = {
+      slug: "onlyfans-downloader",
+      mode: "payment",
+      quantity: 1,
+      metadata: { product_slug: "onlyfans-downloader" },
+      customerEmail: "devin@serp.co",
+      clientReferenceId: "dub_id_affiliate-123",
+      successUrl: "https://apps.serp.co/checkout/success",
+      cancelUrl: "https://apps.serp.co/checkout/cancel",
+      price: {
+        id: "price_live_123",
+        productName: "OnlyFans Downloader",
+      },
+      optionalItems: [
+        {
+          productId: "prod_optional",
+          quantity: 1,
+        },
+      ],
+      paymentAccountAlias: "primary",
+    };
+
+    await stripeCheckoutAdapter.createCheckout(request);
+
+    const params = checkoutCreateMock.mock.calls[0]?.[0] as Stripe.Checkout.SessionCreateParams & {
+      optional_items?: unknown;
+    };
+    expect(params.optional_items).toBeUndefined();
   });
 
   it("adds a setup fee line item for subscription checkouts", async () => {
