@@ -48,6 +48,9 @@ Optional:
 - `NEXT_PUBLIC_STRIPE_MODE` or `STRIPE_MODE` (force `test` or `live`)
 - `STRIPE_ENTITLEMENTS_ENABLED` (enables Stripe customer entitlements)
 - `NEXT_PUBLIC_STORE_BASE_URL` (optional override for store checkout base URL)
+- `STRIPE_BILLING_PORTAL_CONFIGURATION_ID_LIVE` (live customer portal configuration for `/account`)
+- `STRIPE_BILLING_PORTAL_CONFIGURATION_ID_TEST` (test customer portal configuration for `/account`)
+- `STRIPE_BILLING_PORTAL_CONFIGURATION_ID` (fallback portal configuration when mode-specific values are unset)
 <<<<<<< HEAD
 =======
 - `STORE_BASE_URL` (server-only fallback for the store base URL when `NEXT_PUBLIC_STORE_BASE_URL` is not set)

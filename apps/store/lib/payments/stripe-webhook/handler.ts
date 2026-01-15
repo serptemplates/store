@@ -33,14 +33,24 @@ export async function handleStripeEvent(
     case "payment_intent.payment_failed":
       await handlePaymentIntentFailed(event.data.object as Stripe.PaymentIntent);
       break;
+    case "payment_intent.canceled":
+      await handlePaymentIntentFailed(
+        event.data.object as Stripe.PaymentIntent,
+        "payment_intent.canceled",
+      );
+      break;
     case "charge.refunded":
       await handleChargeRefunded(event.data.object as Stripe.Charge);
       break;
     case "charge.dispute.created":
-      await handleChargeDisputeCreated(event.data.object as Stripe.Dispute);
+      await handleChargeDisputeCreated(event.data.object as Stripe.Dispute, {
+        accountAlias: options?.accountAlias ?? null,
+      });
       break;
     case "charge.dispute.closed":
-      await handleChargeDisputeClosed(event.data.object as Stripe.Dispute);
+      await handleChargeDisputeClosed(event.data.object as Stripe.Dispute, {
+        accountAlias: options?.accountAlias ?? null,
+      });
       break;
     case "customer.subscription.deleted":
       await handleCustomerSubscriptionDeleted(event.data.object as Stripe.Subscription);

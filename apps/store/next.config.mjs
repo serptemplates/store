@@ -11,9 +11,11 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const isStaticExport = process.env.STATIC_EXPORT === "1";
+const outputFileTracingRoot = resolve(process.cwd(), "../..");
 
 const nextConfig = {
   transpilePackages: ["@repo/ui", "@repo/payments", "@serpcompany/payments"],
+  typedRoutes: true,
 
   // Enable compression
   compress: true,
@@ -125,7 +127,6 @@ const nextConfig = {
       },
 
   experimental: {
-    typedRoutes: true,
     optimizeCss: true,
     // Optimize common package imports - Next.js will tree-shake these
     optimizePackageImports: [
@@ -169,6 +170,7 @@ const nextConfig = {
   // Ensure server functions include product data files for runtime fs access
   // This allows API/Route handlers (e.g., /checkout/[slug]) to read
   // apps/store/data/products/*.json in serverless environments.
+  outputFileTracingRoot,
   outputFileTracingIncludes: {
     // Include product JSON broadly for all server functions to avoid
     // route-matching edge cases in serverless packaging.

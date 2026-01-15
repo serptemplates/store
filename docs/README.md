@@ -8,7 +8,6 @@ This folder collects the architecture, operations, runbooks, and data notes for 
 - `architecture/payments-stripe-webhook.md` - Stripe webhook handlers and persistence flow.
 - `architecture/GHL-INTEGRATION-STATUS.md` - GHL sync behavior, env requirements, and verification.
 - `architecture/license-provider-contract.md` - Legacy license service contract and env mapping.
-- `architecture/VISUAL-FLOW-DIAGRAM.md` - Legacy account flow diagram for historical reference.
 - `architecture/component-organization.md` - Component layout and shared UI guidance.
 - `architecture/marketplace-lander.md` - Marketplace landing page behavior.
 - `architecture/dub-partner-attribution.md` - Dub affiliate tracking flow.
@@ -23,15 +22,10 @@ This folder collects the architecture, operations, runbooks, and data notes for 
 - `operations/store-post-launch-monitoring.md` - Post-launch checks and monitoring checklist.
 - `operations/REAL-TIME-MONITORING-GUIDE.md` - Live monitoring endpoints and alerting.
 - `operations/pre-release-cta.md` - Pre-release CTA behavior and waitlist flow.
-- `operations/repo-cleanup-inventory.md` - Repo cleanup inventory tracking.
 - `operations/PAYPAL-SETUP.md` - Legacy PayPal notes (historical reference).
 
 ## Data and content
 
-- `data/plan-json-first.md` - JSON-first migration plan (historical context).
-- `data/product-data-json-migration-tracker.md` - Migration tracker (historical context).
-- `data/json-first-pilot-report.md` - Pilot report (historical context).
-- `data/entitlements-product-map.csv` - Entitlements mapping snapshot.
 - `../apps/store/data/README.md` - Product JSON contract and validation workflow.
 
 ## Runbooks
@@ -45,3 +39,12 @@ This folder collects the architecture, operations, runbooks, and data notes for 
 
 - `../TODO-dry-refactor.md` - DRY/refactor roadmap and progress checklist.
 >>>>>>> 34aba1f4 (clean up dry up store repo)
+
+## Archive
+
+- `archive/architecture/VISUAL-FLOW-DIAGRAM.md` - Legacy account flow diagram (historical reference).
+- `archive/operations/repo-cleanup-inventory.md` - Repo cleanup inventory tracking (historical).
+- `archive/data/plan-json-first.md` - JSON-first migration plan (historical context).
+- `archive/data/product-data-json-migration-tracker.md` - Migration tracker (historical context).
+- `archive/data/json-first-pilot-report.md` - Pilot report (historical context).
+- `archive/data/entitlements-product-map.csv` - Entitlements mapping snapshot.

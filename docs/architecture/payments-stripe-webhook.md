@@ -18,12 +18,14 @@ The Stripe webhook handler lives at `apps/store/app/api/stripe/webhook/route.ts`
   - Writes webhook logs via `@/lib/webhook-logs`.
 - `payment-intent-succeeded.ts` / `payment-intent-failed.ts`
   - Marks orders paid/failed and updates checkout session metadata.
-  - For subscription products, `payment-intent-failed.ts` revokes SERP Auth entitlements.
+  - `payment-intent-failed.ts` handles `payment_intent.payment_failed` and `payment_intent.canceled`, revoking all SERP Auth entitlements for the receipt email (purges sessions + device bindings).
 - `charge-refunded.ts`, `charge-dispute-created.ts`, `charge-dispute-closed.ts`
-  - Revokes or re-grants Stripe customer entitlements via `@/lib/payments/stripe-entitlements` (gated by `STRIPE_ENTITLEMENTS_ENABLED`).
-  - Revokes/re-grants SERP Auth entitlements for the receipt email.
+  - Revokes Stripe customer entitlements via `@/lib/payments/stripe-entitlements` (gated by `STRIPE_ENTITLEMENTS_ENABLED`) on refunds/disputes.
+  - Revokes all SERP Auth entitlements for the receipt email on refunds/disputes; the internal revoke endpoint also purges Better Auth sessions and device bindings.
+  - `charge-dispute-closed.ts` does not re-grant entitlements; reversals are handled manually.
 - `customer-subscription-deleted.ts`, `invoice-payment-failed.ts`, `invoice-payment-succeeded.ts`
-  - Revokes SERP Auth entitlements on cancel/failed renewal and re-grants on successful renewal using subscription ID -> checkout session lookups.
+  - Revokes all SERP Auth entitlements on cancel/failed renewal (purges sessions + device bindings) and re-grants on successful renewal using subscription ID -> checkout session lookups.
+  - Subscription cancels honor the remaining paid period: if `current_period_end` is still in the future, revocation is skipped until the period ends.
 - `unhandled-event.ts`
   - Logs and exits for unsupported events.
 

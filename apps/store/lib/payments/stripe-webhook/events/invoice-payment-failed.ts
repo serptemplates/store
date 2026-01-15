@@ -2,10 +2,7 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionBySubscriptionId } from "@/lib/checkout";
 import logger from "@/lib/logger";
-import {
-  resolveCheckoutCustomerEmail,
-  resolveCheckoutEntitlements,
-} from "@/lib/payments/stripe-webhook/helpers/entitlements";
+import { resolveCheckoutCustomerEmail } from "@/lib/payments/stripe-webhook/helpers/entitlements";
 
 export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   try {
@@ -23,30 +20,26 @@ export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
         invoiceId: invoice.id ?? null,
         subscriptionId,
       });
-      return;
     }
 
-    const offerId = sessionRecord.offerId ?? null;
-    const entitlements = resolveCheckoutEntitlements(sessionRecord);
+    const offerId = sessionRecord?.offerId ?? null;
     const customerEmail = resolveCheckoutCustomerEmail(sessionRecord)
       ?? invoice.customer_email
       ?? null;
 
-    if (entitlements.length === 0 || !customerEmail) {
+    if (!customerEmail) {
       logger.debug("serp_auth.entitlements_revoke_skipped_invoice_failed", {
         invoiceId: invoice.id ?? null,
         subscriptionId,
-        hasEmail: Boolean(customerEmail),
-        entitlementsCount: entitlements.length,
+        hasEmail: false,
       });
       return;
     }
 
     try {
-      const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-      await revokeSerpAuthEntitlements({
+      const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+      await revokeAllSerpAuthEntitlements({
         email: customerEmail,
-        entitlements,
         metadata: {
           source: "stripe",
           offerId,
@@ -62,7 +55,7 @@ export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
         context: {
           provider: "stripe",
           providerEventId: invoice.id ?? null,
-          providerSessionId: sessionRecord.stripeSessionId ?? null,
+          providerSessionId: sessionRecord?.stripeSessionId ?? null,
         },
       });
     } catch (error) {

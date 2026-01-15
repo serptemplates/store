@@ -28,6 +28,7 @@ vi.mock("@/lib/payments/stripe", () => ({
 
 vi.mock("@/lib/checkout", () => ({
   findCheckoutSessionByPaymentIntentId: vi.fn(),
+  findCheckoutSessionBySubscriptionId: vi.fn(),
   findCheckoutSessionByStripeSessionId: vi.fn(),
   markStaleCheckoutSessions: vi.fn(),
   upsertCheckoutSession: vi.fn(),
@@ -81,6 +82,7 @@ import { getStripeClient } from "@/lib/payments/stripe";
 import { getOfferConfig } from "@/lib/products/offer-config";
 import {
   findCheckoutSessionByPaymentIntentId,
+  findCheckoutSessionBySubscriptionId,
   findCheckoutSessionByStripeSessionId,
   markStaleCheckoutSessions,
   upsertCheckoutSession,
@@ -96,6 +98,7 @@ import { createLicenseForOrder } from "@/lib/license-service";
 const getStripeClientMock = vi.mocked(getStripeClient);
 const getOfferConfigMock = vi.mocked(getOfferConfig);
 const findCheckoutSessionByPaymentIntentIdMock = vi.mocked(findCheckoutSessionByPaymentIntentId);
+const findCheckoutSessionBySubscriptionIdMock = vi.mocked(findCheckoutSessionBySubscriptionId);
 const findCheckoutSessionByStripeSessionIdMock = vi.mocked(findCheckoutSessionByStripeSessionId);
 const markStaleCheckoutSessionsMock = vi.mocked(markStaleCheckoutSessions);
 const upsertCheckoutSessionMock = vi.mocked(upsertCheckoutSession);
@@ -260,16 +263,18 @@ function buildCheckoutSessionEvent() {
 }
 
 function buildPaymentIntentEvent(
-  type: "payment_intent.succeeded" | "payment_intent.payment_failed",
+  type: "payment_intent.succeeded" | "payment_intent.payment_failed" | "payment_intent.canceled",
   overrides: Partial<Stripe.PaymentIntent> = {},
 ) {
+  const isSucceeded = type === "payment_intent.succeeded";
+  const isCanceled = type === "payment_intent.canceled";
   const baseIntent: Partial<Stripe.PaymentIntent> = {
     id: "pi_test_123",
     object: "payment_intent",
     amount: 9900,
-    amount_received: type === "payment_intent.succeeded" ? 9900 : 0,
+    amount_received: isSucceeded ? 9900 : 0,
     currency: "usd",
-    status: type === "payment_intent.succeeded" ? "succeeded" : "requires_payment_method",
+    status: isSucceeded ? "succeeded" : isCanceled ? "canceled" : "requires_payment_method",
     payment_method_types: ["card"],
     metadata: {
       offer_id: "demo-offer",
@@ -309,6 +314,36 @@ function buildPaymentIntentEvent(
   } as unknown as Stripe.Event;
 }
 
+function buildSubscriptionDeletedEvent(overrides: Partial<Stripe.Subscription> = {}) {
+  const subscription: Partial<Stripe.Subscription> = {
+    id: "sub_test_123",
+    object: "subscription",
+    status: "canceled",
+    cancel_at_period_end: false,
+    current_period_end: Math.floor(Date.now() / 1_000),
+    customer: "cus_test_123",
+  };
+
+  const merged = { ...subscription, ...overrides } as Stripe.Subscription;
+
+  return {
+    id: "evt_sub_deleted",
+    object: "event",
+    api_version: "2024-04-10",
+    created: Math.floor(Date.now() / 1_000),
+    livemode: false,
+    pending_webhooks: 1,
+    request: {
+      id: null,
+      idempotency_key: null,
+    },
+    type: "customer.subscription.deleted",
+    data: {
+      object: merged,
+    },
+  } as unknown as Stripe.Event;
+}
+
 async function flushMicrotasks() {
   await new Promise((resolve) => setImmediate(resolve));
 }
@@ -321,6 +356,7 @@ describe("POST /api/stripe/webhook", () => {
     markStaleCheckoutSessionsMock.mockResolvedValue(undefined);
     findCheckoutSessionByStripeSessionIdMock.mockResolvedValue(null);
     findCheckoutSessionByPaymentIntentIdMock.mockResolvedValue(null);
+    findCheckoutSessionBySubscriptionIdMock.mockResolvedValue(null);
     upsertCheckoutSessionMock.mockResolvedValue("checkout-session-id");
     upsertOrderMock.mockResolvedValue(undefined);
     updateCheckoutSessionStatusMock.mockResolvedValue(undefined);
@@ -1218,6 +1254,87 @@ describe("POST /api/stripe/webhook", () => {
       expect.objectContaining({
         stripePaymentIntentId: "pi_test_123",
         paymentStatus: "requires_payment_method",
+      }),
+    );
+  });
+
+  it("marks checkout failed when payment_intent.canceled fires", async () => {
+    const event = buildPaymentIntentEvent("payment_intent.canceled");
+
+    getStripeClientMock.mockReturnValue({
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>);
+
+    findCheckoutSessionByPaymentIntentIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    expect(updateCheckoutSessionStatusMock).toHaveBeenCalledWith(
+      checkoutSessionFixture.stripeSessionId,
+      "failed",
+      expect.objectContaining({
+        paymentIntentId: "pi_test_123",
+      }),
+    );
+
+    expect(upsertOrderMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        stripePaymentIntentId: "pi_test_123",
+        paymentStatus: "canceled",
+      }),
+    );
+  });
+
+  it("keeps entitlements when subscription has remaining time", async () => {
+    const nowSeconds = Math.floor(Date.now() / 1_000);
+    const event = buildSubscriptionDeletedEvent({
+      cancel_at_period_end: true,
+      current_period_end: nowSeconds + 60 * 60 * 24 * 7,
+    });
+
+    getStripeClientMock.mockReturnValue({
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>);
+
+    findCheckoutSessionBySubscriptionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("revokes entitlements when subscription ends", async () => {
+    const nowSeconds = Math.floor(Date.now() / 1_000);
+    const event = buildSubscriptionDeletedEvent({
+      cancel_at_period_end: true,
+      current_period_end: nowSeconds - 60,
+    });
+
+    getStripeClientMock.mockReturnValue({
+      webhooks: {
+        constructEvent: vi.fn().mockReturnValue(event),
+      },
+    } as unknown as ReturnType<typeof getStripeClient>);
+
+    findCheckoutSessionBySubscriptionIdMock.mockResolvedValue(checkoutSessionFixture);
+
+    const response = await POST(buildRequest("{}"));
+    expect(response.status).toBe(200);
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://auth.serp.co/internal/entitlements/revoke",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "content-type": "application/json",
+          "x-serp-internal-secret": "serp_auth_test_secret",
+        }),
       }),
     );
   });

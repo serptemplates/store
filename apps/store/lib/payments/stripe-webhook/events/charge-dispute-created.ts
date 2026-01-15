@@ -2,11 +2,12 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionByPaymentIntentId } from "@/lib/checkout";
 import logger from "@/lib/logger";
+import { getStripeClient } from "@/lib/payments/stripe";
 import {
   resolveCheckoutCustomerEmail,
   resolveCheckoutEntitlements,
 } from "@/lib/payments/stripe-webhook/helpers/entitlements";
-import type { StripeChargeReference } from "@/lib/payments/stripe-webhook/types";
+import type { StripeChargeReference, StripeWebhookContext } from "@/lib/payments/stripe-webhook/types";
 
 function extractIdsFromCharge(chargeLike: StripeChargeReference) {
   const result: {
@@ -45,46 +46,92 @@ function extractIdsFromCharge(chargeLike: StripeChargeReference) {
   return result;
 }
 
-export async function handleChargeDisputeCreated(dispute: Stripe.Dispute) {
+async function resolveDisputeCharge(
+  dispute: Stripe.Dispute,
+  context?: StripeWebhookContext,
+): Promise<StripeChargeReference> {
+  const chargeRef = dispute.charge;
+  if (!chargeRef || typeof chargeRef !== "string") {
+    return chargeRef ?? null;
+  }
+
   try {
-    const { chargeId, stripeCustomerId, paymentIntentId } = extractIdsFromCharge(
-      dispute.charge,
-    );
+    const stripe = getStripeClient({ accountAlias: context?.accountAlias ?? undefined });
+    return await stripe.charges.retrieve(chargeRef, {
+      expand: ["customer", "payment_intent"],
+    });
+  } catch (error) {
+    logger.warn("stripe.charge_dispute_charge_fetch_failed", {
+      disputeId: dispute.id ?? null,
+      chargeId: chargeRef,
+      error: error instanceof Error ? { message: error.message, name: error.name } : error,
+    });
+    return chargeRef;
+  }
+}
+
+export async function handleChargeDisputeCreated(
+  dispute: Stripe.Dispute,
+  context?: StripeWebhookContext,
+) {
+  try {
+    const chargeRef = await resolveDisputeCharge(dispute, context);
+    const { chargeId, stripeCustomerId, paymentIntentId } = extractIdsFromCharge(chargeRef);
+    const chargeEmail =
+      typeof chargeRef === "string" || !chargeRef
+        ? null
+        : chargeRef.receipt_email ?? chargeRef.billing_details?.email ?? null;
 
     if (!stripeCustomerId || !paymentIntentId) {
-      return;
-    }
-
-    const sessionRecord = await findCheckoutSessionByPaymentIntentId(paymentIntentId);
-    const offerId = sessionRecord?.offerId ?? null;
-    const entitlements = resolveCheckoutEntitlements(sessionRecord);
-    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord);
-
-    if (entitlements.length === 0) {
-      return;
-    }
-
-    try {
-      const { revokeCustomerFeatures } = await import("@/lib/payments/stripe-entitlements");
-      await revokeCustomerFeatures(stripeCustomerId, entitlements);
-    } catch (error) {
-      logger.debug("stripe.entitlements_revoke_on_dispute_failed", {
-        disputeId: dispute.id,
+      logger.warn("stripe.charge_dispute_missing_identifiers", {
+        disputeId: dispute.id ?? null,
         chargeId,
+        stripeCustomerId,
         paymentIntentId,
-        error: error instanceof Error ? { message: error.message, name: error.name } : error,
       });
     }
 
+    const sessionRecord = paymentIntentId
+      ? await findCheckoutSessionByPaymentIntentId(paymentIntentId)
+      : null;
+    if (!sessionRecord && paymentIntentId) {
+      logger.warn("stripe.charge_dispute_session_not_found", {
+        disputeId: dispute.id ?? null,
+        chargeId,
+        paymentIntentId,
+      });
+    }
+    const offerId = sessionRecord?.offerId ?? null;
+    const entitlements = resolveCheckoutEntitlements(sessionRecord);
+    const customerEmail = resolveCheckoutCustomerEmail(sessionRecord) ?? chargeEmail ?? null;
+
+    if (stripeCustomerId && entitlements.length > 0) {
+      try {
+        const { revokeCustomerFeatures } = await import("@/lib/payments/stripe-entitlements");
+        await revokeCustomerFeatures(stripeCustomerId, entitlements);
+      } catch (error) {
+        logger.debug("stripe.entitlements_revoke_on_dispute_failed", {
+          disputeId: dispute.id,
+          chargeId,
+          paymentIntentId,
+          error: error instanceof Error ? { message: error.message, name: error.name } : error,
+        });
+      }
+    }
+
     if (!customerEmail) {
+      logger.debug("serp_auth.entitlements_revoke_skipped_dispute", {
+        disputeId: dispute.id ?? null,
+        chargeId,
+        paymentIntentId,
+      });
       return;
     }
 
     try {
-      const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-      await revokeSerpAuthEntitlements({
+      const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+      await revokeAllSerpAuthEntitlements({
         email: customerEmail,
-        entitlements,
         metadata: {
           source: "stripe",
           offerId,
