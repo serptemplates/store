@@ -21,31 +21,20 @@ function normalizeParam(value?: string | null): string | null {
   return trimmed.length ? trimmed : null;
 }
 
-<<<<<<< HEAD
-function isLocalStack(): boolean {
-  return process.env.NODE_ENV !== "production" && !process.env.VERCEL_ENV;
-=======
 function isTrustedEnvironment(): boolean {
   const deploymentEnv = process.env.VERCEL_ENV ?? "development";
   const isLocalStack = process.env.NODE_ENV !== "production" && !process.env.VERCEL_ENV;
   const isPreview = deploymentEnv === "preview";
   const isStaging = deploymentEnv === "staging";
   return isLocalStack || isPreview || isStaging;
->>>>>>> 951dd42b (update account page)
 }
 
 async function resolveAdminImpersonation(
   request: NextRequest,
 ): Promise<{ email: string; adminTokenSatisfied: boolean } | null> {
   let body: Record<string, unknown> | null = null;
-<<<<<<< HEAD
-  const requestClone = request.clone();
-  try {
-    body = (await requestClone.json()) as Record<string, unknown>;
-=======
   try {
     body = (await request.json()) as Record<string, unknown>;
->>>>>>> 951dd42b (update account page)
   } catch {
     body = null;
   }
@@ -69,12 +58,8 @@ async function resolveAdminImpersonation(
 
   const adminTokenEnv = normalizeParam(process.env.ACCOUNT_ADMIN_TOKEN);
   const adminTokenSatisfied =
-<<<<<<< HEAD
-    (Boolean(adminTokenEnv) && adminTokenParam === adminTokenEnv) || isLocalStack();
-=======
     Boolean(adminTokenEnv) &&
     (adminTokenParam === adminTokenEnv || isTrustedEnvironment());
->>>>>>> 951dd42b (update account page)
 
   return {
     email: impersonateParam,

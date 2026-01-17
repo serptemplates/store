@@ -84,7 +84,7 @@ async function startStripeListener(forwardUrl: string): Promise<string> {
   const listener = spawn(stripeCmd, ["listen", "--forward-to", forwardUrl], {
     cwd: repoRoot,
     env: process.env,
-    stdio: ["ignore", "pipe", "inherit"],
+    stdio: ["ignore", "pipe", "pipe"],
   });
 
   registerBackgroundProcess(listener, "Stripe CLI listener");
@@ -93,6 +93,21 @@ async function startStripeListener(forwardUrl: string): Promise<string> {
     let resolved = false;
     let buffer = "";
 
+    const handleChunk = (chunk: Buffer, stream: "stdout" | "stderr") => {
+      const text = chunk.toString();
+      if (stream === "stdout") {
+        process.stdout.write(text);
+      } else {
+        process.stderr.write(text);
+      }
+      buffer += text;
+      const match = buffer.match(/whsec_[0-9A-Za-z]+/);
+      if (match && !resolved) {
+        resolved = true;
+        resolve(match[0]);
+      }
+    };
+
     listener.on("error", (error) => {
       if (!resolved) {
         reject(new Error(`Failed to start Stripe CLI listener: ${error.message}`));
@@ -100,15 +115,14 @@ async function startStripeListener(forwardUrl: string): Promise<string> {
     });
 
     listener.stdout.on("data", (chunk: Buffer) => {
-      const text = chunk.toString();
-      process.stdout.write(text);
-      buffer += text;
-      const match = buffer.match(/whsec_[0-9A-Za-z]+/);
-      if (match && !resolved) {
-        resolved = true;
-        resolve(match[0]);
-      }
+      handleChunk(chunk, "stdout");
     });
+
+    if (listener.stderr) {
+      listener.stderr.on("data", (chunk: Buffer) => {
+        handleChunk(chunk, "stderr");
+      });
+    }
 
     listener.on("exit", (code) => {
       if (!resolved) {

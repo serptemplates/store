@@ -26,6 +26,7 @@ The Stripe webhook handler lives at `apps/store/app/api/stripe/webhook/route.ts`
 - `customer-subscription-deleted.ts`, `invoice-payment-failed.ts`, `invoice-payment-succeeded.ts`
   - Revokes all SERP Auth entitlements on cancel/failed renewal (purges sessions + device bindings) and re-grants on successful renewal using subscription ID -> checkout session lookups.
   - Subscription cancels honor the remaining paid period: if `current_period_end` is still in the future, revocation is skipped until the period ends.
+  - `invoice-payment-succeeded.ts` updates the Stripe PaymentIntent description to `Subscription - {Product name}` with fallbacks (checkout session metadata/offer config, invoice metadata, invoice line items).
 - `unhandled-event.ts`
   - Logs and exits for unsupported events.
 

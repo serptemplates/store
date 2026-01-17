@@ -99,8 +99,6 @@ export default function AccountDashboard({
   const [emailError, setEmailError] = useState<string | null>(null);
   const [billingLoading, setBillingLoading] = useState(false);
   const [billingError, setBillingError] = useState<string | null>(null);
-  const [billingLoading, setBillingLoading] = useState(false);
-  const [billingError, setBillingError] = useState<string | null>(null);
   const [receiptNumber, setReceiptNumber] = useState("");
   const [repairing, setRepairing] = useState(false);
   const [repairMessage, setRepairMessage] = useState<string | null>(null);
@@ -281,7 +279,6 @@ export default function AccountDashboard({
     .filter((purchase) => purchase.source === "stripe" || purchase.source === "legacy_paypal")
     .filter((purchase) => !purchase.paymentStatus || purchase.paymentStatus === "paid" || purchase.paymentStatus === "succeeded");
 
-  const hasStripePurchase = purchases.some((purchase) => purchase.source === "stripe");
   const hasStripePurchase = purchases.some((purchase) => purchase.source === "stripe");
   const ghlPurchases = purchases.filter((purchase) => purchase.source === "ghl");
 
