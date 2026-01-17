@@ -160,6 +160,7 @@ export default function AccountDashboard({
     setRepairMessage(null);
     setRepairError(null);
     setBillingError(null);
+    setBillingError(null);
   }, [account.email, purchases]);
 
   const normalizeEmail = useCallback((value: string) => value.trim().toLowerCase(), []);
@@ -395,11 +396,6 @@ export default function AccountDashboard({
         throw new Error("Billing portal link unavailable");
       }
 
-      window.setTimeout(() => {
-        setBillingError("Billing portal did not open. Please try again.");
-        setBillingLoading(false);
-      }, 10000);
-
       window.location.assign(body.url);
     } catch (billingPortalError) {
       setBillingError(billingPortalError instanceof Error ? billingPortalError.message : String(billingPortalError));
@@ -427,6 +423,9 @@ export default function AccountDashboard({
                 </div>
               </div>
               <div className="flex flex-col gap-3 self-stretch sm:flex-row sm:items-center sm:self-auto">
+                {/* <Badge variant="secondary" className={statusBadgeClasses[statusVisual.tone]}>
+                  {statusVisual.label}
+                </Badge> */}
                 <Button
                   className="w-full sm:w-auto"
                   variant="outline"
@@ -445,6 +444,10 @@ export default function AccountDashboard({
                 </Button>
               </div>
             </div>
+            {billingError ? <p className="text-xs text-rose-600">{billingError}</p> : null}
+            {!hasStripePurchase ? (
+              <p className="text-xs text-slate-500">No Stripe billing history found for this account yet.</p>
+            ) : null}
             {billingError ? <p className="text-xs text-rose-600">{billingError}</p> : null}
             {!hasStripePurchase ? (
               <p className="text-xs text-slate-500">No Stripe billing history found for this account yet.</p>
@@ -503,6 +506,8 @@ export default function AccountDashboard({
             ) : null}
             {emailMessage && <p className="text-sm text-emerald-600">{emailMessage}</p>}
             {emailError && <p className="text-sm text-red-600">{emailError}</p>}
+
+            
           </CardContent>
         </Card>
       </section>

@@ -9,10 +9,7 @@ The store uses internal checkout routes for every product CTA. Product pages rou
 - `/checkout/<slug>` is the primary CTA target. The route handler lives at `apps/store/app/checkout/[slug]/route.ts`.
 - Product CTAs are resolved from product JSON and mapped by `useProductCheckoutCta` so every live product drives the internal checkout flow.
 - Pre-release products trigger the waitlist modal instead of checkout.
-<<<<<<< HEAD
-=======
 - Use `apps/store/lib/routes.ts` for checkout path construction and `apps/store/lib/products/product-urls.ts` for canonical product URLs.
->>>>>>> 34aba1f4 (clean up dry up store repo)
 
 ## Stripe Checkout session notes
 
