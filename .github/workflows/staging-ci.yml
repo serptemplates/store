@@ -49,9 +49,9 @@ jobs:
           - check: schema
             title: Product schema validation
             command: pnpm --filter @apps/store validate:products
-      - check: lighthouse
-        title: Lighthouse checks
-        command: pnpm --filter @apps/store run test:lhci
+          - check: lighthouse
+            title: Lighthouse checks
+            command: pnpm --filter @apps/store run test:lhci
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       STAGING_BASE_URL: ${{ secrets.STAGING_BASE_URL }}
