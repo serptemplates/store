@@ -15,3 +15,7 @@
 - [x] Update subscription invoice payment intents to use invoice metadata/line items when checkout session mapping is missing.
 - [x] Fix `apps/store/scripts/run-checkout-e2e.ts` to capture Stripe CLI webhook secret from stderr (current listener hangs waiting on stdout).
 - [x] Document invoice payment intent description updates in `docs/architecture/payments-stripe-webhook.md`.
+
+## CI
+
+- [x] Fix `staging-ci.yml` matrix indentation so `lighthouse` runs within `matrix.include`.
