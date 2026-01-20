@@ -79,12 +79,12 @@
   "clientclub-downloader": {
     "slug": "clientclub-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS6iDP7AOTRcvmOpHS4e4P",
-      "test_price_id": "price_1SdS6iDP7AOTRcvmnLFJin6Q"
+      "live_price_id": "price_1SrVAQDP7AOTRcvmiWtH6pyJ",
+      "test_price_id": "price_1SrVARDP7AOTRcvmYhdYxUOU"
     }
   },
   "coomer-downloader": {
@@ -134,23 +134,23 @@
   "gohighlevel-downloader": {
     "slug": "gohighlevel-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS6mDP7AOTRcvm7bCMj3gV",
-      "test_price_id": "price_1SdS6mDP7AOTRcvmSEV301HE"
+      "live_price_id": "price_1SrVASDP7AOTRcvmoAzTCG1I",
+      "test_price_id": "price_1SrVATDP7AOTRcvmNzCmhWs1"
     }
   },
   "gokollab-downloader": {
     "slug": "gokollab-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
     "unit_amount": 1700,
     "stripe": {
-      "live_price_id": "price_1SdS6nDP7AOTRcvmjvQU4RIn",
-      "test_price_id": "price_1SdS6nDP7AOTRcvm7yPEHPHW"
+      "live_price_id": "price_1SrVARDP7AOTRcvmo7th7sk6",
+      "test_price_id": "price_1SrVASDP7AOTRcvmLjOfVhZR"
     }
   },
   "hdzog-downloader": {
