@@ -21,6 +21,14 @@ function extractCookieValue(cookieStr: string, name: string): string | null {
   return null;
 }
 
+function extractViaParam(link: string): string | null {
+  try {
+    return new URL(link).searchParams.get("via");
+  } catch {
+    return null;
+  }
+}
+
 async function waitForCookie(page: Page, name: string, timeoutMs = 15000): Promise<string> {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
@@ -44,6 +52,7 @@ maybe("Dub affiliate cookies set and persist to staging", async ({ page, context
 
   const dubId = extractCookieValue(cookiesStr, "dub_id");
   const partnerRaw = extractCookieValue(cookiesStr, "dub_partner_data");
+  const viaParam = extractViaParam(DUB_TEST_LINK);
 
   expect(dubId, "dub_id cookie should be set").not.toBeNull();
   if (!dubId) throw new Error("dub_id cookie missing after visiting Dub link");
@@ -54,6 +63,13 @@ maybe("Dub affiliate cookies set and persist to staging", async ({ page, context
 
   expect(partnerRaw, "dub_partner_data should exist").not.toBeNull();
   if (!partnerRaw) throw new Error("dub_partner_data cookie missing after visiting Dub link");
+
+  if (viaParam) {
+    expect(dubId).not.toBe(viaParam);
+    expect(dubId).not.toBe(`dub_id_${viaParam}`);
+    const decodedPartner = decodeURIComponent(partnerRaw);
+    expect(decodedPartner).not.toBe(JSON.stringify({ via: viaParam }));
+  }
 
   if (EXPECTED_PARTNER_JSON) {
     expect(partnerRaw).toBe(EXPECTED_PARTNER_JSON);

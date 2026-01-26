@@ -86,6 +86,7 @@ export function middleware(request: NextRequest) {
   ) {
     // Preserve UTM parameters when redirecting
     // Store UTM parameters in cookies for attribution tracking
+    // Dub handles ?via= client-side; only ?dub_id is handled here.
     const response = NextResponse.next();
     const searchParams = new URLSearchParams(search);
 
