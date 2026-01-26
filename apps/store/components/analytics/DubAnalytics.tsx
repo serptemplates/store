@@ -19,11 +19,14 @@ export function DubAnalytics() {
     return null;
   }
 
-  if (!dubConfig.conversionTrackingEnabled && process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
-    console.warn(
-      "[DubAnalytics] Running without NEXT_PUBLIC_DUB_PUBLISHABLE_KEY; conversion tracking is disabled."
-    );
+  if (!dubConfig.conversionTrackingEnabled) {
+    if (process.env.NODE_ENV !== "production") {
+      // eslint-disable-next-line no-console
+      console.error(
+        "[DubAnalytics] Skipping Dub initialization: conversion tracking is disabled (e.g. missing NEXT_PUBLIC_DUB_PUBLISHABLE_KEY)."
+      );
+    }
+    return null;
   }
 
   return (

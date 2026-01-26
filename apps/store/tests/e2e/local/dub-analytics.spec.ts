@@ -18,8 +18,15 @@ test.describe("Dub Analytics e2e", () => {
   test("sets dub_id cookie and loads SDK with serp.cc + outbound domains", async ({ page }) => {
     const pk = process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
 
-    const clickResponsePromise = page.waitForResponse((response) =>
-      response.url().includes("api.dub.co/track/click")
+    // Skip test if publishable key is not set, as the component won't render
+    if (!pk) {
+      test.skip();
+      return;
+    }
+
+    const clickResponsePromise = page.waitForResponse(
+      (response) => response.url().includes("api.dub.co/track/click"),
+      { timeout: 15000 }
     );
 
     await page.goto("/?via=mds", { waitUntil: "domcontentloaded" });

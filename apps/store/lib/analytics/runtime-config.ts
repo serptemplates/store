@@ -85,7 +85,7 @@ export function resolveDubConfig(env: Env = getEnvSnapshot()): DubConfig {
     normalizedRuntime
   );
   const conversionTrackingEnabled = Boolean(publishableKey);
-  const enabled = isProductionRuntime;
+  const enabled = Boolean(publishableKey && isProductionRuntime);
 
   return {
     publishableKey,
