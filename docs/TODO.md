@@ -19,6 +19,7 @@
 ## CI
 
 - [x] Fix `staging-ci.yml` matrix indentation so `lighthouse` runs within `matrix.include`.
+- [x] Fix Dub analytics CI failures in PR #397 (unit tests + staging smoke).
 
 ## Analytics
 
