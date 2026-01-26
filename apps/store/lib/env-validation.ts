@@ -215,6 +215,12 @@ export function validateEnvironment(): ValidationResult {
       warnings.push("WARNING: Using Stripe test mode in production environment!");
     }
 
+    if (!process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY) {
+      warnings.push(
+        "NEXT_PUBLIC_DUB_PUBLISHABLE_KEY is not set. Dub conversion tracking is disabled.",
+      );
+    }
+
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     // Allow http for localhost when running a production build locally
     const isLocalhost = siteUrl?.startsWith("http://localhost") || siteUrl?.startsWith("http://127.0.0.1");
@@ -286,6 +292,7 @@ export function getEnvironmentInfo(): Record<string, string | boolean> {
       process.env.GHL_PAT_LOCATION && process.env.GHL_LOCATION_ID
     ),
     monitoringConfigured: !!process.env.SLACK_ALERT_WEBHOOK_URL,
+    dubPublishableKeyConfigured: !!process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY,
     emailDeliveryConfigured,
   };
 }

@@ -1,9 +1,11 @@
 import { config as loadEnv } from "dotenv";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
 // Standardize on a single env file for local/dev builds
-loadEnv({ path: resolve(process.cwd(), "../../.env") });
+const configDir = dirname(fileURLToPath(import.meta.url));
+loadEnv({ path: resolve(configDir, "../../.env") });
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -16,6 +18,14 @@ const outputFileTracingRoot = resolve(process.cwd(), "../..");
 const nextConfig = {
   transpilePackages: ["@repo/ui", "@repo/payments", "@serpcompany/payments"],
   typedRoutes: true,
+  env: {
+    ...(process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY
+      ? { NEXT_PUBLIC_DUB_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_RUNTIME_ENV
+      ? { NEXT_PUBLIC_RUNTIME_ENV: process.env.NEXT_PUBLIC_RUNTIME_ENV }
+      : {}),
+  },
 
   // Enable compression
   compress: true,

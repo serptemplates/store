@@ -30,12 +30,14 @@ const config: PlaywrightTestConfig = {
 
 if (shouldStartWebServer) {
   const dubPk = process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
+  const runtimeEnv = process.env.NEXT_PUBLIC_RUNTIME_ENV ?? "preview";
   config.webServer = {
     command: `pnpm exec next dev --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
     reuseExistingServer: true,
     env: {
       POSTHOG_API_HOST: 'https://us.i.posthog.com',
+      NEXT_PUBLIC_RUNTIME_ENV: runtimeEnv,
       ...(dubPk ? { NEXT_PUBLIC_DUB_PUBLISHABLE_KEY: dubPk } : {}),
     },
   };

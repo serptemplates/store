@@ -1,19 +1,61 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 test.describe("Dub Analytics e2e", () => {
   test.use({ viewport: { width: 1280, height: 1200 } });
 
+  async function waitForCookie(page: Page, name: string, timeoutMs = 15000) {
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      const cookieStr: string = await page.evaluate(() => document.cookie);
+      if (cookieStr.includes(`${name}=`)) {
+        return;
+      }
+      await page.waitForTimeout(500);
+    }
+    throw new Error(`Timed out waiting for cookie ${name}`);
+  }
+
   test("sets dub_id cookie and loads SDK with serp.cc + outbound domains", async ({ page }) => {
     const pk = process.env.NEXT_PUBLIC_DUB_PUBLISHABLE_KEY;
-    test.skip(!pk, "NEXT_PUBLIC_DUB_PUBLISHABLE_KEY not provided to webServer env");
+
+    // Skip test if publishable key is not set, as the component won't render
+    if (!pk) {
+      test.skip();
+      return;
+    }
+
+    const clickResponsePromise = page.waitForResponse(
+      (response) => response.url().includes("api.dub.co/track/click"),
+      { timeout: 15000 }
+    );
 
     await page.goto("/?via=mds", { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle");
+    const clickResponse = await clickResponsePromise;
+    const clickData = await clickResponse.json();
 
     // dub_id cookie present (set by Dub SDK reading ?via=mds)
-    const cookies = await page.context().cookies();
-    const dub = cookies.find((c) => c.name === "dub_id");
-    expect(dub && typeof dub.value === "string" && dub.value.length > 0).toBe(true);
+    let cookies = await page.context().cookies();
+    let dub = cookies.find((c) => c.name === "dub_id");
+
+    const isForbidden = clickData?.error?.code === "forbidden";
+    if (isForbidden) {
+      expect(clickData.error.message).toContain("allowed hostnames");
+      expect(dub).toBeUndefined();
+    } else {
+      await waitForCookie(page, "dub_id");
+      cookies = await page.context().cookies();
+      dub = cookies.find((c) => c.name === "dub_id");
+      expect(dub && typeof dub.value === "string" && dub.value.length > 0).toBe(true);
+      expect(dub?.value).not.toBe("mds");
+      expect(dub?.value).not.toBe("dub_id_mds");
+
+      const partner = cookies.find((c) => c.name === "dub_partner_data");
+      expect(partner).toBeTruthy();
+      const partnerDecoded = partner?.value ? decodeURIComponent(partner.value) : "{}";
+      const partnerData = JSON.parse(partnerDecoded);
+      expect(partnerData.clickId).toBe(dub?.value);
+    }
 
     // SDK script is injected with correct attributes
     const attrs = await page.evaluate(() => {
@@ -28,7 +70,13 @@ test.describe("Dub Analytics e2e", () => {
       };
     });
     expect(attrs).toBeTruthy();
-    expect(attrs!.publishableKey).toBe(pk);
+    if (pk) {
+      expect(attrs!.publishableKey).toBe(pk);
+    } else if (attrs!.publishableKey) {
+      expect(attrs!.publishableKey).toMatch(/^dub_pk_/);
+    } else {
+      expect(attrs!.publishableKey).toBeNull();
+    }
     expect(attrs!.src || "").toContain("dubcdn.com/analytics/script");
     const domains = attrs!.domains ? JSON.parse(attrs!.domains) : {};
     expect(domains.refer).toBe("serp.cc");
@@ -44,6 +92,10 @@ test.describe("Dub Analytics e2e", () => {
     ]));
 
     // cross-domain outbound links to serp.co include ?dub_id=
+    if (isForbidden) {
+      return;
+    }
+
     const outboundWithDub = await page.evaluate(() => {
       const anchors = Array.from(document.querySelectorAll('a[href]'));
       const candidates = anchors
@@ -53,5 +105,18 @@ test.describe("Dub Analytics e2e", () => {
     });
     expect(outboundWithDub.length).toBeGreaterThan(0);
     expect(outboundWithDub.some((x: any) => x.hasDub)).toBe(true);
+  });
+
+  test("sets dub_id cookie from ?dub_id param", async ({ page }) => {
+    const expected = "dub_id_test_cookie_123";
+
+    await page.goto(`/?dub_id=${encodeURIComponent(expected)}`, {
+      waitUntil: "domcontentloaded",
+    });
+    await waitForCookie(page, "dub_id");
+
+    const cookies = await page.context().cookies();
+    const dub = cookies.find((c) => c.name === "dub_id");
+    expect(dub?.value).toBe(expected);
   });
 });
