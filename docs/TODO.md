@@ -19,3 +19,18 @@
 ## CI
 
 - [x] Fix `staging-ci.yml` matrix indentation so `lighthouse` runs within `matrix.include`.
+
+## Analytics
+
+- [x] Fix Dub analytics not loading in production (no `dubcdn` script, no `window._dubAnalytics`).
+- [x] Stop setting `dub_id`/`dub_partner_data` from middleware `via` param unless aligned with Dub docs.
+- [ ] Deploy Dub tracking changes to production and re-check `?via=...` click IDs.
+- [ ] Re-verify `?via=mds` sets `dub_id` from `api.dub.co/track/click` and partner data in `dub_partner_data`.
+- [ ] Verify Stripe checkout metadata uses `dubClickId` + `dubCustomerExternalId` per Dub docs.
+- [ ] Add production + local hostnames to Dub “allowed hostnames” list for full local verification.
+- [ ] Make Dub cookie domain conditional so localhost can receive `dub_id` for local testing.
+
+## Maintenance
+
+- [ ] Update `baseline-browser-mapping` dev dependency to clear Vitest warning.
+- [ ] Review `next/image` `images.qualities` config to address the quality 85 warning.

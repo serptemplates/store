@@ -82,7 +82,7 @@ export function middleware(request: NextRequest) {
     search.includes("affiliateId=") ||
     search.includes("aff=") ||
     search.includes("am_id=") ||
-    search.includes("via=")
+    search.includes("dub_id=")
   ) {
     // Preserve UTM parameters when redirecting
     // Store UTM parameters in cookies for attribution tracking
@@ -120,8 +120,7 @@ export function middleware(request: NextRequest) {
       searchParams.get('affiliate') ||
       searchParams.get('affiliateId') ||
       searchParams.get('ref') ||
-      searchParams.get('am_id') ||
-      searchParams.get('via');
+      searchParams.get('am_id');
 
     if (affiliateParam) {
       const normalizedAffiliate = affiliateParam.trim();
@@ -130,21 +129,12 @@ export function middleware(request: NextRequest) {
       }
     }
 
-    const viaParam = searchParams.get("via");
-    if (viaParam && viaParam.trim()) {
-      const normalizedVia = viaParam.trim();
-      const normalizedDubId = normalizedVia.startsWith("dub_id_")
-        ? normalizedVia
-        : `dub_id_${normalizedVia}`;
+    const dubIdParam = searchParams.get("dub_id");
+    if (dubIdParam && dubIdParam.trim()) {
+      const normalizedDubId = dubIdParam.trim();
       const currentDubId = request.cookies.get("dub_id")?.value ?? "";
       if (!currentDubId) {
         response.cookies.set("dub_id", normalizedDubId, cookieOptions);
-      }
-
-      const currentPartnerData = request.cookies.get("dub_partner_data")?.value ?? "";
-      if (!currentPartnerData) {
-        const partnerData = JSON.stringify({ via: normalizedVia });
-        response.cookies.set("dub_partner_data", partnerData, cookieOptions);
       }
     }
 
