@@ -10,6 +10,7 @@ Expected behavior (per Dub docs + analytics script):
 - `?dub_id=<clickId>` sets the `dub_id` cookie directly to the param value
 - Cookie `dub_partner_data` stores partner + discount metadata (URL-encoded JSON)
 - `affiliateId=mds` may still appear from legacy tracking
+ - If `dub_id` equals `dub_id_<via>` or `dub_partner_data` equals `{"via":"<via>"}`, middleware is incorrectly overriding Dub.
 
 If you see no Dub cookies and no `track/click` call, the Dub script did not run.
 If you see `dub_id` equal to the `via` value, something else is writing it

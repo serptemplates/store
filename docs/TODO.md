@@ -24,6 +24,7 @@
 
 - [x] Fix Dub analytics not loading in production (no `dubcdn` script, no `window._dubAnalytics`).
 - [x] Stop setting `dub_id`/`dub_partner_data` from middleware `via` param unless aligned with Dub docs.
+- [x] Strengthen staging Dub e2e check to fail if `dub_id` is derived from `via`.
 - [ ] Deploy Dub tracking changes to production and re-check `?via=...` click IDs.
 - [ ] Re-verify `?via=mds` sets `dub_id` from `api.dub.co/track/click` and partner data in `dub_partner_data`.
 - [ ] Verify Stripe checkout metadata uses `dubClickId` + `dubCustomerExternalId` per Dub docs.
