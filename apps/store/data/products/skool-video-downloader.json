@@ -111,7 +111,7 @@
   ],
   "featured": false,
   "new_release": false,
-  "popular": false,
+  "popular": true,
   "permission_justifications": [
     {
       "permission": "downloads",
