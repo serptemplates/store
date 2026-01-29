@@ -1,0 +1,252 @@
+{
+  // PRODUCT INFO
+  "platform": "Chrome, Firefox, Edge, Opera, Brave",
+  "name": "SERP Video Tools",
+  "tagline": "Supercharged video tools for downloading, speed controls, scrubbing, transcriptions, clipping, conversions and more",
+  "slug": "serp-video-tools",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "SERP Video Tools is a cross-browser extension that upgrades online video workflows with fast downloads, precise scrubbing, and flexible playback speed controls. It also helps you skip ads, grab transcripts and thumbnails, clip segments, and convert formats for faster research and reuse.",
+  "seo_title": "SERP Video Tools",
+  "seo_description": "Supercharged video tools for downloading, speed controls, scrubbing, transcriptions, clipping, conversions and more",
+  "status": "live",
+  "features": [
+    "Download videos from online websites and embedded players directly to your computer.",
+    "Adjust video playback speeds to watch faster or slower depending on your workflow.",
+    "Jump forward or backward in videos using precise time-based controls.",
+    "Skip ads on supported video players where ads are delivered within the stream.",
+    "Download available transcripts or captions for offline reading and analysis.",
+    "Save video thumbnails directly from the player for previews or documentation.",
+    "Convert videos into common video or audio formats while preserving quality.",
+    "Simple, intuitive interface that requires no technical knowledge. Download and manage videos with just a few clicks.",
+    "Automatically detects playable videos on a page and enables instant one-click downloads.",
+    "Preserves original video and audio quality whenever possible without unnecessary compression.",
+    "Supports multiple video and audio formats for editing, sharing, and offline use.",
+    "Save videos locally so you can watch, review, or analyze them without an internet connection.",
+    "Frame-accurate scrubbing to quickly locate exact moments in long videos.",
+    "Clip and download only the specific parts of a video you need using custom start and end points.",
+    "Runs efficiently without slowing down your browser or system.",
+    "Works across Chrome, Edge, Firefox, Brave, and Opera on desktop systems.",
+    "No caps or quotas. Download as much content as you want.",
+    "All processing happens locally in your browser. No video content is uploaded or stored on external servers."
+  ],
+  "benefits": [],
+  "faqs": [
+    {
+      "question": "What is SERP Video Tools used for?",
+      "answer": "SERP Video Tools is a cross-browser extension designed to improve how you work with online videos. It lets you download videos, adjust playback speed, scrub precisely, skip ads, grab transcripts and thumbnails, clip specific segments, and convert formats for faster research and reuse."
+    },
+    {
+      "question": "Which websites and video players does it work on?",
+      "answer": "It works on most common video players and platforms you encounter online, including embedded videos on blogs, landing pages, course portals, and search results. If a video plays in your browser, there’s a good chance SERP Video Tools can interact with it."
+    },
+    {
+      "question": "Can I download videos directly from a page?",
+      "answer": "Yes. When a supported video is detected, a download option appears. You can select from available qualities or formats and save the video directly to your computer."
+    },
+    {
+      "question": "Is there a free trial or free version?",
+      "answer": "Currently, there is no fully free version or free trial. We may introduce a free trial in the future, but there is no official timeline yet."
+    },
+    {
+      "question": "Is there a limit to how much I can download?",
+      "answer": "No. There are no download limits. SERP Video Tools allows unlimited downloads, so you can download as much content as you need."
+    },
+    {
+      "question": "Will the video or course owner know that I downloaded their content?",
+      "answer": "In most cases, no. Platforms typically do not give content owners access to download-level user data. If you want additional privacy, you can use the SERP VPN extension alongside the downloader."
+    },
+    {
+      "question": "Can I use SERP Video Tools on my phone or iPad?",
+      "answer": "No. SERP Video Tools is a browser extension and must be used on a desktop or laptop computer. Mobile browsers on phones and tablets do not support the required extension features."
+    },
+    {
+      "question": "How does playback speed control work?",
+      "answer": "You can speed videos up to skim content faster or slow them down for detailed review. Speed changes apply instantly and work together with precise scrubbing controls."
+    },
+    {
+      "question": "Can I jump forward or backward by specific time intervals?",
+      "answer": "Yes. The extension adds quick-jump controls so you can move forward or backward by set time increments without dragging the timeline."
+    },
+    {
+      "question": "Does SERP Video Tools skip ads?",
+      "answer": "Ad skipping works on compatible players where ads are part of the video stream. Results depend on how the platform serves ads, so some ads may still appear."
+    },
+    {
+      "question": "Can I download transcripts or captions?",
+      "answer": "If captions or transcripts are available for a video, SERP Video Tools can extract and download them for offline reading, quoting, or analysis."
+    },
+    {
+      "question": "Can I download video thumbnails?",
+      "answer": "Yes. You can save available thumbnails directly from the video player, which is useful for previews, documentation, or content planning."
+    },
+    {
+      "question": "Can I clip just part of a video instead of the whole thing?",
+      "answer": "Yes. You can set start and end points and download only the segment you need, which saves time and storage."
+    },
+    {
+      "question": "What browsers and operating systems are supported?",
+      "answer": "SERP Video Tools works on Chrome, Edge, Firefox, Brave, and Opera on Windows, macOS, and Linux desktop systems."
+    },
+    {
+      "question": "Is using SERP Video Tools legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not provide legal advice. Laws and platform rules vary by country and service. Consult a qualified legal professional if you have legal questions.</p>\n<p>General best practices include:</p>\n<ol>\n<li>Only download or clip content you own or have permission to use.</li>\n<li>Respect platform terms of service and reasonable usage limits.</li>\n<li>Use the tool responsibly for personal, research, or permitted professional use.</li>\n</ol>"
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Mariah Keene",
+      "review": "I grabbed every classroom replay before the cohort closed. Segment counters let me know how long each download would take.",
+      "title": "Perfect for cohort replays",
+      "rating": 5,
+      "date": "2025-02-23"
+    },
+    {
+      "name": "Theo Richter",
+      "review": "My membership site locks lessons to members only. The downloader honoured my login automatically and the MP4 quality is flawless.",
+      "title": "Works with private communities",
+      "rating": 4.9,
+      "date": "2025-03-04"
+    },
+    {
+      "name": "Ines Navarro",
+      "review": "I travel often and need lessons offline. This keeps downloads private and never asks for extra credentials.",
+      "title": "Offline study made simple",
+      "rating": 4.8,
+      "date": "2025-01-31"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Course Platforms",
+    "Video Downloader",
+    "Social Media",
+    "Productivity",
+    "Utilities"
+  ],
+  "keywords": [],
+  "featured": true,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [
+    {
+      "permission": "downloads",
+      "justification": "Saves downloaded videos as MP4 files to your downloads folder."
+    },
+    {
+      "permission": "storage",
+      "justification": "Stores download history, preferences, and session data locally between sessions."
+    },
+    {
+      "permission": "activeTab",
+      "justification": "Detects video players on the page you're currently viewing to inject download controls."
+    },
+    {
+      "permission": "tabs",
+      "justification": "Manages download sessions across tab refreshes and switches."
+    },
+    {
+      "permission": "scripting",
+      "justification": "Extracts video stream data, quality information, and authentication details from the page."
+    },
+    {
+      "permission": "offscreen",
+      "justification": "Processes and converts video streams to MP4 in the background using FFmpeg without freezing your browser."
+    },
+    {
+      "permission": "cookies",
+      "justification": "Reads authentication cookies needed to download videos from sites that require login."
+    },
+    {
+      "permission": "webNavigation",
+      "justification": "Tracks page navigation to maintain context for ongoing downloads."
+    },
+    {
+      "permission": "declarativeNetRequestWithHostAccess",
+      "justification": "Intercepts and modifies network requests to optimize video stream fetching."
+    },
+    {
+      "permission": "webRequest",
+      "justification": "Monitors network traffic to detect video streams and capture stream manifests."
+    },
+    {
+      "permission": "debugger",
+      "justification": "Analyzes page content and detects video players like YouTube, Vimeo, Loom, and Wistia."
+    },
+    {
+      "permission": "management",
+      "justification": "Manages extension lifecycle and settings during operation."
+    },
+    {
+      "permission": "sidePanel",
+      "justification": "Displays download status and controls in a side panel for easy monitoring."
+    },
+    {
+      "permission": "host_permissions",
+      "justification": "Allows the extension to access all websites to detect and download videos from any video player."
+    }
+  ],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "/media/products/serp-video-tools/serp-video-tools-extension-screenshot-1-overlay.jpg",
+  "screenshots": [
+    {
+      "url": "/media/products/serp-video-tools/serp-video-tools-extension-screenshot-1-overlay.jpg",
+      "alt": "SERP Video Tools overlay controls on a video player"
+    },
+    {
+      "url": "/media/products/serp-video-tools/serp-video-tools-extension-screenshot-2-playback-speed.jpg",
+      "alt": "SERP Video Tools playback speed controls"
+    },
+    {
+      "url": "/media/products/serp-video-tools/serp-video-tools-extension-screenshot-3-download-videos.jpg",
+      "alt": "SERP Video Tools download panel with available formats"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/serp-video-tools-extension",
+  "github_repo_url": "https://github.com/serpapps/serp-video-tools",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "subscription",
+    "stripe": {
+      "price_id": "price_1SumgADP7AOTRcvmonowSzvO",
+      "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC",
+      "metadata": {
+        "stripe_product_id": "prod_TsXlm3yxxiJiWg",
+        "stripe_test_product_id": "prod_TsXluNB31I4tzV"
+      }
+    }
+  },
+  "license": {
+    "entitlements": [
+      "serp-video-tools"
+    ]
+  }
+}
