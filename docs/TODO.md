@@ -6,6 +6,10 @@
 - Store product JSONs must use canonical slugs (bundle canonicals: `serp-downloaders-bundle`, `all-adult-video-downloaders-bundle`; alias `all-video-downloaders-bundle` is accepted but should not be emitted).
 - Entitlement lint is wired into `pnpm lint` via `validate:entitlements`.
   - Requires `INTERNAL_ENTITLEMENTS_TOKEN` (preferred) or `SERP_AUTH_INTERNAL_SECRET` for `/internal/entitlements/catalog`, or the D1 fallback credentials.
+- [x] Add `serp-video-tools` store product JSON from serp-db (features/faqs/permissions + screenshots).
+- [x] Document serp-db → store product sync steps in `docs/knowledge`.
+- [x] Validate `serp-video-tools` product data via `pnpm --filter @apps/store validate:products`.
+- [x] Add `serp-video-tools` to serp-auth `entitlement_catalog` with `tags: ["video-downloader"]`.
 - Cleanup follow-ups:
   - Retire GHL tags from downstream flows when safe.
   - Remove license-key provisioning once `ai-voice-cloner` no longer depends on `serp-license-keys`.
