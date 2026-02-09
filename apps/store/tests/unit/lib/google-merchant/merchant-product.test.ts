@@ -39,7 +39,7 @@ describe("merchant-product helpers", () => {
     expect(result.link).toBe("https://apps.serp.co/loom-video-downloader");
     expect(result.mobileLink).toBe("https://apps.serp.co/loom-video-downloader");
     expect(result.description).toBe("Turn chaos into clarity.");
-    expect(result.price).toEqual({ value: "17.00", currency: "USD" });
+    expect(result.price).toEqual({ value: "9.00", currency: "USD" });
     expect(result.salePrice).toBeUndefined();
     expect(result.availability).toBe("in stock");
     expect(result.brand).toBe("SERP Apps");

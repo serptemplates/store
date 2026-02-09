@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
+const slug = "loom-video-downloader";
+
 test.describe("Dub Analytics e2e", () => {
   test.use({ viewport: { width: 1280, height: 1200 } });
 
@@ -29,7 +31,7 @@ test.describe("Dub Analytics e2e", () => {
       { timeout: 15000 }
     );
 
-    await page.goto("/?via=mds", { waitUntil: "domcontentloaded" });
+    await page.goto(`/${slug}?via=mds`, { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle");
     const clickResponse = await clickResponsePromise;
     const clickData = await clickResponse.json();

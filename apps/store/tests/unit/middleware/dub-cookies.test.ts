@@ -36,4 +36,18 @@ describe("middleware dub cookies", () => {
 
     expect(response.cookies.get("dub_id")).toBeUndefined();
   });
+
+  it("does not override an existing affiliateId cookie", () => {
+    const response = middleware(
+      makeRequest("https://apps.serp.co/?via=mds", "affiliateId=existing")
+    );
+
+    expect(response.cookies.get("affiliateId")).toBeUndefined();
+  });
+
+  it("does not override affiliateId query param with ?via", () => {
+    const response = middleware(makeRequest("https://apps.serp.co/?affiliateId=explicit&via=mds"));
+
+    expect(response.cookies.get("affiliateId")?.value).toBe("explicit");
+  });
 });
