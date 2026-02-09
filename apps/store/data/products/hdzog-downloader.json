@@ -110,9 +110,10 @@
   },
   "payment": {
     "provider": "stripe",
+    "mode": "subscription",
     "stripe": {
-      "price_id": "price_1SibdWDP7AOTRcvmvQQcRY7k",
-      "test_price_id": "price_1SibdWDP7AOTRcvmxpsgMDYw",
+      "price_id": "price_1SymsuDP7AOTRcvmOJN2AcsT",
+      "test_price_id": "price_1SymsuDP7AOTRcvmLj1LAxdE",
       "metadata": {
         "stripe_product_id": "prod_TfxYgun9jqWlyf",
         "stripe_test_product_id": "prod_TfxYL4uB2Ek0ed"
