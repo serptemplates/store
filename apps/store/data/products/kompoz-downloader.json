@@ -10,7 +10,7 @@
   "description": "Kompoz Downloader keeps collaboration sessions moving by saving Kompoz stems, mixes, and discussions directly to your local workspace. Pull reference takes without manually exporting each track one-by-one.\n\nUse it to back up sessions, prep offline mixing environments, or share approved stems with clients while keeping everything organized by project.",
   "seo_title": "Kompoz Downloader | Download Kompoz Stems",
   "seo_description": "Download Kompoz stems and mixes for offline production. Reliable Kompoz downloader for music collaborators.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download stems, mixes, and attachments directly from Kompoz projects",
     "Preserve track naming and folder structure automatically",
@@ -111,7 +111,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

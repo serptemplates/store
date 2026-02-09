@@ -416,18 +416,23 @@
         "minLength": 1
       }
     },
-    "pricing": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "subheading": {
-          "type": "string"
-        },
-        "cta_text": {
-          "type": "string"
+      "pricing": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "subheading": {
+            "type": "string"
+          },
+          "cta_text": {
+            "type": "string"
+          },
+          "checkout_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional override for the primary checkout destination (buy button). When set, the CTA can route to an external URL instead of the internal /checkout flow."
+          }
         }
-      }
-    },
+      },
     "order_bump": {
       "description": "Deprecated. Hosted checkout ignores this field.",
       "anyOf": [
@@ -858,7 +863,19 @@
     },
     {
       "if": {
-        "properties": { "status": { "const": "live" } }
+        "allOf": [
+          { "properties": { "status": { "const": "live" } } },
+          {
+            "not": {
+              "properties": {
+                "pricing": {
+                  "type": "object",
+                  "required": ["checkout_url"]
+                }
+              }
+            }
+          }
+        ]
       },
       "then": {
         "properties": {

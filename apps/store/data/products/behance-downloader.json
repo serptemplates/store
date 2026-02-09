@@ -10,7 +10,7 @@
   "description": "Behance Downloader gives design teams a fast way to save public Behance project assets for offline reference. Grab mood board inspiration, client examples, or training materials without juggling screenshots or losing original resolutions.\n\nUse it to archive visual studies, prep pitch decks, or build inspiration folders that stay available when you are traveling or working in low-connectivity environments.",
   "seo_title": "Behance Downloader | Download Behance Images",
   "seo_description": "Download Behance project images in their original quality. Fast, private Behance downloader built for creative teams.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download public project images without compression",
     "Preserve metadata, captions, and project structure",
@@ -105,7 +105,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

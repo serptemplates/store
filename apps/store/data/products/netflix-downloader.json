@@ -12,7 +12,7 @@
   "description": "Netflix Downloader gives creators and teams a dependable way to save Netflix videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Netflix with consistent quality and predictable results.\n\nIt supports High-quality Netflix movies and downloads, Multi-track subtitle/audio support, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Netflix assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Netflix Downloader (Unofficial) | Download Netflix Videos",
   "seo_description": "Netflix Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Netflix videos easily for offline viewing. Fast, reliable Netflix video downloader with high-quality downloads.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "High-quality Netflix movies and downloads",
     "Multi-track subtitle/audio support",
@@ -140,7 +140,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

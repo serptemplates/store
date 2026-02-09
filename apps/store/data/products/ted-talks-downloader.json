@@ -10,7 +10,7 @@
   "description": "TED Talks Downloader gives creators and teams a dependable way to save TED Talks talks for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from TED Talks with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "TED Talks Downloader | Download TED Talks Videos",
   "seo_description": "Download TED Talks talks for offline use. Fast, private TED Talks downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from TED Talks",
     "Preserves original quality and metadata",
@@ -105,7 +105,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

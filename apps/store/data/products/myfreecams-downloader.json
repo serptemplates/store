@@ -12,7 +12,7 @@
   "description": "Myfreecams Downloader gives creators and teams a dependable way to save Myfreecams videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Myfreecams with consistent quality and predictable results.\n\nIt supports Record MyFreeCams live shows and performances, Public and private show recording, and Auto stream detection and quality adjustment, so you can move quickly from download to delivery without tedious rework. Use it to archive Myfreecams assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Myfreecams Downloader (Unofficial) | Download Myfreecams Downloader for Offline Access",
   "seo_description": "Myfreecams Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download videos, images, and content from myfreecams with our reliable downloader tool. Fast, secure, and easy to use.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Record MyFreeCams live shows and performances",
     "Public and private show recording",
@@ -135,7 +135,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

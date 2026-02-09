@@ -103,7 +103,7 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 900,
+    "unit_amount": 1700,
     "stripe": {
       "live_price_id": "price_1Syy5TDP7AOTRcvmucVSCxKC",
       "test_price_id": "price_1Syy5TDP7AOTRcvmO8koJE4u"
@@ -327,17 +327,6 @@
     "stripe": {
       "live_price_id": "price_1Symt4DP7AOTRcvmP4xTHSDu",
       "test_price_id": "price_1Symt5DP7AOTRcvmhx1NXedK"
-    }
-  },
-  "serp-video-tools": {
-    "slug": "serp-video-tools",
-    "provider": "stripe",
-    "mode": "subscription",
-    "currency": "usd",
-    "unit_amount": 2700,
-    "stripe": {
-      "live_price_id": "price_1SumgADP7AOTRcvmonowSzvO",
-      "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
     }
   },
   "serp-video-tools": {

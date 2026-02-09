@@ -10,7 +10,7 @@
   "description": "AI Audio & Video Transcription Generator converts recordings into accurate, ready‑to‑use text. Upload an audio or video file, pick a language, and get clean transcripts you can edit, search, and share. Perfect for creators, teams, and marketers documenting calls, webinars, podcasts, and training.",
   "seo_title": "AI Audio & Video Transcription Generator",
   "seo_description": "Transcribe audio and video into accurate, editable text for docs, captions, and summaries.",
-  "status": "pre_release",
+  "status": "live",
   "features": [],
   "benefits": [],
   "faqs": [],
@@ -43,6 +43,10 @@
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
+  },
   "license": {
     "entitlements": [
       "ai-audio-video-transcription-generator"

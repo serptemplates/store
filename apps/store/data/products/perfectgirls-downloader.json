@@ -10,7 +10,7 @@
   "description": "PerfectGirls Downloader helps teams and viewers save permitted PerfectGirls videos and image sets in one workflow. It captures the source files directly, preserving quality and metadata without manual effort.\n\nUse it to maintain research archives, prep highlight clips for editing, or keep private collections accessible when you're away from a stable connection.",
   "seo_title": "PerfectGirls Downloader | Download PerfectGirls Videos",
   "seo_description": "Download PerfectGirls videos and galleries you are authorized to view. Reliable PerfectGirls downloader with batch support.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Save PerfectGirls videos and galleries without compression",
     "Maintain creator folders, filenames, and timestamps",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",
