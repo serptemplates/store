@@ -340,6 +340,17 @@
       "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
     }
   },
+  "serp-video-tools": {
+    "slug": "serp-video-tools",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 2700,
+    "stripe": {
+      "live_price_id": "price_1SumgADP7AOTRcvmonowSzvO",
+      "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
+    }
+  },
   "serp-vpn": {
     "slug": "serp-vpn",
     "provider": "stripe",
