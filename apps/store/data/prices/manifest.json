@@ -211,12 +211,12 @@
   "loom-video-downloader": {
     "slug": "loom-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6pDP7AOTRcvmC4iRmMQV",
-      "test_price_id": "price_1SdS6pDP7AOTRcvmrC3NdrYn"
+      "live_price_id": "price_1SyyoYDP7AOTRcvm5DzNEthp",
+      "test_price_id": "price_1SyyoYDP7AOTRcvmhywal0zS"
     }
   },
   "luxuretv-downloader": {
@@ -340,17 +340,6 @@
       "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
     }
   },
-  "serp-video-tools": {
-    "slug": "serp-video-tools",
-    "provider": "stripe",
-    "mode": "subscription",
-    "currency": "usd",
-    "unit_amount": 2700,
-    "stripe": {
-      "live_price_id": "price_1SumgADP7AOTRcvmonowSzvO",
-      "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
-    }
-  },
   "serp-vpn": {
     "slug": "serp-vpn",
     "provider": "stripe",
@@ -387,12 +376,12 @@
   "sprout-video-downloader": {
     "slug": "sprout-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6xDP7AOTRcvmIZf2eWTA",
-      "test_price_id": "price_1SdS6yDP7AOTRcvm4vHxvK06"
+      "live_price_id": "price_1Syyp8DP7AOTRcvmuBqLMYgk",
+      "test_price_id": "price_1Syyp8DP7AOTRcvmLrmGUES2"
     }
   },
   "thisvid-downloader": {
