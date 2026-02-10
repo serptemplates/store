@@ -12,7 +12,7 @@
   "description": "iStockphoto Downloader gives creators and teams a dependable way to save iStockphoto stock images for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from iStockphoto with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "iStockphoto Downloader (Unofficial) | Download iStockphoto Images",
   "seo_description": "iStockphoto Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download iStockphoto stock images for offline use. Fast, private iStockphoto downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from iStockphoto",
     "Preserves original quality and metadata",
@@ -113,7 +113,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

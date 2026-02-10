@@ -10,7 +10,7 @@
   "description": "MP3 Downloader gives creators and teams a dependable way to save MP3 audio tracks for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from MP3 with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "MP3 Downloader | Download MP3 Audio",
   "seo_description": "Download MP3 audio tracks for offline use. Fast, private MP3 downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from MP3",
     "Preserves original quality and metadata",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

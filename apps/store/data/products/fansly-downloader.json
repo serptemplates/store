@@ -10,7 +10,7 @@
   "description": "Fansly Downloader helps creators and authorized viewers archive Fansly photos and videos they have permission to access. Instead of juggling unstable browser extensions, it keeps downloads fast, consistent, and organized.\n\nUse it to backup subscriber content, deliver media to clients, or keep personal archives available when you're working offline while respecting creator rights.",
   "seo_title": "Fansly Downloader | Download Fansly Media",
   "seo_description": "Download approved Fansly photos and videos for personal archiving. Fast, private Fansly downloader for authorized users.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download media you are authorized to view in original quality",
     "Preserve file naming and folder organization for each creator",
@@ -107,7 +107,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Secure Your Copy"
+    "cta_text": "Secure Your Copy",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

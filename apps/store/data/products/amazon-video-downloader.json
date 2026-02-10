@@ -12,7 +12,7 @@
   "description": "Amazon Video Downloader gives creators and teams a dependable way to save Amazon videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Amazon with consistent quality and predictable results.\n\nIt supports Amazon Prime Video movies and series, Multiple audio tracks and subtitles, and Batch downloads for series/collections, so you can move quickly from download to delivery without tedious rework. Use it to archive Amazon assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Amazon Video Downloader (Unofficial) | Download Amazon Videos",
   "seo_description": "Amazon Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Amazon videos easily for offline viewing. Fast, reliable Amazon video downloader with high-quality downloads.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Amazon Prime Video movies and series",
     "Multiple audio tracks and subtitles",
@@ -141,7 +141,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

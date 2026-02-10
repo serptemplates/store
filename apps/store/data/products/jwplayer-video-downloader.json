@@ -10,7 +10,7 @@
   "description": "JW Player Video Downloader unlocks the videos hiding behind jwplayer.com and jwplatform.com embeds used across newsrooms, OTT portals, and course platforms. The extension detects the player, resolves the signed media URLs, and saves a clean MP4 so you can review, archive, or edit content offline.\n\nFrom newsroom replays and subscriber-only interviews to customer education hubs, JW Player Video Downloader keeps teams in control of their media without reverse-engineering manifests or juggling third-party apps.",
   "seo_title": "JW Player Video Downloader | Download JW Player Videos",
   "seo_description": "Download JW Player videos and playlists in MP4 format with the JW Player Video Downloader browser extension.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Detects JW Player embeds on jwplayer.com, jwplatform.com, and white-labelled partner domains",
     "Replays the same signed URLs your session uses so subscriber-only or paywalled videos download securely",
@@ -130,7 +130,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

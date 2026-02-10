@@ -10,7 +10,7 @@
   "description": "PornPics Downloader gives researchers and collectors a dependable way to save galleries they are authorized to view. It grabs original-resolution images, preserves album order, and avoids the broken downloads that usually happen with manual saving.\n\nUse it to catalog inspiration sets, prep creative mood boards, or keep personal reference folders ready when you're offline—all while keeping content private on your own storage.",
   "seo_title": "PornPics Downloader | Download PornPics Galleries",
   "seo_description": "Download PornPics galleries in full resolution with organized folders. Reliable PornPics downloader for private archives.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Save PornPics galleries in original quality without compression",
     "Preserve album structure, tags, and ordering automatically",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

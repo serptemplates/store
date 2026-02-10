@@ -162,6 +162,30 @@ function resolveProductCta(product: ProductData, baseUrl?: string | null): Resol
     };
   }
 
+  const checkoutUrlOverride =
+    typeof product.pricing?.checkout_url === "string" ? product.pricing.checkout_url.trim() : "";
+  const hasAllowedOverride =
+    checkoutUrlOverride.length > 0
+    && (
+      checkoutUrlOverride.startsWith("/")
+      || CTA_ALLOWED_PREFIXES.some((prefix) => checkoutUrlOverride.startsWith(prefix))
+    );
+
+  if (hasAllowedOverride) {
+    const opensInNewTab = !checkoutUrlOverride.startsWith("/") && !checkoutUrlOverride.startsWith("#");
+    return {
+      mode: "external",
+      href: checkoutUrlOverride,
+      text: normalizedCtaText ?? DEFAULT_CTA_LABEL,
+      opensInNewTab,
+      target: opensInNewTab ? "_blank" : "_self",
+      rel: opensInNewTab ? "noopener noreferrer" : undefined,
+      analytics: {
+        destination: "external",
+      },
+    };
+  }
+
   const checkoutDestination = buildCheckoutDestination(product);
   if (checkoutDestination) {
     return {

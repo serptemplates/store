@@ -10,7 +10,7 @@
   "description": "SERP Downloader is the all-in-one browser extension for people who need the fastest path from “I’m watching it now” to “I have the file saved forever.” It recognises 1,000+ streaming, social, and file-hosting providers, unwraps whatever format they use—HLS, DASH, progressive MP4, WebM, audio-only, or zipped image galleries—and returns clean downloads that match the original quality.\n\nUnder the hood the extension keeps an up-to-date provider manifest, smartly routes each request through the right extractor, and merges segmented media without the user touching a command line. Teams can queue bulk jobs, monitor state from a single dashboard, and store recipes for recurring tasks so the same workflow works for the next platform that pops up.",
   "seo_title": "SERP Video Downloader | Download any type of video, from any provider, anywhere on the web",
   "seo_description": "Download videos, images, and audio from thousands of providers with the universal SERP Downloader browser extension.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Detects 1,000+ video, audio, and image providers in any tab without manual toggles",
     "Keeps a continuously updated extractor manifest backed by automated regression tests",
@@ -166,7 +166,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

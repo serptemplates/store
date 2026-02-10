@@ -10,7 +10,7 @@
   "description": "SERP Audio Downloader is the dedicated track and episode capture engine for people who need pristine masters from anywhere online. It fingerprints 1,000+ streaming, social, course, and podcast hosts, pulls the highest-quality rendition they expose—FLAC, WAV, 320kbps MP3, or AAC—and leaves you with clean, chapter-aware files ready for editing or archive.\n\nThe extension keeps a real-time manifest of supported providers, handles segmented HLS/DASH audio just as easily as progressive downloads, and merges multi-part shows without leaving stray gaps or channel drift. Teams can batch entire seasons, auto-normalise loudness to LKFS targets, and auto-fill ID3 artwork and metadata so the files are broadcast-ready the moment they land in storage.",
   "seo_title": "SERP Audio Downloader | Capture lossless audio from any provider",
   "seo_description": "Download studio-quality audio, podcasts, and music from thousands of sites with the dedicated SERP Audio Downloader browser extension.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Detects 1,000+ music, podcast, audiobook, and course providers in any active tab",
     "Pulls lossless FLAC/WAV or highest-bitrate MP3/AAC renditions automatically",
@@ -160,7 +160,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

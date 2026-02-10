@@ -12,6 +12,7 @@ const ALLOWED_PREFIXES = [
   siteBaseUrl,
   "https://ghl.serp.co/",
   "https://newsletter.serp.co/",
+  "https://serp.ly/",
   "https://buy.stripe.com/",
 ];
 

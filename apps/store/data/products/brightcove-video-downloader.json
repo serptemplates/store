@@ -10,7 +10,7 @@
   "description": "Brightcove Video Downloader helps teams archive enterprise video portals, training libraries, and campaign landing pages powered by Brightcove. The extension recognises players served from players.brightcove.net and embedded marketing sites, then captures the underlying media streams with the access you already have.\n\nWhether you are preparing compliance backups, reviewing customer onboarding flows, or keeping stakeholders aligned during launches, Brightcove Video Downloader automates the process—no devtools spelunking, header tracing, or external CLI utilities required.",
   "seo_title": "Brightcove Video Downloader | Download Brightcove Videos",
   "seo_description": "Download Brightcove-hosted videos, gated trainings, and embedded marketing assets with the Brightcove Video Downloader extension.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Detects Brightcove players across players.brightcove.net, bcbolt.com, and embedded marketing pages",
     "Authenticates using your existing SSO or token-based Brightcove session to respect access controls",
@@ -131,7 +131,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

@@ -103,7 +103,7 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 900,
+    "unit_amount": 1700,
     "stripe": {
       "live_price_id": "price_1Syy5TDP7AOTRcvmucVSCxKC",
       "test_price_id": "price_1Syy5TDP7AOTRcvmO8koJE4u"
@@ -279,10 +279,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 900,
+    "unit_amount": 2700,
     "stripe": {
-      "live_price_id": "price_1Symt0DP7AOTRcvmXqF2urXw",
-      "test_price_id": "price_1Symt1DP7AOTRcvmGL84mm8C"
+      "live_price_id": "price_1SpX5ZDP7AOTRcvmqzdg1fTx",
+      "test_price_id": "price_1SpXPfDP7AOTRcvmJrJNDNBP"
     }
   },
   "pornhub-video-downloader": {

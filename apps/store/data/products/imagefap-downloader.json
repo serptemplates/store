@@ -10,7 +10,7 @@
   "description": "ImageFap Downloader helps archivists and teams capture ImageFap galleries they have permission to view. It pulls full-resolution images, keeps albums intact, and avoids the broken downloads that come with manual saving.\n\nUse it to catalog research collections, prep backups for client deliverables, or carry personal sets with you when you're offline—all while respecting creator rights and privacy.",
   "seo_title": "ImageFap Downloader | Download ImageFap Galleries",
   "seo_description": "Download full ImageFap galleries with original quality and structure. Reliable ImageFap downloader for organized archives.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Download galleries you are authorized to access without compression",
     "Preserve album hierarchy, titles, and file order automatically",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

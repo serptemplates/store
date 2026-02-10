@@ -10,7 +10,7 @@
   "description": "SERP Image Downloader is the all-format asset grabber for creative teams that need the fastest path from inspiration to organised library. It recognises 1,000+ stock sites, marketplaces, design tools, and social feeds, fetches original-resolution files—JPG, PNG, SVG, WebP, AVIF, sprites, and zipped collections—and hands you clean, deduplicated folders tagged with the metadata you care about.\n\nThe extension maintains a living provider manifest, unwraps complex gallery APIs, and stitches infinite-scrolling boards into tidy downloads without brittle manual scripts. Design ops teams can schedule bulk pulls, auto-map licensing metadata, and sync drops straight into DAM buckets while keeping everything on-device.",
   "seo_title": "SERP Image Downloader | Archive high-resolution images from any provider",
   "seo_description": "Download high-resolution images, galleries, and vectors from thousands of providers with the dedicated SERP Image Downloader browser extension.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Detects 1,000+ stock libraries, design tools, marketplaces, and social feeds automatically",
     "Pulls original-resolution JPG, PNG, SVG, WebP, AVIF, and sprite sheets without compression",
@@ -160,7 +160,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

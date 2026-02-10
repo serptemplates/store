@@ -10,7 +10,7 @@
   "description": "SERP Subscription Tracker helps teams manage recurring tools and services. Capture vendors, renewal dates, costs, owners, and usage notes so you never miss a renewal or overpay for unused seats.",
   "seo_title": "SERP Subscription Tracker",
   "seo_description": "Track SaaS renewals, costs, and owners across your team.",
-  "status": "pre_release",
+  "status": "live",
   "features": [],
   "benefits": [],
   "faqs": [],
@@ -42,6 +42,10 @@
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
+  },
   "license": {
     "entitlements": [
       "subscription-tracking-manager"
