@@ -334,10 +334,10 @@
     "provider": "stripe",
     "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 2700,
+    "unit_amount": 4700,
     "stripe": {
-      "live_price_id": "price_1SumgADP7AOTRcvmonowSzvO",
-      "test_price_id": "price_1SumgBDP7AOTRcvm05CsWKuC"
+      "live_price_id": "price_1SzBXXDP7AOTRcvmN1vYSopU",
+      "test_price_id": "price_1SzBXYDP7AOTRcvmNBLX1lKB"
     }
   },
   "serp-vpn": {
