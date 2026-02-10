@@ -12,7 +12,7 @@
   "description": "Learnworlds Downloader gives creators and teams a dependable way to download Learnworlds course content instantly for offline learning. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Learnworlds with consistent quality and predictable results.\n\nIt supports Complete LearnWorlds courses and academies, Interactive videos and SCORM content, and Maintain academy structure and course hierarchy, so you can move quickly from download to delivery without tedious rework. Use it to archive Learnworlds assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Learnworlds Downloader (Unofficial) | Download Learnworlds Courses",
   "seo_description": "Learnworlds Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Learnworlds courses and videos for offline learning. Fast and reliable course content downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Complete LearnWorlds courses and academies",
     "Interactive videos and SCORM content",
@@ -140,7 +140,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

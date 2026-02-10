@@ -60,6 +60,16 @@ for (const file of productFiles) {
   }
 
   if (data?.status === "live") {
+    const checkoutUrlOverride =
+      typeof data?.pricing?.checkout_url === "string" ? data.pricing.checkout_url.trim() : "";
+    const hasCheckoutOverride = checkoutUrlOverride.length > 0;
+
+    if (hasCheckoutOverride) {
+      // Live listings can intentionally route to an external offer page and may not have
+      // a license entitlement or Stripe price configured in this repo.
+      continue;
+    }
+
     const entitlements = data?.license?.entitlements;
     const hasEntitlements = Array.isArray(entitlements)
       ? entitlements.some((entry) => typeof entry === "string" && entry.trim().length > 0)

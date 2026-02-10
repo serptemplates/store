@@ -12,7 +12,7 @@
   "description": "Soundcloud Downloader gives creators and teams a dependable way to save Soundcloud audio tracks instantly for offline listening. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Soundcloud with consistent quality and predictable results.\n\nIt supports SoundCloud tracks and playlists, High-quality audio downloads up to 320kbps, and Batch artist discographies/liked tracks downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Soundcloud assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Soundcloud Downloader (Unofficial) | Download Soundcloud Audio",
   "seo_description": "Soundcloud Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Soundcloud audio tracks for offline listening. Fast and reliable Soundcloud audio downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "SoundCloud tracks and playlists",
     "High-quality audio downloads up to 320kbps",
@@ -140,7 +140,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

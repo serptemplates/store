@@ -10,7 +10,7 @@
   "description": "Webinarjam Video Downloader lets you archive WebinarJam replays as MP4 files you can watch anytime. Detects replay pages, lists available qualities, and downloads reliably without extra tools.",
   "seo_title": "WebinarJam Video Downloader | Save WebinarJam Replays",
   "seo_description": "Download WebinarJam replays in MP4. Fast, reliable WebinarJam video downloader for offline access.",
-  "status": "pre_release",
+  "status": "live",
   "features": [],
   "benefits": [],
   "faqs": [
@@ -48,6 +48,10 @@
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
+  },
   "payment": {
     "provider": "stripe",
     "stripe": {

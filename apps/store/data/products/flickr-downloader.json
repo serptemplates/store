@@ -12,7 +12,7 @@
   "description": "Flickr Downloader gives creators and teams a dependable way to save Flickr images and content instantly to your device. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Flickr with consistent quality and predictable results.\n\nIt supports High-res Flickr downloads and albums, Batch photographer portfolios/collections downloads, and Creative Commons and rights-managed content, so you can move quickly from download to delivery without tedious rework. Use it to archive Flickr assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Flickr Downloader (Unofficial) | Download Flickr Images",
   "seo_description": "Flickr Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download Flickr images and graphics for offline use. Fast and reliable Flickr content downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "High-res Flickr downloads and albums",
     "Batch photographer portfolios/collections downloads",
@@ -142,7 +142,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

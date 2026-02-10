@@ -9,6 +9,7 @@ import {
   optionalArray,
   optionalHost,
   optionalAssetPathSchema,
+  optionalExternalUrl,
   optionalTrimmedString,
   reviewSchema,
   screenshotSchema,
@@ -41,11 +42,13 @@ const licenseSchema = z
 const pricingSchemaShape = {
   subheading: z.string().trim().optional(),
   cta_text: z.string().trim().optional(),
+  checkout_url: optionalExternalUrl,
 } satisfies Record<string, z.ZodTypeAny>;
 
 export const PRICING_FIELD_ORDER = [
   "subheading",
   "cta_text",
+  "checkout_url",
 ] as const;
 const pricingSchema = z.object(pricingSchemaShape).optional();
 
@@ -317,7 +320,13 @@ export const productSchema = z
 
     if (data.status === "live") {
       const activeStripePriceId = resolveStripePriceId(data.payment);
-      if (!activeStripePriceId) {
+      const checkoutUrlOverride =
+        typeof data.pricing?.checkout_url === "string" ? data.pricing.checkout_url.trim() : "";
+      const hasCheckoutUrlOverride = checkoutUrlOverride.length > 0;
+
+      // Some live listings intentionally route to an external checkout/offer page and do not
+      // require an internal Stripe price configuration.
+      if (!activeStripePriceId && !hasCheckoutUrlOverride) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["payment", "stripe", "price_id"],

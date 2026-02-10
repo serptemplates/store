@@ -10,7 +10,7 @@
   "description": "ShesFreaky Downloader keeps downloads stable for teams and viewers who have permission to access ShesFreaky media. It preserves original quality, album order, and performer info without the hassles of manual saving.\n\nUse it to build research references, prep editing timelines, or maintain personal archives that stay accessible even when you're offline.",
   "seo_title": "ShesFreaky Downloader | Download ShesFreaky Media",
   "seo_description": "Download ShesFreaky videos and galleries you are authorized to view. Secure ShesFreaky downloader with batch support.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Save ShesFreaky videos and galleries in original quality",
     "Keep performer details, tags, and timestamps intact",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",
