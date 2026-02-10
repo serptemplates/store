@@ -563,12 +563,12 @@
   "youtube-downloader": {
     "slug": "youtube-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS77DP7AOTRcvmEt8SQRBN",
-      "test_price_id": "price_1SdS77DP7AOTRcvmXEEQ8OXD"
+      "live_price_id": "price_1SzJLQDP7AOTRcvmyVBPcu3Q",
+      "test_price_id": "price_1SzJLRDP7AOTRcvmosvHwFIn"
     }
   }
 }
