@@ -10,7 +10,7 @@
   "description": "Unleash the power of 1200+ meticulously crafted, theme-ready blocks. Built for Shadcn UI and Tailwind, optimized for NextJS and AstroJS. Copy and paste fully-designed, full-width sections to build landing and marketing pages in minutes.",
   "seo_title": "SERP Blocks – The Largest ShadcnUI Component Library for React, NextJS Built on TailwindCSS - 1200+ Themed ShadcnUI Blocks",
   "seo_description": "Theme-ready UI blocks for Shadcn UI and Tailwind. 1200+ blocks, 40 themes, dark mode, and support for NextJS, Astro, Vue, Svelte, React, and HTML/JS.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "1200+ themed UI blocks based on ShadcnUI",
     "Built for Shadcn UI and Tailwind",
@@ -120,5 +120,8 @@
     }
   ],
   // PAYMENT DATA
-  "pricing": {}
+  "pricing": {
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
+  }
 }

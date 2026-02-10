@@ -12,7 +12,7 @@
   "description": "Facebook Video Downloader gives creators and teams a dependable way to save Facebook videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Facebook with consistent quality and predictable results.\n\nIt supports High-quality Facebook downloads quality, Public and private video content, and Batch from pages, groups,/profiles downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Facebook assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Facebook Video Downloader (Unofficial) | Facebook Downloader | Download Facebook Downloader for Offline Access",
   "seo_description": "Facebook Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download videos, images, and content from facebook with our reliable downloader tool. Fast, secure, and easy to use.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "High-quality Facebook downloads quality",
     "Public and private video content",
@@ -140,7 +140,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

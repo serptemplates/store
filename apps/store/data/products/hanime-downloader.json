@@ -10,7 +10,7 @@
   "description": "Hanime Downloader gives collectors a private way to save hanime.tv videos they have permission to view. Instead of juggling unreliable recorders, it pulls the original stream files so quality stays crisp end-to-end.\n\nUse it to archive niche titles, prep viewing libraries for travel, or back up purchases you want available without depending on internet access.",
   "seo_title": "Hanime Downloader | Download Hanime Videos",
   "seo_description": "Download hanime.tv videos you are permitted to view. Fast, private Hanime downloader tailored for collectors.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "Save hanime.tv videos you are authorized to watch",
     "Maintain original resolution, subtitles, and metadata",
@@ -106,7 +106,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",

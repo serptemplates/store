@@ -10,7 +10,7 @@
   "description": "HLS Downloader gives creators and teams a dependable way to save HLS videos for offline access. Instead of juggling manual captures or risky browser extensions, it pulls publicly accessible files directly from HLS with consistent quality.\n\nUse it to archive research material, prep client deliverables, or keep your personal library available when you're traveling or working with limited connectivity.",
   "seo_title": "HLS Downloader | Download HLS Videos",
   "seo_description": "Download HLS videos for offline use. Fast, private HLS downloader.",
-  "status": "pre_release",
+  "status": "live",
   "features": [
     "One-click downloads from HLS",
     "Preserves original quality and metadata",
@@ -105,7 +105,8 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get Notified 🔔"
+    "cta_text": "Get it Now",
+    "checkout_url": "https://serp.ly/serp-video-tools"
   },
   "payment": {
     "provider": "stripe",
