@@ -142,6 +142,17 @@
       "test_price_id": "price_1SymsuDP7AOTRcvmK55FYvoJ"
     }
   },
+  "facebook-video-downloader": {
+    "slug": "facebook-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1Szee5DP7AOTRcvmUxSKMqkE",
+      "test_price_id": "price_1Szee7DP7AOTRcvmI987C4hy"
+    }
+  },
   "gohighlevel-downloader": {
     "slug": "gohighlevel-downloader",
     "provider": "stripe",
@@ -250,6 +261,17 @@
     "stripe": {
       "live_price_id": "price_1SymsyDP7AOTRcvmsn0UFdzC",
       "test_price_id": "price_1SymsyDP7AOTRcvm8R6BgZuT"
+    }
+  },
+  "mindvalley-downloader": {
+    "slug": "mindvalley-downloader",
+    "provider": "stripe",
+    "mode": "payment",
+    "currency": "usd",
+    "unit_amount": 9700,
+    "stripe": {
+      "live_price_id": "price_1Szee8DP7AOTRcvmxfmuY3TP",
+      "test_price_id": "price_1Szee9DP7AOTRcvmxf2G5ReM"
     }
   },
   "motherless-downloader": {
