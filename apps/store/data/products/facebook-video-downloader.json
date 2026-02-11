@@ -1,7 +1,7 @@
 {
   // PRODUCT INFO
   "platform": "Facebook",
-  "name": "Facebook Video Downloader",
+  "name": "Facebook Downloader",
   "tagline": "Save Facebook videos instantly for offline viewing.",
   "slug": "facebook-video-downloader",
   "trademark_metadata": {
@@ -11,7 +11,7 @@
   },
   "description": "Facebook Video Downloader gives creators and teams a dependable way to save Facebook videos instantly for offline viewing. Instead of juggling manual captures or questionable browser extensions, it pulls content directly from Facebook with consistent quality and predictable results.\n\nIt supports High-quality Facebook downloads quality, Public and private video content, and Batch from pages, groups,/profiles downloads, so you can move quickly from download to delivery without tedious rework. Use it to archive Facebook assets, prep client deliverables, or keep your library accessible when connectivity is limited.",
   "seo_title": "Facebook Video Downloader (Unofficial) | Facebook Downloader | Download Facebook Downloader for Offline Access",
-  "seo_description": "Facebook Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download videos, images, and content from facebook with our reliable downloader tool. Fast, secure, and easy to use.",
+  "seo_description": "Facebook Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Facebook Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Download videos, images, and content from facebook with our reliable downloader tool. Fast, secure, and easy to use.",
   "status": "live",
   "features": [
     "High-quality Facebook downloads quality",
@@ -134,20 +134,23 @@
   "related_videos": [],
   "related_posts": [],
   // PRODUCT PAGE LINKS
-  "serply_link": "https://serp.ly/facebook-video-downloader",
+  "serply_link": "https://serp.ly/facebook-downloader",
   "github_repo_url": "https://github.com/serpapps/facebook-video-downloader",
   "github_repo_tags": [],
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now",
-    "checkout_url": "https://serp.ly/serp-video-tools"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
+    "mode": "subscription",
     "stripe": {
+      "price_id": "price_1Szee5DP7AOTRcvmUxSKMqkE",
+      "test_price_id": "price_1Szee7DP7AOTRcvmI987C4hy",
       "metadata": {
-        "stripe_product_id": "prod_Sv6Gxbj0G8PsfX"
+        "stripe_product_id": "prod_TxZnTCI57ZLwsn",
+        "stripe_test_product_id": "prod_TxZnSShMquKWkU"
       },
       "optional_items": [
         {
@@ -159,7 +162,13 @@
   "ghl": {
     "tag_ids": [
       "purchase-facebook-video-downloader",
+      "purchase-facebook-downloader",
       "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "facebook-downloader"
     ]
   }
 }
