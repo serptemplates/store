@@ -351,6 +351,28 @@
       "test_price_id": "price_1Symt5DP7AOTRcvmhx1NXedK"
     }
   },
+  "serp-downloaders-bundle": {
+    "slug": "serp-downloaders-bundle",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 4700,
+    "stripe": {
+      "live_price_id": "price_1SpeoDDP7AOTRcvmHxKn0Ns6",
+      "test_price_id": "price_1SpeoDDP7AOTRcvmyDKXnlHc"
+    }
+  },
+  "serp-everything-bundle": {
+    "slug": "serp-everything-bundle",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 9900,
+    "stripe": {
+      "live_price_id": "price_1Szty5DP7AOTRcvma7VzEJnf",
+      "test_price_id": "price_1Szty7DP7AOTRcvmpx6Zq27U"
+    }
+  },
   "serp-video-tools": {
     "slug": "serp-video-tools",
     "provider": "stripe",
