@@ -1,0 +1,106 @@
+{
+  // PRODUCT INFO
+  "platform": "Mindvalley",
+  "name": "Mindvalley Downloader",
+  "tagline": "Save Mindvalley videos for offline access.",
+  "slug": "mindvalley-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Mindvalley",
+    "legal_entity": "Mindvalley, Inc."
+  },
+  "description": "Mindvalley Downloader helps you save accessible Mindvalley lesson videos for offline review and research workflows. It is built for fast, reliable downloads with clean file output so you can keep your study library organized.",
+  "seo_title": "Mindvalley Downloader (Unofficial) | Download Mindvalley Videos for Offline Access",
+  "seo_description": "Mindvalley Downloader (Unofficial). Authorized-use only — download content you own or have permission to access.",
+  "status": "live",
+  "features": [
+    "Download available Mindvalley lesson videos quickly",
+    "Keep offline copies for study and travel",
+    "Stable download handling for long-form course content",
+    "Simple one-click workflow from supported pages"
+  ],
+  "benefits": [
+    "Review lessons without depending on constant internet access",
+    "Keep training assets organized for repeat study",
+    "Speed up research and note-taking workflows"
+  ],
+  "faqs": [
+    {
+      "question": "What is Mindvalley Downloader used for?",
+      "answer": "It helps you save available Mindvalley videos for offline viewing and structured study workflows."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "mindvalley downloader",
+    "mindvalley video downloader"
+  ],
+  "featured": false,
+  "new_release": false,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "featured_image": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/mindvalley-downloader.jpg",
+  "screenshots": [
+    {
+      "url": "https://raw.githubusercontent.com/serpapps/.github/refs/heads/main/sites/mindvalley-downloader.jpg",
+      "alt": "Mindvalley Downloader product preview"
+    }
+  ],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/mindvalley-downloader",
+  "github_repo_url": "https://github.com/serpapps/mindvalley-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "payment",
+    "stripe": {
+      "price_id": "price_1Szee8DP7AOTRcvmxfmuY3TP",
+      "test_price_id": "price_1Szee9DP7AOTRcvmxf2G5ReM",
+      "metadata": {
+        "stripe_product_id": "prod_TxZnsgyfL6rdY4",
+        "stripe_test_product_id": "prod_TxZn7qt04jY4I9"
+      }
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-mindvalley-downloader",
+      "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "mindvalley-downloader"
+    ]
+  }
+}
