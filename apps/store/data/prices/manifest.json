@@ -197,6 +197,17 @@
       "test_price_id": "price_1SymsvDP7AOTRcvmFs5qPE5Z"
     }
   },
+  "instagram-downloader": {
+    "slug": "instagram-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1SzuDwDP7AOTRcvm3ENEldam",
+      "test_price_id": "price_1SzuDxDP7AOTRcvm2XHMK3fk"
+    }
+  },
   "justforfans-downloader": {
     "slug": "justforfans-downloader",
     "provider": "stripe",
