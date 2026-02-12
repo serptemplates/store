@@ -2,17 +2,10 @@ import type Stripe from "stripe";
 
 import { findCheckoutSessionBySubscriptionId } from "@/lib/checkout";
 import logger from "@/lib/logger";
-import { resolveCheckoutCustomerEmail } from "@/lib/payments/stripe-webhook/helpers/entitlements";
-
-function hasRemainingSubscriptionTime(subscription: Stripe.Subscription): boolean {
-  const currentPeriodEnd = subscription.current_period_end;
-  if (typeof currentPeriodEnd !== "number") {
-    return false;
-  }
-
-  const nowSeconds = Math.floor(Date.now() / 1_000);
-  return currentPeriodEnd > nowSeconds;
-}
+import {
+  resolveCheckoutCustomerEmail,
+  resolveCheckoutEntitlements,
+} from "@/lib/payments/stripe-webhook/helpers/entitlements";
 
 export async function handleCustomerSubscriptionDeleted(subscription: Stripe.Subscription) {
   try {
@@ -28,8 +21,8 @@ export async function handleCustomerSubscriptionDeleted(subscription: Stripe.Sub
       return;
     }
 
-    const offerId = sessionRecord.offerId ?? null;
     const customerEmail = resolveCheckoutCustomerEmail(sessionRecord);
+    const entitlements = resolveCheckoutEntitlements(sessionRecord);
 
     if (!customerEmail) {
       logger.debug("serp_auth.entitlements_revoke_skipped_subscription", {
@@ -39,38 +32,42 @@ export async function handleCustomerSubscriptionDeleted(subscription: Stripe.Sub
       return;
     }
 
-    if (hasRemainingSubscriptionTime(subscription)) {
-      logger.info("stripe.subscription_deleted_skipped_remaining_period", {
-        subscriptionId,
-        currentPeriodEnd: subscription.current_period_end ?? null,
-        cancelAtPeriodEnd: subscription.cancel_at_period_end ?? null,
-        canceledAt: subscription.canceled_at ?? null,
-        status: subscription.status ?? null,
-      });
-      return;
-    }
-
     try {
-      const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
-      await revokeAllSerpAuthEntitlements({
-        email: customerEmail,
-        metadata: {
-          source: "stripe",
-          offerId,
-          stripe: {
-            eventType: "customer.subscription.deleted",
-            subscriptionId,
-            customerId: typeof subscription.customer === "string"
-              ? subscription.customer
-              : subscription.customer?.id ?? null,
+      const serpAuthEntitlementMetadata = {
+        source: "stripe",
+        offerId: sessionRecord.offerId ?? null,
+        stripe: {
+          eventType: "customer.subscription.deleted",
+          subscriptionId,
+          customerId: typeof subscription.customer === "string"
+            ? subscription.customer
+            : subscription.customer?.id ?? null,
+        },
+      };
+      if (entitlements.length > 0) {
+        const { revokeSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+        await revokeSerpAuthEntitlements({
+          email: customerEmail,
+          entitlements,
+          metadata: serpAuthEntitlementMetadata,
+          context: {
+            provider: "stripe",
+            providerEventId: subscriptionId,
+            providerSessionId: sessionRecord.stripeSessionId ?? null,
           },
-        },
-        context: {
-          provider: "stripe",
-          providerEventId: subscriptionId,
-          providerSessionId: sessionRecord.stripeSessionId ?? null,
-        },
-      });
+        });
+      } else {
+        const { revokeAllSerpAuthEntitlements } = await import("@/lib/serp-auth/entitlements");
+        await revokeAllSerpAuthEntitlements({
+          email: customerEmail,
+          metadata: serpAuthEntitlementMetadata,
+          context: {
+            provider: "stripe",
+            providerEventId: subscriptionId,
+            providerSessionId: sessionRecord.stripeSessionId ?? null,
+          },
+        });
+      }
     } catch (error) {
       logger.debug("serp_auth.entitlements_revoke_on_subscription_deleted_failed", {
         subscriptionId,

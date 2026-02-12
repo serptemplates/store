@@ -2,21 +2,38 @@
   // PRODUCT INFO
   "platform": "SERP Apps",
   "name": "All SERP Video Downloaders",
-  "tagline": "Bundle offer applied via checkout cross-sell.",
+  "tagline": "One subscription for all SERP video downloaders.",
   "slug": "serp-downloaders-bundle",
   "trademark_metadata": {
     "uses_trademarked_brand": false
   },
-  "description": "This is an internal bundle product used as an optional item/cross-sell during checkout. It is excluded from the public catalog.",
+  "description": "Get access to all SERP video downloader tools in one monthly bundle. This subscription is designed for teams and power users who need broad downloader coverage across platforms without buying each tool separately.",
   "seo_title": "All SERP Video Downloaders Bundle",
-  "seo_description": "Internal checkout bundle for SERP Video Downloaders.",
-  "status": "pre_release",
-  "features": [],
-  "benefits": [],
-  "faqs": [],
+  "seo_description": "Bundle subscription for all SERP video downloader tools in one plan.",
+  "status": "live",
+  "features": [
+    "Single monthly plan for all SERP video downloader tools",
+    "Broad platform coverage without buying tools one-by-one",
+    "Fast activation and centralized access"
+  ],
+  "benefits": [
+    "Lower total cost versus multiple separate subscriptions",
+    "Simpler billing and access management",
+    "Faster onboarding for teams"
+  ],
+  "faqs": [
+    {
+      "question": "What is included in this bundle?",
+      "answer": "This bundle gives you access to all SERP video downloader software in one subscription."
+    }
+  ],
   "reviews": [],
   "supported_operating_systems": [],
   "supported_regions": [],
+  "categories": [
+    "Utilities",
+    "Video Downloader"
+  ],
   "keywords": [],
   "featured": false,
   "new_release": false,
@@ -38,15 +55,17 @@
   },
   // PAYMENT DATA
   "pricing": {
-    "cta_text": ""
+    "cta_text": "Get Bundle"
   },
   "payment": {
     "provider": "stripe",
+    "mode": "subscription",
     "stripe": {
       "price_id": "price_1SpeoDDP7AOTRcvmHxKn0Ns6",
       "test_price_id": "price_1SpeoDDP7AOTRcvmyDKXnlHc",
       "metadata": {
-        "stripe_product_id": "prod_TadNFo3sxzkGYb"
+        "stripe_product_id": "prod_TadNFo3sxzkGYb",
+        "stripe_test_product_id": "prod_TjcRuRLb8vuYDQ"
       }
     }
   },

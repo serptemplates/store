@@ -1288,7 +1288,7 @@ describe("POST /api/stripe/webhook", () => {
     );
   });
 
-  it("keeps entitlements when subscription has remaining time", async () => {
+  it("revokes entitlements even when subscription period end is in the future", async () => {
     const nowSeconds = Math.floor(Date.now() / 1_000);
     const event = buildSubscriptionDeletedEvent({
       cancel_at_period_end: true,
@@ -1306,7 +1306,16 @@ describe("POST /api/stripe/webhook", () => {
     const response = await POST(buildRequest("{}"));
     expect(response.status).toBe(200);
 
-    expect(fetchMock).not.toHaveBeenCalled();
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://auth.serp.co/internal/entitlements/revoke",
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "content-type": "application/json",
+          "x-serp-internal-secret": "serp_auth_test_secret",
+        }),
+      }),
+    );
   });
 
   it("revokes entitlements when subscription ends", async () => {
