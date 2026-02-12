@@ -1,0 +1,86 @@
+{
+  // PRODUCT INFO
+  "platform": "SERP Apps",
+  "name": "SERP Everything Bundle",
+  "tagline": "One subscription for all SERP software, tools, and apps.",
+  "slug": "serp-everything-bundle",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "SERP Everything Bundle is the all-access subscription for the full SERP ecosystem. One plan unlocks all SERP software, browser extensions, apps, tools, and games.",
+  "seo_title": "SERP Everything Bundle | All SERP Software in One Subscription",
+  "seo_description": "Get full access to all SERP software, browser extensions, apps, tools, and games with one monthly plan.",
+  "status": "live",
+  "features": [
+    "One subscription for all SERP products",
+    "Includes software, browser extensions, apps, tools, and games",
+    "Centralized billing and access"
+  ],
+  "benefits": [
+    "Maximum value if you use multiple SERP products",
+    "Simpler onboarding for teams",
+    "Single plan instead of multiple separate subscriptions"
+  ],
+  "faqs": [
+    {
+      "question": "What does SERP Everything Bundle include?",
+      "answer": "It includes access to all SERP software, browser extensions, apps, tools, and games under one monthly subscription."
+    }
+  ],
+  "reviews": [],
+  "supported_operating_systems": [],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Utilities",
+    "Productivity"
+  ],
+  "keywords": [
+    "serp everything bundle",
+    "serp all access",
+    "all serp tools"
+  ],
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/serp-everything-bundle",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get Everything"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "subscription",
+    "stripe": {
+      "price_id": "price_1Szty5DP7AOTRcvma7VzEJnf",
+      "test_price_id": "price_1Szty7DP7AOTRcvmpx6Zq27U",
+      "metadata": {
+        "stripe_product_id": "prod_TxpdgNI0FTrKeP",
+        "stripe_test_product_id": "prod_TxpdUfZVAbXI1M"
+      }
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-serp-everything-bundle",
+      "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "serp-everything-bundle"
+    ]
+  }
+}

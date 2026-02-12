@@ -140,14 +140,17 @@
   "resource_links": [],
   // PAYMENT DATA
   "pricing": {
-    "cta_text": "Get it Now",
-    "checkout_url": "https://serp.ly/serp-video-tools"
+    "cta_text": "Get it Now"
   },
   "payment": {
     "provider": "stripe",
+    "mode": "subscription",
     "stripe": {
+      "price_id": "price_1SzuDwDP7AOTRcvm3ENEldam",
+      "test_price_id": "price_1SzuDxDP7AOTRcvm2XHMK3fk",
       "metadata": {
-        "stripe_product_id": "prod_Sv6HurnDKF4TUS"
+        "stripe_product_id": "prod_Txptmus04z0233",
+        "stripe_test_product_id": "prod_TxptGwVMj2MNYq"
       },
       "optional_items": [
         {
@@ -160,6 +163,11 @@
     "tag_ids": [
       "purchase-instagram-downloader",
       "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "instagram-downloader"
     ]
   }
 }
