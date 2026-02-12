@@ -318,6 +318,17 @@
       "test_price_id": "price_1SpXPfDP7AOTRcvmJrJNDNBP"
     }
   },
+  "pinterest-downloader": {
+    "slug": "pinterest-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1SzwFeDP7AOTRcvm0U8Purst",
+      "test_price_id": "price_1SzwFfDP7AOTRcvmJ3N2QgKs"
+    }
+  },
   "pornhub-video-downloader": {
     "slug": "pornhub-video-downloader",
     "provider": "stripe",
