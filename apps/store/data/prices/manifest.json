@@ -494,6 +494,17 @@
       "test_price_id": "price_1Symt8DP7AOTRcvmwGywxVED"
     }
   },
+  "twitter-video-downloader": {
+    "slug": "twitter-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1SzxruDP7AOTRcvmD5KUuruh",
+      "test_price_id": "price_1SzxrsDP7AOTRcvm53mkYt0R"
+    }
+  },
   "txxx-downloader": {
     "slug": "txxx-downloader",
     "provider": "stripe",
