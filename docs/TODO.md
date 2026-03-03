@@ -40,3 +40,16 @@
 
 - [ ] Update `baseline-browser-mapping` dev dependency to clear Vitest warning.
 - [ ] Review `next/image` `images.qualities` config to address the quality 85 warning.
+
+## Downloader Billing Updates (2026-03-04)
+
+- [x] Add `tellatv-downloader` product JSON page in `apps/store/data/products/`.
+- [x] Create Stripe live + test product for `tellatv-downloader` and wire IDs into product JSON.
+- [x] Create/refresh Stripe live + test monthly ($9/mo) product+price wiring for:
+  `erothots-downloader`, `reddit-downloader`, `stripchat-video-downloader`, `linkedin-learning-downloader`,
+  `thinkific-downloader`, `dailymotion-downloader`, `m3u8-downloader`, `mindvalley-downloader`,
+  `tiktok-downloader`, `wistia-video-downloader`, `123movies-downloader`.
+- [x] Update product JSON payment configuration to subscription mode + new Stripe live/test IDs.
+- [x] Update `apps/store/data/prices/manifest.json` entries to subscription mode, `unit_amount: 900`, and new live/test price IDs.
+- [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
+- [x] Document Stripe monthly upsert workflow + gotchas in `docs/knowledge`.

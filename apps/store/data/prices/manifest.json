@@ -2,12 +2,12 @@
   "123movies-downloader": {
     "slug": "123movies-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6cDP7AOTRcvm3EeOELFV",
-      "test_price_id": "price_1SdS6dDP7AOTRcvmgxMd5FzK"
+      "live_price_id": "price_1T6w1EDP7AOTRcvmGyzJkHN2",
+      "test_price_id": "price_1T6w1FDP7AOTRcvmf5sgo3di"
     }
   },
   "ai-voice-cloner-app": {
@@ -112,12 +112,12 @@
   "dailymotion-downloader": {
     "slug": "dailymotion-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6jDP7AOTRcvmSPOaz9gI",
-      "test_price_id": "price_1SdS6jDP7AOTRcvmUpRlTPty"
+      "live_price_id": "price_1T6w10DP7AOTRcvmaasGwyk3",
+      "test_price_id": "price_1T6w11DP7AOTRcvmzls9UBCi"
     }
   },
   "eporner-video-downloader": {
@@ -140,6 +140,17 @@
     "stripe": {
       "live_price_id": "price_1SymstDP7AOTRcvmj36uKy9o",
       "test_price_id": "price_1SymsuDP7AOTRcvmK55FYvoJ"
+    }
+  },
+  "erothots-downloader": {
+    "slug": "erothots-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0mDP7AOTRcvmqtV14YZT",
+      "test_price_id": "price_1T6w0oDP7AOTRcvmEr1BAHfF"
     }
   },
   "facebook-video-downloader": {
@@ -230,6 +241,17 @@
       "test_price_id": "price_1SpedTDP7AOTRcvm0JJllkPJ"
     }
   },
+  "linkedin-learning-downloader": {
+    "slug": "linkedin-learning-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0uDP7AOTRcvmwD5G8xSQ",
+      "test_price_id": "price_1T6w0wDP7AOTRcvmxjZ3XloF"
+    }
+  },
   "loom-video-downloader": {
     "slug": "loom-video-downloader",
     "provider": "stripe",
@@ -255,12 +277,12 @@
   "m3u8-downloader": {
     "slug": "m3u8-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6qDP7AOTRcvmUER2kNTE",
-      "test_price_id": "price_1SdS6qDP7AOTRcvmdBsyuWPv"
+      "live_price_id": "price_1T6w12DP7AOTRcvmRuKMNEat",
+      "test_price_id": "price_1T6w14DP7AOTRcvmg2EP1X3z"
     }
   },
   "manyvids-downloader": {
@@ -277,12 +299,12 @@
   "mindvalley-downloader": {
     "slug": "mindvalley-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 9700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1Szee8DP7AOTRcvmxfmuY3TP",
-      "test_price_id": "price_1Szee9DP7AOTRcvmxf2G5ReM"
+      "live_price_id": "price_1T6w15DP7AOTRcvm16ECHbjH",
+      "test_price_id": "price_1T6w17DP7AOTRcvmm8J579lV"
     }
   },
   "motherless-downloader": {
@@ -349,6 +371,17 @@
     "stripe": {
       "live_price_id": "price_1Symt2DP7AOTRcvmkD6WMTGo",
       "test_price_id": "price_1Symt3DP7AOTRcvmE86SjsoZ"
+    }
+  },
+  "reddit-downloader": {
+    "slug": "reddit-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0pDP7AOTRcvmWQfNfHNX",
+      "test_price_id": "price_1T6w0qDP7AOTRcvm7RG1nDgL"
     }
   },
   "redgifs-downloader": {
@@ -450,6 +483,39 @@
       "test_price_id": "price_1Syyp8DP7AOTRcvmLrmGUES2"
     }
   },
+  "stripchat-video-downloader": {
+    "slug": "stripchat-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0sDP7AOTRcvmV8eZuEhf",
+      "test_price_id": "price_1T6w0tDP7AOTRcvmvEBQGoMc"
+    }
+  },
+  "tellatv-downloader": {
+    "slug": "tellatv-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0kDP7AOTRcvm549Saa2i",
+      "test_price_id": "price_1T6w0lDP7AOTRcvmof9necyz"
+    }
+  },
+  "thinkific-downloader": {
+    "slug": "thinkific-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T6w0xDP7AOTRcvmoJZCXMAa",
+      "test_price_id": "price_1T6w0yDP7AOTRcvmAMvY9uAd"
+    }
+  },
   "thisvid-downloader": {
     "slug": "thisvid-downloader",
     "provider": "stripe",
@@ -464,12 +530,12 @@
   "tiktok-downloader": {
     "slug": "tiktok-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS6yDP7AOTRcvm66nWvCXX",
-      "test_price_id": "price_1SdS6zDP7AOTRcvmppjozxYj"
+      "live_price_id": "price_1T6w18DP7AOTRcvmE2Adn1Cl",
+      "test_price_id": "price_1T6w1ADP7AOTRcvmP6fmZBgk"
     }
   },
   "tnaflix-video-downloader": {
@@ -552,12 +618,12 @@
   "wistia-video-downloader": {
     "slug": "wistia-video-downloader",
     "provider": "stripe",
-    "mode": "payment",
+    "mode": "subscription",
     "currency": "usd",
-    "unit_amount": 1700,
+    "unit_amount": 900,
     "stripe": {
-      "live_price_id": "price_1SdS72DP7AOTRcvm9E8lsXex",
-      "test_price_id": "price_1SdS72DP7AOTRcvm1lIS5aj5"
+      "live_price_id": "price_1T6w1BDP7AOTRcvmnBpk4bTx",
+      "test_price_id": "price_1T6w1CDP7AOTRcvm4TcTdIca"
     }
   },
   "xfantazy-downloader": {
