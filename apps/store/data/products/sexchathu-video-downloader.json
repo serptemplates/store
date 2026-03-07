@@ -1,0 +1,129 @@
+{
+  // PRODUCT INFO
+  "platform": "SexChat.hu",
+  "name": "SexChat.hu Video Downloader",
+  "tagline": "Save SexChat.hu videos in a few clicks.",
+  "slug": "sexchathu-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "SexChat.hu",
+    "legal_entity": "Unknown / no verifiable registrant"
+  },
+  "description": "SexChat.hu Video Downloader helps you keep publicly accessible SexChat.hu videos available offline with a simple capture workflow and local-first storage. It is designed to make private archiving easier while keeping downloads organized and dependable.",
+  "seo_title": "SexChat.hu Video Downloader (Unofficial) | Download SexChat.hu Videos",
+  "seo_description": "SexChat.hu Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Authorized-use only — download SexChat.hu videos for offline access with a reliable local workflow.",
+  "status": "live",
+  "features": [
+    "Capture SexChat.hu videos with a simple local-first workflow",
+    "Stable downloads with organized offline storage",
+    "Playback and archive media without relying on live links",
+    "Private workflow with no external file uploads",
+    "Works across major desktop browsers and operating systems"
+  ],
+  "benefits": [],
+  "faqs": [
+    {
+      "question": "How does SexChat.hu Video Downloader work?",
+      "answer": "Open the SexChat.hu video or stream you are authorized to access, start the downloader workflow, and save the media locally for offline viewing."
+    },
+    {
+      "question": "Does it bypass DRM or private access controls?",
+      "answer": "No. It is intended only for publicly accessible content or content you already have permission to access."
+    },
+    {
+      "question": "Where are downloads stored?",
+      "answer": "Files are saved to your own device so you can organize them in your preferred folders and archive workflow."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Jordan Blake",
+      "review": "SexChat.hu Video Downloader made it much easier to keep reference videos organized and available offline.",
+      "title": "Clean offline workflow",
+      "rating": 4.9,
+      "date": "2025-03-01"
+    },
+    {
+      "name": "Taylor Brooks",
+      "review": "The local-first setup is the main win for me. SexChat.hu downloads stay simple and dependable.",
+      "title": "Reliable and private",
+      "rating": 4.8,
+      "date": "2025-02-14"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "brave",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Livestream",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "sexchathu video downloader",
+    "sexchat hu downloader",
+    "sexchat.hu downloader"
+  ],
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/sexchathu-video-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "subscription",
+    "stripe": {
+      "price_id": "price_1T8KpCDP7AOTRcvmKzuBmmH7",
+      "test_price_id": "price_1T8KpDDP7AOTRcvmAARkdpRa",
+      "metadata": {
+        "stripe_product_id": "prod_U6XvKLqSobEqxu",
+        "stripe_test_product_id": "prod_U6XvHQGyeXz9gt"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-sexchathu-video-downloader",
+      "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "sexchathu-video-downloader"
+    ]
+  }
+}

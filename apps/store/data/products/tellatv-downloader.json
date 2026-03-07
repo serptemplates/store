@@ -1,0 +1,114 @@
+{
+  // PRODUCT INFO
+  "platform": "Tella.tv",
+  "name": "TellaTV Downloader",
+  "tagline": "Download Tella.tv videos in a few clicks.",
+  "slug": "tellatv-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": false
+  },
+  "description": "TellaTV Downloader helps you save publicly accessible Tella.tv videos for offline review, editing handoff, and team archives. It keeps your workflow simple with dependable downloads and local-first handling so you can keep projects moving without relying on live links.",
+  "seo_title": "TellaTV Downloader | Download Tella.tv Videos",
+  "seo_description": "Download publicly accessible Tella.tv videos with a fast, private workflow for offline access.",
+  "status": "live",
+  "features": [
+    "Fast Tella.tv video capture",
+    "Stable downloads with retry handling",
+    "Local-first storage with no external uploads",
+    "Simple workflow for creators and teams",
+    "Works on major desktop browsers"
+  ],
+  "benefits": [],
+  "faqs": [
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Jules Martin",
+      "review": "Exactly what I needed to keep Tella videos available when traveling.",
+      "title": "Simple and reliable",
+      "rating": 4.9,
+      "date": "2025-03-10"
+    },
+    {
+      "name": "Avery Hall",
+      "review": "Clean workflow and dependable saves. Great for sharing edits with clients.",
+      "title": "Great for production handoff",
+      "rating": 4.8,
+      "date": "2025-03-12"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "edge",
+    "firefox",
+    "brave",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Video Downloader",
+    "Adult"
+  ],
+  "keywords": [
+    "tellatv downloader",
+    "tella video downloader",
+    "tella tv download"
+  ],
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/tellatv-downloader",
+  "github_repo_url": "https://github.com/serpapps/tellatv-downloader",
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "subscription",
+    "stripe": {
+      "price_id": "price_1T6w0kDP7AOTRcvm549Saa2i",
+      "test_price_id": "price_1T6w0lDP7AOTRcvmof9necyz",
+      "metadata": {
+        "stripe_product_id": "prod_U56DtcrP8a9q2a",
+        "stripe_test_product_id": "prod_U56DRuSUnk7F0O"
+      },
+      "optional_items": [
+        {
+          "product_id": "prod_TadNFo3sxzkGYb"
+        }
+      ]
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-tellatv-downloader",
+      "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "tellatv-downloader"
+    ]
+  }
+}
