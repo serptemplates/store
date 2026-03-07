@@ -41,6 +41,13 @@
 - [ ] Update `baseline-browser-mapping` dev dependency to clear Vitest warning.
 - [ ] Review `next/image` `images.qualities` config to address the quality 85 warning.
 
+## MDX Security Upgrade (2026-03-07)
+
+- [x] Add a regression test to block vulnerable `next-mdx-remote` majors in `apps/store/package.json`.
+- [x] Upgrade `next-mdx-remote` from `^5.0.0` to `^6.0.0` to satisfy the Vercel CVE gate.
+- [x] Document the `next-mdx-remote` v6 security default (`blockJS` on by default) in `docs/knowledge`.
+- [ ] Consider upgrading `next` to a patched non-deprecated release after verifying plugin and deploy compatibility.
+
 ## Downloader Billing Updates (2026-03-04)
 
 - [x] Add `tellatv-downloader` product JSON page in `apps/store/data/products/`.
