@@ -65,6 +65,28 @@
       "test_price_id": "price_1SymsrDP7AOTRcvmaYxlK2nw"
     }
   },
+  "cam4-video-downloader": {
+    "slug": "cam4-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KouDP7AOTRcvmw3WHzuyf",
+      "test_price_id": "price_1T8KovDP7AOTRcvmKPtPG613"
+    }
+  },
+  "camscom-video-downloader": {
+    "slug": "camscom-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KoxDP7AOTRcvmiDmPbcGz",
+      "test_price_id": "price_1T8KoyDP7AOTRcvm0pRn9vTz"
+    }
+  },
   "circle-downloader": {
     "slug": "circle-downloader",
     "provider": "stripe",
@@ -120,6 +142,28 @@
       "test_price_id": "price_1T6w11DP7AOTRcvmzls9UBCi"
     }
   },
+  "dreamcam-video-downloader": {
+    "slug": "dreamcam-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KozDP7AOTRcvmwdZ42c6t",
+      "test_price_id": "price_1T8Kp1DP7AOTRcvmQ4JclwLX"
+    }
+  },
+  "dreamcam-vr-video-downloader": {
+    "slug": "dreamcam-vr-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8Kp2DP7AOTRcvm3doe0ljD",
+      "test_price_id": "price_1T8Kp3DP7AOTRcvmX9lldY5i"
+    }
+  },
   "eporner-video-downloader": {
     "slug": "eporner-video-downloader",
     "provider": "stripe",
@@ -162,6 +206,28 @@
     "stripe": {
       "live_price_id": "price_1Szee5DP7AOTRcvmUxSKMqkE",
       "test_price_id": "price_1Szee7DP7AOTRcvmI987C4hy"
+    }
+  },
+  "fansly-live-video-downloader": {
+    "slug": "fansly-live-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8Kp5DP7AOTRcvme8zuc5wF",
+      "test_price_id": "price_1T8Kp6DP7AOTRcvmI7US4QEP"
+    }
+  },
+  "flirt4free-video-downloader": {
+    "slug": "flirt4free-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8Kp8DP7AOTRcvmUqiHxAPw",
+      "test_price_id": "price_1T8Kp9DP7AOTRcvmc8XDlW6l"
     }
   },
   "gohighlevel-downloader": {
@@ -450,6 +516,17 @@
       "test_price_id": "price_1SdS6vDP7AOTRcvmsfdW0ZIS"
     }
   },
+  "sexchathu-video-downloader": {
+    "slug": "sexchathu-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KpCDP7AOTRcvmKzuBmmH7",
+      "test_price_id": "price_1T8KpDDP7AOTRcvmAARkdpRa"
+    }
+  },
   "skool-video-downloader": {
     "slug": "skool-video-downloader",
     "provider": "stripe",
@@ -483,6 +560,17 @@
       "test_price_id": "price_1Syyp8DP7AOTRcvmLrmGUES2"
     }
   },
+  "streamate-video-downloader": {
+    "slug": "streamate-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KpEDP7AOTRcvmRxZ1oc21",
+      "test_price_id": "price_1T8KpGDP7AOTRcvmu8IwivtV"
+    }
+  },
   "stripchat-video-downloader": {
     "slug": "stripchat-video-downloader",
     "provider": "stripe",
@@ -492,6 +580,17 @@
     "stripe": {
       "live_price_id": "price_1T6w0sDP7AOTRcvmV8eZuEhf",
       "test_price_id": "price_1T6w0tDP7AOTRcvmvEBQGoMc"
+    }
+  },
+  "stripchat-vr-video-downloader": {
+    "slug": "stripchat-vr-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KpHDP7AOTRcvm9tnl8XmZ",
+      "test_price_id": "price_1T8KpJDP7AOTRcvmKBn7nSQT"
     }
   },
   "tellatv-downloader": {
@@ -571,6 +670,17 @@
       "test_price_id": "price_1SzxrsDP7AOTRcvm53mkYt0R"
     }
   },
+  "twitter-x-downloader": {
+    "slug": "twitter-x-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T7c6EDP7AOTRcvmmjjQsu2U",
+      "test_price_id": "price_1T8KpNDP7AOTRcvm80YXuWTU"
+    }
+  },
   "txxx-downloader": {
     "slug": "txxx-downloader",
     "provider": "stripe",
@@ -646,6 +756,28 @@
     "stripe": {
       "live_price_id": "price_1SymtBDP7AOTRcvm84KCMyz3",
       "test_price_id": "price_1SymtCDP7AOTRcvmL1HBhTHx"
+    }
+  },
+  "xhamsterlive-video-downloader": {
+    "slug": "xhamsterlive-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KpODP7AOTRcvmbksBXOA1",
+      "test_price_id": "price_1T8KpQDP7AOTRcvmqpnN7jsi"
+    }
+  },
+  "xlovecam-video-downloader": {
+    "slug": "xlovecam-video-downloader",
+    "provider": "stripe",
+    "mode": "subscription",
+    "currency": "usd",
+    "unit_amount": 900,
+    "stripe": {
+      "live_price_id": "price_1T8KpRDP7AOTRcvmIwBUPch2",
+      "test_price_id": "price_1T8KpSDP7AOTRcvmMq4EZL24"
     }
   },
   "xnxx-video-downloader": {

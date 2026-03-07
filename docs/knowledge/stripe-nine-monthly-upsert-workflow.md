@@ -24,3 +24,17 @@ The existing `apps/store/scripts/stripe-migrate-create-products.ts` script can f
 ## Gotcha
 
 When patching JSON text with regex, ensure `stripe_product_id` keys are written into `payment.stripe.metadata`, not into `optional_items`. Validate by re-reading payment blocks and running `pnpm lint` + `pnpm validate:products`.
+
+## Exact route slugs
+
+For exact storefront routes like `https://apps.serp.co/twitter-x-downloader`, the safest path is to create the product JSON file with the exact slug (`apps/store/data/products/twitter-x-downloader.json`) instead of trying to reuse a near-match such as `twitter-video-downloader`.
+
+That keeps these systems aligned:
+
+- file route slug
+- `serply_link`
+- Stripe product metadata `product_slug`
+- manifest key in `apps/store/data/prices/manifest.json`
+- GHL tag prefix and entitlement slug
+
+If the route slug already matches the desired page URL, you do not need a `product_page_url` override.

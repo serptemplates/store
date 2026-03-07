@@ -53,3 +53,16 @@
 - [x] Update `apps/store/data/prices/manifest.json` entries to subscription mode, `unit_amount: 900`, and new live/test price IDs.
 - [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
 - [x] Document Stripe monthly upsert workflow + gotchas in `docs/knowledge`.
+
+## Downloader Page Launches (2026-03-07)
+
+- [x] Add exact product JSON pages for:
+  `cam4-video-downloader`, `camscom-video-downloader`, `dreamcam-video-downloader`,
+  `dreamcam-vr-video-downloader`, `fansly-live-video-downloader`, `flirt4free-video-downloader`,
+  `sexchathu-video-downloader`, `streamate-video-downloader`, `stripchat-vr-video-downloader`,
+  `twitter-x-downloader`, `xhamsterlive-video-downloader`, `xlovecam-video-downloader`.
+- [x] Update `reddit-downloader` and `tellatv-downloader` to align with the requested exact SERP.ly routes.
+- [x] Create or upsert Stripe live + test monthly products/prices for all 14 exact slugs.
+- [x] Update `apps/store/data/prices/manifest.json` and product JSON Stripe metadata with the new live/test product + price IDs.
+- [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
+- [ ] Add the new exact slugs to serp-auth `entitlement_catalog` so `validate:entitlements` resolves them without fallback warnings.
