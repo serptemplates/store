@@ -140,12 +140,7 @@
   "payment": {
     "provider": "stripe",
     "stripe": {
-      "metadata": {},
-      "optional_items": [
-        {
-          "product_id": "prod_TadNFo3sxzkGYb"
-        }
-      ]
+      "metadata": {}
     }
   },
   "ghl": {
