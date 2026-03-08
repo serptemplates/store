@@ -156,12 +156,7 @@
     "stripe": {
       "metadata": {
         "stripe_product_id": "prod_Sv6HGmec4Qc0D6"
-      },
-      "optional_items": [
-        {
-          "product_id": "prod_TadNFo3sxzkGYb"
-        }
-      ]
+      }
     }
   },
   "ghl": {

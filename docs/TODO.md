@@ -40,3 +40,43 @@
 
 - [ ] Update `baseline-browser-mapping` dev dependency to clear Vitest warning.
 - [ ] Review `next/image` `images.qualities` config to address the quality 85 warning.
+
+## MDX Security Upgrade (2026-03-07)
+
+- [x] Add a regression test to block vulnerable `next-mdx-remote` majors in `apps/store/package.json`.
+- [x] Upgrade `next-mdx-remote` from `^5.0.0` to `^6.0.0` to satisfy the Vercel CVE gate.
+- [x] Document the `next-mdx-remote` v6 security default (`blockJS` on by default) in `docs/knowledge`.
+- [ ] Consider upgrading `next` to a patched non-deprecated release after verifying plugin and deploy compatibility.
+
+## Downloader Billing Updates (2026-03-04)
+
+- [x] Add `tellatv-downloader` product JSON page in `apps/store/data/products/`.
+- [x] Create Stripe live + test product for `tellatv-downloader` and wire IDs into product JSON.
+- [x] Create/refresh Stripe live + test monthly ($9/mo) product+price wiring for:
+  `erothots-downloader`, `reddit-downloader`, `stripchat-video-downloader`, `linkedin-learning-downloader`,
+  `thinkific-downloader`, `dailymotion-downloader`, `m3u8-downloader`, `mindvalley-downloader`,
+  `tiktok-downloader`, `wistia-video-downloader`, `123movies-downloader`.
+- [x] Update product JSON payment configuration to subscription mode + new Stripe live/test IDs.
+- [x] Update `apps/store/data/prices/manifest.json` entries to subscription mode, `unit_amount: 900`, and new live/test price IDs.
+- [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
+- [x] Document Stripe monthly upsert workflow + gotchas in `docs/knowledge`.
+
+## Downloader Page Launches (2026-03-07)
+
+- [x] Add exact product JSON pages for:
+  `cam4-video-downloader`, `camscom-video-downloader`, `dreamcam-video-downloader`,
+  `dreamcam-vr-video-downloader`, `fansly-live-video-downloader`, `flirt4free-video-downloader`,
+  `sexchathu-video-downloader`, `streamate-video-downloader`, `stripchat-vr-video-downloader`,
+  `twitter-x-downloader`, `xhamsterlive-video-downloader`, `xlovecam-video-downloader`.
+- [x] Update `reddit-downloader` and `tellatv-downloader` to align with the requested exact SERP.ly routes.
+- [x] Create or upsert Stripe live + test monthly products/prices for all 14 exact slugs.
+- [x] Update `apps/store/data/prices/manifest.json` and product JSON Stripe metadata with the new live/test product + price IDs.
+- [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
+- [ ] Add the new exact slugs to serp-auth `entitlement_catalog` so `validate:entitlements` resolves them without fallback warnings.
+
+## Downloader Bundle Upsell Removal (2026-03-08)
+
+- [x] Confirm the downloader sales-page upsell is sourced from `payment.stripe.optional_items` in product JSONs.
+- [x] Remove the all-downloaders bundle Stripe product (`prod_TadNFo3sxzkGYb`) from downloader product JSON optional items.
+- [x] Add a regression test in `apps/store/tests/unit/lib/offer-config.test.ts` to keep downloader offer configs free of the bundle upsell.
+- [ ] Decide separately whether the global VPN optional item should remain on downloader sales pages.
