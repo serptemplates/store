@@ -73,3 +73,10 @@
 - [x] Update `apps/store/data/prices/manifest.json` and product JSON Stripe metadata with the new live/test product + price IDs.
 - [x] Run acceptance checks: `pnpm lint`, `pnpm typecheck`, `pnpm test:unit`, `pnpm validate:products`.
 - [ ] Add the new exact slugs to serp-auth `entitlement_catalog` so `validate:entitlements` resolves them without fallback warnings.
+
+## Downloader Bundle Upsell Removal (2026-03-08)
+
+- [x] Confirm the downloader sales-page upsell is sourced from `payment.stripe.optional_items` in product JSONs.
+- [x] Remove the all-downloaders bundle Stripe product (`prod_TadNFo3sxzkGYb`) from downloader product JSON optional items.
+- [x] Add a regression test in `apps/store/tests/unit/lib/offer-config.test.ts` to keep downloader offer configs free of the bundle upsell.
+- [ ] Decide separately whether the global VPN optional item should remain on downloader sales pages.

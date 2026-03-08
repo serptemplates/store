@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { ensureSuccessUrlHasSessionPlaceholder } from "@/lib/products/offer-config";
+import { ensureSuccessUrlHasSessionPlaceholder, getOfferConfig } from "@/lib/products/offer-config";
 
 describe("ensureSuccessUrlHasSessionPlaceholder", () => {
   it("appends the placeholder when absent and no query parameters are present", () => {
@@ -23,5 +23,12 @@ describe("ensureSuccessUrlHasSessionPlaceholder", () => {
     const url = "https://apps.serp.co/checkout/success?session_id={CHECKOUT_SESSION_ID}";
 
     expect(ensureSuccessUrlHasSessionPlaceholder(url)).toBe(url);
+  });
+
+  it("does not expose the all downloaders bundle as an optional item for downloader sales pages", () => {
+    const offer = getOfferConfig("youtube-downloader");
+
+    const optionalProductIds = (offer?.optionalItems ?? []).map((item) => item.product_id);
+    expect(optionalProductIds).not.toContain("prod_TadNFo3sxzkGYb");
   });
 });
