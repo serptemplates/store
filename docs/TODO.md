@@ -79,4 +79,7 @@
 - [x] Confirm the downloader sales-page upsell is sourced from `payment.stripe.optional_items` in product JSONs.
 - [x] Remove the all-downloaders bundle Stripe product (`prod_TadNFo3sxzkGYb`) from downloader product JSON optional items.
 - [x] Add a regression test in `apps/store/tests/unit/lib/offer-config.test.ts` to keep downloader offer configs free of the bundle upsell.
+- [x] Guard Stripe cross-sell automation so downloader scripts cannot default back to the bundle product.
+- [x] Disable the legacy script that re-added the bundle to downloader product JSON `optional_items`.
+- [ ] Merge `staging` into `main` so production stops serving the old downloader checkout configuration.
 - [ ] Decide separately whether the global VPN optional item should remain on downloader sales pages.

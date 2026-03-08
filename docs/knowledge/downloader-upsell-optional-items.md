@@ -20,6 +20,19 @@ The all-downloaders bundle upsell used Stripe product ID:
 
 Removing that ID from downloader product JSONs removes the bundle upsell from the downloader sales pages and from the optional Stripe checkout items derived from those products.
 
+## Why production could still show it later
+
+There are two separate reintroduction paths to watch:
+
+1. Production `main` can still serve old product JSONs until `staging` is merged and deployed.
+2. Legacy automation scripts can re-apply the bundle to downloader products unless they are guarded.
+
+The repo now blocks the automation path by:
+
+- removing the bundle as the default target from Stripe cross-sell automation
+- rejecting bundle product IDs from cross-sell env-based configuration
+- hard-disabling the legacy script that re-added bundle `optional_items` to downloader JSONs
+
 ## Important distinction
 
 There is also a separate global optional item path in `offer-config.ts`:

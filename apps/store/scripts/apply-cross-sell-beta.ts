@@ -4,6 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { URLSearchParams } from "node:url";
 import dotenv from "dotenv";
+import { resolveDownloaderCrossSellTarget } from "@/lib/payments/stripe-cross-sell-config";
 import { getAllProducts } from "@/lib/products/product";
 import type { ProductData } from "@/lib/products/product-schema";
 
@@ -32,10 +33,11 @@ function resolveModeConfigs(): ModeConfig[] {
     configs.push({
       mode: "live",
       secretKey: liveKey,
-      targetProductId:
-        process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_LIVE
-        || process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_LIVE
-        || process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_LIVE,
+      targetProductId: resolveDownloaderCrossSellTarget({
+        env: process.env,
+        accountAlias: "primary",
+        mode: "live",
+      }),
     });
   }
 
@@ -47,10 +49,11 @@ function resolveModeConfigs(): ModeConfig[] {
     configs.push({
       mode: "test",
       secretKey: testKey,
-      targetProductId:
-        process.env.STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID_TEST
-        || process.env.STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID_TEST
-        || process.env.STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID_TEST,
+      targetProductId: resolveDownloaderCrossSellTarget({
+        env: process.env,
+        accountAlias: "primary",
+        mode: "test",
+      }),
     });
   }
 
