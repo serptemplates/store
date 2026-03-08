@@ -9,6 +9,7 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import { normalizeStripeAccountAlias } from "../config/payment-accounts";
 import { getOptionalStripeSecretKey, type StripeMode } from "../lib/payments/stripe-environment";
+import { resolveDownloaderCrossSellTarget } from "../lib/payments/stripe-cross-sell-config";
 import { getAllProducts } from "../lib/products/product";
 
 const API_VERSION = "2025-06-30.basil; checkout_cross_sells_beta=v1" as unknown as Stripe.LatestApiVersion;
@@ -22,42 +23,14 @@ type CrossSellConfig = {
   downloaderProductId?: string;
 };
 
-const DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID = "prod_TadNFo3sxzkGYb";
-
-const CROSS_SELL_ENV_BASES = [
-  "STRIPE_CROSS_SELL_DOWNLOADERS_PRODUCT_ID",
-  "STRIPE_CROSS_SELL_ALL_BUNDLE_PRODUCT_ID",
-  "STRIPE_CROSS_SELL_ADULT_BUNDLE_PRODUCT_ID",
-];
-
-function buildEnvCandidates(base: string, aliasToken: string, mode: StripeMode): string[] {
-  const suffix = mode === "live" ? "LIVE" : "TEST";
-  return [
-    `${base}__${aliasToken}__${suffix}`,
-    `${base}__${aliasToken}`,
-    `${base}_${suffix}`,
-    base,
-  ];
-}
-
 function resolveCrossSellConfig(mode: StripeMode, accountAlias: string): CrossSellConfig {
-  const aliasToken = accountAlias.replace(/[^a-z0-9]/gi, "_").toUpperCase();
-
-  for (const base of CROSS_SELL_ENV_BASES) {
-    const candidates = buildEnvCandidates(base, aliasToken, mode);
-    for (const candidate of candidates) {
-      const value = process.env[candidate];
-      if (typeof value === "string" && value.trim().length > 0) {
-        return { downloaderProductId: value.trim() };
-      }
-    }
-  }
-
-  if (mode === "live") {
-    return { downloaderProductId: DEFAULT_LIVE_DOWNLOADER_CROSS_SELL_PRODUCT_ID };
-  }
-
-  return { downloaderProductId: undefined };
+  return {
+    downloaderProductId: resolveDownloaderCrossSellTarget({
+      env: process.env,
+      accountAlias,
+      mode,
+    }),
+  };
 }
 
 function loadEnvFiles() {

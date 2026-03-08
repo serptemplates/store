@@ -117,12 +117,7 @@
       "metadata": {
         "stripe_product_id": "prod_TfxYlIvcUSu9Li",
         "stripe_test_product_id": "prod_TfxYUxSWNMvH9t"
-      },
-      "optional_items": [
-        {
-          "product_id": "prod_TadNFo3sxzkGYb"
-        }
-      ]
+      }
     }
   },
   "ghl": {

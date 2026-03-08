@@ -1,0 +1,123 @@
+{
+  // PRODUCT INFO
+  "platform": "Stripchat VR",
+  "name": "Stripchat VR Video Downloader",
+  "tagline": "Save Stripchat VR videos for private offline playback.",
+  "slug": "stripchat-vr-video-downloader",
+  "trademark_metadata": {
+    "uses_trademarked_brand": true,
+    "trade_name": "Stripchat",
+    "legal_entity": "Unknown / complex multi-entity structure"
+  },
+  "description": "Stripchat VR Video Downloader is built for saving publicly accessible Stripchat VR videos with a private, local-first workflow. It helps you keep recordings organized and available offline without adding extra steps or external uploads.",
+  "seo_title": "Stripchat VR Video Downloader (Unofficial) | Download Stripchat VR Videos",
+  "seo_description": "Stripchat VR Video Downloader (Unofficial). Authorized-use only — download content you own or have permission to access. Authorized-use only — save Stripchat VR videos locally for offline viewing.",
+  "status": "live",
+  "features": [
+    "Capture Stripchat VR videos with a simple local-first workflow",
+    "Stable downloads with organized offline storage",
+    "Playback and archive media without relying on live links",
+    "Private workflow with no external file uploads",
+    "Works across major desktop browsers and operating systems"
+  ],
+  "benefits": [],
+  "faqs": [
+    {
+      "question": "How does Stripchat VR Video Downloader work?",
+      "answer": "Open the Stripchat VR video or stream you are authorized to access, start the downloader workflow, and save the media locally for offline viewing."
+    },
+    {
+      "question": "Does it bypass DRM or private access controls?",
+      "answer": "No. It is intended only for publicly accessible content or content you already have permission to access."
+    },
+    {
+      "question": "Where are downloads stored?",
+      "answer": "Files are saved to your own device so you can organize them in your preferred folders and archive workflow."
+    },
+    {
+      "question": "Is this legal?",
+      "answer": "<p><strong>DISCLAIMER:</strong> We are not attorneys and do not offer legal advice. Laws vary by country and platform. For any legal question please consult a qualified legal professional.</p>\n<p>We give you full control over download speeds because we believe users should decide how they use their software.</p>\n<p>That said, here are a few widely accepted best practices for safe, responsible downloading:</p>\n<ol>\n<li>Only download content you created, own, or have explicit permission from the rights holder to access.</li>\n<li>Protect your personal data by respecting platform rules and rate limits with reasonable download speeds to avoid automated abuse systems putting your account at risk.</li>\n<li>Protect your privacy by using a reputable VPN for IP protection before initiating downloads — <a href=\"https://serp.ly/best/vpn\" target=\"_blank\" rel=\"noreferrer\">this is the VPN we recommend &amp; use</a>.</li>\n</ol>"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Jordan Blake",
+      "review": "Stripchat VR Video Downloader made it much easier to keep reference videos organized and available offline.",
+      "title": "Clean offline workflow",
+      "rating": 4.9,
+      "date": "2025-03-01"
+    },
+    {
+      "name": "Taylor Brooks",
+      "review": "The local-first setup is the main win for me. Stripchat VR downloads stay simple and dependable.",
+      "title": "Reliable and private",
+      "rating": 4.8,
+      "date": "2025-02-14"
+    }
+  ],
+  "supported_operating_systems": [
+    "windows",
+    "mac",
+    "linux",
+    "chrome",
+    "firefox",
+    "edge",
+    "brave",
+    "opera"
+  ],
+  "supported_regions": [
+    "Worldwide"
+  ],
+  "categories": [
+    "Downloader",
+    "Adult",
+    "Livestream",
+    "Video Downloader"
+  ],
+  "keywords": [
+    "stripchat vr video downloader",
+    "stripchat vr downloader"
+  ],
+  "featured": false,
+  "new_release": true,
+  "popular": false,
+  "permission_justifications": [],
+  "brand": "SERP Apps",
+  // PRODUCT MEDIA
+  "screenshots": [],
+  "product_videos": [],
+  "related_videos": [],
+  "related_posts": [],
+  // PRODUCT PAGE LINKS
+  "serply_link": "https://serp.ly/stripchat-vr-video-downloader",
+  "github_repo_url": null,
+  "github_repo_tags": [],
+  "resource_links": [],
+  // PAYMENT DATA
+  "pricing": {
+    "cta_text": "Get it Now"
+  },
+  "payment": {
+    "provider": "stripe",
+    "mode": "subscription",
+    "stripe": {
+      "price_id": "price_1T8KpHDP7AOTRcvm9tnl8XmZ",
+      "test_price_id": "price_1T8KpJDP7AOTRcvmKBn7nSQT",
+      "metadata": {
+        "stripe_product_id": "prod_U6Xvh1Pr7avXN6",
+        "stripe_test_product_id": "prod_U6XvYLLebtHD7N"
+      }
+    }
+  },
+  "ghl": {
+    "tag_ids": [
+      "purchase-stripchat-vr-video-downloader",
+      "purchase"
+    ]
+  },
+  "license": {
+    "entitlements": [
+      "stripchat-vr-video-downloader"
+    ]
+  }
+}
